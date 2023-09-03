@@ -1,4 +1,8 @@
+"use client"
+
+import { useEffect } from "react"
 import Link from "next/link"
+import { supabase } from "@/utils/services/supabase/config"
 
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
