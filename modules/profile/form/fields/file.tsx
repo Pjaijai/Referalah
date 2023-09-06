@@ -12,50 +12,28 @@ import {
 import { Input } from "@/components/ui/input"
 
 interface IInputFormFieldProps {
-  control?: Control<any>
-  name: string
   label: string
   placeholder?: string
   description?: string
   onChange: (e: any) => void
+  accept: string
 }
 
 const InputFileField: React.FunctionComponent<IInputFormFieldProps> = ({
-  control,
-  name,
   label,
   placeholder,
   description,
   onChange,
+  accept,
 }) => {
   return (
-    // <FormField
-    //   control={control}
-    //   name={name}
-    //   render={({ field }) => (
-    //     <FormItem>
-    //       <FormLabel>{label}</FormLabel>
-    //       <FormControl>
-    //         <Input
-    //           placeholder={placeholder}
-    //           type="file"
-    //           accept=".jpg, .jpeg, .png"
-    //           {...field}
-    //         />
-    //       </FormControl>
-    //       {description && <FormDescription>{description}</FormDescription>}
-    //       <FormMessage />
-    //     </FormItem>
-    //   )}
-    // />
-
     <>
       <FormLabel>{label}</FormLabel>
       <FormControl>
         <Input
           placeholder={placeholder}
           type="file"
-          accept=".jpg, .jpeg, .png"
+          accept={accept}
           onChange={onChange}
         />
       </FormControl>

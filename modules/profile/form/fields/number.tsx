@@ -1,4 +1,5 @@
 import React from "react"
+import { IFormTextInputFieldProps } from "@/modules/profile/form/fields/input"
 import { Control, FieldValues } from "react-hook-form"
 
 import {
@@ -11,21 +12,11 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-export interface IFormTextInputFieldProps {
-  control: Control<any>
-  name: string
-  label: string
-  placeholder?: string
-  description?: string
-}
+export interface IFormNumberInputFieldProps extends IFormTextInputFieldProps {}
 
-const InputField: React.FunctionComponent<IFormTextInputFieldProps> = ({
-  control,
-  name,
-  label,
-  placeholder,
-  description,
-}) => {
+const FormNumberInputField: React.FunctionComponent<
+  IFormNumberInputFieldProps
+> = ({ control, name, label, placeholder, description }) => {
   return (
     <FormField
       control={control}
@@ -34,7 +25,7 @@ const InputField: React.FunctionComponent<IFormTextInputFieldProps> = ({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input placeholder={placeholder} {...field} />
+            <Input placeholder={placeholder} type="number" {...field} />
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
@@ -44,4 +35,4 @@ const InputField: React.FunctionComponent<IFormTextInputFieldProps> = ({
   )
 }
 
-export default InputField
+export default FormNumberInputField
