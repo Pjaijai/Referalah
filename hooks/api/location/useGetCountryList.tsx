@@ -1,8 +1,10 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { supabase } from "@/utils/services/supabase/config"
 
+import { ICountryResponse } from "@/types/api/reponse/country"
+
 const useGetCountryList = () => {
-  const [country, setCountry] = useState<any[]>([])
+  const [country, setCountry] = useState<ICountryResponse[]>([])
 
   useEffect(() => {
     // Create an async function to fetch data

@@ -1,8 +1,14 @@
 "use client"
 
 import React from "react"
+import Image from "next/image"
 
+import { ICityResponse } from "@/types/api/reponse/city"
+import { ICountryResponse } from "@/types/api/reponse/country"
+import { IIndustryResponse } from "@/types/api/reponse/industry"
+import { IProvinceResponse } from "@/types/api/reponse/province"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 
 export interface IViewProfileTemplateProps {
@@ -11,18 +17,24 @@ export interface IViewProfileTemplateProps {
   chineseLastName: string | null
   englishFirstName: string | null
   englishLastName: string | null
-  username: string
+  username: string | null
   description: string | null
   company: string | null
   jobTitle: string | null
   yearOfExperience?: number | null
-  country: string | null
-  province: string | null
-  city: string | null
+  countryUuid: string | null
+  provinceUuid: string | null
+  industryUuid: string | null
+  cityUuid: string | null
   resumeUrl: string | null
   socialMediaUrl: string | null
   isReferer: boolean
   isReferee: boolean
+  industryList: IIndustryResponse[]
+  cityList: ICityResponse[]
+  countryList: ICountryResponse[]
+  provinceList: IProvinceResponse[]
+  setIsEditMode: (value: boolean) => void
 }
 const ViewProfileTemplate: React.FunctionComponent<
   IViewProfileTemplateProps
@@ -37,20 +49,45 @@ const ViewProfileTemplate: React.FunctionComponent<
   company,
   jobTitle,
   yearOfExperience,
-  country,
-  province,
-  city,
+  countryUuid,
+  provinceUuid,
+  cityUuid,
   resumeUrl,
   socialMediaUrl,
+  setIsEditMode,
+  industryList,
+  countryList,
+  provinceList,
+  industryUuid,
+  cityList,
 }) => {
+  const country = countryUuid
+    ? countryList.find((c) => c.uuid === countryUuid)?.cantonese_name
+    : "no country"
+
+  const province = provinceUuid
+    ? provinceList.find((p) => p.uuid === provinceUuid)?.cantonese_name
+    : "no province"
+  const city = cityUuid
+    ? cityList.find((ci) => ci.uuid === cityUuid)?.cantonese_name
+    : "no city"
+  const industry = industryUuid
+    ? industryList.find((i) => i.uuid === industryUuid)?.cantonese_name
+    : "no industry"
+
   return (
     <div>
-      <Avatar>
-        <AvatarImage src={photoUrl} alt={username} />
-        <AvatarFallback>
-          <Icons.user />
-        </AvatarFallback>
-      </Avatar>
+      <Button
+        onClick={() => {
+          setIsEditMode(true)
+        }}
+      >
+        Edit
+      </Button>
+      {photoUrl && (
+        <Image src={photoUrl} width={200} height={200} alt={username ?? ""} />
+      )}
+
       <div>{username}</div>
       <div>
         {chineseLastName} {chineseFirstName}
@@ -59,6 +96,7 @@ const ViewProfileTemplate: React.FunctionComponent<
         {englishLastName} {englishFirstName}
       </div>
 
+      <div>{description}</div>
       <div>
         {company} {jobTitle} {yearOfExperience}
       </div>
@@ -68,6 +106,8 @@ const ViewProfileTemplate: React.FunctionComponent<
         {province}
         {city}
       </div>
+
+      <div>{industry}</div>
 
       {resumeUrl}
       {socialMediaUrl}

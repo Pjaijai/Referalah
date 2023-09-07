@@ -1,8 +1,10 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { supabase } from "@/utils/services/supabase/config"
 
+import { IProvinceResponse } from "@/types/api/reponse/province"
+
 const useGetProvinceList = () => {
-  const [province, setProvince] = useState<any[]>([])
+  const [province, setProvince] = useState<IProvinceResponse[]>([])
 
   useEffect(() => {
     // Create an async function to fetch data

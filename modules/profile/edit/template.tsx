@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react"
+import { StaticImport } from "next/dist/shared/lib/get-img-props"
 import Image from "next/image"
 import FormCheckBox from "@/modules/profile/form/fields/checkbox"
 import InputFileField from "@/modules/profile/form/fields/file"
@@ -6,21 +7,22 @@ import InputField from "@/modules/profile/form/fields/input"
 import FormNumberInputField from "@/modules/profile/form/fields/number"
 import FormSelect from "@/modules/profile/form/fields/select"
 import FormTextArea from "@/modules/profile/form/fields/textArea"
+import { conditionalValidation } from "@/modules/profile/form/validation.ts/conditional"
+import { maximumWordValidation } from "@/modules/profile/form/validation.ts/max-word"
+import { nameValidation } from "@/modules/profile/form/validation.ts/name"
 import { IViewProfileTemplateProps } from "@/modules/profile/view/template"
 import { supabase } from "@/utils/services/supabase/config"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { v4 as uuidv4 } from "uuid"
 import { z } from "zod"
 
-import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
-import useGetCityList from "@/hooks/api/location/useGetCityList"
-import useGetCountryList from "@/hooks/api/location/useGetCountryList"
-import useGetProvinceList from "@/hooks/api/location/useGetProvinceList"
+import useUserStore from "@/hooks/state/user/useUserStore"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 
 interface IEdiProfileTemplate extends IViewProfileTemplateProps {
-  slug: string
+  isProfileLoading: boolean
 }
 
 const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
@@ -34,89 +36,128 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   company,
   jobTitle,
   yearOfExperience,
-  country,
-  province,
-  city,
+  countryUuid,
+  provinceUuid,
+  cityUuid,
   resumeUrl,
+  industryUuid,
   socialMediaUrl,
   isReferer,
   isReferee,
-  slug,
+  industryList,
+  countryList,
+  provinceList,
+  cityList,
+  isProfileLoading,
+  setIsEditMode,
 }) => {
-  const formSchema = z.object({
-    photoUrl: z.any().optional(),
-    resumeUrl: z.any().optional(),
-    chineseFirstName: z.string().min(1, {
-      message: "Username must be at least 2 characters.",
-    }),
-    chineseLastName: z.string().min(1, {
-      message: "Username must be at least 2 characters.",
-    }),
-    englishFirstName: z.string().min(1, {
-      message: "Username must be at least 2 characters.",
-    }),
-    englishLastName: z.string().min(1, {
-      message: "Username must be at least 2 characters.",
-    }),
-    username: z.string().min(1, {
-      message: "Username must be at least 2 characters.",
-    }),
-    company: z.string().min(1, {
-      message: "Username must be at least 2 characters.",
-    }),
-    jobTitle: z.string().min(1, {
-      message: "Username must be at least 2 characters.",
-    }),
-    socialMediaUrl: z.string().min(1, {
-      message: "Username must be at least 2 characters.",
-    }),
-    description: z.string().min(1, {
-      message: "Username must be at least 2 characters.",
-    }),
+  const formSchema = z
+    .object({
+      photoUrl: z.any().optional(),
+      resumeUrl: z.any().optional(),
+      chineseFirstName: maximumWordValidation(4).optional(),
+      chineseLastName: maximumWordValidation(4).optional(),
+      englishFirstName: maximumWordValidation(30).optional(),
+      englishLastName: maximumWordValidation(30).optional(),
+      username: nameValidation(10).min(1, {
+        message: `至少有要1粒字`,
+      }),
+      company: conditionalValidation(30).optional(),
+      jobTitle: conditionalValidation(30).optional(),
+      socialMediaUrl: maximumWordValidation(250).optional(),
+      description: conditionalValidation(3000).optional(),
+      countryUuid: z.string().optional(),
+      provinceUuid: z.string().optional(),
+      cityUuid: z.string().optional(),
+      industryUuid: z.string().optional(),
+      yearOfExperience: z.string().optional(),
+      isReferer: z.boolean(),
+      isReferee: z.boolean(),
+    })
+    .refine(
+      (schema) =>
+        schema.isReferer || schema.isReferee ? schema.company : true,
+      {
+        path: ["company"],
+        message: "如果想成為推薦人/被推薦人，請填一填",
+      }
+    )
+    .refine(
+      (schema) =>
+        schema.isReferer || schema.isReferee ? schema.jobTitle : true,
+      {
+        path: ["jobTitle"],
+        message: "如果想成為推薦人/被推薦人，請填一填",
+      }
+    )
+    .refine(
+      (schema) =>
+        schema.isReferer || schema.isReferee ? schema.description : true,
+      {
+        path: ["description"],
+        message: "如果想成為推薦人/被推薦人，請填一填",
+      }
+    )
+    .refine(
+      (schema) =>
+        schema.isReferer || schema.isReferee ? schema.yearOfExperience : true,
+      {
+        path: ["yearOfExperience"],
+        message: "如果想成為推薦人/被推薦人，請填一填",
+      }
+    )
+    .refine(
+      (schema) =>
+        schema.isReferer || schema.isReferee ? schema.countryUuid : true,
+      {
+        path: ["countryUuid"],
+        message: "如果想成為推薦人/被推薦人，請填一填",
+      }
+    )
 
-    country: z.string().min(1, {
-      message: "Username must be at least 2 characters.",
-    }),
-    province: z.string().min(1, {
-      message: "Username must be at least 2 characters.",
-    }),
-    city: z.string().min(1, {
-      message: "Username must be at least 2 characters.",
-    }),
-    industry: z.string().min(1, {
-      message: "Username must be at least 2 characters.",
-    }),
-    yearOfExperience: z.string(),
-    isReferer: z.boolean(),
-    isReferee: z.boolean(),
-  })
-
-  const [image, setImage] = useState(null)
-  const [base64Image, setBase64Image] = useState<string | ArrayBuffer | null>(
+  const [image, setImage] = useState<any | null>(null)
+  const [base64Image, setBase64Image] = useState<string | StaticImport | null>(
     null
   )
-  const [resume, setResume] = useState(null)
+  const [resume, setResume] = useState<any | null>(null)
   const [base64Resume, setBase64Resume] = useState<string | ArrayBuffer | null>(
     null
   )
+  const user = useUserStore((state) => state)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: useMemo(() => {
+      return {
+        username: username || undefined,
+        chineseFirstName: chineseFirstName || undefined,
+        chineseLastName: chineseLastName || undefined,
+        englishFirstName: englishFirstName || undefined,
+        englishLastName: englishLastName || undefined,
+        description: description || undefined,
+        company: company || undefined,
+        jobTitle: jobTitle || undefined,
+        yearOfExperience: yearOfExperience?.toString() || undefined,
+        countryUuid: countryUuid || undefined,
+        provinceUuid: provinceUuid || undefined,
+        cityUuid: cityUuid || undefined,
+        resumeUrl: resumeUrl || undefined,
+        socialMediaUrl: socialMediaUrl || undefined,
+        isReferer: isReferer || undefined,
+        isReferee: isReferee || undefined,
+        industryUuid: industryUuid || undefined,
+      }
+    }, [isProfileLoading]),
   })
 
   const {
     watch,
-    setValue,
     formState: { errors },
   } = form
 
-  const { industry: industryList } = useGetIndustryList()
-  const { city: cityList } = useGetCityList()
-  const { country: countryList } = useGetCountryList()
-  const { province: provinceList } = useGetProvinceList()
+  const countryWatch = watch("countryUuid")
+  const provinceWatch = watch("provinceUuid")
 
-  const countryWatch = watch("country")
-  const provinceWatch = watch("province")
   const industryOptions = useMemo(
     () =>
       industryList.map((industry) => {
@@ -148,6 +189,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         } as { value: string; title: string }
       }
     })
+
     return res.filter((r) => r !== undefined)
   }, [countryWatch, provinceList])
 
@@ -160,44 +202,50 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         } as { value: string; title: string }
       }
     })
+
     return res.filter((r) => r !== undefined)
   }, [cityList, provinceWatch])
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     let photoUrl = values.photoUrl
 
+    console.log("start onSubmit")
     if (image) {
+      console.log("start image")
+      const uuid = uuidv4()
       const { data, error } = await supabase.storage
         .from("profile_image")
-        .upload("test1/avatar1.png", image, {
+        .upload(`${user.uuid}/${uuid}_${image.name}`, image, {
           cacheControl: "3600",
           upsert: false,
         })
 
       const { data: imageUrl } = await supabase.storage
         .from("profile_image")
-        .getPublicUrl("test1/avatar1.png")
+        .getPublicUrl(`${user.uuid}/${uuid}_${image.name}`)
 
       photoUrl = imageUrl.publicUrl
     }
 
     if (resume) {
+      console.log("start resume")
+      const uuid = uuidv4()
       const { data, error } = await supabase.storage
         .from("resume")
-        .upload("test1/avatar1.pdf", resume, {
+        .upload(`${user.uuid}/${uuid}_${resume.name}`, resume, {
           cacheControl: "3600",
           upsert: false,
         })
 
       const { data: pdfUrl } = await supabase.storage
         .from("resume")
-        .getPublicUrl("test1/avatar1.pdf")
+        .getPublicUrl(`${user.uuid}/${uuid}_${resume.name}`)
 
       resumeUrl = pdfUrl.publicUrl
     }
 
-    console.log("resumeUrl", resumeUrl)
-
+    // TODO
+    // Error handling email , username dupliation
     const { error } = await supabase
       .from("user")
       .update({
@@ -210,17 +258,22 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         description: values.description,
         company_name: values.company,
         job_title: values.jobTitle,
-        year_of_experience: parseInt(values.yearOfExperience),
-        country_uuid: values.country,
-        province_uuid: values.province,
-        city_uuid: values.city,
-        industry_uuid: values.industry,
+        year_of_experience: values.yearOfExperience
+          ? parseInt(values.yearOfExperience)
+          : null,
+        country_uuid: values.countryUuid,
+        province_uuid: values.provinceUuid,
+        city_uuid: values.cityUuid,
+        industry_uuid: values.industryUuid,
         resume_url: resumeUrl,
         social_media_url: values.socialMediaUrl,
         is_referer: values.isReferer,
         is_referee: values.isReferee,
       })
-      .eq("uuid", slug)
+      .eq("uuid", user.uuid)
+
+    console.log("error resume", error)
+    console.log("end resume")
   }
 
   const handleProfileImageChange = (e: any) => {
@@ -258,8 +311,24 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   return (
     <div>
       <Form {...form}>
+        <Button
+          onClick={() => {
+            setIsEditMode(false)
+          }}
+        >
+          back
+        </Button>
+        {photoUrl && !base64Image && (
+          <Image src={photoUrl} width={200} height={200} alt={username ?? ""} />
+        )}
+
         {base64Image && (
-          <Image src={base64Image} width={200} height={200} alt={username} />
+          <Image
+            src={base64Image}
+            width={200}
+            height={200}
+            alt={username ?? ""}
+          />
         )}
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -367,7 +436,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             options={industryOptions}
             control={form.control}
             label="industry"
-            name="industry"
+            name="industryUuid"
             description="Select your industry"
             placeholder="Select a industry"
           />
@@ -375,15 +444,15 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             options={countryOptions}
             control={form.control}
             label="Country"
-            name="country"
+            name="countryUuid"
             description="Select your country"
             placeholder="Select a country"
           />
           <FormSelect
             control={form.control}
             label="Province"
-            name="province"
-            options={provinceOptions}
+            name="provinceUuid"
+            options={provinceOptions as any}
             description="Select your province"
             placeholder="Select a province"
           />
@@ -391,8 +460,8 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           <FormSelect
             control={form.control}
             label="City"
-            name="city"
-            options={cityOptions}
+            name="cityUuid"
+            options={cityOptions as any}
             description="Select your city"
             placeholder="Select a city"
           />

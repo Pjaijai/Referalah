@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/select"
 
 interface IFormSelectProps extends IFormTextInputFieldProps {
-  options: ({ value: string; title: string } | undefined)[]
+  options: { value: string; title: string }[]
 }
 const FormSelect: React.FunctionComponent<IFormSelectProps> = ({
   control,
