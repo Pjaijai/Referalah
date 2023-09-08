@@ -27,7 +27,6 @@ const Page = ({ params }: { params: { slug: string } }) => {
   const { province: provinceList } = useGetProvinceList()
   const [isEditMode, setIsEditMode] = useState(false)
 
-  console.log("userUuid", userUuid)
   useEffect(() => {
     // Introduce a 1-second delay
     const delay = 1000 // 1000 milliseconds = 1 second
@@ -44,7 +43,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
           .from("user")
           .select("*")
           .eq("uuid", userUuid)
-        console.log("fire", data)
+
         if (error) {
           // Handle the error, e.g., show an error message or redirect
           console.error("Error fetching user:", error)
@@ -68,7 +67,6 @@ const Page = ({ params }: { params: { slug: string } }) => {
     return () => clearTimeout(timer) // Clean up the timer when the component unmounts
   }, [isLoading, isUserSignIn, profile, router, userUuid])
 
-  console.log("profileprofile", profile)
   if (isLoading) return <h1>loading</h1>
   if (!isLoading && profile)
     return (

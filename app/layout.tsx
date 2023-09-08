@@ -4,6 +4,8 @@ import { Metadata } from "next"
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
+import APIProviders from "@/components/providers/api"
+import APIProvider from "@/components/providers/api"
 import AuthProvider from "@/components/providers/auth"
 import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
@@ -42,13 +44,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <AuthProvider>
-              <div className="relative flex min-h-screen flex-col">
-                <SiteHeader />
-                <div className="flex-1">{children}</div>
-              </div>
-              <TailwindIndicator />
-            </AuthProvider>
+            <APIProvider>
+              <AuthProvider>
+                <div className="relative flex min-h-screen flex-col">
+                  <SiteHeader />
+                  <div className="flex-1">{children}</div>
+                </div>
+                <TailwindIndicator />
+              </AuthProvider>
+            </APIProvider>
           </ThemeProvider>
         </body>
       </html>

@@ -14,7 +14,7 @@ const BaseAvatar: React.FunctionComponent<IBaseAvatar> = ({
 }) => {
   return (
     <Avatar>
-      <AvatarImage src={url} alt={alt} />=
+      <AvatarImage src={url} alt={alt} />
       <AvatarFallback>{fallBack}</AvatarFallback>
     </Avatar>
   )

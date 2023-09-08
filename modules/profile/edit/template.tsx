@@ -170,9 +170,9 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     let photoUrl = values.photoUrl
 
-    console.log("start onSubmit")
     if (image) {
-      console.log("start image")
+      // TODO
+      // clean bacuket before insert image
       const uuid = uuidv4()
       const { data, error } = await supabase.storage
         .from("profile_image")
@@ -189,7 +189,6 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     }
 
     if (resume) {
-      console.log("start resume")
       const uuid = uuidv4()
       const { data, error } = await supabase.storage
         .from("resume")
@@ -232,9 +231,6 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         is_referee: values.isReferee,
       })
       .eq("uuid", user.uuid)
-
-    console.log("error resume", error)
-    console.log("end resume")
   }
 
   const handleProfileImageChange = (e: any) => {

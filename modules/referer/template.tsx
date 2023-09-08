@@ -1,12 +1,14 @@
-import React, { ChangeEvent, ChangeEventHandler, useState } from "react"
+import React, { ChangeEvent, useState } from "react"
 import { refererSortingOptions } from "@/utils/common/sorting/referer"
-import { SlidersHorizontal } from "lucide-react"
+import InfiniteScroll from "react-infinite-scroll-component"
 
+import { IRefererResponse } from "@/types/api/response/referer-list"
 import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
 import useGetCityList from "@/hooks/api/location/useGetCityList"
 import useGetCountryList from "@/hooks/api/location/useGetCountryList"
 import useGetProvinceList from "@/hooks/api/location/useGetProvinceList"
-import useGetRefererList from "@/hooks/api/referer/useGetRefererList"
+import useGetRefererList from "@/hooks/api/referer/useSearchRefererList"
+import useSearchRefererList from "@/hooks/api/referer/useSearchRefererList"
 import useDebounce from "@/hooks/common/useDebounce"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -24,10 +26,11 @@ const RefererPageTemplate: React.FunctionComponent<
   const [industryUuid, setIndustryUuid] = useState<undefined | string>()
   const [yoeMin, setYoeMin] = useState<undefined | string>()
   const [yoeMax, setYoeMax] = useState<undefined | string>()
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(0)
   const [sorting, setSorting] = useState(refererSortingOptions[0].value)
   const debouncedCompanyName = useDebounce(companyName, 800)
-  const { data: refererListData, isLoading } = useGetRefererList({
+
+  const filterMeta = {
     companyName: debouncedCompanyName,
     cityUuid,
     countryUuid,
@@ -36,14 +39,21 @@ const RefererPageTemplate: React.FunctionComponent<
     sorting,
     yoeMin,
     yoeMax,
-    page,
-  })
+  }
+
+  const {
+    data: refererListData,
+    isLoading: isRefererListLoading,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+  } = useSearchRefererList(sorting, filterMeta)
   const { industry: industryList } = useGetIndustryList()
   const { city: cityList } = useGetCityList()
   const { country: countryList } = useGetCountryList()
   const { province: provinceList } = useGetProvinceList()
-
-  console.log("data", refererListData)
 
   const handleCompanyChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCompanyName(e.target.value)
@@ -74,6 +84,11 @@ const RefererPageTemplate: React.FunctionComponent<
   const handleYeoMaxChange = (e: ChangeEvent<HTMLInputElement>) => {
     setYoeMax(e.target.value)
   }
+
+  const list = refererListData
+    ? (refererListData?.pages.flatMap((d) => d) as IRefererResponse[])
+    : []
+
   return (
     <div>
       <Input onChange={handleCompanyChange} placeholder="companyname" />
@@ -91,36 +106,56 @@ const RefererPageTemplate: React.FunctionComponent<
         onSortingChange={handleSortingChange}
         onYeoMinChange={handleYeoMinChange}
         onYeoMaxChange={handleYeoMaxChange}
+        currentSorting={sorting}
+        currentCityUuid={cityUuid}
+        currentCountryUuid={countryUuid}
+        currentIndustryUuid={industryUuid}
+        currentProvinceUuid={provinceUuid}
+        currentYeoMax={yoeMax}
+        currentYeoMin={yoeMin}
       />
 
-      {isLoading && <>isloading</>}
-      {!isLoading && refererListData && (
-        <div>
-          {refererListData.map((referer) => {
-            console.log("23123", referer)
-            return (
-              <ReferralCard
-                jobTitle={referer.job_title}
-                username={referer.username}
-                photoUrl={referer.avatar_url}
-                industryList={industryList}
-                countryList={countryList}
-                provinceList={provinceList}
-                cityList={cityList}
-                provinceUuid={referer.province_uuid}
-                countryUuid={referer.country_uuid}
-                cityUuid={referer.city_uuid}
-                companyName={referer.company_name}
-                description={referer.description}
-                industryUuid={referer.industry_uuid}
-                socialMediaUrl={referer.social_media_url}
-                yearOfExperience={referer.year_of_experience}
-                uuid={referer.uuid}
-                key={referer.uuid}
-              />
-            )
-          })}
-        </div>
+      {isRefererListLoading && <>isloading</>}
+      {!isRefererListLoading && list && (
+        <InfiniteScroll
+          dataLength={list?.length} //This is important field to render the next data
+          next={fetchNextPage}
+          hasMore={true}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>Yay! You have seen it all</b>
+            </p>
+          }
+          className="w-full h-full"
+        >
+          <div className="grid grid-cols-3  ">
+            {list.map((referer) => {
+              return (
+                <ReferralCard
+                  jobTitle={referer.job_title}
+                  username={referer.username}
+                  photoUrl={referer.avatar_url}
+                  industryList={industryList}
+                  countryList={countryList}
+                  provinceList={provinceList}
+                  cityList={cityList}
+                  provinceUuid={referer.province_uuid}
+                  countryUuid={referer.country_uuid}
+                  cityUuid={referer.city_uuid}
+                  companyName={referer.company_name}
+                  description={referer.description}
+                  industryUuid={referer.industry_uuid}
+                  socialMediaUrl={referer.social_media_url}
+                  yearOfExperience={referer.year_of_experience}
+                  uuid={referer.uuid}
+                  key={referer.uuid}
+                />
+              )
+            })}
+          </div>
+        </InfiniteScroll>
+        // </div>
       )}
     </div>
   )

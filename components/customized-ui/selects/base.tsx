@@ -19,6 +19,7 @@ interface IBaseSelectProps {
   options?: ISelectOption[]
   onChange: (e: string) => void
   defaultValue?: string
+  value?: string
 }
 const BaseSelect: React.FunctionComponent<IBaseSelectProps> = ({
   triggerClassName,
@@ -26,9 +27,10 @@ const BaseSelect: React.FunctionComponent<IBaseSelectProps> = ({
   options,
   onChange,
   defaultValue,
+  value,
 }) => {
   return (
-    <Select onValueChange={onChange} defaultValue={defaultValue}>
+    <Select onValueChange={onChange} defaultValue={defaultValue} value={value}>
       <SelectTrigger className={cn("w-[180px]", triggerClassName)}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>

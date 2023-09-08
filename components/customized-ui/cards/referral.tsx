@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
-import LinkTooltip from "@/components/customized-ui/tooltips/Link"
+import LinkTooltip from "@/components/customized-ui/tool/Link"
 import { Icons } from "@/components/icons"
 
 interface IReferralCardProps {
@@ -68,7 +68,6 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
     (c) => c.uuid === industryUuid
   )?.cantonese_name
 
-  console.log("jobTitle", jobTitle)
   return (
     <Card className="flex h-[350px] w-[350px] flex-col justify-between">
       <CardHeader className="justify-between">

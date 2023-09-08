@@ -30,8 +30,6 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({ children }) => {
       } else {
         reSetUserState()
       }
-
-      console.log("session", !!session)
     })
   }, [])
 

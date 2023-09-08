@@ -41,6 +41,13 @@ interface ISearchPopoverProps {
   onSortingChange: (value: string) => void
   onYeoMinChange: (e: ChangeEvent<HTMLInputElement>) => void
   onYeoMaxChange: (e: ChangeEvent<HTMLInputElement>) => void
+  currentCountryUuid?: string
+  currentProvinceUuid?: string
+  currentCityUuid?: string
+  currentIndustryUuid?: string
+  currentYeoMin?: string
+  currentYeoMax?: string
+  currentSorting: string
 }
 const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
   countryList,
@@ -56,6 +63,13 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
   onSortingChange,
   onYeoMinChange,
   onYeoMaxChange,
+  currentCountryUuid,
+  currentProvinceUuid,
+  currentCityUuid,
+  currentIndustryUuid,
+  currentYeoMin,
+  currentYeoMax,
+  currentSorting,
 }) => {
   const industryOptions = useIndustryOptions(industryList)
   const countryOptions = useCountryOptions(countryList)
@@ -76,6 +90,7 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
               options={refererSortingOptions}
               onChange={onSortingChange}
               defaultValue={refererSortingOptions[0].value}
+              value={currentSorting}
             />
             <Button>reset</Button>
           </div>
@@ -83,23 +98,41 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
           <div className="grid gap-2">
             <div className="grid grid-cols-3 items-center gap-4">
               <Label>Country</Label>
-              <Input type="number" onChange={onYeoMinChange} /> <span>to</span>{" "}
-              <Input type="number" />
+              <Input
+                type="number"
+                onChange={onYeoMinChange}
+                value={currentYeoMin}
+              />
+              <span>to</span>
+              <Input
+                type="number"
+                onChange={onYeoMaxChange}
+                value={currentYeoMax}
+              />
             </div>
             <div className="grid grid-cols-3 items-center gap-4">
               <Label>Country</Label>
-              <BaseSelect options={countryOptions} onChange={onCountryChange} />
+              <BaseSelect
+                options={countryOptions}
+                onChange={onCountryChange}
+                value={currentCountryUuid}
+              />
             </div>
             <div className="grid grid-cols-3 items-center gap-4">
               <Label>Province</Label>
               <BaseSelect
                 options={provinceOptions}
                 onChange={onProvinceChange}
+                value={currentProvinceUuid}
               />
             </div>
             <div className="grid grid-cols-3 items-center gap-4">
               <Label>City</Label>
-              <BaseSelect options={cityOptions} onChange={onCityChange} />
+              <BaseSelect
+                options={cityOptions}
+                onChange={onCityChange}
+                value={currentCityUuid}
+              />
             </div>
 
             <div className="grid grid-cols-3 items-center gap-4">
@@ -107,12 +140,9 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
               <BaseSelect
                 options={industryOptions}
                 onChange={onIndustryChange}
+                value={currentIndustryUuid}
               />
             </div>
-            {/* <div className="grid grid-cols-3 items-center gap-4">
-              <Label htmlFor="maxHeight">Max. height</Label>
-              <BaseSelect />
-            </div> */}
           </div>
         </div>
       </PopoverContent>
