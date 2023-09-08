@@ -18,6 +18,7 @@ export function SiteHeader() {
   const handleSignOut = async () => {
     try {
       const { error } = await supabase.auth.signOut()
+      userState.reSetUser()
     } catch (err) {}
   }
 

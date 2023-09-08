@@ -17,6 +17,10 @@ import { useForm } from "react-hook-form"
 import { v4 as uuidv4 } from "uuid"
 import { z } from "zod"
 
+import useCityOptions from "@/hooks/common/options/useCityOptions"
+import useCountryOptions from "@/hooks/common/options/useCountryOptions"
+import useIndustryOptions from "@/hooks/common/options/useIndustryOptions"
+import useProvinceOptions from "@/hooks/common/options/useProvinceOptions"
 import useUserStore from "@/hooks/state/user/useUserStore"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
@@ -158,53 +162,10 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   const countryWatch = watch("countryUuid")
   const provinceWatch = watch("provinceUuid")
 
-  const industryOptions = useMemo(
-    () =>
-      industryList.map((industry) => {
-        return {
-          value: industry.uuid,
-          title: `${industry.english_name} | ${industry.cantonese_name}`,
-        }
-      }),
-    [industryList]
-  )
-
-  const countryOptions = useMemo(
-    () =>
-      countryList.map((country) => {
-        return {
-          value: country.uuid,
-          title: `${country.english_name} | ${country.cantonese_name}`,
-        }
-      }),
-    [countryList]
-  )
-
-  const provinceOptions = useMemo(() => {
-    const res = provinceList.map((province) => {
-      if (province.country_uuid === countryWatch) {
-        return {
-          value: province.uuid,
-          title: `${province.english_name} | ${province.cantonese_name}`,
-        } as { value: string; title: string }
-      }
-    })
-
-    return res.filter((r) => r !== undefined)
-  }, [countryWatch, provinceList])
-
-  const cityOptions = useMemo(() => {
-    const res = cityList.map((city) => {
-      if (city.province_uuid === provinceWatch) {
-        return {
-          value: city.uuid,
-          title: `${city.english_name} | ${city.cantonese_name}`,
-        } as { value: string; title: string }
-      }
-    })
-
-    return res.filter((r) => r !== undefined)
-  }, [cityList, provinceWatch])
+  const industryOptions = useIndustryOptions(industryList)
+  const countryOptions = useCountryOptions(countryList)
+  const provinceOptions = useProvinceOptions(provinceList, countryWatch)
+  const cityOptions = useCityOptions(cityList, provinceWatch)
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     let photoUrl = values.photoUrl
