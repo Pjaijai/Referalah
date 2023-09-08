@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 
 import { IProvinceResponse } from "@/types/api/response/province"
-import { ISelectOption } from "@/components/customized-ui/select/base"
+import { ISelectOption } from "@/components/customized-ui/selects/base"
 
 const useProvinceOptions = (
   provinceList: IProvinceResponse[],

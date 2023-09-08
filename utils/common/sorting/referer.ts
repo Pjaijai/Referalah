@@ -1,4 +1,4 @@
-import { ISelectOption } from "@/components/customized-ui/select/base"
+import { ISelectOption } from "@/components/customized-ui/selects/base"
 
 const refererSortingOptions = [
   {

@@ -17,10 +17,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { Select } from "@/components/ui/select"
-import BaseSelect, {
-  ISelectOption,
-} from "@/components/customized-ui/select/base"
+import BaseSelect from "@/components/customized-ui/selects/base"
 import { Icons } from "@/components/icons"
 
 // TODO

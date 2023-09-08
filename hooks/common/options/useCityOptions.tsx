@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 
 import { ICityResponse } from "@/types/api/response/city"
-import { ISelectOption } from "@/components/customized-ui/select/base"
+import { ISelectOption } from "@/components/customized-ui/selects/base"
 
 const useCityOptions = (cityList: ICityResponse[], provinceUuid?: string) => {
   const cityOptions = useMemo(() => {

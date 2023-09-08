@@ -10,6 +10,7 @@ import useGetRefererList from "@/hooks/api/referer/useGetRefererList"
 import useDebounce from "@/hooks/common/useDebounce"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import ReferralCard from "@/components/customized-ui/cards/referral"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 
 interface IRefererPageTemplateProps {}
@@ -23,9 +24,10 @@ const RefererPageTemplate: React.FunctionComponent<
   const [industryUuid, setIndustryUuid] = useState<undefined | string>()
   const [yoeMin, setYoeMin] = useState<undefined | string>()
   const [yoeMax, setYoeMax] = useState<undefined | string>()
+  const [page, setPage] = useState(1)
   const [sorting, setSorting] = useState(refererSortingOptions[0].value)
   const debouncedCompanyName = useDebounce(companyName, 800)
-  const { refererList, isLoading } = useGetRefererList({
+  const { data: refererListData, isLoading } = useGetRefererList({
     companyName: debouncedCompanyName,
     cityUuid,
     countryUuid,
@@ -34,11 +36,14 @@ const RefererPageTemplate: React.FunctionComponent<
     sorting,
     yoeMin,
     yoeMax,
+    page,
   })
   const { industry: industryList } = useGetIndustryList()
   const { city: cityList } = useGetCityList()
   const { country: countryList } = useGetCountryList()
   const { province: provinceList } = useGetProvinceList()
+
+  console.log("data", refererListData)
 
   const handleCompanyChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCompanyName(e.target.value)
@@ -89,6 +94,34 @@ const RefererPageTemplate: React.FunctionComponent<
       />
 
       {isLoading && <>isloading</>}
+      {!isLoading && refererListData && (
+        <div>
+          {refererListData.map((referer) => {
+            console.log("23123", referer)
+            return (
+              <ReferralCard
+                jobTitle={referer.job_title}
+                username={referer.username}
+                photoUrl={referer.avatar_url}
+                industryList={industryList}
+                countryList={countryList}
+                provinceList={provinceList}
+                cityList={cityList}
+                provinceUuid={referer.province_uuid}
+                countryUuid={referer.country_uuid}
+                cityUuid={referer.city_uuid}
+                companyName={referer.company_name}
+                description={referer.description}
+                industryUuid={referer.industry_uuid}
+                socialMediaUrl={referer.social_media_url}
+                yearOfExperience={referer.year_of_experience}
+                uuid={referer.uuid}
+                key={referer.uuid}
+              />
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }

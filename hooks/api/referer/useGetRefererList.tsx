@@ -12,6 +12,7 @@ interface IUseGetRefererListProps {
   sorting: string
   yoeMax?: string
   yoeMin?: string
+  page: number
 }
 const useGetRefererList = ({
   companyName,
@@ -22,11 +23,14 @@ const useGetRefererList = ({
   sorting,
   yoeMin,
   yoeMax,
+  page,
 }: IUseGetRefererListProps) => {
-  const [refererList, setRefererList] = useState<IRefererResponse[] | null>(
-    null
-  )
+  const ITEMS_PER_PAGE = 3
+  const from = page * ITEMS_PER_PAGE
+  const to = from + ITEMS_PER_PAGE
+  const [refererList, setRefererList] = useState<IRefererResponse[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [hasMore, setHasMore] = useState(true)
   const sort = sorting.split(",")
   const order = sort[1] === "dec" ? false : true
   useEffect(() => {
@@ -59,6 +63,7 @@ const useGetRefererList = ({
         .lte("year_of_experience", yoeMax ? parseInt(yoeMax) : 100)
         .gte("year_of_experience", yoeMin ? parseInt(yoeMin) : 0)
         .order("year_of_experience", { ascending: order })
+      // .range(from, to)
 
       if (countryUuid !== undefined) {
         query = query.eq("country_uuid", countryUuid)
@@ -74,12 +79,20 @@ const useGetRefererList = ({
       }
 
       const { data: refererData, error: countryError } = await query
+      console.log("refererData", refererData)
 
       if (countryError) {
         console.error("Error fetching country data:", countryError)
-      } else {
+      }
+
+      if (refererData) {
         // Update the countryData state with the fetched data
-        setRefererList(refererData as IRefererResponse[])
+        setRefererList([...refererList, ...refererData] as IRefererResponse[])
+      }
+
+      if (!refererData) {
+        // Update the countryData state with the fetched data
+        setHasMore(false)
       }
 
       setIsLoading(false)
@@ -98,7 +111,7 @@ const useGetRefererList = ({
     yoeMin,
   ])
 
-  return { refererList, isLoading }
+  return { data: refererList, isLoading, hasMore }
 }
 
 export default useGetRefererList
