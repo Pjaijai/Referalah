@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { supabase } from "@/utils/services/supabase/config"
 import { useInfiniteQuery } from "@tanstack/react-query"
+import { transformer } from "zod"
 
 import { IRefererResponse } from "@/types/api/response/referer-list"
 
@@ -15,6 +16,7 @@ interface ISearchRefererFilterMeta {
   yoeMin?: string
   // page: number
 }
+
 const useSearchRefererList = (
   sorting: string,
   filterMeta: ISearchRefererFilterMeta
@@ -85,14 +87,16 @@ const useSearchRefererList = (
     queryKey: ["referer-list", { sorting, filterMeta }],
     queryFn: fetchRefererList,
     getNextPageParam: (lastPage, allPages: any[]) => {
-      if (
-        lastPage === undefined ||
-        (typeof lastPage !== "undefined" && !(lastPage.length > 0))
-      ) {
-        return undefined
+      if (lastPage && lastPage.length > 0) {
+        return allPages.length
+      } else {
+        return null
       }
-      return allPages.length
     },
+    select: (data) => ({
+      pages: [...data.pages],
+      pageParams: [...data.pageParams],
+    }),
   })
 }
 

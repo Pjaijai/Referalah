@@ -120,7 +120,12 @@ const RefererPageTemplate: React.FunctionComponent<
         <InfiniteScroll
           dataLength={list?.length} //This is important field to render the next data
           next={fetchNextPage}
-          hasMore={true}
+          hasMore={
+            (refererListData &&
+              refererListData.pages &&
+              refererListData.pages[refererListData.pages.length - 1].length !==
+                0)!
+          }
           loader={<h4>Loading...</h4>}
           endMessage={
             <p style={{ textAlign: "center" }}>
