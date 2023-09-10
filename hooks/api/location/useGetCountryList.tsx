@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { supabase } from "@/utils/services/supabase/config"
 
-import { ICountryResponse } from "@/types/api/reponse/country"
+import { ICountryResponse } from "@/types/api/response/country"
 
 const useGetCountryList = () => {
   const [country, setCountry] = useState<ICountryResponse[]>([])

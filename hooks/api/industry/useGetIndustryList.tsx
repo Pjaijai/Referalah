@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { supabase } from "@/utils/services/supabase/config"
 
-import { IIndustryResponse } from "@/types/api/reponse/industry"
+import { IIndustryResponse } from "@/types/api/response/industry"
 
 const useGetIndustryList = () => {
   const [industry, setIndustry] = useState<IIndustryResponse[]>([])
