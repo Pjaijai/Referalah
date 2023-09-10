@@ -1,4 +1,6 @@
-import React from "react"
+import React, { useState } from "react"
+import ContactDialog from "@/modules/referral/components/dialog/contact"
+import ReferralCardDropDownMenu from "@/modules/referral/components/drop-down-menu/card"
 
 import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
@@ -54,6 +56,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
   cityList,
   provinceList,
 }) => {
+  const [isContactFormOpen, setIsContactFormOpen] = useState(false)
   const country = countryList.find(
     (c) => c.uuid === countryUuid
   )?.cantonese_name
@@ -69,34 +72,54 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
   )?.cantonese_name
 
   return (
-    <Card className="flex h-[350px] w-[350px] flex-col justify-between">
-      <CardHeader className="justify-between">
-        <CardTitle className="flex  flex-row justify-between items-center">
-          <span>{jobTitle}</span>
-          {socialMediaUrl && <LinkTooltip url={socialMediaUrl} />}
-        </CardTitle>
-        <CardDescription>{companyName}</CardDescription>
-      </CardHeader>
-      <CardContent className=" h-full w-full px-6">
-        <ScrollArea className="h-full w-full  ">{description}</ScrollArea>
-      </CardContent>
-      <CardFooter className="flex flex-col">
-        <div className="flex flex-row items-center justify-start">
-          {photoUrl && (
-            <BaseAvatar fallBack={username[0]} alt={username} url={photoUrl} />
-          )}
-          {!photoUrl && <Icons.user />}
+    <>
+      <ContactDialog
+        open={isContactFormOpen}
+        username={username}
+        onContactFormClose={() => setIsContactFormOpen(false)}
+      />
+      <Card className="flex max-w-[350px] h-[350px] w-full flex-col justify-between">
+        {/* <div className="absolute">
+          <ContactDialog />
+        </div> */}
+        <CardHeader className="justify-between">
+          <CardTitle className="flex  flex-row justify-between items-center">
+            <span>{jobTitle}</span>
+            <ReferralCardDropDownMenu
+              url={socialMediaUrl}
+              onContactClick={() => setIsContactFormOpen(true)}
+            />
+          </CardTitle>
+          <CardDescription>{companyName}</CardDescription>
+        </CardHeader>
+        <CardContent className=" h-full w-full px-6">
+          <ScrollArea className="h-[125px] w-full">{description}</ScrollArea>
+        </CardContent>
+        <CardFooter className="flex flex-col">
+          <div className="flex flex-row items-center justify-start">
+            {photoUrl && (
+              <BaseAvatar
+                fallBack={username[0]}
+                alt={username}
+                url={photoUrl}
+              />
+            )}
+            {!photoUrl && <Icons.user />}
 
-          <p className="tex t-sm test">{username}</p>
-        </div>
-        <div className="gap-x-2">
-          {country && <Badge variant="outline">{country}</Badge>}
-          {province && <Badge variant="outline">{province}</Badge>}
-          {city && <Badge variant="outline">{city}</Badge>}
-          {industry && <Badge variant="outline">{industry}</Badge>}
-        </div>
-      </CardFooter>
-    </Card>
+            <p className="text-sm test">{username}</p>
+          </div>
+          <div className="gap-x-2">
+            {country && <Badge variant="outline">{country}</Badge>}
+            {province && <Badge variant="outline">{province}</Badge>}
+            {city && <Badge variant="outline">{city}</Badge>}
+            {industry && <Badge variant="outline">{industry}</Badge>}
+            {typeof yearOfExperience === "number" && yearOfExperience >= 0 && (
+              <Badge variant="outline">{yearOfExperience}年經驗</Badge>
+            )}
+          </div>
+        </CardFooter>
+      </Card>
+    </>
   )
 }
 
