@@ -1,14 +1,15 @@
 "use client"
 
 import React from "react"
-import Image from "next/image"
 
 import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import BaseAvatar from "@/components/customized-ui/avatars/base"
+import LinkTooltip from "@/components/customized-ui/tool/Link"
 import { Icons } from "@/components/icons"
 
 export interface IViewProfileTemplateProps {
@@ -76,41 +77,59 @@ const ViewProfileTemplate: React.FunctionComponent<
     : "no industry"
 
   return (
-    <div>
-      <Button
-        onClick={() => {
-          setIsEditMode(true)
-        }}
-      >
-        Edit
-      </Button>
-      {photoUrl && (
-        <Image src={photoUrl} width={200} height={200} alt={username ?? ""} />
-      )}
+    <div className="w-full flex flex-col gap-2 mt-28">
+      <div className="flex flex-row justify-end w-full mx-8">
+        {photoUrl && <LinkTooltip url={photoUrl} />}
 
-      <div>{username}</div>
-      <div>
-        {chineseLastName} {chineseFirstName}
-      </div>
-      <div>
-        {englishLastName} {englishFirstName}
+        <Button
+          onClick={() => {
+            setIsEditMode(true)
+          }}
+          variant="ghost"
+        >
+          <Icons.pencil />
+        </Button>
       </div>
 
-      <div>{description}</div>
-      <div>
-        {company} {jobTitle} {yearOfExperience}
+      <div className="flex justify-center">
+        <BaseAvatar
+          url={photoUrl}
+          alt={username}
+          fallBack={username && username[0]}
+          size="large"
+        />
+        {!photoUrl && <Icons.user />}
       </div>
 
-      <div>
-        {country}
-        {province}
-        {city}
-      </div>
+      <h5 className="text-2xl text-center font-semibold">{username}</h5>
 
-      <div>{industry}</div>
+      <li className="flex justify-center gap-x-2">
+        {country && (
+          <ul>
+            <Badge> {country}</Badge>
+          </ul>
+        )}
 
-      {resumeUrl}
-      {socialMediaUrl}
+        {province && (
+          <ul>
+            <Badge> {province}</Badge>
+          </ul>
+        )}
+        {city && (
+          <ul>
+            <Badge> {city}</Badge>
+          </ul>
+        )}
+        {industry && (
+          <div>
+            <Badge> {industry}</Badge>
+          </div>
+        )}
+
+        {yearOfExperience && <Badge>{yearOfExperience}年經驗</Badge>}
+      </li>
+
+      <p className="container mt-8">{description}</p>
     </div>
   )
 }
