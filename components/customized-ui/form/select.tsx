@@ -1,5 +1,4 @@
 import React from "react"
-import { IFormTextInputFieldProps } from "@/modules/profile/form/fields/input"
 
 import {
   FormControl,
@@ -16,8 +15,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { IFormTextInputProps } from "@/components/customized-ui/form/input"
 
-interface IFormSelectProps extends IFormTextInputFieldProps {
+interface IFormSelectProps extends IFormTextInputProps {
   options: { value: string; title: string }[]
 }
 const FormSelect: React.FunctionComponent<IFormSelectProps> = ({

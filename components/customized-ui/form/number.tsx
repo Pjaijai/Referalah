@@ -10,16 +10,11 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { IFormTextInputProps } from "@/components/customized-ui/form/input"
 
-export interface IFormTextInputFieldProps {
-  control: Control<any>
-  name: string
-  label: string
-  placeholder?: string
-  description?: string
-}
+export interface IFormNumberInputProps extends IFormTextInputProps {}
 
-const InputField: React.FunctionComponent<IFormTextInputFieldProps> = ({
+const FormNumberInput: React.FunctionComponent<IFormNumberInputProps> = ({
   control,
   name,
   label,
@@ -34,7 +29,7 @@ const InputField: React.FunctionComponent<IFormTextInputFieldProps> = ({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input placeholder={placeholder} {...field} />
+            <Input placeholder={placeholder} type="number" {...field} />
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
@@ -44,4 +39,4 @@ const InputField: React.FunctionComponent<IFormTextInputFieldProps> = ({
   )
 }
 
-export default InputField
+export default FormNumberInput
