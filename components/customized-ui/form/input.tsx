@@ -1,5 +1,5 @@
 import React from "react"
-import { IFormTextInputFieldProps } from "@/modules/profile/form/fields/input"
+import { Control } from "react-hook-form"
 
 import {
   FormControl,
@@ -9,10 +9,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Textarea } from "@/components/ui/textarea"
+import { Input } from "@/components/ui/input"
 
-interface IFormTextArea extends IFormTextInputFieldProps {}
-const FormTextArea: React.FunctionComponent<IFormTextArea> = ({
+export interface IFormTextInputProps {
+  control: Control<any>
+  name: string
+  label: string
+  placeholder?: string
+  description?: string
+}
+
+const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
   control,
   name,
   label,
@@ -27,11 +34,7 @@ const FormTextArea: React.FunctionComponent<IFormTextArea> = ({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Textarea
-              placeholder={placeholder}
-              className="resize-none"
-              {...field}
-            />
+            <Input placeholder={placeholder} {...field} />
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
@@ -41,4 +44,4 @@ const FormTextArea: React.FunctionComponent<IFormTextArea> = ({
   )
 }
 
-export default FormTextArea
+export default FormTextInput

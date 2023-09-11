@@ -19,7 +19,7 @@ interface IInputFormFieldProps {
   accept: string
 }
 
-const InputFileField: React.FunctionComponent<IInputFormFieldProps> = ({
+const FormFileUpload: React.FunctionComponent<IInputFormFieldProps> = ({
   label,
   placeholder,
   description,
@@ -42,4 +42,4 @@ const InputFileField: React.FunctionComponent<IInputFormFieldProps> = ({
   )
 }
 
-export default InputFileField
+export default FormFileUpload

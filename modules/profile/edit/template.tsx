@@ -1,12 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useMemo, useState } from "react"
 import { StaticImport } from "next/dist/shared/lib/get-img-props"
 import Image from "next/image"
-import FormCheckBox from "@/modules/profile/form/fields/checkbox"
-import InputFileField from "@/modules/profile/form/fields/file"
-import InputField from "@/modules/profile/form/fields/input"
-import FormNumberInputField from "@/modules/profile/form/fields/number"
-import FormSelect from "@/modules/profile/form/fields/select"
-import FormTextArea from "@/modules/profile/form/fields/textArea"
 import { conditionalValidation } from "@/modules/profile/form/validation.ts/conditional"
 import { maximumWordValidation } from "@/modules/profile/form/validation.ts/max-word"
 import { nameValidation } from "@/modules/profile/form/validation.ts/name"
@@ -24,6 +18,12 @@ import useProvinceOptions from "@/hooks/common/options/useProvinceOptions"
 import useUserStore from "@/hooks/state/user/useUserStore"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
+import FormCheckBox from "@/components/customized-ui/form/check-box"
+import FormFileUpload from "@/components/customized-ui/form/file"
+import FormTextInput from "@/components/customized-ui/form/input"
+import FormNumberInput from "@/components/customized-ui/form/number"
+import FormSelect from "@/components/customized-ui/form/select"
+import FormTextArea from "@/components/customized-ui/form/text-area"
 
 interface IEdiProfileTemplate extends IViewProfileTemplateProps {
   isProfileLoading: boolean
@@ -302,7 +302,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             name="isReferee"
             description="isReferee"
           />
-          <InputFileField
+          <FormFileUpload
             label="photoUrl"
             accept=".jpg, .jpeg, .png"
             description="photoUrl"
@@ -310,14 +310,14 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             onChange={handleProfileImageChange}
           />
 
-          <InputFileField
+          <FormFileUpload
             label="resume"
             accept=".pdf"
             description="resuem"
             placeholder="resume"
             onChange={handleResumeChange}
           />
-          <InputField
+          <FormTextInput
             control={form.control}
             label="Chinese First Name"
             name="chineseFirstName"
@@ -325,7 +325,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             placeholder="Chinese First Name"
           />
 
-          <InputField
+          <FormTextInput
             control={form.control}
             label="Chinese Last Name"
             name="chineseLastName"
@@ -333,7 +333,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             placeholder="Chinese Last Name"
           />
 
-          <InputField
+          <FormTextInput
             control={form.control}
             label="English First Name"
             name="englishFirstName"
@@ -341,7 +341,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             placeholder="English First Name"
           />
 
-          <InputField
+          <FormTextInput
             control={form.control}
             label="English Last Name"
             name="englishLastName"
@@ -349,7 +349,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             placeholder="English Last Name"
           />
 
-          <InputField
+          <FormTextInput
             control={form.control}
             label="Username"
             name="username"
@@ -365,7 +365,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             placeholder="description"
           />
 
-          <InputField
+          <FormTextInput
             control={form.control}
             label="Company"
             name="company"
@@ -373,7 +373,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             placeholder="Company"
           />
 
-          <InputField
+          <FormTextInput
             control={form.control}
             label="Job Title"
             name="jobTitle"
@@ -381,7 +381,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             placeholder="Job Title"
           />
 
-          <FormNumberInputField
+          <FormNumberInput
             control={form.control}
             label="yearOfExperience"
             name="yearOfExperience"
@@ -422,7 +422,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             description="Select your city"
             placeholder="Select a city"
           />
-          <InputField
+          <FormTextInput
             control={form.control}
             label="Social Media URL"
             name="socialMediaUrl"
