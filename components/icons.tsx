@@ -4,6 +4,7 @@ import {
   Mail,
   Moon,
   MoreVertical,
+  Pencil,
   SlidersHorizontal,
   SunMedium,
   Twitter,
@@ -20,6 +21,7 @@ export const Icons = {
   user: User,
   link: Link,
   mail: Mail,
+  pencil: Pencil,
   moreVertical: MoreVertical,
   slidersHorizontal: SlidersHorizontal,
   logo: (props: LucideProps) => (

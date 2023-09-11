@@ -28,48 +28,27 @@ interface IReferralCardProps {
   companyName: string | null
   jobTitle: string | null
   yearOfExperience: number | null
-  countryUuid: string | null
-  provinceUuid: string | null
-  cityUuid: string | null
+  country: string | null
+  province: string | null
+  city: string | null
+  industry: string | null
   socialMediaUrl: string | null
-  industryUuid: string | null
-  industryList: IIndustryResponse[]
-  countryList: ICountryResponse[]
-  cityList: ICityResponse[]
-  provinceList: IProvinceResponse[]
 }
 const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
   jobTitle,
-  cityUuid,
+  city,
   companyName,
-  countryUuid,
+  country,
   description,
-  industryUuid,
+  industry,
   photoUrl,
-  provinceUuid,
+  province,
   socialMediaUrl,
   username,
   uuid,
   yearOfExperience,
-  industryList,
-  countryList,
-  cityList,
-  provinceList,
 }) => {
   const [isContactFormOpen, setIsContactFormOpen] = useState(false)
-  const country = countryList.find(
-    (c) => c.uuid === countryUuid
-  )?.cantonese_name
-
-  const province = provinceList.find(
-    (c) => c.uuid === provinceUuid
-  )?.cantonese_name
-
-  const city = cityList.find((c) => c.uuid === cityUuid)?.cantonese_name
-
-  const industry = industryList.find(
-    (c) => c.uuid === industryUuid
-  )?.cantonese_name
 
   return (
     <>

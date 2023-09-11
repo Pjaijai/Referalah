@@ -48,7 +48,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <AuthProvider>
                 <div className="relative flex min-h-screen flex-col">
                   <SiteHeader />
-                  <div className="flex-1">{children}</div>
+                  <div className="flex-1 container">{children}</div>
                 </div>
                 <TailwindIndicator />
               </AuthProvider>

@@ -50,8 +50,6 @@ const CreatePostTemplate: React.FunctionComponent<
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   })
-
-  console.log("12312", form.formState.errors)
   const countryWatch = form.watch("countryUuid")
   const provinceWatch = form.watch("provinceUuid")
   const user = useUserStore((state) => state)
@@ -75,6 +73,7 @@ const CreatePostTemplate: React.FunctionComponent<
   ]
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log("sub,it", values)
+
     const { error } = await supabase.from("post").insert({
       url: values.url,
       country_uuid: values.countryUuid,
@@ -86,36 +85,13 @@ const CreatePostTemplate: React.FunctionComponent<
       type: values.type,
       company_name: values.companyName,
       job_title: values.jobTitle,
+      description: values.description,
     })
 
     if (error) {
       console.log("errorerrorerrorerror")
     }
-    //   .update({
-    //     avatar_url: photoUrl,
-    //     chinese_first_name: values.chineseFirstName,
-    //     chinese_last_name: values.chineseLastName,
-    //     english_first_name: values.englishFirstName,
-    //     english_last_name: values.englishLastName,
-    //     username: values.username,
-    //     description: values.description,
-    //     company_name: values.company,
-    //     job_title: values.jobTitle,
-    //     year_of_experience: values.yearOfExperience
-    //       ? parseInt(values.yearOfExperience)
-    //       : null,
-    //     country_uuid: values.countryUuid,
-    //     province_uuid: values.provinceUuid,
-    //     city_uuid: values.cityUuid,
-    //     industry_uuid: values.industryUuid,
-    //     resume_url: resumeUrl,
-    //     social_media_url: values.socialMediaUrl,
-    //     is_referer: values.isReferer,
-    //     is_referee: values.isReferee,
-    //   })
-    //   .eq("uuid", user.uuid)
   }
-
   return (
     <div>
       <Form {...form}>

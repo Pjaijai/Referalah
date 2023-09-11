@@ -1,5 +1,5 @@
 import React from "react"
-import CreatePostTemplate from "@/modules/post/create-post/template"
+import CreatePostTemplate from "@/modules/post/create/template"
 
 const CreatePostPage = () => {
   return (

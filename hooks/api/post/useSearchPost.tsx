@@ -1,11 +1,7 @@
-import { useEffect, useState } from "react"
 import { supabase } from "@/utils/services/supabase/config"
 import { useInfiniteQuery } from "@tanstack/react-query"
-import { transformer } from "zod"
 
-import { IRefererResponse } from "@/types/api/response/referer-list"
-
-interface ISearchRefererFilterMeta {
+interface ISearchPostFilterMeta {
   companyName: string
   cityUuid?: string
   provinceUuid?: string
@@ -14,14 +10,15 @@ interface ISearchRefererFilterMeta {
   sorting: string
   yoeMax?: string
   yoeMin?: string
-  // page: number
 }
 
-const useSearchRefererList = (
+type TPost = "referer" | "referral"
+const useSearchPost = (
   sorting: string,
-  filterMeta: ISearchRefererFilterMeta
+  filterMeta: ISearchPostFilterMeta,
+  type: TPost
 ) => {
-  const fetchRefererList = async ({ pageParam = 0, queryKey }: any) => {
+  const fetchPosts = async ({ pageParam = 0, queryKey }: any) => {
     const NUMBER_OF_DATE_PER_FETCH = 6
     const countryUuid = queryKey[1].filterMeta.countryUuid
     const provinceUuid = queryKey[1].filterMeta.provinceUuid
@@ -33,27 +30,34 @@ const useSearchRefererList = (
     const to = from + NUMBER_OF_DATE_PER_FETCH
 
     let query = supabase
-      .from("user")
+      .from("post")
       .select(
         `
-        username,
-        avatar_url,
-        chinese_first_name,
-        chinese_last_name,
-        english_first_name,
-        english_last_name,
-        description,
-        company_name,
-        job_title,
-        year_of_experience,
-        country_uuid,
-        province_uuid,
-        city_uuid,
-        social_media_url,
-        industry_uuid
-      `
+            created_at,
+            url,
+            description,
+            company_name,
+            job_title,
+            year_of_experience,
+            country(
+                cantonese_name
+            ),
+            province(
+                cantonese_name
+            ),
+            city(
+                cantonese_name
+            ),
+            industry(
+                cantonese_name
+            ),
+            user (
+                username,
+                avatar_url
+            )
+          `
       )
-      .eq("is_referer", true)
+      .eq("type", type)
       .ilike("company_name", `%${filterMeta.companyName}%`)
       .lte(
         "year_of_experience",
@@ -64,7 +68,7 @@ const useSearchRefererList = (
         filterMeta.yoeMin ? parseInt(filterMeta.yoeMin) : 0
       )
       .order("year_of_experience", { ascending: order })
-      .range(from, to)
+    //   .range(from, to)
 
     if (countryUuid !== undefined) {
       query = query.eq("country_uuid", countryUuid)
@@ -85,7 +89,7 @@ const useSearchRefererList = (
 
   return useInfiniteQuery({
     queryKey: ["referer-list", { sorting, filterMeta }],
-    queryFn: fetchRefererList,
+    queryFn: fetchPosts,
     getNextPageParam: (lastPage, allPages: any[]) => {
       if (lastPage && lastPage.length > 0) {
         return allPages.length
@@ -100,4 +104,4 @@ const useSearchRefererList = (
   })
 }
 
-export default useSearchRefererList
+export default useSearchPost

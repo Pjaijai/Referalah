@@ -70,7 +70,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
   if (isLoading) return <h1>loading</h1>
   if (!isLoading && profile)
     return (
-      <div>
+      <div className="h-fit w-fit mt-8">
         {!isEditMode && (
           <ViewProfileTemplate
             photoUrl={profile.avatar_url || undefined}
