@@ -77,9 +77,9 @@ const ViewProfileTemplate: React.FunctionComponent<
     : "no industry"
 
   return (
-    <div className="w-full flex flex-col gap-2 mt-28">
+    <div className="w-full flex flex-col gap-y-2 mt-28">
       <div className="flex flex-row justify-end w-full mx-8">
-        {photoUrl && <LinkTooltip url={photoUrl} />}
+        {socialMediaUrl && <LinkTooltip url={socialMediaUrl} />}
 
         <Button
           onClick={() => {
@@ -103,30 +103,36 @@ const ViewProfileTemplate: React.FunctionComponent<
 
       <h5 className="text-2xl text-center font-semibold">{username}</h5>
 
-      <li className="flex justify-center gap-x-2">
+      <li className="flex flex-wrap justify-center w-full gap-2">
         {country && (
           <ul>
-            <Badge> {country}</Badge>
+            <Badge className="w-1/5  shrink-0 "> {country}</Badge>
           </ul>
         )}
 
         {province && (
           <ul>
-            <Badge> {province}</Badge>
+            <Badge className="w-1/5  shrink-0"> {province}</Badge>
           </ul>
         )}
         {city && (
           <ul>
-            <Badge> {city}</Badge>
+            <Badge className="w-1/5  shrink-0"> {city}</Badge>
           </ul>
         )}
+      </li>
+      <li className="flex flex-wrap justify-center w-full gap-2">
         {industry && (
-          <div>
-            <Badge> {industry}</Badge>
-          </div>
+          <ul>
+            <Badge className="w-1/5  shrink-0"> {industry}</Badge>
+          </ul>
         )}
 
-        {yearOfExperience && <Badge>{yearOfExperience}年經驗</Badge>}
+        {yearOfExperience && (
+          <ul>
+            <Badge className="w-1/5  shrink-0"> {yearOfExperience}年經驗</Badge>
+          </ul>
+        )}
       </li>
 
       <p className="container mt-8">{description}</p>

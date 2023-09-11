@@ -12,6 +12,7 @@ import useGetCityList from "@/hooks/api/location/useGetCityList"
 import useGetCountryList from "@/hooks/api/location/useGetCountryList"
 import useGetProvinceList from "@/hooks/api/location/useGetProvinceList"
 import useUserStore from "@/hooks/state/user/useUserStore"
+import { Icons } from "@/components/icons"
 
 // interface IProfilePageProps extends NextPage {}
 
@@ -67,7 +68,12 @@ const Page = ({ params }: { params: { slug: string } }) => {
     return () => clearTimeout(timer) // Clean up the timer when the component unmounts
   }, [isLoading, isUserSignIn, profile, router, userUuid])
 
-  if (isLoading) return <h1>loading</h1>
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-screen text-2xl">
+        <Icons.loader className="animate-spin text-2xl" />
+      </div>
+    )
   if (!isLoading && profile)
     return (
       <div className="h-fit w-fit mt-8">

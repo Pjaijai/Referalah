@@ -1,5 +1,6 @@
 import {
   Link,
+  Loader,
   LucideProps,
   Mail,
   Moon,
@@ -22,6 +23,7 @@ export const Icons = {
   link: Link,
   mail: Mail,
   pencil: Pencil,
+  loader: Loader,
   moreVertical: MoreVertical,
   slidersHorizontal: SlidersHorizontal,
   logo: (props: LucideProps) => (
