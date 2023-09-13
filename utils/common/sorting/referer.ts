@@ -2,12 +2,12 @@ import { ISelectOption } from "@/components/customized-ui/selects/base"
 
 const refererSortingOptions = [
   {
-    value: "yoe,dec",
-    title: "yeo, dec",
+    value: "yoe,ae",
+    title: "年資-由低到高",
   },
   {
-    value: "yoe,ae",
-    title: "yeo, ace",
+    value: "yoe,dec",
+    title: "年資-由高到低",
   },
 ]
 

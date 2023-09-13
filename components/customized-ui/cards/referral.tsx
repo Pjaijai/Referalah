@@ -51,54 +51,80 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
   const [isContactFormOpen, setIsContactFormOpen] = useState(false)
 
   return (
-    <>
+    <Card className="flex w-full h-500 md:h-[400px] flex-col justify-between border-2">
       <ContactDialog
         open={isContactFormOpen}
         username={username}
         onContactFormClose={() => setIsContactFormOpen(false)}
       />
-      <Card className="flex max-w-[350px] h-[350px] w-full flex-col justify-between">
-        {/* <div className="absolute">
-          <ContactDialog />
-        </div> */}
-        <CardHeader className="justify-between">
-          <CardTitle className="flex  flex-row justify-between items-center">
-            <span>{jobTitle}</span>
-            <ReferralCardDropDownMenu
-              url={socialMediaUrl}
-              onContactClick={() => setIsContactFormOpen(true)}
-            />
-          </CardTitle>
-          <CardDescription>{companyName}</CardDescription>
-        </CardHeader>
-        <CardContent className=" h-full w-full px-6">
-          <ScrollArea className="h-[125px] w-full">{description}</ScrollArea>
-        </CardContent>
-        <CardFooter className="flex flex-col">
-          <div className="flex flex-row items-center justify-start">
-            {photoUrl && (
-              <BaseAvatar
-                fallBack={username[0]}
-                alt={username}
-                url={photoUrl}
-              />
-            )}
-            {!photoUrl && <Icons.user />}
 
-            <p className="text-sm test">{username}</p>
-          </div>
-          <div className="gap-x-2">
-            {country && <Badge variant="outline">{country}</Badge>}
-            {province && <Badge variant="outline">{province}</Badge>}
-            {city && <Badge variant="outline">{city}</Badge>}
-            {industry && <Badge variant="outline">{industry}</Badge>}
-            {typeof yearOfExperience === "number" && yearOfExperience >= 0 && (
-              <Badge variant="outline">{yearOfExperience}年經驗</Badge>
-            )}
-          </div>
-        </CardFooter>
-      </Card>
-    </>
+      <CardHeader className="justify-between">
+        <CardTitle className="flex  flex-row justify-between items-center">
+          <span className="truncate">{jobTitle}</span>
+          <ReferralCardDropDownMenu
+            url={socialMediaUrl}
+            onContactClick={() => setIsContactFormOpen(true)}
+          />
+        </CardTitle>
+        <CardDescription>{companyName}</CardDescription>
+      </CardHeader>
+
+      <CardContent className="hidden h-full w-full md:flex flex-col md:flex-row">
+        <div className="flex flex-col items-center justify-start w-1/4">
+          {photoUrl && (
+            <BaseAvatar
+              fallBack={username[0]}
+              alt={username}
+              url={undefined}
+              size="large"
+            />
+          )}
+          <p className="text-lg mt-12 font-semibold">{username}</p>
+        </div>
+
+        <ScrollArea className="h-[240px] w-3/4 whitespace-pre-wrap ">
+          {description}
+        </ScrollArea>
+      </CardContent>
+
+      <CardFooter className="hidden md:flex md:justify-start md:gap-4">
+        {country && <Badge variant="outline">{country}</Badge>}
+        {province && <Badge variant="outline">{province}</Badge>}
+        {city && <Badge variant="outline">{city}</Badge>}
+        {industry && <Badge variant="outline">{industry}</Badge>}
+        {typeof yearOfExperience === "number" && yearOfExperience >= 0 && (
+          <Badge variant="outline">{yearOfExperience}年經驗</Badge>
+        )}
+      </CardFooter>
+
+      {/* for small screen */}
+      <CardContent className="flex h-full w-full md:hidden flex-col ">
+        <ScrollArea className="h-[200px] whitespace-pre-wrap ">
+          {description}
+        </ScrollArea>
+      </CardContent>
+
+      <CardFooter className="flex flex-col md:hidden">
+        <div className="flex flex-row justify-center items-center w-full">
+          {photoUrl && (
+            <BaseAvatar fallBack={username[0]} alt={username} url={undefined} />
+          )}
+          <p>{username}</p>
+        </div>
+
+        <div className="md:hidden flex flex-wrap gap-4 mt-2">
+          {country && <Badge variant="outline">{country}</Badge>}
+          {province && <Badge variant="outline">{province}</Badge>}
+          {city && <Badge variant="outline">{city}</Badge>}
+        </div>
+        <div>
+          {industry && <Badge variant="outline">{industry}</Badge>}
+          {typeof yearOfExperience === "number" && yearOfExperience >= 0 && (
+            <Badge variant="outline">{yearOfExperience}年經驗</Badge>
+          )}
+        </div>
+      </CardFooter>
+    </Card>
   )
 }
 

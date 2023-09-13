@@ -22,7 +22,7 @@ const useSearchRefererList = (
   filterMeta: ISearchRefererFilterMeta
 ) => {
   const fetchRefererList = async ({ pageParam = 0, queryKey }: any) => {
-    const NUMBER_OF_DATE_PER_FETCH = 6
+    const NUMBER_OF_DATE_PER_FETCH = 3
     const countryUuid = queryKey[1].filterMeta.countryUuid
     const provinceUuid = queryKey[1].filterMeta.provinceUuid
     const cityUuid = queryKey[1].filterMeta.cityUuid
@@ -36,22 +36,30 @@ const useSearchRefererList = (
       .from("user")
       .select(
         `
-        username,
-        avatar_url,
-        chinese_first_name,
-        chinese_last_name,
-        english_first_name,
-        english_last_name,
-        description,
-        company_name,
-        job_title,
-        year_of_experience,
-        country_uuid,
-        province_uuid,
-        city_uuid,
+          uuid,
+          email,
+          username,
+          avatar_url,
+          description,
+          company_name,
+          job_title,
+          year_of_experience,
         social_media_url,
-        industry_uuid
-      `
+      country(
+        cantonese_name
+    ),
+    province(
+        cantonese_name
+    ),
+    city(
+        cantonese_name
+    ),
+    industry(
+     
+        cantonese_name
+    ),
+    is_referer
+    `
       )
       .eq("is_referer", true)
       .ilike("company_name", `%${filterMeta.companyName}%`)
@@ -93,10 +101,6 @@ const useSearchRefererList = (
         return null
       }
     },
-    // select: (data) => ({
-    //   pages: [...data.pages],
-    //   pageParams: [...data.pageParams],
-    // }),
   })
 }
 

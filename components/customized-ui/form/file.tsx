@@ -27,7 +27,7 @@ const FormFileUpload: React.FunctionComponent<IInputFormFieldProps> = ({
   accept,
 }) => {
   return (
-    <>
+    <div className="w-full flex-col">
       <FormLabel>{label}</FormLabel>
       <FormControl>
         <Input
@@ -38,7 +38,7 @@ const FormFileUpload: React.FunctionComponent<IInputFormFieldProps> = ({
         />
       </FormControl>
       {description && <FormDescription>{description}</FormDescription>}
-    </>
+    </div>
   )
 }
 

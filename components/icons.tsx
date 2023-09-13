@@ -9,6 +9,7 @@ import {
   SlidersHorizontal,
   SunMedium,
   Twitter,
+  Undo2,
   User,
   type Icon as LucideIcon,
 } from "lucide-react"
@@ -24,6 +25,7 @@ export const Icons = {
   mail: Mail,
   pencil: Pencil,
   loader: Loader,
+  undo: Undo2,
   moreVertical: MoreVertical,
   slidersHorizontal: SlidersHorizontal,
   logo: (props: LucideProps) => (

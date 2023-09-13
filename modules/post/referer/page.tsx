@@ -75,7 +75,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
   }
 
   const { data, fetchNextPage } = useSearchPost(sorting, filterMeta, "referer")
-  console.log("datadata", data)
+
   const list = data
     ? (data?.pages.flatMap((d) => d) as ISearchPostResponse[])
     : []

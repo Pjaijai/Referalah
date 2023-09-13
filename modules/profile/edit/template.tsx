@@ -1,16 +1,19 @@
-import React, { useMemo, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { StaticImport } from "next/dist/shared/lib/get-img-props"
-import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { conditionalValidation } from "@/modules/profile/form/validation.ts/conditional"
 import { maximumWordValidation } from "@/modules/profile/form/validation.ts/max-word"
 import { nameValidation } from "@/modules/profile/form/validation.ts/name"
-import { IViewProfileTemplateProps } from "@/modules/profile/view/template"
 import { supabase } from "@/utils/services/supabase/config"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { v4 as uuidv4 } from "uuid"
 import { z } from "zod"
 
+import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
+import useGetCityList from "@/hooks/api/location/useGetCityList"
+import useGetCountryList from "@/hooks/api/location/useGetCountryList"
+import useGetProvinceList from "@/hooks/api/location/useGetProvinceList"
 import useCityOptions from "@/hooks/common/options/useCityOptions"
 import useCountryOptions from "@/hooks/common/options/useCountryOptions"
 import useIndustryOptions from "@/hooks/common/options/useIndustryOptions"
@@ -18,23 +21,36 @@ import useProvinceOptions from "@/hooks/common/options/useProvinceOptions"
 import useUserStore from "@/hooks/state/user/useUserStore"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
+import BaseAvatar from "@/components/customized-ui/avatars/base"
 import FormCheckBox from "@/components/customized-ui/form/check-box"
 import FormFileUpload from "@/components/customized-ui/form/file"
 import FormTextInput from "@/components/customized-ui/form/input"
-import FormNumberInput from "@/components/customized-ui/form/number"
 import FormSelect from "@/components/customized-ui/form/select"
 import FormTextArea from "@/components/customized-ui/form/text-area"
+import NumberInput from "@/components/customized-ui/inputs/number"
+import { Icons } from "@/components/icons"
 
-interface IEdiProfileTemplate extends IViewProfileTemplateProps {
+interface IEdiProfileTemplate {
   isProfileLoading: boolean
+  photoUrl?: string
+  username: string | null
+  description: string | null
+  company: string | null
+  jobTitle: string | null
+  yearOfExperience?: number | null
+  countryUuid: string | null
+  provinceUuid: string | null
+  industryUuid: string | null
+  cityUuid: string | null
+  // resumeUrl: string | null
+  socialMediaUrl: string | null
+  isReferer: boolean
+  isReferee: boolean
+  setIsEditMode: (value: boolean) => void
 }
 
 const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   photoUrl,
-  chineseFirstName,
-  chineseLastName,
-  englishFirstName,
-  englishLastName,
   username,
   description,
   company,
@@ -43,15 +59,10 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   countryUuid,
   provinceUuid,
   cityUuid,
-  resumeUrl,
   industryUuid,
   socialMediaUrl,
   isReferer,
   isReferee,
-  industryList,
-  countryList,
-  provinceList,
-  cityList,
   isProfileLoading,
   setIsEditMode,
 }) => {
@@ -59,41 +70,45 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     .object({
       photoUrl: z.any().optional(),
       resumeUrl: z.any().optional(),
-      chineseFirstName: maximumWordValidation(4).optional(),
-      chineseLastName: maximumWordValidation(4).optional(),
-      englishFirstName: maximumWordValidation(30).optional(),
-      englishLastName: maximumWordValidation(30).optional(),
+      // chineseFirstName: maximumWordValidation(4).optional(),
+      // chineseLastName: maximumWordValidation(4).optional(),
+      // englishFirstName: maximumWordValidation(30).optional(),
+      // englishLastName: maximumWordValidation(30).optional(),
       username: nameValidation(10).min(1, {
         message: `至少有要1粒字`,
       }),
       company: conditionalValidation(30).optional(),
       jobTitle: conditionalValidation(30).optional(),
-      socialMediaUrl: maximumWordValidation(250).optional(),
+      socialMediaUrl: maximumWordValidation(250)
+        .url({
+          message: "無效連結",
+        })
+        .optional(),
       description: conditionalValidation(3000).optional(),
-      countryUuid: z.string().optional(),
-      provinceUuid: z.string().optional(),
-      cityUuid: z.string().optional(),
-      industryUuid: z.string().optional(),
+      countryUuid: z.string().min(1, {
+        message: `俾幫手填下🙏🏻`,
+      }),
+      provinceUuid: z.string().min(1, {
+        message: `俾幫手填下🙏🏻`,
+      }),
+      cityUuid: z.string().min(1, {
+        message: `俾幫手填下🙏🏻`,
+      }),
+      industryUuid: z.string().min(1, {
+        message: `俾幫手填下🙏🏻`,
+      }),
       yearOfExperience: z.string().optional(),
       isReferer: z.boolean(),
       isReferee: z.boolean(),
     })
-    .refine(
-      (schema) =>
-        schema.isReferer || schema.isReferee ? schema.company : true,
-      {
-        path: ["company"],
-        message: "如果想成為推薦人/被推薦人，請填一填",
-      }
-    )
-    .refine(
-      (schema) =>
-        schema.isReferer || schema.isReferee ? schema.jobTitle : true,
-      {
-        path: ["jobTitle"],
-        message: "如果想成為推薦人/被推薦人，請填一填",
-      }
-    )
+    .refine((schema) => (schema.isReferer ? schema.company : true), {
+      path: ["company"],
+      message: "如果想成為推薦人，請填一填",
+    })
+    .refine((schema) => (schema.isReferer ? schema.jobTitle : true), {
+      path: ["jobTitle"],
+      message: "如果想成為推薦人，請填一填",
+    })
     .refine(
       (schema) =>
         schema.isReferer || schema.isReferee ? schema.description : true,
@@ -110,23 +125,14 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         message: "如果想成為推薦人/被推薦人，請填一填",
       }
     )
-    .refine(
-      (schema) =>
-        schema.isReferer || schema.isReferee ? schema.countryUuid : true,
-      {
-        path: ["countryUuid"],
-        message: "如果想成為推薦人/被推薦人，請填一填",
-      }
-    )
 
+  const router = useRouter()
   const [image, setImage] = useState<any | null>(null)
   const [base64Image, setBase64Image] = useState<string | StaticImport | null>(
     null
   )
-  const [resume, setResume] = useState<any | null>(null)
-  const [base64Resume, setBase64Resume] = useState<string | ArrayBuffer | null>(
-    null
-  )
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const user = useUserStore((state) => state)
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -134,21 +140,21 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     defaultValues: useMemo(() => {
       return {
         username: username || undefined,
-        chineseFirstName: chineseFirstName || undefined,
-        chineseLastName: chineseLastName || undefined,
-        englishFirstName: englishFirstName || undefined,
-        englishLastName: englishLastName || undefined,
+        // chineseFirstName: chineseFirstName || undefined,
+        // chineseLastName: chineseLastName || undefined,
+        // englishFirstName: englishFirstName || undefined,
+        // englishLastName: englishLastName || undefined,
         description: description || undefined,
         company: company || undefined,
         jobTitle: jobTitle || undefined,
-        yearOfExperience: yearOfExperience?.toString() || undefined,
+        yearOfExperience: yearOfExperience?.toString() || "0",
         countryUuid: countryUuid || undefined,
         provinceUuid: provinceUuid || undefined,
         cityUuid: cityUuid || undefined,
-        resumeUrl: resumeUrl || undefined,
+        // resumeUrl: resumeUrl || undefined,
         socialMediaUrl: socialMediaUrl || undefined,
-        isReferer: isReferer || undefined,
-        isReferee: isReferee || undefined,
+        isReferer: isReferer || false,
+        isReferee: isReferee || false,
         industryUuid: industryUuid || undefined,
       }
     }, [isProfileLoading]),
@@ -156,18 +162,33 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
 
   const {
     watch,
+    setValue,
     formState: { errors },
   } = form
 
   const countryWatch = watch("countryUuid")
   const provinceWatch = watch("provinceUuid")
+  const cityWatch = watch("cityUuid")
+  const yeoWatch = watch("yearOfExperience")
+
+  const { industry: industryList } = useGetIndustryList()
+  const { country: countryList } = useGetCountryList()
+  const { province: provinceList } = useGetProvinceList()
+  const { city: cityList } = useGetCityList()
 
   const industryOptions = useIndustryOptions(industryList)
   const countryOptions = useCountryOptions(countryList)
   const provinceOptions = useProvinceOptions(provinceList, countryWatch)
   const cityOptions = useCityOptions(cityList, provinceWatch)
 
+  useEffect(() => {
+    if (provinceWatch !== provinceUuid) {
+      setValue("cityUuid", "")
+    }
+  }, [provinceOptions, provinceWatch])
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setIsSubmitting(true)
     let photoUrl = values.photoUrl
 
     if (image) {
@@ -176,10 +197,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       const uuid = uuidv4()
       const { data, error } = await supabase.storage
         .from("profile_image")
-        .upload(`${user.uuid}/${uuid}_${image.name}`, image, {
-          cacheControl: "3600",
-          upsert: false,
-        })
+        .upload(`${user.uuid}/${uuid}_${image.name}`, image)
 
       const { data: imageUrl } = await supabase.storage
         .from("profile_image")
@@ -188,32 +206,16 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       photoUrl = imageUrl.publicUrl
     }
 
-    if (resume) {
-      const uuid = uuidv4()
-      const { data, error } = await supabase.storage
-        .from("resume")
-        .upload(`${user.uuid}/${uuid}_${resume.name}`, resume, {
-          cacheControl: "3600",
-          upsert: false,
-        })
-
-      const { data: pdfUrl } = await supabase.storage
-        .from("resume")
-        .getPublicUrl(`${user.uuid}/${uuid}_${resume.name}`)
-
-      resumeUrl = pdfUrl.publicUrl
-    }
-
     // TODO
     // Error handling email , username dupliation
     const { error } = await supabase
       .from("user")
       .update({
         avatar_url: photoUrl,
-        chinese_first_name: values.chineseFirstName,
-        chinese_last_name: values.chineseLastName,
-        english_first_name: values.englishFirstName,
-        english_last_name: values.englishLastName,
+        // chinese_first_name: values.chineseFirstName,
+        // chinese_last_name: values.chineseLastName,
+        // english_first_name: values.englishFirstName,
+        // english_last_name: values.englishLastName,
         username: values.username,
         description: values.description,
         company_name: values.company,
@@ -225,12 +227,17 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         province_uuid: values.provinceUuid,
         city_uuid: values.cityUuid,
         industry_uuid: values.industryUuid,
-        resume_url: resumeUrl,
+        // resume_url: resumeUrl,
         social_media_url: values.socialMediaUrl,
         is_referer: values.isReferer,
         is_referee: values.isReferee,
       })
       .eq("uuid", user.uuid)
+
+    if (error) {
+    }
+    router.push("/")
+    setIsSubmitting(false)
   }
 
   const handleProfileImageChange = (e: any) => {
@@ -249,188 +256,150 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     }
   }
 
-  const handleResumeChange = (e: any) => {
-    const pdfFile = e.target.files[0]
+  const handleYoeChange = (e: any) => {
+    // Get the raw input value from the event
+    const rawValue = e.target.value
 
-    setResume(pdfFile)
-    if (pdfFile) {
-      const reader = new FileReader()
+    // Parse the input value to an integer
+    const integerValue = parseInt(rawValue)
 
-      reader.onload = (e: any) => {
-        const base64Image = e.target.result
-        setBase64Resume(base64Image)
-      }
-
-      reader.readAsDataURL(pdfFile)
+    // Check if the parsed value is a valid integer
+    if (!isNaN(integerValue) && integerValue >= 0) {
+      // If it's a non-negative integer, set the value as is
+      setValue("yearOfExperience", integerValue.toString())
+    } else {
+      // If it's negative or not a valid integer, set it to '0'
+      setValue("yearOfExperience", "0")
     }
   }
 
   return (
-    <div>
+    <div className="w-full h-full flex flex-col mt-28 p-4">
       <Form {...form}>
-        <Button
-          onClick={() => {
-            setIsEditMode(false)
-          }}
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4"
         >
-          back
-        </Button>
-        {photoUrl && !base64Image && (
-          <Image src={photoUrl} width={200} height={200} alt={username ?? ""} />
-        )}
+          <div className="flex justify-end">
+            <Button
+              onClick={() => {
+                setIsEditMode(false)
+              }}
+              variant={"ghost"}
+            >
+              <Icons.undo />
+            </Button>
+          </div>
 
-        {base64Image && (
-          <Image
-            src={base64Image}
-            width={200}
-            height={200}
-            alt={username ?? ""}
-          />
-        )}
+          <div className="flex justify-center">
+            {photoUrl && !base64Image && (
+              <BaseAvatar
+                url={photoUrl}
+                alt={username}
+                fallBack={username && username[0]}
+                size="large"
+              />
+            )}
 
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormCheckBox
-            control={form.control}
-            label="Is referer"
-            name="isReferer"
-            description="isReferer"
-          />
+            {base64Image && (
+              <BaseAvatar
+                url={base64Image.toString()}
+                alt={username}
+                fallBack={username && username[0]}
+                size="large"
+              />
+            )}
+          </div>
 
-          <FormCheckBox
-            control={form.control}
-            label="Is referee"
-            name="isReferee"
-            description="isReferee"
-          />
           <FormFileUpload
-            label="photoUrl"
+            label="你嘅嘜頭"
             accept=".jpg, .jpeg, .png"
-            description="photoUrl"
-            placeholder="photoUrl"
             onChange={handleProfileImageChange}
           />
 
-          <FormFileUpload
-            label="resume"
-            accept=".pdf"
-            description="resuem"
-            placeholder="resume"
-            onChange={handleResumeChange}
-          />
-          <FormTextInput
-            control={form.control}
-            label="Chinese First Name"
-            name="chineseFirstName"
-            description="Enter your Chinese first name"
-            placeholder="Chinese First Name"
-          />
+          <div className="flex   flex-col sm:flex-row gap-4 w-full justify-center items-center mt-4">
+            <div className="w-full">
+              <FormCheckBox
+                control={form.control}
+                label="推薦人"
+                name="isReferer"
+                description="你嘅資料會俾公開（Email不會)，如果有人想入你間公司，就會搵你幫手🙏🏻"
+              />
+            </div>
+
+            <div className="w-full">
+              <FormCheckBox
+                control={form.control}
+                label="受薦人"
+                name="isReferee"
+                description="你嘅資料會俾公開（Email不會)，如果有人想招你入佢間公司，就會搵你，祝一切順利！"
+              />
+            </div>
+          </div>
 
           <FormTextInput
             control={form.control}
-            label="Chinese Last Name"
-            name="chineseLastName"
-            description="Enter your Chinese last name"
-            placeholder="Chinese Last Name"
-          />
-
-          <FormTextInput
-            control={form.control}
-            label="English First Name"
-            name="englishFirstName"
-            description="Enter your English first name"
-            placeholder="English First Name"
-          />
-
-          <FormTextInput
-            control={form.control}
-            label="English Last Name"
-            name="englishLastName"
-            description="Enter your English last name"
-            placeholder="English Last Name"
-          />
-
-          <FormTextInput
-            control={form.control}
-            label="Username"
+            label="使用者名稱"
             name="username"
-            description="Enter your username"
-            placeholder="Username"
           />
 
           <FormTextArea
             control={form.control}
-            label="Description"
+            label="個人簡介"
             name="description"
-            description="description"
-            placeholder="description"
+            description="可以簡介吓你嘅經歷，你當簡單版Resume。"
           />
+
+          <FormTextInput control={form.control} label="公司名" name="company" />
 
           <FormTextInput
             control={form.control}
-            label="Company"
-            name="company"
-            description="Enter your company name"
-            placeholder="Company"
-          />
-
-          <FormTextInput
-            control={form.control}
-            label="Job Title"
+            label="職位名/工作名稱"
             name="jobTitle"
-            description="Enter your job title"
-            placeholder="Job Title"
+            description="呢度寫翻你個Title，如果搵工就寫翻自己想搵乜工，方便人Search到你。"
           />
 
-          <FormNumberInput
-            control={form.control}
-            label="yearOfExperience"
-            name="yearOfExperience"
-            description="yearOfExperience"
-            placeholder="yearOfExperience"
+          <NumberInput
+            label="工作年資"
+            onChange={handleYoeChange}
+            value={yeoWatch}
           />
 
           <FormSelect
             options={industryOptions}
             control={form.control}
-            label="industry"
+            label="行業"
             name="industryUuid"
-            description="Select your industry"
-            placeholder="Select a industry"
           />
           <FormSelect
             options={countryOptions}
             control={form.control}
-            label="Country"
+            label="國家"
             name="countryUuid"
-            description="Select your country"
-            placeholder="Select a country"
           />
           <FormSelect
             control={form.control}
-            label="Province"
+            label="省份"
             name="provinceUuid"
             options={provinceOptions as any}
-            description="Select your province"
-            placeholder="Select a province"
           />
 
           <FormSelect
             control={form.control}
-            label="City"
+            label="城市"
             name="cityUuid"
             options={cityOptions as any}
-            description="Select your city"
-            placeholder="Select a city"
           />
           <FormTextInput
             control={form.control}
-            label="Social Media URL"
+            label="個人連結"
             name="socialMediaUrl"
-            description="Enter your social media URL"
-            placeholder="Social Media URL"
+            description="可以放你LinkedIn/個人網站/Portfolio。"
           />
 
-          <Button type="submit">Submit</Button>
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "請等等" : "提交"}
+          </Button>
         </form>
       </Form>
     </div>

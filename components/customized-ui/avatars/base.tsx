@@ -1,4 +1,5 @@
 import React from "react"
+import { StaticImport } from "next/dist/shared/lib/get-img-props"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 

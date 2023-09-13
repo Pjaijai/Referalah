@@ -5,11 +5,7 @@ import { NextPage } from "next"
 import RefererPageTemplate from "@/modules/referral/referer/template"
 
 const RefererPage: NextPage = () => {
-  return (
-    <div>
-      <RefererPageTemplate />
-    </div>
-  )
+  return <RefererPageTemplate />
 }
 
 export default RefererPage

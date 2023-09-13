@@ -35,7 +35,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="zh-Hk" suppressHydrationWarning>
         <head />
         <body
           className={cn(
@@ -46,9 +46,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <APIProvider>
               <AuthProvider>
-                <div className="relative flex min-h-screen flex-col">
+                <div className="flex min-h-screen flex-col">
                   <SiteHeader />
-                  <div className="flex-1 container">{children}</div>
+                  <div className="container">{children}</div>
                 </div>
                 <TailwindIndicator />
               </AuthProvider>

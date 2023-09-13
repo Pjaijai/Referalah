@@ -8,26 +8,27 @@ import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import LinkTooltip from "@/components/customized-ui/tool/Link"
 import { Icons } from "@/components/icons"
 
 export interface IViewProfileTemplateProps {
   photoUrl?: string
-  chineseFirstName: string | null
-  chineseLastName: string | null
-  englishFirstName: string | null
-  englishLastName: string | null
+  // chineseFirstName: string | null
+  // chineseLastName: string | null
+  // englishFirstName: string | null
+  // englishLastName: string | null
   username: string | null
   description: string | null
   company: string | null
   jobTitle: string | null
   yearOfExperience?: number | null
-  countryUuid: string | null
-  provinceUuid: string | null
-  industryUuid: string | null
-  cityUuid: string | null
-  resumeUrl: string | null
+  country: string | null
+  province: string | null
+  industry: string | null
+  city: string | null
+  // resumeUrl: string | null
   socialMediaUrl: string | null
   isReferer: boolean
   isReferee: boolean
@@ -41,41 +42,25 @@ const ViewProfileTemplate: React.FunctionComponent<
   IViewProfileTemplateProps
 > = ({
   photoUrl,
-  chineseFirstName,
-  chineseLastName,
-  englishFirstName,
-  englishLastName,
+  // chineseFirstName,
+  // chineseLastName,
+  // englishFirstName,
+  // englishLastName,
   username,
   description,
   company,
   jobTitle,
   yearOfExperience,
-  countryUuid,
-  provinceUuid,
-  cityUuid,
-  resumeUrl,
+  country,
+  province,
+  city,
+  // resumeUrl,
   socialMediaUrl,
   setIsEditMode,
-  industryList,
-  countryList,
-  provinceList,
-  industryUuid,
-  cityList,
+  industry,
+  isReferer,
+  isReferee,
 }) => {
-  const country = countryUuid
-    ? countryList.find((c) => c.uuid === countryUuid)?.cantonese_name
-    : "no country"
-
-  const province = provinceUuid
-    ? provinceList.find((p) => p.uuid === provinceUuid)?.cantonese_name
-    : "no province"
-  const city = cityUuid
-    ? cityList.find((ci) => ci.uuid === cityUuid)?.cantonese_name
-    : "no city"
-  const industry = industryUuid
-    ? industryList.find((i) => i.uuid === industryUuid)?.cantonese_name
-    : "no industry"
-
   return (
     <div className="w-full flex flex-col gap-y-2 mt-28">
       <div className="flex flex-row justify-end w-full mx-8">
@@ -103,39 +88,61 @@ const ViewProfileTemplate: React.FunctionComponent<
 
       <h5 className="text-2xl text-center font-semibold">{username}</h5>
 
+      <div className="flex flex-col text-center">
+        {jobTitle && <h5 className="font-semibold">{jobTitle}</h5>}
+        {company && <h5 className="font-semibold ">{company}</h5>}
+      </div>
+
       <li className="flex flex-wrap justify-center w-full gap-2">
         {country && (
           <ul>
-            <Badge className="w-1/5  shrink-0 "> {country}</Badge>
+            <Badge> {country}</Badge>
           </ul>
         )}
 
         {province && (
           <ul>
-            <Badge className="w-1/5  shrink-0"> {province}</Badge>
+            <Badge> {province}</Badge>
           </ul>
         )}
         {city && (
           <ul>
-            <Badge className="w-1/5  shrink-0"> {city}</Badge>
+            <Badge> {city}</Badge>
           </ul>
         )}
       </li>
       <li className="flex flex-wrap justify-center w-full gap-2">
         {industry && (
           <ul>
-            <Badge className="w-1/5  shrink-0"> {industry}</Badge>
+            <Badge> {industry}</Badge>
           </ul>
         )}
 
         {yearOfExperience && (
           <ul>
-            <Badge className="w-1/5  shrink-0"> {yearOfExperience}年經驗</Badge>
+            <Badge> {yearOfExperience}年經驗</Badge>
           </ul>
         )}
       </li>
 
-      <p className="container mt-8">{description}</p>
+      <div className="flex justify-center gap-x-2 mt-8 w-full">
+        <div className="flex items-center space-x-2">
+          <Checkbox checked={isReferer} />
+          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            推薦人
+          </label>
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <Checkbox checked={isReferee} />
+          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            受薦人
+          </label>
+        </div>
+      </div>
+      <div className="container mt-8 shadow-md rounded-lg p-4 break-words  whitespace-pre-wrap">
+        {description}
+      </div>
     </div>
   )
 }
