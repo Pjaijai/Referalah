@@ -20,13 +20,19 @@ const BaseInfiniteScroll: React.FunctionComponent<IBaseInfiniteScrollProps> = ({
       dataLength={dataLength} //This is important field to render the next data
       next={next}
       hasMore={hasMore}
-      loader={<h4>Loading...</h4>}
+      loader={
+        <div className="flex justify-center mt-4">
+          <Badge variant={"outline"} className="flex justify-center">
+            Load緊...
+          </Badge>
+        </div>
+      }
       endMessage={
-        <p className="flex justify-center mt-4">
+        <div className="flex justify-center mt-4">
           <Badge variant={"outline"} className="flex justify-center">
             盡頭了！
           </Badge>
-        </p>
+        </div>
       }
     >
       {children}

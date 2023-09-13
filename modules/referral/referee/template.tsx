@@ -6,7 +6,7 @@ import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
 import useGetCityList from "@/hooks/api/location/useGetCityList"
 import useGetCountryList from "@/hooks/api/location/useGetCountryList"
 import useGetProvinceList from "@/hooks/api/location/useGetProvinceList"
-import useSearchRefererList from "@/hooks/api/referral/useSearchReferralList"
+import useSearchReferralList from "@/hooks/api/referral/useSearchReferralList"
 import useDebounce from "@/hooks/common/useDebounce"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
@@ -14,9 +14,9 @@ import ReferralCard from "@/components/customized-ui/cards/referral"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons /card-list"
 
-interface IRefererPageTemplateProps {}
-const RefererPageTemplate: React.FunctionComponent<
-  IRefererPageTemplateProps
+interface IRefereePageTemplateProps {}
+const RefereePageTemplate: React.FunctionComponent<
+  IRefereePageTemplateProps
 > = () => {
   const [companyName, setCompanyName] = useState("")
   const [provinceUuid, setProvinceUuid] = useState<undefined | string>()
@@ -40,12 +40,12 @@ const RefererPageTemplate: React.FunctionComponent<
   }
 
   const {
-    data: refererListData,
-    isLoading: isRefererListLoading,
+    data: refereeListData,
+    isLoading: isRefereeListLoading,
     error,
     fetchNextPage,
     isFetching,
-  } = useSearchRefererList(sorting, filterMeta, "referer")
+  } = useSearchReferralList(sorting, filterMeta, "referee")
   const { industry: industryList } = useGetIndustryList()
   const { city: cityList } = useGetCityList()
   const { country: countryList } = useGetCountryList()
@@ -106,8 +106,8 @@ const RefererPageTemplate: React.FunctionComponent<
   }
 
   const list =
-    refererListData && refererListData.pages.length > 0
-      ? (refererListData?.pages.flatMap((d) => d) as IReferralResponse[])
+    refereeListData && refereeListData.pages.length > 0
+      ? (refereeListData?.pages.flatMap((d) => d) as IReferralResponse[])
       : []
 
   return (
@@ -137,43 +137,43 @@ const RefererPageTemplate: React.FunctionComponent<
           currentYeoMin={yoeMin}
         />
       </div>
-      {!isRefererListLoading && !isFetching && list.length === 0 && (
+      {!isRefereeListLoading && !isFetching && list.length === 0 && (
         <div className="p-4 rounded-lg text-center mt-8 border-2">
-          冇資料🥲不如成為推薦人？
+          冇資料🥲不如成為受薦人？
         </div>
       )}
 
-      {isRefererListLoading && <CardSkeletonList />}
+      {isRefereeListLoading && <CardSkeletonList />}
 
-      {!isRefererListLoading && list.length > 0 && (
+      {!isRefereeListLoading && list.length > 0 && (
         <BaseInfiniteScroll
           dataLength={list ? list.length : 0} //This is important field to render the next data
           next={fetchNextPage}
           hasMore={
-            (refererListData &&
-              refererListData.pages &&
-              refererListData.pages[refererListData.pages.length - 1].length !==
+            (refereeListData &&
+              refereeListData.pages &&
+              refereeListData.pages[refereeListData.pages.length - 1].length !==
                 0) ??
             true
           }
         >
           <div className="grid grid-cols-1 gap-4  w-full overflow-hidden mt-8">
-            {list.map((referer) => {
+            {list.map((referee) => {
               return (
                 <ReferralCard
-                  jobTitle={referer.job_title}
-                  username={referer.username}
-                  photoUrl={referer.avatar_url}
-                  province={referer.province.cantonese_name}
-                  country={referer.country.cantonese_name}
-                  city={referer.city.cantonese_name}
-                  companyName={referer.company_name}
-                  description={referer.description}
-                  industry={referer.industry.cantonese_name}
-                  socialMediaUrl={referer.social_media_url}
-                  yearOfExperience={referer.year_of_experience}
-                  uuid={referer.uuid}
-                  key={referer.uuid}
+                  jobTitle={referee.job_title}
+                  username={referee.username}
+                  photoUrl={referee.avatar_url}
+                  province={referee.province.cantonese_name}
+                  country={referee.country.cantonese_name}
+                  city={referee.city.cantonese_name}
+                  companyName={referee.company_name}
+                  description={referee.description}
+                  industry={referee.industry.cantonese_name}
+                  socialMediaUrl={referee.social_media_url}
+                  yearOfExperience={referee.year_of_experience}
+                  uuid={referee.uuid}
+                  key={referee.uuid}
                 />
               )
             })}
@@ -184,4 +184,4 @@ const RefererPageTemplate: React.FunctionComponent<
   )
 }
 
-export default RefererPageTemplate
+export default RefereePageTemplate

@@ -12,11 +12,10 @@ interface ISearchPostFilterMeta {
   yoeMin?: string
 }
 
-type TPost = "referer" | "referral"
 const useSearchPost = (
   sorting: string,
   filterMeta: ISearchPostFilterMeta,
-  type: TPost
+  type: "referer" | "referee"
 ) => {
   const fetchPosts = async ({ pageParam = 0, queryKey }: any) => {
     const NUMBER_OF_DATE_PER_FETCH = 3
@@ -59,14 +58,8 @@ const useSearchPost = (
       )
       .eq("type", type)
       .ilike("company_name", `%${filterMeta.companyName}%`)
-      .lte(
-        "year_of_experience",
-        filterMeta.yoeMax ? parseInt(filterMeta.yoeMax) : 100
-      )
-      .gte(
-        "year_of_experience",
-        filterMeta.yoeMin ? parseInt(filterMeta.yoeMin) : 0
-      )
+      .lte("year_of_experience", 100)
+      .gte("year_of_experience", 0)
       .order("year_of_experience", { ascending: order })
       .range(from, to)
 
@@ -88,9 +81,11 @@ const useSearchPost = (
   }
 
   return useInfiniteQuery({
-    queryKey: ["referer-list", { sorting, filterMeta }],
+    queryKey: [`${type}-post-list`, { sorting, filterMeta }],
     queryFn: fetchPosts,
     keepPreviousData: true,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
     getNextPageParam: (lastPage, allPages: any[]) => {
       if (lastPage && lastPage.length > 0) {
         return allPages.length

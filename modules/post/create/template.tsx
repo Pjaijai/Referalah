@@ -31,7 +31,7 @@ const CreatePostTemplate: React.FunctionComponent<
   ICreatePostTemplateProps
 > = () => {
   const formSchema = z.object({
-    type: z.string().nonempty("asa haha"),
+    type: z.string().nonempty("俾幫手填下🙏🏻"),
     url: maximumWordValidation(250)
       .url({
         message: "無效連結",
@@ -41,7 +41,7 @@ const CreatePostTemplate: React.FunctionComponent<
           return value.trim() !== "" // Add your custom validation logic here
         },
         {
-          message: "asa haha", // Specify the custom error message here
+          message: "俾幫手填下🙏🏻", // Specify the custom error message here
         }
       ),
     description: z

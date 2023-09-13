@@ -1,12 +1,8 @@
 import React from "react"
-import RefererPostPageTemplate from "@/modules/post/referer/page"
+import RefererPostPageTemplate from "@/modules/post/referer/template"
 
 const RefererPostPage = () => {
-  return (
-    <div>
-      <RefererPostPageTemplate />
-    </div>
-  )
+  return <RefererPostPageTemplate />
 }
 
 export default RefererPostPage

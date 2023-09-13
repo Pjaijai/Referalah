@@ -1,4 +1,4 @@
-export interface IRefererResponse
+export interface IReferralResponse
   extends Omit<
     IUserResponse,
     | "id"

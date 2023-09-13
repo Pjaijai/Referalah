@@ -1,7 +1,7 @@
 "use client"
 
 import React, { ChangeEvent, useState } from "react"
-import { refererSortingOptions } from "@/utils/common/sorting/referer"
+import { referralSortingOptions } from "@/utils/common/sorting/referer"
 
 import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
 import useGetCityList from "@/hooks/api/location/useGetCityList"
@@ -26,7 +26,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
   const [industryUuid, setIndustryUuid] = useState<undefined | string>()
   const [yoeMin, setYoeMin] = useState<undefined | string>()
   const [yoeMax, setYoeMax] = useState<undefined | string>()
-  const [sorting, setSorting] = useState(refererSortingOptions[0].value)
+  const [sorting, setSorting] = useState(referralSortingOptions[0].value)
   const debouncedCompanyName = useDebounce(companyName, 800)
 
   const { industry: industryList } = useGetIndustryList()
