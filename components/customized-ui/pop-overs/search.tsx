@@ -86,32 +86,35 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
       <PopoverContent className="w-80">
         <div className="grid gap-2">
           <div className="grid grid-cols-3 items-center gap-4">
+            <Label>排列</Label>
             <BaseSelect
               options={refererSortingOptions}
               onChange={onSortingChange}
               defaultValue={refererSortingOptions[0].value}
               value={currentSorting}
             />
-            <Button>reset</Button>
           </div>
 
           <div className="grid gap-2">
             <div className="grid grid-cols-3 items-center gap-4">
-              <Label>Country</Label>
+              <Label>年資</Label>
+              {/* <div className="grid grid-cols-3 items-center gap-4"> */}
               <Input
                 type="number"
                 onChange={onYeoMinChange}
                 value={currentYeoMin}
+                placeholder="下限"
               />
-              <span>to</span>
+
               <Input
                 type="number"
                 onChange={onYeoMaxChange}
                 value={currentYeoMax}
+                placeholder="上限"
               />
             </div>
             <div className="grid grid-cols-3 items-center gap-4">
-              <Label>Country</Label>
+              <Label>國家</Label>
               <BaseSelect
                 options={countryOptions}
                 onChange={onCountryChange}
@@ -119,7 +122,7 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
               />
             </div>
             <div className="grid grid-cols-3 items-center gap-4">
-              <Label>Province</Label>
+              <Label>省份</Label>
               <BaseSelect
                 options={provinceOptions}
                 onChange={onProvinceChange}
@@ -127,7 +130,7 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
               />
             </div>
             <div className="grid grid-cols-3 items-center gap-4">
-              <Label>City</Label>
+              <Label>城市</Label>
               <BaseSelect
                 options={cityOptions}
                 onChange={onCityChange}
@@ -136,7 +139,7 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
             </div>
 
             <div className="grid grid-cols-3 items-center gap-4">
-              <Label>indtry</Label>
+              <Label>行業</Label>
               <BaseSelect
                 options={industryOptions}
                 onChange={onIndustryChange}

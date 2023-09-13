@@ -14,10 +14,6 @@ interface ILinkTooltipProps {
   url: string
 }
 const LinkTooltip: React.FunctionComponent<ILinkTooltipProps> = ({ url }) => {
-  // const router
-  // const handleClick =()=>{
-
-  // }
   return (
     <TooltipProvider>
       <Tooltip>
@@ -25,10 +21,6 @@ const LinkTooltip: React.FunctionComponent<ILinkTooltipProps> = ({ url }) => {
           <Link href={url} target="_blank">
             <Icons.link />
           </Link>
-
-          {/* <Button variant="outline" onClick={handleClick}>
-           
-          </Button> */}
         </TooltipTrigger>
         <TooltipContent>
           <p>{url}</p>

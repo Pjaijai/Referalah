@@ -57,13 +57,12 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
   const {
     formState: { errors },
   } = form
-  console.log("formState", form.formState.errors)
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log("submist")
+
     onContactFormClose()
-    console.log(values)
   }
   return (
     <Dialog open={open}>

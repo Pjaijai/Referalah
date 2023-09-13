@@ -27,11 +27,7 @@ const FormTextArea: React.FunctionComponent<IFormTextArea> = ({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Textarea
-              placeholder={placeholder}
-              className="resize-none"
-              {...field}
-            />
+            <Textarea placeholder={placeholder} {...field} />
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />

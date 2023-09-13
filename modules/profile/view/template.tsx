@@ -1,32 +1,34 @@
 "use client"
 
 import React from "react"
-import Image from "next/image"
 
 import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import BaseAvatar from "@/components/customized-ui/avatars/base"
+import LinkTooltip from "@/components/customized-ui/tool/Link"
 import { Icons } from "@/components/icons"
 
 export interface IViewProfileTemplateProps {
   photoUrl?: string
-  chineseFirstName: string | null
-  chineseLastName: string | null
-  englishFirstName: string | null
-  englishLastName: string | null
+  // chineseFirstName: string | null
+  // chineseLastName: string | null
+  // englishFirstName: string | null
+  // englishLastName: string | null
   username: string | null
   description: string | null
   company: string | null
   jobTitle: string | null
   yearOfExperience?: number | null
-  countryUuid: string | null
-  provinceUuid: string | null
-  industryUuid: string | null
-  cityUuid: string | null
-  resumeUrl: string | null
+  country: string | null
+  province: string | null
+  industry: string | null
+  city: string | null
+  // resumeUrl: string | null
   socialMediaUrl: string | null
   isReferer: boolean
   isReferee: boolean
@@ -40,77 +42,107 @@ const ViewProfileTemplate: React.FunctionComponent<
   IViewProfileTemplateProps
 > = ({
   photoUrl,
-  chineseFirstName,
-  chineseLastName,
-  englishFirstName,
-  englishLastName,
+  // chineseFirstName,
+  // chineseLastName,
+  // englishFirstName,
+  // englishLastName,
   username,
   description,
   company,
   jobTitle,
   yearOfExperience,
-  countryUuid,
-  provinceUuid,
-  cityUuid,
-  resumeUrl,
+  country,
+  province,
+  city,
+  // resumeUrl,
   socialMediaUrl,
   setIsEditMode,
-  industryList,
-  countryList,
-  provinceList,
-  industryUuid,
-  cityList,
+  industry,
+  isReferer,
+  isReferee,
 }) => {
-  const country = countryUuid
-    ? countryList.find((c) => c.uuid === countryUuid)?.cantonese_name
-    : "no country"
-
-  const province = provinceUuid
-    ? provinceList.find((p) => p.uuid === provinceUuid)?.cantonese_name
-    : "no province"
-  const city = cityUuid
-    ? cityList.find((ci) => ci.uuid === cityUuid)?.cantonese_name
-    : "no city"
-  const industry = industryUuid
-    ? industryList.find((i) => i.uuid === industryUuid)?.cantonese_name
-    : "no industry"
-
   return (
-    <div>
-      <Button
-        onClick={() => {
-          setIsEditMode(true)
-        }}
-      >
-        Edit
-      </Button>
-      {photoUrl && (
-        <Image src={photoUrl} width={200} height={200} alt={username ?? ""} />
-      )}
+    <div className="w-full flex flex-col gap-y-2 mt-28">
+      <div className="flex flex-row justify-end w-full mx-8">
+        {socialMediaUrl && <LinkTooltip url={socialMediaUrl} />}
 
-      <div>{username}</div>
-      <div>
-        {chineseLastName} {chineseFirstName}
-      </div>
-      <div>
-        {englishLastName} {englishFirstName}
+        <Button
+          onClick={() => {
+            setIsEditMode(true)
+          }}
+          variant="ghost"
+        >
+          <Icons.pencil />
+        </Button>
       </div>
 
-      <div>{description}</div>
-      <div>
-        {company} {jobTitle} {yearOfExperience}
+      <div className="flex justify-center">
+        <BaseAvatar
+          url={photoUrl}
+          alt={username}
+          fallBack={username && username[0]}
+          size="large"
+        />
+        {!photoUrl && <Icons.user />}
       </div>
 
-      <div>
-        {country}
-        {province}
-        {city}
+      <h5 className="text-2xl text-center font-semibold">{username}</h5>
+
+      <div className="flex flex-col text-center">
+        {jobTitle && <h5 className="font-semibold">{jobTitle}</h5>}
+        {company && <h5 className="font-semibold ">{company}</h5>}
       </div>
 
-      <div>{industry}</div>
+      <li className="flex flex-wrap justify-center w-full gap-2">
+        {country && (
+          <ul>
+            <Badge> {country}</Badge>
+          </ul>
+        )}
 
-      {resumeUrl}
-      {socialMediaUrl}
+        {province && (
+          <ul>
+            <Badge> {province}</Badge>
+          </ul>
+        )}
+        {city && (
+          <ul>
+            <Badge> {city}</Badge>
+          </ul>
+        )}
+      </li>
+      <li className="flex flex-wrap justify-center w-full gap-2">
+        {industry && (
+          <ul>
+            <Badge> {industry}</Badge>
+          </ul>
+        )}
+
+        {yearOfExperience && (
+          <ul>
+            <Badge> {yearOfExperience}年經驗</Badge>
+          </ul>
+        )}
+      </li>
+
+      <div className="flex justify-center gap-x-2 mt-8 w-full">
+        <div className="flex items-center space-x-2">
+          <Checkbox checked={isReferer} />
+          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            推薦人
+          </label>
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <Checkbox checked={isReferee} />
+          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            受薦人
+          </label>
+        </div>
+      </div>
+      <div className="container mt-8 shadow-md rounded-lg p-4 break-words  whitespace-pre-wrap">
+        {description}
+      </div>
     </div>
   )
 }

@@ -1,20 +1,23 @@
 import React from "react"
+import { StaticImport } from "next/dist/shared/lib/get-img-props"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 interface IBaseAvatar {
-  url: string
-  alt: string
-  fallBack: string
+  url?: string
+  alt: string | null
+  fallBack: string | null
+  size?: "large"
 }
 const BaseAvatar: React.FunctionComponent<IBaseAvatar> = ({
   alt,
   fallBack,
   url,
+  size,
 }) => {
   return (
-    <Avatar>
-      <AvatarImage src={url} alt={alt} />
+    <Avatar className={size === "large" ? "w-24 h-24 text-2xl" : ""}>
+      <AvatarImage src={url ? url : ""} alt={alt ? alt : ""} />
       <AvatarFallback>{fallBack}</AvatarFallback>
     </Avatar>
   )

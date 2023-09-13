@@ -1,6 +1,7 @@
 "use client"
 
-import React from "react"
+import React, { useEffect, useState } from "react"
+import { maximumWordValidation } from "@/modules/profile/form/validation.ts/max-word"
 import { supabase } from "@/utils/services/supabase/config"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -17,10 +18,12 @@ import useProvinceOptions from "@/hooks/common/options/useProvinceOptions"
 import useUserStore from "@/hooks/state/user/useUserStore"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
+import { useToast } from "@/components/ui/use-toast"
 import FormTextInput from "@/components/customized-ui/form/input"
 import FormNumberInput from "@/components/customized-ui/form/number"
 import FormSelect from "@/components/customized-ui/form/select"
 import FormTextArea from "@/components/customized-ui/form/text-area"
+import NumberInput from "@/components/customized-ui/inputs/number"
 
 interface ICreatePostTemplateProps {}
 
@@ -28,8 +31,19 @@ const CreatePostTemplate: React.FunctionComponent<
   ICreatePostTemplateProps
 > = () => {
   const formSchema = z.object({
-    type: z.string().min(1, "need"),
-    url: z.string().min(1, "need"),
+    type: z.string().nonempty("asa haha"),
+    url: maximumWordValidation(250)
+      .url({
+        message: "無效連結",
+      })
+      .refine(
+        (value) => {
+          return value.trim() !== "" // Add your custom validation logic here
+        },
+        {
+          message: "asa haha", // Specify the custom error message here
+        }
+      ),
     description: z
       .string()
       .max(3000, {
@@ -39,21 +53,51 @@ const CreatePostTemplate: React.FunctionComponent<
         message: `至少有要1粒字`,
       }),
 
-    countryUuid: z.string().min(1, "need"),
-    provinceUuid: z.string().min(1, "need"),
-    cityUuid: z.string().min(1, "need"),
-    industryUuid: z.string().min(1, "need"),
-    yearOfExperience: z.string().min(1, "need"),
-    companyName: z.string().min(1, "need"),
-    jobTitle: z.string().min(1, "need"),
+    countryUuid: z.string().min(1, {
+      message: `俾幫手填下🙏🏻`,
+    }),
+    provinceUuid: z.string().min(1, {
+      message: `俾幫手填下🙏🏻`,
+    }),
+    cityUuid: z.string().min(1, {
+      message: `俾幫手填下🙏🏻`,
+    }),
+    industryUuid: z.string().min(1, {
+      message: `俾幫手填下🙏🏻`,
+    }),
+    yearOfExperience: z.string().min(1, {
+      message: `俾幫手填下🙏🏻`,
+    }),
+    companyName: z.string().min(1, {
+      message: `俾幫手填下🙏🏻`,
+    }),
+    jobTitle: z.string().min(1, {
+      message: `俾幫手填下🙏🏻`,
+    }),
   })
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-  })
+    defaultValues: {
+      type: "referer",
+      description: "",
+      companyName: "",
+      jobTitle: "",
+      yearOfExperience: "0",
+      countryUuid: "",
+      provinceUuid: "",
+      cityUuid: "",
 
-  console.log("12312", form.formState.errors)
+      url: "",
+
+      industryUuid: "",
+    },
+  })
+  const { toast } = useToast()
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const countryWatch = form.watch("countryUuid")
   const provinceWatch = form.watch("provinceUuid")
+  const yeoWatch = form.watch("yearOfExperience")
+  const typeWatch = form.watch("type")
   const user = useUserStore((state) => state)
   const { industry: industryList } = useGetIndustryList()
   const { city: cityList } = useGetCityList()
@@ -66,15 +110,41 @@ const CreatePostTemplate: React.FunctionComponent<
   const postTypeOptions = [
     {
       value: "referer",
-      title: "Referer",
+      title: "推薦人",
     },
     {
       value: "referee",
-      title: "Referee",
+      title: "受薦人",
     },
   ]
+
+  useEffect(() => {
+    form.setValue("cityUuid", "")
+  }, [provinceWatch])
+
+  useEffect(() => {
+    // Convert yeoWatch to a number
+    const yeoWatchNumber = parseFloat(yeoWatch)
+
+    // Check if yeoWatchNumber is a valid number and not NaN
+    if (!isNaN(yeoWatchNumber) && typeof yeoWatchNumber === "number") {
+      // If yeoWatchNumber is negative, set yearOfExperience to '0'
+      if (yeoWatchNumber < 0) {
+        form.setValue("yearOfExperience", "0")
+      } else {
+        // Round yeoWatchNumber to the nearest integer and set it as yearOfExperience
+        const roundedValue = Math.round(yeoWatchNumber)
+        form.setValue("yearOfExperience", roundedValue.toString())
+      }
+    } else {
+      // Handle cases where yeoWatchNumber is not a valid number
+      // Set a default value or handle it as needed
+      form.setValue("yearOfExperience", "0")
+    }
+  }, [yeoWatch])
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log("sub,it", values)
+    setIsSubmitting(true)
     const { error } = await supabase.from("post").insert({
       url: values.url,
       country_uuid: values.countryUuid,
@@ -86,116 +156,99 @@ const CreatePostTemplate: React.FunctionComponent<
       type: values.type,
       company_name: values.companyName,
       job_title: values.jobTitle,
+      description: values.description,
     })
 
+    console.log("error", error)
+
     if (error) {
-      console.log("errorerrorerrorerror")
+      return toast({
+        title: "出事！",
+        description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+      })
     }
-    //   .update({
-    //     avatar_url: photoUrl,
-    //     chinese_first_name: values.chineseFirstName,
-    //     chinese_last_name: values.chineseLastName,
-    //     english_first_name: values.englishFirstName,
-    //     english_last_name: values.englishLastName,
-    //     username: values.username,
-    //     description: values.description,
-    //     company_name: values.company,
-    //     job_title: values.jobTitle,
-    //     year_of_experience: values.yearOfExperience
-    //       ? parseInt(values.yearOfExperience)
-    //       : null,
-    //     country_uuid: values.countryUuid,
-    //     province_uuid: values.provinceUuid,
-    //     city_uuid: values.cityUuid,
-    //     industry_uuid: values.industryUuid,
-    //     resume_url: resumeUrl,
-    //     social_media_url: values.socialMediaUrl,
-    //     is_referer: values.isReferer,
-    //     is_referee: values.isReferee,
-    //   })
-    //   .eq("uuid", user.uuid)
+
+    setIsSubmitting(false)
   }
 
   return (
-    <div>
+    <div className="w-full h-full flex flex-col mt-28 p-4">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4"
+        >
           <FormSelect
             options={postTypeOptions}
             control={form.control}
-            label="Type"
+            label="類型"
             name="type"
           />
           <FormTextInput
             control={form.control}
-            label="url"
+            label="相關網址"
             name="url"
-            description="job ppoers li"
+            description="例如份工個LinkedIn，Indeed，Glassdoor個連結"
           />
 
           <FormTextInput
             control={form.control}
-            label="comapayname"
+            label="公司名"
             name="companyName"
-            description="job ppoers li"
           />
 
           <FormTextInput
             control={form.control}
-            label="jpob title"
+            label="職位名稱"
             name="jobTitle"
-            description="job ppoers li"
           />
 
           <FormTextArea
             control={form.control}
-            label="Description"
+            label="內容"
             name="description"
-            description="description"
-            placeholder="description"
+            description={
+              typeWatch === "referer"
+                ? "額外講吓想搵啲咩人？"
+                : "大概講吓你自己點解match呢個職位，建議唔好公開自己聯絡資訊。"
+            }
           />
 
           <FormSelect
             options={industryOptions}
             control={form.control}
-            label="industry"
+            label="行業"
             name="industryUuid"
-            description="Select your industry"
-            placeholder="Select a industry"
           />
           <FormSelect
             options={countryOptions}
             control={form.control}
-            label="Country"
+            label="國家"
             name="countryUuid"
-            description="Select your country"
-            placeholder="Select a country"
           />
           <FormSelect
             control={form.control}
-            label="Province"
+            label="省份"
             name="provinceUuid"
             options={provinceOptions as any}
-            description="Select your province"
-            placeholder="Select a province"
           />
 
           <FormSelect
             control={form.control}
-            label="City"
+            label="城市"
             name="cityUuid"
             options={cityOptions as any}
-            description="Select your city"
-            placeholder="Select a city"
           />
+
           <FormNumberInput
             control={form.control}
-            label="yearOfExperience"
+            label="工作年資"
             name="yearOfExperience"
-            description="yearOfExperience"
-            placeholder="yearOfExperience"
           />
-          <Button type="submit">Save changes</Button>
+
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "請等等" : "提交"}
+          </Button>
         </form>
       </Form>
     </div>

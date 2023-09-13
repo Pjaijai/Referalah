@@ -12,6 +12,7 @@ import useGetCityList from "@/hooks/api/location/useGetCityList"
 import useGetCountryList from "@/hooks/api/location/useGetCountryList"
 import useGetProvinceList from "@/hooks/api/location/useGetProvinceList"
 import useUserStore from "@/hooks/state/user/useUserStore"
+import { Icons } from "@/components/icons"
 
 // interface IProfilePageProps extends NextPage {}
 
@@ -41,8 +42,39 @@ const Page = ({ params }: { params: { slug: string } }) => {
       const fetchProfile = async () => {
         const { data, error } = await supabase
           .from("user")
-          .select("*")
+          .select(
+            `
+              uuid,
+              email,
+              username,
+              avatar_url,
+              description,
+              company_name,
+              job_title,
+              year_of_experience,
+            social_media_url,
+          country(
+            uuid,
+            cantonese_name
+        ),
+        province(
+          uuid,
+            cantonese_name
+        ),
+        city(
+          uuid,
+            cantonese_name
+        ),
+        industry(
+          uuid,
+            cantonese_name
+        ),
+        is_referer,
+        is_referee
+        `
+          )
           .eq("uuid", userUuid)
+          .single()
 
         if (error) {
           // Handle the error, e.g., show an error message or redirect
@@ -50,8 +82,8 @@ const Page = ({ params }: { params: { slug: string } }) => {
           return
         }
 
-        if (data && data.length > 0) {
-          setProfile(data[0])
+        if (data) {
+          setProfile(data as any)
         } else {
           // Handle the case where no user with the given slug was found
           console.warn("User not found")
@@ -67,34 +99,39 @@ const Page = ({ params }: { params: { slug: string } }) => {
     return () => clearTimeout(timer) // Clean up the timer when the component unmounts
   }, [isLoading, isUserSignIn, profile, router, userUuid])
 
-  if (isLoading) return <h1>loading</h1>
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-screen ">
+        <Icons.loader className="animate-spin text-2xl" />
+      </div>
+    )
   if (!isLoading && profile)
     return (
-      <div>
+      <div className="h-full w-full mt-8">
         {!isEditMode && (
           <ViewProfileTemplate
             photoUrl={profile.avatar_url || undefined}
-            chineseFirstName={profile.chinese_first_name}
-            chineseLastName={profile.chinese_last_name}
-            englishFirstName={profile.english_first_name}
-            englishLastName={profile.english_last_name}
+            // chineseFirstName={profile.chinese_first_name}
+            // chineseLastName={profile.chinese_last_name}
+            // englishFirstName={profile.english_first_name}
+            // englishLastName={profile.english_last_name}
             username={profile.username}
             description={profile.description}
             company={profile.company_name}
             jobTitle={profile.job_title}
             yearOfExperience={profile.year_of_experience}
-            countryUuid={profile.country_uuid}
-            provinceUuid={profile.province_uuid}
-            cityUuid={profile.city_uuid}
-            resumeUrl={profile.resume_url}
-            industryUuid={profile.industry_uuid}
+            country={profile.country.cantonese_name}
+            province={profile.province.cantonese_name}
+            city={profile.city.cantonese_name}
+            // resumeUrl={profile.resume_url}
+            industry={profile.industry.cantonese_name}
             socialMediaUrl={profile.social_media_url}
             industryList={industryList}
             cityList={cityList}
             countryList={countryList}
             provinceList={provinceList}
             isReferee={profile.is_referee}
-            isReferer={profile.is_referee}
+            isReferer={profile.is_referer}
             setIsEditMode={setIsEditMode}
           />
         )}
@@ -102,27 +139,19 @@ const Page = ({ params }: { params: { slug: string } }) => {
         {isEditMode && (
           <EditProfileTemplate
             photoUrl={profile.avatar_url || undefined}
-            chineseFirstName={profile.chinese_first_name}
-            chineseLastName={profile.chinese_last_name}
-            englishFirstName={profile.english_first_name}
-            englishLastName={profile.english_last_name}
             username={profile.username}
             description={profile.description}
             company={profile.company_name}
             jobTitle={profile.job_title}
             yearOfExperience={profile.year_of_experience}
-            countryUuid={profile.country_uuid}
-            provinceUuid={profile.province_uuid}
-            cityUuid={profile.city_uuid}
-            resumeUrl={profile.resume_url}
-            industryUuid={profile.industry_uuid}
+            countryUuid={profile.country.uuid}
+            provinceUuid={profile.province.uuid}
+            cityUuid={profile.city.uuid}
+            // resumeUrl={profile.resume_url}
+            industryUuid={profile.industry.uuid}
             socialMediaUrl={profile.social_media_url}
-            industryList={industryList}
-            cityList={cityList}
-            countryList={countryList}
-            provinceList={provinceList}
             isReferee={profile.is_referee}
-            isReferer={profile.is_referee}
+            isReferer={profile.is_referer}
             isProfileLoading={isLoading}
             setIsEditMode={setIsEditMode}
           />
