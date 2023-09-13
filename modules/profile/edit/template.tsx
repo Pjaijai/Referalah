@@ -21,10 +21,12 @@ import useProvinceOptions from "@/hooks/common/options/useProvinceOptions"
 import useUserStore from "@/hooks/state/user/useUserStore"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
+import { useToast } from "@/components/ui/use-toast"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import FormCheckBox from "@/components/customized-ui/form/check-box"
 import FormFileUpload from "@/components/customized-ui/form/file"
 import FormTextInput from "@/components/customized-ui/form/input"
+import FormNumberInput from "@/components/customized-ui/form/number"
 import FormSelect from "@/components/customized-ui/form/select"
 import FormTextArea from "@/components/customized-ui/form/text-area"
 import NumberInput from "@/components/customized-ui/inputs/number"
@@ -114,7 +116,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         schema.isReferer || schema.isReferee ? schema.description : true,
       {
         path: ["description"],
-        message: "如果想成為推薦人/被推薦人，請填一填",
+        message: "如果想成為推薦人/受薦人，請填一填",
       }
     )
     .refine(
@@ -122,17 +124,17 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         schema.isReferer || schema.isReferee ? schema.yearOfExperience : true,
       {
         path: ["yearOfExperience"],
-        message: "如果想成為推薦人/被推薦人，請填一填",
+        message: "如果想成為推薦人/受薦人，請填一填",
       }
     )
 
   const router = useRouter()
+  const { toast } = useToast()
   const [image, setImage] = useState<any | null>(null)
   const [base64Image, setBase64Image] = useState<string | StaticImport | null>(
     null
   )
   const [isSubmitting, setIsSubmitting] = useState(false)
-
   const user = useUserStore((state) => state)
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -160,15 +162,10 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     }, [isProfileLoading]),
   })
 
-  const {
-    watch,
-    setValue,
-    formState: { errors },
-  } = form
+  const { watch, setValue } = form
 
   const countryWatch = watch("countryUuid")
   const provinceWatch = watch("provinceUuid")
-  const cityWatch = watch("cityUuid")
   const yeoWatch = watch("yearOfExperience")
 
   const { industry: industryList } = useGetIndustryList()
@@ -187,6 +184,27 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     }
   }, [provinceOptions, provinceWatch])
 
+  useEffect(() => {
+    // Convert yeoWatch to a number
+    const yeoWatchNumber = yeoWatch ? parseFloat(yeoWatch) : 0
+
+    // Check if yeoWatchNumber is a valid number and not NaN
+    if (!isNaN(yeoWatchNumber) && typeof yeoWatchNumber === "number") {
+      // If yeoWatchNumber is negative, set yearOfExperience to '0'
+      if (yeoWatchNumber < 0) {
+        form.setValue("yearOfExperience", "0")
+      } else {
+        // Round yeoWatchNumber to the nearest integer and set it as yearOfExperience
+        const roundedValue = Math.round(yeoWatchNumber)
+        form.setValue("yearOfExperience", roundedValue.toString())
+      }
+    } else {
+      // Handle cases where yeoWatchNumber is not a valid number
+      // Set a default value or handle it as needed
+      form.setValue("yearOfExperience", "0")
+    }
+  }, [yeoWatch])
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true)
     let photoUrl = values.photoUrl
@@ -199,6 +217,12 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         .from("profile_image")
         .upload(`${user.uuid}/${uuid}_${image.name}`, image)
 
+      if (error) {
+        return toast({
+          title: "上載嘜頭時出錯！",
+          description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+        })
+      }
       const { data: imageUrl } = await supabase.storage
         .from("profile_image")
         .getPublicUrl(`${user.uuid}/${uuid}_${image.name}`)
@@ -222,7 +246,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         job_title: values.jobTitle,
         year_of_experience: values.yearOfExperience
           ? parseInt(values.yearOfExperience)
-          : null,
+          : "0",
         country_uuid: values.countryUuid,
         province_uuid: values.provinceUuid,
         city_uuid: values.cityUuid,
@@ -235,7 +259,12 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       .eq("uuid", user.uuid)
 
     if (error) {
+      return toast({
+        title: "出事！",
+        description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+      })
     }
+
     router.push("/")
     setIsSubmitting(false)
   }
@@ -253,23 +282,6 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       }
 
       reader.readAsDataURL(imageFile)
-    }
-  }
-
-  const handleYoeChange = (e: any) => {
-    // Get the raw input value from the event
-    const rawValue = e.target.value
-
-    // Parse the input value to an integer
-    const integerValue = parseInt(rawValue)
-
-    // Check if the parsed value is a valid integer
-    if (!isNaN(integerValue) && integerValue >= 0) {
-      // If it's a non-negative integer, set the value as is
-      setValue("yearOfExperience", integerValue.toString())
-    } else {
-      // If it's negative or not a valid integer, set it to '0'
-      setValue("yearOfExperience", "0")
     }
   }
 
@@ -359,10 +371,10 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             description="呢度寫翻你個Title，如果搵工就寫翻自己想搵乜工，方便人Search到你。"
           />
 
-          <NumberInput
+          <FormNumberInput
+            control={form.control}
             label="工作年資"
-            onChange={handleYoeChange}
-            value={yeoWatch}
+            name="yearOfExperience"
           />
 
           <FormSelect
