@@ -1,6 +1,4 @@
-import { ISelectOption } from "@/components/customized-ui/selects/base"
-
-const refererSortingOptions = [
+const referralSortingOptions = [
   {
     value: "yoe,ae",
     title: "年資-由低到高",
@@ -11,4 +9,4 @@ const refererSortingOptions = [
   },
 ]
 
-export { refererSortingOptions }
+export { referralSortingOptions }

@@ -70,19 +70,19 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
       </CardHeader>
 
       <CardContent className="hidden h-full w-full md:flex flex-col md:flex-row">
-        <div className="flex flex-col items-center justify-start w-1/4">
+        <div className="flex flex-col items-center justify-start w-[35%]">
           {photoUrl && (
             <BaseAvatar
               fallBack={username[0]}
               alt={username}
-              url={undefined}
+              url={photoUrl}
               size="large"
             />
           )}
           <p className="text-lg mt-12 font-semibold">{username}</p>
         </div>
 
-        <ScrollArea className="h-[240px] w-3/4 whitespace-pre-wrap ">
+        <ScrollArea className="h-[240px] w-[65%] whitespace-pre-wrap">
           {description}
         </ScrollArea>
       </CardContent>
@@ -98,7 +98,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
       </CardFooter>
 
       {/* for small screen */}
-      <CardContent className="flex h-full w-full md:hidden flex-col ">
+      <CardContent className="flex h-full w-full md:hidden flex-col">
         <ScrollArea className="h-[200px] whitespace-pre-wrap ">
           {description}
         </ScrollArea>
@@ -107,7 +107,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
       <CardFooter className="flex flex-col md:hidden">
         <div className="flex flex-row justify-center items-center w-full">
           {photoUrl && (
-            <BaseAvatar fallBack={username[0]} alt={username} url={undefined} />
+            <BaseAvatar fallBack={username[0]} alt={username} url={photoUrl} />
           )}
           <p>{username}</p>
         </div>

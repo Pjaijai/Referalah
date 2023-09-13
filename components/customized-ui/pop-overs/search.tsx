@@ -1,5 +1,5 @@
-import React, { ChangeEvent, ChangeEventHandler, useState } from "react"
-import { refererSortingOptions } from "@/utils/common/sorting/referer"
+import React, { ChangeEvent } from "react"
+import { referralSortingOptions } from "@/utils/common/sorting/referer"
 import { Label } from "@radix-ui/react-label"
 
 import { ICityResponse } from "@/types/api/response/city"
@@ -88,9 +88,9 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
           <div className="grid grid-cols-3 items-center gap-4">
             <Label>排列</Label>
             <BaseSelect
-              options={refererSortingOptions}
+              options={referralSortingOptions}
               onChange={onSortingChange}
-              defaultValue={refererSortingOptions[0].value}
+              defaultValue={referralSortingOptions[0].value}
               value={currentSorting}
             />
           </div>

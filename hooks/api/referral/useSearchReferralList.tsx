@@ -10,12 +10,12 @@ interface ISearchRefererFilterMeta {
   sorting: string
   yoeMax?: string
   yoeMin?: string
-  // page: number
 }
 
-const useSearchRefererList = (
+const useSearchReferralList = (
   sorting: string,
-  filterMeta: ISearchRefererFilterMeta
+  filterMeta: ISearchRefererFilterMeta,
+  type: "referer" | "referee"
 ) => {
   const fetchRefererList = async ({ pageParam = 0, queryKey }: any) => {
     const NUMBER_OF_DATE_PER_FETCH = 3
@@ -57,7 +57,6 @@ const useSearchRefererList = (
     is_referer
     `
       )
-      .eq("is_referer", true)
       .ilike("company_name", `%${filterMeta.companyName}%`)
       .lte(
         "year_of_experience",
@@ -70,6 +69,13 @@ const useSearchRefererList = (
       .order("year_of_experience", { ascending: order })
       .range(from, to)
 
+    if (type === "referer") {
+      query = query.eq("is_referer", true)
+    }
+
+    if (type === "referee") {
+      query = query.eq("is_referee", true)
+    }
     if (countryUuid !== undefined) {
       query = query.eq("country_uuid", countryUuid)
     }
@@ -88,9 +94,11 @@ const useSearchRefererList = (
   }
 
   return useInfiniteQuery({
-    queryKey: ["referer-list", { sorting, filterMeta }],
+    queryKey: [`${type}-list`, { sorting, filterMeta }],
     queryFn: fetchRefererList,
     keepPreviousData: true,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, allPages: any[]) => {
       if (lastPage && lastPage.length > 0) {
         return allPages.length
@@ -101,4 +109,4 @@ const useSearchRefererList = (
   })
 }
 
-export default useSearchRefererList
+export default useSearchReferralList
