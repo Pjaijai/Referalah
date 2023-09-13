@@ -19,7 +19,7 @@ const useSearchPost = (
   type: TPost
 ) => {
   const fetchPosts = async ({ pageParam = 0, queryKey }: any) => {
-    const NUMBER_OF_DATE_PER_FETCH = 6
+    const NUMBER_OF_DATE_PER_FETCH = 3
     const countryUuid = queryKey[1].filterMeta.countryUuid
     const provinceUuid = queryKey[1].filterMeta.provinceUuid
     const cityUuid = queryKey[1].filterMeta.cityUuid
@@ -68,7 +68,7 @@ const useSearchPost = (
         filterMeta.yoeMin ? parseInt(filterMeta.yoeMin) : 0
       )
       .order("year_of_experience", { ascending: order })
-    //   .range(from, to)
+      .range(from, to)
 
     if (countryUuid !== undefined) {
       query = query.eq("country_uuid", countryUuid)
@@ -90,6 +90,7 @@ const useSearchPost = (
   return useInfiniteQuery({
     queryKey: ["referer-list", { sorting, filterMeta }],
     queryFn: fetchPosts,
+    keepPreviousData: true,
     getNextPageParam: (lastPage, allPages: any[]) => {
       if (lastPage && lastPage.length > 0) {
         return allPages.length
@@ -97,10 +98,6 @@ const useSearchPost = (
         return null
       }
     },
-    // select: (data) => ({
-    //   pages: [...data.pages],
-    //   pageParams: [...data.pageParams],
-    // }),
   })
 }
 

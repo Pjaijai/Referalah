@@ -46,7 +46,6 @@ const RefererPageTemplate: React.FunctionComponent<
     error,
     fetchNextPage,
     isFetching,
-    hasNextPage,
   } = useSearchRefererList(sorting, filterMeta)
   const { industry: industryList } = useGetIndustryList()
   const { city: cityList } = useGetCityList()
@@ -145,16 +144,15 @@ const RefererPageTemplate: React.FunctionComponent<
         </div>
       )}
 
-      {isRefererListLoading && isFetching && <CardSkeletonList />}
+      {isRefererListLoading && <CardSkeletonList />}
 
-      {!isRefererListLoading && !isFetching && list.length > 0 && (
+      {!isRefererListLoading && list.length > 0 && (
         <BaseInfiniteScroll
           dataLength={list ? list.length : 0} //This is important field to render the next data
           next={fetchNextPage}
           hasMore={
             (refererListData &&
               refererListData.pages &&
-              refererListData.pages.length > 1 &&
               refererListData.pages[refererListData.pages.length - 1].length !==
                 0) ??
             true

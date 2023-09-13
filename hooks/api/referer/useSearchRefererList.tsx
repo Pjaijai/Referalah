@@ -1,9 +1,5 @@
-import { useEffect, useState } from "react"
 import { supabase } from "@/utils/services/supabase/config"
 import { useInfiniteQuery } from "@tanstack/react-query"
-import { transformer } from "zod"
-
-import { IRefererResponse } from "@/types/api/response/referer-list"
 
 interface ISearchRefererFilterMeta {
   companyName: string
@@ -94,6 +90,7 @@ const useSearchRefererList = (
   return useInfiniteQuery({
     queryKey: ["referer-list", { sorting, filterMeta }],
     queryFn: fetchRefererList,
+    keepPreviousData: true,
     getNextPageParam: (lastPage, allPages: any[]) => {
       if (lastPage && lastPage.length > 0) {
         return allPages.length
