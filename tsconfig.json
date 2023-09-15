@@ -24,6 +24,15 @@
     ],
     "strictNullChecks": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "supabase/functions/contactReferral/index.ts",
+    "supabase/functions/sendEmail/index.ts",
+    "supabase/functions/_shared/cors.ts",
+    "supabase/functions/_shared/client.ts"
+  ],
   "exclude": ["node_modules"]
 }
