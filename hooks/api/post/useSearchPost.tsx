@@ -83,7 +83,6 @@ const useSearchPost = (
   return useInfiniteQuery({
     queryKey: [`${type}-post-list`, { sorting, filterMeta }],
     queryFn: fetchPosts,
-    keepPreviousData: true,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     getNextPageParam: (lastPage, allPages: any[]) => {

@@ -1,3 +1,5 @@
+import { useState } from "react"
+import { supabase } from "@/utils/services/supabase/config"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -21,21 +23,27 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Icons } from "@/components/icons"
+import { useToast } from "@/components/ui/use-toast"
 
-interface IContactDialogProps {
+export interface IContactDialogProps {
   open: boolean
   username: string
   onContactFormClose: () => void
+  messageType: "post" | "referral"
+  receiverType?: "referer" | "referee"
+  toUuid: string | null
+  postUuid: string | null
 }
 
 const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
   open,
   username,
   onContactFormClose,
+  receiverType,
+  messageType,
+  toUuid,
+  postUuid,
 }) => {
   const formSchema = z.object({
     message: z
@@ -53,25 +61,82 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
       message: "",
     },
   })
-
+  const [isLoading, setIsLoading] = useState(false)
+  const { toast } = useToast()
   const {
     formState: { errors },
   } = form
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
 
-    onContactFormClose()
+    try {
+      setIsLoading(true)
+      if (messageType === "referral") {
+        console.log("referral invoke", receiverType, values.message, toUuid)
+        const { data, error } = await supabase.functions.invoke(
+          "contact-referral",
+          {
+            body: {
+              type: receiverType,
+              message: values.message,
+              to_uuid: toUuid,
+            },
+          }
+        )
+
+        console.log("err", error)
+        if (error) {
+          return toast({
+            title: "Send不到，哭咗🥲",
+            description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+            variant: "destructive",
+          })
+        }
+      } else {
+        console.log("post invoke")
+        const { data, error } = await supabase.functions.invoke(
+          "contact-through-post",
+          {
+            body: {
+              message: values.message,
+              post_uuid: postUuid,
+            },
+          }
+        )
+
+        if (error) {
+          return toast({
+            title: "Send不到，哭咗🥲",
+            description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+            variant: "destructive",
+          })
+        }
+      }
+
+      toast({
+        title: "成功！！！！！！！",
+        description: "祝一切順利！",
+      })
+
+      onContactFormClose()
+    } catch (err) {
+      return toast({
+        title: "Send不到，哭咗🥲",
+        description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+        variant: "destructive",
+      })
+    } finally {
+      setIsLoading(false)
+    }
   }
   return (
     <Dialog open={open}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Send信息俾{username}</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DialogDescription>
+          <DialogTitle>Send信息俾 {username}</DialogTitle>
+          <DialogDescription>注意: 你個Email 會send埋俾對方</DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
@@ -81,18 +146,23 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
               name="message"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{"message"}</FormLabel>
+                  <FormLabel>{"信息"}</FormLabel>
                   <FormControl>
-                    <Textarea placeholder={"placeholder"} {...field} />
+                    <Textarea {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <DialogFooter>
-              <Button onClick={onContactFormClose}>Save changes</Button>
-              <Button type="submit">Save changes</Button>
+            <DialogFooter className="mt-4">
+              <Button onClick={onContactFormClose} variant={"ghost"}>
+                都係算
+              </Button>
+
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? "請等等" : "傳送"}
+              </Button>
             </DialogFooter>
           </form>
         </Form>

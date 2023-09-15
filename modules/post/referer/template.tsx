@@ -146,6 +146,10 @@ const RefererPostPageTemplate: React.FunctionComponent<
                   yearOfExperience={data.year_of_experience}
                   uuid={data.uuid}
                   key={data.uuid}
+                  messageType="post"
+                  postUuid={data.uuid}
+                  toUuid={data.uuid}
+                  receiverType="referer"
                 />
               )
             })}

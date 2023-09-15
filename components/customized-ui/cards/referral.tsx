@@ -1,6 +1,9 @@
 import React, { useState } from "react"
-import ContactDialog from "@/modules/referral/components/dialog/contact"
+import ContactDialog, {
+  IContactDialogProps,
+} from "@/modules/referral/components/dialog/contact"
 import ReferralCardDropDownMenu from "@/modules/referral/components/drop-down-menu/card"
+import { supabase } from "@/utils/services/supabase/config"
 
 import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
@@ -16,11 +19,16 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { useToast } from "@/components/ui/use-toast"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import LinkTooltip from "@/components/customized-ui/tool/Link"
 import { Icons } from "@/components/icons"
 
-interface IReferralCardProps {
+interface IReferralCardProps
+  extends Omit<
+    IContactDialogProps,
+    "open" | "username" | "onContactFormClose"
+  > {
   uuid: string | null
   username: string
   photoUrl: string | null
@@ -47,6 +55,10 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
   username,
   uuid,
   yearOfExperience,
+  messageType,
+  postUuid,
+  receiverType,
+  toUuid,
 }) => {
   const [isContactFormOpen, setIsContactFormOpen] = useState(false)
 
@@ -56,6 +68,10 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
         open={isContactFormOpen}
         username={username}
         onContactFormClose={() => setIsContactFormOpen(false)}
+        toUuid={toUuid}
+        messageType={messageType}
+        postUuid={postUuid}
+        receiverType={receiverType}
       />
 
       <CardHeader className="justify-between">
@@ -71,14 +87,13 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
 
       <CardContent className="hidden h-full w-full md:flex flex-col md:flex-row">
         <div className="flex flex-col items-center justify-start w-[35%]">
-          {photoUrl && (
-            <BaseAvatar
-              fallBack={username[0]}
-              alt={username}
-              url={photoUrl}
-              size="large"
-            />
-          )}
+          <BaseAvatar
+            fallBack={username[0]}
+            alt={username}
+            url={photoUrl || undefined}
+            size="large"
+          />
+
           <p className="text-lg mt-12 font-semibold">{username}</p>
         </div>
 
@@ -106,9 +121,11 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
 
       <CardFooter className="flex flex-col md:hidden">
         <div className="flex flex-row justify-center items-center w-full">
-          {photoUrl && (
-            <BaseAvatar fallBack={username[0]} alt={username} url={photoUrl} />
-          )}
+          <BaseAvatar
+            fallBack={username[0]}
+            alt={username}
+            url={photoUrl || undefined}
+          />
           <p>{username}</p>
         </div>
 
