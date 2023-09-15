@@ -159,8 +159,6 @@ const CreatePostTemplate: React.FunctionComponent<
       description: values.description,
     })
 
-    console.log("error", error)
-
     if (error) {
       return toast({
         title: "出事！",

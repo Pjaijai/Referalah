@@ -6,46 +6,47 @@ import { corsHeaders } from "../_shared/cors.ts"
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")
 
 // TODO add email record
-serve(async (req) => {
-  const client = initSupabaseClient(req)
-
-  console.log("getting1", RESEND_API_KEY, Deno.env.get("RESEND_API_KEY"))
-
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders })
-  }
-  const { type, message, to_uuid } = await req.json()
-
-  if (!type) {
-    return new Response("Missing type", {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 400,
-    })
-  }
-
-  if (!message) {
-    return new Response("Missing Message", {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 400,
-    })
-  }
-
-  if (!to_uuid) {
-    return new Response("Missing to_uuid", {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 400,
-    })
-  }
-
-  if (message.length > 3000) {
-    return new Response("Message too long", {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 400,
-    })
-  }
-
+serve(async (req: any) => {
   try {
+    if (req.method === "OPTIONS") {
+      return new Response("ok", { headers: corsHeaders })
+    }
+
+    // // N
+    const client = initSupabaseClient(req)
+
+    const { type, message, to_uuid } = await req.json()
+
+    if (!type) {
+      return new Response("Missing type", {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400,
+      })
+    }
+
+    if (!message) {
+      return new Response("Missing Message", {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400,
+      })
+    }
+
+    if (!to_uuid) {
+      return new Response("Missing to_uuid", {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400,
+      })
+    }
+
+    if (message.length > 3000) {
+      return new Response("Message too long", {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400,
+      })
+    }
+
     // Function code here ...
+
     const {
       data: { user },
     } = await client.auth.getUser()
@@ -136,8 +137,6 @@ serve(async (req) => {
       `
     }
 
-    console.log("adsasdasd reseunda pi", `Bearer ${RESEND_API_KEY}`)
-
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -146,7 +145,7 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         from: "onboarding@resend.dev",
-        to: "pwongct2000@gmail.com",
+        to: receiver.email,
         subject: subject,
         html: body,
       }),

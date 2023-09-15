@@ -29,7 +29,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "supabase/functions/contactReferral/index.ts",
+    "supabase/functions/contact-referral/index.ts",
+    "supabase/functions/ contact-through-post/index.ts",
     "supabase/functions/sendEmail/index.ts",
     "supabase/functions/_shared/cors.ts",
     "supabase/functions/_shared/client.ts"
