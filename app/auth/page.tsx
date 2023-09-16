@@ -1,19 +1,13 @@
 "use client"
 
-import React, { useState } from "react"
-import { supabase } from "@/utils/services/supabase/config"
-import { Auth } from "@supabase/auth-ui-react"
-import { ThemeSupa } from "@supabase/auth-ui-shared"
+import React from "react"
+import AuthPageTemplate from "@/modules/auth/template"
 
 const AuthPage = () => {
   return (
-    <>
-      <Auth
-        supabaseClient={supabase}
-        appearance={{ theme: ThemeSupa }}
-        providers={["google"]}
-      />
-    </>
+    <div className="mt-20 flex justify-center items-center">
+      <AuthPageTemplate />
+    </div>
   )
 }
 

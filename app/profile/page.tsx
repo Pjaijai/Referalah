@@ -1,20 +1,13 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { NextPage } from "next"
 import { useRouter } from "next/navigation"
 import EditProfileTemplate from "@/modules/profile/edit/template"
 import ViewProfileTemplate from "@/modules/profile/view/template"
 import { supabase } from "@/utils/services/supabase/config"
 
-import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
-import useGetCityList from "@/hooks/api/location/useGetCityList"
-import useGetCountryList from "@/hooks/api/location/useGetCountryList"
-import useGetProvinceList from "@/hooks/api/location/useGetProvinceList"
 import useUserStore from "@/hooks/state/user/useUserStore"
 import { Icons } from "@/components/icons"
-
-// interface IProfilePageProps extends NextPage {}
 
 const Page = ({ params }: { params: { slug: string } }) => {
   const isUserSignIn = useUserStore((state) => state.isSignIn)
@@ -22,10 +15,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
   const [profile, setProfile] = useState<IUserResponse | null>()
-  // const { industry: industryList } = useGetIndustryList()
-  // const { city: cityList } = useGetCityList()
-  // const { country: countryList } = useGetCountryList()
-  // const { province: provinceList } = useGetProvinceList()
+
   const [isEditMode, setIsEditMode] = useState(false)
 
   useEffect(() => {

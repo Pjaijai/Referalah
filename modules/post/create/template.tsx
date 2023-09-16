@@ -23,7 +23,6 @@ import FormTextInput from "@/components/customized-ui/form/input"
 import FormNumberInput from "@/components/customized-ui/form/number"
 import FormSelect from "@/components/customized-ui/form/select"
 import FormTextArea from "@/components/customized-ui/form/text-area"
-import NumberInput from "@/components/customized-ui/inputs/number"
 
 interface ICreatePostTemplateProps {}
 
