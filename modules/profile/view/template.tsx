@@ -32,10 +32,7 @@ export interface IViewProfileTemplateProps {
   socialMediaUrl: string | null
   isReferer: boolean
   isReferee: boolean
-  industryList: IIndustryResponse[]
-  cityList: ICityResponse[]
-  countryList: ICountryResponse[]
-  provinceList: IProvinceResponse[]
+
   setIsEditMode: (value: boolean) => void
 }
 const ViewProfileTemplate: React.FunctionComponent<
@@ -83,7 +80,6 @@ const ViewProfileTemplate: React.FunctionComponent<
           fallBack={username && username[0]}
           size="large"
         />
-        {!photoUrl && <Icons.user />}
       </div>
 
       <h5 className="text-2xl text-center font-semibold">{username}</h5>
@@ -125,23 +121,26 @@ const ViewProfileTemplate: React.FunctionComponent<
         )}
       </li>
 
-      <div className="flex justify-center gap-x-2 mt-8 w-full">
-        <div className="flex items-center space-x-2">
+      <div className="flex justify-center gap-2 mt-8 w-full">
+        <div className="flex flex-row items-center gap-2">
           <Checkbox checked={isReferer} />
           <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             推薦人
           </label>
         </div>
 
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2">
           <Checkbox checked={isReferee} />
           <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             受薦人
           </label>
         </div>
       </div>
-      <div className="container mt-8 shadow-md rounded-lg p-4 break-words  whitespace-pre-wrap">
-        {description}
+
+      <div className="container text-center mt-8">
+        <div className="text-left inline-block break-all whitespace-pre-wrap">
+          {description}
+        </div>
       </div>
     </div>
   )

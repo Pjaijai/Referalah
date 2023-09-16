@@ -1,20 +1,13 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { NextPage } from "next"
 import { useRouter } from "next/navigation"
 import EditProfileTemplate from "@/modules/profile/edit/template"
 import ViewProfileTemplate from "@/modules/profile/view/template"
 import { supabase } from "@/utils/services/supabase/config"
 
-import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
-import useGetCityList from "@/hooks/api/location/useGetCityList"
-import useGetCountryList from "@/hooks/api/location/useGetCountryList"
-import useGetProvinceList from "@/hooks/api/location/useGetProvinceList"
 import useUserStore from "@/hooks/state/user/useUserStore"
 import { Icons } from "@/components/icons"
-
-// interface IProfilePageProps extends NextPage {}
 
 const Page = ({ params }: { params: { slug: string } }) => {
   const isUserSignIn = useUserStore((state) => state.isSignIn)
@@ -22,10 +15,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
   const [profile, setProfile] = useState<IUserResponse | null>()
-  const { industry: industryList } = useGetIndustryList()
-  const { city: cityList } = useGetCityList()
-  const { country: countryList } = useGetCountryList()
-  const { province: provinceList } = useGetProvinceList()
+
   const [isEditMode, setIsEditMode] = useState(false)
 
   useEffect(() => {
@@ -107,7 +97,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
     )
   if (!isLoading && profile)
     return (
-      <div className="h-full w-full mt-8">
+      <div className="h-full w-full mt-8 ">
         {!isEditMode && (
           <ViewProfileTemplate
             photoUrl={profile.avatar_url || undefined}
@@ -120,16 +110,16 @@ const Page = ({ params }: { params: { slug: string } }) => {
             company={profile.company_name}
             jobTitle={profile.job_title}
             yearOfExperience={profile.year_of_experience}
-            country={profile.country.cantonese_name}
-            province={profile.province.cantonese_name}
-            city={profile.city.cantonese_name}
-            // resumeUrl={profile.resume_url}
-            industry={profile.industry.cantonese_name}
+            country={profile.country && profile.country.cantonese_name}
+            province={profile.province && profile.province.cantonese_name}
+            city={profile.city && profile.city.cantonese_name}
+            industry={profile.industry && profile.industry.cantonese_name}
             socialMediaUrl={profile.social_media_url}
-            industryList={industryList}
-            cityList={cityList}
-            countryList={countryList}
-            provinceList={provinceList}
+            // resumeUrl={profile.resume_url}
+            // industryList={industryList}
+            // cityList={cityList}
+            // countryList={countryList}
+            // provinceList={provinceList}
             isReferee={profile.is_referee}
             isReferer={profile.is_referer}
             setIsEditMode={setIsEditMode}
@@ -144,11 +134,11 @@ const Page = ({ params }: { params: { slug: string } }) => {
             company={profile.company_name}
             jobTitle={profile.job_title}
             yearOfExperience={profile.year_of_experience}
-            countryUuid={profile.country.uuid}
-            provinceUuid={profile.province.uuid}
-            cityUuid={profile.city.uuid}
+            countryUuid={profile.country && profile.country.uuid}
+            provinceUuid={profile.province && profile.province.uuid}
+            cityUuid={profile.city && profile.city.uuid}
             // resumeUrl={profile.resume_url}
-            industryUuid={profile.industry.uuid}
+            industryUuid={profile.industry && profile.industry.uuid}
             socialMediaUrl={profile.social_media_url}
             isReferee={profile.is_referee}
             isReferer={profile.is_referer}

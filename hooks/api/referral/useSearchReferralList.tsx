@@ -96,7 +96,6 @@ const useSearchReferralList = (
   return useInfiniteQuery({
     queryKey: [`${type}-list`, { sorting, filterMeta }],
     queryFn: fetchRefererList,
-    keepPreviousData: true,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, allPages: any[]) => {

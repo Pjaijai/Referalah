@@ -18,9 +18,6 @@ interface IReferralCardDropDownMenuProps {
 const ReferralCardDropDownMenu: React.FunctionComponent<
   IReferralCardDropDownMenuProps
 > = ({ url, onContactClick }) => {
-  const handleClick = () => {
-    onContactClick()
-  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -32,17 +29,18 @@ const ReferralCardDropDownMenu: React.FunctionComponent<
             <Link
               href={url}
               target="_blank"
-              className="flex justify-start items-center gap-x-4 text-lg"
+              className="grid grid-cols-3 items-center gap-4"
             >
               <Icons.link />
-              <p>連結</p>
+              <p className="text-lg">連結</p>
             </Link>
           )}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={handleClick}>
-          <div className="flex justify-start items-center gap-x-4 text-lg">
+
+        <DropdownMenuItem onClick={onContactClick}>
+          <div className="grid grid-cols-3 items-center gap-4">
             <Icons.mail />
-            <p>contact</p>
+            <p className="text-lg">聯絡</p>
           </div>
         </DropdownMenuItem>
       </DropdownMenuContent>

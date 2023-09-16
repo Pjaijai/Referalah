@@ -23,7 +23,6 @@ import FormTextInput from "@/components/customized-ui/form/input"
 import FormNumberInput from "@/components/customized-ui/form/number"
 import FormSelect from "@/components/customized-ui/form/select"
 import FormTextArea from "@/components/customized-ui/form/text-area"
-import NumberInput from "@/components/customized-ui/inputs/number"
 
 interface ICreatePostTemplateProps {}
 
@@ -145,6 +144,7 @@ const CreatePostTemplate: React.FunctionComponent<
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true)
+
     const { error } = await supabase.from("post").insert({
       url: values.url,
       country_uuid: values.countryUuid,
@@ -158,8 +158,6 @@ const CreatePostTemplate: React.FunctionComponent<
       job_title: values.jobTitle,
       description: values.description,
     })
-
-    console.log("error", error)
 
     if (error) {
       return toast({
