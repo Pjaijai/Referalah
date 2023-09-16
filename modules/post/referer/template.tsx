@@ -24,8 +24,8 @@ const RefererPostPageTemplate: React.FunctionComponent<
   const [countryUuid, setCountryUuid] = useState<undefined | string>()
   const [cityUuid, setCityUuid] = useState<undefined | string>()
   const [industryUuid, setIndustryUuid] = useState<undefined | string>()
-  const [yoeMin, setYoeMin] = useState<undefined | string>()
-  const [yoeMax, setYoeMax] = useState<undefined | string>()
+  const [yoeMin, setYoeMin] = useState<undefined | string>("0")
+  const [yoeMax, setYoeMax] = useState<undefined | string>("100")
   const [sorting, setSorting] = useState(referralSortingOptions[0].value)
   const debouncedCompanyName = useDebounce(companyName, 800)
 
@@ -129,7 +129,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
             true
           }
         >
-          <div className="grid grid-cols-1 gap-4  w-full overflow-hidden mt-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4  w-full overflow-hidden mt-8">
             {list.map((data) => {
               return (
                 <ReferralCard

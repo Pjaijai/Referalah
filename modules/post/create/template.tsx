@@ -145,6 +145,7 @@ const CreatePostTemplate: React.FunctionComponent<
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true)
+
     const { error } = await supabase.from("post").insert({
       url: values.url,
       country_uuid: values.countryUuid,

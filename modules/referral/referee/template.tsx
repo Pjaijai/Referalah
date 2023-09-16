@@ -23,8 +23,8 @@ const RefereePageTemplate: React.FunctionComponent<
   const [countryUuid, setCountryUuid] = useState<undefined | string>()
   const [cityUuid, setCityUuid] = useState<undefined | string>()
   const [industryUuid, setIndustryUuid] = useState<undefined | string>()
-  const [yoeMin, setYoeMin] = useState<undefined | string>()
-  const [yoeMax, setYoeMax] = useState<undefined | string>()
+  const [yoeMin, setYoeMin] = useState<undefined | string>("0")
+  const [yoeMax, setYoeMax] = useState<undefined | string>("100")
   const [sorting, setSorting] = useState(referralSortingOptions[0].value)
   const debouncedCompanyName = useDebounce(companyName, 800)
 

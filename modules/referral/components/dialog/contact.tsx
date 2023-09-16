@@ -74,7 +74,6 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
     try {
       setIsLoading(true)
       if (messageType === "referral") {
-        console.log("referral invoke", receiverType, values.message, toUuid)
         const { data, error } = await supabase.functions.invoke(
           "contact-referral",
           {
@@ -86,7 +85,6 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
           }
         )
 
-        console.log("err", error)
         if (error) {
           return toast({
             title: "Send不到，哭咗🥲",
@@ -95,7 +93,6 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
           })
         }
       } else {
-        console.log("post invoke")
         const { data, error } = await supabase.functions.invoke(
           "contact-through-post",
           {

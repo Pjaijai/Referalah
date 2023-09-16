@@ -136,8 +136,11 @@ const ViewProfileTemplate: React.FunctionComponent<
           </label>
         </div>
       </div>
-      <div className="container mt-8 shadow-md rounded-lg p-4 break-words  whitespace-pre-wrap">
-        {description}
+
+      <div className="container text-center mt-8">
+        <div className="text-left inline-block break-all whitespace-pre-wrap">
+          {description}
+        </div>
       </div>
     </div>
   )

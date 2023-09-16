@@ -18,7 +18,14 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({ children }) => {
       if (session && user.isSignIn !== true) {
         const { data, error }: any = await supabase
           .from("user")
-          .select("*")
+          .select(
+            `
+            email,
+            uuid,
+            username,
+            avatar_url
+            `
+          )
           .eq("uuid", session.user.id)
           .single()
 
@@ -26,6 +33,7 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({ children }) => {
           email: data.email,
           uuid: data.uuid,
           username: data.username,
+          photoUrl: data.avatar_url,
         })
       } else {
         reSetUserState()

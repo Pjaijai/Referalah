@@ -1,4 +1,5 @@
 import {
+  ChevronDown,
   Link,
   Loader,
   LucideProps,
@@ -27,6 +28,7 @@ export const Icons = {
   loader: Loader,
   undo: Undo2,
   moreVertical: MoreVertical,
+  chevronDown: ChevronDown,
   slidersHorizontal: SlidersHorizontal,
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>

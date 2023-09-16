@@ -52,6 +52,7 @@ serve(async (req: any) => {
               job_title,
               description,
               url,
+              uuid
       `
       )
       .eq("uuid", post_uuid)

@@ -31,7 +31,7 @@ const useSearchPost = (
     let query = supabase
       .from("post")
       .select(
-        `
+        `   uuid,
             created_at,
             url,
             description,
