@@ -128,7 +128,7 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
   }
   return (
     <Dialog open={open}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="w-[350px]">
         <DialogHeader>
           <DialogTitle>Send信息俾 {username}</DialogTitle>
           <DialogDescription>注意: 你個Email 會send埋俾對方</DialogDescription>
