@@ -98,44 +98,22 @@ serve(async (req: any) => {
       })
     }
 
-    let subject
-    let body
-
-    if (type === "referer") {
-      subject = `${sender.username} 想搵你幫手做推薦人`
-      body = `
+    const subject = `${sender.username} 想搵你做${
+      type === "referer" ? "推薦人" : "受薦人"
+    }`
+    const body = `
       <html lang="zh-Hk">
       <body>
-          <p>Dear <span id="receiverUsername">${receiver.username}</span>,</p>
-          <p>You have received an email from <span id="senderUsername">${sender.username}</span>.</p>
-          <p>Email content: ${sender.email}</p>
+          <p>Hi ${receiver.username}!</p>
+          <p>${sender.username} send咗個訊息俾你。佢個電郵地址: ${sender.email}</p>
+          <p>佢個訊息</p>
           <div id="emailContent" style="word-break: break-word; white-space: pre-wrap;">
-              <!-- Email content goes here -->
               ${message}
           </div>
-          <p>Thank you for using our service.</p>
+          <p>溫馨提示：保持警覺，祝大家順利！</p>
       </body>
       </html>
       `
-    }
-
-    if (type === "referee") {
-      subject = `${sender.username} 想搵你幫手做受薦人`
-      body = `
-      <html lang="zh-Hk">
-      <body>
-          <p>Dear <span id="receiverUsername">${receiver.username}</span>,</p>
-          <p>You have received an email from <span id="senderUsername">${sender.username}</span> (<span id="senderEmail">[Sender's Email]</span>).</p>
-          <p>Email content: ${sender.email}</p>
-          <div id="emailContent" style="word-break: break-word; white-space: pre-wrap;">
-              <!-- Email content goes here -->
-              ${message}
-          </div>
-          <p>Thank you for using our service.</p>
-      </body>
-      </html>
-      `
-    }
 
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -157,6 +135,15 @@ serve(async (req: any) => {
         status: 400,
       })
     }
+
+    const { error: insertError } = await client
+      .from("referral_contact_history")
+      .insert({
+        sender_uuid: sender.uuid,
+        receiver_uuid: sender.uuid,
+        type: type,
+        message: message,
+      })
 
     return new Response(JSON.stringify("success"), {
       headers: { ...corsHeaders, "Content-Type": "application/json" }, // Be sure to add CORS headers here too
