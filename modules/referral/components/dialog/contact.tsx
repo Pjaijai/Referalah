@@ -151,7 +151,11 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
             />
 
             <DialogFooter className="mt-4">
-              <Button onClick={onContactFormClose} variant={"ghost"}>
+              <Button
+                onClick={onContactFormClose}
+                type="button"
+                variant={"ghost"}
+              >
                 都係算
               </Button>
 

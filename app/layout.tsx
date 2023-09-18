@@ -5,6 +5,7 @@ import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/toaster"
+import NavFooter from "@/components/customized-ui/footer/nav"
 import APIProvider from "@/components/providers/api"
 import AuthProvider from "@/components/providers/auth"
 import { SiteHeader } from "@/components/site-header"
@@ -48,7 +49,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <AuthProvider>
                 <div className="flex min-h-screen flex-col">
                   <SiteHeader />
-                  <div className="container">{children}</div>
+                  <div className="container flex-grow">{children}</div>
+                  <NavFooter />
                 </div>
                 <TailwindIndicator />
               </AuthProvider>
