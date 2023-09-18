@@ -2,9 +2,7 @@
 
 import Link from "next/link"
 
-import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
 import { BaseNavigationMenu } from "@/components/customized-ui/navigation-menu/base"
 
 export default function IndexPage() {

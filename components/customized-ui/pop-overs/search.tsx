@@ -21,13 +21,6 @@ import {
 import BaseSelect from "@/components/customized-ui/selects/base"
 import { Icons } from "@/components/icons"
 
-// TODO
-// couuntry
-// city
-// province
-//induestry
-// year from x to x
-// sort by yeo
 interface ISearchPopoverProps {
   countryList: ICountryResponse[]
   provinceList: IProvinceResponse[]

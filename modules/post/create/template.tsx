@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
+import Link from "next/link"
 import { maximumWordValidation } from "@/modules/profile/form/validation.ts/max-word"
 import { supabase } from "@/utils/services/supabase/config"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -18,6 +19,7 @@ import useProvinceOptions from "@/hooks/common/options/useProvinceOptions"
 import useUserStore from "@/hooks/state/user/useUserStore"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
+import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
 import FormTextInput from "@/components/customized-ui/form/input"
 import FormNumberInput from "@/components/customized-ui/form/number"
@@ -143,6 +145,18 @@ const CreatePostTemplate: React.FunctionComponent<
   }, [yeoWatch])
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (!user.isSignIn)
+      return toast({
+        title: "未登入",
+        description: "登入咗先可以開Post",
+        variant: "destructive",
+        action: (
+          <ToastAction altText="登入">
+            <Link href={"/auth"}>登入</Link>
+          </ToastAction>
+        ),
+      })
+
     setIsSubmitting(true)
 
     const { error } = await supabase.from("post").insert({
