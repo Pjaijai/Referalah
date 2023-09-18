@@ -24,6 +24,7 @@ const useSearchPost = (
     const cityUuid = queryKey[1].filterMeta.cityUuid
     const industryUuid = queryKey[1].filterMeta.industryUuid
     const sort = queryKey[1].sorting.split(",")
+    const sortingType = sort[0]
     const order = sort[1] === "dec" ? false : true
     const from = pageParam * NUMBER_OF_DATE_PER_FETCH
     const to = from + NUMBER_OF_DATE_PER_FETCH
@@ -60,9 +61,15 @@ const useSearchPost = (
       .ilike("company_name", `%${filterMeta.companyName}%`)
       .lte("year_of_experience", 100)
       .gte("year_of_experience", 0)
-      .order("year_of_experience", { ascending: order })
       .range(from, to)
 
+    if (sortingType === "createdAt") {
+      query = query.order("created_at", { ascending: order })
+    }
+
+    if (sortingType === "yoe") {
+      query = query.order("year_of_experience", { ascending: order })
+    }
     if (countryUuid !== undefined) {
       query = query.eq("country_uuid", countryUuid)
     }

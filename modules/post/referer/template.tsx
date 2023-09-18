@@ -1,7 +1,7 @@
 "use client"
 
 import React, { ChangeEvent, useState } from "react"
-import { referralSortingOptions } from "@/utils/common/sorting/referer"
+import { postSortingOptions } from "@/utils/common/sorting/post"
 
 import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
 import useGetCityList from "@/hooks/api/location/useGetCityList"
@@ -26,7 +26,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
   const [industryUuid, setIndustryUuid] = useState<undefined | string>()
   const [yoeMin, setYoeMin] = useState<undefined | string>("0")
   const [yoeMax, setYoeMax] = useState<undefined | string>("100")
-  const [sorting, setSorting] = useState(referralSortingOptions[0].value)
+  const [sorting, setSorting] = useState(postSortingOptions[0].value)
   const debouncedCompanyName = useDebounce(companyName, 800)
 
   const { industry: industryList } = useGetIndustryList()
@@ -107,6 +107,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
           currentProvinceUuid={provinceUuid}
           currentYeoMax={yoeMax}
           currentYeoMin={yoeMin}
+          type="post"
         />
       </div>
 
@@ -150,6 +151,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
                   postUuid={data.uuid}
                   toUuid={data.uuid}
                   receiverType="referer"
+                  createdAt={data.created_at.toString()}
                 />
               )
             })}

@@ -135,6 +135,7 @@ const RefererPageTemplate: React.FunctionComponent<
           currentProvinceUuid={provinceUuid}
           currentYeoMax={yoeMax}
           currentYeoMin={yoeMin}
+          type="referral"
         />
       </div>
       {!isRefererListLoading && !isFetching && list.length === 0 && (
