@@ -12,6 +12,13 @@ serve(async (req: any) => {
   const client = initSupabaseClient(req)
   const { message, post_uuid } = await req.json()
 
+  if (!client) {
+    return new Response("User not signed in", {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      status: 400,
+    })
+  }
+
   if (!message) {
     return new Response("Missing Message", {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -49,6 +56,7 @@ serve(async (req: any) => {
                   username,
                   email
               ),
+              company_name,
               job_title,
               description,
               url,
@@ -77,42 +85,33 @@ serve(async (req: any) => {
         status: 400,
       })
     }
-    let subject
-    let body
-    if (post.type === "referer") {
-      subject = `${sender.username} 想搵你幫手做推薦人2`
-      body = `
+
+    const subject = `${sender.username}對於你係工作${
+      post.type === "referer" ? "(推薦區)" : "(受薦區)"
+    }開嘅post有興趣`
+    const body = `
             <html lang="zh-Hk">
             <body>
-                <p>Dear <span id="receiverUsername">${post.user.username}</span>,</p>
-                <p>You have received an email from <span id="senderUsername">${sender.username}</span>.</p>
-                <p>Email content: ${sender.email}</p>
-                <div id="emailContent" style="word-break: break-word; white-space: pre-wrap;">
-                    <!-- Email content goes here -->
-                    ${post.description}
+                <p>Hi ${post.user.username}!</p>
+                <p>${sender.username}對於你係工作${
+      post.type === "referer" ? "(推薦區)" : "(受薦區)"
+    }開嘅post有興趣</p>
+                <p>職位: ${post.job_title}</p>
+                <p>公司名稱: ${post.company_name}</p>
+                <p>佢個電郵地址: ${sender.email}</p>
+                <p>佢個訊息</p>
+                <div style="word-break: break-word; white-space: pre-wrap;">
+                    ${message}
                 </div>
-                <p>Thank you for using our service.</p>
+
+                  <p>Post 原文</p>
+                  <div style="word-break: break-word; white-space: pre-wrap; color: gray;">
+                  ${post.description}
+                  </div>
+                  <p>溫馨提示：保持警覺，祝大家順利！</p>
             </body>
             </html>
             `
-    }
-    if (post.type === "referee") {
-      subject = `${sender.username} 想搵你幫手做受薦人1`
-      body = `
-            <html lang="zh-Hk">
-            <body>
-                <p>Dear <span id="receiverUsername">${post.username}</span>,</p>
-                <p>You have received an email from <span id="senderUsername">${sender.username}</span> (<span id="senderEmail">[Sender's Email]</span>).</p>
-                <p>Email content: ${sender.email}</p>
-                <div id="emailContent" style="word-break: break-word; white-space: pre-wrap;">
-                    <!-- Email content goes here -->
-                    ${post.description}
-                </div>
-                <p>Thank you for using our service.</p>
-            </body>
-            </html>
-            `
-    }
 
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
