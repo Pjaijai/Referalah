@@ -1,4 +1,5 @@
 import React, { ChangeEvent } from "react"
+import { postSortingOptions } from "@/utils/common/sorting/post"
 import { referralSortingOptions } from "@/utils/common/sorting/referer"
 import { Label } from "@radix-ui/react-label"
 
@@ -48,6 +49,7 @@ interface ISearchPopoverProps {
   currentYeoMin?: string
   currentYeoMax?: string
   currentSorting: string
+  type: "post" | "referral"
 }
 const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
   countryList,
@@ -70,6 +72,7 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
   currentYeoMin,
   currentYeoMax,
   currentSorting,
+  type,
 }) => {
   const industryOptions = useIndustryOptions(industryList)
   const countryOptions = useCountryOptions(countryList)
@@ -88,9 +91,17 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
           <div className="grid grid-cols-3 items-center gap-4">
             <Label>排列</Label>
             <BaseSelect
-              options={referralSortingOptions}
+              options={
+                type === "referral"
+                  ? referralSortingOptions
+                  : postSortingOptions
+              }
               onChange={onSortingChange}
-              defaultValue={referralSortingOptions[0].value}
+              defaultValue={
+                type === "referral"
+                  ? referralSortingOptions[0].value
+                  : postSortingOptions[0].value
+              }
               value={currentSorting}
             />
           </div>
