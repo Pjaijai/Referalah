@@ -2,15 +2,11 @@ import React, { useEffect, useState } from "react"
 import ContactDialog, {
   IContactDialogProps,
 } from "@/modules/referral/components/dialog/contact"
+import UserSignInDialog from "@/modules/referral/components/dialog/userSignIn"
 import ReferralCardDropDownMenu from "@/modules/referral/components/drop-down-menu/card"
 import compareDateDifferenceHelper from "@/utils/common/helpers/time/compareDateDifference"
-import { supabase } from "@/utils/services/supabase/config"
-import dayjs from "dayjs"
 
-import { ICityResponse } from "@/types/api/response/city"
-import { ICountryResponse } from "@/types/api/response/country"
-import { IIndustryResponse } from "@/types/api/response/industry"
-import { IProvinceResponse } from "@/types/api/response/province"
+import useUserStore from "@/hooks/state/user/useUserStore"
 import { Badge } from "@/components/ui/badge"
 import {
   Card,
@@ -21,10 +17,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { useToast } from "@/components/ui/use-toast"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
-import LinkTooltip from "@/components/customized-ui/tool/Link"
-import { Icons } from "@/components/icons"
 
 interface IReferralCardProps
   extends Omit<
@@ -65,7 +58,9 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
   createdAt,
 }) => {
   const [isContactFormOpen, setIsContactFormOpen] = useState(false)
+  const [isAuthOpen, setIsAuthOpen] = useState(false)
   const [dateDiffText, setDateDiffText] = useState<undefined | string>()
+  const isUserSignIn = useUserStore((state) => state.isSignIn)
 
   useEffect(() => {
     if (createdAt) {
@@ -85,6 +80,13 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
     }
   }, [createdAt])
 
+  const handleContactClick = () => {
+    if (isUserSignIn) {
+      setIsContactFormOpen(true)
+    } else {
+      setIsAuthOpen(true)
+    }
+  }
   return (
     <Card className="flex w-full h-500 md:h-[400px] flex-col justify-between border-2">
       <ContactDialog
@@ -97,12 +99,17 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
         receiverType={receiverType}
       />
 
+      <UserSignInDialog
+        open={isAuthOpen}
+        onDialogClose={() => setIsAuthOpen(false)}
+      />
+
       <CardHeader className="justify-between">
         <CardTitle className="flex  flex-row justify-between items-center">
           <span className="truncate">{jobTitle}</span>
           <ReferralCardDropDownMenu
             url={socialMediaUrl}
-            onContactClick={() => setIsContactFormOpen(true)}
+            onContactClick={handleContactClick}
           />
         </CardTitle>
         <CardDescription>{companyName}</CardDescription>
