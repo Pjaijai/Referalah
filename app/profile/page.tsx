@@ -15,7 +15,6 @@ const Page = ({ params }: { params: { slug: string } }) => {
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
   const [profile, setProfile] = useState<IUserResponse | null>()
-
   const [isEditMode, setIsEditMode] = useState(false)
 
   useEffect(() => {
@@ -66,17 +65,16 @@ const Page = ({ params }: { params: { slug: string } }) => {
           .eq("uuid", userUuid)
           .single()
 
+        console.log(123123, data, error)
         if (error) {
           // Handle the error, e.g., show an error message or redirect
+
           console.error("Error fetching user:", error)
           return
         }
 
         if (data) {
           setProfile(data as any)
-        } else {
-          // Handle the case where no user with the given slug was found
-          console.warn("User not found")
         }
         setIsLoading(false)
       }
