@@ -136,6 +136,15 @@ serve(async (req: any) => {
       })
     }
 
+    const { error: insertError } = await client
+      .from("referral_contact_history")
+      .insert({
+        sender_uuid: sender.uuid,
+        receiver_uuid: sender.uuid,
+        type: type,
+        message: message,
+      })
+
     return new Response(JSON.stringify("success"), {
       headers: { ...corsHeaders, "Content-Type": "application/json" }, // Be sure to add CORS headers here too
       status: 200,

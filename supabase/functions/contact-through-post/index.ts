@@ -99,6 +99,7 @@ serve(async (req: any) => {
                 <p>職位: ${post.job_title}</p>
                 <p>公司名稱: ${post.company_name}</p>
                 <p>佢個電郵地址: ${sender.email}</p>
+                <p>相關網站連結: <a href=${post.url}>${post.url}</p>
                 <p>佢個訊息</p>
                 <div style="word-break: break-word; white-space: pre-wrap;">
                     ${message}
@@ -133,6 +134,16 @@ serve(async (req: any) => {
         status: 400,
       })
     }
+
+    const { error: insertError } = await client
+      .from("post_contact_history")
+      .insert({
+        post_uuid: post.uuid,
+        sender_uuid: sender.uuid,
+        type: post.type,
+        message: message,
+      })
+
     return new Response(JSON.stringify("success"), {
       headers: { ...corsHeaders, "Content-Type": "application/json" }, // Be sure to add CORS headers here too
       status: 200,
