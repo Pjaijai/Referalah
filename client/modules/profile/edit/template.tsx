@@ -107,10 +107,14 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       path: ["company"],
       message: "如果想成為推薦人，請填一填",
     })
-    .refine((schema) => (schema.isReferer ? schema.jobTitle : true), {
-      path: ["jobTitle"],
-      message: "如果想成為推薦人，請填一填",
-    })
+    .refine(
+      (schema) =>
+        schema.isReferer || schema.isReferee ? schema.jobTitle : true,
+      {
+        path: ["jobTitle"],
+        message: "如果想成為推薦人/受薦人，請填一填",
+      }
+    )
     .refine(
       (schema) =>
         schema.isReferer || schema.isReferee ? schema.description : true,
