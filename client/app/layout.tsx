@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {
   title: {
-    default: siteConfig.name,
+    default: `${siteConfig.name} | 海外港人搵Referral平台`,
     template: `%s - ${siteConfig.name}`,
   },
   description: siteConfig.description,
