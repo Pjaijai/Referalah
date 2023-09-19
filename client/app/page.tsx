@@ -4,11 +4,17 @@ import Link from "next/link"
 import { BaseNavigationMenu } from "@/components/customized-ui/navigation-menu/base"
 import { buttonVariants } from "@/components/ui/button"
 import useUserStore from "@/hooks/state/user/useUserStore"
+// import useGetTotalUser from "@/hooks/api/user/useGetTotalUser"
 
 export default function IndexPage() {
+  
   const isUserSignIn = useUserStore(state=> state.isSignIn)
+  // const {data}= useGetTotalUser()
   return (
     <>
+    <div>
+        {/* <h2 className="text-end text-sm mt-4"><span className="text-yellow-300 font-bold">{data || '0'}</span>個會員</h2> */}
+      </div>
       <div className="flex md:hidden justify-center mt-4">
         <BaseNavigationMenu />
       </div>
@@ -36,6 +42,7 @@ export default function IndexPage() {
          
         </div>
       </section>
+      
     </>
   )
 }
