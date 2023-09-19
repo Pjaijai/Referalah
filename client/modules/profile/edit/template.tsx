@@ -210,12 +210,24 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     let photoUrl = values.photoUrl
 
     if (image) {
-      // TODO
-      // clean bacuket before insert image
+      const { data: list, error: listError } = await supabase.storage
+        .from("user_assets")
+        .list(`${user.uuid}/avatar_image`)
+
+      if (list) {
+        const filesToRemove = list.map(
+          (x) => `${user.uuid}/avatar_image/${x.name}`
+        )
+
+        const { error: removeError } = await supabase.storage
+          .from("user_assets")
+          .remove(filesToRemove)
+      }
+
       const uuid = uuidv4()
       const { data, error } = await supabase.storage
-        .from("profile_image")
-        .upload(`${user.uuid}/${uuid}_${image.name}`, image)
+        .from("user_assets")
+        .upload(`${user.uuid}/avatar_image/${uuid}_${image.name}`, image)
 
       if (error) {
         return toast({
@@ -225,7 +237,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       }
       const { data: imageUrl } = await supabase.storage
         .from("profile_image")
-        .getPublicUrl(`${user.uuid}/${uuid}_${image.name}`)
+        .getPublicUrl(`${user.uuid}/avatar_image/${uuid}_${image.name}`)
 
       photoUrl = imageUrl.publicUrl
     }
@@ -330,6 +342,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             label="你嘅嘜頭"
             accept=".jpg, .jpeg, .png"
             onChange={handleProfileImageChange}
+            description="JPG JPEG PNG max 3MB"
           />
 
           <div className="flex   flex-col sm:flex-row gap-4 w-full justify-center items-center mt-4">

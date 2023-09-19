@@ -5,7 +5,7 @@ import { corsHeaders } from "../_shared/cors.ts"
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")
 
-// TODO add email record
+
 serve(async (req: any) => {
   try {
     if (req.method === "OPTIONS") {
