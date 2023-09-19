@@ -3,8 +3,10 @@
 import Link from "next/link"
 import { BaseNavigationMenu } from "@/components/customized-ui/navigation-menu/base"
 import { buttonVariants } from "@/components/ui/button"
+import useUserStore from "@/hooks/state/user/useUserStore"
 
 export default function IndexPage() {
+  const isUserSignIn = useUserStore(state=> state.isSignIn)
   return (
     <>
       <div className="flex md:hidden justify-center mt-4">
@@ -22,13 +24,16 @@ export default function IndexPage() {
         <div className="flex gap-4">
           <Link
             href={"/about"}
-            className={buttonVariants({ variant: "outline" })}
+            className={buttonVariants({ variant: isUserSignIn ?  'default' :'outline' })}
           >
             了解更多
           </Link>
-          <Link href={"/auth"} className={buttonVariants()}>
+          {
+            !isUserSignIn && <Link href={"/auth"} className={buttonVariants()}>
             登入/註冊
           </Link>
+          }
+         
         </div>
       </section>
     </>
