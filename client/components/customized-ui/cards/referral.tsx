@@ -120,11 +120,11 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
           <p className="text-lg mt-12 font-semibold">{username}</p>
         </div>
 
-        <ScrollArea className="h-[240px] w-[65%]  text-center">
-          <div className="text-left inline-block break-all whitespace-pre-wrap">
+        <div className=" h-[240px] w-[65%] text-center">
+          <div className="h-[240px] text-left inline-block break-all whitespace-pre-wrap overflow-auto">
             {description}
           </div>
-        </ScrollArea>
+        </div>
       </CardContent>
 
       <CardFooter className="hidden md:flex md:justify-between md:gap-4">
@@ -145,11 +145,13 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
 
       {/* for small screen */}
       <CardContent className="flex h-full w-full md:hidden flex-col">
-        <ScrollArea className="h-[200px] text-center">
-          <div className="text-left inline-block break-all whitespace-pre-wrap">
+
+      <div className="h-[200px] text-center">
+          <div className="h-[200px] text-left inline-block break-all whitespace-pre-wrap overflow-auto">
             {description}
           </div>
-        </ScrollArea>
+        </div>
+      
       </CardContent>
 
       <CardFooter className="flex flex-col md:hidden">

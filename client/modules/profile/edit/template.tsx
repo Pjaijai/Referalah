@@ -342,7 +342,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             label="你嘅嘜頭"
             accept=".jpg, .jpeg, .png"
             onChange={handleProfileImageChange}
-            description="JPG JPEG PNG max 3MB"
+            description="食到JPG，JPEG，PNG，最多3MB。"
           />
 
           <div className="flex   flex-col sm:flex-row gap-4 w-full justify-center items-center mt-4">
