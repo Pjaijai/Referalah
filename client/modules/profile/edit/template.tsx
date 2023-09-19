@@ -323,7 +323,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           </div>
 
           <div className="flex justify-center">
-            {photoUrl && !base64Image && (
+            {!base64Image && (
               <BaseAvatar
                 url={photoUrl}
                 alt={username}
