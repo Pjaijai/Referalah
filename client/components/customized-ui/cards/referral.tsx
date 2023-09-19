@@ -147,7 +147,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
       <CardContent className="flex h-full w-full md:hidden flex-col">
 
       <div className="h-[200px] text-center">
-          <div className="h-[200px] text-left inline-block break-words whitespace-pre-wrap overflow-auto">
+          <div className="h-[200px] w-[95%] text-left inline-block break-all whitespace-pre-wrap overflow-auto">
             {description}
           </div>
         </div>
