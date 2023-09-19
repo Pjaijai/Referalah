@@ -236,7 +236,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         })
       }
       const { data: imageUrl } = await supabase.storage
-        .from("profile_image")
+        .from("user_assets")
         .getPublicUrl(`${user.uuid}/avatar_image/${uuid}_${image.name}`)
 
       photoUrl = imageUrl.publicUrl
