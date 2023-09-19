@@ -114,7 +114,7 @@ const ViewProfileTemplate: React.FunctionComponent<
           </ul>
         )}
 
-        {yearOfExperience && (
+        {typeof yearOfExperience === "number" && yearOfExperience >= 0 && (
           <ul>
             <Badge> {yearOfExperience}年經驗</Badge>
           </ul>
