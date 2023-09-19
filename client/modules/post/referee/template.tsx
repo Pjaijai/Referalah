@@ -3,6 +3,7 @@
 import React, { ChangeEvent, useState } from "react"
 import { postSortingOptions } from "@/utils/common/sorting/post"
 
+import { ISearchPostResponse } from "@/types/api/response/referer-post"
 import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
 import useGetCityList from "@/hooks/api/location/useGetCityList"
 import useGetCountryList from "@/hooks/api/location/useGetCountryList"

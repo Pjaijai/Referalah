@@ -1,4 +1,4 @@
-interface ISearchPostResponse {
+export interface ISearchPostResponse {
   id: number
   created_at: Date
   created_by: Date
