@@ -265,6 +265,9 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       })
     }
 
+    toast({
+      title: "個人檔案更改成功!",
+    })
     router.push("/")
     setIsSubmitting(false)
   }

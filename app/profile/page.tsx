@@ -65,7 +65,6 @@ const Page = ({ params }: { params: { slug: string } }) => {
           .eq("uuid", userUuid)
           .single()
 
-        console.log(123123, data, error)
         if (error) {
           // Handle the error, e.g., show an error message or redirect
 
