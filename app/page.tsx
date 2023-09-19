@@ -17,7 +17,7 @@ export default function IndexPage() {
             海外港人搵工，互相支持，互相幫助。
           </h1>
           <p className="max-w-[700px] text-lg text-muted-foreground">
-            過程唔會收錢，希望呢個平台幫到大家！
+            希望呢個平台幫到大家！祝大家一切順利！
           </p>
         </div>
         <div className="flex gap-4">

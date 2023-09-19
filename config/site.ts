@@ -1,9 +1,8 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "R1Referral",
-  description:
-    "Beautifully designed components built with Radix UI and Tailwind CSS.",
+  name: "Referalah",
+  description: "海外港人搵Referral平台。",
   mainNav: [
     // {
     //   title: "Home",
@@ -26,9 +25,9 @@ export const siteConfig = {
     //   href: "/post/referee",
     // },
   ],
-  links: {
-    twitter: "https://twitter.com/shadcn",
-    github: "https://github.com/shadcn/ui",
-    docs: "https://ui.shadcn.com",
-  },
+  // links: {
+  //   twitter: "https://twitter.com/shadcn",
+  //   github: "https://github.com/shadcn/ui",
+  //   docs: "https://ui.shadcn.com",
+  // },
 }
