@@ -16,6 +16,7 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({ children }) => {
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (event, session) => {
       if (session && user.isSignIn !== true) {
+        console.log(123123, session, user)
         const { data, error }: any = await supabase
           .from("user")
           .select(
