@@ -7,6 +7,7 @@ import useUserStore from "@/hooks/state/user/useUserStore"
 import EditProfileTemplate from "@/modules/profile/edit/template"
 import ViewProfileTemplate from "@/modules/profile/view/template"
 import { supabase } from "@/utils/services/supabase/config"
+import { IUserResponse } from "@/types/api/response/user"
 
 const Page = ({ params }: { params: { slug: string } }) => {
   const isUserSignIn = useUserStore((state) => state.isSignIn)

@@ -1,4 +1,4 @@
-interface IUserResponse {
+export interface IUserResponse {
   // id: number
   // created_at: Date
   uuid: string | null
