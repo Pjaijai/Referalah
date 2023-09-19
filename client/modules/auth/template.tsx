@@ -4,7 +4,6 @@ import { authFormSchema } from "@/modules/auth/validation"
 import { supabase } from "@/utils/services/supabase/config"
 import { z } from "zod"
 
-import { Card } from "@/components/ui/card"
 import { useToast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
@@ -16,7 +15,7 @@ const AuthPageTemplate = () => {
     const { data, error } = await supabase.auth.signInWithOtp({
       email: values.email,
       options: {
-        emailRedirectTo: "https://example.com/welcome",
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_WEB_URL}`,
       },
     })
 
@@ -35,10 +34,10 @@ const AuthPageTemplate = () => {
       {!isSubmitted && <AuthForm onSubmit={onSubmit} />}
 
       {isSubmitted && (
-        <Card className="flex flex-col  justify-center items-center rounded-lg p-4 gap-4">
+        <div className="flex flex-col  justify-center items-center rounded-lg p-4 gap-4">
           <Icons.bigSend />
           Send 咗了！請查看！
-        </Card>
+        </div>
       )}
     </div>
   )
