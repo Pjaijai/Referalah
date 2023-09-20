@@ -21,7 +21,6 @@ const compareDateDifferenceHelper = (props: requiredProps) => {
   const newD = dayjs(newDate)
   const oldD = dayjs(oldDate)
   const diff = newD.diff(oldD, unit)
-
   return diff
 }
 

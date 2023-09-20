@@ -68,9 +68,29 @@ const CreatePostTemplate: React.FunctionComponent<
     industryUuid: z.string().min(1, {
       message: `俾幫手填下🙏🏻`,
     }),
-    yearOfExperience: z.string().min(1, {
-      message: `俾幫手填下🙏🏻`,
-    }),
+    yearOfExperience: z
+      .string()
+      .min(1, {
+        message: `俾幫手填下🙏🏻`,
+      })
+      .refine(
+        (value) => {
+          if (value) {
+            const number = parseFloat(value)
+            if (!isNaN(number) && number >= 0 && number <= 100) {
+              return true
+            } else {
+              return false
+            }
+          }
+
+          return true
+          // Check if it's a valid number and falls within the range 1 to 100
+        },
+        {
+          message: "必須喺0到100之間，如果唔夠用請聯絡我🙇🏻‍♂️", // Specify the custom error message here
+        }
+      ),
     companyName: z.string().min(1, {
       message: `俾幫手填下🙏🏻`,
     }),
@@ -171,9 +191,9 @@ const CreatePostTemplate: React.FunctionComponent<
       year_of_experience: parseInt(values.yearOfExperience),
       created_by: user.uuid,
       type: values.type,
-      company_name: values.companyName,
-      job_title: values.jobTitle,
-      description: values.description,
+      company_name: values.companyName.trim(),
+      job_title: values.jobTitle.trim(),
+      description: values.description.trim(),
     })
 
     if (error) {

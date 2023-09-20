@@ -10,7 +10,6 @@ import BaseAvatar from "@/components/customized-ui/avatars/base"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
 import useUserStore from "@/hooks/state/user/useUserStore"
-import { ScrollArea } from "@radix-ui/react-scroll-area"
 
 interface IReferralCardProps
   extends Omit<
@@ -62,10 +61,11 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
         oldDate: createdAt,
         unit: "day",
       })
+     
       if (difference === 0) {
         setDateDiffText("今日")
       }
-      if (difference > 0 && difference < 30) {
+      else if (difference > 0 && difference < 30) {
         setDateDiffText(`${difference}日`)
       } else {
         setDateDiffText(`30日+`)

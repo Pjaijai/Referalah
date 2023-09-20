@@ -10,6 +10,7 @@ import { siteConfig } from "@/config/site"
 
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
+import GoogleAnalytics from "@/components/google-analytics"
 
 export const metadata: Metadata = {
   title: {
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             fontSans.variable
           )}
         >
+             <GoogleAnalytics />
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <APIProvider>
               <AuthProvider>

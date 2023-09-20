@@ -99,7 +99,27 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       industryUuid: z.string().min(1, {
         message: `俾幫手填下🙏🏻`,
       }),
-      yearOfExperience: z.string().optional(),
+      yearOfExperience: z
+        .string()
+        .optional()
+        .refine(
+          (value) => {
+            if (value) {
+              const number = parseFloat(value)
+              if (!isNaN(number) && number >= 0 && number <= 100) {
+                return true
+              } else {
+                return false
+              }
+            }
+
+            return true
+            // Check if it's a valid number and falls within the range 1 to 100
+          },
+          {
+            message: "必須喺0到100之間，如果唔夠用請聯絡我🙇🏻‍♂️", // Specify the custom error message here
+          }
+        ),
       isReferer: z.boolean(),
       isReferee: z.boolean(),
     })
@@ -256,10 +276,10 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         // chinese_last_name: values.chineseLastName,
         // english_first_name: values.englishFirstName,
         // english_last_name: values.englishLastName,
-        username: values.username,
-        description: values.description,
-        company_name: values.company,
-        job_title: values.jobTitle,
+        username: values.username.trim(),
+        description: values.description?.trim(),
+        company_name: values.company?.trim(),
+        job_title: values.jobTitle?.trim(),
         year_of_experience: values.yearOfExperience
           ? parseInt(values.yearOfExperience)
           : "0",
@@ -268,7 +288,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         city_uuid: values.cityUuid,
         industry_uuid: values.industryUuid,
         // resume_url: resumeUrl,
-        social_media_url: values.socialMediaUrl,
+        social_media_url: values.socialMediaUrl?.trim(),
         is_referer: values.isReferer,
         is_referee: values.isReferee,
       })
