@@ -7,18 +7,18 @@ import Script from "next/script"
 declare const window: any
 
 export default function GoogleAnalytics() {
-  const pathname = usePathname()
+  // const pathname = usePathname()
 
-  useEffect(() => {
-    const url = pathname
+  // useEffect(() => {
+  //   const url = pathname
 
-    window.gtag("config", process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID as string, {
-      page_path: url,
-    })
-  }, [pathname, process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID])
+  //   window.gtag("config", process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID as string, {
+  //     page_path: url,
+  //   })
+  // }, [pathname, process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID])
   return (
     <>
-      <Script
+      {/* <Script
         strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
       />
@@ -40,7 +40,7 @@ export default function GoogleAnalytics() {
                 });
                 `,
         }}
-      />
+      /> */}
     </>
   )
 }
