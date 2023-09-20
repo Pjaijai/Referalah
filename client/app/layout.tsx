@@ -10,6 +10,7 @@ import { siteConfig } from "@/config/site"
 import { Analytics } from '@vercel/analytics/react';
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
+import GoogleAnalytics from "@/components/google-analytics"
 
 export const metadata: Metadata = {
   title: {
@@ -43,7 +44,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             fontSans.variable
           )}
         >
-             {/* <GoogleAnalytics /> */}
+           
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <APIProvider>
               <AuthProvider>
@@ -52,6 +53,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   <div className="container flex-grow">{children}</div>
                   <NavFooter />
                 </div>
+                <GoogleAnalytics />
                 <Analytics />
                 <TailwindIndicator />
               </AuthProvider>
