@@ -3,7 +3,7 @@ name: Deploy Migrations to Staging
 on:
   push:
     branches:
-      - develop
+      - development
   workflow_dispatch:
 
 jobs:
@@ -24,3 +24,4 @@ jobs:
 
       - run: supabase link --project-ref $SUPABASE_PROJECT_ID
       - run: supabase db push
+      - run: supabase functions deploy --project-ref $SUPABASE_PROJECT_ID
