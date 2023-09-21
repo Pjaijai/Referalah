@@ -57,7 +57,7 @@ const useSearchReferralList = (
     is_referer
     `
       )
-      .ilike("company_name", `%${filterMeta.companyName}%`)
+
       .lte(
         "year_of_experience",
         filterMeta.yoeMax ? parseInt(filterMeta.yoeMax) : 100
@@ -73,6 +73,9 @@ const useSearchReferralList = (
       query = query.eq("is_referer", true)
     }
 
+    if (filterMeta.companyName.length > 0) {
+      query = query.ilike("company_name", `%${filterMeta.companyName}%`)
+    }
     if (type === "referee") {
       query = query.eq("is_referee", true)
     }
