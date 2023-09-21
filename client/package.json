@@ -1,6 +1,6 @@
 {
-  "name": "next-template",
-  "version": "0.0.2",
+  "name": "Referalah",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
