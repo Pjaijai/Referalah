@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/select"
 
 import { cn } from "@/lib/utils"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export interface ISelectOption {
   value: string
@@ -34,11 +35,13 @@ const BaseSelect: React.FunctionComponent<IBaseSelectProps> = ({
       <SelectTrigger className={cn("w-[180px]", triggerClassName)}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="max-h-[300px]">
+      <ScrollArea>
         {options &&
           options.map((option) => {
             return <SelectItem value={option.value}>{option.title}</SelectItem>
           })}
+      </ScrollArea>
       </SelectContent>
     </Select>
   )
