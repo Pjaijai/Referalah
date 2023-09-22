@@ -337,8 +337,10 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
                 setIsEditMode(false)
               }}
               variant={"ghost"}
+              className=" gap-2"
             >
               <Icons.undo />
+              返回
             </Button>
           </div>
 

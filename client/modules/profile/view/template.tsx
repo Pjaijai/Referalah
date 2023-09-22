@@ -56,16 +56,17 @@ const ViewProfileTemplate: React.FunctionComponent<
 }) => {
   return (
     <div className="w-full flex flex-col gap-y-2 mt-28">
-      <div className="flex flex-row justify-end w-full mx-8">
+      <div className="flex flex-row justify-end w-full mx-8 gap-2">
         {socialMediaUrl && <LinkTooltip url={socialMediaUrl} />}
 
         <Button
           onClick={() => {
             setIsEditMode(true)
           }}
-          variant="ghost"
+          className=" gap-2"
         >
           <Icons.pencil />
+          編輯
         </Button>
       </div>
 
