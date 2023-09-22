@@ -1,5 +1,6 @@
 import { IFormTextInputProps } from "@/components/customized-ui/form/input";
 import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from "@/components/ui/form";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import React from "react"
@@ -28,13 +29,15 @@ const FormSelect: React.FunctionComponent<IFormSelectProps> = ({
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>
-            <SelectContent>
+            <SelectContent className="max-h-[300px]">
+              <ScrollArea>
               {options?.length > 0 &&
                 options.map((option) => {
                   return (
                     <SelectItem value={option.value}>{option.title}</SelectItem>
                   )
                 })}
+              </ScrollArea>
             </SelectContent>
           </Select>
           {description && <FormDescription>{description}</FormDescription>}
