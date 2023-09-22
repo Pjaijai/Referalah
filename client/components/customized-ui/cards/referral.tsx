@@ -98,14 +98,17 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
       />
 
       <CardHeader className="justify-between">
-        <CardTitle className="flex  flex-row justify-between items-center">
-          <span className="truncate">{jobTitle}</span>
-          <ReferralCardDropDownMenu
+        <CardTitle className="flex  flex-row justify-between items-center w-full overflow-hidden">
+          <span className="text-overflow-ellipsis">{jobTitle}</span>
+            
+            <ReferralCardDropDownMenu
             url={socialMediaUrl}
             onContactClick={handleContactClick}
           />
+     
         </CardTitle>
-        <CardDescription>{companyName}</CardDescription>
+     
+        <CardDescription className="text-overflow-ellipsis">{companyName}</CardDescription>
       </CardHeader>
 
       <CardContent className="hidden h-full w-full md:flex flex-col md:flex-row">
@@ -147,7 +150,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
       <CardContent className="flex h-full w-full md:hidden flex-col">
 
       <div className="h-[200px] text-center">
-          <div className="h-[200px] text-left inline-block break-all whitespace-pre-wrap overflow-y-auto">
+          <div className="h-[200px] text-left inline-block break-all whitespace-pre-wrap overflow-y-auto hyphens-auto">
             {description}
           </div>
         </div>
