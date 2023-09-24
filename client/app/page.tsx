@@ -4,6 +4,8 @@ import Link from "next/link"
 import { BaseNavigationMenu } from "@/components/customized-ui/navigation-menu/base"
 import { buttonVariants } from "@/components/ui/button"
 import useUserStore from "@/hooks/state/user/useUserStore"
+import { Icons } from "@/components/icons"
+import { cn } from "@/lib/utils"
 // import useGetTotalUser from "@/hooks/api/user/useGetTotalUser"
 
 export default function IndexPage() {
@@ -33,6 +35,15 @@ export default function IndexPage() {
             className={buttonVariants({ variant: isUserSignIn ?  'default' :'outline' })}
           >
             了解更多
+          </Link>
+
+          <Link
+            href={"https://instagram.com/referalah?igshid=NGVhN2U2NjQ0Yg=="}
+            className={cn(buttonVariants({ variant: isUserSignIn ?  'default' :'outline' }), 'gap-2')}
+        
+          >
+            <Icons.instagram/>
+            Instagram
           </Link>
           {
             !isUserSignIn && <Link href={"/auth"} className={buttonVariants()}>

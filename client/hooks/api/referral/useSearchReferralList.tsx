@@ -26,7 +26,7 @@ const useSearchReferralList = (
     const sort = queryKey[1].sorting.split(",")
     const order = sort[1] === "dec" ? false : true
     const from = pageParam * NUMBER_OF_DATE_PER_FETCH
-    const to = from + NUMBER_OF_DATE_PER_FETCH
+    const to = from + NUMBER_OF_DATE_PER_FETCH - 1
 
     let query = supabase
       .from("user")

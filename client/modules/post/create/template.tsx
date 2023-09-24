@@ -1,6 +1,5 @@
 "use client"
 
-import { type } from "os"
 import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -39,21 +38,14 @@ const CreatePostTemplate: React.FunctionComponent<
       .url({
         message: "無效連結",
       })
-      .refine(
-        (value) => {
-          return value.trim() !== "" // Add your custom validation logic here
-        },
-        {
-          message: "俾幫手填下🙏🏻", // Specify the custom error message here
-        }
-      ),
+      .optional(),
     description: z
       .string()
       .max(3000, {
         message: `俾盡3000粒字，唔夠用請聯絡我🙏🏻`,
       })
-      .min(1, {
-        message: `至少有要1粒字`,
+      .min(10, {
+        message: `至少有要10粒字`,
       }),
 
     countryUuid: z.string().min(1, {
@@ -110,8 +102,6 @@ const CreatePostTemplate: React.FunctionComponent<
       provinceUuid: "",
       cityUuid: "",
 
-      url: "",
-
       industryUuid: "",
     },
   })
@@ -121,6 +111,7 @@ const CreatePostTemplate: React.FunctionComponent<
   const provinceWatch = form.watch("provinceUuid")
   const yeoWatch = form.watch("yearOfExperience")
   const typeWatch = form.watch("type")
+  const urlWatch = form.watch("url")
   const router = useRouter()
   const user = useUserStore((state) => state)
   const { industry: industryList } = useGetIndustryList()
@@ -145,6 +136,12 @@ const CreatePostTemplate: React.FunctionComponent<
   useEffect(() => {
     form.setValue("cityUuid", "")
   }, [provinceWatch])
+
+  useEffect(() => {
+    if (urlWatch === "") {
+      form.setValue("url", undefined)
+    }
+  }, [urlWatch])
 
   useEffect(() => {
     // Convert yeoWatch to a number
@@ -250,7 +247,7 @@ const CreatePostTemplate: React.FunctionComponent<
             name="description"
             description={
               typeWatch === "referer"
-                ? "額外講吓想搵啲咩人？"
+                ? "講吓想搵啲咩人？"
                 : "大概講吓你自己點解match呢個職位，建議唔好公開自己聯絡資訊。"
             }
           />

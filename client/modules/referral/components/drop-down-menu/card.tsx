@@ -23,8 +23,8 @@ const ReferralCardDropDownMenu: React.FunctionComponent<
         <Icons.moreVertical />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem>
-          {url && (
+        {url && (
+          <DropdownMenuItem>
             <Link
               href={url}
               target="_blank"
@@ -33,8 +33,8 @@ const ReferralCardDropDownMenu: React.FunctionComponent<
               <Icons.link />
               <p className="text-lg">連結</p>
             </Link>
-          )}
-        </DropdownMenuItem>
+          </DropdownMenuItem>
+        )}
 
         <DropdownMenuItem onClick={onContactClick}>
           <div className="grid grid-cols-3 items-center gap-4">
