@@ -377,7 +377,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
                 control={form.control}
                 label="推薦人"
                 name="isReferer"
-                description="你嘅資料會俾公開（Email不會)，如果有人想入你間公司，就會搵你幫手🙏🏻"
+                description="你嘅資料會被公開（Email不會)，如果有人想入你間公司，就可以搵你幫手🙏🏻"
               />
             </div>
 
@@ -386,7 +386,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
                 control={form.control}
                 label="受薦人"
                 name="isReferee"
-                description="你嘅資料會俾公開（Email不會)，如果有人想招你入佢間公司，就會搵你，祝一切順利！"
+                description="你嘅資料會被公開（Email不會)，如果有人想招你入佢間公司，就可以搵你，祝一切順利！"
               />
             </div>
           </div>
