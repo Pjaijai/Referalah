@@ -34,7 +34,7 @@ const CreatePostTemplate: React.FunctionComponent<
 > = () => {
   const formSchema = z.object({
     type: z.string().nonempty("俾幫手填下🙏🏻"),
-    url: maximumWordValidation(250)
+    url: maximumWordValidation(20000)
       .url({
         message: "無效連結",
       })
