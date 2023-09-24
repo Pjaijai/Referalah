@@ -140,7 +140,7 @@ serve(async (req: any) => {
       .from("referral_contact_history")
       .insert({
         sender_uuid: sender.uuid,
-        receiver_uuid: sender.uuid,
+        receiver_uuid: receiver.uuid,
         type: type,
         message: message,
       })
