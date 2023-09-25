@@ -44,7 +44,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             fontSans.variable
           )}
         >
-           
+          <GoogleAnalytics />
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <APIProvider>
               <AuthProvider>
@@ -53,7 +53,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   <div className="container flex-grow">{children}</div>
                   <NavFooter />
                 </div>
-                <GoogleAnalytics />
+           
                 <Analytics />
                 <TailwindIndicator />
               </AuthProvider>
