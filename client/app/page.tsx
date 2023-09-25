@@ -6,16 +6,16 @@ import { buttonVariants } from "@/components/ui/button"
 import useUserStore from "@/hooks/state/user/useUserStore"
 import { Icons } from "@/components/icons"
 import { cn } from "@/lib/utils"
-// import useGetTotalUser from "@/hooks/api/user/useGetTotalUser"
+import useGetUserCount from "@/hooks/api/user/useGetUserCount"
 
 export default function IndexPage() {
   
   const isUserSignIn = useUserStore(state=> state.isSignIn)
-  // const {data}= useGetTotalUser()
+  const {data}= useGetUserCount()
   return (
     <>
     <div>
-        {/* <h2 className="text-end text-sm mt-4"><span className="text-yellow-300 font-bold">{data || '0'}</span>個會員</h2> */}
+ 
       </div>
       <div className="flex md:hidden justify-center mt-4">
         <BaseNavigationMenu />
@@ -50,8 +50,10 @@ export default function IndexPage() {
             登入/註冊
           </Link>
           }
-         
+            <h2 className="text-end text-sm mt-4 border-b-2 border-green-700 dark:border-yellow-300"><span className="text-green-700
+] dark:text-yellow-300  font-bold">{data || '0'}</span>個會員</h2>
         </div>
+     
       </section>
       
     </>
