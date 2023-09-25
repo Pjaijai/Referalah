@@ -16,29 +16,22 @@ export default function GoogleAnalytics() {
       page_path: url,
     })
   }, [pathname, process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID])
+
   return (
     <>
-      <Script
-        strategy="afterInteractive"
+      <script
         src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
       />
-      <Script
-        id="google-analytics"
-        strategy="afterInteractive"
+      <script
         dangerouslySetInnerHTML={{
           __html: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-
-                gtag('consent', 'default', {
-                    'analytics_storage': 'denied'
-                });
-                
-                gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}', {
-                    page_path: window.location.pathname,
-                });
-                `,
+                      window.dataLayer = window.dataLayer || [];
+                      function gtag(){dataLayer.push(arguments);}
+                      gtag('js', new Date());
+                      gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}', {
+                      page_path: window.location.pathname,
+                      });
+                    `,
         }}
       />
     </>
