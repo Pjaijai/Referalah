@@ -1,7 +1,7 @@
 import { supabase } from "@/utils/services/supabase/config"
 import { useQuery } from "@tanstack/react-query"
 
-const useGetTotalUser = () => {
+const useGetUserCount = () => {
   const fetchPosts = async ({ pageParam = 0, queryKey }: any) => {
     const { error, data, count } = await supabase
       .from("user")
@@ -25,4 +25,4 @@ const useGetTotalUser = () => {
   })
 }
 
-export default useGetTotalUser
+export default useGetUserCount
