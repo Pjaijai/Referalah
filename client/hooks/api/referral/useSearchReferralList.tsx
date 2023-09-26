@@ -18,7 +18,7 @@ const useSearchReferralList = (
   type: "referer" | "referee"
 ) => {
   const fetchRefererList = async ({ pageParam = 0, queryKey }: any) => {
-    const NUMBER_OF_DATE_PER_FETCH = 2
+    const NUMBER_OF_DATE_PER_FETCH = 3
     const countryUuid = queryKey[1].filterMeta.countryUuid
     const provinceUuid = queryKey[1].filterMeta.provinceUuid
     const cityUuid = queryKey[1].filterMeta.cityUuid
