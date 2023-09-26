@@ -11,10 +11,6 @@ import { Icons } from "@/components/icons"
 
 export interface IViewProfileTemplateProps {
   photoUrl?: string
-  // chineseFirstName: string | null
-  // chineseLastName: string | null
-  // englishFirstName: string | null
-  // englishLastName: string | null
   username: string | null
   description: string | null
   company: string | null
@@ -24,7 +20,6 @@ export interface IViewProfileTemplateProps {
   province: string | null
   industry: string | null
   city: string | null
-  // resumeUrl: string | null
   socialMediaUrl: string | null
   isReferer: boolean
   isReferee: boolean

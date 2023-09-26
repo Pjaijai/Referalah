@@ -4,7 +4,7 @@ export interface IUpdateUserProfileRequest {
   description?: string
   companyName?: string
   jobTitle?: string
-  yearOfExperience: number
+  yearOfExperience?: number
   countryUuid?: string
   provinceUuid?: string
   cityUuid?: string
@@ -12,5 +12,5 @@ export interface IUpdateUserProfileRequest {
   socialMediaUrl?: string
   isReferer: boolean
   isReferee: boolean
-  userId: string
+  userUuid: string
 }
