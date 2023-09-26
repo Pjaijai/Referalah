@@ -11,10 +11,6 @@ import { Icons } from "@/components/icons"
 
 export interface IViewProfileTemplateProps {
   photoUrl?: string
-  // chineseFirstName: string | null
-  // chineseLastName: string | null
-  // englishFirstName: string | null
-  // englishLastName: string | null
   username: string | null
   description: string | null
   company: string | null
@@ -24,7 +20,6 @@ export interface IViewProfileTemplateProps {
   province: string | null
   industry: string | null
   city: string | null
-  // resumeUrl: string | null
   socialMediaUrl: string | null
   isReferer: boolean
   isReferee: boolean
@@ -135,7 +130,7 @@ const ViewProfileTemplate: React.FunctionComponent<
       </div>
 
       <div className="container text-center mt-8">
-        <div className="text-left inline-block break-words whitespace-pre-wrap">
+        <div className="text-left inline-block break-all md:break-words whitespace-pre-wrap">
           {description}
         </div>
       </div>
