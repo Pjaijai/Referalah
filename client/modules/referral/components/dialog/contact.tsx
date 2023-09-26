@@ -63,6 +63,7 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
   const { toast } = useToast()
   const {
     formState: { errors },
+    reset,
   } = form
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -124,6 +125,7 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
       })
     } finally {
       setIsLoading(false)
+      reset()
     }
   }
   return (
