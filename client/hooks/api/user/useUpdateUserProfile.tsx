@@ -1,13 +1,10 @@
 import { supabase } from "@/utils/services/supabase/config"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
 
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 
 const useUpdateUserProfile = () => {
-  const queryClient = useQueryClient()
-  let userUuid: string
   const updateUserProfile = async (values: IUpdateUserProfileRequest) => {
-    userUuid = values.userUuid
     return await supabase
       .from("user")
       .update({
@@ -25,16 +22,9 @@ const useUpdateUserProfile = () => {
         is_referer: values.isReferer,
         is_referee: values.isReferee,
       })
-      .eq("uuid", values.userUuid)
+      .eq("uuid", values.userId)
   }
-  return useMutation({
-    mutationFn: updateUserProfile,
-    onSuccess: (values) => {
-      queryClient.invalidateQueries({
-        queryKey: ["user-profile", { userUuid: userUuid }],
-      })
-    },
-  })
+  return useMutation(updateUserProfile)
 }
 
 export default useUpdateUserProfile
