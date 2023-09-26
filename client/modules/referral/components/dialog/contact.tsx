@@ -132,6 +132,11 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
         <DialogHeader>
           <DialogTitle>Send信息俾 {username}</DialogTitle>
           <DialogDescription>注意: 你個Email 會send埋俾對方</DialogDescription>
+          {receiverType === "referer" && messageType === "referral" && (
+            <DialogDescription>
+              提示: 搵對方前，建議搵定個Job post射俾對方，推薦人冇義務幫你搵工。
+            </DialogDescription>
+          )}
         </DialogHeader>
 
         <Form {...form}>
