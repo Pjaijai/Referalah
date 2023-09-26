@@ -404,7 +404,11 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             description="可以簡介吓你嘅經歷，你當簡單版Resume。"
           />
 
-          <FormTextInput control={form.control} label="公司名" name="company" />
+          <FormTextInput
+            control={form.control}
+            label="公司名(選填)"
+            name="company"
+          />
 
           <FormTextInput
             control={form.control}
