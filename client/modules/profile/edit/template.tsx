@@ -278,7 +278,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       jobTitle: values.jobTitle?.trim(),
       yearOfExperience: values.yearOfExperience
         ? parseInt(values.yearOfExperience)
-        : 0,
+        : undefined,
       countryUuid: values.countryUuid,
       provinceUuid: values.provinceUuid,
       cityUuid: values.cityUuid,
@@ -286,7 +286,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       socialMediaUrl: values.socialMediaUrl?.trim(),
       isReferer: values.isReferer,
       isReferee: values.isReferee,
-      userId: user.uuid!,
+      userUuid: user.uuid!,
     }
     updateProfile(updateUserRequest)
 
