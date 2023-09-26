@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { maximumWordValidation } from "@/modules/profile/form/validation.ts/max-word"
-import { supabase } from "@/utils/services/supabase/config"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -13,6 +12,7 @@ import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
 import useGetCityList from "@/hooks/api/location/useGetCityList"
 import useGetCountryList from "@/hooks/api/location/useGetCountryList"
 import useGetProvinceList from "@/hooks/api/location/useGetProvinceList"
+import useCreatePost from "@/hooks/api/post/useCreatePost"
 import useCityOptions from "@/hooks/common/options/useCityOptions"
 import useCountryOptions from "@/hooks/common/options/useCountryOptions"
 import useIndustryOptions from "@/hooks/common/options/useIndustryOptions"
@@ -122,6 +122,7 @@ const CreatePostTemplate: React.FunctionComponent<
   const countryOptions = useCountryOptions(countryList)
   const provinceOptions = useProvinceOptions(provinceList, countryWatch)
   const cityOptions = useCityOptions(cityList, provinceWatch)
+  const { mutate: createPost, isLoading: isCreatePostLoading } = useCreatePost()
   const postTypeOptions = [
     {
       value: "referer",
@@ -179,34 +180,36 @@ const CreatePostTemplate: React.FunctionComponent<
 
     setIsSubmitting(true)
 
-    const { error } = await supabase.from("post").insert({
-      url: values.url,
-      country_uuid: values.countryUuid,
-      province_uuid: values.provinceUuid,
-      city_uuid: values.cityUuid,
-      industry_uuid: values.industryUuid,
-      year_of_experience: parseInt(values.yearOfExperience),
-      created_by: user.uuid,
-      type: values.type,
-      company_name: values.companyName.trim(),
-      job_title: values.jobTitle.trim(),
-      description: values.description.trim(),
-    })
-
-    if (error) {
-      return toast({
-        title: "出事！",
-        description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
-      })
-    }
-
-    if (values.type === "referer") {
-      router.push("/post/referer")
-    } else {
-      router.push("/post/referee")
-    }
-
-    setIsSubmitting(false)
+    createPost(
+      {
+        url: values.url,
+        countryUuid: values.countryUuid,
+        provinceUuid: values.provinceUuid,
+        cityUuid: values.cityUuid,
+        industryUuid: values.industryUuid,
+        yearOfExperience: parseInt(values.yearOfExperience),
+        createdBy: user.uuid!,
+        type: values.type,
+        companyName: values.companyName.trim(),
+        jobTitle: values.jobTitle.trim(),
+        description: values.description.trim(),
+      },
+      {
+        onSuccess: () => {
+          if (values.type === "referer") {
+            router.push("/post/referer")
+          } else {
+            router.push("/post/referee")
+          }
+        },
+        onError: () => {
+          return toast({
+            title: "出事！",
+            description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+          })
+        },
+      }
+    )
   }
 
   return (
@@ -284,7 +287,7 @@ const CreatePostTemplate: React.FunctionComponent<
             name="yearOfExperience"
           />
 
-          <Button type="submit" disabled={isSubmitting}>
+          <Button type="submit" disabled={isCreatePostLoading}>
             {isSubmitting ? "請等等" : "提交"}
           </Button>
         </form>
