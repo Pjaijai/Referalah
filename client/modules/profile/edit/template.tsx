@@ -10,10 +10,12 @@ import { useForm } from "react-hook-form"
 import { v4 as uuidv4 } from "uuid"
 import { z } from "zod"
 
+import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
 import useGetCityList from "@/hooks/api/location/useGetCityList"
 import useGetCountryList from "@/hooks/api/location/useGetCountryList"
 import useGetProvinceList from "@/hooks/api/location/useGetProvinceList"
+import useUpdateUserProfile from "@/hooks/api/user/useUpdateUserProfile"
 import useCityOptions from "@/hooks/common/options/useCityOptions"
 import useCountryOptions from "@/hooks/common/options/useCountryOptions"
 import useIndustryOptions from "@/hooks/common/options/useIndustryOptions"
@@ -160,6 +162,8 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   )
   const [isSubmitting, setIsSubmitting] = useState(false)
   const user = useUserStore((state) => state)
+  const { mutate: updateProfile, error: updateProfileError } =
+    useUpdateUserProfile()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -266,35 +270,27 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       photoUrl = imageUrl.publicUrl
     }
 
-    // TODO
-    // Error handling email , username dupliation
-    const { error } = await supabase
-      .from("user")
-      .update({
-        avatar_url: photoUrl,
-        // chinese_first_name: values.chineseFirstName,
-        // chinese_last_name: values.chineseLastName,
-        // english_first_name: values.englishFirstName,
-        // english_last_name: values.englishLastName,
-        username: values.username.trim(),
-        description: values.description?.trim(),
-        company_name: values.company?.trim(),
-        job_title: values.jobTitle?.trim(),
-        year_of_experience: values.yearOfExperience
-          ? parseInt(values.yearOfExperience)
-          : "0",
-        country_uuid: values.countryUuid,
-        province_uuid: values.provinceUuid,
-        city_uuid: values.cityUuid,
-        industry_uuid: values.industryUuid,
-        // resume_url: resumeUrl,
-        social_media_url: values.socialMediaUrl?.trim(),
-        is_referer: values.isReferer,
-        is_referee: values.isReferee,
-      })
-      .eq("uuid", user.uuid)
+    const updateUserRequest: IUpdateUserProfileRequest = {
+      avatarUrl: photoUrl,
+      username: values.username.trim(),
+      description: values.description?.trim(),
+      companyName: values.company?.trim(),
+      jobTitle: values.jobTitle?.trim(),
+      yearOfExperience: values.yearOfExperience
+        ? parseInt(values.yearOfExperience)
+        : 0,
+      countryUuid: values.countryUuid,
+      provinceUuid: values.provinceUuid,
+      cityUuid: values.cityUuid,
+      industryUuid: values.industryUuid,
+      socialMediaUrl: values.socialMediaUrl?.trim(),
+      isReferer: values.isReferer,
+      isReferee: values.isReferee,
+      userId: user.uuid!,
+    }
+    updateProfile(updateUserRequest)
 
-    if (error) {
+    if (updateProfileError) {
       return toast({
         title: "出事！",
         description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
