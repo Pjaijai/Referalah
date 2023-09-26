@@ -81,7 +81,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       }),
       company: conditionalValidation(30).optional(),
       jobTitle: conditionalValidation(30).optional(),
-      socialMediaUrl: maximumWordValidation(250)
+      socialMediaUrl: maximumWordValidation(20000)
         .url({
           message: "無效連結",
         })
@@ -368,7 +368,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             label="你嘅嘜頭"
             accept=".jpg, .jpeg, .png"
             onChange={handleProfileImageChange}
-            description="食到JPG，JPEG，PNG，最多3MB。"
+            description="食到JPG，JPEG，PNG，最多1MB。"
           />
 
           <div className="flex   flex-col sm:flex-row gap-4 w-full justify-center items-center mt-4">
@@ -446,7 +446,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           />
           <FormTextInput
             control={form.control}
-            label="個人連結"
+            label="個人連結(選填)"
             name="socialMediaUrl"
             description="可以放你LinkedIn/個人網站/Portfolio。"
           />
