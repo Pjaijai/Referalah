@@ -1,5 +1,7 @@
 import { supabase } from "@/utils/services/supabase/config"
 
+import { IContactThroughPostRequest } from "@/types/api/request/contact/post"
+import { IContactReferralRequest } from "@/types/api/request/contact/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
 import { IUserResponse } from "@/types/api/response/user"
 
@@ -63,6 +65,47 @@ const apiService = {
         job_title: req.jobTitle.trim(),
         description: req.description.trim(),
       })
+    } catch (err) {
+      throw err
+    }
+  },
+
+  // contact
+  contactReferral: async (req: IContactReferralRequest) => {
+    try {
+      const { data, error } = await supabase.functions.invoke(
+        "contact-referral",
+        {
+          body: {
+            type: req.type,
+            message: req.message,
+            to_uuid: req.toUuid,
+          },
+        }
+      )
+
+      if (error) {
+        throw error
+      }
+    } catch (err) {
+      throw err
+    }
+  },
+  contactThroughPost: async (req: IContactThroughPostRequest) => {
+    try {
+      const { data, error } = await supabase.functions.invoke(
+        "contact-through-post",
+        {
+          body: {
+            message: req.message,
+            post_uuid: req.postUuid,
+          },
+        }
+      )
+
+      if (error) {
+        throw error
+      }
     } catch (err) {
       throw err
     }
