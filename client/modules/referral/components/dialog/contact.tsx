@@ -76,17 +76,6 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
 
     setIsLoading(true)
     if (messageType === "referral") {
-      // const { data, error } = await supabase.functions.invoke(
-      //   "contact-referral",
-      //   {
-      //     body: {
-      //       type: receiverType,
-      //       message: values.message,
-      //       to_uuid: toUuid,
-      //     },
-      //   }
-      // )
-
       contactReferral(
         {
           type: receiverType!,
