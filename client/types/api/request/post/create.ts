@@ -1,5 +1,3 @@
-import { IPostType } from "@/types/common/post-type"
-
 export interface ICreatePostRequest {
   url?: string
   countryUuid: string

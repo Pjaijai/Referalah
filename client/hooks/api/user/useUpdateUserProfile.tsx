@@ -1,5 +1,5 @@
 import { supabase } from "@/utils/services/supabase/config"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 
