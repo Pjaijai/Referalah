@@ -16,7 +16,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
 
   if (!isLoading && profile===null)
     return (
-      <div className="flex flex-col  justify-center items-center rounded-lg p-4 gap-4 border-2 h-screen">
+      <div className="flex flex-col  justify-center items-center rounded-lg p-4 gap-4  h-screen">
       <span className="text-5xl">🥲</span>
       <h6>搵唔到用戶資料請refresh網頁或先<Link href={"/auth"} className="border-b-2 border-green-700 text-green-700 dark:border-yellow-300 dark:text-yellow-300 "> 登入</Link></h6>
 
