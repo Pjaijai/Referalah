@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react"
+import React, { ChangeEvent, useMemo, useState } from "react"
 import { referralSortingOptions } from "@/utils/common/sorting/referer"
 
 import { IReferralResponse } from "@/types/api/response/referral"
@@ -105,10 +105,23 @@ const RefererPageTemplate: React.FunctionComponent<
     }
   }
 
-  const list =
-    refererListData && refererListData.pages.length > 0
-      ? (refererListData?.pages.flatMap((d) => d) as IReferralResponse[])
-      : []
+  const list = useMemo(() => {
+    if (refererListData && refererListData.pages.length > 0) {
+      const uuidSet = new Set()
+      const list = refererListData?.pages.flatMap(
+        (d) => d
+      ) as IReferralResponse[]
+      const mappedList = list.map((data) => {
+        if (!uuidSet.has(data.uuid)) {
+          uuidSet.add(data.uuid)
+          return data
+        }
+      })
+      return mappedList.filter((d) => d !== undefined) as IReferralResponse[]
+    } else {
+      return []
+    }
+  }, [refererListData, refererListData?.pages])
 
   return (
     <>
