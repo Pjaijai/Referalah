@@ -46,7 +46,7 @@ export default function IndexPage() {
             Instagram
           </Link>
           {
-            !isUserSignIn && <Link href={"/auth"} className={buttonVariants()}>
+            !isUserSignIn && <Link href={"/auth"} className={buttonVariants({variant:'default'})}>
             登入/註冊
           </Link>
           }

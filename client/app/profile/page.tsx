@@ -1,17 +1,27 @@
 "use client"
 
 import React, {  useState } from "react"
-import { useRouter } from "next/navigation"
 import { Icons } from "@/components/icons"
 import useUserStore from "@/hooks/state/user/useUserStore"
 import EditProfileTemplate from "@/modules/profile/edit/template"
 import ViewProfileTemplate from "@/modules/profile/view/template"
 import useGetUserprofile from "@/hooks/api/user/useGetUserprofile"
+import Link from "next/link"
 
 const Page = ({ params }: { params: { slug: string } }) => {
   const userUuid = useUserStore((state) => state.uuid)
   const [isEditMode, setIsEditMode] = useState(false)
   const {data:profile, isLoading, isError}=useGetUserprofile(userUuid)
+
+
+  if (!isLoading && profile===null)
+    return (
+      <div className="flex flex-col  justify-center items-center rounded-lg p-4 gap-4  h-screen">
+      <span className="text-5xl">🥲</span>
+      <h6>搵唔到用戶資料請refresh網頁或先<Link href={"/auth"} className="border-b-2 border-green-700 text-green-700 dark:border-yellow-300 dark:text-yellow-300 "> 登入</Link></h6>
+
+    </div>
+    )
 
   if (isLoading)
     return (
@@ -25,10 +35,6 @@ const Page = ({ params }: { params: { slug: string } }) => {
         {!isEditMode && (
           <ViewProfileTemplate
             photoUrl={profile.avatar_url || undefined}
-            // chineseFirstName={profile.chinese_first_name}
-            // chineseLastName={profile.chinese_last_name}
-            // englishFirstName={profile.english_first_name}
-            // englishLastName={profile.english_last_name}
             username={profile.username}
             description={profile.description}
             company={profile.company_name}
@@ -39,11 +45,6 @@ const Page = ({ params }: { params: { slug: string } }) => {
             city={profile.city && profile.city.cantonese_name}
             industry={profile.industry && profile.industry.cantonese_name}
             socialMediaUrl={profile.social_media_url}
-            // resumeUrl={profile.resume_url}
-            // industryList={industryList}
-            // cityList={cityList}
-            // countryList={countryList}
-            // provinceList={provinceList}
             isReferee={profile.is_referee}
             isReferer={profile.is_referer}
             setIsEditMode={setIsEditMode}
@@ -61,7 +62,6 @@ const Page = ({ params }: { params: { slug: string } }) => {
             countryUuid={profile.country && profile.country.uuid}
             provinceUuid={profile.province && profile.province.uuid}
             cityUuid={profile.city && profile.city.uuid}
-            // resumeUrl={profile.resume_url}
             industryUuid={profile.industry && profile.industry.uuid}
             socialMediaUrl={profile.social_media_url}
             isReferee={profile.is_referee}
