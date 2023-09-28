@@ -20,12 +20,12 @@ const components: { title: string; href: string; description: string }[] = [
       "你公司請人又想搵香港人？網上睇到份工又想人幫手？係到開post，等人聯絡你。",
   },
   {
-    title: "工作(推薦區)",
+    title: "工搵人",
     href: "/post/referer",
     description: "係到搵有乜工搵人推薦。",
   },
   {
-    title: "工作(受薦區)",
+    title: "人搵工",
     href: "/post/referee",
     description: "係到搵有乜人需要幫手。",
   },
