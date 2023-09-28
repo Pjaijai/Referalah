@@ -233,7 +233,9 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     }
   }, [yeoWatch])
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>, e:any) => {
+    e.preventDefault();
+    try{
     setIsSubmitting(true)
     let photoUrl = values.photoUrl
 
@@ -305,6 +307,12 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         })
       },
     })
+    }catch(err){
+      return toast({
+        title: "出事！",
+        description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+      })
+    }
   }
 
   const handleProfileImageChange = (e: any) => {
