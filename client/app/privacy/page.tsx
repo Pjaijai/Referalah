@@ -1,12 +1,13 @@
+/* eslint-disable react/no-unescaped-entities */
 import Link from "next/link"
 
 const PrivacyPage = () => {
   return (
     <article className="mt-10">
-      <h1 className="text-2xl  md:text-4xl mb-10 font-bold">Privacy Policy</h1>
+      <h1 className="mb-10  text-2xl font-bold md:text-4xl">Privacy Policy</h1>
       <p className="italic">Last updated: September 28, 2023</p>
 
-      <div className="[&>h2]:text-xl [&>h2]:font-bold [&>*]:my-8 ">
+      <div className="[&>*]:my-8 [&>h2]:text-xl [&>h2]:font-bold ">
         <p>
           This Privacy Policy describes Our policies and procedures on the
           collection, use and disclosure of Your information when You use the
@@ -99,7 +100,7 @@ const PrivacyPage = () => {
           identify You. Personally identifiable information may include, but is
           not limited to:
         </p>
-        <ul className="list-disc list-inside">
+        <ul className="list-inside list-disc">
           <li>Email address</li>
           <li>Usage Data</li>
         </ul>
@@ -139,7 +140,7 @@ const PrivacyPage = () => {
           and to improve and analyze Our Service. The technologies We use may
           include:
         </p>
-        <ul className="list-disc list-inside">
+        <ul className="list-inside list-disc">
           <li>
             Cookies or Browser Cookies. A cookie is a small file placed on Your
             Device. You can instruct Your browser to refuse all Cookies or to
@@ -258,7 +259,7 @@ const PrivacyPage = () => {
         <p>
           We may share Your personal information in the following situations:
         </p>
-        <ul className="list-disc list-inside">
+        <ul className="list-inside list-disc">
           <li>
             <strong>With Service Providers:</strong> We may share Your personal
             information with Service Providers to monitor and analyze the use of
@@ -355,25 +356,25 @@ const PrivacyPage = () => {
         </p>
 
         <h2>Disclosure of Your Personal Data</h2>
-        <p className="italic font-bold">Business Transactions</p>
+        <p className="font-bold italic">Business Transactions</p>
         <p>
           If the Company is involved in a merger, acquisition or asset sale,
           Your Personal Data may be transferred. We will provide notice before
           Your Personal Data is transferred and becomes subject to a different
           Privacy Policy.
         </p>
-        <p className="italic font-bold">Law enforcement</p>
+        <p className="font-bold italic">Law enforcement</p>
         <p>
           Under certain circumstances, the Company may be required to disclose
           Your Personal Data if required to do so by law or in response to valid
           requests by public authorities (e.g. a court or a government agency).
         </p>
-        <p className="italic font-bold">Other legal requirements</p>
+        <p className="font-bold italic">Other legal requirements</p>
         <p>
           The Company may disclose Your Personal Data in the good faith belief
           that such action is necessary to:
         </p>
-        <ul className="list-disc list-inside">
+        <ul className="list-inside list-disc">
           <li>Comply with a legal obligation</li>
           <li>Protect and defend the rights or property of the Company</li>
           <li>
@@ -444,7 +445,7 @@ const PrivacyPage = () => {
           If you have any questions about this Privacy Policy, You can contact
           us:
         </p>
-        <ul className="list-disc list-inside">
+        <ul className="list-inside list-disc">
           <li>By email: r1r69.referalah@gmail.com</li>
         </ul>
       </div>
