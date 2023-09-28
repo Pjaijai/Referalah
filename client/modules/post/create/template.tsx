@@ -126,11 +126,11 @@ const CreatePostTemplate: React.FunctionComponent<
   const postTypeOptions = [
     {
       value: "referer",
-      title: "推薦人",
+      title: "工搵人",
     },
     {
       value: "referee",
-      title: "受薦人",
+      title: "人搵工",
     },
   ]
 

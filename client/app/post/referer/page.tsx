@@ -4,7 +4,7 @@ import RefererPostPageTemplate from "@/modules/post/referer/template"
 
 const RefererPostPage = () => {
   return (
-    <SearchPageLayout title="工作(推薦區)">
+    <SearchPageLayout title="工搵人">
       <RefererPostPageTemplate />
     </SearchPageLayout>
   )

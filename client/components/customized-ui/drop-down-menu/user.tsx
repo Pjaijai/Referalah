@@ -12,8 +12,8 @@ const nav = [
   { href: "/referer", title: "搵推薦人" },
   { href: "/referee", title: "搵受薦人" },
   { href: "/post/create", title: "開Post" },
-  { href: "/post/referer", title: "工作(推薦區)" },
-  { href: "/post/referee", title: "工作(受薦區)" },
+  { href: "/post/referer", title: "工搵人" },
+  { href: "/post/referee", title: "人搵工" },
 ]
 
 const UserDropDownMenu = () => {
