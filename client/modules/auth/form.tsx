@@ -10,6 +10,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import FormTextInput from "@/components/customized-ui/form/input"
+import Link from "next/link";
 
 interface IAuthFormProps {
   onSubmit: any
@@ -40,6 +41,9 @@ const AuthForm: React.FunctionComponent<IAuthFormProps> = ({ onSubmit }) => {
             你個電郵Email只會係你主動聯絡人個時先話俾對方知。
           </AlertDescription>
         </Alert>
+        <p className="text-muted-foreground">點擊「登入/註冊」按鈕即表示你同意<Link href={"/privacy"}>私隱政策</Link>。<br/>
+          By clicking the "Sign in/Sign up" button, you agree to the <Link href={"/privacy"}>privacy policy</Link>.
+        </p>
         <Button type="submit"> 登入/註冊 </Button>
       </form>
     </Form>
