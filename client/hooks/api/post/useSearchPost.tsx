@@ -58,9 +58,11 @@ const useSearchPost = (
           `
       )
       .eq("type", type)
+      .eq("status", "active")
       .ilike("company_name", `%${filterMeta.companyName}%`)
       .lte("year_of_experience", 100)
       .gte("year_of_experience", 0)
+
       .range(from, to)
 
     if (sortingType === "createdAt") {
