@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 import { authFormSchema } from "@/modules/auth/validation"
 import { zodResolver } from "@hookform/resolvers/zod"

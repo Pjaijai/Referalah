@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useEffect, useMemo, useState } from "react"
 import { StaticImport } from "next/dist/shared/lib/get-img-props"
 import { useRouter } from "next/navigation"
@@ -233,81 +235,81 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     }
   }, [yeoWatch])
 
-  const onSubmit = async (values: z.infer<typeof formSchema>, e:any) => {
-    e.preventDefault();
-    try{
-    setIsSubmitting(true)
-    let photoUrl = values.photoUrl
+  const onSubmit = async (values: z.infer<typeof formSchema>, e: any) => {
+    e.preventDefault()
+    try {
+      setIsSubmitting(true)
+      let photoUrl = values.photoUrl
 
-    if (image) {
-      const { data: list, error: listError } = await supabase.storage
-        .from("user_assets")
-        .list(`${user.uuid}/avatar_image`)
-
-      if (list) {
-        const filesToRemove = list.map(
-          (x) => `${user.uuid}/avatar_image/${x.name}`
-        )
-
-        const { error: removeError } = await supabase.storage
+      if (image) {
+        const { data: list, error: listError } = await supabase.storage
           .from("user_assets")
-          .remove(filesToRemove)
+          .list(`${user.uuid}/avatar_image`)
+
+        if (list) {
+          const filesToRemove = list.map(
+            (x) => `${user.uuid}/avatar_image/${x.name}`
+          )
+
+          const { error: removeError } = await supabase.storage
+            .from("user_assets")
+            .remove(filesToRemove)
+        }
+
+        const uuid = uuidv4()
+        const { data, error } = await supabase.storage
+          .from("user_assets")
+          .upload(`${user.uuid}/avatar_image/${uuid}_${image.name}`, image)
+
+        if (error) {
+          return toast({
+            title: "上載嘜頭時出錯！",
+            description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+          })
+        }
+        const { data: imageUrl } = await supabase.storage
+          .from("user_assets")
+          .getPublicUrl(`${user.uuid}/avatar_image/${uuid}_${image.name}`)
+
+        photoUrl = imageUrl.publicUrl
       }
 
-      const uuid = uuidv4()
-      const { data, error } = await supabase.storage
-        .from("user_assets")
-        .upload(`${user.uuid}/avatar_image/${uuid}_${image.name}`, image)
-
-      if (error) {
-        return toast({
-          title: "上載嘜頭時出錯！",
-          description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
-        })
+      const updateUserRequest: IUpdateUserProfileRequest = {
+        avatarUrl: photoUrl,
+        username: values.username.trim(),
+        description: values.description?.trim(),
+        companyName: values.company?.trim(),
+        jobTitle: values.jobTitle?.trim(),
+        yearOfExperience: values.yearOfExperience
+          ? parseInt(values.yearOfExperience)
+          : undefined,
+        countryUuid: values.countryUuid,
+        provinceUuid: values.provinceUuid,
+        cityUuid: values.cityUuid,
+        industryUuid: values.industryUuid,
+        socialMediaUrl: values.socialMediaUrl?.trim(),
+        isReferer: values.isReferer,
+        isReferee: values.isReferee,
+        userUuid: user.uuid!,
       }
-      const { data: imageUrl } = await supabase.storage
-        .from("user_assets")
-        .getPublicUrl(`${user.uuid}/avatar_image/${uuid}_${image.name}`)
-
-      photoUrl = imageUrl.publicUrl
-    }
-
-    const updateUserRequest: IUpdateUserProfileRequest = {
-      avatarUrl: photoUrl,
-      username: values.username.trim(),
-      description: values.description?.trim(),
-      companyName: values.company?.trim(),
-      jobTitle: values.jobTitle?.trim(),
-      yearOfExperience: values.yearOfExperience
-        ? parseInt(values.yearOfExperience)
-        : undefined,
-      countryUuid: values.countryUuid,
-      provinceUuid: values.provinceUuid,
-      cityUuid: values.cityUuid,
-      industryUuid: values.industryUuid,
-      socialMediaUrl: values.socialMediaUrl?.trim(),
-      isReferer: values.isReferer,
-      isReferee: values.isReferee,
-      userUuid: user.uuid!,
-    }
-    updateProfile(updateUserRequest, {
-      onSuccess: () => {
-        toast({
-          title: "個人檔案更改成功!",
-        })
-        router.push("/")
-      },
-      onSettled: () => {
-        setIsSubmitting(false)
-      },
-      onError: () => {
-        return toast({
-          title: "出事！",
-          description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
-        })
-      },
-    })
-    }catch(err){
+      updateProfile(updateUserRequest, {
+        onSuccess: () => {
+          toast({
+            title: "個人檔案更改成功!",
+          })
+          router.push("/")
+        },
+        onSettled: () => {
+          setIsSubmitting(false)
+        },
+        onError: () => {
+          return toast({
+            title: "出事！",
+            description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+          })
+        },
+      })
+    } catch (err) {
       return toast({
         title: "出事！",
         description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",

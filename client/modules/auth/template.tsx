@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState } from "react"
 import AuthForm from "@/modules/auth/form"
 import { authFormSchema } from "@/modules/auth/validation"
