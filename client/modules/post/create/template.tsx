@@ -165,51 +165,59 @@ const CreatePostTemplate: React.FunctionComponent<
     }
   }, [yeoWatch])
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    if (!user.isSignIn)
+  const onSubmit = async (values: z.infer<typeof formSchema>, e: any) => {
+    e.preventDefault()
+    try {
+      if (!user.isSignIn)
+        return toast({
+          title: "未登入",
+          description: "登入咗先可以開Post",
+          variant: "destructive",
+          action: (
+            <ToastAction altText="登入">
+              <Link href={"/auth"}>登入</Link>
+            </ToastAction>
+          ),
+        })
+
+      setIsSubmitting(true)
+
+      createPost(
+        {
+          url: values.url,
+          countryUuid: values.countryUuid,
+          provinceUuid: values.provinceUuid,
+          cityUuid: values.cityUuid,
+          industryUuid: values.industryUuid,
+          yearOfExperience: parseInt(values.yearOfExperience),
+          createdBy: user.uuid!,
+          type: values.type,
+          companyName: values.companyName.trim(),
+          jobTitle: values.jobTitle.trim(),
+          description: values.description.trim(),
+        },
+        {
+          onSuccess: () => {
+            if (values.type === "referer") {
+              router.push("/post/referer")
+            } else {
+              router.push("/post/referee")
+            }
+          },
+          onError: () => {
+            return toast({
+              title: "出事！",
+              description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+            })
+          },
+        }
+      )
+    } catch (err) {
       return toast({
-        title: "未登入",
-        description: "登入咗先可以開Post",
-        variant: "destructive",
-        action: (
-          <ToastAction altText="登入">
-            <Link href={"/auth"}>登入</Link>
-          </ToastAction>
-        ),
+        title: "出事！",
+        description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
       })
-
-    setIsSubmitting(true)
-
-    createPost(
-      {
-        url: values.url,
-        countryUuid: values.countryUuid,
-        provinceUuid: values.provinceUuid,
-        cityUuid: values.cityUuid,
-        industryUuid: values.industryUuid,
-        yearOfExperience: parseInt(values.yearOfExperience),
-        createdBy: user.uuid!,
-        type: values.type,
-        companyName: values.companyName.trim(),
-        jobTitle: values.jobTitle.trim(),
-        description: values.description.trim(),
-      },
-      {
-        onSuccess: () => {
-          if (values.type === "referer") {
-            router.push("/post/referer")
-          } else {
-            router.push("/post/referee")
-          }
-        },
-        onError: () => {
-          return toast({
-            title: "出事！",
-            description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
-          })
-        },
-      }
-    )
+    }
   }
 
   return (

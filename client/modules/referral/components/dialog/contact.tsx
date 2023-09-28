@@ -1,5 +1,6 @@
+"use client"
+
 import { useState } from "react"
-import { supabase } from "@/utils/services/supabase/config"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -70,66 +71,73 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
     reset,
   } = form
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>, e: any) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-
-    setIsLoading(true)
-    if (messageType === "referral") {
-      contactReferral(
-        {
-          type: receiverType!,
-          message: values.message,
-          toUuid: toUuid!,
-        },
-        {
-          onError: () => {
-            return toast({
-              title: "Send不到，哭咗🥲",
-              description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
-              variant: "destructive",
-            })
+    e.preventDefault()
+    try {
+      setIsLoading(true)
+      if (messageType === "referral") {
+        contactReferral(
+          {
+            type: receiverType!,
+            message: values.message,
+            toUuid: toUuid!,
           },
-          onSuccess: () => {
-            onContactFormClose()
-            return toast({
-              title: "成功！！！！！！！",
-              description: "祝一切順利！",
-            })
+          {
+            onError: () => {
+              return toast({
+                title: "Send不到，哭咗🥲",
+                description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+                variant: "destructive",
+              })
+            },
+            onSuccess: () => {
+              onContactFormClose()
+              return toast({
+                title: "成功！！！！！！！",
+                description: "祝一切順利！",
+              })
+            },
+            onSettled: () => {
+              reset()
+              setIsLoading(false)
+            },
+          }
+        )
+      } else {
+        contactThroughPost(
+          {
+            message: values.message,
+            postUuid: postUuid!,
           },
-          onSettled: () => {
-            reset()
-            setIsLoading(false)
-          },
-        }
-      )
-    } else {
-      contactThroughPost(
-        {
-          message: values.message,
-          postUuid: postUuid!,
-        },
-        {
-          onError: () => {
-            return toast({
-              title: "Send不到，哭咗🥲",
-              description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
-              variant: "destructive",
-            })
-          },
-          onSuccess: () => {
-            onContactFormClose()
-            reset()
-            return toast({
-              title: "成功！！！！！！！",
-              description: "祝一切順利！",
-            })
-          },
-          onSettled: () => {
-            setIsLoading(false)
-          },
-        }
-      )
+          {
+            onError: () => {
+              return toast({
+                title: "Send不到，哭咗🥲",
+                description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+                variant: "destructive",
+              })
+            },
+            onSuccess: () => {
+              onContactFormClose()
+              reset()
+              return toast({
+                title: "成功！！！！！！！",
+                description: "祝一切順利！",
+              })
+            },
+            onSettled: () => {
+              setIsLoading(false)
+            },
+          }
+        )
+      }
+    } catch (err) {
+      return toast({
+        title: "成功！！！！！！！",
+        description: "祝一切順利！",
+      })
     }
   }
   return (
