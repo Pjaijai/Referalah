@@ -288,20 +288,23 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       isReferee: values.isReferee,
       userUuid: user.uuid!,
     }
-    updateProfile(updateUserRequest)
-
-    if (updateProfileError) {
-      return toast({
-        title: "出事！",
-        description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
-      })
-    }
-
-    toast({
-      title: "個人檔案更改成功!",
+    updateProfile(updateUserRequest, {
+      onSuccess: () => {
+        toast({
+          title: "個人檔案更改成功!",
+        })
+        router.push("/")
+      },
+      onSettled: () => {
+        setIsSubmitting(false)
+      },
+      onError: () => {
+        return toast({
+          title: "出事！",
+          description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+        })
+      },
     })
-    router.push("/")
-    setIsSubmitting(false)
   }
 
   const handleProfileImageChange = (e: any) => {
