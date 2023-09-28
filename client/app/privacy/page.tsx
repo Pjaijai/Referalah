@@ -1,6 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 import Link from "next/link"
 
+
+
+
+
 const PrivacyPage = () => {
   return (
     <article className="mt-10">
@@ -67,7 +71,7 @@ const PrivacyPage = () => {
           <strong>Service</strong> refers to the Website.
         </p>
         <p>
-          <strong>Service</strong> Provider means any natural or legal person
+          <strong>Service Provider</strong> means any natural or legal person
           who processes the data on behalf of the Company. It refers to
           third-party companies or individuals employed by the Company to
           facilitate the Service, to provide the Service on behalf of the
@@ -255,6 +259,11 @@ const PrivacyPage = () => {
           evaluate and improve our Service, products, services, marketing and
           your experience.
         </p>
+        <p>
+          <strong>Third-Party Analytics:</strong> We use third-party analytics services, including Google Analytics and
+          Vercel
+          Analytics, to analyze website traffic and improve our services. These services may collect and process data as
+          described in their respective privacy policies.</p>
 
         <p>
           We may share Your personal information in the following situations:
