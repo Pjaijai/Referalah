@@ -2,6 +2,7 @@ import React, { ChangeEvent, useMemo, useState } from "react"
 import { referralSortingOptions } from "@/utils/common/sorting/referer"
 
 import { IReferralResponse } from "@/types/api/response/referral"
+import { MessageType } from "@/types/common/message-type"
 import { ReferralType } from "@/types/common/referral-type"
 import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
 import useGetCityList from "@/hooks/api/location/useGetCityList"
@@ -151,7 +152,7 @@ const RefereePageTemplate: React.FunctionComponent<
           currentProvinceUuid={provinceUuid}
           currentYeoMax={yoeMax}
           currentYeoMin={yoeMin}
-          type="referral"
+          type={MessageType.REFERRAL}
         />
       </div>
       {!isRefereeListLoading && !isFetching && list.length === 0 && (
@@ -191,7 +192,7 @@ const RefereePageTemplate: React.FunctionComponent<
                   yearOfExperience={referee.year_of_experience}
                   uuid={referee.uuid}
                   key={referee.uuid}
-                  messageType="referral"
+                  messageType={MessageType.REFERRAL}
                   postUuid={referee.uuid}
                   toUuid={referee.uuid}
                   receiverType={ReferralType.REFEREE}
