@@ -1,32 +1,15 @@
-import { useEffect, useState } from "react"
-import { supabase } from "@/utils/services/supabase/config"
+import apiService from "@/utils/common/api"
+import { useQuery } from "@tanstack/react-query"
 
-import { IIndustryResponse } from "@/types/api/response/industry"
+import { QueryKeyString } from "@/types/common/query-key-string"
 
 const useGetIndustryList = () => {
-  const [industry, setIndustry] = useState<IIndustryResponse[]>([])
-
-  useEffect(() => {
-    // Create an async function to fetch data
-    async function fetchData() {
-      // Fetch country data
-      const { data: industryData, error: industryError } = await supabase
-        .from("industry")
-        .select("*")
-
-      if (industryError) {
-        console.error("Error fetching country data:", industryError)
-      } else {
-        // Update the countryData state with the fetched data
-        setIndustry(industryData)
-      }
-    }
-
-    // Call the fetchData function
-    fetchData()
-  }, [])
-
-  return { industry }
+  return useQuery({
+    queryKey: [QueryKeyString.INDUSTRY_LIST],
+    queryFn: apiService.getIndustryList,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  })
 }
 
 export default useGetIndustryList
