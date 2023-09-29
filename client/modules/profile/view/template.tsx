@@ -38,7 +38,6 @@ const ViewProfileTemplate: React.FunctionComponent<
   country,
   province,
   city,
-  // resumeUrl,
   socialMediaUrl,
   setIsEditMode,
   industry,

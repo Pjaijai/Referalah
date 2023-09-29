@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { ReferralType } from "@/types/common/referral-type"
 import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
 import useGetCityList from "@/hooks/api/location/useGetCityList"
 import useGetCountryList from "@/hooks/api/location/useGetCountryList"
@@ -93,7 +94,7 @@ const CreatePostTemplate: React.FunctionComponent<
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      type: "referer",
+      type: ReferralType.REFERRER,
       description: "",
       companyName: "",
       jobTitle: "",
@@ -125,11 +126,11 @@ const CreatePostTemplate: React.FunctionComponent<
   const { mutate: createPost, isLoading: isCreatePostLoading } = useCreatePost()
   const postTypeOptions = [
     {
-      value: "referer",
+      value: ReferralType.REFERRER,
       title: "工搵人",
     },
     {
-      value: "referee",
+      value: ReferralType.REFEREE,
       title: "人搵工",
     },
   ]
@@ -198,7 +199,7 @@ const CreatePostTemplate: React.FunctionComponent<
         },
         {
           onSuccess: () => {
-            if (values.type === "referer") {
+            if (values.type === ReferralType.REFERRER) {
               router.push("/post/referer")
             } else {
               router.push("/post/referee")
@@ -257,7 +258,7 @@ const CreatePostTemplate: React.FunctionComponent<
             label="內容"
             name="description"
             description={
-              typeWatch === "referer"
+              typeWatch === ReferralType.REFERRER
                 ? "講吓想搵啲咩人？"
                 : "大概講吓你自己點解match呢個職位，建議唔好公開自己聯絡資訊。"
             }

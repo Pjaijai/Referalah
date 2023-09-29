@@ -2,6 +2,7 @@ import React, { ChangeEvent, useMemo, useState } from "react"
 import { referralSortingOptions } from "@/utils/common/sorting/referer"
 
 import { IReferralResponse } from "@/types/api/response/referral"
+import { ReferralType } from "@/types/common/referral-type"
 import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
 import useGetCityList from "@/hooks/api/location/useGetCityList"
 import useGetCountryList from "@/hooks/api/location/useGetCountryList"
@@ -45,7 +46,7 @@ const RefereePageTemplate: React.FunctionComponent<
     error,
     fetchNextPage,
     isFetching,
-  } = useSearchReferralList(sorting, filterMeta, "referee")
+  } = useSearchReferralList(sorting, filterMeta, ReferralType.REFEREE)
   const { data: industryList } = useGetIndustryList()
   const { data: cityList } = useGetCityList()
   const { data: countryList } = useGetCountryList()
@@ -193,7 +194,7 @@ const RefereePageTemplate: React.FunctionComponent<
                   messageType="referral"
                   postUuid={referee.uuid}
                   toUuid={referee.uuid}
-                  receiverType="referee"
+                  receiverType={ReferralType.REFEREE}
                 />
               )
             })}
