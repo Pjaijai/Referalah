@@ -30,10 +30,10 @@ const RefereePostPageTemplate: React.FunctionComponent<
   const [sorting, setSorting] = useState(postSortingOptions[0].value)
   const debouncedCompanyName = useDebounce(companyName, 800)
 
-  const { industry: industryList } = useGetIndustryList()
-  const { city: cityList } = useGetCityList()
-  const { country: countryList } = useGetCountryList()
-  const { province: provinceList } = useGetProvinceList()
+  const { data: industryList } = useGetIndustryList()
+  const { data: cityList } = useGetCityList()
+  const { data: countryList } = useGetCountryList()
+  const { data: provinceList } = useGetProvinceList()
 
   const handleCompanyChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCompanyName(e.target.value)

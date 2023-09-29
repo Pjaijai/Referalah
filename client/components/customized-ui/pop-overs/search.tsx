@@ -22,10 +22,10 @@ import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
 
 interface ISearchPopoverProps {
-  countryList: ICountryResponse[]
-  provinceList: IProvinceResponse[]
-  cityList: ICityResponse[]
-  industryList: IIndustryResponse[]
+  countryList?: ICountryResponse[]
+  provinceList?: IProvinceResponse[]
+  cityList?: ICityResponse[]
+  industryList?: IIndustryResponse[]
   countryUuid?: string
   provinceUuid?: string
   onCountryChange: (value: string) => void

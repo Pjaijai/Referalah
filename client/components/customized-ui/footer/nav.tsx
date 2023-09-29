@@ -1,7 +1,7 @@
 import React from "react"
+import Link from "next/link"
 
 import { Icons } from "@/components/icons"
-import Link from "next/link";
 
 const NavFooter = () => {
   return (
@@ -11,7 +11,7 @@ const NavFooter = () => {
         <Icons.mail />
         <span>r1r69.referalah@gmail.com</span>
       </p>
-      <Link className="text-muted-foreground text-sm" href={"/privacy"}>
+      <Link className="text-muted-foreground text-sm" href={"/privacy-policy"}>
         Privacy Policy
       </Link>
     </footer>
