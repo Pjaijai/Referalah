@@ -30,10 +30,6 @@ const ViewProfileTemplate: React.FunctionComponent<
   IViewProfileTemplateProps
 > = ({
   photoUrl,
-  // chineseFirstName,
-  // chineseLastName,
-  // englishFirstName,
-  // englishLastName,
   username,
   description,
   company,
