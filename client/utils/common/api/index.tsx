@@ -3,9 +3,12 @@ import { supabase } from "@/utils/services/supabase/config"
 import { IContactThroughPostRequest } from "@/types/api/request/contact/post"
 import { IContactReferralRequest } from "@/types/api/request/contact/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
+import { ICityResponse } from "@/types/api/response/city"
+import { IIndustryResponse } from "@/types/api/response/industry"
 import { IUserResponse } from "@/types/api/response/user"
 
 const apiService = {
+  // User
   getUserProfile: async (arg: any) => {
     try {
       const { data } = await supabase
@@ -49,7 +52,7 @@ const apiService = {
     }
   },
 
-  // create
+  // Post
   createPost: async (req: ICreatePostRequest) => {
     try {
       await supabase.from("post").insert({
@@ -70,7 +73,57 @@ const apiService = {
     }
   },
 
-  // contact
+  // Industry
+  getIndustryList: async () => {
+    const { data: industryData, error: industryError } = await supabase
+      .from("industry")
+      .select("*")
+
+    if (industryError) {
+      throw industryError
+    }
+    return industryData as IIndustryResponse[]
+  },
+
+  // Country
+  getCountryList: async () => {
+    const { data: countryData, error: countryError } = await supabase
+      .from("country")
+      .select("*")
+
+    if (countryError) {
+      throw countryError
+    }
+
+    return countryData as ICityResponse[]
+  },
+
+  // Province
+  getProvinceList: async () => {
+    const { data: provinceData, error: provinceError } = await supabase
+      .from("province")
+      .select("*")
+
+    if (provinceError) {
+      throw provinceError
+    }
+
+    return provinceData
+  },
+
+  // City
+  getCityList: async () => {
+    const { data: provinceData, error: provinceError } = await supabase
+      .from("province")
+      .select("*")
+
+    if (provinceError) {
+      throw provinceError
+    }
+
+    return provinceData
+  },
+  // Contact
   contactReferral: async (req: IContactReferralRequest) => {
     try {
       const { data, error } = await supabase.functions.invoke(

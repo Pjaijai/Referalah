@@ -1,32 +1,15 @@
-import { useEffect, useState } from "react"
-import { supabase } from "@/utils/services/supabase/config"
+import apiService from "@/utils/common/api"
+import { useQuery } from "@tanstack/react-query"
 
-import { ICountryResponse } from "@/types/api/response/country"
+import { QueryKeyString } from "@/types/common/query-key-string"
 
 const useGetCountryList = () => {
-  const [country, setCountry] = useState<ICountryResponse[]>([])
-
-  useEffect(() => {
-    // Create an async function to fetch data
-    async function fetchData() {
-      // Fetch country data
-      const { data: countryData, error: countryError } = await supabase
-        .from("country")
-        .select("*")
-
-      if (countryError) {
-        console.error("Error fetching country data:", countryError)
-      } else {
-        // Update the countryData state with the fetched data
-        setCountry(countryData)
-      }
-    }
-
-    // Call the fetchData function
-    fetchData()
-  }, [])
-
-  return { country }
+  return useQuery({
+    queryKey: [QueryKeyString.COUNTRY_LIST],
+    queryFn: apiService.getCountryList,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  })
 }
 
 export default useGetCountryList
