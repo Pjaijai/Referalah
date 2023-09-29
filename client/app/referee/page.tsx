@@ -7,7 +7,7 @@ import RefereePageTemplate from "@/modules/referral/referee/template"
 
 const RefereePage: NextPage = () => {
   return (
-    <SearchPageLayout title="搵受薦人">
+    <SearchPageLayout title="受薦人">
       <RefereePageTemplate />
     </SearchPageLayout>
   )

@@ -1,5 +1,7 @@
+import { ReferralType } from "@/types/common/referral-type"
+
 export interface IContactReferralRequest {
-  type: "referee" | "referer"
+  type: ReferralType
   message: string
   toUuid: string
 }
