@@ -5,10 +5,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { MessageType } from "@/types/common/message-type"
 import { ReferralType } from "@/types/common/referral-type"
-import useContactReferral from "@/hooks/api/contact/referral"
-import useContactThroughPost from "@/hooks/api/contact/through-post"
+import useContactReferral from "@/hooks/api/contact/useContactReferral"
+import useContactThroughPost from "@/hooks/api/contact/useContactThroughPost"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -33,7 +32,7 @@ export interface IContactDialogProps {
   open: boolean
   username: string
   onContactFormClose: () => void
-  messageType: MessageType
+  messageType: "post" | "referral"
   receiverType?: ReferralType
   toUuid: string | null
   postUuid: string | null

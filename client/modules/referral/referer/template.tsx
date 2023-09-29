@@ -2,6 +2,7 @@ import React, { ChangeEvent, useMemo, useState } from "react"
 import { referralSortingOptions } from "@/utils/common/sorting/referer"
 
 import { IReferralResponse } from "@/types/api/response/referral"
+import { ReferralType } from "@/types/common/referral-type"
 import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
 import useGetCityList from "@/hooks/api/location/useGetCityList"
 import useGetCountryList from "@/hooks/api/location/useGetCountryList"
@@ -45,7 +46,7 @@ const RefererPageTemplate: React.FunctionComponent<
     error,
     fetchNextPage,
     isFetching,
-  } = useSearchRefererList(sorting, filterMeta, "referer")
+  } = useSearchRefererList(sorting, filterMeta, ReferralType.REFERRER)
   const { data: industryList } = useGetIndustryList()
   const { data: cityList } = useGetCityList()
   const { data: countryList } = useGetCountryList()
@@ -193,7 +194,7 @@ const RefererPageTemplate: React.FunctionComponent<
                   messageType="referral"
                   postUuid={referer.uuid}
                   toUuid={referer.uuid}
-                  receiverType="referer"
+                  receiverType={ReferralType.REFERRER}
                 />
               )
             })}

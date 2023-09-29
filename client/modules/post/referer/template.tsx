@@ -4,14 +4,14 @@ import React, { ChangeEvent, useState } from "react"
 import { postSortingOptions } from "@/utils/common/sorting/post"
 
 import { ISearchPostResponse } from "@/types/api/response/referer-post"
-import { MessageType } from "@/types/common/message-type"
+import { PostType } from "@/types/common/post-type"
 import { ReferralType } from "@/types/common/referral-type"
-import useGetIndustryList from "@/hooks/api/industry/get-Industry-list"
-import useGetCityList from "@/hooks/api/location/get-city-list"
-import useGetCountryList from "@/hooks/api/location/get-country-list"
-import useGetProvinceList from "@/hooks/api/location/get-province-list"
-import useSearchPost from "@/hooks/api/post/search-post"
-import useDebounce from "@/hooks/common/debounce"
+import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
+import useGetCityList from "@/hooks/api/location/useGetCityList"
+import useGetCountryList from "@/hooks/api/location/useGetCountryList"
+import useGetProvinceList from "@/hooks/api/location/useGetProvinceList"
+import useSearchPost from "@/hooks/api/post/useSearchPost"
+import useDebounce from "@/hooks/common/useDebounce"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import ReferralCard from "@/components/customized-ui/cards/referral"
@@ -110,7 +110,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
           currentProvinceUuid={provinceUuid}
           currentYeoMax={yoeMax}
           currentYeoMin={yoeMin}
-          type={MessageType.POST}
+          type="post"
         />
       </div>
 
@@ -150,7 +150,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
                   yearOfExperience={data.year_of_experience}
                   uuid={data.uuid}
                   key={data.uuid}
-                  messageType={MessageType.POST}
+                  messageType="post"
                   postUuid={data.uuid}
                   toUuid={data.uuid}
                   receiverType={ReferralType.REFERRER}

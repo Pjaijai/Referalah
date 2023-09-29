@@ -1,6 +1,8 @@
 import { supabase } from "@/utils/services/supabase/config"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
+import { ReferralType } from "@/types/common/referral-type"
+
 interface ISearchRefererFilterMeta {
   companyName: string
   cityUuid?: string
@@ -15,7 +17,7 @@ interface ISearchRefererFilterMeta {
 const useSearchReferralList = (
   sorting: string,
   filterMeta: ISearchRefererFilterMeta,
-  type: "referer" | "referee"
+  type: ReferralType
 ) => {
   const fetchRefererList = async ({ pageParam = 0, queryKey }: any) => {
     const NUMBER_OF_DATE_PER_FETCH = 10
@@ -70,11 +72,11 @@ const useSearchReferralList = (
       .order("id", { ascending: true })
       .range(from, to)
 
-    if (type === "referer") {
+    if (type === ReferralType.REFERRER) {
       query = query.eq("is_referer", true)
     }
 
-    if (type === "referee") {
+    if (type === ReferralType.REFEREE) {
       query = query.eq("is_referee", true)
     }
 
