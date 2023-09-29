@@ -1,6 +1,8 @@
 import { supabase } from "@/utils/services/supabase/config"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
+import { ReferralType } from "@/types/common/referral-type"
+
 interface ISearchPostFilterMeta {
   companyName: string
   cityUuid?: string
@@ -15,7 +17,7 @@ interface ISearchPostFilterMeta {
 const useSearchPost = (
   sorting: string,
   filterMeta: ISearchPostFilterMeta,
-  type: "referer" | "referee"
+  type: ReferralType
 ) => {
   const fetchPosts = async ({ pageParam = 0, queryKey }: any) => {
     const NUMBER_OF_DATE_PER_FETCH = 3

@@ -7,6 +7,7 @@ import useUserStore from "@/hooks/state/user/useUserStore"
 import { Icons } from "@/components/icons"
 import { cn } from "@/lib/utils"
 import useGetUserCount from "@/hooks/api/user/useGetUserCount"
+import { siteConfig } from "@/config/site"
 
 export default function IndexPage() {
   
@@ -31,14 +32,14 @@ export default function IndexPage() {
         </div>
         <div className={`${isUserSignIn ? 'flex gap-4' : 'flex flex-wrap gap-4'}`}>
           <Link
-            href={"/about"}
+            href={siteConfig.page.about.href}
             className={buttonVariants({ variant: isUserSignIn ?  'default' :'outline' })}
           >
             了解更多
           </Link>
 
           <Link
-            href={"https://instagram.com/referalah?igshid=NGVhN2U2NjQ0Yg=="}
+            href={siteConfig.links.instagram}
             className={cn(buttonVariants({ variant: isUserSignIn ?  'default' :'outline' }), 'gap-2')}
         
           >
@@ -46,7 +47,7 @@ export default function IndexPage() {
             Instagram
           </Link>
           {
-            !isUserSignIn && <Link href={"/auth"} className={buttonVariants({variant:'default'})}>
+            !isUserSignIn && <Link href={siteConfig.page.auth.href} className={buttonVariants({variant:'default'})}>
             登入/註冊
           </Link>
           }

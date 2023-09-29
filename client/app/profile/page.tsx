@@ -7,6 +7,7 @@ import EditProfileTemplate from "@/modules/profile/edit/template"
 import ViewProfileTemplate from "@/modules/profile/view/template"
 import useGetUserprofile from "@/hooks/api/user/useGetUserprofile"
 import Link from "next/link"
+import { siteConfig } from "@/config/site"
 
 const Page = ({ params }: { params: { slug: string } }) => {
   const userUuid = useUserStore((state) => state.uuid)
@@ -18,7 +19,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
     return (
       <div className="flex flex-col  justify-center items-center rounded-lg p-4 gap-4  h-screen">
       <span className="text-5xl">🥲</span>
-      <h6>搵唔到用戶資料請refresh網頁或先<Link href={"/auth"} className="border-b-2 border-green-700 text-green-700 dark:border-yellow-300 dark:text-yellow-300 "> 登入</Link></h6>
+      <h6>搵唔到用戶資料請refresh網頁或先<Link href={siteConfig.page.auth.href} className="border-b-2 border-green-700 text-green-700 dark:border-yellow-300 dark:text-yellow-300 "> 登入</Link></h6>
 
     </div>
     )
