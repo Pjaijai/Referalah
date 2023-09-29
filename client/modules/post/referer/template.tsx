@@ -4,7 +4,7 @@ import React, { ChangeEvent, useState } from "react"
 import { postSortingOptions } from "@/utils/common/sorting/post"
 
 import { ISearchPostResponse } from "@/types/api/response/referer-post"
-import { PostType } from "@/types/common/post-type"
+import { MessageType } from "@/types/common/message-type"
 import { ReferralType } from "@/types/common/referral-type"
 import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
 import useGetCityList from "@/hooks/api/location/useGetCityList"
@@ -110,7 +110,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
           currentProvinceUuid={provinceUuid}
           currentYeoMax={yoeMax}
           currentYeoMin={yoeMin}
-          type="post"
+          type={MessageType.POST}
         />
       </div>
 
@@ -150,7 +150,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
                   yearOfExperience={data.year_of_experience}
                   uuid={data.uuid}
                   key={data.uuid}
-                  messageType="post"
+                  messageType={MessageType.POST}
                   postUuid={data.uuid}
                   toUuid={data.uuid}
                   receiverType={ReferralType.REFERRER}
