@@ -2,10 +2,8 @@
 
 import UserDropDownMenu from "@/components/customized-ui/drop-down-menu/user"
 import { BaseNavigationMenu } from "@/components/customized-ui/navigation-menu/base"
-import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
-import { siteConfig } from "@/config/site"
 import useUserStore from "@/hooks/state/user/useUserStore"
 import { useRouter } from "next/navigation"
 
@@ -16,8 +14,6 @@ export function SiteHeader() {
   return (
     <header className="bg-background sticky top-0 z-40 w-full border-b">
       <div className="container flex h-16 items-center space-x-4 justify-between sm:space-x-0">
-        <MainNav items={siteConfig.mainNav} />
-
         <div className="hidden md:flex justify-center">
           <BaseNavigationMenu />
         </div>
