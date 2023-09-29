@@ -44,7 +44,7 @@ const AuthForm: React.FunctionComponent<IAuthFormProps> = ({ onSubmit }) => {
         <p className="text-muted-foreground">
           點擊「登入/註冊」按鈕即表示你同意
           <Link
-            href={"/privacy"}
+            href={"/privacy-policy"}
             className="border-green-700 dark:border-yellow-300 text-green-700
 ] dark:text-yellow-300 "
           >
@@ -52,7 +52,7 @@ const AuthForm: React.FunctionComponent<IAuthFormProps> = ({ onSubmit }) => {
           </Link>
           。<br />
           By clicking the "Sign in/Sign up" button, you agree to the{" "}
-          <Link href={"/privacy"}>privacy policy</Link>.
+          <Link href={"/privacy-policy"}>privacy policy</Link>.
         </p>
         <Button type="submit"> 登入/註冊 </Button>
       </form>
