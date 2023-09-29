@@ -113,15 +113,13 @@ const apiService = {
 
   // City
   getCityList: async () => {
-    const { data: provinceData, error: provinceError } = await supabase
-      .from("province")
-      .select("*")
+    const { data, error } = await supabase.from("city").select("*")
 
-    if (provinceError) {
-      throw provinceError
+    if (error) {
+      throw error
     }
 
-    return provinceData
+    return data
   },
   // Contact
   contactReferral: async (req: IContactReferralRequest) => {
