@@ -2,14 +2,12 @@ import React, { ChangeEvent, useMemo, useState } from "react"
 import { referralSortingOptions } from "@/utils/common/sorting/referer"
 
 import { IReferralResponse } from "@/types/api/response/referral"
-import { MessageType } from "@/types/common/message-type"
-import { ReferralType } from "@/types/common/referral-type"
-import useGetIndustryList from "@/hooks/api/industry/get-Industry-list"
-import useGetCityList from "@/hooks/api/location/get-city-list"
-import useGetCountryList from "@/hooks/api/location/get-country-list"
-import useGetProvinceList from "@/hooks/api/location/get-province-list"
-import useSearchReferral from "@/hooks/api/referral/search-referral"
-import useDebounce from "@/hooks/common/debounce"
+import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
+import useGetCityList from "@/hooks/api/location/useGetCityList"
+import useGetCountryList from "@/hooks/api/location/useGetCountryList"
+import useGetProvinceList from "@/hooks/api/location/useGetProvinceList"
+import useSearchReferralList from "@/hooks/api/referral/useSearchReferralList"
+import useDebounce from "@/hooks/common/useDebounce"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import ReferralCard from "@/components/customized-ui/cards/referral"
@@ -47,7 +45,7 @@ const RefereePageTemplate: React.FunctionComponent<
     error,
     fetchNextPage,
     isFetching,
-  } = useSearchReferral(sorting, filterMeta, ReferralType.REFEREE)
+  } = useSearchReferralList(sorting, filterMeta, "referee")
   const { data: industryList } = useGetIndustryList()
   const { data: cityList } = useGetCityList()
   const { data: countryList } = useGetCountryList()
@@ -107,8 +105,6 @@ const RefereePageTemplate: React.FunctionComponent<
     }
   }
 
-  // To hot fix duplication
-  // TODO : Double check from api, remove when it is not necessary
   const list = useMemo(() => {
     if (refereeListData && refereeListData.pages.length > 0) {
       const uuidSet = new Set()
@@ -152,7 +148,7 @@ const RefereePageTemplate: React.FunctionComponent<
           currentProvinceUuid={provinceUuid}
           currentYeoMax={yoeMax}
           currentYeoMin={yoeMin}
-          type={MessageType.REFERRAL}
+          type="referral"
         />
       </div>
       {!isRefereeListLoading && !isFetching && list.length === 0 && (
@@ -192,10 +188,10 @@ const RefereePageTemplate: React.FunctionComponent<
                   yearOfExperience={referee.year_of_experience}
                   uuid={referee.uuid}
                   key={referee.uuid}
-                  messageType={MessageType.REFERRAL}
+                  messageType="referral"
                   postUuid={referee.uuid}
                   toUuid={referee.uuid}
-                  receiverType={ReferralType.REFEREE}
+                  receiverType="referee"
                 />
               )
             })}
