@@ -40,7 +40,7 @@ export const siteConfig = {
       name: "about",
       href: "/about",
     },
-    privatePolicy: {
+    privacyPolicy: {
       name: "privatePolicy",
       href: "/privacy-policy",
     },

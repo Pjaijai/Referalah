@@ -2,7 +2,7 @@ import BaseAvatar from "@/components/customized-ui/avatars/base"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useToast } from "@/components/ui/use-toast"
 import { siteConfig } from "@/config/site"
-import useUserStore from "@/hooks/state/user/store"
+import useUserStore from "@/hooks/state/user/useUserStore"
 import { supabase } from "@/utils/services/supabase/config"
 import Link from "next/link"
 
@@ -12,7 +12,7 @@ const nav = [
   { href:   siteConfig.page.profile.href, title: "用戶檔案" },
   { href: siteConfig.page.referrer.href , title: "推薦人" },
   { href:  siteConfig.page.referee.href, title: "受薦人" },
-  { href: siteConfig.page.createPost.href, title: "貼街招" },
+  { href: siteConfig.page.createPost.href, title: "開Post" },
   { href: siteConfig.page.referrerPost.href, title: "工搵人" },
   { href:  siteConfig.page.refereePost.href, title: "人搵工" },
 ]
@@ -25,8 +25,6 @@ const UserDropDownMenu = () => {
     try {
       const { error } = await supabase.auth.signOut()
 
-      if(error) throw error
-      
       userState.reSetUser()
       toast({
         title: "登出成功！",

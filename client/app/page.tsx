@@ -3,10 +3,10 @@
 import Link from "next/link"
 import { BaseNavigationMenu } from "@/components/customized-ui/navigation-menu/base"
 import { buttonVariants } from "@/components/ui/button"
-import useUserStore from "@/hooks/state/user/store"
+import useUserStore from "@/hooks/state/user/useUserStore"
 import { Icons } from "@/components/icons"
 import { cn } from "@/lib/utils"
-import useGetUserCount from "@/hooks/api/user/get-user-count"
+import useGetUserCount from "@/hooks/api/user/useGetUserCount"
 import { siteConfig } from "@/config/site"
 
 export default function IndexPage() {

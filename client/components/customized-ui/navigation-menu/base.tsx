@@ -15,10 +15,10 @@ import Link from "next/link"
 
 const components: { title: string; href: string; description: string }[] = [
   {
-    title: "貼街招",
+    title: "開Post",
     href: siteConfig.page.createPost.href,
     description:
-      "你公司請人又想搵香港人？網上睇到份工又想人幫手？係到貼個街招，等人聯絡你。",
+      "你公司請人又想搵香港人？網上睇到份工又想人幫手？係到開post，等人聯絡你。",
   },
   {
     title: "工搵人",

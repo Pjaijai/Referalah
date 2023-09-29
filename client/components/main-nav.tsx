@@ -10,7 +10,7 @@ interface MainNavProps {
 
 export function MainNav({ items }: MainNavProps) {
   return (
-      <Link href="/" className="flex items-center space-x-2">
+      <Link href={siteConfig.page.main.href} className="flex items-center space-x-2">
         <span className="inline-block font-bold">{siteConfig.name}</span>
       </Link>
   )
