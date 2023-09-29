@@ -105,6 +105,8 @@ const RefererPageTemplate: React.FunctionComponent<
     }
   }
 
+  // To hot fix duplication
+  // TODO : Double check from api, remove when it is not necessary
   const list = useMemo(() => {
     if (refererListData && refererListData.pages.length > 0) {
       const uuidSet = new Set()
