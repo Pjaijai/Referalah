@@ -1,10 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import Link from "next/link"
 
-
-
-
-
 const PrivacyPage = () => {
   return (
     <article className="mt-10">
@@ -18,9 +14,7 @@ const PrivacyPage = () => {
           Service and tells You about Your privacy rights and how the law
           protects You. We use Your Personal data to provide and improve the
           Service. By using the Service, You agree to the collection and use of
-          information in accordance with this Privacy Policy. This Privacy
-          Policy has been created with the help of the Free Privacy Policy
-          Generator.
+          information in accordance with this Privacy Policy.
         </p>
 
         <h2>Interpretation and Definitions</h2>
@@ -167,8 +161,7 @@ const PrivacyPage = () => {
           Cookies can be "Persistent" or "Session" Cookies. Persistent Cookies
           remain on Your personal computer or mobile device when You go offline,
           while Session Cookies are deleted as soon as You close Your web
-          browser. Learn more about cookies on the Free Privacy Policy website
-          article.
+          browser.
         </p>
         <p>
           We use both Session and Persistent Cookies for the purposes set out
@@ -260,10 +253,11 @@ const PrivacyPage = () => {
           your experience.
         </p>
         <p>
-          <strong>Third-Party Analytics:</strong> We use third-party analytics services, including Google Analytics and
-          Vercel
-          Analytics, to analyze website traffic and improve our services. These services may collect and process data as
-          described in their respective privacy policies.</p>
+          <strong>Third-Party Analytics:</strong> We use third-party analytics
+          services, including Google Analytics and Vercel Analytics, to analyze
+          website traffic and improve our services. These services may collect
+          and process data as described in their respective privacy policies.
+        </p>
 
         <p>
           We may share Your personal information in the following situations:
