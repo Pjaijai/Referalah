@@ -4,6 +4,7 @@ import React, { ChangeEvent, useState } from "react"
 import { postSortingOptions } from "@/utils/common/sorting/post"
 
 import { ISearchPostResponse } from "@/types/api/response/referer-post"
+import { ReferralType } from "@/types/common/referral-type"
 import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
 import useGetCityList from "@/hooks/api/location/useGetCityList"
 import useGetCountryList from "@/hooks/api/location/useGetCountryList"
@@ -77,7 +78,7 @@ const RefereePostPageTemplate: React.FunctionComponent<
   }
 
   const { data, fetchNextPage, isLoading, isFetching, hasNextPage } =
-    useSearchPost(sorting, filterMeta, "referee")
+    useSearchPost(sorting, filterMeta, ReferralType.REFEREE)
 
   const list = data
     ? (data?.pages.flatMap((d) => d) as ISearchPostResponse[])
@@ -151,7 +152,7 @@ const RefereePostPageTemplate: React.FunctionComponent<
                   messageType="post"
                   postUuid={data.uuid}
                   toUuid={data.uuid}
-                  receiverType="referee"
+                  receiverType={ReferralType.REFEREE}
                   createdAt={data.created_at.toString()}
                 />
               )
