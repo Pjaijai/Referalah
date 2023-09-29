@@ -1,6 +1,7 @@
 import React from "react"
 import Link from "next/link"
 
+import { siteConfig } from "@/config/site"
 import { Icons } from "@/components/icons"
 
 const NavFooter = () => {
@@ -11,7 +12,10 @@ const NavFooter = () => {
         <Icons.mail />
         <span>r1r69.referalah@gmail.com</span>
       </p>
-      <Link className="text-muted-foreground text-sm" href={"/privacy-policy"}>
+      <Link
+        className="text-muted-foreground text-sm"
+        href={siteConfig.page.privacyPolicy.href}
+      >
         Privacy Policy
       </Link>
     </footer>
