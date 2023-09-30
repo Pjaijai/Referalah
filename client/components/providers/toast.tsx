@@ -1,5 +1,3 @@
-"use client"
-
 import React, { PropsWithChildren } from "react"
 
 import { Toaster } from "@/components/ui/toaster"
@@ -10,8 +8,7 @@ const ToastProvider: React.FunctionComponent<
 > = ({ children }) => {
   return (
     <>
-      {children}
-      <Toaster />
+      {children} <Toaster />
     </>
   )
 }

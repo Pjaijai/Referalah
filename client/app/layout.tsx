@@ -11,10 +11,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import GoogleAnalytics from "@/components/google-analytics"
-import ToastProvider from "@/components/providers/toast"
-import { supabase as supabaseClient} from "@/utils/services/supabase/config"
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { ToastProvider } from "@/components/ui/toast"
 
 export const metadata: Metadata = {
   title: {
@@ -37,19 +34,7 @@ interface RootLayoutProps {
   children: React.ReactNode
 }
 
-// do not cache this layout
-export const revalidate = 0;
-
-
-export default async function RootLayout({ children }: RootLayoutProps) {
-  const supabase = createServerComponentClient({ cookies });
-
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  const accessToken = session?.access_token || null;
-
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
       <html lang="zh-Hk" suppressHydrationWarning>
@@ -63,16 +48,16 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           <GoogleAnalytics />
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <APIProvider>
-              <AuthProvider accessToken={accessToken}>
+              <AuthProvider>
                 <ToastProvider>
                 <div className="flex min-h-screen flex-col">
                   <SiteHeader />
                   <div className="container flex-grow">{children}</div>
                   <NavFooter />
                 </div>
+                </ToastProvider>
                 <Analytics />
                 <TailwindIndicator />
-                </ToastProvider>
               </AuthProvider>
             </APIProvider>
           </ThemeProvider>
