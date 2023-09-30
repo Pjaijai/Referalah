@@ -3,6 +3,7 @@ import { supabase } from "@/utils/services/supabase/config"
 import { IContactThroughPostRequest } from "@/types/api/request/contact/post"
 import { IContactReferralRequest } from "@/types/api/request/contact/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
+import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { ICityResponse } from "@/types/api/response/city"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IUserResponse } from "@/types/api/response/user"
@@ -47,6 +48,30 @@ const apiService = {
         .eq("uuid", arg.queryKey[1].userUuid)
         .single()
       return data as unknown as IUserResponse
+    } catch (err) {
+      throw err
+    }
+  },
+  updateUserProfile: async (req: IUpdateUserProfileRequest) => {
+    try {
+      return await supabase
+        .from("user")
+        .update({
+          avatar_url: req.avatarUrl,
+          username: req.username,
+          description: req.description,
+          company_name: req.companyName,
+          job_title: req.jobTitle,
+          year_of_experience: req.yearOfExperience,
+          country_uuid: req.countryUuid,
+          province_uuid: req.provinceUuid,
+          city_uuid: req.cityUuid,
+          industry_uuid: req.industryUuid,
+          social_media_url: req.socialMediaUrl,
+          is_referer: req.isReferer,
+          is_referee: req.isReferee,
+        })
+        .eq("uuid", req.userUuid)
     } catch (err) {
       throw err
     }
