@@ -5,4 +5,6 @@ export enum QueryKeyString {
   PROVINCE_LIST = "province-list",
   USER_PROFILE = "user-profile",
   COUNT_USER = "count-user",
+  SEARCH_REFERRER_POST = "search-referrer-post",
+  SEARCH_REFEREE_POST = "search-referee-post",
 }
