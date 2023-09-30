@@ -4,4 +4,5 @@ export enum QueryKeyString {
   COUNTRY_LIST = "country-list",
   PROVINCE_LIST = "province-list",
   USER_PROFILE = "user-profile",
+  COUNT_USER = "count-user",
 }
