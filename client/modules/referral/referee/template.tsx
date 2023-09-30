@@ -8,7 +8,7 @@ import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
 import useGetCityList from "@/hooks/api/location/useGetCityList"
 import useGetCountryList from "@/hooks/api/location/useGetCountryList"
 import useGetProvinceList from "@/hooks/api/location/useGetProvinceList"
-import useSearchReferralList from "@/hooks/api/referral/useSearchReferralList"
+import useSearchReferral from "@/hooks/api/referral/useSearchReferral"
 import useDebounce from "@/hooks/common/useDebounce"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
@@ -47,7 +47,7 @@ const RefereePageTemplate: React.FunctionComponent<
     error,
     fetchNextPage,
     isFetching,
-  } = useSearchReferralList(sorting, filterMeta, ReferralType.REFEREE)
+  } = useSearchReferral(sorting, filterMeta, ReferralType.REFEREE)
   const { data: industryList } = useGetIndustryList()
   const { data: cityList } = useGetCityList()
   const { data: countryList } = useGetCountryList()
