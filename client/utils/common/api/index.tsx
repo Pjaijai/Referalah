@@ -9,10 +9,10 @@ import { IIndustryResponse } from "@/types/api/response/industry"
 import { IUserResponse } from "@/types/api/response/user"
 
 const apiService = {
-  // User
+  // User Profile
   getUserProfile: async (arg: any) => {
     try {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("user")
         .select(
           `
@@ -47,6 +47,10 @@ const apiService = {
         )
         .eq("uuid", arg.queryKey[1].userUuid)
         .single()
+
+      if (error) throw error
+
+      // TODO: Fix type casting
       return data as unknown as IUserResponse
     } catch (err) {
       throw err
@@ -54,7 +58,7 @@ const apiService = {
   },
   updateUserProfile: async (req: IUpdateUserProfileRequest) => {
     try {
-      return await supabase
+      const { data, error } = await supabase
         .from("user")
         .update({
           avatar_url: req.avatarUrl,
@@ -72,6 +76,12 @@ const apiService = {
           is_referee: req.isReferee,
         })
         .eq("uuid", req.userUuid)
+
+      if (error) {
+        throw error
+      }
+
+      return data
     } catch (err) {
       throw err
     }
@@ -182,6 +192,20 @@ const apiService = {
       if (error) {
         throw error
       }
+    } catch (err) {
+      throw err
+    }
+  },
+
+  // Statistic
+  getUserCount: async () => {
+    try {
+      const { count, error } = await supabase
+        .from("user")
+        .select("id", { count: "exact" })
+
+      if (error) throw error
+      return count
     } catch (err) {
       throw err
     }
