@@ -11,7 +11,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import GoogleAnalytics from "@/components/google-analytics"
-import { ToastProvider } from "@/components/ui/toast"
+import ToastProvider from "@/components/providers/toast"
 
 export const metadata: Metadata = {
   title: {
@@ -55,9 +55,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   <div className="container flex-grow">{children}</div>
                   <NavFooter />
                 </div>
-                </ToastProvider>
                 <Analytics />
                 <TailwindIndicator />
+                </ToastProvider>
               </AuthProvider>
             </APIProvider>
           </ThemeProvider>
