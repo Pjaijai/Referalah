@@ -7,4 +7,6 @@ export enum QueryKeyString {
   COUNT_USER = "count-user",
   SEARCH_REFERRER_POST = "search-referrer-post",
   SEARCH_REFEREE_POST = "search-referee-post",
+  SEARCH_REFERRER = "search-referrer",
+  SEARCH_REFEREE = "search-referee",
 }
