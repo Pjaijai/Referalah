@@ -1,5 +1,4 @@
 import apiService from "@/utils/common/api"
-import { supabase } from "@/utils/services/supabase/config"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { QueryKeyString } from "@/types/common/query-key-string"
