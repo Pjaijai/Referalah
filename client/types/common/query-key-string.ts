@@ -12,4 +12,4 @@ enum QueryKeyString {
 }
 
 export { QueryKeyString }
-export {}
+export default {}
