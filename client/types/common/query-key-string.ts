@@ -1,4 +1,4 @@
-export enum QueryKeyString {
+enum QueryKeyString {
   INDUSTRY_LIST = "industry-list",
   CITY_LIST = "city-list",
   COUNTRY_LIST = "country-list",
@@ -10,3 +10,5 @@ export enum QueryKeyString {
   SEARCH_REFERRER = "search-referrer",
   SEARCH_REFEREE = "search-referee",
 }
+
+export { QueryKeyString }
