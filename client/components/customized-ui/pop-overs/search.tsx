@@ -20,12 +20,13 @@ import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
+import { MessageType } from "@/types/common/message-type"
 
 interface ISearchPopoverProps {
-  countryList: ICountryResponse[]
-  provinceList: IProvinceResponse[]
-  cityList: ICityResponse[]
-  industryList: IIndustryResponse[]
+  countryList?: ICountryResponse[]
+  provinceList?: IProvinceResponse[]
+  cityList?: ICityResponse[]
+  industryList?: IIndustryResponse[]
   countryUuid?: string
   provinceUuid?: string
   onCountryChange: (value: string) => void
@@ -42,7 +43,7 @@ interface ISearchPopoverProps {
   currentYeoMin?: string
   currentYeoMax?: string
   currentSorting: string
-  type: "post" | "referral"
+  type: MessageType
 }
 const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
   countryList,

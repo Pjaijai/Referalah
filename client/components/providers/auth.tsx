@@ -1,21 +1,35 @@
 "use client"
 
 import React, { FunctionComponent, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { supabase } from "@/utils/services/supabase/config"
 
 import useUserStore from "@/hooks/state/user/useUserStore"
 
 interface IAuthProviderProps {
+  accessToken: string | null
   children: React.ReactNode
 }
-const AuthProvider: FunctionComponent<IAuthProviderProps> = ({ children }) => {
+const AuthProvider: FunctionComponent<IAuthProviderProps> = ({
+  accessToken,
+  children,
+}) => {
   const setUserState = useUserStore((state) => state.setUser)
   const reSetUserState = useUserStore((state) => state.reSetUser)
   const user = useUserStore((state) => state)
+  const router = useRouter()
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange(async (event, session) => {
-      if (session && user.isSignIn !== true) {
+    const {
+      data: { subscription: authListener },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (session && session.access_token !== accessToken) {
+        router.refresh()
+      } else if (
+        session &&
+        session.access_token === accessToken &&
+        user.isSignIn !== true
+      ) {
         const { data, error }: any = await supabase
           .from("user")
           .select(
@@ -39,7 +53,11 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({ children }) => {
         reSetUserState()
       }
     })
-  }, [])
+
+    return () => {
+      authListener?.unsubscribe()
+    }
+  }, [accessToken, supabase, router])
 
   return <>{children}</>
 }

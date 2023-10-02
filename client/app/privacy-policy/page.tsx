@@ -1,5 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
+
 import Link from "next/link"
+
+import { siteConfig } from "@/config/site"
 
 const PrivacyPage = () => {
   return (
@@ -14,9 +17,7 @@ const PrivacyPage = () => {
           Service and tells You about Your privacy rights and how the law
           protects You. We use Your Personal data to provide and improve the
           Service. By using the Service, You agree to the collection and use of
-          information in accordance with this Privacy Policy. This Privacy
-          Policy has been created with the help of the Free Privacy Policy
-          Generator.
+          information in accordance with this Privacy Policy.
         </p>
 
         <h2>Interpretation and Definitions</h2>
@@ -67,12 +68,12 @@ const PrivacyPage = () => {
           <strong>Service</strong> refers to the Website.
         </p>
         <p>
-          <strong>Service</strong> Provider means any natural or legal person
-          who processes the data on behalf of the Company. It refers to
-          third-party companies or individuals employed by the Company to
-          facilitate the Service, to provide the Service on behalf of the
-          Company, to perform services related to the Service or to assist the
-          Company in analyzing how the Service is used.
+          <strong>Service Provider</strong> means any natural or legal person
+          who processes the data on behalf of the us. It refers to third-party
+          companies or individuals employed by the us to facilitate the Service,
+          to provide the Service on behalf of the us, to perform services
+          related to the Service or to assist the us in analyzing how the
+          Service is used.
         </p>
         <p>
           <strong>Usage Data</strong> refers to data collected automatically,
@@ -81,11 +82,13 @@ const PrivacyPage = () => {
         </p>
         <p>
           <strong>Website</strong> refers to Referalah, accessible from{" "}
-          <Link href="/">Referalah | 海外港人搵Referral平台</Link>
+          <Link href={siteConfig.page.main.href}>
+            Referalah | 海外港人搵Referral平台
+          </Link>
         </p>
         <p>
           <strong>You</strong> means the individual accessing or using the
-          Service, or the company, or other legal entity on behalf of which such
+          Service, or the us, or other legal entity on behalf of which such
           individual is accessing or using the Service, as applicable.
         </p>
 
@@ -153,7 +156,7 @@ const PrivacyPage = () => {
             Web Beacons. Certain sections of our Service and our emails may
             contain small electronic files known as web beacons (also referred
             to as clear gifs, pixel tags, and single-pixel gifs) that permit the
-            Company, for example, to count users who have visited those pages or
+            us, for example, to count users who have visited those pages or
             opened an email and for other related website statistics (for
             example, recording the popularity of a certain section and verifying
             system and server integrity).
@@ -163,8 +166,7 @@ const PrivacyPage = () => {
           Cookies can be "Persistent" or "Session" Cookies. Persistent Cookies
           remain on Your personal computer or mobile device when You go offline,
           while Session Cookies are deleted as soon as You close Your web
-          browser. Learn more about cookies on the Free Privacy Policy website
-          article.
+          browser.
         </p>
         <p>
           We use both Session and Persistent Cookies for the purposes set out
@@ -205,7 +207,7 @@ const PrivacyPage = () => {
         </p>
 
         <h2>Use of Your Personal Data</h2>
-        <p>The Company may use Personal Data for the following purposes:</p>
+        <p>We may use Personal Data for the following purposes:</p>
         <p>
           <strong>To provide and maintain our Service,</strong> including to
           monitor the usage of our Service.
@@ -255,6 +257,12 @@ const PrivacyPage = () => {
           evaluate and improve our Service, products, services, marketing and
           your experience.
         </p>
+        <p>
+          <strong>Third-Party Analytics:</strong> We use third-party analytics
+          services, including Google Analytics and Vercel Analytics, to analyze
+          website traffic and improve our services. These services may collect
+          and process data as described in their respective privacy policies.
+        </p>
 
         <p>
           We may share Your personal information in the following situations:
@@ -268,8 +276,8 @@ const PrivacyPage = () => {
           <li>
             <strong>For business transfers:</strong> We may share or transfer
             Your personal information in connection with, or during negotiations
-            of, any merger, sale of Company assets, financing, or acquisition of
-            all or a portion of Our business to another company.
+            of, any merger, sale of assets, financing, or acquisition of all or
+            a portion of Our business to another company.
           </li>
           <li>
             <strong>With Affiliates:</strong>We may share Your information with
@@ -297,19 +305,23 @@ const PrivacyPage = () => {
 
         <h2>Retention of Your Personal Data</h2>
         <p>
-          The Company will retain Your Personal Data only for as long as is
-          necessary for the purposes set out in this Privacy Policy. We will
-          retain and use Your Personal Data to the extent necessary to comply
-          with our legal obligations (for example, if we are required to retain
-          your data to comply with applicable laws), resolve disputes, and
-          enforce our legal agreements and policies.
+          We will retain Your Personal Data only for as long as is necessary for
+          the purposes set out in this Privacy Policy. We will retain and use
+          Your Personal Data to the extent necessary to comply with our legal
+          obligations (for example, if we are required to retain your data to
+          comply with applicable laws), resolve disputes, and enforce our legal
+          agreements and policies. We will also retain Usage Data for internal
+          analysis purposes. Usage Data is generally retained for a shorter
+          period of time, except when this data is used to strengthen the
+          security or to improve the functionality of Our Service, or We are
+          legally obligated to retain this data for longer time periods.
         </p>
         <p>
-          The Company will also retain Usage Data for internal analysis
-          purposes. Usage Data is generally retained for a shorter period of
-          time, except when this data is used to strengthen the security or to
-          improve the functionality of Our Service, or We are legally obligated
-          to retain this data for longer time periods.
+          We will also retain Usage Data for internal analysis purposes. Usage
+          Data is generally retained for a shorter period of time, except when
+          this data is used to strengthen the security or to improve the
+          functionality of Our Service, or We are legally obligated to retain
+          this data for longer time periods.
         </p>
 
         <h2>Transfer of Your Personal Data</h2>
@@ -327,11 +339,11 @@ const PrivacyPage = () => {
           such information represents Your agreement to that transfer.
         </p>
         <p>
-          The Company will take all steps reasonably necessary to ensure that
-          Your data is treated securely and in accordance with this Privacy
-          Policy and no transfer of Your Personal Data will take place to an
-          organization or a country unless there are adequate controls in place
-          including the security of Your data and other personal information.
+          We will take all steps reasonably necessary to ensure that Your data
+          is treated securely and in accordance with this Privacy Policy and no
+          transfer of Your Personal Data will take place to an organization or a
+          country unless there are adequate controls in place including the
+          security of Your data and other personal information.
         </p>
 
         <h2>Delete Your Personal Data</h2>
@@ -358,25 +370,25 @@ const PrivacyPage = () => {
         <h2>Disclosure of Your Personal Data</h2>
         <p className="font-bold italic">Business Transactions</p>
         <p>
-          If the Company is involved in a merger, acquisition or asset sale,
-          Your Personal Data may be transferred. We will provide notice before
-          Your Personal Data is transferred and becomes subject to a different
+          If we are involved in a merger, acquisition or asset sale, Your
+          Personal Data may be transferred. We will provide notice before Your
+          Personal Data is transferred and becomes subject to a different
           Privacy Policy.
         </p>
         <p className="font-bold italic">Law enforcement</p>
         <p>
-          Under certain circumstances, the Company may be required to disclose
-          Your Personal Data if required to do so by law or in response to valid
+          Under certain circumstances, we may be required to disclose Your
+          Personal Data if required to do so by law or in response to valid
           requests by public authorities (e.g. a court or a government agency).
         </p>
         <p className="font-bold italic">Other legal requirements</p>
         <p>
-          The Company may disclose Your Personal Data in the good faith belief
-          that such action is necessary to:
+          We may disclose Your Personal Data in the good faith belief that such
+          action is necessary to:
         </p>
         <ul className="list-inside list-disc">
           <li>Comply with a legal obligation</li>
-          <li>Protect and defend the rights or property of the Company</li>
+          <li>Protect and defend the rights or property of us</li>
           <li>
             Prevent or investigate possible wrongdoing in connection with the
             Service

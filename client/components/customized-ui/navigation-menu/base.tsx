@@ -1,4 +1,3 @@
-"use client"
 
 import * as React from "react"
 import {
@@ -11,22 +10,24 @@ import {
 } from "@/components/ui/navigation-menu"
 
 import { cn } from "@/lib/utils"
+import { siteConfig } from "@/config/site"
+import Link from "next/link"
 
 const components: { title: string; href: string; description: string }[] = [
   {
     title: "開Post",
-    href: "/post/create",
+    href: siteConfig.page.createPost.href,
     description:
       "你公司請人又想搵香港人？網上睇到份工又想人幫手？係到開post，等人聯絡你。",
   },
   {
     title: "工搵人",
-    href: "/post/referer",
+    href: siteConfig.page.referrerPost.href,
     description: "係到搵有乜工搵人推薦。",
   },
   {
     title: "人搵工",
-    href: "/post/referee",
+    href: siteConfig.page.refereePost.href ,
     description: "係到搵有乜人需要幫手。",
   },
 ]
@@ -41,15 +42,25 @@ export function BaseNavigationMenu() {
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="flex flex-col w-[200px]">
-              <ListItem href="/profile" title="成為推薦人/受薦人">
+
+            <Link href={siteConfig.page.profile.href}>
+            <ListItem  title="成為推薦人/受薦人">
                 去個人檔案剔翻該選項，同埋填翻相認資料就OK啦！幫得一個得一個🙏🏻
               </ListItem>
-              <ListItem href="/referer" title="搵推薦人">
+              </Link>
+
+              <Link href={siteConfig.page.referrer.href}>
+              <ListItem title="推薦人">
                 想搵人推薦你入去？係到搵下啦！
               </ListItem>
-              <ListItem href="/referee" title="搵受薦人">
-                想搵人材？係到睇下有冇合適嘅人啦！
+              </Link>
+
+              <Link href={siteConfig.page.referee.href}>
+              <ListItem title="受薦人">
+              想搵人材？係到睇下有冇合適嘅人啦！
               </ListItem>
+              </Link>
+              
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
@@ -60,13 +71,15 @@ export function BaseNavigationMenu() {
           <NavigationMenuContent>
             <ul className="flex flex-col w-[200px] ">
               {components.map((component) => (
+              <Link href={component.href}>
                 <ListItem
                   key={component.title}
                   title={component.title}
-                  href={component.href}
                 >
                   {component.description}
+                
                 </ListItem>
+                </Link>
               ))}
             </ul>
           </NavigationMenuContent>

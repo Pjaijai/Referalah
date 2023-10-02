@@ -1,6 +1,7 @@
 import React from "react"
 import Link from "next/link"
 
+import { siteConfig } from "@/config/site"
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Dialog,
@@ -29,7 +30,7 @@ const UserSignInDialog = ({ open, onDialogClose }: IUserSignInDialogProps) => {
           <Button onClick={onDialogClose} variant={"ghost"}>
             下次先
           </Button>
-          <Link href={"/auth"} className={buttonVariants()}>
+          <Link href={siteConfig.page.auth.href} className={buttonVariants()}>
             登入/註冊
           </Link>
         </DialogFooter>

@@ -33,7 +33,6 @@ import FormTextInput from "@/components/customized-ui/form/input"
 import FormNumberInput from "@/components/customized-ui/form/number"
 import FormSelect from "@/components/customized-ui/form/select"
 import FormTextArea from "@/components/customized-ui/form/text-area"
-import NumberInput from "@/components/customized-ui/inputs/number"
 import { Icons } from "@/components/icons"
 
 interface IEdiProfileTemplate {
@@ -76,10 +75,6 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     .object({
       photoUrl: z.any().optional(),
       resumeUrl: z.any().optional(),
-      // chineseFirstName: maximumWordValidation(4).optional(),
-      // chineseLastName: maximumWordValidation(4).optional(),
-      // englishFirstName: maximumWordValidation(30).optional(),
-      // englishLastName: maximumWordValidation(30).optional(),
       username: nameValidation(10).min(1, {
         message: `至少有要1粒字`,
       }),
@@ -198,10 +193,10 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   const provinceWatch = watch("provinceUuid")
   const yeoWatch = watch("yearOfExperience")
 
-  const { industry: industryList } = useGetIndustryList()
-  const { country: countryList } = useGetCountryList()
-  const { province: provinceList } = useGetProvinceList()
-  const { city: cityList } = useGetCityList()
+  const { data: industryList } = useGetIndustryList()
+  const { data: countryList } = useGetCountryList()
+  const { data: provinceList } = useGetProvinceList()
+  const { data: cityList } = useGetCityList()
 
   const industryOptions = useIndustryOptions(industryList)
   const countryOptions = useCountryOptions(countryList)

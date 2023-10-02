@@ -4,6 +4,8 @@ import React, { ChangeEvent, useState } from "react"
 import { postSortingOptions } from "@/utils/common/sorting/post"
 
 import { ISearchPostResponse } from "@/types/api/response/referer-post"
+import { MessageType } from "@/types/common/message-type"
+import { ReferralType } from "@/types/common/referral-type"
 import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
 import useGetCityList from "@/hooks/api/location/useGetCityList"
 import useGetCountryList from "@/hooks/api/location/useGetCountryList"
@@ -30,10 +32,10 @@ const RefererPostPageTemplate: React.FunctionComponent<
   const [sorting, setSorting] = useState(postSortingOptions[0].value)
   const debouncedCompanyName = useDebounce(companyName, 800)
 
-  const { industry: industryList } = useGetIndustryList()
-  const { city: cityList } = useGetCityList()
-  const { country: countryList } = useGetCountryList()
-  const { province: provinceList } = useGetProvinceList()
+  const { data: industryList } = useGetIndustryList()
+  const { data: cityList } = useGetCityList()
+  const { data: countryList } = useGetCountryList()
+  const { data: provinceList } = useGetProvinceList()
 
   const handleCompanyChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCompanyName(e.target.value)
@@ -77,7 +79,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
   }
 
   const { data, fetchNextPage, isLoading, isFetching, hasNextPage } =
-    useSearchPost(sorting, filterMeta, "referer")
+    useSearchPost(sorting, filterMeta, ReferralType.REFERRER)
 
   const list = data
     ? (data?.pages.flatMap((d) => d) as ISearchPostResponse[])
@@ -108,7 +110,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
           currentProvinceUuid={provinceUuid}
           currentYeoMax={yoeMax}
           currentYeoMin={yoeMin}
-          type="post"
+          type={MessageType.POST}
         />
       </div>
 
@@ -148,10 +150,10 @@ const RefererPostPageTemplate: React.FunctionComponent<
                   yearOfExperience={data.year_of_experience}
                   uuid={data.uuid}
                   key={data.uuid}
-                  messageType="post"
+                  messageType={MessageType.POST}
                   postUuid={data.uuid}
                   toUuid={data.uuid}
-                  receiverType="referer"
+                  receiverType={ReferralType.REFERRER}
                   createdAt={data.created_at.toString()}
                 />
               )
