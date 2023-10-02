@@ -59,32 +59,6 @@ const TncPage = () => {
         records.
       </p>
 
-      <h2 className="mt-2 font-semibold">TABLE OF CONTENTS</h2>
-      <ol>
-        <li>OUR SERVICES</li>
-        <li>INTELLECTUAL PROPERTY RIGHTS</li>
-        <li>USER REPRESENTATIONS</li>
-        <li>USER REGISTRATION</li>
-        <li>PROHIBITED ACTIVITIES</li>
-        <li>USER GENERATED CONTRIBUTIONS</li>
-        <li>CONTRIBUTION LICENSE</li>
-        <li>THIRD-PARTY WEBSITES AND CONTENT</li>
-        <li>SERVICES MANAGEMENT</li>
-        <li>PRIVACY POLICY</li>
-        <li>TERM AND TERMINATION</li>
-        <li>MODIFICATIONS AND INTERRUPTIONS</li>
-        <li>GOVERNING LAW</li>
-        <li>DISPUTE RESOLUTION</li>
-        <li>CORRECTIONS</li>
-        <li>DISCLAIMER</li>
-        <li>LIMITATIONS OF LIABILITY</li>
-        <li>INDEMNIFICATION</li>
-        <li>USER DATA</li>
-        <li>ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES</li>
-        <li>MISCELLANEOUS</li>
-        <li>CONTACT US</li>
-      </ol>
-
       <h2 className="mt-2 font-semibold">1. OUR SERVICES</h2>
       <p>
         The information provided when using the Services is not intended for
@@ -631,7 +605,11 @@ const TncPage = () => {
       <p>
         We care about data privacy and security. Please review our Privacy
         Policy:
-        <a href="https://www.referalah.com/privacy-policy" target="_blank" rel="noreferrer">
+        <a
+          href="https://www.referalah.com/privacy-policy"
+          target="_blank"
+          rel="noreferrer"
+        >
           https://www.referalah.com/privacy
         </a>
         . By using the Services, you agree to be bound by our Privacy Policy,
