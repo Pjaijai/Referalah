@@ -12,6 +12,9 @@ import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import GoogleAnalytics from "@/components/google-analytics"
 import ToastProvider from "@/components/providers/toast"
+import { supabase as supabaseClient} from "@/utils/services/supabase/config"
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
 
 export const metadata: Metadata = {
   title: {
@@ -34,7 +37,19 @@ interface RootLayoutProps {
   children: React.ReactNode
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+// do not cache this layout
+export const revalidate = 0;
+
+
+export default async function RootLayout({ children }: RootLayoutProps) {
+  const supabase = createServerComponentClient({ cookies });
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  const accessToken = session?.access_token || null;
+
   return (
     <>
       <html lang="zh-Hk" suppressHydrationWarning>
@@ -48,7 +63,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <GoogleAnalytics />
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <APIProvider>
-              <AuthProvider>
+              <AuthProvider accessToken={accessToken}>
                 <ToastProvider>
                 <div className="flex min-h-screen flex-col">
                   <SiteHeader />
