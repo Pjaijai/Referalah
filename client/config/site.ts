@@ -44,6 +44,10 @@ export const siteConfig = {
       name: "privatePolicy",
       href: "/privacy-policy",
     },
+    termsAndConditions: {
+      name: "termsAndConditions",
+      href: "/terms-and-conditions",
+    },
   },
   links: {
     instagram: "https://instagram.com/referalah?igshid=NGVhN2U2NjQ0Yg==",
