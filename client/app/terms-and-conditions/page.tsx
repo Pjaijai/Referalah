@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React from "react"
 
 const TncPage = () => {
@@ -5,7 +6,7 @@ const TncPage = () => {
     <article>
       <title>AGREEMENT TO OUR TERMS</title>
 
-      <h2 className="font-semibold mt-2">AGREEMENT TO OUR TERMS</h2>
+      <h2 className="mt-2 font-semibold">AGREEMENT TO OUR TERMS</h2>
 
       <p>We are Referalah ("we," "us," "our").</p>
 
@@ -58,7 +59,7 @@ const TncPage = () => {
         records.
       </p>
 
-      <h2 className="font-semibold mt-2">TABLE OF CONTENTS</h2>
+      <h2 className="mt-2 font-semibold">TABLE OF CONTENTS</h2>
       <ol>
         <li>OUR SERVICES</li>
         <li>INTELLECTUAL PROPERTY RIGHTS</li>
@@ -84,7 +85,7 @@ const TncPage = () => {
         <li>CONTACT US</li>
       </ol>
 
-      <h2 className="font-semibold mt-2">1. OUR SERVICES</h2>
+      <h2 className="mt-2 font-semibold">1. OUR SERVICES</h2>
       <p>
         The information provided when using the Services is not intended for
         distribution to or use by any person or entity in any jurisdiction or
@@ -96,7 +97,7 @@ const TncPage = () => {
         and to the extent local laws are applicable.
       </p>
 
-      <h2 className="font-semibold mt-2">2. INTELLECTUAL PROPERTY RIGHTS</h2>
+      <h2 className="mt-2 font-semibold">2. INTELLECTUAL PROPERTY RIGHTS</h2>
       <p>
         <strong>Our intellectual property</strong>
       </p>
@@ -269,7 +270,7 @@ const TncPage = () => {
         disable your account and report you to the authorities.
       </p>
 
-      <h2 className="font-semibold mt-2">3. USER REPRESENTATIONS</h2>
+      <h2 className="mt-2 font-semibold">3. USER REPRESENTATIONS</h2>
       <p>By using the Services, you represent and warrant that:</p>
       <ol>
         <li>
@@ -305,7 +306,7 @@ const TncPage = () => {
         portion thereof).
       </p>
 
-      <h2 className="font-semibold mt-2">4. USER REGISTRATION</h2>
+      <h2 className="mt-2 font-semibold">4. USER REGISTRATION</h2>
       <p>
         You may be required to register to use the Services. You agree to keep
         your password confidential and will be responsible for all use of your
@@ -313,7 +314,7 @@ const TncPage = () => {
         a username you select if we determine, in our sole discretion, that such
         username is inappropriate, obscene, or otherwise objectionable.
       </p>
-      <h2 className="font-semibold mt-2">5. PROHIBITED ACTIVITIES</h2>
+      <h2 className="mt-2 font-semibold">5. PROHIBITED ACTIVITIES</h2>
       <p>
         You may not access or use the Services for any purpose other than that
         for which we make the Services available. The Services may not be used
@@ -428,7 +429,7 @@ const TncPage = () => {
           endeavor or commercial enterprise.
         </li>
       </ul>
-      <h2 className="font-semibold mt-2">6. USER GENERATED CONTRIBUTIONS</h2>
+      <h2 className="mt-2 font-semibold">6. USER GENERATED CONTRIBUTIONS</h2>
       <p>
         The Services may invite you to chat, contribute to, or participate in
         blogs, message boards, online forums, and other functionality, and may
@@ -518,7 +519,7 @@ const TncPage = () => {
         Legal Terms and may result in, among other things, termination or
         suspension of your rights to use the Services.
       </p>
-      <h2 className="font-semibold mt-2">7. CONTRIBUTION LICENSE</h2>
+      <h2 className="mt-2 font-semibold">7. CONTRIBUTION LICENSE</h2>
       <p>
         By posting your Contributions to any part of the Services, you
         automatically grant, and you represent and warrant that you have the
@@ -561,7 +562,7 @@ const TncPage = () => {
         and for any reason, without notice. We have no obligation to monitor
         your Contributions.
       </p>
-      <h2 className="font-semibold mt-2">
+      <h2 className="mt-2 font-semibold">
         8. THIRD-PARTY WEBSITES AND CONTENT
       </h2>
       <p>
@@ -598,7 +599,7 @@ const TncPage = () => {
         Third-Party Websites.
       </p>
 
-      <h2 className="font-semibold mt-2">9. SERVICES MANAGEMENT</h2>
+      <h2 className="mt-2 font-semibold">9. SERVICES MANAGEMENT</h2>
       <p>We reserve the right, but not the obligation, to:</p>
       <ol>
         <li>Monitor the Services for violations of these Legal Terms;</li>
@@ -626,11 +627,11 @@ const TncPage = () => {
         </li>
       </ol>
 
-      <h2 className="font-semibold mt-2">10. PRIVACY POLICY</h2>
+      <h2 className="mt-2 font-semibold">10. PRIVACY POLICY</h2>
       <p>
         We care about data privacy and security. Please review our Privacy
         Policy:
-        <a href="https://www.referalah.com/privacy-policy" target="_blank">
+        <a href="https://www.referalah.com/privacy-policy" target="_blank" rel="noreferrer">
           https://www.referalah.com/privacy
         </a>
         . By using the Services, you agree to be bound by our Privacy Policy,
@@ -642,7 +643,7 @@ const TncPage = () => {
         transferring your data to Canada, and you expressly consent to have your
         data transferred to and processed in Canada.
       </p>
-      <h2 className="font-semibold mt-2">11. TERM AND TERMINATION</h2>
+      <h2 className="mt-2 font-semibold">11. TERM AND TERMINATION</h2>
       <p>
         These Legal Terms shall remain in full force and effect while you use
         the Services. Without limiting any other provision of these legal terms,
@@ -665,7 +666,7 @@ const TncPage = () => {
         injunctive redress.
       </p>
 
-      <h2 className="font-semibold mt-2">
+      <h2 className="mt-2 font-semibold">
         12. MODIFICATIONS AND INTERRUPTIONS
       </h2>
       <p>
@@ -690,14 +691,14 @@ const TncPage = () => {
         supply any corrections, updates, or releases in connection therewith.
       </p>
 
-      <h2 className="font-semibold mt-2">13. GOVERNING LAW</h2>
+      <h2 className="mt-2 font-semibold">13. GOVERNING LAW</h2>
       <p>
         These Legal Terms shall be governed by and defined following the laws of
         Canada. Referalah and yourself irrevocably consent that the courts of
         Canada shall have exclusive jurisdiction to resolve any dispute which
         may arise in connection with these Legal Terms.
       </p>
-      <h2 className="font-semibold mt-2">14. DISPUTE RESOLUTION</h2>
+      <h2 className="mt-2 font-semibold">14. DISPUTE RESOLUTION</h2>
       <p>
         You agree to irrevocably submit all disputes related to these Legal
         Terms or the legal relationship established by these Legal Terms to the
@@ -708,7 +709,7 @@ const TncPage = () => {
         your principal place of business.
       </p>
 
-      <h2 className="font-semibold mt-2">15. CORRECTIONS</h2>
+      <h2 className="mt-2 font-semibold">15. CORRECTIONS</h2>
       <p>
         There may be information on the Services that contains typographical
         errors, inaccuracies, or omissions, including descriptions, pricing,
@@ -717,7 +718,7 @@ const TncPage = () => {
         the information on the Services at any time, without prior notice.
       </p>
 
-      <h2 className="font-semibold mt-2">16. DISCLAIMER</h2>
+      <h2 className="mt-2 font-semibold">16. DISCLAIMER</h2>
       <p>
         The services are provided on an as-is and as-available basis. You agree
         that your use of the services will be at your sole risk. To the fullest
@@ -750,7 +751,7 @@ const TncPage = () => {
         judgment and exercise caution where appropriate.
       </p>
 
-      <h2 className="font-semibold mt-2">17. LIMITATIONS OF LIABILITY</h2>
+      <h2 className="mt-2 font-semibold">17. LIMITATIONS OF LIABILITY</h2>
       <p>
         In no event will we be liable to you or any third party for any direct,
         indirect, consequential, exemplary, incidental, special or punitive
@@ -759,7 +760,7 @@ const TncPage = () => {
         advised of the possibility of such damages.
       </p>
 
-      <h2 className="font-semibold mt-2">18. INDEMNIFICATION</h2>
+      <h2 className="mt-2 font-semibold">18. INDEMNIFICATION</h2>
       <p>
         You agree to defend, indemnify, and hold us harmless, including our
         subsidiaries, affiliates, and all of our respective officers, agents,
@@ -779,7 +780,7 @@ const TncPage = () => {
         proceeding which is subject to this indemnification upon becoming aware
         of it.
       </p>
-      <h2 className="font-semibold mt-2">19. USER DATA</h2>
+      <h2 className="mt-2 font-semibold">19. USER DATA</h2>
       <p>
         We will maintain certain data that you transmit to the Services for the
         purpose of managing the performance of the Services, as well as data
@@ -791,7 +792,7 @@ const TncPage = () => {
         action against us arising from any such loss or corruption of such data.
       </p>
 
-      <h2 className="font-semibold mt-2">
+      <h2 className="mt-2 font-semibold">
         20. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES
       </h2>
       <p>
@@ -811,7 +812,7 @@ const TncPage = () => {
         means.
       </p>
 
-      <h2 className="font-semibold mt-2">21. MISCELLANEOUS</h2>
+      <h2 className="mt-2 font-semibold">21. MISCELLANEOUS</h2>
       <p>
         These Legal Terms and any policies or operating rules posted by us on
         the Services or in respect to the Services constitute the entire
@@ -834,7 +835,7 @@ const TncPage = () => {
         signing by the parties hereto to execute these Legal Terms.
       </p>
 
-      <h2 className="font-semibold mt-2">22. CONTACT US</h2>
+      <h2 className="mt-2 font-semibold">22. CONTACT US</h2>
       <p>
         In order to resolve a complaint regarding the Services or to receive
         further information regarding use of the Services, please contact us at:
