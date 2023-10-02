@@ -37,6 +37,10 @@ interface RootLayoutProps {
   children: React.ReactNode
 }
 
+// do not cache this layout
+export const revalidate = 0;
+
+
 export default async function RootLayout({ children }: RootLayoutProps) {
   const supabase = createServerComponentClient({ cookies });
 
