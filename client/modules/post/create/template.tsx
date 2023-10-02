@@ -8,6 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { ReferralType } from "@/types/common/referral-type"
+import { siteConfig } from "@/config/site"
 import useGetIndustryList from "@/hooks/api/industry/useGetIndustryList"
 import useGetCityList from "@/hooks/api/location/useGetCityList"
 import useGetCountryList from "@/hooks/api/location/useGetCountryList"
@@ -93,7 +95,7 @@ const CreatePostTemplate: React.FunctionComponent<
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      type: "referer",
+      type: ReferralType.REFERRER,
       description: "",
       companyName: "",
       jobTitle: "",
@@ -114,10 +116,10 @@ const CreatePostTemplate: React.FunctionComponent<
   const urlWatch = form.watch("url")
   const router = useRouter()
   const user = useUserStore((state) => state)
-  const { industry: industryList } = useGetIndustryList()
-  const { city: cityList } = useGetCityList()
-  const { country: countryList } = useGetCountryList()
-  const { province: provinceList } = useGetProvinceList()
+  const { data: industryList } = useGetIndustryList()
+  const { data: cityList } = useGetCityList()
+  const { data: countryList } = useGetCountryList()
+  const { data: provinceList } = useGetProvinceList()
   const industryOptions = useIndustryOptions(industryList)
   const countryOptions = useCountryOptions(countryList)
   const provinceOptions = useProvinceOptions(provinceList, countryWatch)
@@ -125,11 +127,11 @@ const CreatePostTemplate: React.FunctionComponent<
   const { mutate: createPost, isLoading: isCreatePostLoading } = useCreatePost()
   const postTypeOptions = [
     {
-      value: "referer",
+      value: ReferralType.REFERRER,
       title: "工搵人",
     },
     {
-      value: "referee",
+      value: ReferralType.REFEREE,
       title: "人搵工",
     },
   ]
@@ -175,7 +177,7 @@ const CreatePostTemplate: React.FunctionComponent<
           variant: "destructive",
           action: (
             <ToastAction altText="登入">
-              <Link href={"/auth"}>登入</Link>
+              <Link href={siteConfig.page.auth.href}>登入</Link>
             </ToastAction>
           ),
         })
@@ -198,7 +200,7 @@ const CreatePostTemplate: React.FunctionComponent<
         },
         {
           onSuccess: () => {
-            if (values.type === "referer") {
+            if (values.type === ReferralType.REFERRER) {
               router.push("/post/referer")
             } else {
               router.push("/post/referee")
@@ -257,7 +259,7 @@ const CreatePostTemplate: React.FunctionComponent<
             label="內容"
             name="description"
             description={
-              typeWatch === "referer"
+              typeWatch === ReferralType.REFERRER
                 ? "講吓想搵啲咩人？"
                 : "大概講吓你自己點解match呢個職位，建議唔好公開自己聯絡資訊。"
             }

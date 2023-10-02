@@ -4,7 +4,7 @@ import { useInfiniteQuery } from "@tanstack/react-query"
 import { QueryKeyString } from "@/types/common/query-key-string"
 import { ReferralType } from "@/types/common/referral-type"
 
-interface ISearchPostFilterMeta {
+interface ISearchRefererFilterMeta {
   companyName: string
   cityUuid?: string
   provinceUuid?: string
@@ -15,20 +15,20 @@ interface ISearchPostFilterMeta {
   yoeMin?: string
 }
 
-const useSearchPost = (
+const useSearchReferral = (
   sorting: string,
-  filterMeta: ISearchPostFilterMeta,
+  filterMeta: ISearchRefererFilterMeta,
   type: ReferralType
 ) => {
   const keyString =
     type === ReferralType.REFEREE
-      ? QueryKeyString.SEARCH_REFEREE_POST
-      : QueryKeyString.SEARCH_REFERRER_POST
+      ? QueryKeyString.SEARCH_REFEREE
+      : QueryKeyString.SEARCH_REFERRER
   return useInfiniteQuery({
     queryKey: [keyString, { sorting, filterMeta, type }],
-    queryFn: apiService.searchPost,
-    refetchOnWindowFocus: false,
+    queryFn: apiService.searchReferral,
     refetchOnMount: false,
+    refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, allPages: any[]) => {
       if (lastPage && lastPage.length > 0) {
         return allPages.length
@@ -39,4 +39,4 @@ const useSearchPost = (
   })
 }
 
-export default useSearchPost
+export default useSearchReferral

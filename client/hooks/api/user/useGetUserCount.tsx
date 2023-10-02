@@ -1,19 +1,12 @@
-import { supabase } from "@/utils/services/supabase/config"
+import apiService from "@/utils/common/api"
 import { useQuery } from "@tanstack/react-query"
 
+import { QueryKeyString } from "@/types/common/query-key-string"
+
 const useGetUserCount = () => {
-  const fetchPosts = async ({ pageParam = 0, queryKey }: any) => {
-    const { count } = await supabase
-      .from("user")
-      .select("id", { count: "exact" })
-
-    return count
-  }
-
   return useQuery({
-    queryKey: [`number-of-user`],
-    queryFn: fetchPosts,
-    refetchOnMount: true,
+    queryKey: [QueryKeyString.COUNT_USER],
+    queryFn: apiService.getUserCount,
     refetchOnWindowFocus: true,
   })
 }
