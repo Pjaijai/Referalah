@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { supabase } from "@/utils/services/supabase/config"
 
 import useUserStore from "@/hooks/state/user/store"
+import { useToast } from "@/components/ui/use-toast"
 
 interface IAuthProviderProps {
   accessToken: string | null
@@ -19,6 +20,7 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({
   const [userUuid, setUserUuid] = useState<string | null>(null)
   const user = useUserStore((state) => state)
   const router = useRouter()
+  const { toast } = useToast()
 
   useEffect(() => {
     const {
@@ -49,22 +51,29 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({
         try {
           const { data, error }: any = await supabase
             .from("user")
-            .select("email, uuid, username, avatar_url")
+            .select("uuid, username, avatar_url")
             .eq("uuid", userUuid)
             .single()
 
           if (!error) {
             setUserState({
-              email: data.email,
               uuid: data.uuid,
               username: data.username,
               photoUrl: data.avatar_url,
             })
           } else {
-            console.error("Error fetching user data:", error)
+            return toast({
+              title: "登入出事！",
+              description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+              variant: "destructive",
+            })
           }
         } catch (error) {
-          console.error("Error during async operation:", error)
+          return toast({
+            title: "登入出事！",
+            description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+            variant: "destructive",
+          })
         }
       } else {
         reSetUserState()
