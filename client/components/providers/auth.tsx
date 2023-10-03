@@ -4,7 +4,7 @@ import React, { FunctionComponent, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { supabase } from "@/utils/services/supabase/config"
 
-import useUserStore from "@/hooks/state/user/useUserStore"
+import useUserStore from "@/hooks/state/user/store"
 
 interface IAuthProviderProps {
   accessToken: string | null

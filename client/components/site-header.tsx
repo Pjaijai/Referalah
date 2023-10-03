@@ -5,7 +5,7 @@ import { BaseNavigationMenu } from "@/components/customized-ui/navigation-menu/b
 import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
-import useUserStore from "@/hooks/state/user/useUserStore"
+import useUserStore from "@/hooks/state/user/store"
 import { useRouter } from "next/navigation"
 
 export function SiteHeader() {
