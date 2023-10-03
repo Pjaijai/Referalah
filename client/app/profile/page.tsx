@@ -2,10 +2,10 @@
 
 import React, {  useState } from "react"
 import { Icons } from "@/components/icons"
-import useUserStore from "@/hooks/state/user/useUserStore"
+import useUserStore from "@/hooks/state/user/store"
 import EditProfileTemplate from "@/modules/profile/edit/template"
 import ViewProfileTemplate from "@/modules/profile/view/template"
-import useGetUserprofile from "@/hooks/api/user/useGetUserprofile"
+import useGetUserprofile from "@/hooks/api/user/get-user-profile"
 import Link from "next/link"
 import { siteConfig } from "@/config/site"
 
