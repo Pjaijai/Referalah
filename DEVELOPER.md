@@ -58,7 +58,7 @@ create trigger on_auth_user_created
 
 ### Creating branch
 
-Naming your branch with category. For example `feature/i-go-to-school-by-bus`
+Naming your branch with category. For example `feature/i-go-to-school-by-bus`. Please create new branch based on `development` branch and created PR point to `development`.
 
 | Category Word |                               Meaning                                |
 | ------------- | :------------------------------------------------------------------: |
