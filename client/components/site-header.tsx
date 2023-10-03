@@ -2,10 +2,13 @@
 
 import UserDropDownMenu from "@/components/customized-ui/drop-down-menu/user"
 import { BaseNavigationMenu } from "@/components/customized-ui/navigation-menu/base"
+import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
 import useUserStore from "@/hooks/state/user/store"
+import { siteConfig } from "@/config/site"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 
 export function SiteHeader() {
@@ -23,6 +26,14 @@ export function SiteHeader() {
         <div className="flex  items-center justify-end space-x-4">
           <nav className="flex items-center space-x-1">
             <ThemeToggle />
+            <Link
+              href={siteConfig.links.github}
+              target="_blank"
+              rel="noreferrer"
+            >
+            <Icons.github />
+            </Link>
+
             {isUserSignIn ? (
               <UserDropDownMenu />
             ) : (

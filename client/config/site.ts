@@ -51,5 +51,6 @@ export const siteConfig = {
   },
   links: {
     instagram: "https://instagram.com/referalah?igshid=NGVhN2U2NjQ0Yg==",
+    github: "https://github.com/Pjaijai/Referalah",
   },
 }
