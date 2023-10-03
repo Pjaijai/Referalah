@@ -56,4 +56,26 @@ create trigger on_auth_user_created
 3.  Make sure you have already installed the Supabase CLI.
 4.  Start the Supabase development environment using the command provided in the Supabase documentation [here](https://supabase.com/docs/guides/cli/local-development).
 
+### Creating branch
+
+Naming your branch with category. For example `feature/i-go-to-school-by-bus`
+
+| Category Word |                               Meaning                                |
+| ------------- | :------------------------------------------------------------------: |
+| hotfix        | for quickly fixing critical issues,usually with a temporary solution |
+| bugfix        |                           for fixing a bug                           |
+| feature       |             for adding, removing or modifying a feature              |
+| doc           |                               document                               |
+
+### Creating Pull Request
+
+Naming your PR with category. For example `Feature/I Go To School By Bus`
+
+| Category Word |                               Meaning                                |
+| ------------- | :------------------------------------------------------------------: |
+| HotFix        | for quickly fixing critical issues,usually with a temporary solution |
+| BugFix        |                           for fixing a bug                           |
+| Feature       |             for adding, removing or modifying a feature              |
+| Doc           |                               document                               |
+
 Now you have both the frontend and backend of Referalah up and running locally, allowing you to work on and test your changes effectively. Happy coding!
