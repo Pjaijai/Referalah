@@ -9,7 +9,7 @@ import compareDateDifferenceHelper from "@/utils/common/helpers/time/compareDate
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
-import useUserStore from "@/hooks/state/user/useUserStore"
+import useUserStore from "@/hooks/state/user/store"
 
 interface IReferralCardProps
   extends Omit<

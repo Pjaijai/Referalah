@@ -2,7 +2,7 @@ import BaseAvatar from "@/components/customized-ui/avatars/base"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useToast } from "@/components/ui/use-toast"
 import { siteConfig } from "@/config/site"
-import useUserStore from "@/hooks/state/user/useUserStore"
+import useUserStore from "@/hooks/state/user/store"
 import { supabase } from "@/utils/services/supabase/config"
 import Link from "next/link"
 
