@@ -62,18 +62,20 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({
               photoUrl: data.avatar_url,
             })
           } else {
-            return toast({
+            toast({
               title: "登入出事！",
               description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
               variant: "destructive",
             })
+            throw error
           }
         } catch (error) {
-          return toast({
+          toast({
             title: "登入出事！",
             description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
             variant: "destructive",
           })
+          throw error
         }
       } else {
         reSetUserState()
