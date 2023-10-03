@@ -1,0 +1,59 @@
+## Introduction
+
+Hello and welcome! We are delighted to have you join our community! 🎉🌟
+
+## Tech Stack
+
+Frontend : Next.js 13, Zustand, React-Hook-Form, Tanstack Query, Shadcn(Radix + Tailwind.css)
+Backend: Supabase , SQL
+Infra : Vercel, Supabase
+Email service: Resend
+Analytic : GA, Vercel Analytic
+
+## Current Table Structure
+
+Check [here](https://dbdiagram.io/d/Referalah-651b7b71ffbf5169f0e71a7a)
+
+## Data that you need
+
+Check [here](https://drive.google.com/drive/folders/14Q5xqmHU9w1v7Zv9HlxL3qr--Cw_4z7b?usp=drive_link)
+
+## To solve user data cannot be inserted after registration
+
+I'm uncertain about the reason why, but there should be a trigger that inserts user data into the user table after registration. I did execute the migration, but unfortunately, it did not generate the trigger as expected. To address this issue, please run the following SQL command in your local SQL editor:
+
+```line_numbers,js
+create or replace function public.handle_new_user()
+returns trigger
+language plpgsql
+security definer set search_path = public
+as $$
+begin
+insert into public.user (uuid, email, username)
+values (new.id, new.email , new.email);
+return new;
+end;
+
+$$
+;
+
+-- trigger the function every time a user is created
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user();
+```
+
+### Frontend
+
+1.  Open your terminal.
+2.  Navigate to the 'client' directory using the `cd client` command.
+3.  Run the development server using `yarn dev`.
+
+### Backend
+
+1.  Open your terminal.
+2.  Navigate to the 'supabase' directory using the `cd supabase` command.
+3.  Make sure you have already installed the Supabase CLI.
+4.  Start the Supabase development environment using the command provided in the Supabase documentation [here](https://supabase.com/docs/guides/cli/local-development).
+
+Now you have both the frontend and backend of Referalah up and running locally, allowing you to work on and test your changes effectively. Happy coding!
