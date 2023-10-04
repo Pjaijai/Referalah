@@ -25,6 +25,8 @@ const UserDropDownMenu = () => {
     try {
       const { error } = await supabase.auth.signOut()
 
+      if(error) throw error
+      
       userState.reSetUser()
       toast({
         title: "登出成功！",
