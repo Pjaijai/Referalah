@@ -47,38 +47,33 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      if (userUuid) {
-        try {
-          const { data, error }: any = await supabase
-            .from("user")
-            .select("uuid, username, avatar_url")
-            .eq("uuid", userUuid)
-            .single()
+      if (!userUuid) {
+        reSetUserState()
+        return
+      }
 
-          if (!error) {
-            setUserState({
-              uuid: data.uuid,
-              username: data.username,
-              photoUrl: data.avatar_url,
-            })
-          } else {
-            toast({
-              title: "登入出事！",
-              description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
-              variant: "destructive",
-            })
-            throw error
-          }
-        } catch (error) {
-          toast({
-            title: "登入出事！",
-            description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
-            variant: "destructive",
-          })
+      try {
+        const { data, error } = await supabase
+          .from("user")
+          .select("uuid, username, avatar_url")
+          .eq("uuid", userUuid)
+          .single()
+
+        if (error) {
           throw error
         }
-      } else {
-        reSetUserState()
+
+        setUserState({
+          uuid: data.uuid,
+          username: data.username,
+          photoUrl: data.avatar_url,
+        })
+      } catch (error) {
+        toast({
+          title: "登入出事！",
+          description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+          variant: "destructive",
+        })
       }
     }
 
