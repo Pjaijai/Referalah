@@ -15,14 +15,11 @@ BEGIN
     username_text := LEFT(username_text, 4);
   END IF;
 
-  -- Ensure the username doesn't exceed 10 characters in total
-  IF LENGTH(username_text) + 4 > 10 THEN
-    username_text := LEFT(username_text, 10 - 4);
-  END IF;
+  
 
   -- Append the first 4 characters of the uuid (id) to the username
   username_text := username_text || LEFT(NEW.id::TEXT, 4);
-
+  
   -- Insert the new user with the generated username
   INSERT INTO public.user (uuid, email, username)
   VALUES (NEW.id, NEW.email, username_text);
