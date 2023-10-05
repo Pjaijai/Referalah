@@ -1,7 +1,7 @@
 {
   "name": "Referalah",
   "description": "An open source online platform for oversea Hong Kong People to connect each other",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "license": "Apache-2.0",
   "scripts": {
     "dev": "next dev",
