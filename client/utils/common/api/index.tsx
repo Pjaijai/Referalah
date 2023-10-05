@@ -84,7 +84,7 @@ const apiService = {
 
       return data
     } catch (err) {
-      throw err
+      console.error(err)
     }
   },
   searchReferral: async ({ pageParam = 0, queryKey }: any) => {
@@ -170,7 +170,7 @@ const apiService = {
 
       return data
     } catch (err) {
-      throw err
+      console.error(err)
     }
   },
 
@@ -191,7 +191,7 @@ const apiService = {
         description: req.description.trim(),
       })
     } catch (err) {
-      throw err
+      console.error(err)
     }
   },
   searchPost: async ({ pageParam = 0, queryKey }: any) => {
@@ -270,46 +270,58 @@ const apiService = {
 
       return data
     } catch (err) {
-      throw err
+      console.error(err)
     }
   },
 
   // Industry
   getIndustryList: async () => {
-    const { data: industryData, error: industryError } = await supabase
-      .from("industry")
-      .select("*")
+    try {
+      const { data: industryData, error: industryError } = await supabase
+        .from("industry")
+        .select("*")
 
-    if (industryError) {
-      throw industryError
+      if (industryError) {
+        throw industryError
+      }
+      return industryData as IIndustryResponse[]
+    } catch (error) {
+      console.error(error)
     }
-    return industryData as IIndustryResponse[]
   },
 
   // Country
   getCountryList: async () => {
-    const { data: countryData, error: countryError } = await supabase
-      .from("country")
-      .select("*")
+    try {
+      const { data: countryData, error: countryError } = await supabase
+        .from("country")
+        .select("*")
 
-    if (countryError) {
-      throw countryError
+      if (countryError) {
+        throw countryError
+      }
+
+      return countryData as ICityResponse[]
+    } catch (error) {
+      console.error(error)
     }
-
-    return countryData as ICityResponse[]
   },
 
   // Province
   getProvinceList: async () => {
-    const { data: provinceData, error: provinceError } = await supabase
-      .from("province")
-      .select("*")
+    try {
+      const { data: provinceData, error: provinceError } = await supabase
+        .from("province")
+        .select("*")
 
-    if (provinceError) {
-      throw provinceError
+      if (provinceError) {
+        throw provinceError
+      }
+
+      return provinceData
+    } catch (err) {
+      console.error(err)
     }
-
-    return provinceData
   },
 
   // City
@@ -340,7 +352,7 @@ const apiService = {
         throw error
       }
     } catch (err) {
-      throw err
+      console.error(err)
     }
   },
   contactThroughPost: async (req: IContactThroughPostRequest) => {
@@ -359,7 +371,7 @@ const apiService = {
         throw error
       }
     } catch (err) {
-      throw err
+      console.error(err)
     }
   },
 
@@ -373,7 +385,7 @@ const apiService = {
       if (error) throw error
       return count
     } catch (err) {
-      throw err
+      console.error(err)
     }
   },
 }
