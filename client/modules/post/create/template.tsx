@@ -173,7 +173,7 @@ const CreatePostTemplate: React.FunctionComponent<
       if (!user.isSignIn)
         return toast({
           title: "未登入",
-          description: "登入咗先可以開Post",
+          description: "登入咗先可以貼街招",
           variant: "destructive",
           action: (
             <ToastAction altText="登入">

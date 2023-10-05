@@ -12,7 +12,7 @@ const nav = [
   { href:   siteConfig.page.profile.href, title: "用戶檔案" },
   { href: siteConfig.page.referrer.href , title: "推薦人" },
   { href:  siteConfig.page.referee.href, title: "受薦人" },
-  { href: siteConfig.page.createPost.href, title: "開Post" },
+  { href: siteConfig.page.createPost.href, title: "貼街招" },
   { href: siteConfig.page.referrerPost.href, title: "工搵人" },
   { href:  siteConfig.page.refereePost.href, title: "人搵工" },
 ]
