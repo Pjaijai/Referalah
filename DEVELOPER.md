@@ -28,17 +28,29 @@ returns trigger
 language plpgsql
 security definer set search_path = public
 as $$
-begin
-insert into public.user (uuid, email, username)
-values (new.id, new.email , new.email);
-return new;
-end;
+DECLARE
+  username_text TEXT;
+BEGIN
+  -- Extract the username from the email (word before @), limited to 4 characters
+  username_text := SUBSTRING(NEW.email FROM 1 FOR POSITION('@' IN NEW.email) - 1);
+  IF LENGTH(username_text) > 4 THEN
+    username_text := LEFT(username_text, 4);
+  END IF;
 
+  -- Append the first 4 characters of the uuid (id) to the username
+  username_text := username_text || LEFT(NEW.id::TEXT, 4);
+
+  -- Insert the new user with the generated username
+  INSERT INTO public.user (uuid, email, username)
+  VALUES (NEW.id, NEW.email, username_text);
+
+  RETURN NEW;
+END;
 $$
 ;
 
 -- trigger the function every time a user is created
-create trigger on_auth_user_created
+create or replace trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
 ```
