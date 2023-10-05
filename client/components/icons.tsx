@@ -1,6 +1,7 @@
 import {
   CheckCircle2,
   ChevronDown,
+  Github,
   Instagram,
   Link,
   Loader,
@@ -33,6 +34,7 @@ export const Icons = {
   chevronDown: ChevronDown,
   checkCircle: CheckCircle2,
   instagram: Instagram,
+  github: Github,
   slidersHorizontal: SlidersHorizontal,
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
@@ -42,7 +44,7 @@ export const Icons = {
       />
     </svg>
   ),
-  gitHub: (props: LucideProps) => (
+  bigGitHub: (props: LucideProps) => (
     <svg viewBox="0 0 438.549 438.549" {...props}>
       <path
         fill="currentColor"
