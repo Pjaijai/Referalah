@@ -30,7 +30,7 @@ const AboutPage = () => {
           </div>
           <Separator className="block md:hidden mt-12" />
           <div className="flex flex-col text-center font-medium text-lg gap-4 mt-12 md:mt-0">
-            <h3 className="text-xl md:text-3xl font-semibold">2.開Post</h3>
+            <h3 className="text-xl md:text-3xl font-semibold">2.貼街招</h3>
             <h6>工作招聘網站見到合適工作/自己公司請人，想推薦香港人入。</h6>
             <h6>將相關連結放上嚟。</h6>
             <h6>睇吓有冇有緣人，如果有佢可以立即聯絡。</h6>
