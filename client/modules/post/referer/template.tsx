@@ -22,64 +22,31 @@ interface IRefererPostPageProps {}
 const RefererPostPageTemplate: React.FunctionComponent<
   IRefererPostPageProps
 > = () => {
-  const [companyName, setCompanyName] = useState("")
-  const [provinceUuid, setProvinceUuid] = useState<undefined | string>()
-  const [countryUuid, setCountryUuid] = useState<undefined | string>()
-  const [cityUuid, setCityUuid] = useState<undefined | string>()
-  const [industryUuid, setIndustryUuid] = useState<undefined | string>()
-  const [yoeMin, setYoeMin] = useState<undefined | string>("0")
-  const [yoeMax, setYoeMax] = useState<undefined | string>("100")
-  const [sorting, setSorting] = useState(postSortingOptions[0].value)
-  const debouncedCompanyName = useDebounce(companyName, 800)
-
   const { data: industryList } = useGetIndustryList()
   const { data: cityList } = useGetCityList()
   const { data: countryList } = useGetCountryList()
   const { data: provinceList } = useGetProvinceList()
 
-  const handleCompanyChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setCompanyName(e.target.value)
-  }
-
-  const handleCountryChange = (value: string) => {
-    setCountryUuid(value)
-  }
-  const handleProvinceChange = (value: string) => {
-    setProvinceUuid(value)
-  }
-  const handleCityChange = (value: string) => {
-    setCityUuid(value)
-  }
-
-  const handleIndustryChange = (value: string) => {
-    setIndustryUuid(value)
-  }
-
-  const handleSortingChange = (value: string) => {
-    setSorting(value)
-  }
-
-  const handleYeoMinChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setYoeMin(e.target.value)
-  }
-
-  const handleYeoMaxChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setYoeMax(e.target.value)
-  }
-
-  const filterMeta = {
-    companyName: debouncedCompanyName,
+  const {
+    result,
+    handleCompanyChange,
+    handleCountryChange,
+    handleProvinceChange,
+    handleCityChange,
+    handleSortingChange,
+    handleIndustryChange,
+    handleYeoMinChange,
+    handleYeoMaxChange,
+    provinceUuid,
     cityUuid,
     countryUuid,
     industryUuid,
-    provinceUuid,
-    sorting,
-    yoeMin,
     yoeMax,
-  }
+    yoeMin,
+    sorting,
+  } = useSearchPost(ReferralType.REFERRER)
 
-  const { data, fetchNextPage, isLoading, isFetching, hasNextPage } =
-    useSearchPost(sorting, filterMeta, ReferralType.REFERRER)
+  const { data, fetchNextPage, isLoading, isFetching } = result
 
   const list = data
     ? (data?.pages.flatMap((d) => d) as ISearchPostResponse[])
