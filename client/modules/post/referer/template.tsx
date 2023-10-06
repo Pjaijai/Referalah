@@ -1,7 +1,6 @@
 "use client"
 
-import React, { ChangeEvent, useState } from "react"
-import { postSortingOptions } from "@/utils/common/sorting/post"
+import React from "react"
 
 import { ISearchPostResponse } from "@/types/api/response/referer-post"
 import { MessageType } from "@/types/common/message-type"
@@ -11,7 +10,6 @@ import useGetCityList from "@/hooks/api/location/get-city-list"
 import useGetCountryList from "@/hooks/api/location/get-country-list"
 import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useSearchPost from "@/hooks/api/post/search-post"
-import useDebounce from "@/hooks/common/debounce"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import ReferralCard from "@/components/customized-ui/cards/referral"
