@@ -1,27 +1,11 @@
 import { ChangeEvent, useState } from "react"
 import apiService from "@/utils/common/api"
-import { postSortingOptions } from "@/utils/common/sorting/post"
 import { referralSortingOptions } from "@/utils/common/sorting/referer"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { QueryKeyString } from "@/types/common/query-key-string"
 import { ReferralType } from "@/types/common/referral-type"
-import useGetIndustryList from "@/hooks/api/industry/get-Industry-list"
-import useGetCityList from "@/hooks/api/location/get-city-list"
-import useGetCountryList from "@/hooks/api/location/get-country-list"
-import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useDebounce from "@/hooks/common/debounce"
-
-interface ISearchRefererFilterMeta {
-  companyName: string
-  cityUuid?: string
-  provinceUuid?: string
-  countryUuid?: string
-  industryUuid?: string
-  sorting: string
-  yoeMax?: string
-  yoeMin?: string
-}
 
 const useSearchReferral = (type: ReferralType) => {
   const keyString =
