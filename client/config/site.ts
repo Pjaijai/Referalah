@@ -48,6 +48,10 @@ export const siteConfig = {
       name: "termsAndConditions",
       href: "/terms-and-conditions",
     },
+    postHistory: {
+      name: "街招記錄",
+      href: "/post-history",
+    },
   },
   links: {
     instagram: "https://instagram.com/referalah?igshid=NGVhN2U2NjQ0Yg==",
