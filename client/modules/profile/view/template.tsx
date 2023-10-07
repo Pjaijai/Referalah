@@ -1,9 +1,11 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 
+import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import LinkTooltip from "@/components/customized-ui/tool/Link"
@@ -48,6 +50,15 @@ const ViewProfileTemplate: React.FunctionComponent<
     <div className="w-full flex flex-col gap-y-2 mt-28">
       <div className="flex flex-row justify-end w-full mx-8 gap-2">
         {socialMediaUrl && <LinkTooltip url={socialMediaUrl} />}
+        <Link
+          href={"/post-history"}
+          className={cn(
+            buttonVariants({ variant: "ghost", className: "gap-2" })
+          )}
+        >
+          <Icons.history />
+          <span>街招記錄</span>
+        </Link>
 
         <Button
           onClick={() => {
