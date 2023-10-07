@@ -2,6 +2,7 @@ import {
   CheckCircle2,
   ChevronDown,
   Github,
+  History,
   Instagram,
   Link,
   Loader,
@@ -35,6 +36,7 @@ export const Icons = {
   checkCircle: CheckCircle2,
   instagram: Instagram,
   github: Github,
+  history: History,
   slidersHorizontal: SlidersHorizontal,
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
