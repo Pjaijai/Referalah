@@ -1,12 +1,12 @@
 import React from "react"
-import SearchPageLayout from "@/components/layouts/search-page"
+import CommonPageLayout from "@/components/layouts/common"
 import RefereePostPageTemplate from "@/modules/post/referee/template"
 
 const RefereePostPage = () => {
   return (
-    <SearchPageLayout title="人搵工">
+    <CommonPageLayout title="人搵工">
       <RefereePostPageTemplate />
-    </SearchPageLayout>
+    </CommonPageLayout>
   )
 }
 

@@ -2,14 +2,14 @@
 
 import React from "react"
 import { NextPage } from "next"
-import SearchPageLayout from "@/components/layouts/search-page"
+import CommonPageLayout from "@/components/layouts/common"
 import RefererPageTemplate from "@/modules/referral/referer/template"
 
 const RefererPage: NextPage = () => {
   return (
-    <SearchPageLayout title="推薦人">
+    <CommonPageLayout title="推薦人">
       <RefererPageTemplate />
-    </SearchPageLayout>
+    </CommonPageLayout>
   )
 }
 
