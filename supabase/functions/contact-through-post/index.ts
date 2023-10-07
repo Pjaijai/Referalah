@@ -86,16 +86,17 @@ serve(async (req: any) => {
       })
     }
 
-    const subject = `${sender.username}對於你係工作${
-      post.type === "referer" ? "(推薦區)" : "(受薦區)"
-    }開嘅post有興趣`
+     
+    const subject = `${sender.username}對於你份街招${
+      post.type === "referer" ? "(工搵人)" : "(人搵工)"
+    }有興趣`
     const body = `
             <html lang="zh-Hk">
             <body>
                 <p>Hi ${post.user.username}!</p>
-                <p>${sender.username}對於你係工作${
-      post.type === "referer" ? "(推薦區)" : "(受薦區)"
-    }開嘅post有興趣</p>
+                <p>${sender.username}對於你你份街招${
+      post.type === "referer" ? "(工搵人)" : "(人搵工)"
+    }有興趣</p>
                 <p>職位: ${post.job_title}</p>
                 <p>公司名稱: ${post.company_name}</p>
                 <p>佢個電郵地址: ${sender.email}</p>
