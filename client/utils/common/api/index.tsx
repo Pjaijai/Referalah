@@ -3,6 +3,7 @@ import { supabase } from "@/utils/services/supabase/config"
 import { IContactThroughPostRequest } from "@/types/api/request/contact/post"
 import { IContactReferralRequest } from "@/types/api/request/contact/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
+import { IUpdatePostRequest } from "@/types/api/request/post/update"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { ICityResponse } from "@/types/api/response/city"
 import { IIndustryResponse } from "@/types/api/response/industry"
@@ -190,6 +191,39 @@ const apiService = {
         job_title: req.jobTitle.trim(),
         description: req.description.trim(),
       })
+    } catch (err) {
+      console.error(err)
+    }
+  },
+  updatePost: async (req: IUpdatePostRequest) => {
+    try {
+      await supabase
+        .from("post")
+        .update({
+          url: req.url,
+          country_uuid: req.countryUuid,
+          province_uuid: req.provinceUuid,
+          city_uuid: req.cityUuid,
+          industry_uuid: req.industryUuid,
+          year_of_experience: req.yearOfExperience,
+          created_by: req.createdBy,
+          type: req.type,
+          company_name: req.companyName.trim(),
+          job_title: req.jobTitle.trim(),
+          description: req.description.trim(),
+        })
+        .eq("created_by", req.createdBy)
+    } catch (err) {
+      console.error(err)
+    }
+  },
+  getPostsByUserUuid: async (userUuid: string) => {
+    try {
+      await supabase
+        .from("post")
+        .select("*")
+        .eq("created_by", userUuid)
+        .order("created_at", { ascending: true })
     } catch (err) {
       console.error(err)
     }
