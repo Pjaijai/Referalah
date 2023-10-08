@@ -56,16 +56,19 @@ create or replace trigger on_auth_user_created
 1.  Open your terminal.
 2.  Navigate to the 'client' directory using the `cd client` command.
 3.  Run the development server using `yarn dev`.
+4.  Clone .env.template and rename it to `.env`
+5.  Find Supabase URL and anon key from Project Setting > API and configure `.env`
 
 ### Backend
 
 1. Install [Supabase CLI](https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli)
 2. Run `supabase start`
 3. Create a [new Supabase project](https://supabase.com/dashboard/projects)
-4. Navigate to the project, go to `Project Setting`. Go to `General`. Copy `Reference ID.
+4. Navigate to the project, go to `Project Setting`. Go to `General`. Copy `Reference ID
 5. Run `supabase link --project-ref [your-supabase-project-id]`
 6. Run `supabase db push` to run migrations on your supabase project
-7. Import [csv files](https://drive.google.com/drive/folders/14Q5xqmHU9w1v7Zv9HlxL3qr--Cw_4z7b?usp=drive_link) into your Supabase project for `city`, `country`, `industry` and `province` tables. 
+7. Import [csv files](https://drive.google.com/drive/folders/14Q5xqmHU9w1v7Zv9HlxL3qr--Cw_4z7b?usp=drive_link) into your Supabase project for `city`, `country`, `industry` and `province` tables
+8. Connect Supabase database to your favourite database IDE. Run [SQL Script](#to-solve-user-data-cannot-be-inserted-after-registration) to insert user data upon registration
 
 ### Creating branch
 
