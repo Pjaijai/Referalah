@@ -10,8 +10,8 @@ const ResetButton: React.FunctionComponent<IResetButtonProps> = ({
   onClick,
 }) => {
   return (
-    <Button onClick={onClick}>
-      <Icons.instagram />
+    <Button onClick={onClick} variant={"outline"}>
+      <Icons.rotateRight />
     </Button>
   )
 }
