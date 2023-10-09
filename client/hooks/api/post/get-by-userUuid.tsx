@@ -1,7 +1,6 @@
 import apiService from "@/utils/common/api"
 import { useQuery } from "@tanstack/react-query"
 
-import { IPostHistoryResponse } from "@/types/api/response/post-history"
 import { QueryKeyString } from "@/types/common/query-key-string"
 
 const getPosts = ({ queryKey }: any) => {
