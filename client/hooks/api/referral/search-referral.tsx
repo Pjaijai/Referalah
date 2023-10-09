@@ -21,7 +21,6 @@ const useSearchReferral = (type: ReferralType) => {
   const [industryUuid, setIndustryUuid] = useState<undefined | string>()
   const [yoeMin, setYoeMin] = useState<undefined | string>("0")
   const [yoeMax, setYoeMax] = useState<undefined | string>("100")
-
   const [sorting, setSorting] = useState(referralSortingOptions[0].value)
   const debouncedCompanyName = useDebounce(companyName, 800)
   const debouncedJobTitle = useDebounce(jobTitle, 800)
@@ -48,6 +47,17 @@ const useSearchReferral = (type: ReferralType) => {
     setIndustryUuid(value)
   }
 
+  const handleReset = () => {
+    setCompanyName("")
+    setJobTitle("")
+    setCountryUuid(undefined)
+    setProvinceUuid(undefined)
+    setCityUuid(undefined)
+    setIndustryUuid(undefined)
+    setYoeMax("100")
+    setYoeMin("0")
+    setSorting(referralSortingOptions[0].value)
+  }
   const handleSortingChange = (value: string) => {
     setSorting(value)
   }
@@ -120,6 +130,8 @@ const useSearchReferral = (type: ReferralType) => {
     handleYeoMinChange,
     handleYeoMaxChange,
     handleJobTitleChange,
+    jobTitle,
+    companyName,
     provinceUuid,
     cityUuid,
     countryUuid,
@@ -127,6 +139,7 @@ const useSearchReferral = (type: ReferralType) => {
     yoeMax,
     yoeMin,
     sorting,
+    handleReset,
   }
 }
 
