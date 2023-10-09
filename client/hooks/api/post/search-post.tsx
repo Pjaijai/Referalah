@@ -53,11 +53,35 @@ const useSearchPost = (type: ReferralType) => {
   }
 
   const handleYeoMinChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setYoeMin(e.target.value)
+    const rawValue = e.target.value
+
+    // Parse the input value to an integer
+    const integerValue = parseInt(rawValue)
+
+    // Check if the parsed value is a valid integer
+    if (!isNaN(integerValue) && integerValue >= 0) {
+      // If it's a non-negative integer, set the value as is
+      setYoeMin(integerValue.toString())
+    } else {
+      // If it's negative or not a valid integer, set it to '0'
+      setYoeMin("0")
+    }
   }
 
   const handleYeoMaxChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setYoeMax(e.target.value)
+    const rawValue = e.target.value
+
+    // Parse the input value to an integer
+    const integerValue = parseInt(rawValue)
+
+    // Check if the parsed value is a valid integer
+    if (!isNaN(integerValue) && integerValue >= 0) {
+      // If it's a non-negative integer, set the value as is
+      setYoeMax(integerValue.toString())
+    } else {
+      // If it's negative or not a valid integer, set it to '0'
+      setYoeMax("0")
+    }
   }
 
   const handleReset = () => {
