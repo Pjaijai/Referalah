@@ -7,6 +7,7 @@ import { IUpdatePostRequest } from "@/types/api/request/post/update"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { ICityResponse } from "@/types/api/response/city"
 import { IIndustryResponse } from "@/types/api/response/industry"
+import { IPostHistoryResponse } from "@/types/api/response/post-history"
 import { IUserResponse } from "@/types/api/response/user"
 import { ReferralType } from "@/types/common/referral-type"
 
@@ -219,11 +220,46 @@ const apiService = {
   },
   getPostsByUserUuid: async (userUuid: string) => {
     try {
-      await supabase
+      const { data, error } = await supabase
         .from("post")
-        .select("*")
+        .select(
+          `
+          uuid,
+          id,
+          created_at,
+          created_by,
+          type,
+          status,
+          url,
+          country(
+            uuid,
+            cantonese_name
+        ),
+        province(
+          uuid,
+            cantonese_name
+        ),
+        city(
+          uuid,
+            cantonese_name
+        ),
+        industry(
+          uuid,
+            cantonese_name
+        ),
+          year_of_experience,
+          company_name,
+          job_title,
+          description
+        `
+        )
         .eq("created_by", userUuid)
         .order("created_at", { ascending: true })
+        .returns<IPostHistoryResponse[]>()
+
+      if (error) throw error
+
+      return data
     } catch (err) {
       console.error(err)
     }
