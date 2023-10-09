@@ -95,6 +95,7 @@ const apiService = {
       const cityUuid = queryKey[1].filterMeta.cityUuid
       const industryUuid = queryKey[1].filterMeta.industryUuid
       const companyName = queryKey[1].filterMeta.companyName
+      const jobTitle = queryKey[1].filterMeta.jobTitle
       const yoeMax = queryKey[1].filterMeta.yoeMax
       const yoeMin = queryKey[1].filterMeta.yoeMin
       const type = queryKey[1].type satisfies ReferralType
@@ -162,6 +163,10 @@ const apiService = {
 
       if (companyName.length > 0) {
         query = query.ilike("company_name", `%${companyName}%`)
+      }
+
+      if (jobTitle.length > 0) {
+        query = query.ilike("job_title", `%${jobTitle}%`)
       }
 
       const { data, error } = await query
