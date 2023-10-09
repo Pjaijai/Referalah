@@ -16,6 +16,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import LinkTooltip from "@/components/customized-ui/tool-tip/Link"
+import BaseTooltip from "@/components/customized-ui/tool-tip/base"
+import { Icons } from "@/components/icons"
 
 interface IPostHistoryCardProps {
   city: string
@@ -57,6 +60,13 @@ const PostHistoryCard: React.FunctionComponent<IPostHistoryCardProps> = ({
   return (
     <Card>
       <CardHeader className="justify-between">
+        <div className="flex justify-end gap-2">
+          {url && (
+            <BaseTooltip content={<p>{url}</p>} trigger={<Icons.link />} />
+          )}
+
+          <Icons.pencil />
+        </div>
         <CardTitle className="flex  flex-row justify-between items-center w-full overflow-hidden">
           <span className="text-overflow-ellipsis">{jobTitle}</span>
         </CardTitle>
@@ -66,7 +76,7 @@ const PostHistoryCard: React.FunctionComponent<IPostHistoryCardProps> = ({
         </CardDescription>
       </CardHeader>
 
-      <CardFooter className="hidden md:flex md:justify-between md:gap-4">
+      <CardFooter className="md:flex-row flex-col md:justify-between gap-4">
         <div>
           <Badge variant="outline">{country}</Badge>
           <Badge variant="outline">{province}</Badge>
