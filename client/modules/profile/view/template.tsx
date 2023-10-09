@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
-import LinkTooltip from "@/components/customized-ui/tool/Link"
+import LinkTooltip from "@/components/customized-ui/tool-tip/Link"
 import { Icons } from "@/components/icons"
 
 export interface IViewProfileTemplateProps {
