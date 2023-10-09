@@ -33,6 +33,7 @@ const RefererPageTemplate: React.FunctionComponent<
     handleIndustryChange,
     handleYeoMinChange,
     handleYeoMaxChange,
+    handleJobTitleChange,
     provinceUuid,
     cityUuid,
     countryUuid,
@@ -57,6 +58,7 @@ const RefererPageTemplate: React.FunctionComponent<
     <>
       <div className="flex flex-row mt-8 gap-4 w-full h-full">
         <Input onChange={handleCompanyChange} placeholder="公司名稱" />
+        <Input onChange={handleJobTitleChange} placeholder="職位/工作名稱" />
         <SearchPopover
           countryList={countryList}
           provinceList={provinceList}
