@@ -8,8 +8,10 @@ import useGetCityList from "@/hooks/api/location/get-city-list"
 import useGetCountryList from "@/hooks/api/location/get-country-list"
 import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useSearchReferral from "@/hooks/api/referral/search-referral"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
+import ResetButton from "@/components/customized-ui/buttons/reset"
 import ReferralCard from "@/components/customized-ui/cards/referral"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons /card-list"
@@ -29,6 +31,9 @@ const RefereePageTemplate: React.FunctionComponent<
     handleYeoMinChange,
     handleYeoMaxChange,
     handleJobTitleChange,
+    handleReset,
+    jobTitle,
+    companyName,
     provinceUuid,
     cityUuid,
     countryUuid,
@@ -56,8 +61,16 @@ const RefereePageTemplate: React.FunctionComponent<
   return (
     <>
       <div className="flex flex-row mt-8 gap-4 w-full h-full">
-        <Input onChange={handleCompanyChange} placeholder="公司名稱" />
-        <Input onChange={handleJobTitleChange} placeholder="職位/工作名稱" />
+        <Input
+          onChange={handleCompanyChange}
+          value={companyName}
+          placeholder="公司名稱"
+        />
+        <Input
+          onChange={handleJobTitleChange}
+          value={jobTitle}
+          placeholder="職位/工作名稱"
+        />
         <SearchPopover
           countryList={countryList}
           provinceList={provinceList}
@@ -81,6 +94,7 @@ const RefereePageTemplate: React.FunctionComponent<
           currentYeoMin={yoeMin}
           type={MessageType.REFERRAL}
         />
+        <ResetButton onClick={handleReset} />
       </div>
       {!isRefereeListLoading && !isFetching && list.length === 0 && (
         <div className="p-4 rounded-lg text-center mt-8 border-2">
