@@ -105,7 +105,7 @@ serve(async (req: any) => {
       <html lang="zh-Hk">
       <body>
           <p>Hi ${receiver.username}!</p>
-          <p>${sender.username} send咗個訊息俾你。佢個電郵地址: ${sender.email}</p>
+          <p>${sender.username} send咗個訊息俾你。佢個電郵地址: ${sender.email} (又或者可以喺度直接撳Reply 覆返佢!)</p>
           <p>佢個訊息</p>
           <div id="emailContent" style="word-break: break-word; white-space: pre-wrap;">
               ${message}
@@ -122,7 +122,8 @@ serve(async (req: any) => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "no-reply@referalah.com",
+        from: "Referalah <no-reply@referalah.com>",
+        reply_to: sender.email,
         to: receiver.email,
         subject: subject,
         html: body,
