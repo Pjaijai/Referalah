@@ -58,33 +58,36 @@ const RefererPostPageTemplate: React.FunctionComponent<
 
   return (
     <>
-      <div className="flex flex-row mt-8 gap-4 w-full h-full">
+      <div className="flex flex-col-reverse md:flex-row mt-8 gap-4 w-full h-full">
         <Input onChange={handleCompanyChange} placeholder="公司名稱" />
         <Input onChange={handleJobTitleChange} placeholder="職位/工作名稱" />
-        <SearchPopover
-          countryList={countryList}
-          provinceList={provinceList}
-          cityList={cityList}
-          industryList={industryList}
-          provinceUuid={provinceUuid}
-          countryUuid={countryUuid}
-          onCityChange={handleCityChange}
-          onCountryChange={handleCountryChange}
-          onProvinceChange={handleProvinceChange}
-          onIndustryChange={handleIndustryChange}
-          onSortingChange={handleSortingChange}
-          onYeoMinChange={handleYeoMinChange}
-          onYeoMaxChange={handleYeoMaxChange}
-          currentSorting={sorting}
-          currentCityUuid={cityUuid}
-          currentCountryUuid={countryUuid}
-          currentIndustryUuid={industryUuid}
-          currentProvinceUuid={provinceUuid}
-          currentYeoMax={yoeMax}
-          currentYeoMin={yoeMin}
-          type={MessageType.POST}
-        />
-        <ResetButton onClick={handleReset} />
+
+        <div className="flex flex-row justify-end gap-2">
+          <SearchPopover
+            countryList={countryList}
+            provinceList={provinceList}
+            cityList={cityList}
+            industryList={industryList}
+            provinceUuid={provinceUuid}
+            countryUuid={countryUuid}
+            onCityChange={handleCityChange}
+            onCountryChange={handleCountryChange}
+            onProvinceChange={handleProvinceChange}
+            onIndustryChange={handleIndustryChange}
+            onSortingChange={handleSortingChange}
+            onYeoMinChange={handleYeoMinChange}
+            onYeoMaxChange={handleYeoMaxChange}
+            currentSorting={sorting}
+            currentCityUuid={cityUuid}
+            currentCountryUuid={countryUuid}
+            currentIndustryUuid={industryUuid}
+            currentProvinceUuid={provinceUuid}
+            currentYeoMax={yoeMax}
+            currentYeoMin={yoeMin}
+            type={MessageType.POST}
+          />
+          <ResetButton onClick={handleReset} />
+        </div>
       </div>
 
       {!isLoading && !isFetching && list.length === 0 && (

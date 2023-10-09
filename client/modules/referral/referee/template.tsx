@@ -60,7 +60,7 @@ const RefereePageTemplate: React.FunctionComponent<
     : []
   return (
     <>
-      <div className="flex flex-row mt-8 gap-4 w-full h-full">
+      <div className="flex flex-col-reverse md:flex-row mt-8 gap-4 w-full h-full">
         <Input
           onChange={handleCompanyChange}
           value={companyName}
@@ -71,30 +71,32 @@ const RefereePageTemplate: React.FunctionComponent<
           value={jobTitle}
           placeholder="職位/工作名稱"
         />
-        <SearchPopover
-          countryList={countryList}
-          provinceList={provinceList}
-          cityList={cityList}
-          industryList={industryList}
-          provinceUuid={provinceUuid}
-          countryUuid={countryUuid}
-          onCityChange={handleCityChange}
-          onCountryChange={handleCountryChange}
-          onProvinceChange={handleProvinceChange}
-          onIndustryChange={handleIndustryChange}
-          onSortingChange={handleSortingChange}
-          onYeoMinChange={handleYeoMinChange}
-          onYeoMaxChange={handleYeoMaxChange}
-          currentSorting={sorting}
-          currentCityUuid={cityUuid}
-          currentCountryUuid={countryUuid}
-          currentIndustryUuid={industryUuid}
-          currentProvinceUuid={provinceUuid}
-          currentYeoMax={yoeMax}
-          currentYeoMin={yoeMin}
-          type={MessageType.REFERRAL}
-        />
-        <ResetButton onClick={handleReset} />
+        <div className="flex flex-row justify-end gap-2">
+          <SearchPopover
+            countryList={countryList}
+            provinceList={provinceList}
+            cityList={cityList}
+            industryList={industryList}
+            provinceUuid={provinceUuid}
+            countryUuid={countryUuid}
+            onCityChange={handleCityChange}
+            onCountryChange={handleCountryChange}
+            onProvinceChange={handleProvinceChange}
+            onIndustryChange={handleIndustryChange}
+            onSortingChange={handleSortingChange}
+            onYeoMinChange={handleYeoMinChange}
+            onYeoMaxChange={handleYeoMaxChange}
+            currentSorting={sorting}
+            currentCityUuid={cityUuid}
+            currentCountryUuid={countryUuid}
+            currentIndustryUuid={industryUuid}
+            currentProvinceUuid={provinceUuid}
+            currentYeoMax={yoeMax}
+            currentYeoMin={yoeMin}
+            type={MessageType.REFERRAL}
+          />
+          <ResetButton onClick={handleReset} />
+        </div>
       </div>
       {!isRefereeListLoading && !isFetching && list.length === 0 && (
         <div className="p-4 rounded-lg text-center mt-8 border-2">
