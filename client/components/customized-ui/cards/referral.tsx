@@ -5,7 +5,7 @@ import ContactDialog, {
 } from "@/modules/referral/components/dialog/contact"
 import UserSignInDialog from "@/modules/referral/components/dialog/userSignIn"
 import ReferralCardDropDownMenu from "@/modules/referral/components/drop-down-menu/card"
-import compareDateDifferenceHelper from "@/utils/common/helpers/time/compareDateDifference"
+import compareDateDifferenceHelper from "@/utils/common/helpers/time/compare-date-difference"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
