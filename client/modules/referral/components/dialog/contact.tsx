@@ -137,8 +137,9 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
       }
     } catch (err) {
       return toast({
-        title: "成功！！！！！！！",
-        description: "祝一切順利！",
+        title: "Send不到，哭咗🥲",
+        description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+        variant: "destructive",
       })
     }
   }
