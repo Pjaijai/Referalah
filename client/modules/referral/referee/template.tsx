@@ -1,5 +1,4 @@
-import React, { ChangeEvent, useMemo, useState } from "react"
-import { referralSortingOptions } from "@/utils/common/sorting/referer"
+import React from "react"
 
 import { IReferralResponse } from "@/types/api/response/referral"
 import { MessageType } from "@/types/common/message-type"
@@ -9,7 +8,6 @@ import useGetCityList from "@/hooks/api/location/get-city-list"
 import useGetCountryList from "@/hooks/api/location/get-country-list"
 import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useSearchReferral from "@/hooks/api/referral/search-referral"
-import useDebounce from "@/hooks/common/debounce"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import ReferralCard from "@/components/customized-ui/cards/referral"
@@ -20,113 +18,40 @@ interface IRefereePageTemplateProps {}
 const RefereePageTemplate: React.FunctionComponent<
   IRefereePageTemplateProps
 > = () => {
-  const [companyName, setCompanyName] = useState("")
-  const [provinceUuid, setProvinceUuid] = useState<undefined | string>()
-  const [countryUuid, setCountryUuid] = useState<undefined | string>()
-  const [cityUuid, setCityUuid] = useState<undefined | string>()
-  const [industryUuid, setIndustryUuid] = useState<undefined | string>()
-  const [yoeMin, setYoeMin] = useState<undefined | string>("0")
-  const [yoeMax, setYoeMax] = useState<undefined | string>("100")
-  const [sorting, setSorting] = useState(referralSortingOptions[0].value)
-  const debouncedCompanyName = useDebounce(companyName, 800)
-
-  const filterMeta = {
-    companyName: debouncedCompanyName,
+  const {
+    result,
+    handleCompanyChange,
+    handleCountryChange,
+    handleProvinceChange,
+    handleCityChange,
+    handleSortingChange,
+    handleIndustryChange,
+    handleYeoMinChange,
+    handleYeoMaxChange,
+    provinceUuid,
     cityUuid,
     countryUuid,
     industryUuid,
-    provinceUuid,
-    sorting,
-    yoeMin,
     yoeMax,
-  }
+    yoeMin,
+    sorting,
+  } = useSearchReferral(ReferralType.REFEREE)
 
   const {
     data: refereeListData,
     isLoading: isRefereeListLoading,
-    error,
     fetchNextPage,
     isFetching,
-  } = useSearchReferral(sorting, filterMeta, ReferralType.REFEREE)
+  } = result
+
   const { data: industryList } = useGetIndustryList()
   const { data: cityList } = useGetCityList()
   const { data: countryList } = useGetCountryList()
   const { data: provinceList } = useGetProvinceList()
 
-  const handleCompanyChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setCompanyName(e.target.value)
-  }
-
-  const handleCountryChange = (value: string) => {
-    setCountryUuid(value)
-  }
-  const handleProvinceChange = (value: string) => {
-    setProvinceUuid(value)
-  }
-  const handleCityChange = (value: string) => {
-    setCityUuid(value)
-  }
-
-  const handleIndustryChange = (value: string) => {
-    setIndustryUuid(value)
-  }
-
-  const handleSortingChange = (value: string) => {
-    setSorting(value)
-  }
-
-  const handleYeoMinChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const rawValue = e.target.value
-
-    // Parse the input value to an integer
-    const integerValue = parseInt(rawValue)
-
-    // Check if the parsed value is a valid integer
-    if (!isNaN(integerValue) && integerValue >= 0) {
-      // If it's a non-negative integer, set the value as is
-      setYoeMin(integerValue.toString())
-    } else {
-      // If it's negative or not a valid integer, set it to '0'
-      setYoeMin("0")
-    }
-  }
-
-  const handleYeoMaxChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const rawValue = e.target.value
-
-    // Parse the input value to an integer
-    const integerValue = parseInt(rawValue)
-
-    // Check if the parsed value is a valid integer
-    if (!isNaN(integerValue) && integerValue >= 0) {
-      // If it's a non-negative integer, set the value as is
-      setYoeMax(integerValue.toString())
-    } else {
-      // If it's negative or not a valid integer, set it to '0'
-      setYoeMax("0")
-    }
-  }
-
-  // To hot fix duplication
-  // TODO : Double check from api, remove when it is not necessary
-  const list = useMemo(() => {
-    if (refereeListData && refereeListData.pages.length > 0) {
-      const uuidSet = new Set()
-      const list = refereeListData?.pages.flatMap(
-        (d) => d
-      ) as IReferralResponse[]
-      const mappedList = list.map((data) => {
-        if (!uuidSet.has(data.uuid)) {
-          uuidSet.add(data.uuid)
-          return data
-        }
-      })
-      return mappedList.filter((d) => d !== undefined) as IReferralResponse[]
-    } else {
-      return []
-    }
-  }, [refereeListData, refereeListData?.pages])
-
+  const list = refereeListData
+    ? (refereeListData?.pages.flatMap((d) => d) as IReferralResponse[])
+    : []
   return (
     <>
       <div className="flex flex-row mt-8 gap-4 w-full h-full">
