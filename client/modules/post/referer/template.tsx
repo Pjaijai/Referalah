@@ -10,8 +10,10 @@ import useGetCityList from "@/hooks/api/location/get-city-list"
 import useGetCountryList from "@/hooks/api/location/get-country-list"
 import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useSearchPost from "@/hooks/api/post/search-post"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
+import ResetButton from "@/components/customized-ui/buttons/reset"
 import ReferralCard from "@/components/customized-ui/cards/referral"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons /card-list"
@@ -36,6 +38,9 @@ const RefererPostPageTemplate: React.FunctionComponent<
     handleYeoMinChange,
     handleYeoMaxChange,
     handleJobTitleChange,
+    handleReset,
+    companyName,
+    jobTitle,
     provinceUuid,
     cityUuid,
     countryUuid,
@@ -79,6 +84,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
           currentYeoMin={yoeMin}
           type={MessageType.POST}
         />
+        <ResetButton onClick={handleReset} />
       </div>
 
       {!isLoading && !isFetching && list.length === 0 && (

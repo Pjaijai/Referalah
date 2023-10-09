@@ -59,6 +59,19 @@ const useSearchPost = (type: ReferralType) => {
   const handleYeoMaxChange = (e: ChangeEvent<HTMLInputElement>) => {
     setYoeMax(e.target.value)
   }
+
+  const handleReset = () => {
+    setCompanyName("")
+    setJobTitle("")
+    setCountryUuid(undefined)
+    setProvinceUuid(undefined)
+    setCityUuid(undefined)
+    setIndustryUuid(undefined)
+    setYoeMax("100")
+    setYoeMin("0")
+    setSorting(postSortingOptions[0].value)
+  }
+
   const filterMeta = {
     companyName: debouncedCompanyName,
     jobTitle: debouncedJobTitle,
@@ -95,6 +108,9 @@ const useSearchPost = (type: ReferralType) => {
     handleYeoMinChange,
     handleYeoMaxChange,
     handleJobTitleChange,
+    handleReset,
+    jobTitle,
+    companyName,
     provinceUuid,
     cityUuid,
     countryUuid,

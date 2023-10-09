@@ -12,6 +12,7 @@ import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useSearchPost from "@/hooks/api/post/search-post"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
+import ResetButton from "@/components/customized-ui/buttons/reset"
 import ReferralCard from "@/components/customized-ui/cards/referral"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons /card-list"
@@ -36,6 +37,9 @@ const RefereePostPageTemplate: React.FunctionComponent<
     handleYeoMinChange,
     handleYeoMaxChange,
     handleJobTitleChange,
+    handleReset,
+    companyName,
+    jobTitle,
     provinceUuid,
     cityUuid,
     countryUuid,
@@ -54,8 +58,16 @@ const RefereePostPageTemplate: React.FunctionComponent<
   return (
     <>
       <div className="flex flex-row mt-8 gap-4 w-full h-full">
-        <Input onChange={handleCompanyChange} placeholder="公司名稱" />
-        <Input onChange={handleJobTitleChange} placeholder="職位/工作名稱" />
+        <Input
+          onChange={handleCompanyChange}
+          value={companyName}
+          placeholder="公司名稱"
+        />
+        <Input
+          onChange={handleJobTitleChange}
+          value={jobTitle}
+          placeholder="職位/工作名稱"
+        />
         <SearchPopover
           countryList={countryList}
           provinceList={provinceList}
@@ -79,6 +91,7 @@ const RefereePostPageTemplate: React.FunctionComponent<
           currentYeoMin={yoeMin}
           type={MessageType.POST}
         />
+        <ResetButton onClick={handleReset} />
       </div>
 
       {!isLoading && !isFetching && list.length === 0 && (
