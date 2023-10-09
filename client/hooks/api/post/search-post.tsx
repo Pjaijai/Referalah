@@ -14,6 +14,7 @@ const useSearchPost = (type: ReferralType) => {
       : QueryKeyString.SEARCH_REFERRER_POST
 
   const [companyName, setCompanyName] = useState("")
+  const [jobTitle, setJobTitle] = useState("")
   const [provinceUuid, setProvinceUuid] = useState<undefined | string>()
   const [countryUuid, setCountryUuid] = useState<undefined | string>()
   const [cityUuid, setCityUuid] = useState<undefined | string>()
@@ -21,10 +22,16 @@ const useSearchPost = (type: ReferralType) => {
   const [yoeMin, setYoeMin] = useState<undefined | string>("0")
   const [yoeMax, setYoeMax] = useState<undefined | string>("100")
   const [sorting, setSorting] = useState(postSortingOptions[0].value)
+
   const debouncedCompanyName = useDebounce(companyName, 800)
+  const debouncedJobTitle = useDebounce(jobTitle, 800)
 
   const handleCompanyChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCompanyName(e.target.value)
+  }
+
+  const handleJobTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setJobTitle(e.target.value)
   }
 
   const handleCountryChange = (value: string) => {
@@ -54,6 +61,7 @@ const useSearchPost = (type: ReferralType) => {
   }
   const filterMeta = {
     companyName: debouncedCompanyName,
+    jobTitle: debouncedJobTitle,
     cityUuid,
     countryUuid,
     industryUuid,
@@ -86,6 +94,7 @@ const useSearchPost = (type: ReferralType) => {
     handleIndustryChange,
     handleYeoMinChange,
     handleYeoMaxChange,
+    handleJobTitleChange,
     provinceUuid,
     cityUuid,
     countryUuid,

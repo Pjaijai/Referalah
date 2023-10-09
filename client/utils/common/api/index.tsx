@@ -208,6 +208,7 @@ const apiService = {
       const cityUuid = queryKey[1].filterMeta.cityUuid
       const industryUuid = queryKey[1].filterMeta.industryUuid
       const companyName = queryKey[1].filterMeta.companyName
+      const jobTitle = queryKey[1].filterMeta.jobTitle
       const sort = queryKey[1].sorting.split(",")
       const sortingType = sort[0]
       const order = sort[1] === "dec" ? false : true
@@ -244,7 +245,6 @@ const apiService = {
         )
         .eq("type", type)
         .eq("status", "active")
-        .ilike("company_name", `%${companyName}%`)
         .lte("year_of_experience", 100)
         .gte("year_of_experience", 0)
 
@@ -268,6 +268,14 @@ const apiService = {
       }
       if (industryUuid !== undefined) {
         query = query.eq("industry_uuid", industryUuid)
+      }
+
+      if (companyName.length > 0) {
+        query = query.ilike("company_name", `%${companyName}%`)
+      }
+
+      if (jobTitle.length > 0) {
+        query = query.ilike("job_title", `%${jobTitle}%`)
       }
       const { data, error } = await query.order("id", { ascending: true })
 
