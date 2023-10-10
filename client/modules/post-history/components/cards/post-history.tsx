@@ -1,22 +1,16 @@
 import React from "react"
 import formatTimeHelper from "@/utils/common/helpers/time/format-time"
 
-import { ICityResponse } from "@/types/api/response/city"
-import { ICountryResponse } from "@/types/api/response/country"
-import { IIndustryResponse } from "@/types/api/response/industry"
-import { IProvinceResponse } from "@/types/api/response/province"
 import { PostStatusType } from "@/types/common/post/status"
 import { PostType } from "@/types/common/post/type"
 import { Badge } from "@/components/ui/badge"
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import LinkTooltip from "@/components/customized-ui/tool-tip/Link"
 import BaseTooltip from "@/components/customized-ui/tool-tip/base"
 import { Icons } from "@/components/icons"
 
@@ -25,7 +19,6 @@ interface IPostHistoryCardProps {
   companyName: string
   country: string
   createdAt: string
-  description: string
   id: number
   industry: string
   jobTitle: string
@@ -41,7 +34,6 @@ const PostHistoryCard: React.FunctionComponent<IPostHistoryCardProps> = ({
   companyName,
   country,
   createdAt,
-  description,
   id,
   industry,
   jobTitle,
@@ -57,17 +49,28 @@ const PostHistoryCard: React.FunctionComponent<IPostHistoryCardProps> = ({
     format: "YYYY年MM月DD日",
   })
 
+  const typeText = type === PostType.REFERRER ? "工搵人" : "人搵工"
   return (
     <Card>
-      <CardHeader className="justify-between">
-        <div className="flex justify-end gap-2">
-          {url && (
-            <BaseTooltip content={<p>{url}</p>} trigger={<Icons.link />} />
-          )}
+      <CardHeader>
+        <div className="flex justify-between items-center">
+          <div className="flex flex-row  items-center gap-2">
+            <Badge className="text-sm">{typeText}</Badge>
+            {status === PostStatusType.ACTIVE && (
+              <p className="text-destructive font-semibold">不再受理</p>
+            )}
+          </div>
 
-          <Icons.pencil />
+          <div className="flex justify-end gap-2">
+            {url && (
+              <BaseTooltip content={<p>{url}</p>} trigger={<Icons.link />} />
+            )}
+
+            <Icons.pencil />
+          </div>
         </div>
-        <CardTitle className="flex  flex-row justify-between items-center w-full overflow-hidden">
+
+        <CardTitle className="flex  flex-row justify-between items-center w-full overflow-hidden mt-2">
           <span className="text-overflow-ellipsis">{jobTitle}</span>
         </CardTitle>
 
@@ -84,7 +87,6 @@ const PostHistoryCard: React.FunctionComponent<IPostHistoryCardProps> = ({
           <Badge variant="outline">{industry}</Badge>
           <Badge variant="outline">{yearOfExperience}年經驗</Badge>
         </div>
-        <p>{formattedDate}</p>
       </CardFooter>
     </Card>
   )

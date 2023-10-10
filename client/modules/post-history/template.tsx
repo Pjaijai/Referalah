@@ -20,7 +20,6 @@ const PostHistoryTemplate = () => {
               companyName={data.company_name}
               country={data.country.cantonese_name}
               createdAt={data.created_at}
-              description={data.description}
               id={data.id}
               industry={data.industry.cantonese_name}
               jobTitle={data.job_title}
