@@ -1,27 +1,37 @@
 "use client"
 
-import React, {  useState } from "react"
-import { Icons } from "@/components/icons"
-import useUserStore from "@/hooks/state/user/store"
+import React, { useState } from "react"
+import Link from "next/link"
 import EditProfileTemplate from "@/modules/profile/edit/template"
 import ViewProfileTemplate from "@/modules/profile/view/template"
-import useGetUserprofile from "@/hooks/api/user/get-user-profile"
-import Link from "next/link"
+
 import { siteConfig } from "@/config/site"
+import useGetUserprofile from "@/hooks/api/user/get-user-profile"
+import useUserStore from "@/hooks/state/user/store"
+import { Icons } from "@/components/icons"
 
-const Page = ({ params }: { params: { slug: string } }) => {
-  const userUuid = useUserStore((state) => state.uuid)
+const Page = ({ params }: { params: { userUuid: string } }) => {
+  const { userUuid } = params
+  console.log(userUuid)
+  // const userUuid = useUserStore((state) => state.uuid)
   const [isEditMode, setIsEditMode] = useState(false)
-  const {data:profile, isLoading, isError}=useGetUserprofile(userUuid)
+  const { data: profile, isLoading, isError } = useGetUserprofile(userUuid)
 
-
-  if (!isLoading && profile===null)
+  if (!isLoading && profile === null)
     return (
       <div className="flex flex-col  justify-center items-center rounded-lg p-4 gap-4  h-screen">
-      <span className="text-5xl">🥲</span>
-      <h6>搵唔到用戶資料請refresh網頁或先<Link href={siteConfig.page.auth.href} className="border-b-2 border-green-700 text-green-700 dark:border-yellow-300 dark:text-yellow-300 "> 登入</Link></h6>
-
-    </div>
+        <span className="text-5xl">🥲</span>
+        <h6>
+          搵唔到用戶資料請refresh網頁或先
+          <Link
+            href={siteConfig.page.auth.href}
+            className="border-b-2 border-green-700 text-green-700 dark:border-yellow-300 dark:text-yellow-300 "
+          >
+            {" "}
+            登入
+          </Link>
+        </h6>
+      </div>
     )
 
   if (isLoading)
