@@ -105,7 +105,9 @@ const RefererPageTemplate: React.FunctionComponent<
         </div>
       )}
 
-      {isRefererListLoading && <CardSkeletonList />}
+      {isRefererListLoading && (
+        <CardSkeletonList className="lg:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1" />
+      )}
 
       {!isRefererListLoading && list.length > 0 && (
         <BaseInfiniteScroll
@@ -119,7 +121,7 @@ const RefererPageTemplate: React.FunctionComponent<
             true
           }
         >
-          <div className="grid grid-cols-1 gap-4  w-full overflow-hidden mt-8">
+          <div className="grid lg:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-4 w-full overflow-hidden mt-8">
             {list.map((referer) => {
               return (
                 <ReferralCard

@@ -1,15 +1,31 @@
-import React, { useEffect, useState } from "react"
-
+import React, { useState } from "react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 import ContactDialog, {
   IContactDialogProps,
 } from "@/modules/referral/components/dialog/contact"
 import UserSignInDialog from "@/modules/referral/components/dialog/userSignIn"
-import ReferralCardDropDownMenu from "@/modules/referral/components/drop-down-menu/card"
-import compareDateDifferenceHelper from "@/utils/common/helpers/time/compareDateDifference"
-import BaseAvatar from "@/components/customized-ui/avatars/base"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
+import { formatLocation } from "@/utils/common/helpers/format/location"
+
+import { ReferralType } from "@/types/common/referral-type"
+import { siteConfig } from "@/config/site"
 import useUserStore from "@/hooks/state/user/store"
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import BaseAvatar from "@/components/customized-ui/avatars/base"
+import { Icons } from "@/components/icons"
 
 interface IReferralCardProps
   extends Omit<
@@ -47,31 +63,11 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
   postUuid,
   receiverType,
   toUuid,
-  createdAt,
 }) => {
   const [isContactFormOpen, setIsContactFormOpen] = useState(false)
   const [isAuthOpen, setIsAuthOpen] = useState(false)
-  const [dateDiffText, setDateDiffText] = useState<undefined | string>()
   const isUserSignIn = useUserStore((state) => state.isSignIn)
-
-  useEffect(() => {
-    if (createdAt) {
-      const difference = compareDateDifferenceHelper({
-        newDate: new Date().toString(),
-        oldDate: createdAt,
-        unit: "day",
-      })
-     
-      if (difference === 0) {
-        setDateDiffText("今日")
-      }
-      else if (difference > 0 && difference < 30) {
-        setDateDiffText(`${difference}日`)
-      } else {
-        setDateDiffText(`30日+`)
-      }
-    }
-  }, [createdAt])
+  const router = useRouter()
 
   const handleContactClick = () => {
     if (isUserSignIn) {
@@ -80,8 +76,101 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
       setIsAuthOpen(true)
     }
   }
+
+  const handleProfileClick = () => {
+    router.push(`${siteConfig.page.profile.href}/${uuid}`)
+  }
+
+  const handleUrlClick = () => {
+    if (socialMediaUrl) window.open(socialMediaUrl, "_blank")
+  }
+
   return (
-    <Card className="flex w-full h-500 md:h-[400px] flex-col justify-between border-2">
+    <>
+      <Card className="p-2 rounded shadow-md flex flex-col justify-between">
+        <CardHeader className="flex flex-col items-center justify-center space-y-0 pb-0 relative">
+          {socialMediaUrl && (
+            <div className="absolute top-0 right-0">
+              <TooltipProvider delayDuration={100}>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Button variant="link" size="icon" onClick={handleUrlClick}>
+                      <Icons.link className="h-4 w-4" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <span>個人連結</span>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+          )}
+          <Link href={`${siteConfig.page.profile.href}/${uuid}`}>
+            <BaseAvatar
+              fallBack={username[0]}
+              alt={username}
+              url={photoUrl || undefined}
+              size="large"
+            />
+          </Link>
+          <Link href={`${siteConfig.page.profile.href}/${uuid}`}>
+            <p className="text-xs pt-5">@{username}</p>
+          </Link>
+          <p className="text-lg font-semibold">{jobTitle}</p>
+          {receiverType === ReferralType.REFERRER && companyName && (
+            <div className="flex justify-start items-center text-sm text-muted-foreground">
+              <Icons.company width="13" />
+              <span className="ml-1">{companyName}</span>
+            </div>
+          )}
+          <p className="pt-6 text-sm line-clamp-4">{description}</p>
+        </CardHeader>
+        <CardContent className="justify-start">
+          <div className="relative py-5">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+          </div>
+          <CardDescription className="text-overflow-ellipsis">
+            {(city || province || country) && (
+              <div className="flex justify-start">
+                <Icons.location width="18" />
+                <span className="ml-2">
+                  {formatLocation(city, province, country)}
+                </span>
+              </div>
+            )}
+            {industry && (
+              <div className="flex justify-start">
+                <Icons.industry width="18" />
+                <span className="ml-2">{industry}</span>
+              </div>
+            )}
+            {yearOfExperience !== null && (
+              <div className="flex justify-start">
+                <Icons.yearsOfExp width="18" />
+                <span className="ml-2">{yearOfExperience}年經驗</span>
+              </div>
+            )}
+          </CardDescription>
+
+          <CardFooter className="p-0 pt-7 flex-col">
+            <Button className="w-full" onClick={handleContactClick}>
+              <Icons.mail className="mr-1 h-4 w-4" />
+              聯絡我
+            </Button>
+
+            <Button
+              variant="outline"
+              className="w-full mt-2"
+              onClick={handleProfileClick}
+            >
+              睇吓Profile先！
+            </Button>
+          </CardFooter>
+        </CardContent>
+      </Card>
+
       <ContactDialog
         open={isContactFormOpen}
         username={username}
@@ -96,93 +185,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
         open={isAuthOpen}
         onDialogClose={() => setIsAuthOpen(false)}
       />
-
-      <CardHeader className="justify-between">
-        <CardTitle className="flex  flex-row justify-between items-center w-full overflow-hidden">
-          <span className="text-overflow-ellipsis">{jobTitle}</span>
-            
-            <ReferralCardDropDownMenu
-            url={socialMediaUrl}
-            onContactClick={handleContactClick}
-          />
-     
-        </CardTitle>
-     
-        <CardDescription className="text-overflow-ellipsis">{companyName}</CardDescription>
-      </CardHeader>
-
-      <CardContent className="hidden h-full w-full md:flex flex-col md:flex-row">
-        <div className="flex flex-col items-center justify-start w-[35%]">
-          <BaseAvatar
-            fallBack={username[0]}
-            alt={username}
-            url={photoUrl || undefined}
-            size="large"
-          />
-
-          <p className="text-lg mt-12 font-semibold">{username}</p>
-        </div>
-
-        <div className=" h-[240px] w-[65%] text-center">
-          <div className="h-[240px] text-left inline-block break-words whitespace-pre-wrap overflow-y-auto">
-            {description}
-          </div>
-        </div>
-      </CardContent>
-
-      <CardFooter className="hidden md:flex md:justify-between md:gap-4">
-        <div>
-          {country && <Badge variant="outline">{country}</Badge>}
-          {province && <Badge variant="outline">{province}</Badge>}
-          {city && <Badge variant="outline">{city}</Badge>}
-          {industry && <Badge variant="outline">{industry}</Badge>}
-          {typeof yearOfExperience === "number" && yearOfExperience >= 0 && (
-            <Badge variant="outline">{yearOfExperience}年經驗</Badge>
-          )}
-        </div>
-
-        {dateDiffText && (
-          <p className="text-muted-foreground text-sm ">{dateDiffText}</p>
-        )}
-      </CardFooter>
-
-      {/* for small screen */}
-      <CardContent className="flex h-full w-full md:hidden flex-col">
-
-      <div className="h-[200px] text-center">
-          <div className="h-[200px] text-left inline-block break-all whitespace-pre-wrap overflow-y-auto hyphens-auto">
-            {description}
-          </div>
-        </div>
-      
-      </CardContent>
-
-      <CardFooter className="flex flex-col md:hidden">
-        <div className="flex flex-row justify-center items-center w-full">
-          <BaseAvatar
-            fallBack={username[0]}
-            alt={username}
-            url={photoUrl || undefined}
-          />
-          <p>{username}</p>
-        </div>
-
-        <div className="md:hidden flex flex-wrap gap-4 mt-2">
-          {country && <Badge variant="outline">{country}</Badge>}
-          {province && <Badge variant="outline">{province}</Badge>}
-          {city && <Badge variant="outline">{city}</Badge>}
-        </div>
-        <div>
-          {industry && <Badge variant="outline">{industry}</Badge>}
-          {typeof yearOfExperience === "number" && yearOfExperience >= 0 && (
-            <Badge variant="outline">{yearOfExperience}年經驗</Badge>
-          )}
-        </div>
-        {dateDiffText && (
-          <p className="text-muted-foreground text-sm ">{dateDiffText}</p>
-        )}
-      </CardFooter>
-    </Card>
+    </>
   )
 }
 

@@ -13,7 +13,7 @@ import useSearchPost from "@/hooks/api/post/search-post"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import ResetButton from "@/components/customized-ui/buttons/reset"
-import ReferralCard from "@/components/customized-ui/cards/referral"
+import ReferralPostCard from "@/components/customized-ui/cards/referral-post"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons /card-list"
 
@@ -119,7 +119,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4  w-full overflow-hidden mt-8">
             {list.map((data) => {
               return (
-                <ReferralCard
+                <ReferralPostCard
                   jobTitle={data.job_title}
                   username={data.user.username}
                   photoUrl={data.user.avatar_url}

@@ -120,7 +120,7 @@ const RefereePostPageTemplate: React.FunctionComponent<
           <div className="grid grid-cols-1 gap-4  w-full overflow-hidden mt-8">
             {list.map((data) => {
               return (
-                <ReferralCard
+                <ReferralPostCard
                   jobTitle={data.job_title}
                   username={data.user.username}
                   photoUrl={data.user.avatar_url}

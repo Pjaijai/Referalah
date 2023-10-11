@@ -103,7 +103,9 @@ const RefereePageTemplate: React.FunctionComponent<
         </div>
       )}
 
-      {isRefereeListLoading && <CardSkeletonList />}
+      {isRefereeListLoading && (
+        <CardSkeletonList className="lg:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1" />
+      )}
 
       {!isRefereeListLoading && list.length > 0 && (
         <BaseInfiniteScroll
@@ -117,7 +119,7 @@ const RefereePageTemplate: React.FunctionComponent<
             true
           }
         >
-          <div className="grid grid-cols-1 gap-4  w-full overflow-hidden mt-8">
+          <div className="grid lg:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-4 w-full overflow-hidden mt-8">
             {list.map((referee) => {
               return (
                 <ReferralCard
