@@ -40,7 +40,8 @@ const CreatePostTemplate: React.FunctionComponent<
       .url({
         message: "無效連結",
       })
-      .optional(),
+      .optional()
+      .or(z.literal('')),
     description: z
       .string()
       .max(3000, {
