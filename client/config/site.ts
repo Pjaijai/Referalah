@@ -9,7 +9,7 @@ export const siteConfig = {
       href: "/",
     },
     profile: {
-      name: "profile",
+      name: "用戶檔案",
       href: "/profile",
     },
     auth: {
