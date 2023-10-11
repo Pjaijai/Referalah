@@ -47,13 +47,13 @@ const ViewProfileTemplate: React.FunctionComponent<
   slug,
 }) => {
   const userUuid = useUserStore((state) => state.uuid)
-  const matchedUser = slug == userUuid
+  const isViewingOwnProfile = slug === userUuid
   return (
     <div className="w-full flex flex-col gap-y-2 mt-28">
       <div className="flex flex-row justify-end w-full mx-8 gap-2">
         {socialMediaUrl && <LinkTooltip url={socialMediaUrl} />}
 
-        {matchedUser && (
+        {isViewingOwnProfile && (
           <Button
             onClick={() => {
               setIsEditMode(true)
