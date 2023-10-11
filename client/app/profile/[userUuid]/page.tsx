@@ -12,12 +12,12 @@ import { Icons } from "@/components/icons"
 
 const Page = ({ params }: { params: { userUuid: string } }) => {
   const { userUuid } = params
-  console.log(userUuid)
+
   // const userUuid = useUserStore((state) => state.uuid)
   const [isEditMode, setIsEditMode] = useState(false)
-  const { data: profile, isLoading, isError } = useGetUserprofile(userUuid)
+  const { data: profile, isLoading } = useGetUserprofile(userUuid)
 
-  if (!isLoading && profile === null)
+  if (!isLoading && !profile)
     return (
       <div className="flex flex-col  justify-center items-center rounded-lg p-4 gap-4  h-screen">
         <span className="text-5xl">🥲</span>
