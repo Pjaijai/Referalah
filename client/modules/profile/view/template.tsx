@@ -2,6 +2,7 @@
 
 import React from "react"
 
+import useUserStore from "@/hooks/state/user/store"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -23,7 +24,7 @@ export interface IViewProfileTemplateProps {
   socialMediaUrl: string | null
   isReferer: boolean
   isReferee: boolean
-
+  slug: string
   setIsEditMode: (value: boolean) => void
 }
 const ViewProfileTemplate: React.FunctionComponent<
@@ -43,21 +44,26 @@ const ViewProfileTemplate: React.FunctionComponent<
   industry,
   isReferer,
   isReferee,
+  slug,
 }) => {
+  const userUuid = useUserStore((state) => state.uuid)
+  const isViewingOwnProfile = slug === userUuid
   return (
     <div className="w-full flex flex-col gap-y-2 mt-28">
       <div className="flex flex-row justify-end w-full mx-8 gap-2">
         {socialMediaUrl && <LinkTooltip url={socialMediaUrl} />}
 
-        <Button
-          onClick={() => {
-            setIsEditMode(true)
-          }}
-          className=" gap-2"
-        >
-          <Icons.pencil />
-          編輯
-        </Button>
+        {isViewingOwnProfile && (
+          <Button
+            onClick={() => {
+              setIsEditMode(true)
+            }}
+            className=" gap-2"
+          >
+            <Icons.pencil />
+            編輯
+          </Button>
+        )}
       </div>
 
       <div className="flex justify-center">
