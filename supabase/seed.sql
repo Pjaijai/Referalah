@@ -36,7 +36,7 @@ VALUES
   (14, 'eddaced1-4336-473f-9268-82a0bd51957d', 'charlottetown', '0f66dd8f-22d2-4977-9f5e-54149750d330', 'Charlottetown', '夏洛特敦'),
   (15, 'db984e01-6d4a-4f1f-81ff-2589aed69044', 'regina', '0d38e506-4421-4283-bcb5-28e0bf0caf03', 'Regina', '雷吉納'),
   (16, '2e5d4fcf-fc67-47d8-b8fb-c9e671fae44c', 'saskatoon', '0d38e506-4421-4283-bcb5-28e0bf0caf03', 'Saskatoon', '沙斯加通'),
-  (17, 'f8f68409-5789-44c3-8684-d7c6fa656623', 'St_Johns', '1cd459f0-0e0f-45fe-9c4b-ec7e0ce22340', 'St. Johns', '聖約翰'),
+  (17, 'f8f68409-5789-44c3-8684-d7c6fa656623', 'st_Johns', '1cd459f0-0e0f-45fe-9c4b-ec7e0ce22340', 'St. Johns', '聖約翰'),
   (18, 'b2528cc2-21e2-4c5b-af1f-628aabcae9b1', 'waterloo', '7546ebd4-6057-4d63-b1ae-40a8ee520c33', 'Waterloo', '滑鐵盧');
 
 -- Insert data into the "industry" table
