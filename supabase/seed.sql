@@ -42,8 +42,12 @@ VALUES
 -- Insert data into the "industry" table
 INSERT INTO industry (id, uuid, value, english_name, cantonese_name)
 VALUES
+  (1, '7f7a3ceb-886d-480a-b35b-33721f7e2c75', 'creative_and_cultural', 'Culture', '文化產業'),
+  (2, 'bb447b3d-10a8-48cc-849e-d578c3685241', 'information_and_technology', 'Information and Technology', '信息科技業'),
   (3, '4b2af2dd-e72c-4618-a928-fbde3c427599', 'education', 'Education', '教育業'),
+  (4, 'a1a60af6-325b-4f7b-8543-f198e40404c1', 'banking_and_finance', 'Banking and Finance', '銀行及金融業'),
   (5, '0c9c8045-80ef-49fb-b931-3a8e3199602f', 'health_care', 'Health care', '醫療保健業'),
+  (6, '10a553ee-e9e0-4a71-ae4a-21cab42bd340', 'utility', 'Utility', '公用事業'),
   (7, 'cfe1352a-b0a3-4b9c-b3e3-6f12a233beaa', 'game', 'Game', '遊戲業'),
   (8, '59869380-ca5c-4e3a-8138-0a80e2037561', 'textile', 'Textile', '紡織業'),
   (9, 'f8a30a93-6dee-49a3-a474-26a18f2d5ada', 'real_estate', 'Real estate', '房地產業'),
@@ -51,18 +55,15 @@ VALUES
   (11, 'ac2bb1eb-9e00-4e15-9b51-2972dc51947e', 'music', 'Music', '音樂業'),
   (12, 'a641f4f6-73a2-4c19-b666-69889867daed', 'food_and_beverage', 'Food & Beverage', '餐飲業'),
   (13, '429da610-49f3-4154-a235-3dce18e3e851', 'gambling', 'Gambling', '賭博業'),
+  (14, 'dcf6fdcf-f124-45c6-9023-369ed01b9c1c', 'tourism_and_hospitality', 'Hospitality', '旅遊及款待業'),
+  (15, '2e3a5bc6-84af-49e2-9d67-40c2220fe689', 'entertainment', 'Entertainment', '娛樂產業'),
   (16, '356ee0b6-34a4-402d-b01a-87bb5ad750e5', 'transport_and_logistics', 'Transport and Logistics', '運輸及物流業'),
   (17, '61b2af45-18cd-474c-9096-230510e02e04', 'construction', 'Construction', '建筑業'),
-  (14, 'dcf6fdcf-f124-45c6-9023-369ed01b9c1c', 'tourism_and_hospitality', 'Hospitality', '旅遊及款待業'),
-  (1, '7f7a3ceb-886d-480a-b35b-33721f7e2c75', 'creative_and_cultural', 'Culture', '文化產業'),
   (18, '52979570-24dc-408f-abfd-5b4b5aed9de1', 'advertising_and_marketing', 'Advertising and Marketing', '廣告及市場推廣業'),
   (19, '4bbe86ac-d8a7-4855-b585-64d25d331297', 'creative_industry', 'Creative Industry', '創意產業'),
   (20, '69f65821-9706-40ee-b7b7-cf837c30232f', 'design_industry', 'Design industry', '設計業'),
-  (2, 'bb447b3d-10a8-48cc-849e-d578c3685241', 'information_and_technology', 'Information and Technology', '信息科技業'),
-  (4, 'a1a60af6-325b-4f7b-8543-f198e40404c1', 'banking_and_finance', 'Banking and Finance', '銀行及金融業'),
-  (6, '10a553ee-e9e0-4a71-ae4a-21cab42bd340', 'utility', 'Utility', '公用事業'),
-  (15, '2e3a5bc6-84af-49e2-9d67-40c2220fe689', 'entertainment', 'Entertainment', '娛樂產業'),
   (21, '489cd668-cdc2-4052-9a97-bf25576440e5', 'legal', 'Legal Industry', '法律行業'),
   (22, '82fc7fc4-e177-4330-99ce-1d34a238e52a', 'research_and_development', 'Research and Development', '學術研究'),
   (23, '37af5dc1-b1f8-4e58-a1d1-4726a5243e9d', 'human_resources', 'Human Resources', '人力資源'),
   (24, 'f468b272-4613-403f-a7e6-4f01c29043ec', 'automobile', 'Automobile', '汽車業');
+
