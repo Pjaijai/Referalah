@@ -1,4 +1,4 @@
--- Insert data into the "city" table
+
 -- Insert data into the "country" table
 INSERT INTO country (id, uuid, value, english_name, cantonese_name)
 VALUES
@@ -8,9 +8,9 @@ VALUES
 INSERT INTO province (id, uuid, value, country_uuid, english_name, cantonese_name)
 VALUES
   (1, '090d3e23-d1bb-4fff-b6c0-87fc4da6304c', 'alberta', 'c55a2a85-bd17-423d-b49f-548dc859ab67', 'Alberta', '亞伯達省'),
+  (2, '62f381bd-c061-4c89-a9eb-7a902a69dfe9', 'british_columbia', 'c55a2a85-bd17-423d-b49f-548dc859ab67', 'British Columbia', '不列顛哥倫比亞省'),
   (3, '7546ebd4-6057-4d63-b1ae-40a8ee520c33', 'ontario', 'c55a2a85-bd17-423d-b49f-548dc859ab67', 'Ontario', '安大略省'),
   (4, '65732979-af98-4a8a-aeac-203d506bcdaa', 'quebec', 'c55a2a85-bd17-423d-b49f-548dc859ab67', 'Quebec', '魁北克'),
-  (2, '62f381bd-c061-4c89-a9eb-7a902a69dfe9', 'british_columbia', 'c55a2a85-bd17-423d-b49f-548dc859ab67', 'British Columbia', '不列顛哥倫比亞省'),
   (5, '42a12df3-f785-44e7-9aca-208602b1544c', 'nova_scotia', 'c55a2a85-bd17-423d-b49f-548dc859ab67', 'Nova Scotia', '新斯科細亞'),
   (6, '2a44e69f-3ae1-45ea-8dd3-572663b9e303', 'new_brunswick', 'c55a2a85-bd17-423d-b49f-548dc859ab67', 'New Brunswick', '新不倫瑞克省'),
   (7, '9670157c-7370-4caa-86c6-4e73d0218796', 'manitoba', 'c55a2a85-bd17-423d-b49f-548dc859ab67', 'Manitoba', '馬尼托巴'),
@@ -18,16 +18,17 @@ VALUES
   (9, '0d38e506-4421-4283-bcb5-28e0bf0caf03', 'saskatchewan', 'c55a2a85-bd17-423d-b49f-548dc859ab67', 'Saskatchewan', '沙斯卡寸旺省'),
   (10, '1cd459f0-0e0f-45fe-9c4b-ec7e0ce22340', 'newfoundland_and_labrador', 'c55a2a85-bd17-423d-b49f-548dc859ab67', 'Newfoundland and Labrador', '紐芬蘭及拉布拉多');
 
+-- Insert data into the "city" table
 INSERT INTO city (id, uuid, value, province_uuid, english_name, cantonese_name)
 VALUES
   (1, '69a46dce-b0a1-4ba7-94f1-f6486ed48ca4', 'calgary', '090d3e23-d1bb-4fff-b6c0-87fc4da6304c', 'Calgary', '卡加里'),
+  (2, '2b18a77f-6c41-4379-af90-a6c47ee545f1', 'edmonton', '090d3e23-d1bb-4fff-b6c0-87fc4da6304c', 'Edmonton', '愛民頓'),
+  (3, 'c348552a-6096-4dab-b710-0cb92f90790b', 'vancouver', '62f381bd-c061-4c89-a9eb-7a902a69dfe9', 'Vancouver', '溫哥華'),
+  (4, '9ca24784-9716-4f91-84dd-5641e7f261cf', 'toronto', '7546ebd4-6057-4d63-b1ae-40a8ee520c33', 'Toronto', '多倫多'),
   (5, '603de184-7a1f-4fd3-b094-e3e357b85f1c', 'ottawa', '7546ebd4-6057-4d63-b1ae-40a8ee520c33', 'Ottawa', '渥太華'),
   (6, '300fe61e-d77a-434c-bdb7-b462a8c5ebcd', 'london', '7546ebd4-6057-4d63-b1ae-40a8ee520c33', 'London', '倫敦'),
   (7, 'bf0c965c-6380-46fc-8fb0-13515742cb28', 'quebec_city', '65732979-af98-4a8a-aeac-203d506bcdaa', 'Quebec City', '魁北克市'),
   (8, 'f4d1ee38-4c00-4298-8af2-869ba8872430', 'montreal', '65732979-af98-4a8a-aeac-203d506bcdaa', 'Montreal', '滿地可'),
-  (4, '9ca24784-9716-4f91-84dd-5641e7f261cf', 'toronto', '7546ebd4-6057-4d63-b1ae-40a8ee520c33', 'Toronto', '多倫多'),
-  (3, 'c348552a-6096-4dab-b710-0cb92f90790b', 'vancouver', '62f381bd-c061-4c89-a9eb-7a902a69dfe9', 'Vancouver', '溫哥華'),
-  (2, '2b18a77f-6c41-4379-af90-a6c47ee545f1', 'edmonton', '090d3e23-d1bb-4fff-b6c0-87fc4da6304c', 'Edmonton', '愛民頓'),
   (9, '82a8511d-7f92-4e7b-a90e-d48a0bc5a445', 'halifax', '42a12df3-f785-44e7-9aca-208602b1544c', 'Halifax', '哈利法克斯'),
   (10, '4de0e48e-fb8f-49ae-9966-85e12e60eeec', 'fredericton', '2a44e69f-3ae1-45ea-8dd3-572663b9e303', 'Fredericton', '弗雷德里克頓'),
   (11, '6f02d216-2c64-4fa0-a8d2-37c9c43c7ad8', 'moncton', '2a44e69f-3ae1-45ea-8dd3-572663b9e303', 'Moncton', '蒙克頓'),
