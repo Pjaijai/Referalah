@@ -12,6 +12,7 @@ import {
 import { cn } from "@/lib/utils"
 import { siteConfig } from "@/config/site"
 import Link from "next/link"
+import useUserStore from "@/hooks/state/user/store"
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -33,6 +34,7 @@ const components: { title: string; href: string; description: string }[] = [
 ]
 
 export function BaseNavigationMenu() {
+  const userUuid = useUserStore(state=> state.uuid)
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -43,7 +45,7 @@ export function BaseNavigationMenu() {
           <NavigationMenuContent>
             <ul className="flex flex-col w-[200px]">
 
-            <Link href={siteConfig.page.profile.href}>
+            <Link href={`${siteConfig.page.profile.href}/${userUuid}`}>
             <ListItem  title="成為推薦人/受薦人">
                 去個人檔案剔翻該選項，同埋填翻相認資料就OK啦！幫得一個得一個🙏🏻
               </ListItem>
