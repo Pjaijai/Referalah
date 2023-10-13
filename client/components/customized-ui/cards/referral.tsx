@@ -5,7 +5,6 @@ import ContactDialog, {
   IContactDialogProps,
 } from "@/modules/referral/components/dialog/contact"
 import UserSignInDialog from "@/modules/referral/components/dialog/userSignIn"
-import { formatLocation } from "@/utils/common/helpers/format/location"
 
 import { ReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
@@ -18,14 +17,15 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+import { Separator } from "@/components/ui/separator"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import { Icons } from "@/components/icons"
+
+import CompanyNameDisplay from "../info-display/company"
+import IndustryDisplay from "../info-display/industry"
+import LocationDisplay from "../info-display/location"
+import YearsOfExperienceDisplay from "../info-display/years-of-experience"
+import TooltipWrapper from "../tool/tooltip-wrapper"
 
 interface IReferralCardProps
   extends Omit<
@@ -88,21 +88,18 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
   return (
     <>
       <Card className="p-2 rounded shadow-md flex flex-col justify-between">
+        {/* avatar, username , title, company, desc, url */}
         <CardHeader className="flex flex-col items-center justify-center space-y-0 pb-0 relative">
           {socialMediaUrl && (
-            <div className="absolute top-0 right-0">
-              <TooltipProvider delayDuration={100}>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <Button variant="link" size="icon" onClick={handleUrlClick}>
-                      <Icons.link className="h-4 w-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <span>個人連結</span>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+            <div className="absolute top-3 right-3">
+              <TooltipWrapper
+                tooltipTrigger={
+                  <Button variant="link" size="icon" onClick={handleUrlClick}>
+                    <Icons.link className="h-4 w-4" />
+                  </Button>
+                }
+                tooltipContent={<span>個人連結</span>}
+              />
             </div>
           )}
           <Link href={`${siteConfig.page.profile.href}/${uuid}`}>
@@ -118,42 +115,29 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
           </Link>
           <p className="text-lg font-semibold">{jobTitle}</p>
           {receiverType === ReferralType.REFERRER && companyName && (
-            <div className="flex justify-start items-center text-sm text-muted-foreground">
-              <Icons.company width="13" />
-              <span className="ml-1">{companyName}</span>
-            </div>
+            <CompanyNameDisplay name={companyName} />
           )}
           <p className="pt-6 text-sm line-clamp-4">{description}</p>
         </CardHeader>
+
+        {/* location, industry, year of exp */}
         <CardContent className="justify-start">
-          <div className="relative py-5">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
-            </div>
-          </div>
+          <Separator className="my-4" />
           <CardDescription className="text-overflow-ellipsis">
             {(city || province || country) && (
-              <div className="flex justify-start">
-                <Icons.location width="18" />
-                <span className="ml-2">
-                  {formatLocation(city, province, country)}
-                </span>
-              </div>
+              <LocationDisplay
+                city={city}
+                province={province}
+                country={country}
+              />
             )}
-            {industry && (
-              <div className="flex justify-start">
-                <Icons.industry width="18" />
-                <span className="ml-2">{industry}</span>
-              </div>
-            )}
+            {industry && <IndustryDisplay industry={industry} />}
             {yearOfExperience !== null && (
-              <div className="flex justify-start">
-                <Icons.yearsOfExp width="18" />
-                <span className="ml-2">{yearOfExperience}年經驗</span>
-              </div>
+              <YearsOfExperienceDisplay yearOfExperience={yearOfExperience} />
             )}
           </CardDescription>
 
+          {/* quick actions  */}
           <CardFooter className="p-0 pt-7 flex-col">
             <Button className="w-full" onClick={handleContactClick}>
               <Icons.mail className="mr-1 h-4 w-4" />
@@ -165,7 +149,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
               className="w-full mt-2"
               onClick={handleProfileClick}
             >
-              睇吓Profile先！
+              查看用戶檔案
             </Button>
           </CardFooter>
         </CardContent>

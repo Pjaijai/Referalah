@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react"
+import React, { useMemo, useState } from "react"
+import Link from "next/link"
 import ContactDialog, {
   IContactDialogProps,
 } from "@/modules/referral/components/dialog/contact"
 import UserSignInDialog from "@/modules/referral/components/dialog/userSignIn"
-import ReferralCardDropDownMenu from "@/modules/referral/components/drop-down-menu/card"
-import compareDateDifferenceHelper from "@/utils/common/helpers/time/compareDateDifference"
+import { formatCreatedAt } from "@/utils/common/helpers/format/date"
 
+import { ReferralType } from "@/types/common/referral-type"
+import { siteConfig } from "@/config/site"
 import useUserStore from "@/hooks/state/user/store"
-import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -16,7 +18,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Separator } from "@/components/ui/separator"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
+import { Icons } from "@/components/icons"
+
+import IndustryDisplay from "../info-display/industry"
+import LocationDisplay from "../info-display/location"
+import PostHeader from "../info-display/post-header"
+import YearsOfExperienceDisplay from "../info-display/years-of-experience"
+import Trunclater from "../tool/collapsable-text-wrapper"
+import TooltipWrapper from "../tool/tooltip-wrapper"
 
 interface IReferralPostCardProps
   extends Omit<
@@ -34,7 +45,7 @@ interface IReferralPostCardProps
   province: string | null
   city: string | null
   industry: string | null
-  socialMediaUrl: string | null
+  url: string | null
   createdAt?: string
 }
 const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
@@ -46,7 +57,7 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   industry,
   photoUrl,
   province,
-  socialMediaUrl,
+  url,
   username,
   uuid,
   yearOfExperience,
@@ -58,26 +69,8 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
 }) => {
   const [isContactFormOpen, setIsContactFormOpen] = useState(false)
   const [isAuthOpen, setIsAuthOpen] = useState(false)
-  const [dateDiffText, setDateDiffText] = useState<undefined | string>()
   const isUserSignIn = useUserStore((state) => state.isSignIn)
-
-  useEffect(() => {
-    if (createdAt) {
-      const difference = compareDateDifferenceHelper({
-        newDate: new Date().toString(),
-        oldDate: createdAt,
-        unit: "day",
-      })
-
-      if (difference === 0) {
-        setDateDiffText("今日")
-      } else if (difference > 0 && difference < 30) {
-        setDateDiffText(`${difference}日`)
-      } else {
-        setDateDiffText(`30日+`)
-      }
-    }
-  }, [createdAt])
+  const isReferrer = receiverType === ReferralType.REFERRER
 
   const handleContactClick = () => {
     if (isUserSignIn) {
@@ -86,8 +79,113 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
       setIsAuthOpen(true)
     }
   }
+
+  const formattedCreatedAt = useMemo(
+    () => formatCreatedAt(createdAt),
+    [createdAt]
+  )
+
   return (
-    <Card className="flex w-full h-500 md:h-[400px] flex-col justify-between border-2">
+    <>
+      <Card className="rounded shadow-md flex flex-col justify-between">
+        <div className="flex flex-col justify-start items-start">
+          <CardHeader className="w-full pb-2">
+            {/* title, subtitle, url, avatar, quick action */}
+            <div className="flex flex-row justify-between items-start">
+              {isReferrer ? (
+                <PostHeader
+                  title={jobTitle}
+                  subtitle={
+                    <>
+                      <Icons.company width="13" />
+                      <span className="ml-1">{companyName}</span>
+                    </>
+                  }
+                  url={url}
+                />
+              ) : (
+                <div className="flex items-center gap-3 mb-2">
+                  <Link href={`${siteConfig.page.profile.href}/${uuid}`}>
+                    <BaseAvatar
+                      fallBack={username[0]}
+                      alt={username}
+                      url={photoUrl || undefined}
+                    />
+                  </Link>
+                  <PostHeader
+                    title={jobTitle}
+                    subtitle={
+                      <Link
+                        href={`${siteConfig.page.profile.href}/${uuid}`}
+                        className="mt-1"
+                      >
+                        <span>@{username}</span>
+                      </Link>
+                    }
+                    url={url}
+                  />
+                </div>
+              )}
+              <div className="flex items-center">
+                {isReferrer && (
+                  <div className="mr-2">
+                    <TooltipWrapper
+                      tooltipTrigger={
+                        <Link href={`${siteConfig.page.profile.href}/${uuid}`}>
+                          <BaseAvatar
+                            fallBack={username[0]}
+                            alt={username}
+                            url={photoUrl || undefined}
+                          />
+                        </Link>
+                      }
+                      tooltipContent={<span>查看推薦人檔案</span>}
+                    />
+                  </div>
+                )}
+                <Button className="px-3" onClick={handleContactClick}>
+                  <Icons.mail className="mr-1 h-4 w-4" />
+                  聯絡{isReferrer ? "推薦人" : "我"}
+                </Button>
+              </div>
+            </div>
+
+            {/* location, industry, year of exp */}
+            <CardDescription className="text-overflow-ellipsis flex justify-start gap-4 mt-2 mb-5 items-center">
+              {(city || province || country) && (
+                <LocationDisplay
+                  city={city}
+                  province={province}
+                  country={country}
+                />
+              )}
+              {industry && <IndustryDisplay industry={industry} />}
+              {yearOfExperience !== null && (
+                <YearsOfExperienceDisplay yearOfExperience={yearOfExperience} />
+              )}
+            </CardDescription>
+
+            <Separator />
+          </CardHeader>
+
+          {/* desc */}
+          <CardContent>
+            {description && (
+              <Trunclater
+                text={description}
+                className="text-sm mt-2"
+                expandButtonProps={{ className: "mt-2" }}
+              />
+            )}
+          </CardContent>
+        </div>
+
+        {/* created at */}
+        <CardFooter className="justify-end">
+          <CardDescription>{formattedCreatedAt}</CardDescription>
+        </CardFooter>
+      </Card>
+
       <ContactDialog
         open={isContactFormOpen}
         username={username}
@@ -102,92 +200,7 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
         open={isAuthOpen}
         onDialogClose={() => setIsAuthOpen(false)}
       />
-
-      <CardHeader className="justify-between">
-        <CardTitle className="flex  flex-row justify-between items-center w-full overflow-hidden">
-          <span className="text-overflow-ellipsis">{jobTitle}</span>
-
-          <ReferralCardDropDownMenu
-            url={socialMediaUrl}
-            onContactClick={handleContactClick}
-          />
-        </CardTitle>
-
-        <CardDescription className="text-overflow-ellipsis">
-          {companyName}
-        </CardDescription>
-      </CardHeader>
-
-      <CardContent className="hidden h-full w-full md:flex flex-col md:flex-row">
-        <div className="flex flex-col items-center justify-start w-[35%]">
-          <BaseAvatar
-            fallBack={username[0]}
-            alt={username}
-            url={photoUrl || undefined}
-            size="large"
-          />
-
-          <p className="text-lg mt-12 font-semibold">{username}</p>
-        </div>
-
-        <div className=" h-[240px] w-[65%] text-center">
-          <div className="h-[240px] text-left inline-block break-words whitespace-pre-wrap overflow-y-auto">
-            {description}
-          </div>
-        </div>
-      </CardContent>
-
-      <CardFooter className="hidden md:flex md:justify-between md:gap-4">
-        <div>
-          {country && <Badge variant="outline">{country}</Badge>}
-          {province && <Badge variant="outline">{province}</Badge>}
-          {city && <Badge variant="outline">{city}</Badge>}
-          {industry && <Badge variant="outline">{industry}</Badge>}
-          {typeof yearOfExperience === "number" && yearOfExperience >= 0 && (
-            <Badge variant="outline">{yearOfExperience}年經驗</Badge>
-          )}
-        </div>
-
-        {dateDiffText && (
-          <p className="text-muted-foreground text-sm ">{dateDiffText}</p>
-        )}
-      </CardFooter>
-
-      {/* for small screen */}
-      <CardContent className="flex h-full w-full md:hidden flex-col">
-        <div className="h-[200px] text-center">
-          <div className="h-[200px] text-left inline-block break-all whitespace-pre-wrap overflow-y-auto hyphens-auto">
-            {description}
-          </div>
-        </div>
-      </CardContent>
-
-      <CardFooter className="flex flex-col md:hidden">
-        <div className="flex flex-row justify-center items-center w-full">
-          <BaseAvatar
-            fallBack={username[0]}
-            alt={username}
-            url={photoUrl || undefined}
-          />
-          <p>{username}</p>
-        </div>
-
-        <div className="md:hidden flex flex-wrap gap-4 mt-2">
-          {country && <Badge variant="outline">{country}</Badge>}
-          {province && <Badge variant="outline">{province}</Badge>}
-          {city && <Badge variant="outline">{city}</Badge>}
-        </div>
-        <div>
-          {industry && <Badge variant="outline">{industry}</Badge>}
-          {typeof yearOfExperience === "number" && yearOfExperience >= 0 && (
-            <Badge variant="outline">{yearOfExperience}年經驗</Badge>
-          )}
-        </div>
-        {dateDiffText && (
-          <p className="text-muted-foreground text-sm ">{dateDiffText}</p>
-        )}
-      </CardFooter>
-    </Card>
+    </>
   )
 }
 

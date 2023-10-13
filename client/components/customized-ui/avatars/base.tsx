@@ -1,28 +1,25 @@
 import React from "react"
 
+import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 interface IBaseAvatar {
   url?: string
   alt: string | null
   fallBack: string | null
-  size?: "large" | { w: string; h: string }
+  size?: "large"
+  className?: string
 }
 const BaseAvatar: React.FunctionComponent<IBaseAvatar> = ({
   alt,
   fallBack,
   url,
   size,
+  className,
 }) => {
   return (
     <Avatar
-      className={
-        size === "large"
-          ? "w-24 h-24 text-2xl"
-          : size
-          ? `w-[${size?.w}] h-[${size?.h}]`
-          : ""
-      }
+      className={cn(size === "large" ? "w-24 h-24 text-2xl" : "", className)}
     >
       <AvatarImage src={url ? url : ""} alt={alt ? alt : ""} />
       <AvatarFallback>{fallBack}</AvatarFallback>

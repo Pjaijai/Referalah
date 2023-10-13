@@ -79,5 +79,5 @@ export const Icons = {
   industry: Briefcase,
   location: MapPin,
   company: Building2,
-  yearsOfExp: CalendarClock,
+  yearsOfExperience: CalendarClock,
 }

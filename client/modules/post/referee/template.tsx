@@ -104,7 +104,9 @@ const RefereePostPageTemplate: React.FunctionComponent<
         </div>
       )}
 
-      {isLoading && <CardSkeletonList />}
+      {isLoading && (
+        <CardSkeletonList className="lg:grid-cols-2 xs:grid-cols-1" />
+      )}
 
       {!isLoading && list.length > 0 && (
         <BaseInfiniteScroll
@@ -117,7 +119,7 @@ const RefereePostPageTemplate: React.FunctionComponent<
             true
           }
         >
-          <div className="grid grid-cols-1 gap-4  w-full overflow-hidden mt-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full overflow-hidden mt-8">
             {list.map((data) => {
               return (
                 <ReferralPostCard
@@ -130,7 +132,7 @@ const RefereePostPageTemplate: React.FunctionComponent<
                   industry={data.industry.cantonese_name}
                   companyName={data.company_name}
                   description={data.description}
-                  socialMediaUrl={data.url}
+                  url={data.url}
                   yearOfExperience={data.year_of_experience}
                   uuid={data.uuid}
                   key={data.uuid}
