@@ -59,8 +59,16 @@ const RefererPostPageTemplate: React.FunctionComponent<
   return (
     <>
       <div className="flex flex-col-reverse md:flex-row mt-8 gap-4 w-full h-full">
-        <Input onChange={handleCompanyChange} placeholder="公司名稱" />
-        <Input onChange={handleJobTitleChange} placeholder="職位/工作名稱" />
+        <Input
+          onChange={handleCompanyChange}
+          value={companyName}
+          placeholder="公司名稱"
+        />
+        <Input
+          onChange={handleJobTitleChange}
+          value={jobTitle}
+          placeholder="職位/工作名稱"
+        />
 
         <div className="flex flex-row justify-end gap-2">
           <SearchPopover
