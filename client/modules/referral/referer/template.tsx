@@ -8,8 +8,10 @@ import useGetCityList from "@/hooks/api/location/get-city-list"
 import useGetCountryList from "@/hooks/api/location/get-country-list"
 import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useSearchReferral from "@/hooks/api/referral/search-referral"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
+import ResetButton from "@/components/customized-ui/buttons/reset"
 import ReferralCard from "@/components/customized-ui/cards/referral"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons /card-list"
@@ -31,8 +33,12 @@ const RefererPageTemplate: React.FunctionComponent<
     handleCityChange,
     handleSortingChange,
     handleIndustryChange,
-    handleYeoMinChange,
-    handleYeoMaxChange,
+    handleYoeMinChange,
+    handleYoeMaxChange,
+    handleJobTitleChange,
+    handleReset,
+    jobTitle,
+    companyName,
     provinceUuid,
     cityUuid,
     countryUuid,
@@ -55,31 +61,44 @@ const RefererPageTemplate: React.FunctionComponent<
 
   return (
     <>
-      <div className="flex flex-row mt-8 gap-4 w-full h-full">
-        <Input onChange={handleCompanyChange} placeholder="公司名稱" />
-        <SearchPopover
-          countryList={countryList}
-          provinceList={provinceList}
-          cityList={cityList}
-          industryList={industryList}
-          provinceUuid={provinceUuid}
-          countryUuid={countryUuid}
-          onCityChange={handleCityChange}
-          onCountryChange={handleCountryChange}
-          onProvinceChange={handleProvinceChange}
-          onIndustryChange={handleIndustryChange}
-          onSortingChange={handleSortingChange}
-          onYeoMinChange={handleYeoMinChange}
-          onYeoMaxChange={handleYeoMaxChange}
-          currentSorting={sorting}
-          currentCityUuid={cityUuid}
-          currentCountryUuid={countryUuid}
-          currentIndustryUuid={industryUuid}
-          currentProvinceUuid={provinceUuid}
-          currentYeoMax={yoeMax}
-          currentYeoMin={yoeMin}
-          type={MessageType.REFERRAL}
+      <div className="flex flex-col-reverse md:flex-row mt-8 gap-4 w-full h-full">
+        <Input
+          onChange={handleCompanyChange}
+          value={companyName}
+          placeholder="公司名稱"
         />
+        <Input
+          onChange={handleJobTitleChange}
+          value={jobTitle}
+          placeholder="職位/工作名稱"
+        />
+
+        <div className="flex flex-row justify-end gap-2">
+          <SearchPopover
+            countryList={countryList}
+            provinceList={provinceList}
+            cityList={cityList}
+            industryList={industryList}
+            provinceUuid={provinceUuid}
+            countryUuid={countryUuid}
+            onCityChange={handleCityChange}
+            onCountryChange={handleCountryChange}
+            onProvinceChange={handleProvinceChange}
+            onIndustryChange={handleIndustryChange}
+            onSortingChange={handleSortingChange}
+            onYeoMinChange={handleYoeMinChange}
+            onYeoMaxChange={handleYoeMaxChange}
+            currentSorting={sorting}
+            currentCityUuid={cityUuid}
+            currentCountryUuid={countryUuid}
+            currentIndustryUuid={industryUuid}
+            currentProvinceUuid={provinceUuid}
+            currentYeoMax={yoeMax}
+            currentYeoMin={yoeMin}
+            type={MessageType.REFERRAL}
+          />
+          <ResetButton onClick={handleReset} />
+        </div>
       </div>
       {!isRefererListLoading && !isFetching && list.length === 0 && (
         <div className="p-4 rounded-lg text-center mt-8 border-2">

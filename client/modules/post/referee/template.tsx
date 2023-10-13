@@ -12,6 +12,7 @@ import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useSearchPost from "@/hooks/api/post/search-post"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
+import ResetButton from "@/components/customized-ui/buttons/reset"
 import ReferralCard from "@/components/customized-ui/cards/referral"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons /card-list"
@@ -33,8 +34,12 @@ const RefereePostPageTemplate: React.FunctionComponent<
     handleCityChange,
     handleSortingChange,
     handleIndustryChange,
-    handleYeoMinChange,
-    handleYeoMaxChange,
+    handleYoeMinChange,
+    handleYoeMaxChange,
+    handleJobTitleChange,
+    handleReset,
+    companyName,
+    jobTitle,
     provinceUuid,
     cityUuid,
     countryUuid,
@@ -52,31 +57,45 @@ const RefereePostPageTemplate: React.FunctionComponent<
 
   return (
     <>
-      <div className="flex flex-row mt-8 gap-4 w-full h-full">
-        <Input onChange={handleCompanyChange} placeholder="公司名稱" />
-        <SearchPopover
-          countryList={countryList}
-          provinceList={provinceList}
-          cityList={cityList}
-          industryList={industryList}
-          provinceUuid={provinceUuid}
-          countryUuid={countryUuid}
-          onCityChange={handleCityChange}
-          onCountryChange={handleCountryChange}
-          onProvinceChange={handleProvinceChange}
-          onIndustryChange={handleIndustryChange}
-          onSortingChange={handleSortingChange}
-          onYeoMinChange={handleYeoMinChange}
-          onYeoMaxChange={handleYeoMaxChange}
-          currentSorting={sorting}
-          currentCityUuid={cityUuid}
-          currentCountryUuid={countryUuid}
-          currentIndustryUuid={industryUuid}
-          currentProvinceUuid={provinceUuid}
-          currentYeoMax={yoeMax}
-          currentYeoMin={yoeMin}
-          type={MessageType.POST}
+      <div className="flex flex-col-reverse md:flex-row mt-8 gap-4 w-full h-full">
+        <Input
+          onChange={handleCompanyChange}
+          value={companyName}
+          placeholder="公司名稱"
         />
+        <Input
+          onChange={handleJobTitleChange}
+          value={jobTitle}
+          placeholder="職位/工作名稱"
+        />
+
+        <div className="flex flex-row justify-end gap-2">
+          <SearchPopover
+            countryList={countryList}
+            provinceList={provinceList}
+            cityList={cityList}
+            industryList={industryList}
+            provinceUuid={provinceUuid}
+            countryUuid={countryUuid}
+            onCityChange={handleCityChange}
+            onCountryChange={handleCountryChange}
+            onProvinceChange={handleProvinceChange}
+            onIndustryChange={handleIndustryChange}
+            onSortingChange={handleSortingChange}
+            onYeoMinChange={handleYoeMinChange}
+            onYeoMaxChange={handleYoeMaxChange}
+            currentSorting={sorting}
+            currentCityUuid={cityUuid}
+            currentCountryUuid={countryUuid}
+            currentIndustryUuid={industryUuid}
+            currentProvinceUuid={provinceUuid}
+            currentYeoMax={yoeMax}
+            currentYeoMin={yoeMin}
+            type={MessageType.POST}
+          />
+
+          <ResetButton onClick={handleReset} />
+        </div>
       </div>
 
       {!isLoading && !isFetching && list.length === 0 && (

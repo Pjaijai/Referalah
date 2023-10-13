@@ -10,6 +10,7 @@ import {
   Moon,
   MoreVertical,
   Pencil,
+  RotateCcw,
   SlidersHorizontal,
   SunMedium,
   Twitter,
@@ -35,6 +36,7 @@ export const Icons = {
   checkCircle: CheckCircle2,
   instagram: Instagram,
   github: Github,
+  rotateRight: RotateCcw,
   slidersHorizontal: SlidersHorizontal,
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
