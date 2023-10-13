@@ -34,8 +34,8 @@ const RefereePostPageTemplate: React.FunctionComponent<
     handleCityChange,
     handleSortingChange,
     handleIndustryChange,
-    handleYeoMinChange,
-    handleYeoMaxChange,
+    handleYoeMinChange,
+    handleYoeMaxChange,
     handleJobTitleChange,
     handleReset,
     companyName,
@@ -82,8 +82,8 @@ const RefereePostPageTemplate: React.FunctionComponent<
             onProvinceChange={handleProvinceChange}
             onIndustryChange={handleIndustryChange}
             onSortingChange={handleSortingChange}
-            onYeoMinChange={handleYeoMinChange}
-            onYeoMaxChange={handleYeoMaxChange}
+            onYeoMinChange={handleYoeMinChange}
+            onYeoMaxChange={handleYoeMaxChange}
             currentSorting={sorting}
             currentCityUuid={cityUuid}
             currentCountryUuid={countryUuid}

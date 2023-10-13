@@ -52,7 +52,7 @@ const useSearchPost = (type: ReferralType) => {
     setSorting(value)
   }
 
-  const handleYeoMinChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleYoeMinChange = (e: ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value
 
     // Parse the input value to an integer
@@ -68,7 +68,7 @@ const useSearchPost = (type: ReferralType) => {
     }
   }
 
-  const handleYeoMaxChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleYoeMaxChange = (e: ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value
 
     // Parse the input value to an integer
@@ -129,8 +129,8 @@ const useSearchPost = (type: ReferralType) => {
     handleCityChange,
     handleSortingChange,
     handleIndustryChange,
-    handleYeoMinChange,
-    handleYeoMaxChange,
+    handleYoeMinChange,
+    handleYoeMaxChange,
     handleJobTitleChange,
     handleReset,
     jobTitle,

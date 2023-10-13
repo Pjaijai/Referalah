@@ -33,8 +33,8 @@ const RefererPageTemplate: React.FunctionComponent<
     handleCityChange,
     handleSortingChange,
     handleIndustryChange,
-    handleYeoMinChange,
-    handleYeoMaxChange,
+    handleYoeMinChange,
+    handleYoeMaxChange,
     handleJobTitleChange,
     handleReset,
     jobTitle,
@@ -86,8 +86,8 @@ const RefererPageTemplate: React.FunctionComponent<
             onProvinceChange={handleProvinceChange}
             onIndustryChange={handleIndustryChange}
             onSortingChange={handleSortingChange}
-            onYeoMinChange={handleYeoMinChange}
-            onYeoMaxChange={handleYeoMaxChange}
+            onYeoMinChange={handleYoeMinChange}
+            onYeoMaxChange={handleYoeMaxChange}
             currentSorting={sorting}
             currentCityUuid={cityUuid}
             currentCountryUuid={countryUuid}
