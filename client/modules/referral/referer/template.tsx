@@ -1,5 +1,4 @@
-import React, { ChangeEvent, useMemo, useState } from "react"
-import { referralSortingOptions } from "@/utils/common/sorting/referer"
+import React from "react"
 
 import { IReferralResponse } from "@/types/api/response/referral"
 import { MessageType } from "@/types/common/message-type"
@@ -9,9 +8,10 @@ import useGetCityList from "@/hooks/api/location/get-city-list"
 import useGetCountryList from "@/hooks/api/location/get-country-list"
 import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useSearchReferral from "@/hooks/api/referral/search-referral"
-import useDebounce from "@/hooks/common/debounce"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
+import ResetButton from "@/components/customized-ui/buttons/reset"
 import ReferralCard from "@/components/customized-ui/cards/referral"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons /card-list"
@@ -20,140 +20,85 @@ interface IRefererPageTemplateProps {}
 const RefererPageTemplate: React.FunctionComponent<
   IRefererPageTemplateProps
 > = () => {
-  const [companyName, setCompanyName] = useState("")
-  const [provinceUuid, setProvinceUuid] = useState<undefined | string>()
-  const [countryUuid, setCountryUuid] = useState<undefined | string>()
-  const [cityUuid, setCityUuid] = useState<undefined | string>()
-  const [industryUuid, setIndustryUuid] = useState<undefined | string>()
-  const [yoeMin, setYoeMin] = useState<undefined | string>("0")
-  const [yoeMax, setYoeMax] = useState<undefined | string>("100")
-  const [sorting, setSorting] = useState(referralSortingOptions[0].value)
-  const debouncedCompanyName = useDebounce(companyName, 800)
-
-  const filterMeta = {
-    companyName: debouncedCompanyName,
-    cityUuid,
-    countryUuid,
-    industryUuid,
-    provinceUuid,
-    sorting,
-    yoeMin,
-    yoeMax,
-  }
-
-  const {
-    data: refererListData,
-    isLoading: isRefererListLoading,
-    error,
-    fetchNextPage,
-    isFetching,
-  } = useSearchReferral(sorting, filterMeta, ReferralType.REFERRER)
   const { data: industryList } = useGetIndustryList()
   const { data: cityList } = useGetCityList()
   const { data: countryList } = useGetCountryList()
   const { data: provinceList } = useGetProvinceList()
 
-  const handleCompanyChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setCompanyName(e.target.value)
-  }
+  const {
+    result,
+    handleCompanyChange,
+    handleCountryChange,
+    handleProvinceChange,
+    handleCityChange,
+    handleSortingChange,
+    handleIndustryChange,
+    handleYoeMinChange,
+    handleYoeMaxChange,
+    handleJobTitleChange,
+    handleReset,
+    jobTitle,
+    companyName,
+    provinceUuid,
+    cityUuid,
+    countryUuid,
+    industryUuid,
+    yoeMax,
+    yoeMin,
+    sorting,
+  } = useSearchReferral(ReferralType.REFERRER)
 
-  const handleCountryChange = (value: string) => {
-    setCountryUuid(value)
-  }
-  const handleProvinceChange = (value: string) => {
-    setProvinceUuid(value)
-  }
-  const handleCityChange = (value: string) => {
-    setCityUuid(value)
-  }
+  const {
+    data: refererListData,
+    isLoading: isRefererListLoading,
+    fetchNextPage,
+    isFetching,
+  } = result
 
-  const handleIndustryChange = (value: string) => {
-    setIndustryUuid(value)
-  }
-
-  const handleSortingChange = (value: string) => {
-    setSorting(value)
-  }
-
-  const handleYeoMinChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const rawValue = e.target.value
-
-    // Parse the input value to an integer
-    const integerValue = parseInt(rawValue)
-
-    // Check if the parsed value is a valid integer
-    if (!isNaN(integerValue) && integerValue >= 0) {
-      // If it's a non-negative integer, set the value as is
-      setYoeMin(integerValue.toString())
-    } else {
-      // If it's negative or not a valid integer, set it to '0'
-      setYoeMin("0")
-    }
-  }
-
-  const handleYeoMaxChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const rawValue = e.target.value
-
-    // Parse the input value to an integer
-    const integerValue = parseInt(rawValue)
-
-    // Check if the parsed value is a valid integer
-    if (!isNaN(integerValue) && integerValue >= 0) {
-      // If it's a non-negative integer, set the value as is
-      setYoeMax(integerValue.toString())
-    } else {
-      // If it's negative or not a valid integer, set it to '0'
-      setYoeMax("0")
-    }
-  }
-
-  // To hot fix duplication
-  // TODO : Double check from api, remove when it is not necessary
-  const list = useMemo(() => {
-    if (refererListData && refererListData.pages.length > 0) {
-      const uuidSet = new Set()
-      const list = refererListData?.pages.flatMap(
-        (d) => d
-      ) as IReferralResponse[]
-      const mappedList = list.map((data) => {
-        if (!uuidSet.has(data.uuid)) {
-          uuidSet.add(data.uuid)
-          return data
-        }
-      })
-      return mappedList.filter((d) => d !== undefined) as IReferralResponse[]
-    } else {
-      return []
-    }
-  }, [refererListData, refererListData?.pages])
+  const list = refererListData
+    ? (refererListData?.pages.flatMap((d) => d) as IReferralResponse[])
+    : []
 
   return (
     <>
-      <div className="flex flex-row mt-8 gap-4 w-full h-full">
-        <Input onChange={handleCompanyChange} placeholder="公司名稱" />
-        <SearchPopover
-          countryList={countryList}
-          provinceList={provinceList}
-          cityList={cityList}
-          industryList={industryList}
-          provinceUuid={provinceUuid}
-          countryUuid={countryUuid}
-          onCityChange={handleCityChange}
-          onCountryChange={handleCountryChange}
-          onProvinceChange={handleProvinceChange}
-          onIndustryChange={handleIndustryChange}
-          onSortingChange={handleSortingChange}
-          onYeoMinChange={handleYeoMinChange}
-          onYeoMaxChange={handleYeoMaxChange}
-          currentSorting={sorting}
-          currentCityUuid={cityUuid}
-          currentCountryUuid={countryUuid}
-          currentIndustryUuid={industryUuid}
-          currentProvinceUuid={provinceUuid}
-          currentYeoMax={yoeMax}
-          currentYeoMin={yoeMin}
-          type={MessageType.REFERRAL}
+      <div className="flex flex-col-reverse md:flex-row mt-8 gap-4 w-full h-full">
+        <Input
+          onChange={handleCompanyChange}
+          value={companyName}
+          placeholder="公司名稱"
         />
+        <Input
+          onChange={handleJobTitleChange}
+          value={jobTitle}
+          placeholder="職位/工作名稱"
+        />
+
+        <div className="flex flex-row justify-end gap-2">
+          <SearchPopover
+            countryList={countryList}
+            provinceList={provinceList}
+            cityList={cityList}
+            industryList={industryList}
+            provinceUuid={provinceUuid}
+            countryUuid={countryUuid}
+            onCityChange={handleCityChange}
+            onCountryChange={handleCountryChange}
+            onProvinceChange={handleProvinceChange}
+            onIndustryChange={handleIndustryChange}
+            onSortingChange={handleSortingChange}
+            onYeoMinChange={handleYoeMinChange}
+            onYeoMaxChange={handleYoeMaxChange}
+            currentSorting={sorting}
+            currentCityUuid={cityUuid}
+            currentCountryUuid={countryUuid}
+            currentIndustryUuid={industryUuid}
+            currentProvinceUuid={provinceUuid}
+            currentYeoMax={yoeMax}
+            currentYeoMin={yoeMin}
+            type={MessageType.REFERRAL}
+          />
+          <ResetButton onClick={handleReset} />
+        </div>
       </div>
       {!isRefererListLoading && !isFetching && list.length === 0 && (
         <div className="p-4 rounded-lg text-center mt-8 border-2">

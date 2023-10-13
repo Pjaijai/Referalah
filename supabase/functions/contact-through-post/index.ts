@@ -99,7 +99,7 @@ serve(async (req: any) => {
     }有興趣</p>
                 <p>職位: ${post.job_title}</p>
                 <p>公司名稱: ${post.company_name}</p>
-                <p>佢個電郵地址: ${sender.email}</p>
+                <p>佢個電郵地址: ${sender.email} (回覆此Email可以直接聯絡對方)</p>
                 <p>相關網站連結: <a href=${post.url}>${post.url}</p>
                 <p>佢個訊息</p>
                 <div style="word-break: break-word; white-space: pre-wrap;">
@@ -122,7 +122,8 @@ serve(async (req: any) => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "no-reply@referalah.com",
+        from: "Referalah <team@referalah.com>",
+        reply_to: sender.email,
         to: post.user.email,
         subject: subject,
         html: body,

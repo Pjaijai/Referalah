@@ -83,8 +83,8 @@ const apiService = {
       }
 
       return data
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
   searchReferral: async ({ pageParam = 0, queryKey }: any) => {
@@ -95,6 +95,7 @@ const apiService = {
       const cityUuid = queryKey[1].filterMeta.cityUuid
       const industryUuid = queryKey[1].filterMeta.industryUuid
       const companyName = queryKey[1].filterMeta.companyName
+      const jobTitle = queryKey[1].filterMeta.jobTitle
       const yoeMax = queryKey[1].filterMeta.yoeMax
       const yoeMin = queryKey[1].filterMeta.yoeMin
       const type = queryKey[1].type satisfies ReferralType
@@ -164,13 +165,17 @@ const apiService = {
         query = query.ilike("company_name", `%${companyName}%`)
       }
 
+      if (jobTitle.length > 0) {
+        query = query.ilike("job_title", `%${jobTitle}%`)
+      }
+
       const { data, error } = await query
 
       if (error) throw error
 
       return data
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
 
@@ -190,8 +195,8 @@ const apiService = {
         job_title: req.jobTitle.trim(),
         description: req.description.trim(),
       })
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
   searchPost: async ({ pageParam = 0, queryKey }: any) => {
@@ -203,6 +208,7 @@ const apiService = {
       const cityUuid = queryKey[1].filterMeta.cityUuid
       const industryUuid = queryKey[1].filterMeta.industryUuid
       const companyName = queryKey[1].filterMeta.companyName
+      const jobTitle = queryKey[1].filterMeta.jobTitle
       const sort = queryKey[1].sorting.split(",")
       const sortingType = sort[0]
       const order = sort[1] === "dec" ? false : true
@@ -239,7 +245,6 @@ const apiService = {
         )
         .eq("type", type)
         .eq("status", "active")
-        .ilike("company_name", `%${companyName}%`)
         .lte("year_of_experience", 100)
         .gte("year_of_experience", 0)
 
@@ -264,13 +269,21 @@ const apiService = {
       if (industryUuid !== undefined) {
         query = query.eq("industry_uuid", industryUuid)
       }
+
+      if (companyName.length > 0) {
+        query = query.ilike("company_name", `%${companyName}%`)
+      }
+
+      if (jobTitle.length > 0) {
+        query = query.ilike("job_title", `%${jobTitle}%`)
+      }
       const { data, error } = await query.order("id", { ascending: true })
 
       if (error) throw error
 
       return data
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
 
@@ -286,7 +299,7 @@ const apiService = {
       }
       return industryData as IIndustryResponse[]
     } catch (error) {
-      console.error(error)
+      throw error
     }
   },
 
@@ -303,7 +316,7 @@ const apiService = {
 
       return countryData as ICityResponse[]
     } catch (error) {
-      console.error(error)
+      throw error
     }
   },
 
@@ -319,8 +332,8 @@ const apiService = {
       }
 
       return provinceData
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
 
@@ -351,8 +364,8 @@ const apiService = {
       if (error) {
         throw error
       }
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
   contactThroughPost: async (req: IContactThroughPostRequest) => {
@@ -370,8 +383,8 @@ const apiService = {
       if (error) {
         throw error
       }
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
 
@@ -384,8 +397,8 @@ const apiService = {
 
       if (error) throw error
       return count
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
 }
