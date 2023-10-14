@@ -134,10 +134,11 @@ const RefererPostPageTemplate: React.FunctionComponent<
                   url={data.url}
                   yearOfExperience={data.year_of_experience}
                   uuid={data.uuid}
+                  createdBy={data.created_by}
                   key={data.uuid}
                   messageType={MessageType.POST}
                   postUuid={data.uuid}
-                  toUuid={data.uuid}
+                  toUuid={data.created_by}
                   receiverType={ReferralType.REFERRER}
                   createdAt={data.created_at.toString()}
                 />

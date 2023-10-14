@@ -16,12 +16,12 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import { Icons } from "@/components/icons"
 
+import CompanyNameDisplay from "../info-display/company"
 import IndustryDisplay from "../info-display/industry"
 import LocationDisplay from "../info-display/location"
 import PostHeader from "../info-display/post-header"
@@ -47,6 +47,7 @@ interface IReferralPostCardProps
   industry: string | null
   url: string | null
   createdAt?: string
+  createdBy: string
 }
 const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   jobTitle,
@@ -59,13 +60,13 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   province,
   url,
   username,
-  uuid,
   yearOfExperience,
   messageType,
   postUuid,
   receiverType,
   toUuid,
   createdAt,
+  createdBy,
 }) => {
   const [isContactFormOpen, setIsContactFormOpen] = useState(false)
   const [isAuthOpen, setIsAuthOpen] = useState(false)
@@ -92,46 +93,41 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
           <CardHeader className="w-full pb-2">
             {/* title, subtitle, url, avatar, quick action */}
             <div className="flex flex-row justify-between items-start">
-              {isReferrer ? (
+              <div className="flex items-center gap-3 mb-2">
+                {!isReferrer && (
+                  <TooltipWrapper
+                    tooltipTrigger={
+                      <Link
+                        href={`${siteConfig.page.profile.href}/${createdBy}`}
+                      >
+                        <BaseAvatar
+                          fallBack={username[0]}
+                          alt={username}
+                          url={photoUrl || undefined}
+                        />
+                      </Link>
+                    }
+                    tooltipContent={<span>查看用戶檔案</span>}
+                  />
+                )}
                 <PostHeader
                   title={jobTitle}
                   subtitle={
-                    <>
-                      <Icons.company width="13" />
-                      <span className="ml-1">{companyName}</span>
-                    </>
+                    companyName ? (
+                      <CompanyNameDisplay name={companyName} />
+                    ) : undefined
                   }
                   url={url}
                 />
-              ) : (
-                <div className="flex items-center gap-3 mb-2">
-                  <Link href={`${siteConfig.page.profile.href}/${uuid}`}>
-                    <BaseAvatar
-                      fallBack={username[0]}
-                      alt={username}
-                      url={photoUrl || undefined}
-                    />
-                  </Link>
-                  <PostHeader
-                    title={jobTitle}
-                    subtitle={
-                      <Link
-                        href={`${siteConfig.page.profile.href}/${uuid}`}
-                        className="mt-1"
-                      >
-                        <span>@{username}</span>
-                      </Link>
-                    }
-                    url={url}
-                  />
-                </div>
-              )}
+              </div>
               <div className="flex items-center">
                 {isReferrer && (
                   <div className="mr-2">
                     <TooltipWrapper
                       tooltipTrigger={
-                        <Link href={`${siteConfig.page.profile.href}/${uuid}`}>
+                        <Link
+                          href={`${siteConfig.page.profile.href}/${createdBy}`}
+                        >
                           <BaseAvatar
                             fallBack={username[0]}
                             alt={username}

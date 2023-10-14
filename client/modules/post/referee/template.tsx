@@ -138,9 +138,10 @@ const RefereePostPageTemplate: React.FunctionComponent<
                   key={data.uuid}
                   messageType={MessageType.POST}
                   postUuid={data.uuid}
-                  toUuid={data.uuid}
+                  toUuid={data.created_by}
                   receiverType={ReferralType.REFEREE}
                   createdAt={data.created_at.toString()}
+                  createdBy={data.created_by}
                 />
               )
             })}
