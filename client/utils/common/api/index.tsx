@@ -98,7 +98,7 @@ const apiService = {
       const jobTitle = queryKey[1].filterMeta.jobTitle
       const yoeMax = queryKey[1].filterMeta.yoeMax
       const yoeMin = queryKey[1].filterMeta.yoeMin
-      const type = queryKey[1].type satisfies ReferralType
+      const type: ReferralType = queryKey[1].type
 
       const sort = queryKey[1].sorting.split(",")
       const order = sort[1] === "dec" ? false : true
