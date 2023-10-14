@@ -9,7 +9,7 @@ const IndustryDisplay: React.FunctionComponent<
   PropsWithChildren<IIndustryDisplayProps>
 > = ({ industry }) => {
   return (
-    <div className="flex justify-start">
+    <div className="flex justify-start items-center">
       <Icons.industry width="18" />
       <span className="ml-1">{industry}</span>
     </div>
