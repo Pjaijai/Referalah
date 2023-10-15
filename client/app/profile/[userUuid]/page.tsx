@@ -8,9 +8,11 @@ import ViewProfileTemplate from "@/modules/profile/view/template"
 import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
 import { Icons } from "@/components/icons"
+import useUserStore from "@/hooks/state/user/store.tsx";
 
 const Page = ({ params }: { params: { userUuid: string } }) => {
   const { userUuid } = params
+  const loggedInUserUUid = useUserStore((state) => state.uuid)
   const [isEditMode, setIsEditMode] = useState(false)
   const { data: profile, isLoading } = useGetUserprofile(userUuid)
 
@@ -55,6 +57,7 @@ const Page = ({ params }: { params: { userUuid: string } }) => {
             isReferee={profile.is_referee}
             isReferer={profile.is_referer}
             setIsEditMode={setIsEditMode}
+            showEditButton={profile.uuid === loggedInUserUUid}
             slug={userUuid}
           />
         )}
