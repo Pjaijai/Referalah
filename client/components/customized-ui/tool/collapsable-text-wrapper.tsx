@@ -1,9 +1,9 @@
 import { useRef } from "react"
-import { ChevronDownIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import useTruncatedElement from "@/hooks/common/useTruncatedElement"
 import { Button, ButtonProps } from "@/components/ui/button"
+import { Icons } from "@/components/icons"
 
 interface ICollapsableTextWrapperProps {
   text: string
@@ -43,7 +43,7 @@ const CollapsableTextWrapper = ({
           {...expandButtonProps}
         >
           {isShowingMore ? "收起" : "展開"}
-          <ChevronDownIcon className="ml-1 h-4 w-4" />
+          <Icons.chevronDown className="ml-1 h-4 w-4" />
         </Button>
       )}
     </div>
