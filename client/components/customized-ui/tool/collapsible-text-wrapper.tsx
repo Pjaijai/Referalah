@@ -5,17 +5,17 @@ import useTruncatedElement from "@/hooks/common/useTruncatedElement"
 import { Button, ButtonProps } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 
-interface ICollapsableTextWrapperProps {
+interface ICollapsibleTextWrapperProps {
   text: string
   className?: string
   expandButtonProps?: ButtonProps
 }
 
-const CollapsableTextWrapper = ({
+const CollapsibleTextWrapper = ({
   text,
   className,
   expandButtonProps,
-}: ICollapsableTextWrapperProps) => {
+}: ICollapsibleTextWrapperProps) => {
   const ref = useRef(null)
   const { isTruncated, isShowingMore, toggleIsShowingMore } =
     useTruncatedElement({
@@ -50,4 +50,4 @@ const CollapsableTextWrapper = ({
   )
 }
 
-export default CollapsableTextWrapper
+export default CollapsibleTextWrapper
