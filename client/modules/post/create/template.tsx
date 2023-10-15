@@ -41,7 +41,7 @@ const CreatePostTemplate: React.FunctionComponent<
         message: "無效連結",
       })
       .optional()
-      .or(z.literal('')),
+      .or(z.literal("")),
     description: z
       .string()
       .max(3000, {
@@ -86,12 +86,22 @@ const CreatePostTemplate: React.FunctionComponent<
           message: "必須喺0到100之間，如果唔夠用請聯絡我🙇🏻‍♂️", // Specify the custom error message here
         }
       ),
-    companyName: z.string().min(1, {
-      message: `俾幫手填下🙏🏻`,
-    }),
-    jobTitle: z.string().min(1, {
-      message: `俾幫手填下🙏🏻`,
-    }),
+    companyName: z
+      .string()
+      .min(1, {
+        message: `俾幫手填下🙏🏻`,
+      })
+      .max(30, {
+        message: `俾盡30粒字，唔夠用請聯絡我🙏🏻`,
+      }),
+    jobTitle: z
+      .string()
+      .min(1, {
+        message: `俾幫手填下🙏🏻`,
+      })
+      .max(30, {
+        message: `俾盡30粒字，唔夠用請聯絡我🙏🏻`,
+      }),
   })
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
