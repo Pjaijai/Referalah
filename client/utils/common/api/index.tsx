@@ -315,7 +315,7 @@ const apiService = {
         throw countryError
       }
 
-      return countryData as ICityResponse[]
+      return countryData
     } catch (error) {
       throw error
     }

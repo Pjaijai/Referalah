@@ -1,0 +1,20 @@
+# https://supabase.com/docs/guides/api/rest/generating-types
+
+name: Update production database types
+on:
+  push:
+    branches: [main]
+    paths:
+      - "*.sql"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.head_ref != 'supabot**'
+    steps:
+      - uses: lyqht/generate-supabase-db-types-github-action@main
+        with:
+          SUPABASE_REF_ID: ${{ secrets.PRODUCTION_PROJECT_ID }}
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          DB_PASSWORD: ${{ secrets.PRODUCTION_DB_PASSWORD }}
+          OUTPUT_PATH: db.types.ts
