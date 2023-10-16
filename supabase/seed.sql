@@ -59,7 +59,7 @@ VALUES
   (14, 'dcf6fdcf-f124-45c6-9023-369ed01b9c1c', 'tourism_and_hospitality', 'Hospitality', '旅遊及款待業'),
   (15, '2e3a5bc6-84af-49e2-9d67-40c2220fe689', 'entertainment', 'Entertainment', '娛樂產業'),
   (16, '356ee0b6-34a4-402d-b01a-87bb5ad750e5', 'transport_and_logistics', 'Transport and Logistics', '運輸及物流業'),
-  (17, '61b2af45-18cd-474c-9096-230510e02e04', 'construction', 'Construction', '建筑業'),
+  (17, '61b2af45-18cd-474c-9096-230510e02e04', 'construction', 'Construction', '建築業'),
   (18, '52979570-24dc-408f-abfd-5b4b5aed9de1', 'advertising_and_marketing', 'Advertising and Marketing', '廣告及市場推廣業'),
   (19, '4bbe86ac-d8a7-4855-b585-64d25d331297', 'creative_industry', 'Creative Industry', '創意產業'),
   (20, '69f65821-9706-40ee-b7b7-cf837c30232f', 'design_industry', 'Design industry', '設計業'),
