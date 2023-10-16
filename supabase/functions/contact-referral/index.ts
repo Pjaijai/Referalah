@@ -5,7 +5,6 @@ import {corsHeaders, ENV_IS_LOCAL} from "../_shared/cors.ts"
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")
 
-
 serve(async (req: any) => {
   try {
     if (req.method === "OPTIONS") {
@@ -127,6 +126,7 @@ serve(async (req: any) => {
         to: ENV_IS_LOCAL ? Deno.env.get("RESEND_TO_EMAIL") : receiver.email,
         subject: subject,
         html: body,
+        cc: [sender.email],
       }),
     })
 
