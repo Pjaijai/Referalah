@@ -12,7 +12,6 @@ import useUserStore from "@/hooks/state/user/store";
 
 const Page = ({ params }: { params: { userUuid: string } }) => {
   const { userUuid } = params
-  const loggedInUserUUid = useUserStore((state) => state.uuid)
   const [isEditMode, setIsEditMode] = useState(false)
   const { data: profile, isLoading } = useGetUserprofile(userUuid)
 
@@ -57,7 +56,6 @@ const Page = ({ params }: { params: { userUuid: string } }) => {
             isReferee={profile.is_referee}
             isReferer={profile.is_referer}
             setIsEditMode={setIsEditMode}
-            showEditButton={profile.uuid === loggedInUserUUid}
             slug={userUuid}
           />
         )}
