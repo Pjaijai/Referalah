@@ -83,8 +83,8 @@ const apiService = {
       }
 
       return data
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
   searchReferral: async ({ pageParam = 0, queryKey }: any) => {
@@ -174,8 +174,8 @@ const apiService = {
       if (error) throw error
 
       return data
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
 
@@ -195,8 +195,8 @@ const apiService = {
         job_title: req.jobTitle.trim(),
         description: req.description.trim(),
       })
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
   searchPost: async ({ pageParam = 0, queryKey }: any) => {
@@ -282,8 +282,8 @@ const apiService = {
       if (error) throw error
 
       return data
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
 
@@ -299,7 +299,7 @@ const apiService = {
       }
       return industryData as IIndustryResponse[]
     } catch (error) {
-      console.error(error)
+      throw error
     }
   },
 
@@ -314,9 +314,9 @@ const apiService = {
         throw countryError
       }
 
-      return countryData as ICityResponse[]
+      return countryData
     } catch (error) {
-      console.error(error)
+      throw error
     }
   },
 
@@ -332,8 +332,8 @@ const apiService = {
       }
 
       return provinceData
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
 
@@ -364,8 +364,8 @@ const apiService = {
       if (error) {
         throw error
       }
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
   contactThroughPost: async (req: IContactThroughPostRequest) => {
@@ -383,8 +383,8 @@ const apiService = {
       if (error) {
         throw error
       }
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
 
@@ -397,8 +397,8 @@ const apiService = {
 
       if (error) throw error
       return count
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
 }
