@@ -71,7 +71,7 @@ create or replace trigger on_auth_user_created
 
 ### 7.Backend Migration
 
-For accurate infomation, please check supabase local dev doc here[https://supabase.com/docs/guides/cli/local-development]
+For accurate information, please check supabase local dev doc here[https://supabase.com/docs/guides/cli/local-development]
 
 # Method A (Github Actions)
 
