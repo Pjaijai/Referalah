@@ -32,7 +32,7 @@ interface IReferralCardProps
     "open" | "username" | "onContactFormClose"
   > {
   uuid: string | null
-  username: string
+  username: string | null
   photoUrl: string | null
   description: string | null
   companyName: string | null
