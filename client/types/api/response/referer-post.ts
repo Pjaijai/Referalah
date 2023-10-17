@@ -1,7 +1,7 @@
 export interface ISearchPostResponse {
   id: number
   created_at: Date
-  created_by: Date
+  created_by: string
   uuid: string | null
   user: {
     username: string

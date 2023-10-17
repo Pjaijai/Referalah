@@ -1,12 +1,27 @@
 import React from "react"
-import CardSkeleton from "@/components/customized-ui/skeletons /card"
 
-const CardSkeletonList = () => {
+import { cn } from "@/lib/utils"
+import CardSkeleton, {
+  CardSkeletonProps,
+} from "@/components/customized-ui/skeletons /card"
+
+interface CardSkeletonListProps {
+  className?: string
+  cardSkeletonProps?: CardSkeletonProps
+}
+
+const CardSkeletonList = ({
+  className,
+  cardSkeletonProps,
+}: CardSkeletonListProps) => {
   return (
-    <div className="flex flex-col mt-8 gap-4">
-      <CardSkeleton />
-      <CardSkeleton /> <CardSkeleton /> <CardSkeleton /> <CardSkeleton />
-      <CardSkeleton />
+    <div className={cn("grid grid-cols-1 gap-4 mt-8", className)}>
+      <CardSkeleton {...cardSkeletonProps} />
+      <CardSkeleton {...cardSkeletonProps} />
+      <CardSkeleton {...cardSkeletonProps} />
+      <CardSkeleton {...cardSkeletonProps} />
+      <CardSkeleton {...cardSkeletonProps} />
+      <CardSkeleton {...cardSkeletonProps} />
     </div>
   )
 }
