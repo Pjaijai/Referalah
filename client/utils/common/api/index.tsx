@@ -93,7 +93,7 @@ const apiService = {
     queryKey,
   }: any): Promise<IReferralResponse[]> => {
     try {
-      const NUMBER_OF_DATE_PER_FETCH = 1
+      const NUMBER_OF_DATE_PER_FETCH = 4
       const countryUuid = queryKey[1].filterMeta.countryUuid
       const provinceUuid = queryKey[1].filterMeta.provinceUuid
       const cityUuid = queryKey[1].filterMeta.cityUuid
@@ -106,7 +106,8 @@ const apiService = {
 
       const sort = queryKey[1].sorting.split(",")
       const order = sort[1] === "dec" ? false : true
-      const from = pageParam * NUMBER_OF_DATE_PER_FETCH
+
+      const from = pageParam + pageParam * NUMBER_OF_DATE_PER_FETCH
       const to = from + NUMBER_OF_DATE_PER_FETCH
 
       let query = supabase
