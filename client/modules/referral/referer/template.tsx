@@ -125,12 +125,12 @@ const RefererPageTemplate: React.FunctionComponent<
                   jobTitle={referer.job_title}
                   username={referer.username}
                   photoUrl={referer.avatar_url}
-                  province={referer.province.cantonese_name}
-                  country={referer.country.cantonese_name}
-                  city={referer.city.cantonese_name}
+                  province={referer.province && referer.province.cantonese_name}
+                  country={referer.country && referer.country.cantonese_name}
+                  city={referer.city && referer.city.cantonese_name}
                   companyName={referer.company_name}
                   description={referer.description}
-                  industry={referer.industry.cantonese_name}
+                  industry={referer.industry && referer.industry.cantonese_name}
                   socialMediaUrl={referer.social_media_url}
                   yearOfExperience={referer.year_of_experience}
                   uuid={referer.uuid}
