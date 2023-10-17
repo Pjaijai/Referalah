@@ -25,14 +25,14 @@ const PostHeader: React.FunctionComponent<
           <TooltipWrapper
             tooltipTrigger={
               <Link href={url} target="_blank">
-                <Icons.link className="h-4 w-4 m-2" />
+                <Icons.link className="m-2 h-4 w-4" />
               </Link>
             }
             tooltipContent={<span>相關連結</span>}
           />
         )}
       </CardTitle>
-      <div className="flex justify-start items-center text-sm text-muted-foreground">
+      <div className="flex items-center justify-start text-sm text-muted-foreground">
         {subtitle}
       </div>
     </div>

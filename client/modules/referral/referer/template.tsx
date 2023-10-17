@@ -60,7 +60,7 @@ const RefererPageTemplate: React.FunctionComponent<
 
   return (
     <>
-      <div className="flex flex-col-reverse md:flex-row mt-8 gap-4 w-full h-full">
+      <div className="mt-8 flex h-full w-full flex-col-reverse gap-4 md:flex-row">
         <Input
           onChange={handleCompanyChange}
           value={companyName}
@@ -100,13 +100,13 @@ const RefererPageTemplate: React.FunctionComponent<
         </div>
       </div>
       {!isRefererListLoading && !isFetching && list.length === 0 && (
-        <div className="p-4 rounded-lg text-center mt-8 border-2">
+        <div className="mt-8 rounded-lg border-2 p-4 text-center">
           冇資料🥲不如成為推薦人？
         </div>
       )}
 
       {isRefererListLoading && (
-        <CardSkeletonList className="lg:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1" />
+        <CardSkeletonList className="xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" />
       )}
 
       {!isRefererListLoading && list.length > 0 && (
@@ -121,7 +121,7 @@ const RefererPageTemplate: React.FunctionComponent<
             true
           }
         >
-          <div className="grid lg:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-6 w-full overflow-hidden mt-8">
+          <div className="xs:grid-cols-1 mt-8 grid w-full gap-6 overflow-hidden sm:grid-cols-2 lg:grid-cols-3">
             {list.map((referer) => {
               return (
                 <ReferralCard

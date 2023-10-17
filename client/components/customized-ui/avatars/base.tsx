@@ -19,7 +19,7 @@ const BaseAvatar: React.FunctionComponent<IBaseAvatar> = ({
 }) => {
   return (
     <Avatar
-      className={cn(size === "large" ? "w-24 h-24 text-2xl" : "", className)}
+      className={cn(size === "large" ? "h-24 w-24 text-2xl" : "", className)}
     >
       <AvatarImage src={url ? url : ""} alt={alt ? alt : ""} />
       <AvatarFallback>{fallBack}</AvatarFallback>

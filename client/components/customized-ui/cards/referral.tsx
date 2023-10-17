@@ -86,11 +86,11 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
 
   return (
     <>
-      <Card className="p-2 rounded shadow-md flex flex-col justify-between">
+      <Card className="flex flex-col justify-between rounded p-2 shadow-md">
         {/* avatar, username , title, company, desc, url */}
-        <CardHeader className="flex flex-col items-center justify-center space-y-0 pb-0 relative">
+        <CardHeader className="relative flex flex-col items-center justify-center space-y-0 pb-0">
           {socialMediaUrl && (
-            <div className="absolute top-3 right-3">
+            <div className="absolute right-3 top-3">
               <TooltipWrapper
                 tooltipTrigger={
                   <Button variant="link" size="icon" onClick={handleUrlClick}>
@@ -110,13 +110,13 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
             />
           </Link>
           <Link href={`${siteConfig.page.profile.href}/${uuid}`}>
-            <p className="text-xs pt-5">@{username}</p>
+            <p className="pt-5 text-xs">@{username}</p>
           </Link>
           <p className="text-lg font-semibold">{jobTitle}</p>
           {receiverType === ReferralType.REFERRER && companyName && (
             <CompanyNameDisplay name={companyName} />
           )}
-          <p className="pt-6 text-sm line-clamp-4">{description}</p>
+          <p className="line-clamp-4 pt-6 text-sm">{description}</p>
         </CardHeader>
 
         {/* location, industry, year of exp */}
@@ -137,7 +137,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
           </CardDescription>
 
           {/* quick actions  */}
-          <CardFooter className="p-0 pt-7 flex-col">
+          <CardFooter className="flex-col p-0 pt-7">
             <Button className="w-full" onClick={handleContactClick}>
               <Icons.mail className="mr-1 h-4 w-4" />
               聯絡我
@@ -145,7 +145,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
 
             <Button
               variant="outline"
-              className="w-full mt-2"
+              className="mt-2 w-full"
               onClick={handleProfileClick}
             >
               查看用戶檔案

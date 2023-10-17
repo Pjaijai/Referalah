@@ -61,7 +61,7 @@ const UserDropDownMenu = () => {
             <DropdownMenuItem>
               <Link
                 href={n.href}
-                className="flex items-center justify-center  space-x-2 w-full"
+                className="flex w-full items-center  justify-center space-x-2"
               >
                 {n.title}
               </Link>
@@ -70,7 +70,7 @@ const UserDropDownMenu = () => {
         })}
 
         <DropdownMenuItem
-          className="flex justify-center cursor-pointer"
+          className="flex cursor-pointer justify-center"
           onClick={handleSignOut}
         >
           登出

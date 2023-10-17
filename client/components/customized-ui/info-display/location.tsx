@@ -12,7 +12,7 @@ const LocationDisplay: React.FunctionComponent<
   PropsWithChildren<ILocationDisplayProps>
 > = ({ city, province, country }) => {
   return (
-    <div className="flex justify-start items-center">
+    <div className="flex items-center justify-start">
       <Icons.location width="18" />
       <span className="ml-1">{formatLocation(city, province, country)}</span>
     </div>

@@ -9,7 +9,7 @@ const YearsOfExperienceDisplay: React.FunctionComponent<
   PropsWithChildren<IYearsOfExperienceDisplayProps>
 > = ({ yearOfExperience }) => {
   return (
-    <div className="flex justify-start items-center">
+    <div className="flex items-center justify-start">
       <Icons.yearsOfExperience width="18" />
       <span className="ml-1">{yearOfExperience}年經驗</span>
     </div>

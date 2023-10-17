@@ -27,7 +27,7 @@ const CollapsibleTextWrapper = ({
       <p
         ref={ref}
         className={cn(
-          `break-words text-xl whitespace-pre-wrap ${
+          `whitespace-pre-wrap break-words text-xl ${
             !isShowingMore && "line-clamp-4"
           }`,
           className

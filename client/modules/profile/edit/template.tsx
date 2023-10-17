@@ -330,7 +330,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   }
 
   return (
-    <div className="w-full h-full flex flex-col mt-28 p-4">
+    <div className="mt-28 flex h-full w-full flex-col p-4">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -376,7 +376,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             description="食到JPG，JPEG，PNG，最多1MB。"
           />
 
-          <div className="flex   flex-col sm:flex-row gap-4 w-full justify-center items-center mt-4">
+          <div className="mt-4   flex w-full flex-col items-center justify-center gap-4 sm:flex-row">
             <div className="w-full">
               <FormCheckBox
                 control={form.control}
