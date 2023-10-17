@@ -8,6 +8,6 @@ Welcome to Referalah! Referalah is a platform that connects people, facilitating
 
 ## Developer | IT 人
 
-Please check DEVELOPER.md
+Please check [DEVELOPER.md](DEVELOPER.md)
 
-詳情請睇 DEVELOPER.md
+詳情請睇 [DEVELOPER.md](DEVELOPER.md)
