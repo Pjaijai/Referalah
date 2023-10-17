@@ -56,8 +56,8 @@ create or replace trigger on_auth_user_created
 1.  Open your terminal.
 2.  Navigate to the 'client' directory using the `cd client` command.
 3.  Run the development server using `yarn dev`.
-4.  Clone `.env.template` and rename it to `.env`
-5.  Find Supabase URL and anon key from Project Setting > API and configure `.env`
+4.  Clone `.env.template` and rename it to `.env`.
+5.  Find Supabase URL and anon key from Project Setting > API and configure `.env`.
 
 ### 6.Backend (local)
 
@@ -67,7 +67,7 @@ create or replace trigger on_auth_user_created
 4. Connect Supabase database to your favourite database IDE/or using supabase local[http://localhost:54323/project/default]. Run [SQL Script](#to-solve-user-data-cannot-be-inserted-after-registration) to insert user data upon registration.
 5. Create a [Resend](https://resend.com) account for email sending. Link it to your Supabase project and get an API key.
 6. configure your `.env.local`, add your `RESEND_API_KEY` from Resend and use your Resend email account as `RESEND_TO_EMAIL`.
-7. To start local edge function, create a `.env.local` at the root of supabase folder. Run command `supabase functions serve --env-file ./supabase/.env.local`
+7. To start local edge function, create a `.env.local` at the root of supabase folder. Run command `supabase functions serve --env-file ./supabase/.env.local`.
 
 ### 7.Backend Migration
 
@@ -75,19 +75,19 @@ For accurate information, please check supabase local dev doc here[https://supab
 
 # Method A (Github Actions)
 
-1. Create a [new Supabase project](https://supabase.com/dashboard/projects)
-2. Go Github > repo > setting > secrets and variables > Actions > adding required variables (Check `production.yml` and `staging.yml`)
+1. Create two[new Supabase project](https://supabase.com/dashboard/projects). One for staging and one for production.
+2. Go Github > repo > setting > secrets and variables > Actions > adding required variables (Check `production.yml` and `staging.yml`).
 3. When you push and changes, github actions should run to migrate files and deploy edge function automatically.
 4. Create a bucket called `user_assets` in `Storage`. It seems like cannot be done through migration ? Need to do manually.
 
 # Method B (Commands)
 
-1. Create a [new Supabase project](https://supabase.com/dashboard/projects)
+1. Create a [new Supabase project](https://supabase.com/dashboard/projects).
 2. Run `supabase login` which your `personal access token` from supabase.
-3. Run `supabase link --project-ref [your-supabase-project-id]`
-4. Run `supabase db push` to run migrations on your supabase project
-5. Clone `.env.template` from `supabase/` and rename it to `.env.local`
-6. Every time you make changes to Supabase functions, run `supabase functions deploy --project-ref [your-supabase-project-id]`
+3. Run `supabase link --project-ref [your-supabase-project-id]`.
+4. Run `supabase db push` to run migrations on your supabase project.
+5. Clone `.env.template` from `supabase/` and rename it to `.env.local`.
+6. Every time you make changes to Supabase functions, run `supabase functions deploy --project-ref [your-supabase-project-id]`.
 
 ### Creating branch
 
