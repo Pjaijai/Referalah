@@ -2,8 +2,9 @@
 
 import React from "react"
 import { NextPage } from "next"
-import SearchPageLayout from "@/components/layouts/search-page"
 import RefererPageTemplate from "@/modules/referral/referer/template"
+
+import SearchPageLayout from "@/components/layouts/search-page"
 
 const RefererPage: NextPage = () => {
   return (

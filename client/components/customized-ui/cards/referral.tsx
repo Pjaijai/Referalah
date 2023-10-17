@@ -19,12 +19,12 @@ import {
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
-import { Icons } from "@/components/icons"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import IndustryDisplay from "@/components/customized-ui/info-display/industry"
 import LocationDisplay from "@/components/customized-ui/info-display/location"
 import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
 import TooltipWrapper from "@/components/customized-ui/tool/tooltip-wrapper"
+import { Icons } from "@/components/icons"
 
 interface IReferralCardProps
   extends Omit<

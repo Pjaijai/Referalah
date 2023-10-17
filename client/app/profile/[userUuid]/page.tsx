@@ -7,8 +7,8 @@ import ViewProfileTemplate from "@/modules/profile/view/template"
 
 import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
+import useUserStore from "@/hooks/state/user/store"
 import { Icons } from "@/components/icons"
-import useUserStore from "@/hooks/state/user/store";
 
 const Page = ({ params }: { params: { userUuid: string } }) => {
   const { userUuid } = params
