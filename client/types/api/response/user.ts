@@ -11,20 +11,20 @@ export interface IUserResponse {
   year_of_experience: number | null
   country: {
     uuid: string
-    cantonese_name: string| null
+    cantonese_name: string | null
   } | null
   province: {
     uuid: string
-    cantonese_name: string| null
-  }| null
+    cantonese_name: string | null
+  } | null
   city: {
     uuid: string
-    cantonese_name: string| null
-  }| null
+    cantonese_name: string | null
+  } | null
   industry: {
     uuid: string
     cantonese_name: string | null
-  }| null
+  } | null
   // resume_url: string | null
   social_media_url: string | null
   is_referer: boolean

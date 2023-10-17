@@ -103,7 +103,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
           )}
           <Link href={`${siteConfig.page.profile.href}/${uuid}`}>
             <BaseAvatar
-              fallBack={username? username[0] :'?'}
+              fallBack={username ? username[0] : "?"}
               alt={username}
               url={photoUrl || undefined}
               size="large"
@@ -156,7 +156,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
 
       <ContactDialog
         open={isContactFormOpen}
-        username={username? username[0] :'?'}
+        username={username ? username[0] : "?"}
         onContactFormClose={() => setIsContactFormOpen(false)}
         toUuid={toUuid}
         messageType={messageType}
