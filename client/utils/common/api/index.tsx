@@ -93,7 +93,7 @@ const apiService = {
     queryKey,
   }: any): Promise<IReferralResponse[]> => {
     try {
-      const NUMBER_OF_DATE_PER_FETCH = 3
+      const NUMBER_OF_DATE_PER_FETCH = 5
       const countryUuid = queryKey[1].filterMeta.countryUuid
       const provinceUuid = queryKey[1].filterMeta.provinceUuid
       const cityUuid = queryKey[1].filterMeta.cityUuid
@@ -209,7 +209,7 @@ const apiService = {
   },
   searchPost: async ({ pageParam = 0, queryKey }: any) => {
     try {
-      const NUMBER_OF_DATE_PER_FETCH = 3
+      const NUMBER_OF_DATE_PER_FETCH = 5
       const type = queryKey[1].type as ReferralType
       const countryUuid = queryKey[1].filterMeta.countryUuid
       const provinceUuid = queryKey[1].filterMeta.provinceUuid
@@ -221,7 +221,7 @@ const apiService = {
       const sortingType = sort[0]
       const order = sort[1] === "dec" ? false : true
       const from = pageParam + pageParam * NUMBER_OF_DATE_PER_FETCH
-      const to = from + NUMBER_OF_DATE_PER_FETCH - 1
+      const to = from + NUMBER_OF_DATE_PER_FETCH
 
       let query = supabase
         .from("post")
