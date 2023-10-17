@@ -10,11 +10,10 @@ import useGetCityList from "@/hooks/api/location/get-city-list"
 import useGetCountryList from "@/hooks/api/location/get-country-list"
 import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useSearchPost from "@/hooks/api/post/search-post"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import ResetButton from "@/components/customized-ui/buttons/reset"
-import ReferralCard from "@/components/customized-ui/cards/referral"
+import ReferralPostCard from "@/components/customized-ui/cards/referral-post"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons /card-list"
 
@@ -104,7 +103,9 @@ const RefererPostPageTemplate: React.FunctionComponent<
         </div>
       )}
 
-      {isLoading && isFetching && <CardSkeletonList />}
+      {isLoading && isFetching && (
+        <CardSkeletonList className="lg:grid-cols-2 xs:grid-cols-1" />
+      )}
 
       {!isLoading && list.length > 0 && (
         <BaseInfiniteScroll
@@ -117,10 +118,10 @@ const RefererPostPageTemplate: React.FunctionComponent<
             true
           }
         >
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4  w-full overflow-hidden mt-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full overflow-hidden mt-8">
             {list.map((data) => {
               return (
-                <ReferralCard
+                <ReferralPostCard
                   jobTitle={data.job_title}
                   username={data.user.username}
                   photoUrl={data.user.avatar_url}
@@ -130,13 +131,14 @@ const RefererPostPageTemplate: React.FunctionComponent<
                   industry={data.industry.cantonese_name}
                   companyName={data.company_name}
                   description={data.description}
-                  socialMediaUrl={data.url}
+                  url={data.url}
                   yearOfExperience={data.year_of_experience}
                   uuid={data.uuid}
+                  createdBy={data.created_by}
                   key={data.uuid}
                   messageType={MessageType.POST}
                   postUuid={data.uuid}
-                  toUuid={data.uuid}
+                  toUuid={data.created_by}
                   receiverType={ReferralType.REFERRER}
                   createdAt={data.created_at.toString()}
                 />

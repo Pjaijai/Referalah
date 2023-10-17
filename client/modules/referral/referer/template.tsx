@@ -8,7 +8,6 @@ import useGetCityList from "@/hooks/api/location/get-city-list"
 import useGetCountryList from "@/hooks/api/location/get-country-list"
 import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useSearchReferral from "@/hooks/api/referral/search-referral"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import ResetButton from "@/components/customized-ui/buttons/reset"
@@ -106,7 +105,9 @@ const RefererPageTemplate: React.FunctionComponent<
         </div>
       )}
 
-      {isRefererListLoading && <CardSkeletonList />}
+      {isRefererListLoading && (
+        <CardSkeletonList className="lg:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1" />
+      )}
 
       {!isRefererListLoading && list.length > 0 && (
         <BaseInfiniteScroll
@@ -120,7 +121,7 @@ const RefererPageTemplate: React.FunctionComponent<
             true
           }
         >
-          <div className="grid grid-cols-1 gap-4  w-full overflow-hidden mt-8">
+          <div className="grid lg:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-6 w-full overflow-hidden mt-8">
             {list.map((referer) => {
               return (
                 <ReferralCard

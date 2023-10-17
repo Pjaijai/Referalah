@@ -1,20 +1,21 @@
 import "@/styles/globals.css"
 import { Metadata } from "next"
+import { cookies } from "next/headers"
+import { supabase as supabaseClient } from "@/utils/services/supabase/config"
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { Analytics } from "@vercel/analytics/react"
+
+import { siteConfig } from "@/config/site"
+import { fontSans } from "@/lib/fonts"
+import { cn } from "@/lib/utils"
 import NavFooter from "@/components/customized-ui/footer/nav"
+import GoogleAnalytics from "@/components/google-analytics"
 import APIProvider from "@/components/providers/api"
 import AuthProvider from "@/components/providers/auth"
+import ToastProvider from "@/components/providers/toast"
 import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
-import { siteConfig } from "@/config/site"
-import { Analytics } from '@vercel/analytics/react';
-import { fontSans } from "@/lib/fonts"
-import { cn } from "@/lib/utils"
-import GoogleAnalytics from "@/components/google-analytics"
-import ToastProvider from "@/components/providers/toast"
-import { supabase as supabaseClient} from "@/utils/services/supabase/config"
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
 
 export const metadata: Metadata = {
   title: {
@@ -38,17 +39,16 @@ interface RootLayoutProps {
 }
 
 // do not cache this layout
-export const revalidate = 0;
-
+export const revalidate = 0
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-  const supabase = createServerComponentClient({ cookies });
+  const supabase = createServerComponentClient({ cookies })
 
   const {
     data: { session },
-  } = await supabase.auth.getSession();
+  } = await supabase.auth.getSession()
 
-  const accessToken = session?.access_token || null;
+  const accessToken = session?.access_token || null
 
   return (
     <>
@@ -65,13 +65,13 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             <APIProvider>
               <AuthProvider accessToken={accessToken}>
                 <ToastProvider>
-                <div className="flex min-h-screen flex-col">
-                  <SiteHeader />
-                  <div className="container flex-grow">{children}</div>
-                  <NavFooter />
-                </div>
-                <Analytics />
-                <TailwindIndicator />
+                  <div className="flex min-h-screen flex-col">
+                    <SiteHeader />
+                    <div className="container flex-grow">{children}</div>
+                    <NavFooter />
+                  </div>
+                  <Analytics />
+                  <TailwindIndicator />
                 </ToastProvider>
               </AuthProvider>
             </APIProvider>

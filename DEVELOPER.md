@@ -8,7 +8,7 @@ Frontend : Next.js 13, Zustand, React-Hook-Form, Tanstack Query, Shadcn(Radix + 
 Backend: Supabase , SQL  
 Infra : Vercel, Supabase  
 Email service: Resend  
-Analytic : GA, Vercel Analytic  
+Analytic : GA, Vercel Analytic
 
 ## Current Table Structure
 
@@ -68,7 +68,7 @@ create or replace trigger on_auth_user_created
 5. Run `supabase link --project-ref [your-supabase-project-id]`
 6. Run `supabase db push` to run migrations on your supabase project
 7. Import [csv files](https://drive.google.com/drive/folders/14Q5xqmHU9w1v7Zv9HlxL3qr--Cw_4z7b?usp=drive_link) into your Supabase project for `city`, `country`, `industry` and `province` tables
-8. Connect Supabase database to your favourite database IDE. Run [SQL Script](#to-solve-user-data-cannot-be-inserted-after-registration) to insert user data upon registration 
+8. Connect Supabase database to your favourite database IDE. Run [SQL Script](#to-solve-user-data-cannot-be-inserted-after-registration) to insert user data upon registration
 9. Clone `.env.template` from `supabase/` and rename it to `.env`
 10. Create a [Resend](https://resend.com) account for email sending. Link it to your Supabase project and get an API key.
 11. Configure your `.env`, add your `RESEND_API_KEY` from Resend and use your Resend email account as `RESEND_TO_EMAIL`.
