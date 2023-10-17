@@ -84,6 +84,7 @@ Naming your branch with category. For example `feature/i-go-to-school-by-bus`. P
 | bugfix        |                           for fixing a bug                           |
 | feature       |             for adding, removing or modifying a feature              |
 | doc           |                               document                               |
+| refactor      |                             refactoring                              |
 
 ### Creating Pull Request
 
@@ -95,5 +96,6 @@ Naming your PR with category. For example `Feature/I Go To School By Bus`
 | BugFix        |                           for fixing a bug                           |
 | Feature       |             for adding, removing or modifying a feature              |
 | Doc           |                               document                               |
+| refactor      |                             refactoring                              |
 
 Now you have both the frontend and backend of Referalah up and running locally, allowing you to work on and test your changes effectively. Happy coding!

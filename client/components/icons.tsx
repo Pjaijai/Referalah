@@ -4,6 +4,7 @@ import {
   CalendarClock,
   CheckCircle2,
   ChevronDown,
+  ChevronDownIcon,
   Github,
   Instagram,
   Link,
@@ -20,7 +21,6 @@ import {
   Twitter,
   Undo2,
   User,
-  ChevronDownIcon,
   type Icon as LucideIcon,
 } from "lucide-react"
 

@@ -85,7 +85,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           message: "無效連結",
         })
         .optional()
-        .or(z.literal('')),
+        .or(z.literal("")),
       description: conditionalValidation(3000).optional(),
       countryUuid: z.string().min(1, {
         message: `俾幫手填下🙏🏻`,

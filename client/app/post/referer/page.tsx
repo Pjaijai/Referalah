@@ -1,6 +1,7 @@
 import React from "react"
-import SearchPageLayout from "@/components/layouts/search-page"
 import RefererPostPageTemplate from "@/modules/post/referer/template"
+
+import SearchPageLayout from "@/components/layouts/search-page"
 
 const RefererPostPage = () => {
   return (

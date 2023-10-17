@@ -1,4 +1,3 @@
-
 import compareDateDifferenceHelper from "@/utils/common/helpers/time/compareDateDifference"
 
 export const formatCreatedAt = (createdAt?: string) => {
