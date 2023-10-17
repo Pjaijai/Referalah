@@ -1,9 +1,14 @@
-import { Checkbox } from "@/components/ui/checkbox"
-import { FormField, FormItem, FormControl, FormLabel, FormDescription } from "@/components/ui/form"
-
 import React from "react"
-
 import { Control } from "react-hook-form"
+
+import { Checkbox } from "@/components/ui/checkbox"
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form"
 
 interface ICheckBoxProps {
   control: Control<any>

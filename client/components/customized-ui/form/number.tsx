@@ -1,7 +1,15 @@
-import { IFormTextInputProps } from "@/components/customized-ui/form/input"
-import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import React from "react"
+
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { IFormTextInputProps } from "@/components/customized-ui/form/input"
 
 export interface IFormNumberInputProps extends IFormTextInputProps {}
 

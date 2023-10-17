@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+
 import { Separator } from "@/components/ui/separator"
 
 const AboutPage = () => {
@@ -44,7 +45,7 @@ const AboutPage = () => {
         過程唔會收錢，希望呢個平台幫到大家！
       </h2>
       <h2 className="text-center text-sm font-bold mt-8">
-       Btw 聯絡me : r1r69.referalah@gmail.com
+        Btw 聯絡me : r1r69.referalah@gmail.com
       </h2>
     </div>
   )
