@@ -1,7 +1,7 @@
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
 
 import { initSupabaseClient } from "../_shared/client.ts"
-import {corsHeaders, ENV_IS_LOCAL} from "../_shared/cors.ts"
+import { corsHeaders, ENV_IS_LOCAL } from "../_shared/cors.ts"
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")
 
@@ -121,7 +121,9 @@ serve(async (req: any) => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: ENV_IS_LOCAL ? 'onboarding@resend.dev' : "Referalah <team@referalah.com>",
+        from: ENV_IS_LOCAL
+          ? "onboarding@resend.dev"
+          : "Referalah <team@referalah.com>",
         reply_to: sender.email,
         to: ENV_IS_LOCAL ? Deno.env.get("RESEND_TO_EMAIL") : receiver.email,
         subject: subject,

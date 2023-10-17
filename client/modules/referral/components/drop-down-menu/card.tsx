@@ -1,6 +1,5 @@
 import React from "react"
 import Link from "next/link"
-import ContactDialog from "@/modules/referral/components/dialog/contact"
 
 import {
   DropdownMenu,

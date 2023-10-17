@@ -1,4 +1,7 @@
 import {
+  Briefcase,
+  Building2,
+  CalendarClock,
   CheckCircle2,
   ChevronDown,
   Github,
@@ -7,6 +10,7 @@ import {
   Loader,
   LucideProps,
   Mail,
+  MapPin,
   Moon,
   MoreVertical,
   Pencil,
@@ -16,6 +20,7 @@ import {
   Twitter,
   Undo2,
   User,
+  ChevronDownIcon,
   type Icon as LucideIcon,
 } from "lucide-react"
 
@@ -66,9 +71,14 @@ export const Icons = {
       stroke-linecap="round"
       stroke-linejoin="round"
       className="lucide lucide-send"
+      {...props}
     >
       <path d="m22 2-7 20-4-9-9-4Z" />
       <path d="M22 2 11 13" />
     </svg>
   ),
+  industry: Briefcase,
+  location: MapPin,
+  company: Building2,
+  yearsOfExperience: CalendarClock,
 }

@@ -220,6 +220,7 @@ const apiService = {
         .select(
           `   uuid,
               created_at,
+              created_by,
               url,
               description,
               company_name,
