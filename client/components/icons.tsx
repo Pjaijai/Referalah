@@ -21,7 +21,6 @@ import {
   Twitter,
   Undo2,
   User,
-  ChevronDownIcon,
   type Icon as LucideIcon,
 } from "lucide-react"
 
