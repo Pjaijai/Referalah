@@ -83,7 +83,7 @@ For accurate information, please check supabase local dev doc here[https://supab
 # Method B (Commands)
 
 1. Create a [new Supabase project](https://supabase.com/dashboard/projects).
-2. Run `supabase login` which your `personal access token` from supabase.
+2. Run `supabase login` with your `personal access token` from supabase.
 3. Run `supabase link --project-ref [your-supabase-project-id]`.
 4. Run `supabase db push` to run migrations on your supabase project.
 5. Clone `.env.template` from `supabase/` and rename it to `.env.local`.
