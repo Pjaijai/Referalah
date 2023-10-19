@@ -126,12 +126,12 @@ const RefereePageTemplate: React.FunctionComponent<
                   jobTitle={referee.job_title}
                   username={referee.username}
                   photoUrl={referee.avatar_url}
-                  province={referee.province.cantonese_name}
-                  country={referee.country.cantonese_name}
-                  city={referee.city.cantonese_name}
+                  province={referee.province && referee.province.cantonese_name}
+                  country={referee.country && referee.country.cantonese_name}
+                  city={referee.city && referee.city.cantonese_name}
                   companyName={referee.company_name}
                   description={referee.description}
-                  industry={referee.industry.cantonese_name}
+                  industry={referee.industry && referee.industry.cantonese_name}
                   socialMediaUrl={referee.social_media_url}
                   yearOfExperience={referee.year_of_experience}
                   uuid={referee.uuid}

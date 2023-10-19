@@ -2,7 +2,6 @@
 
 import React from "react"
 
-import { ISearchPostResponse } from "@/types/api/response/referer-post"
 import { MessageType } from "@/types/common/message-type"
 import { ReferralType } from "@/types/common/referral-type"
 import useGetIndustryList from "@/hooks/api/industry/get-Industry-list"
@@ -51,9 +50,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
 
   const { data, fetchNextPage, isLoading, isFetching } = result
 
-  const list = data
-    ? (data?.pages.flatMap((d) => d) as ISearchPostResponse[])
-    : []
+  const list = data ? data?.pages.flatMap((d) => d) : []
 
   return (
     <>
