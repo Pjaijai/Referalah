@@ -234,7 +234,7 @@ const CreatePostTemplate: React.FunctionComponent<
   }
 
   return (
-    <div className="w-full h-full flex flex-col mt-28 p-4">
+    <div className="mt-28 flex h-full w-full flex-col p-4">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

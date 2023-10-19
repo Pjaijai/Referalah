@@ -17,10 +17,10 @@ export function SiteHeader() {
   const router = useRouter()
 
   return (
-    <header className="bg-background sticky top-0 z-40 w-full border-b">
-      <div className="container flex h-16 items-center space-x-4 justify-between sm:space-x-0">
+    <header className="sticky top-0 z-40 w-full border-b bg-background">
+      <div className="container flex h-16 items-center justify-between space-x-4 sm:space-x-0">
         <MainNav />
-        <div className="hidden md:flex justify-center">
+        <div className="hidden justify-center md:flex">
           <BaseNavigationMenu />
         </div>
 

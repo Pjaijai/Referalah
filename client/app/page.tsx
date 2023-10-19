@@ -16,7 +16,7 @@ export default function IndexPage() {
   return (
     <>
       <div></div>
-      <div className="flex md:hidden justify-center mt-4">
+      <div className="mt-4 flex justify-center md:hidden">
         <BaseNavigationMenu />
       </div>
       <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
@@ -56,10 +56,10 @@ export default function IndexPage() {
               登入/註冊
             </Link>
           )}
-          <h2 className="text-end text-sm mt-4 border-b-2 border-green-700 dark:border-yellow-300">
+          <h2 className="mt-4 border-b-2 border-green-700 text-end text-sm dark:border-yellow-300">
             <span
-              className="text-green-700
-] dark:text-yellow-300  font-bold"
+              className="]
+font-bold text-green-700  dark:text-yellow-300"
             >
               {data || "0"}
             </span>

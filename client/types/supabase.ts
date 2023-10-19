@@ -166,7 +166,7 @@ export interface Database {
             columns: ["province_uuid"]
             referencedRelation: "province"
             referencedColumns: ["uuid"]
-          }
+          },
         ]
       }
       post_contact_history: {
@@ -209,7 +209,7 @@ export interface Database {
             columns: ["sender_uuid"]
             referencedRelation: "user"
             referencedColumns: ["uuid"]
-          }
+          },
         ]
       }
       province: {
@@ -279,7 +279,7 @@ export interface Database {
             columns: ["sender_uuid"]
             referencedRelation: "user"
             referencedColumns: ["uuid"]
-          }
+          },
         ]
       }
       user: {
@@ -379,7 +379,7 @@ export interface Database {
             columns: ["uuid"]
             referencedRelation: "users"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
     }

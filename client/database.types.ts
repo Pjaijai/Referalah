@@ -196,7 +196,7 @@ export interface Database {
             columns: ["uuid"]
             referencedRelation: "users"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
     }
