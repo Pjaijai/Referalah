@@ -1,8 +1,9 @@
 import { ChangeEvent, useState } from "react"
 import apiService from "@/utils/common/api"
 import { postSortingOptions } from "@/utils/common/sorting/post"
-import { useInfiniteQuery } from "@tanstack/react-query"
+import { UseInfiniteQueryResult, useInfiniteQuery } from "@tanstack/react-query"
 
+import { ISearchPostResponse } from "@/types/api/response/referer-post"
 import { QueryKeyString } from "@/types/common/query-key-string"
 import { ReferralType } from "@/types/common/referral-type"
 import useDebounce from "@/hooks/common/debounce"
@@ -108,19 +109,20 @@ const useSearchPost = (type: ReferralType) => {
     yoeMax,
   }
 
-  const result = useInfiniteQuery({
-    queryKey: [keyString, { sorting, filterMeta, type }],
-    queryFn: apiService.searchPost,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    getNextPageParam: (lastPage, allPages: any[]) => {
-      if (lastPage && lastPage.length > 0) {
-        return allPages.length
-      } else {
-        return null
-      }
-    },
-  })
+  const result: UseInfiniteQueryResult<ISearchPostResponse[]> =
+    useInfiniteQuery({
+      queryKey: [keyString, { sorting, filterMeta, type }],
+      queryFn: apiService.searchPost,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      getNextPageParam: (lastPage, allPages: any[]) => {
+        if (lastPage && lastPage.length > 0) {
+          return allPages.length
+        } else {
+          return null
+        }
+      },
+    })
   return {
     result,
     handleCompanyChange,
