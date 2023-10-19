@@ -8,7 +8,7 @@ Frontend : Next.js 13, Zustand, React-Hook-Form, Tanstack Query, Shadcn(Radix + 
 Backend: Supabase , SQL  
 Infra : Vercel, Supabase  
 Email service: Resend  
-Analytic : GA, Vercel Analytic  
+Analytic : GA, Vercel Analytic
 
 ## Current Table Structure
 
@@ -56,7 +56,7 @@ create or replace trigger on_auth_user_created
 1.  Open your terminal.
 2.  Navigate to the 'client' directory using the `cd client` command.
 3.  Run the development server using `yarn dev`.
-4.  Clone .env.template and rename it to `.env`
+4.  Clone `.env.template` and rename it to `.env`
 5.  Find Supabase URL and anon key from Project Setting > API and configure `.env`
 
 ### Backend
@@ -69,6 +69,10 @@ create or replace trigger on_auth_user_created
 6. Run `supabase db push` to run migrations on your supabase project
 7. Import [csv files](https://drive.google.com/drive/folders/14Q5xqmHU9w1v7Zv9HlxL3qr--Cw_4z7b?usp=drive_link) into your Supabase project for `city`, `country`, `industry` and `province` tables
 8. Connect Supabase database to your favourite database IDE. Run [SQL Script](#to-solve-user-data-cannot-be-inserted-after-registration) to insert user data upon registration
+9. Clone `.env.template` from `supabase/` and rename it to `.env`
+10. Create a [Resend](https://resend.com) account for email sending. Link it to your Supabase project and get an API key.
+11. Configure your `.env`, add your `RESEND_API_KEY` from Resend and use your Resend email account as `RESEND_TO_EMAIL`.
+12. Every time you make changes to Supabase functions, run `supabase functions deploy --project-ref [your-supabase-project-id]`
 
 ### Creating branch
 
@@ -80,6 +84,7 @@ Naming your branch with category. For example `feature/i-go-to-school-by-bus`. P
 | bugfix        |                           for fixing a bug                           |
 | feature       |             for adding, removing or modifying a feature              |
 | doc           |                               document                               |
+| refactor      |                             refactoring                              |
 
 ### Creating Pull Request
 
@@ -91,5 +96,6 @@ Naming your PR with category. For example `Feature/I Go To School By Bus`
 | BugFix        |                           for fixing a bug                           |
 | Feature       |             for adding, removing or modifying a feature              |
 | Doc           |                               document                               |
+| refactor      |                             refactoring                              |
 
 Now you have both the frontend and backend of Referalah up and running locally, allowing you to work on and test your changes effectively. Happy coding!

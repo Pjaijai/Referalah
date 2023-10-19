@@ -1,6 +1,7 @@
 import React from "react"
-import { Badge } from "@/components/ui/badge"
 import InfiniteScroll from "react-infinite-scroll-component"
+
+import { Badge } from "@/components/ui/badge"
 
 interface IBaseInfiniteScrollProps {
   dataLength: number
@@ -20,14 +21,14 @@ const BaseInfiniteScroll: React.FunctionComponent<IBaseInfiniteScrollProps> = ({
       next={next}
       hasMore={hasMore}
       loader={
-        <div className="flex justify-center mt-4">
+        <div className="mt-4 flex justify-center">
           <Badge variant={"outline"} className="flex justify-center">
             Load緊...
           </Badge>
         </div>
       }
       endMessage={
-        <div className="flex justify-center mt-4">
+        <div className="mt-4 flex justify-center">
           <Badge variant={"outline"} className="flex justify-center">
             盡頭了！
           </Badge>

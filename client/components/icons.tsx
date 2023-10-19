@@ -1,15 +1,21 @@
 import {
+  Briefcase,
+  Building2,
+  CalendarClock,
   CheckCircle2,
   ChevronDown,
+  ChevronDownIcon,
   Github,
   Instagram,
   Link,
   Loader,
   LucideProps,
   Mail,
+  MapPin,
   Moon,
   MoreVertical,
   Pencil,
+  RotateCcw,
   SlidersHorizontal,
   SunMedium,
   Twitter,
@@ -35,6 +41,7 @@ export const Icons = {
   checkCircle: CheckCircle2,
   instagram: Instagram,
   github: Github,
+  rotateRight: RotateCcw,
   slidersHorizontal: SlidersHorizontal,
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
@@ -64,9 +71,14 @@ export const Icons = {
       stroke-linecap="round"
       stroke-linejoin="round"
       className="lucide lucide-send"
+      {...props}
     >
       <path d="m22 2-7 20-4-9-9-4Z" />
       <path d="M22 2 11 13" />
     </svg>
   ),
+  industry: Briefcase,
+  location: MapPin,
+  company: Building2,
+  yearsOfExperience: CalendarClock,
 }

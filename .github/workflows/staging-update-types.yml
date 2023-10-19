@@ -1,0 +1,20 @@
+# https://supabase.com/docs/guides/api/rest/generating-types
+
+name: Update staging database types
+on:
+  push:
+    branches: [development]
+    paths:
+      - "*.sql"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.head_ref != 'supabot**'
+    steps:
+      - uses: lyqht/generate-supabase-db-types-github-action@main
+        with:
+          SUPABASE_REF_ID: ${{ secrets.STAGING_PROJECT_ID }}
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          DB_PASSWORD: ${{ secrets.STAGING_DB_PASSWORD }}
+          OUTPUT_PATH: db.types.ts

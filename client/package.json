@@ -1,7 +1,7 @@
 {
   "name": "Referalah",
   "description": "An open source online platform for oversea Hong Kong People to connect each other",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "license": "Apache-2.0",
   "scripts": {
     "dev": "next dev",
@@ -45,6 +45,7 @@
     "lucide-react": "0.105.0-alpha.4",
     "next": "13.4.8",
     "next-themes": "0.2.1",
+    "prettier-plugin-tailwindcss": "0.5.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.46.1",
@@ -69,7 +70,7 @@
     "eslint-plugin-react": "7.32.2",
     "eslint-plugin-tailwindcss": "3.13.0",
     "postcss": "8.4.24",
-    "prettier": "2.8.8",
+    "prettier": "3.0.3",
     "tailwindcss": "3.3.2",
     "typescript": "4.9.5"
   },

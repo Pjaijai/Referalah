@@ -1,8 +1,8 @@
 import * as React from "react"
 import Link from "next/link"
-import { siteConfig } from "@/config/site"
 
 import { NavItem } from "@/types/nav"
+import { siteConfig } from "@/config/site"
 
 interface MainNavProps {
   items?: NavItem[]
@@ -10,8 +10,11 @@ interface MainNavProps {
 
 export function MainNav({ items }: MainNavProps) {
   return (
-      <Link href={siteConfig.page.main.href} className="flex items-center space-x-2">
-        <span className="inline-block font-bold">{siteConfig.name}</span>
-      </Link>
+    <Link
+      href={siteConfig.page.main.href}
+      className="flex items-center space-x-2"
+    >
+      <span className="inline-block font-bold">{siteConfig.name}</span>
+    </Link>
   )
 }

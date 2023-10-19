@@ -10,7 +10,7 @@ interface IUserState {
     uuid,
     photoUrl,
   }: {
-    username: string
+    username: string | null
     uuid: string
     photoUrl: string | null
   }) => void

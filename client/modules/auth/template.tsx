@@ -36,7 +36,7 @@ const AuthPageTemplate = () => {
       {!isSubmitted && <AuthForm onSubmit={onSubmit} />}
 
       {isSubmitted && (
-        <div className="flex flex-col  justify-center items-center rounded-lg p-4 gap-4">
+        <div className="flex flex-col  items-center justify-center gap-4 rounded-lg p-4">
           <Icons.bigSend />
           <span>Send 咗了！請查看！</span>
           <span>請查看垃圾郵箱🙏🏻因為個網站設立無耐，會俾人當垃圾，哭左🥲</span>

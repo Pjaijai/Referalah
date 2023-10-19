@@ -1,8 +1,8 @@
 export interface ICityResponse {
+  cantonese_name: string | null
+  english_name: string | null
   id: number
+  province_uuid: string | null
   uuid: string
   value: string
-  province_uuid: string
-  english_name: string
-  cantonese_name: string
 }

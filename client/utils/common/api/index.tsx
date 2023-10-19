@@ -6,6 +6,7 @@ import { ICreatePostRequest } from "@/types/api/request/post/create"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { ICityResponse } from "@/types/api/response/city"
 import { IIndustryResponse } from "@/types/api/response/industry"
+import { IReferralResponse } from "@/types/api/response/referral"
 import { IUserResponse } from "@/types/api/response/user"
 import { ReferralType } from "@/types/common/referral-type"
 
@@ -83,25 +84,30 @@ const apiService = {
       }
 
       return data
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
-  searchReferral: async ({ pageParam = 0, queryKey }: any) => {
+  searchReferral: async ({
+    pageParam = 0,
+    queryKey,
+  }: any): Promise<IReferralResponse[]> => {
     try {
-      const NUMBER_OF_DATE_PER_FETCH = 10
+      const NUMBER_OF_DATE_PER_FETCH = 5
       const countryUuid = queryKey[1].filterMeta.countryUuid
       const provinceUuid = queryKey[1].filterMeta.provinceUuid
       const cityUuid = queryKey[1].filterMeta.cityUuid
       const industryUuid = queryKey[1].filterMeta.industryUuid
       const companyName = queryKey[1].filterMeta.companyName
+      const jobTitle = queryKey[1].filterMeta.jobTitle
       const yoeMax = queryKey[1].filterMeta.yoeMax
       const yoeMin = queryKey[1].filterMeta.yoeMin
       const type = queryKey[1].type satisfies ReferralType
 
       const sort = queryKey[1].sorting.split(",")
       const order = sort[1] === "dec" ? false : true
-      const from = pageParam * NUMBER_OF_DATE_PER_FETCH
+
+      const from = pageParam + pageParam * NUMBER_OF_DATE_PER_FETCH
       const to = from + NUMBER_OF_DATE_PER_FETCH
 
       let query = supabase
@@ -109,7 +115,6 @@ const apiService = {
         .select(
           `
             uuid,
-            email,
             username,
             avatar_url,
             description,
@@ -118,15 +123,19 @@ const apiService = {
             year_of_experience,
             social_media_url,
             country(
+              uuid,
               cantonese_name
             ),
             province(
+              uuid,
               cantonese_name
             ),
             city(
+              uuid,
               cantonese_name
             ),
             industry(
+              uuid,
               cantonese_name
             ),
             is_referer,
@@ -164,13 +173,17 @@ const apiService = {
         query = query.ilike("company_name", `%${companyName}%`)
       }
 
+      if (jobTitle.length > 0) {
+        query = query.ilike("job_title", `%${jobTitle}%`)
+      }
+
       const { data, error } = await query
 
       if (error) throw error
 
-      return data
-    } catch (err) {
-      console.error(err)
+      return data satisfies IReferralResponse[]
+    } catch (error) {
+      throw error
     }
   },
 
@@ -190,30 +203,32 @@ const apiService = {
         job_title: req.jobTitle.trim(),
         description: req.description.trim(),
       })
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
   searchPost: async ({ pageParam = 0, queryKey }: any) => {
     try {
-      const NUMBER_OF_DATE_PER_FETCH = 3
+      const NUMBER_OF_DATE_PER_FETCH = 5
       const type = queryKey[1].type as ReferralType
       const countryUuid = queryKey[1].filterMeta.countryUuid
       const provinceUuid = queryKey[1].filterMeta.provinceUuid
       const cityUuid = queryKey[1].filterMeta.cityUuid
       const industryUuid = queryKey[1].filterMeta.industryUuid
       const companyName = queryKey[1].filterMeta.companyName
+      const jobTitle = queryKey[1].filterMeta.jobTitle
       const sort = queryKey[1].sorting.split(",")
       const sortingType = sort[0]
       const order = sort[1] === "dec" ? false : true
-      const from = pageParam * NUMBER_OF_DATE_PER_FETCH
-      const to = from + NUMBER_OF_DATE_PER_FETCH - 1
+      const from = pageParam + pageParam * NUMBER_OF_DATE_PER_FETCH
+      const to = from + NUMBER_OF_DATE_PER_FETCH
 
       let query = supabase
         .from("post")
         .select(
           `   uuid,
               created_at,
+              created_by,
               url,
               description,
               company_name,
@@ -239,7 +254,6 @@ const apiService = {
         )
         .eq("type", type)
         .eq("status", "active")
-        .ilike("company_name", `%${companyName}%`)
         .lte("year_of_experience", 100)
         .gte("year_of_experience", 0)
 
@@ -264,13 +278,21 @@ const apiService = {
       if (industryUuid !== undefined) {
         query = query.eq("industry_uuid", industryUuid)
       }
+
+      if (companyName.length > 0) {
+        query = query.ilike("company_name", `%${companyName}%`)
+      }
+
+      if (jobTitle.length > 0) {
+        query = query.ilike("job_title", `%${jobTitle}%`)
+      }
       const { data, error } = await query.order("id", { ascending: true })
 
       if (error) throw error
 
       return data
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
 
@@ -286,7 +308,7 @@ const apiService = {
       }
       return industryData as IIndustryResponse[]
     } catch (error) {
-      console.error(error)
+      throw error
     }
   },
 
@@ -301,9 +323,9 @@ const apiService = {
         throw countryError
       }
 
-      return countryData as ICityResponse[]
+      return countryData
     } catch (error) {
-      console.error(error)
+      throw error
     }
   },
 
@@ -319,8 +341,8 @@ const apiService = {
       }
 
       return provinceData
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
 
@@ -351,8 +373,8 @@ const apiService = {
       if (error) {
         throw error
       }
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
   contactThroughPost: async (req: IContactThroughPostRequest) => {
@@ -370,8 +392,8 @@ const apiService = {
       if (error) {
         throw error
       }
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
 
@@ -384,8 +406,8 @@ const apiService = {
 
       if (error) throw error
       return count
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      throw error
     }
   },
 }

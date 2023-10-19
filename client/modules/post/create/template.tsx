@@ -40,7 +40,8 @@ const CreatePostTemplate: React.FunctionComponent<
       .url({
         message: "無效連結",
       })
-      .optional(),
+      .optional()
+      .or(z.literal("")),
     description: z
       .string()
       .max(3000, {
@@ -85,12 +86,22 @@ const CreatePostTemplate: React.FunctionComponent<
           message: "必須喺0到100之間，如果唔夠用請聯絡我🙇🏻‍♂️", // Specify the custom error message here
         }
       ),
-    companyName: z.string().min(1, {
-      message: `俾幫手填下🙏🏻`,
-    }),
-    jobTitle: z.string().min(1, {
-      message: `俾幫手填下🙏🏻`,
-    }),
+    companyName: z
+      .string()
+      .min(1, {
+        message: `俾幫手填下🙏🏻`,
+      })
+      .max(30, {
+        message: `俾盡30粒字，唔夠用請聯絡我🙏🏻`,
+      }),
+    jobTitle: z
+      .string()
+      .min(1, {
+        message: `俾幫手填下🙏🏻`,
+      })
+      .max(30, {
+        message: `俾盡30粒字，唔夠用請聯絡我🙏🏻`,
+      }),
   })
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -223,7 +234,7 @@ const CreatePostTemplate: React.FunctionComponent<
   }
 
   return (
-    <div className="w-full h-full flex flex-col mt-28 p-4">
+    <div className="mt-28 flex h-full w-full flex-col p-4">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

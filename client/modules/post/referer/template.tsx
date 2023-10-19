@@ -2,7 +2,6 @@
 
 import React from "react"
 
-import { ISearchPostResponse } from "@/types/api/response/referer-post"
 import { MessageType } from "@/types/common/message-type"
 import { ReferralType } from "@/types/common/referral-type"
 import useGetIndustryList from "@/hooks/api/industry/get-Industry-list"
@@ -12,7 +11,8 @@ import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useSearchPost from "@/hooks/api/post/search-post"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
-import ReferralCard from "@/components/customized-ui/cards/referral"
+import ResetButton from "@/components/customized-ui/buttons/reset"
+import ReferralPostCard from "@/components/customized-ui/cards/referral-post"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons /card-list"
 
@@ -33,8 +33,12 @@ const RefererPostPageTemplate: React.FunctionComponent<
     handleCityChange,
     handleSortingChange,
     handleIndustryChange,
-    handleYeoMinChange,
-    handleYeoMaxChange,
+    handleYoeMinChange,
+    handleYoeMaxChange,
+    handleJobTitleChange,
+    handleReset,
+    companyName,
+    jobTitle,
     provinceUuid,
     cityUuid,
     countryUuid,
@@ -46,46 +50,59 @@ const RefererPostPageTemplate: React.FunctionComponent<
 
   const { data, fetchNextPage, isLoading, isFetching } = result
 
-  const list = data
-    ? (data?.pages.flatMap((d) => d) as ISearchPostResponse[])
-    : []
+  const list = data ? data?.pages.flatMap((d) => d) : []
 
   return (
     <>
-      <div className="flex flex-row mt-8 gap-4 w-full h-full">
-        <Input onChange={handleCompanyChange} placeholder="公司名稱" />
-        <SearchPopover
-          countryList={countryList}
-          provinceList={provinceList}
-          cityList={cityList}
-          industryList={industryList}
-          provinceUuid={provinceUuid}
-          countryUuid={countryUuid}
-          onCityChange={handleCityChange}
-          onCountryChange={handleCountryChange}
-          onProvinceChange={handleProvinceChange}
-          onIndustryChange={handleIndustryChange}
-          onSortingChange={handleSortingChange}
-          onYeoMinChange={handleYeoMinChange}
-          onYeoMaxChange={handleYeoMaxChange}
-          currentSorting={sorting}
-          currentCityUuid={cityUuid}
-          currentCountryUuid={countryUuid}
-          currentIndustryUuid={industryUuid}
-          currentProvinceUuid={provinceUuid}
-          currentYeoMax={yoeMax}
-          currentYeoMin={yoeMin}
-          type={MessageType.POST}
+      <div className="mt-8 flex h-full w-full flex-col-reverse gap-4 md:flex-row">
+        <Input
+          onChange={handleCompanyChange}
+          value={companyName}
+          placeholder="公司名稱"
         />
+        <Input
+          onChange={handleJobTitleChange}
+          value={jobTitle}
+          placeholder="職位/工作名稱"
+        />
+
+        <div className="flex flex-row justify-end gap-2">
+          <SearchPopover
+            countryList={countryList}
+            provinceList={provinceList}
+            cityList={cityList}
+            industryList={industryList}
+            provinceUuid={provinceUuid}
+            countryUuid={countryUuid}
+            onCityChange={handleCityChange}
+            onCountryChange={handleCountryChange}
+            onProvinceChange={handleProvinceChange}
+            onIndustryChange={handleIndustryChange}
+            onSortingChange={handleSortingChange}
+            onYeoMinChange={handleYoeMinChange}
+            onYeoMaxChange={handleYoeMaxChange}
+            currentSorting={sorting}
+            currentCityUuid={cityUuid}
+            currentCountryUuid={countryUuid}
+            currentIndustryUuid={industryUuid}
+            currentProvinceUuid={provinceUuid}
+            currentYeoMax={yoeMax}
+            currentYeoMin={yoeMin}
+            type={MessageType.POST}
+          />
+          <ResetButton onClick={handleReset} />
+        </div>
       </div>
 
       {!isLoading && !isFetching && list.length === 0 && (
-        <div className="p-4 rounded-lg text-center mt-8 border-2">
+        <div className="mt-8 rounded-lg border-2 p-4 text-center">
           冇資料🥲不如開個Post先？？
         </div>
       )}
 
-      {isLoading && isFetching && <CardSkeletonList />}
+      {isLoading && isFetching && (
+        <CardSkeletonList className="xs:grid-cols-1 lg:grid-cols-2" />
+      )}
 
       {!isLoading && list.length > 0 && (
         <BaseInfiniteScroll
@@ -98,10 +115,10 @@ const RefererPostPageTemplate: React.FunctionComponent<
             true
           }
         >
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4  w-full overflow-hidden mt-8">
+          <div className="mt-8 grid w-full grid-cols-1 gap-4 overflow-hidden lg:grid-cols-2">
             {list.map((data) => {
               return (
-                <ReferralCard
+                <ReferralPostCard
                   jobTitle={data.job_title}
                   username={data.user.username}
                   photoUrl={data.user.avatar_url}
@@ -111,13 +128,14 @@ const RefererPostPageTemplate: React.FunctionComponent<
                   industry={data.industry.cantonese_name}
                   companyName={data.company_name}
                   description={data.description}
-                  socialMediaUrl={data.url}
+                  url={data.url}
                   yearOfExperience={data.year_of_experience}
                   uuid={data.uuid}
+                  createdBy={data.created_by}
                   key={data.uuid}
                   messageType={MessageType.POST}
                   postUuid={data.uuid}
-                  toUuid={data.uuid}
+                  toUuid={data.created_by}
                   receiverType={ReferralType.REFERRER}
                   createdAt={data.created_at.toString()}
                 />
