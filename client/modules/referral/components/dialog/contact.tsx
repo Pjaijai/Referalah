@@ -149,7 +149,7 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
         <DialogHeader>
           <DialogTitle>Send信息俾 {username}</DialogTitle>
           <DialogDescription>
-            注意: 以下信息會連同你嘅Email address send畀對方，同時cc埋你。
+            注意: 以下信息會連同你嘅Email地址send畀對方，同時cc埋你。
           </DialogDescription>
           {receiverType === "referer" && messageType === "referral" && (
             <DialogDescription>
