@@ -49,8 +49,8 @@ const ViewProfileTemplate: React.FunctionComponent<
   const userUuid = useUserStore((state) => state.uuid)
   const isViewingOwnProfile = slug === userUuid
   return (
-    <div className="w-full flex flex-col gap-y-2 mt-28">
-      <div className="flex flex-row justify-end w-full mx-8 gap-2">
+    <div className="mt-28 flex w-full flex-col gap-y-2">
+      <div className="mx-8 flex w-full flex-row justify-end gap-2">
         {socialMediaUrl && <LinkTooltip url={socialMediaUrl} />}
 
         {isViewingOwnProfile && (
@@ -75,14 +75,14 @@ const ViewProfileTemplate: React.FunctionComponent<
         />
       </div>
 
-      <h5 className="text-2xl text-center font-semibold">{username}</h5>
+      <h5 className="text-center text-2xl font-semibold">{username}</h5>
 
       <div className="flex flex-col text-center">
         {jobTitle && <h5 className="font-semibold">{jobTitle}</h5>}
         {company && <h5 className="font-semibold ">{company}</h5>}
       </div>
 
-      <li className="flex flex-wrap justify-center w-full gap-2">
+      <li className="flex w-full flex-wrap justify-center gap-2">
         {country && (
           <ul>
             <Badge> {country}</Badge>
@@ -100,7 +100,7 @@ const ViewProfileTemplate: React.FunctionComponent<
           </ul>
         )}
       </li>
-      <li className="flex flex-wrap justify-center w-full gap-2">
+      <li className="flex w-full flex-wrap justify-center gap-2">
         {industry && (
           <ul>
             <Badge> {industry}</Badge>
@@ -114,7 +114,7 @@ const ViewProfileTemplate: React.FunctionComponent<
         )}
       </li>
 
-      <div className="flex justify-center gap-2 mt-8 w-full">
+      <div className="mt-8 flex w-full justify-center gap-2">
         <div className="flex flex-row items-center gap-2">
           <Checkbox checked={isReferer} />
           <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
@@ -130,8 +130,8 @@ const ViewProfileTemplate: React.FunctionComponent<
         </div>
       </div>
 
-      <div className="container text-center mt-8">
-        <div className="text-left inline-block break-all md:break-words whitespace-pre-wrap">
+      <div className="container mt-8 text-center">
+        <div className="inline-block whitespace-pre-wrap break-all text-left md:break-words">
           {description}
         </div>
       </div>
