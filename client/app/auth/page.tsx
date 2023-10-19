@@ -5,7 +5,7 @@ import AuthPageTemplate from "@/modules/auth/template"
 
 const AuthPage = () => {
   return (
-    <div className="mt-20 flex justify-center items-center">
+    <div className="mt-20 flex items-center justify-center">
       <AuthPageTemplate />
     </div>
   )

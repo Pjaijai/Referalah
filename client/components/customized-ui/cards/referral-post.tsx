@@ -87,12 +87,12 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
 
   return (
     <>
-      <Card className="rounded shadow-md flex flex-col justify-between">
-        <div className="flex flex-col justify-start items-start">
+      <Card className="flex flex-col justify-between rounded shadow-md">
+        <div className="flex flex-col items-start justify-start">
           <CardHeader className="w-full pb-2">
             {/* title, subtitle, url, avatar, quick action */}
-            <div className="flex flex-row justify-between items-start">
-              <div className="flex items-center gap-3 mb-2">
+            <div className="flex flex-row items-start justify-between">
+              <div className="mb-2 flex items-center gap-3">
                 {!isReferrer && (
                   <TooltipWrapper
                     tooltipTrigger={
@@ -146,7 +146,7 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
             </div>
 
             {/* location, industry, year of exp */}
-            <CardDescription className="text-overflow-ellipsis flex justify-start gap-4 mt-2 mb-5 items-center">
+            <CardDescription className="text-overflow-ellipsis mb-5 mt-2 flex items-center justify-start gap-4">
               {(city || province || country) && (
                 <LocationDisplay
                   city={city}
@@ -168,7 +168,7 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
             {description && (
               <CollapsibleTextWrapper
                 text={description}
-                className="text-sm mt-2"
+                className="mt-2 text-sm"
                 expandButtonProps={{ className: "mt-2" }}
               />
             )}

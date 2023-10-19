@@ -54,7 +54,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
 
   return (
     <>
-      <div className="flex flex-col-reverse md:flex-row mt-8 gap-4 w-full h-full">
+      <div className="mt-8 flex h-full w-full flex-col-reverse gap-4 md:flex-row">
         <Input
           onChange={handleCompanyChange}
           value={companyName}
@@ -95,13 +95,13 @@ const RefererPostPageTemplate: React.FunctionComponent<
       </div>
 
       {!isLoading && !isFetching && list.length === 0 && (
-        <div className="p-4 rounded-lg text-center mt-8 border-2">
+        <div className="mt-8 rounded-lg border-2 p-4 text-center">
           冇資料🥲不如開個Post先？？
         </div>
       )}
 
       {isLoading && isFetching && (
-        <CardSkeletonList className="lg:grid-cols-2 xs:grid-cols-1" />
+        <CardSkeletonList className="xs:grid-cols-1 lg:grid-cols-2" />
       )}
 
       {!isLoading && list.length > 0 && (
@@ -115,7 +115,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
             true
           }
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full overflow-hidden mt-8">
+          <div className="mt-8 grid w-full grid-cols-1 gap-4 overflow-hidden lg:grid-cols-2">
             {list.map((data) => {
               return (
                 <ReferralPostCard

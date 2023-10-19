@@ -38,11 +38,11 @@ export function BaseNavigationMenu() {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="text-sm md:text-lg flex items-center flex-row gap-2">
+          <NavigationMenuTrigger className="flex flex-row items-center gap-2 text-sm md:text-lg">
             🙋 人脈
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="flex flex-col w-[200px]">
+            <ul className="flex w-[200px] flex-col">
               <Link href={`${siteConfig.page.profile.href}/${userUuid}`}>
                 <ListItem title="成為推薦人/受薦人">
                   去個人檔案剔翻該選項，同埋填翻相認資料就OK啦！幫得一個得一個🙏🏻
@@ -64,11 +64,11 @@ export function BaseNavigationMenu() {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="text-sm md:text-lg flex items-center gap-2">
+          <NavigationMenuTrigger className="flex items-center gap-2 text-sm md:text-lg">
             💼 工作
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="flex flex-col w-[200px] ">
+            <ul className="flex w-[200px] flex-col ">
               {components.map((component) => (
                 <Link href={component.href}>
                   <ListItem key={component.title} title={component.title}>

@@ -19,7 +19,7 @@ const NumberInput: React.FunctionComponent<INumberInputProps> = ({
   value,
 }) => {
   return (
-    <div className="flex flex-col w-ful">
+    <div className="w-ful flex flex-col">
       {label && <Label htmlFor={id}>{label}</Label>}
 
       <Input
