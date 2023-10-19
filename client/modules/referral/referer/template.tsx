@@ -1,6 +1,5 @@
 import React from "react"
 
-import { IReferralResponse } from "@/types/api/response/referral"
 import { MessageType } from "@/types/common/message-type"
 import { ReferralType } from "@/types/common/referral-type"
 import useGetIndustryList from "@/hooks/api/industry/get-Industry-list"
@@ -54,9 +53,7 @@ const RefererPageTemplate: React.FunctionComponent<
     isFetching,
   } = result
 
-  const list = refererListData
-    ? (refererListData?.pages.flatMap((d) => d) as IReferralResponse[])
-    : []
+  const list = refererListData ? refererListData?.pages.flatMap((d) => d) : []
 
   return (
     <>
@@ -128,12 +125,12 @@ const RefererPageTemplate: React.FunctionComponent<
                   jobTitle={referer.job_title}
                   username={referer.username}
                   photoUrl={referer.avatar_url}
-                  province={referer.province.cantonese_name}
-                  country={referer.country.cantonese_name}
-                  city={referer.city.cantonese_name}
+                  province={referer.province && referer.province.cantonese_name}
+                  country={referer.country && referer.country.cantonese_name}
+                  city={referer.city && referer.city.cantonese_name}
                   companyName={referer.company_name}
                   description={referer.description}
-                  industry={referer.industry.cantonese_name}
+                  industry={referer.industry && referer.industry.cantonese_name}
                   socialMediaUrl={referer.social_media_url}
                   yearOfExperience={referer.year_of_experience}
                   uuid={referer.uuid}

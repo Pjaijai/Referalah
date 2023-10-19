@@ -6,6 +6,7 @@ import { ICreatePostRequest } from "@/types/api/request/post/create"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { ICityResponse } from "@/types/api/response/city"
 import { IIndustryResponse } from "@/types/api/response/industry"
+import { IReferralResponse } from "@/types/api/response/referral"
 import { IUserResponse } from "@/types/api/response/user"
 import { ReferralType } from "@/types/common/referral-type"
 
@@ -87,9 +88,12 @@ const apiService = {
       throw error
     }
   },
-  searchReferral: async ({ pageParam = 0, queryKey }: any) => {
+  searchReferral: async ({
+    pageParam = 0,
+    queryKey,
+  }: any): Promise<IReferralResponse[]> => {
     try {
-      const NUMBER_OF_DATE_PER_FETCH = 10
+      const NUMBER_OF_DATE_PER_FETCH = 5
       const countryUuid = queryKey[1].filterMeta.countryUuid
       const provinceUuid = queryKey[1].filterMeta.provinceUuid
       const cityUuid = queryKey[1].filterMeta.cityUuid
@@ -102,7 +106,8 @@ const apiService = {
 
       const sort = queryKey[1].sorting.split(",")
       const order = sort[1] === "dec" ? false : true
-      const from = pageParam * NUMBER_OF_DATE_PER_FETCH
+
+      const from = pageParam + pageParam * NUMBER_OF_DATE_PER_FETCH
       const to = from + NUMBER_OF_DATE_PER_FETCH
 
       let query = supabase
@@ -110,7 +115,6 @@ const apiService = {
         .select(
           `
             uuid,
-            email,
             username,
             avatar_url,
             description,
@@ -119,15 +123,19 @@ const apiService = {
             year_of_experience,
             social_media_url,
             country(
+              uuid,
               cantonese_name
             ),
             province(
+              uuid,
               cantonese_name
             ),
             city(
+              uuid,
               cantonese_name
             ),
             industry(
+              uuid,
               cantonese_name
             ),
             is_referer,
@@ -173,7 +181,7 @@ const apiService = {
 
       if (error) throw error
 
-      return data
+      return data satisfies IReferralResponse[]
     } catch (error) {
       throw error
     }
@@ -201,7 +209,7 @@ const apiService = {
   },
   searchPost: async ({ pageParam = 0, queryKey }: any) => {
     try {
-      const NUMBER_OF_DATE_PER_FETCH = 3
+      const NUMBER_OF_DATE_PER_FETCH = 5
       const type = queryKey[1].type as ReferralType
       const countryUuid = queryKey[1].filterMeta.countryUuid
       const provinceUuid = queryKey[1].filterMeta.provinceUuid
@@ -212,8 +220,8 @@ const apiService = {
       const sort = queryKey[1].sorting.split(",")
       const sortingType = sort[0]
       const order = sort[1] === "dec" ? false : true
-      const from = pageParam * NUMBER_OF_DATE_PER_FETCH
-      const to = from + NUMBER_OF_DATE_PER_FETCH - 1
+      const from = pageParam + pageParam * NUMBER_OF_DATE_PER_FETCH
+      const to = from + NUMBER_OF_DATE_PER_FETCH
 
       let query = supabase
         .from("post")

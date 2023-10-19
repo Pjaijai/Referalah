@@ -1,8 +1,9 @@
 import { ChangeEvent, useState } from "react"
 import apiService from "@/utils/common/api"
 import { referralSortingOptions } from "@/utils/common/sorting/referer"
-import { useInfiniteQuery } from "@tanstack/react-query"
+import { UseInfiniteQueryResult, useInfiniteQuery } from "@tanstack/react-query"
 
+import { IReferralResponse } from "@/types/api/response/referral"
 import { QueryKeyString } from "@/types/common/query-key-string"
 import { ReferralType } from "@/types/common/referral-type"
 import useDebounce from "@/hooks/common/debounce"
@@ -105,7 +106,7 @@ const useSearchReferral = (type: ReferralType) => {
     yoeMin,
     yoeMax,
   }
-  const result = useInfiniteQuery({
+  const result: UseInfiniteQueryResult<IReferralResponse[]> = useInfiniteQuery({
     queryKey: [keyString, { sorting, filterMeta, type }],
     queryFn: apiService.searchReferral,
     refetchOnMount: false,
