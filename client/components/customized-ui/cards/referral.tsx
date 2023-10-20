@@ -116,7 +116,9 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
           {receiverType === ReferralType.REFERRER && companyName && (
             <CompanyNameDisplay name={companyName} />
           )}
-          <p className="line-clamp-4 pt-6 text-center text-sm">{description}</p>
+          <p className="line-clamp-4 whitespace-pre-wrap break-all pt-6 text-center text-sm">
+            {description}
+          </p>
         </CardHeader>
 
         {/* location, industry, year of exp */}
