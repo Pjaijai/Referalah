@@ -8,6 +8,7 @@ import { formatCreatedAt } from "@/utils/common/helpers/format/date"
 
 import { ReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
+import useViewport from "@/hooks/common/useViewport"
 import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import {
@@ -19,14 +20,15 @@ import {
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
-import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
-import IndustryDisplay from "@/components/customized-ui/info-display/industry"
-import LocationDisplay from "@/components/customized-ui/info-display/location"
-import PostHeader from "@/components/customized-ui/info-display/post-header"
-import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
-import CollapsibleTextWrapper from "@/components/customized-ui/tool/collapsible-text-wrapper"
-import TooltipWrapper from "@/components/customized-ui/tool/tooltip-wrapper"
 import { Icons } from "@/components/icons"
+
+import CompanyNameDisplay from "../info-display/company"
+import IndustryDisplay from "../info-display/industry"
+import LocationDisplay from "../info-display/location"
+import PostHeader from "../info-display/post-header"
+import YearsOfExperienceDisplay from "../info-display/years-of-experience"
+import CollapsibleTextWrapper from "../tool/collapsible-text-wrapper"
+import TooltipWrapper from "../tool/tooltip-wrapper"
 
 interface IReferralPostCardProps
   extends Omit<
@@ -71,6 +73,7 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   const [isAuthOpen, setIsAuthOpen] = useState(false)
   const isUserSignIn = useUserStore((state) => state.isSignIn)
   const isReferrer = receiverType === ReferralType.REFERRER
+  const { isMobile } = useViewport()
 
   const handleContactClick = () => {
     if (isUserSignIn) {
@@ -91,8 +94,8 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
         <div className="flex flex-col items-start justify-start">
           <CardHeader className="w-full pb-2">
             {/* title, subtitle, url, avatar, quick action */}
-            <div className="flex flex-row items-start justify-between">
-              <div className="mb-2 flex items-center gap-3">
+            <div className="flex flex-row items-start justify-between gap-3 sm:gap-1">
+              <div className="mb-2 flex basis-full items-center gap-3 sm:basis-2/3 md:basis-3/5">
                 {!isReferrer && (
                   <TooltipWrapper
                     tooltipTrigger={
@@ -138,25 +141,38 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
                     />
                   </div>
                 )}
-                <Button className="px-3" onClick={handleContactClick}>
-                  <Icons.mail className="mr-1 h-4 w-4" />
-                  聯絡{isReferrer ? "推薦人" : "我"}
+                <Button
+                  className="px-3"
+                  onClick={handleContactClick}
+                  size={isMobile ? "icon" : "default"}
+                >
+                  <Icons.mail className="h-4 w-4 sm:mr-1" />
+                  {isMobile ? undefined : `聯絡${isReferrer ? "推薦人" : "我"}`}
                 </Button>
               </div>
             </div>
 
             {/* location, industry, year of exp */}
-            <CardDescription className="text-overflow-ellipsis mb-5 mt-2 flex items-center justify-start gap-4">
+            <CardDescription className="text-overflow-ellipsis mb-5 mt-2 flex flex-wrap items-center justify-start gap-4">
               {(city || province || country) && (
                 <LocationDisplay
                   city={city}
                   province={province}
                   country={country}
+                  className="xs:max-w-full max-w-sm"
                 />
               )}
-              {industry && <IndustryDisplay industry={industry} />}
+              {industry && (
+                <IndustryDisplay
+                  industry={industry}
+                  className="xs:max-w-full max-w-xs"
+                />
+              )}
               {yearOfExperience !== null && (
-                <YearsOfExperienceDisplay yearOfExperience={yearOfExperience} />
+                <YearsOfExperienceDisplay
+                  yearOfExperience={yearOfExperience}
+                  className="xs:max-w-full max-w-xs"
+                />
               )}
             </CardDescription>
 

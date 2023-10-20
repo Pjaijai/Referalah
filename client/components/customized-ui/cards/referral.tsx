@@ -19,12 +19,13 @@ import {
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
-import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
-import IndustryDisplay from "@/components/customized-ui/info-display/industry"
-import LocationDisplay from "@/components/customized-ui/info-display/location"
-import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
-import TooltipWrapper from "@/components/customized-ui/tool/tooltip-wrapper"
 import { Icons } from "@/components/icons"
+
+import CompanyNameDisplay from "../info-display/company"
+import IndustryDisplay from "../info-display/industry"
+import LocationDisplay from "../info-display/location"
+import YearsOfExperienceDisplay from "../info-display/years-of-experience"
+import TooltipWrapper from "../tool/tooltip-wrapper"
 
 interface IReferralCardProps
   extends Omit<
@@ -88,7 +89,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
     <>
       <Card className="flex flex-col justify-between rounded p-2 shadow-md">
         {/* avatar, username , title, company, desc, url */}
-        <CardHeader className="relative flex flex-col items-center justify-center space-y-0 pb-0">
+        <CardHeader className="relative flex flex-col items-center justify-center space-y-0 pb-0 text-center">
           {socialMediaUrl && (
             <div className="absolute right-3 top-3">
               <TooltipWrapper
@@ -110,29 +111,35 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
             />
           </Link>
           <Link href={`${siteConfig.page.profile.href}/${uuid}`}>
-            <p className="pt-5 text-xs">@{username}</p>
+            <p className="pt-5 text-center text-xs">@{username}</p>
           </Link>
-          <p className="text-lg font-semibold">{jobTitle}</p>
+          <p className="text-center text-lg font-semibold">{jobTitle}</p>
           {receiverType === ReferralType.REFERRER && companyName && (
             <CompanyNameDisplay name={companyName} />
           )}
-          <p className="line-clamp-4 pt-6 text-sm">{description}</p>
+          <p className="line-clamp-4 pt-6 text-center text-sm">{description}</p>
         </CardHeader>
 
         {/* location, industry, year of exp */}
         <CardContent className="justify-start">
           <Separator className="my-4" />
-          <CardDescription className="text-overflow-ellipsis">
+          <CardDescription className="text-overflow-ellipsis flex flex-col">
             {(city || province || country) && (
               <LocationDisplay
                 city={city}
                 province={province}
                 country={country}
+                className="mb-1"
               />
             )}
-            {industry && <IndustryDisplay industry={industry} />}
+            {industry && (
+              <IndustryDisplay industry={industry} className="mb-1" />
+            )}
             {yearOfExperience !== null && (
-              <YearsOfExperienceDisplay yearOfExperience={yearOfExperience} />
+              <YearsOfExperienceDisplay
+                yearOfExperience={yearOfExperience}
+                className="mb-1"
+              />
             )}
           </CardDescription>
 
