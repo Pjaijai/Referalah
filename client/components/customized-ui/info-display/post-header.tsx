@@ -1,12 +1,8 @@
 import React, { PropsWithChildren, ReactNode } from "react"
-import Link from "next/link"
 
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
 import { CardTitle } from "@/components/ui/card"
+import TooltipWrapper from "@/components/customized-ui/tool/tooltip-wrapper"
 import { Icons } from "@/components/icons"
-
-import TooltipWrapper from "../tool/tooltip-wrapper"
 
 interface IPostHeaderProps {
   title: ReactNode | string
@@ -16,23 +12,26 @@ interface IPostHeaderProps {
 const PostHeader: React.FunctionComponent<
   PropsWithChildren<IPostHeaderProps>
 > = ({ title, subtitle, url }) => {
+  const handleUrlClick = () => {
+    if (url) window.open(url, "_blank")
+  }
+
   return (
     <div>
-      <CardTitle className="flex items-center">
+      <CardTitle className="inline-block">
         {title}
-        123
         {url && (
           <TooltipWrapper
             tooltipTrigger={
-              <Link href={url} target="_blank">
-                <Icons.link className="h-4 w-4 m-2" />
-              </Link>
+              <a onClick={handleUrlClick} className="align-middle">
+                <Icons.link className="ml-2 h-4 w-4" />
+              </a>
             }
             tooltipContent={<span>相關連結</span>}
           />
         )}
       </CardTitle>
-      <div className="flex justify-start items-center text-sm text-muted-foreground">
+      <div className="flex items-center justify-start text-sm text-muted-foreground">
         {subtitle}
       </div>
     </div>

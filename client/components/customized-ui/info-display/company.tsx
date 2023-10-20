@@ -1,16 +1,20 @@
 import React, { PropsWithChildren } from "react"
 
+import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 
 interface ICompanyNameDisplayProps {
   name: string
+  className?: string
 }
 const CompanyNameDisplay: React.FunctionComponent<
   PropsWithChildren<ICompanyNameDisplayProps>
-> = ({ name }) => {
+> = ({ name, className }) => {
   return (
-    <div className="flex justify-start items-center text-sm text-muted-foreground">
-      <Icons.company width="13" />
+    <div
+      className={(cn("inline-block text-sm text-muted-foreground"), className)}
+    >
+      <Icons.company width="13" height="13" className="inline align-middle" />
       <span className="ml-1">{name}</span>
     </div>
   )

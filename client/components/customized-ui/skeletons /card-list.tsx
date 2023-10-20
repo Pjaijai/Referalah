@@ -15,7 +15,7 @@ const CardSkeletonList = ({
   cardSkeletonProps,
 }: CardSkeletonListProps) => {
   return (
-    <div className={cn("grid grid-cols-1 gap-4 mt-8", className)}>
+    <div className={cn("mt-8 grid grid-cols-1 gap-4", className)}>
       <CardSkeleton {...cardSkeletonProps} />
       <CardSkeleton {...cardSkeletonProps} />
       <CardSkeleton {...cardSkeletonProps} />

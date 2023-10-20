@@ -10,8 +10,8 @@ const HighlightedLink: React.FunctionComponent<
   return (
     <Link
       href={href}
-      className="border-green-700 dark:border-yellow-300 text-green-700
-] dark:text-yellow-300 border-b hover:border-b-2"
+      className="] border-b border-green-700
+text-green-700 hover:border-b-2 dark:border-yellow-300 dark:text-yellow-300"
     >
       {children}
     </Link>

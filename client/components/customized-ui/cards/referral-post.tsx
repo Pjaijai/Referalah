@@ -8,6 +8,7 @@ import { formatCreatedAt } from "@/utils/common/helpers/format/date"
 
 import { ReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
+import useViewport from "@/hooks/common/useViewport"
 import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import {
@@ -71,6 +72,7 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   const [isAuthOpen, setIsAuthOpen] = useState(false)
   const isUserSignIn = useUserStore((state) => state.isSignIn)
   const isReferrer = receiverType === ReferralType.REFERRER
+  const { isMobile } = useViewport()
 
   const handleContactClick = () => {
     if (isUserSignIn) {
@@ -87,12 +89,12 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
 
   return (
     <>
-      <Card className="rounded shadow-md flex flex-col justify-between">
-        <div className="flex flex-col justify-start items-start">
+      <Card className="flex flex-col justify-between rounded shadow-md">
+        <div className="flex flex-col items-start justify-start">
           <CardHeader className="w-full pb-2">
             {/* title, subtitle, url, avatar, quick action */}
-            <div className="flex flex-row justify-between items-start">
-              <div className="flex items-center gap-3 mb-2">
+            <div className="flex flex-row items-start justify-between gap-3 sm:gap-1">
+              <div className="mb-2 flex basis-full items-center gap-3 sm:basis-2/3 md:basis-3/5">
                 {!isReferrer && (
                   <TooltipWrapper
                     tooltipTrigger={
@@ -138,25 +140,38 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
                     />
                   </div>
                 )}
-                <Button className="px-3" onClick={handleContactClick}>
-                  <Icons.mail className="mr-1 h-4 w-4" />
-                  聯絡{isReferrer ? "推薦人" : "我"}
+                <Button
+                  className="px-3"
+                  onClick={handleContactClick}
+                  size={isMobile ? "icon" : "default"}
+                >
+                  <Icons.mail className="h-4 w-4 sm:mr-1" />
+                  {isMobile ? undefined : `聯絡${isReferrer ? "推薦人" : "我"}`}
                 </Button>
               </div>
             </div>
 
             {/* location, industry, year of exp */}
-            <CardDescription className="text-overflow-ellipsis flex justify-start gap-4 mt-2 mb-5 items-center">
+            <CardDescription className="text-overflow-ellipsis mb-5 mt-2 flex flex-wrap items-center justify-start gap-4">
               {(city || province || country) && (
                 <LocationDisplay
                   city={city}
                   province={province}
                   country={country}
+                  className="xs:max-w-full max-w-sm"
                 />
               )}
-              {industry && <IndustryDisplay industry={industry} />}
+              {industry && (
+                <IndustryDisplay
+                  industry={industry}
+                  className="xs:max-w-full max-w-xs"
+                />
+              )}
               {yearOfExperience !== null && (
-                <YearsOfExperienceDisplay yearOfExperience={yearOfExperience} />
+                <YearsOfExperienceDisplay
+                  yearOfExperience={yearOfExperience}
+                  className="xs:max-w-full max-w-xs"
+                />
               )}
             </CardDescription>
 
@@ -168,7 +183,7 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
             {description && (
               <CollapsibleTextWrapper
                 text={description}
-                className="text-sm mt-2"
+                className="mt-2 text-sm"
                 expandButtonProps={{ className: "mt-2" }}
               />
             )}
