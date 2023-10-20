@@ -26,9 +26,7 @@ export default function IndexPage() {
             希望呢個平台幫到大家！祝大家一切順利！
           </p>
         </div>
-        <div
-          className={`${isUserSignIn ? "flex gap-4" : "flex flex-wrap gap-4"}`}
-        >
+        <div className={"flex flex-wrap gap-4"}>
           <Link
             href={siteConfig.page.about.href}
             className={buttonVariants({
