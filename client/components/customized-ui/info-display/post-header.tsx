@@ -1,9 +1,8 @@
 import React, { PropsWithChildren, ReactNode } from "react"
 
 import { CardTitle } from "@/components/ui/card"
+import TooltipWrapper from "@/components/customized-ui/tool/tooltip-wrapper"
 import { Icons } from "@/components/icons"
-
-import TooltipWrapper from "../tool/tooltip-wrapper"
 
 interface IPostHeaderProps {
   title: ReactNode | string
