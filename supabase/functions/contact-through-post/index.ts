@@ -94,7 +94,7 @@ serve(async (req: any) => {
             <body>
                 <p>Hi ${post.user.username}!</p>
                 <p>${sender.username}對於你你份街招${
-      post.type === "referer" ? "(工搵人)" : "(人搵工)"
+        post.type === "referer" ? "(工搵人)" : "(人搵工)"
     }有興趣</p>
                 <p>職位: ${post.job_title}</p>
                 <p>公司名稱: ${post.company_name}</p>
@@ -111,6 +111,12 @@ serve(async (req: any) => {
                   <div style="word-break: break-word; white-space: pre-wrap; color: gray;">
                   ${post.description}
                   </div>
+                  
+                   ${
+                      typeof sender.social_media_url === "string" && sender.social_media_url !== "" ? `
+                      <p>佢個社交媒體連結: <a href=${sender.social_media_url}>${sender.social_media_url}</p>
+                      ` : ''
+                  }
                   <p>溫馨提示：保持警覺，祝大家順利！</p>
             </body>
             </html>

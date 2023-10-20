@@ -109,6 +109,11 @@ serve(async (req: any) => {
           <div id="emailContent" style="word-break: break-word; white-space: pre-wrap;">
               ${message}
           </div>
+          ${
+            typeof sender.social_media_url === "string" && sender.social_media_url.length > 0 ? `
+            <p>佢個社交媒體連結: <a href=${sender.social_media_url}>${sender.social_media_url}</p>
+            ` : ''
+          }
           <p>溫馨提示：保持警覺，祝大家順利！</p>
       </body>
       </html>
