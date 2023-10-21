@@ -48,6 +48,10 @@ export const siteConfig = {
       name: "termsAndConditions",
       href: "/terms-and-conditions",
     },
+    contributors: {
+      name: "貢獻者",
+      href: "/contributors",
+    },
   },
   links: {
     instagram: "https://instagram.com/referalah?igshid=NGVhN2U2NjQ0Yg==",
