@@ -21,9 +21,6 @@ interface IFilterMeta {
   yoeMax: string // string number
 }
 const searchPost = ({ pageParam = 0, queryKey }: any) => {
-  if (!pageParam || typeof pageParam === "number") return
-  if (!queryKey) return
-
   pageParam satisfies number
   queryKey satisfies [
     string,

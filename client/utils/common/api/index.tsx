@@ -219,6 +219,8 @@ const apiService = {
     provinceUuid,
     sortingType,
     type,
+    maxYearOfExperience,
+    minYearOfExperience,
   }: ISearchPostsRequest) => {
     try {
       const sort = sortingType.split(",")
@@ -260,7 +262,8 @@ const apiService = {
         .eq("status", "active")
         .lte("year_of_experience", 100)
         .gte("year_of_experience", 0)
-
+        .lte("year_of_experience", maxYearOfExperience)
+        .gte("year_of_experience", minYearOfExperience)
         .range(from, to)
 
       if (sortedBy === "createdAt") {
