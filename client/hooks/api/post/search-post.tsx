@@ -3,11 +3,70 @@ import apiService from "@/utils/common/api"
 import { postSortingOptions } from "@/utils/common/sorting/post"
 import { UseInfiniteQueryResult, useInfiniteQuery } from "@tanstack/react-query"
 
+import { ISearchPostsRequest } from "@/types/api/request/post/search"
 import { ISearchPostResponse } from "@/types/api/response/referer-post"
 import { QueryKeyString } from "@/types/common/query-key-string"
 import { ReferralType } from "@/types/common/referral-type"
 import useDebounce from "@/hooks/common/debounce"
 
+interface IFilterMeta {
+  companyName: string
+  jobTitle: string
+  cityUuid: string | undefined
+  countryUuid: string | undefined
+  industryUuid: string | undefined
+  provinceUuid: string | undefined
+  sorting: string
+  yoeMin: string // string number
+  yoeMax: string // string number
+}
+const searchPost = ({ pageParam = 0, queryKey }: any) => {
+  if (!pageParam || typeof pageParam === "number") return
+  if (!queryKey) return
+
+  pageParam satisfies number
+  queryKey satisfies [
+    string,
+    { type: ReferralType; filterMeta: IFilterMeta; sorting: string },
+  ]
+
+  const NUMBER_OF_DATE_PER_FETCH = 5
+
+  const queryKeyItem = queryKey[1] as {
+    type: ReferralType
+    filterMeta: IFilterMeta
+    sorting: string
+  }
+
+  const { type, filterMeta, sorting } = queryKeyItem
+
+  const countryUuid = filterMeta.countryUuid
+  const provinceUuid = filterMeta.provinceUuid
+  const cityUuid = filterMeta.cityUuid
+  const industryUuid = filterMeta.industryUuid
+  const companyName = filterMeta.companyName
+  const jobTitle = filterMeta.jobTitle
+  const sortingType = sorting
+  const yoeMax = filterMeta.yoeMax
+  const yoeMin = filterMeta.yoeMin
+
+  const param: ISearchPostsRequest = {
+    companyName: companyName,
+    numberOfDataPerPage: NUMBER_OF_DATE_PER_FETCH,
+    cityUuid,
+    countryUuid,
+    industryUuid,
+    jobTitle,
+    provinceUuid,
+    page: pageParam,
+    type,
+    sortingType,
+    maxYearOfExperience: parseInt(yoeMax),
+    minYearOfExperience: parseInt(yoeMin),
+  }
+
+  return apiService.searchPost(param)
+}
 const useSearchPost = (type: ReferralType) => {
   const keyString =
     type === ReferralType.REFEREE
@@ -112,7 +171,7 @@ const useSearchPost = (type: ReferralType) => {
   const result: UseInfiniteQueryResult<ISearchPostResponse[]> =
     useInfiniteQuery({
       queryKey: [keyString, { sorting, filterMeta, type }],
-      queryFn: apiService.searchPost,
+      queryFn: searchPost,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       getNextPageParam: (lastPage, allPages: any[]) => {
