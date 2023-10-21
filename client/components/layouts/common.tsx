@@ -1,10 +1,10 @@
 import React, { PropsWithChildren } from "react"
 
-interface SearchPageLayout {
+interface CommonPageLayout {
   title: string
 }
-const SearchPageLayout: React.FunctionComponent<
-  PropsWithChildren<SearchPageLayout>
+const CommonPageLayout: React.FunctionComponent<
+  PropsWithChildren<CommonPageLayout>
 > = ({ title, children }) => {
   return (
     <div className="h-full w-full">
@@ -14,4 +14,4 @@ const SearchPageLayout: React.FunctionComponent<
   )
 }
 
-export default SearchPageLayout
+export default CommonPageLayout
