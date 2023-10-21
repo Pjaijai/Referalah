@@ -29,11 +29,7 @@ const searchPost = ({ pageParam = 0, queryKey }: any) => {
 
   const NUMBER_OF_DATE_PER_FETCH = 5
 
-  const queryKeyItem = queryKey[1] as {
-    type: ReferralType
-    filterMeta: IFilterMeta
-    sorting: string
-  }
+  const queryKeyItem = queryKey[1]
 
   const { type, filterMeta, sorting } = queryKeyItem
 
