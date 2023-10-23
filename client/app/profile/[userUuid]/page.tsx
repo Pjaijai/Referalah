@@ -7,6 +7,7 @@ import ViewProfileTemplate from "@/modules/profile/view/template"
 
 import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
+import useUserStore from "@/hooks/state/user/store"
 import { Icons } from "@/components/icons"
 
 const Page = ({ params }: { params: { userUuid: string } }) => {
@@ -16,7 +17,7 @@ const Page = ({ params }: { params: { userUuid: string } }) => {
 
   if (!isLoading && !profile)
     return (
-      <div className="flex flex-col  justify-center items-center rounded-lg p-4 gap-4  h-screen">
+      <div className="flex h-screen  flex-col items-center justify-center gap-4 rounded-lg  p-4">
         <span className="text-5xl">🥲</span>
         <h6>
           搵唔到用戶資料請refresh網頁或先
@@ -32,13 +33,13 @@ const Page = ({ params }: { params: { userUuid: string } }) => {
 
   if (isLoading)
     return (
-      <div className="flex justify-center items-center h-screen ">
+      <div className="flex h-screen items-center justify-center ">
         <Icons.loader className="animate-spin text-2xl" />
       </div>
     )
   if (!isLoading && profile)
     return (
-      <div className="h-full w-full mt-8 ">
+      <div className="mt-8 h-full w-full ">
         {!isEditMode && (
           <ViewProfileTemplate
             photoUrl={profile.avatar_url || undefined}

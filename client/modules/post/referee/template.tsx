@@ -2,7 +2,6 @@
 
 import React from "react"
 
-import { ISearchPostResponse } from "@/types/api/response/referer-post"
 import { MessageType } from "@/types/common/message-type"
 import { ReferralType } from "@/types/common/referral-type"
 import useGetIndustryList from "@/hooks/api/industry/get-Industry-list"
@@ -13,7 +12,7 @@ import useSearchPost from "@/hooks/api/post/search-post"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import ResetButton from "@/components/customized-ui/buttons/reset"
-import ReferralCard from "@/components/customized-ui/cards/referral"
+import ReferralPostCard from "@/components/customized-ui/cards/referral-post"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons /card-list"
 
@@ -51,13 +50,11 @@ const RefereePostPageTemplate: React.FunctionComponent<
 
   const { data, fetchNextPage, isLoading, isFetching } = result
 
-  const list = data
-    ? (data?.pages.flatMap((d) => d) as ISearchPostResponse[])
-    : []
+  const list = data ? data?.pages.flatMap((d) => d) : []
 
   return (
     <>
-      <div className="flex flex-col-reverse md:flex-row mt-8 gap-4 w-full h-full">
+      <div className="mt-8 flex h-full w-full flex-col-reverse gap-4 md:flex-row">
         <Input
           onChange={handleCompanyChange}
           value={companyName}
@@ -99,12 +96,14 @@ const RefereePostPageTemplate: React.FunctionComponent<
       </div>
 
       {!isLoading && !isFetching && list.length === 0 && (
-        <div className="p-4 rounded-lg text-center mt-8 border-2">
+        <div className="mt-8 rounded-lg border-2 p-4 text-center">
           冇資料🥲不如開個Post先？？
         </div>
       )}
 
-      {isLoading && <CardSkeletonList />}
+      {isLoading && (
+        <CardSkeletonList className="xs:grid-cols-1 lg:grid-cols-2" />
+      )}
 
       {!isLoading && list.length > 0 && (
         <BaseInfiniteScroll
@@ -117,10 +116,10 @@ const RefereePostPageTemplate: React.FunctionComponent<
             true
           }
         >
-          <div className="grid grid-cols-1 gap-4  w-full overflow-hidden mt-8">
+          <div className="mt-8 grid w-full grid-cols-1 gap-4 overflow-hidden lg:grid-cols-2">
             {list.map((data) => {
               return (
-                <ReferralCard
+                <ReferralPostCard
                   jobTitle={data.job_title}
                   username={data.user.username}
                   photoUrl={data.user.avatar_url}
@@ -130,15 +129,16 @@ const RefereePostPageTemplate: React.FunctionComponent<
                   industry={data.industry.cantonese_name}
                   companyName={data.company_name}
                   description={data.description}
-                  socialMediaUrl={data.url}
+                  url={data.url}
                   yearOfExperience={data.year_of_experience}
                   uuid={data.uuid}
                   key={data.uuid}
                   messageType={MessageType.POST}
                   postUuid={data.uuid}
-                  toUuid={data.uuid}
+                  toUuid={data.created_by}
                   receiverType={ReferralType.REFEREE}
                   createdAt={data.created_at.toString()}
+                  createdBy={data.created_by}
                 />
               )
             })}

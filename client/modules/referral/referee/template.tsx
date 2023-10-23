@@ -8,7 +8,6 @@ import useGetCityList from "@/hooks/api/location/get-city-list"
 import useGetCountryList from "@/hooks/api/location/get-country-list"
 import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useSearchReferral from "@/hooks/api/referral/search-referral"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import ResetButton from "@/components/customized-ui/buttons/reset"
@@ -60,7 +59,7 @@ const RefereePageTemplate: React.FunctionComponent<
     : []
   return (
     <>
-      <div className="flex flex-col-reverse md:flex-row mt-8 gap-4 w-full h-full">
+      <div className="mt-8 flex h-full w-full flex-col-reverse gap-4 md:flex-row">
         <Input
           onChange={handleCompanyChange}
           value={companyName}
@@ -99,12 +98,14 @@ const RefereePageTemplate: React.FunctionComponent<
         </div>
       </div>
       {!isRefereeListLoading && !isFetching && list.length === 0 && (
-        <div className="p-4 rounded-lg text-center mt-8 border-2">
+        <div className="mt-8 rounded-lg border-2 p-4 text-center">
           冇資料🥲不如成為受薦人？
         </div>
       )}
 
-      {isRefereeListLoading && <CardSkeletonList />}
+      {isRefereeListLoading && (
+        <CardSkeletonList className="xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" />
+      )}
 
       {!isRefereeListLoading && list.length > 0 && (
         <BaseInfiniteScroll
@@ -118,19 +119,19 @@ const RefereePageTemplate: React.FunctionComponent<
             true
           }
         >
-          <div className="grid grid-cols-1 gap-4  w-full overflow-hidden mt-8">
+          <div className="xs:grid-cols-1 mt-8 grid w-full gap-6 overflow-hidden sm:grid-cols-2 lg:grid-cols-3">
             {list.map((referee) => {
               return (
                 <ReferralCard
                   jobTitle={referee.job_title}
                   username={referee.username}
                   photoUrl={referee.avatar_url}
-                  province={referee.province.cantonese_name}
-                  country={referee.country.cantonese_name}
-                  city={referee.city.cantonese_name}
+                  province={referee.province && referee.province.cantonese_name}
+                  country={referee.country && referee.country.cantonese_name}
+                  city={referee.city && referee.city.cantonese_name}
                   companyName={referee.company_name}
                   description={referee.description}
-                  industry={referee.industry.cantonese_name}
+                  industry={referee.industry && referee.industry.cantonese_name}
                   socialMediaUrl={referee.social_media_url}
                   yearOfExperience={referee.year_of_experience}
                   uuid={referee.uuid}

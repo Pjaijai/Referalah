@@ -148,7 +148,9 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
       <DialogContent className="w-full md:w-[350px]">
         <DialogHeader>
           <DialogTitle>Send信息俾 {username}</DialogTitle>
-          <DialogDescription>注意: 你個Email 會send埋俾對方</DialogDescription>
+          <DialogDescription>
+            注意: 以下信息會連同你嘅Email地址send畀對方，同時cc埋你。
+          </DialogDescription>
           {receiverType === "referer" && messageType === "referral" && (
             <DialogDescription>
               提示: 搵對方前，建議搵定個Job post射俾對方，推薦人冇義務幫你搵工。
