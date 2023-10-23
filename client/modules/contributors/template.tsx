@@ -10,17 +10,27 @@ const contributors: IContributor[] = [
     },
     contributedArea: ["software_development", "uiux_design"],
   },
+  {
+    name: "Gabby Chan",
+    links: {
+      linkedin: "https://www.linkedin.com/in/gabby-chan-94720b179/",
+    },
+    contributedArea: ["marketing"],
+  },
 ]
 const ContributorsPageTemplate = () => {
   return (
     <>
-      {contributors.map((contributor) => (
-        <ContributorCard
-          contributedArea={contributor.contributedArea}
-          links={contributor.links}
-          name={contributor.name}
-        />
-      ))}
+      <div className="flex flex-col gap-8">
+        {contributors.map((contributor, index) => (
+          <ContributorCard
+            contributedArea={contributor.contributedArea}
+            links={contributor.links}
+            name={contributor.name}
+            key={index}
+          />
+        ))}
+      </div>
     </>
   )
 }

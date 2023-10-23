@@ -1,1 +1,4 @@
-export type ContributedArea = "software_development" | "uiux_design"
+export type ContributedArea =
+  | "software_development"
+  | "uiux_design"
+  | "marketing"

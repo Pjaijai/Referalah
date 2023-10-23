@@ -14,7 +14,7 @@ const ContributorCard: React.FunctionComponent<IContributorCard> = ({
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-row items-center justify-start gap-2">
-        <div>{name}</div>
+        <h2 className="text-lg font-semibold">{name}</h2>
         <div className="flex flex-row gap-2">
           {contributedArea.map((data, index) => (
             <ContributionAreaBadge area={data} key={index} />
