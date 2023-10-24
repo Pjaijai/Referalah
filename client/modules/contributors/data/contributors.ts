@@ -20,10 +20,36 @@ const contributors: IContributor[] = [
     contributedArea: ["software_development", "uiux_design"],
   },
   {
+    name: "Thomas Yau",
+    links: {
+      website: "https://yaucp.dev",
+    },
+    contributedArea: ["software_development", "uiux_design"],
+  },
+  {
     name: "Aries Siu",
     links: {
       linkedin: "www.linkedin.com/in/6809611ba",
       github: "https://github.com/ariesscy",
+    },
+    contributedArea: ["software_development"],
+  },
+
+  {
+    name: "SHING HIN LI Eddie",
+    links: {
+      github: "https://github.com/14104647ls3",
+      instagram: "https://www.instagram.com/le_eddiee/",
+    },
+    contributedArea: ["software_development"],
+  },
+
+  ,
+  {
+    name: "Benjamin Zhong",
+    links: {
+      linkedin: "https://www.linkedin.com/in/binghui-zhong/",
+      github: "https://github.com/BinghuiZ",
     },
     contributedArea: ["software_development"],
   },
