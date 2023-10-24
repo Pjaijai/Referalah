@@ -9,6 +9,24 @@ const contributors: IContributor[] = [
     },
     contributedArea: ["software_development", "uiux_design"],
   },
+
+  {
+    name: "Sonia Yeung",
+    links: {
+      github: "https://github.com/marukosy124",
+      linkedin: "https://www.linkedin.com/in/sonia-yeung-sy",
+      website: "https://www.soniayeung.com/",
+    },
+    contributedArea: ["software_development", "uiux_design"],
+  },
+
+  {
+    name: "Arthur Lee",
+    links: {
+      linkedin: "https://www.linkedin.com/in/arthur-lee-13862617b/",
+    },
+    contributedArea: ["administration"],
+  },
   {
     name: "Gabby Chan",
     links: {
