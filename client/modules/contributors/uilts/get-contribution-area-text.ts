@@ -6,6 +6,7 @@ const getContributionAreaText = (area: ContributedArea) => {
     uiux_design: "UX/UI設計",
     marketing: "市場推廣",
     graphic_design: "平面設計",
+    administration: "行政工作",
   }
 
   const text = mapper[area]

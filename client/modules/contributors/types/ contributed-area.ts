@@ -3,3 +3,4 @@ export type ContributedArea =
   | "uiux_design"
   | "marketing"
   | "graphic_design"
+  | "administration"
