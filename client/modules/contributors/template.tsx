@@ -4,7 +4,7 @@ import contributors from "@/modules/contributors/data/contributors"
 const ContributorsPageTemplate = () => {
   return (
     <>
-      <div className="flex flex-col gap-8">
+      <div className="grid grid-cols-1 gap-4 p-2 md:grid-cols-3">
         {contributors.map((contributor, index) => (
           <ContributorCard
             contributedArea={contributor.contributedArea}
