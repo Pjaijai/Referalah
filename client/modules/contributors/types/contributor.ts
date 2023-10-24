@@ -6,6 +6,7 @@ export interface IContributor {
     github?: string
     linkedin?: string
     instagram?: string
+    website?: string
   }
   contributedArea: ContributedArea[]
 }

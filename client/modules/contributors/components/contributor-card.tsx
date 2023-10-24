@@ -3,7 +3,7 @@ import Link from "next/link"
 import ContributionAreaBadge from "@/modules/contributors/components/contribution-area-badge"
 import { IContributor } from "@/modules/contributors/types/contributor"
 
-import { Card, CardFooter, CardTitle } from "@/components/ui/card"
+import { Card, CardTitle } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
 
 interface IContributorCard extends IContributor {}
@@ -31,6 +31,11 @@ const ContributorCard: React.FunctionComponent<IContributorCard> = ({
           {links.instagram && (
             <Link href={links.instagram}>
               <Icons.instagram />
+            </Link>
+          )}
+          {links.website && (
+            <Link href={links.website}>
+              <Icons.laptop />
             </Link>
           )}
         </div>
