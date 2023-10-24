@@ -91,8 +91,8 @@ For accurate information, please check supabase local dev doc here[https://supab
 
 ## Frontend Development
 - Environment
-  - NodeJS
-  - NPM
+  - NodeJS 18.0.0 - 20.5.1
+  - NPM 9.0.0 - 10.0.0
 
 ### To start a local development server
 
