@@ -1,4 +1,4 @@
-import { ContributedArea } from "@/app/contributors/types/ contributed-area"
+import { ContributedArea } from "@/modules/contributors/types/ contributed-area"
 
 export interface IContributor {
   name: string

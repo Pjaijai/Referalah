@@ -1,9 +1,9 @@
 import React from "react"
 import Link from "next/link"
+import ContributionAreaBadge from "@/modules/contributors/components/contribution-area-badge"
+import { IContributor } from "@/modules/contributors/types/contributor"
 
 import { Icons } from "@/components/icons"
-import ContributionAreaBadge from "@/app/contributors/components/contribution-area-badge"
-import { IContributor } from "@/app/contributors/types/contributor"
 
 interface IContributorCard extends IContributor {}
 const ContributorCard: React.FunctionComponent<IContributorCard> = ({

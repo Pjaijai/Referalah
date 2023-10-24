@@ -1,23 +1,6 @@
-import ContributorCard from "@/app/contributors/components/contributor-card"
-import { IContributor } from "@/app/contributors/types/contributor"
+import ContributorCard from "@/modules/contributors/components/contributor-card"
+import contributors from "@/modules/contributors/data/contributors"
 
-const contributors: IContributor[] = [
-  {
-    name: "Paul Wong (aka R1R69)",
-    links: {
-      github: "https://github.com/Pjaijai",
-      linkedin: "https://www.linkedin.com/in/paulwong169/",
-    },
-    contributedArea: ["software_development", "uiux_design"],
-  },
-  {
-    name: "Gabby Chan",
-    links: {
-      linkedin: "https://www.linkedin.com/in/gabby-chan-94720b179/",
-    },
-    contributedArea: ["marketing"],
-  },
-]
 const ContributorsPageTemplate = () => {
   return (
     <>
