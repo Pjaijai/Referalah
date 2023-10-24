@@ -19,7 +19,13 @@ const contributors: IContributor[] = [
     },
     contributedArea: ["software_development", "uiux_design"],
   },
-
+  {
+    name: "Aries Siu",
+    links: {
+      linkedin: "www.linkedin.com/in/6809611ba",
+    },
+    contributedArea: ["software_development"],
+  },
   {
     name: "Arthur Lee",
     links: {
