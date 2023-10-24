@@ -24,7 +24,7 @@ const contributors: IContributor[] = [
     links: {
       website: "yaucp.dev",
     },
-    contributedArea: ["software_development", "uiux_design"],
+    contributedArea: ["software_development"],
   },
   {
     name: "Aries Siu",
