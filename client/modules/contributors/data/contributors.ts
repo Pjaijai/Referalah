@@ -22,7 +22,7 @@ const contributors: IContributor[] = [
   {
     name: "Thomas Yau",
     links: {
-      website: "https://yaucp.dev",
+      website: "yaucp.dev",
     },
     contributedArea: ["software_development", "uiux_design"],
   },
@@ -44,7 +44,6 @@ const contributors: IContributor[] = [
     contributedArea: ["software_development"],
   },
 
-  ,
   {
     name: "Benjamin Zhong",
     links: {
