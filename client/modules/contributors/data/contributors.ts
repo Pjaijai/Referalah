@@ -66,6 +66,15 @@ const contributors: IContributor[] = [
     },
     contributedArea: ["marketing", "graphic_design"],
   },
+
+  {
+    name: "Chak Yuen Leung",
+    links: {
+      linkedin: "http://linkedin.com/in/chak-yuen-leung-9a8853194",
+      github: "https://github.com/BenjamincyLeung",
+    },
+    contributedArea: ["software_development"],
+  },
 ]
 
 export default contributors
