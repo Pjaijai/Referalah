@@ -29,7 +29,7 @@ const contributors: IContributor[] = [
   {
     name: "Aries Siu",
     links: {
-      linkedin: "www.linkedin.com/in/6809611ba",
+      linkedin: "https://www.linkedin.com/in/6809611ba",
       github: "https://github.com/ariesscy",
     },
     contributedArea: ["software_development"],
