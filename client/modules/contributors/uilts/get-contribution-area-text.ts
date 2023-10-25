@@ -1,4 +1,4 @@
-import { ContributedArea } from "@/modules/contributors/types/contributed-area"
+import { ContributedArea } from "@/modules/contributors/types/ contributed-area"
 
 const getContributionAreaText = (area: ContributedArea) => {
   const mapper: Record<ContributedArea, string> = {
