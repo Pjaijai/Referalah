@@ -28,12 +28,12 @@ export default function IndexPage() {
         </div>
         <div className={"flex flex-wrap gap-4"}>
           <Link
-            href={siteConfig.page.about.href}
+            href={siteConfig.page.contributors.href}
             className={buttonVariants({
               variant: isUserSignIn ? "default" : "outline",
             })}
           >
-            了解更多
+            {siteConfig.page.contributors.name}
           </Link>
 
           <Link
