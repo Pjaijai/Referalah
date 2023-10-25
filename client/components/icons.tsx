@@ -4,6 +4,7 @@ import {
   CalendarClock,
   CheckCircle2,
   ChevronDown,
+  ChevronDownIcon,
   Github,
   Instagram,
   Laptop,
