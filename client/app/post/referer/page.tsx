@@ -1,13 +1,14 @@
 import React from "react"
 import RefererPostPageTemplate from "@/modules/post/referer/template"
 
-import SearchPageLayout from "@/components/layouts/search-page"
+import { siteConfig } from "@/config/site"
+import CommonPageLayout from "@/components/layouts/common"
 
 const RefererPostPage = () => {
   return (
-    <SearchPageLayout title="工搵人">
+    <CommonPageLayout title={siteConfig.page.referrerPost.name}>
       <RefererPostPageTemplate />
-    </SearchPageLayout>
+    </CommonPageLayout>
   )
 }
 
