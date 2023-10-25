@@ -37,7 +37,7 @@ export const siteConfig = {
       href: "/post/referee",
     },
     about: {
-      name: "about",
+      name: "關於本平台",
       href: "/about",
     },
     privacyPolicy: {
