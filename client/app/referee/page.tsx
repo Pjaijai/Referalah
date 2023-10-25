@@ -4,13 +4,14 @@ import React from "react"
 import { NextPage } from "next"
 import RefereePageTemplate from "@/modules/referral/referee/template"
 
-import SearchPageLayout from "@/components/layouts/search-page"
+import { siteConfig } from "@/config/site"
+import CommonPageLayout from "@/components/layouts/common"
 
 const RefereePage: NextPage = () => {
   return (
-    <SearchPageLayout title="受薦人">
+    <CommonPageLayout title={siteConfig.page.referee.name}>
       <RefereePageTemplate />
-    </SearchPageLayout>
+    </CommonPageLayout>
   )
 }
 

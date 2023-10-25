@@ -17,23 +17,23 @@ export const siteConfig = {
       href: "/auth",
     },
     referrer: {
-      name: "referrer",
+      name: "推薦人",
       href: "/referer",
     },
     referee: {
-      name: "referee",
+      name: "受薦人",
       href: "/referee",
     },
     createPost: {
-      name: "createPost",
+      name: "貼街招",
       href: "/post/create",
     },
     referrerPost: {
-      name: "createPost",
+      name: "工搵人",
       href: "/post/referer",
     },
     refereePost: {
-      name: "createPost",
+      name: "人搵工",
       href: "/post/referee",
     },
     about: {
