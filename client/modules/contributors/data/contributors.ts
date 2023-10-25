@@ -22,6 +22,8 @@ const contributors: IContributor[] = [
   {
     name: "Thomas Yau",
     links: {
+      github: "https://github.com/yaucp",
+      linkedin: "https://www.linkedin.com/in/yaucp",
       website: "https://yaucp.dev",
     },
     contributedArea: ["software_development"],
