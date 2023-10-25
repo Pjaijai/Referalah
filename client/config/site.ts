@@ -49,7 +49,7 @@ export const siteConfig = {
       href: "/terms-and-conditions",
     },
     contributors: {
-      name: "貢獻者",
+      name: "貢獻者名單",
       href: "/contributors",
     },
   },
