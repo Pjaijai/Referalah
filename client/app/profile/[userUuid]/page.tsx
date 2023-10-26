@@ -9,6 +9,7 @@ import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
 import useUserStore from "@/hooks/state/user/store"
 import { Icons } from "@/components/icons"
+import CommonPageLayout from "@/components/layouts/common"
 
 const Page = ({ params }: { params: { userUuid: string } }) => {
   const { userUuid } = params
@@ -39,7 +40,7 @@ const Page = ({ params }: { params: { userUuid: string } }) => {
     )
   if (!isLoading && profile)
     return (
-      <div className="mt-8 h-full w-full ">
+      <CommonPageLayout title={siteConfig.page.profile.name}>
         {!isEditMode && (
           <ViewProfileTemplate
             photoUrl={profile.avatar_url || undefined}
@@ -79,7 +80,7 @@ const Page = ({ params }: { params: { userUuid: string } }) => {
             setIsEditMode={setIsEditMode}
           />
         )}
-      </div>
+      </CommonPageLayout>
     )
 }
 

@@ -17,27 +17,27 @@ export const siteConfig = {
       href: "/auth",
     },
     referrer: {
-      name: "referrer",
+      name: "推薦人",
       href: "/referer",
     },
     referee: {
-      name: "referee",
+      name: "受薦人",
       href: "/referee",
     },
     createPost: {
-      name: "createPost",
+      name: "貼街招",
       href: "/post/create",
     },
     referrerPost: {
-      name: "createPost",
+      name: "工搵人",
       href: "/post/referer",
     },
     refereePost: {
-      name: "createPost",
+      name: "人搵工",
       href: "/post/referee",
     },
     about: {
-      name: "about",
+      name: "關於本平台",
       href: "/about",
     },
     privacyPolicy: {
@@ -47,6 +47,10 @@ export const siteConfig = {
     termsAndConditions: {
       name: "termsAndConditions",
       href: "/terms-and-conditions",
+    },
+    contributors: {
+      name: "貢獻者名單",
+      href: "/contributors",
     },
   },
   links: {

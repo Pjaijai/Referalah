@@ -3,11 +3,14 @@
 import React from "react"
 import AuthPageTemplate from "@/modules/auth/template"
 
+import { siteConfig } from "@/config/site"
+import CommonPageLayout from "@/components/layouts/common"
+
 const AuthPage = () => {
   return (
-    <div className="mt-20 flex items-center justify-center">
+    <CommonPageLayout>
       <AuthPageTemplate />
-    </div>
+    </CommonPageLayout>
   )
 }
 
