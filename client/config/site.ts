@@ -37,7 +37,7 @@ export const siteConfig = {
       href: "/post/referee",
     },
     about: {
-      name: "about",
+      name: "關於本平台",
       href: "/about",
     },
     privacyPolicy: {
@@ -47,6 +47,10 @@ export const siteConfig = {
     termsAndConditions: {
       name: "termsAndConditions",
       href: "/terms-and-conditions",
+    },
+    contributors: {
+      name: "貢獻者名單",
+      href: "/contributors",
     },
   },
   links: {
