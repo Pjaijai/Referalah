@@ -77,6 +77,16 @@ const contributors: IContributor[] = [
     },
     contributedArea: ["software_development"],
   },
+  {
+    name: "Vardy Ng",
+    links: {
+      linkedin: "https://www.linkedin.com/in/vardyng/",
+      github: "https://github.com/VardyNg",
+    },
+    contributedArea: ["software_development"],
+  },
+
+  https://t.me/+_kIWIOOGGLlkYzc1
 ]
 
 export default contributors
