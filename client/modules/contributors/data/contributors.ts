@@ -85,8 +85,6 @@ const contributors: IContributor[] = [
     },
     contributedArea: ["software_development"],
   },
-
-  https://t.me/+_kIWIOOGGLlkYzc1
 ]
 
 export default contributors
