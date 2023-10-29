@@ -11,7 +11,7 @@ import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at
 import PostDetailsInfoDisplay from "@/components/customized-ui/info-display/post-details-info"
 import PostHeader from "@/components/customized-ui/info-display/post-header"
 import PostStatusDisplay from "@/components/customized-ui/info-display/post-status"
-import PageStatusHandler from "@/components/layouts/page-status"
+import PageStatusLayout from "@/components/layouts/page-status"
 
 interface ReferralPostDetailsPageProps {
   postId: string | null
@@ -23,7 +23,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   const { data: post, isLoading, isSuccess } = useGetPostDetails(postId)
 
   return (
-    <PageStatusHandler
+    <PageStatusLayout
       error={"搵唔到街招資料，請稍後再試。"}
       isLoading={isLoading}
       isSuccess={isSuccess}
@@ -84,7 +84,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
           </div>
         </div>
       ) : null}
-    </PageStatusHandler>
+    </PageStatusLayout>
   )
 }
 
