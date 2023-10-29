@@ -1,3 +1,5 @@
+import { Status } from "@/types/common/status"
+
 export interface ISearchPostResponse {
   id: number
   created_at: Date
@@ -26,4 +28,8 @@ export interface ISearchPostResponse {
   industry: {
     cantonese_name: string
   }
+}
+
+export interface IPostDetailsResponse extends ISearchPostResponse {
+  status: Status
 }

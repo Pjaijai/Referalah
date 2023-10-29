@@ -5,6 +5,7 @@ import {
   CheckCircle2,
   ChevronDown,
   ChevronDownIcon,
+  Clock,
   Github,
   Instagram,
   Link,
@@ -81,4 +82,5 @@ export const Icons = {
   location: MapPin,
   company: Building2,
   yearsOfExperience: CalendarClock,
+  lastUpdated: Clock,
 }
