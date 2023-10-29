@@ -145,7 +145,7 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
   }
   return (
     <Dialog open={open}>
-      <DialogContent className="w-full md:w-[350px]">
+      <DialogContent className="w-full md:w-1/2">
         <DialogHeader>
           <DialogTitle>Send信息俾 {username}</DialogTitle>
           <DialogDescription>
@@ -167,7 +167,15 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
                 <FormItem>
                   <FormLabel>{"信息"}</FormLabel>
                   <FormControl>
-                    <Textarea {...field} />
+                    <Textarea
+                      placeholder={
+                        receiverType === "referer"
+                          ? `- 自我介紹\n- 想見邊份工？\n- 點聯絡你？
+                      `
+                          : ""
+                      }
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
