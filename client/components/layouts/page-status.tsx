@@ -2,19 +2,19 @@ import { ReactNode } from "react"
 
 import { Icons } from "@/components/icons"
 
-interface PageStatusHandlerProps {
+interface PageStatusLayoutProps {
   isLoading: boolean
   isSuccess: boolean
   error?: ReactNode | string
   children: ReactNode
 }
 
-const PageStatusHandler = ({
+const PageStatusLayout = ({
   error,
   isLoading,
   isSuccess,
   children,
-}: PageStatusHandlerProps) => {
+}: PageStatusLayoutProps) => {
   if (isLoading)
     return (
       <div className="flex h-[500px] items-center justify-center">
@@ -31,4 +31,4 @@ const PageStatusHandler = ({
   else return children
 }
 
-export default PageStatusHandler
+export default PageStatusLayout

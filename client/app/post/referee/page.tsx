@@ -1,13 +1,14 @@
 import React from "react"
 import RefereePostPageTemplate from "@/modules/post/referee/template"
 
-import SearchPageLayout from "@/components/layouts/search-page"
+import { siteConfig } from "@/config/site"
+import CommonPageLayout from "@/components/layouts/common"
 
 const RefereePostPage = () => {
   return (
-    <SearchPageLayout title="人搵工">
+    <CommonPageLayout title={siteConfig.page.refereePost.name}>
       <RefereePostPageTemplate />
-    </SearchPageLayout>
+    </CommonPageLayout>
   )
 }
 

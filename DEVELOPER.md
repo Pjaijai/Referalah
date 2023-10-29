@@ -89,6 +89,28 @@ For accurate information, please check supabase local dev doc here[https://supab
 5. Clone `.env.template` from `supabase/` and rename it to `.env.local`.
 6. Every time you make changes to Supabase functions, run `supabase functions deploy --project-ref [your-supabase-project-id]`.
 
+## Frontend Development
+
+- Environment
+  - NodeJS 18.0.0 - 20.5.1
+  - NPM 9.0.0 - 10.0.0
+
+### To start a local development server
+
+1. Navigate to the 'client' directory\
+   ```bash
+   cd client
+   ```
+1. Install dependencies\
+   ```bash
+   npm install
+   ```
+1. Start the development server
+   ```bash
+   npm run preview
+   ```
+1. View the website at [http://localhost:3000](http://localhost:3000)
+
 ### Creating branch
 
 Naming your branch with category. For example `feature/i-go-to-school-by-bus`. Please create new branch based on `development` branch and created PR point to `development`.

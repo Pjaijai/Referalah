@@ -15,7 +15,7 @@ const CreatedAtDisplay: React.FunctionComponent<
   return (
     <div className={cn("flex items-center justify-start", className)}>
       <div>
-        <Icons.lastUpdated width="13" height="13" />
+        <Icons.createdAt width="13" height="13" />
       </div>
       <span className="ml-1">創建於{formatCreatedAt(createdAt)}前</span>
     </div>

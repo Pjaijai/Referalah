@@ -11,7 +11,7 @@ import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at
 import PostDetailsInfoDisplay from "@/components/customized-ui/info-display/post-details-info"
 import PostHeader from "@/components/customized-ui/info-display/post-header"
 import PostStatusDisplay from "@/components/customized-ui/info-display/post-status"
-import PageStatusHandler from "@/components/layouts/page-status-handler"
+import PageStatusHandler from "@/components/layouts/page-status"
 
 interface ReferralPostDetailsPageProps {
   postId: string | null
