@@ -70,11 +70,7 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
     <>
       <Card className="flex flex-col justify-between rounded shadow-md">
         <Link
-          href={`${
-            isReferrer
-              ? siteConfig.page.referrerPost.href
-              : siteConfig.page.refereePost.href
-          }/${uuid}`}
+          href={`${siteConfig.page.referrerPost.href}/${uuid}`}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex flex-col items-start justify-start">

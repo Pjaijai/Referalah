@@ -25,11 +25,6 @@ const components: { title: string; href: string; description: string }[] = [
     href: siteConfig.page.referrerPost.href,
     description: "係到搵有乜工搵人推薦。",
   },
-  {
-    title: "人搵工",
-    href: siteConfig.page.refereePost.href,
-    description: "係到搵有乜人需要幫手。",
-  },
 ]
 
 export function BaseNavigationMenu() {

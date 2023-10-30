@@ -32,10 +32,6 @@ export const siteConfig = {
       name: "工搵人",
       href: "/post/referer",
     },
-    refereePost: {
-      name: "人搵工",
-      href: "/post/referee",
-    },
     about: {
       name: "關於本平台",
       href: "/about",

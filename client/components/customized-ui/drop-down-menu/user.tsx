@@ -42,7 +42,6 @@ const UserDropDownMenu = () => {
     { href: siteConfig.page.referee.href, title: "受薦人" },
     { href: siteConfig.page.createPost.href, title: "貼街招" },
     { href: siteConfig.page.referrerPost.href, title: "工搵人" },
-    { href: siteConfig.page.refereePost.href, title: "人搵工" },
   ]
 
   return (
