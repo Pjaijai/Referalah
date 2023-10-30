@@ -5,8 +5,8 @@ import { IContactReferralRequest } from "@/types/api/request/contact/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
 import { ISearchPostsRequest } from "@/types/api/request/post/search"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
-import { ICityResponse } from "@/types/api/response/city"
 import { IIndustryResponse } from "@/types/api/response/industry"
+import { IGetPostResponse } from "@/types/api/response/referer-post"
 import { IReferralResponse } from "@/types/api/response/referral"
 import { IUserResponse } from "@/types/api/response/user"
 import { ReferralType } from "@/types/common/referral-type"
@@ -300,6 +300,53 @@ const apiService = {
       return data
     } catch (error) {
       throw error
+    }
+  },
+  getPost: async (uuid: string) => {
+    try {
+      let query = supabase
+        .from("post")
+
+        .select(
+          `   uuid,
+              status,
+              created_at,
+              created_by,
+              url,
+              description,
+              company_name,
+              job_title,
+              year_of_experience,
+              country(
+                  cantonese_name
+              ),
+              province(
+                  cantonese_name
+              ),
+              city(
+                  cantonese_name
+              ),
+              industry(
+                  cantonese_name
+              ),
+              user (
+                  username,
+                  avatar_url,
+                  job_title
+              )
+            `
+        )
+
+        .eq("uuid", uuid)
+        .single()
+
+      const { data, error } = await query
+
+      if (error) throw error
+
+      return data as IGetPostResponse
+    } catch (err) {
+      throw err
     }
   },
 

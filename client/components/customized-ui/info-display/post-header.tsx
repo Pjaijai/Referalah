@@ -8,16 +8,17 @@ interface IPostHeaderProps {
   title: ReactNode | string
   subtitle: ReactNode | string
   url: string | null
+  className?: string
 }
 const PostHeader: React.FunctionComponent<
   PropsWithChildren<IPostHeaderProps>
-> = ({ title, subtitle, url }) => {
+> = ({ title, subtitle, url, className }) => {
   const handleUrlClick = () => {
     if (url) window.open(url, "_blank")
   }
 
   return (
-    <div>
+    <div className={className}>
       <CardTitle className="inline-block">
         {title}
         {url && (

@@ -164,7 +164,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
 
       <ContactDialog
         open={isContactFormOpen}
-        username={username ? username[0] : "?"}
+        username={username || "?"}
         onContactFormClose={() => setIsContactFormOpen(false)}
         toUuid={toUuid}
         messageType={messageType}

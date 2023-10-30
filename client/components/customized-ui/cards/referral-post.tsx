@@ -35,7 +35,7 @@ interface IReferralPostCardProps
     "open" | "username" | "onContactFormClose"
   > {
   uuid: string | null
-  username: string
+  username: string | null
   photoUrl: string | null
   description: string | null
   companyName: string | null
@@ -50,6 +50,7 @@ interface IReferralPostCardProps
   createdBy: string
 }
 const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
+  uuid,
   jobTitle,
   city,
   companyName,
@@ -90,115 +91,125 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   return (
     <>
       <Card className="flex flex-col justify-between rounded shadow-md">
-        <div className="flex flex-col items-start justify-start">
-          <CardHeader className="w-full pb-2">
-            {/* title, subtitle, url, avatar, quick action */}
-            <div className="flex flex-row items-start justify-between gap-3 sm:gap-1">
-              <div className="mb-2 flex basis-full items-center gap-3 sm:basis-2/3 md:basis-3/5">
-                {!isReferrer && (
-                  <TooltipWrapper
-                    tooltipTrigger={
-                      <Link
-                        href={`${siteConfig.page.profile.href}/${createdBy}`}
-                      >
-                        <BaseAvatar
-                          fallBack={username[0]}
-                          alt={username}
-                          url={photoUrl || undefined}
-                        />
-                      </Link>
-                    }
-                    tooltipContent={<span>查看用戶檔案</span>}
-                  />
-                )}
-                <PostHeader
-                  title={jobTitle}
-                  subtitle={
-                    companyName ? (
-                      <CompanyNameDisplay name={companyName} />
-                    ) : undefined
-                  }
-                  url={url}
-                />
-              </div>
-              <div className="flex items-center">
-                {isReferrer && (
-                  <div className="mr-2">
+        {" "}
+        <Link
+          href={`${
+            isReferrer
+              ? siteConfig.page.referrerPost.href
+              : siteConfig.page.refereePost.href
+          }/${uuid}`}
+        >
+          <div className="flex flex-col items-start justify-start">
+            <CardHeader className="w-full pb-2">
+              {/* title, subtitle, url, avatar, quick action */}
+              <div className="flex flex-row items-start justify-between gap-3 sm:gap-1">
+                <div className="mb-2 flex basis-full items-center gap-3 sm:basis-2/3 md:basis-3/5">
+                  {!isReferrer && (
                     <TooltipWrapper
                       tooltipTrigger={
                         <Link
                           href={`${siteConfig.page.profile.href}/${createdBy}`}
                         >
                           <BaseAvatar
-                            fallBack={username[0]}
+                            fallBack={username ? username[0] : "?"}
                             alt={username}
                             url={photoUrl || undefined}
                           />
                         </Link>
                       }
-                      tooltipContent={<span>查看推薦人檔案</span>}
+                      tooltipContent={<span>查看用戶檔案</span>}
                     />
-                  </div>
-                )}
-                <Button
-                  className="px-3"
-                  onClick={handleContactClick}
-                  size={isMobile ? "icon" : "default"}
-                >
-                  <Icons.mail className="h-4 w-4 sm:mr-1" />
-                  {isMobile ? undefined : `聯絡${isReferrer ? "推薦人" : "我"}`}
-                </Button>
+                  )}
+                  <PostHeader
+                    title={jobTitle}
+                    subtitle={
+                      companyName ? (
+                        <CompanyNameDisplay name={companyName} />
+                      ) : undefined
+                    }
+                    url={url}
+                  />
+                </div>
+                <div className="flex items-center">
+                  {isReferrer && (
+                    <div className="mr-2">
+                      <TooltipWrapper
+                        tooltipTrigger={
+                          <Link
+                            href={`${siteConfig.page.profile.href}/${createdBy}`}
+                          >
+                            <BaseAvatar
+                              fallBack={username ? username[0] : "?"}
+                              alt={username}
+                              url={photoUrl || undefined}
+                            />
+                          </Link>
+                        }
+                        tooltipContent={<span>查看推薦人檔案</span>}
+                      />
+                    </div>
+                  )}
+                  <Button
+                    className="px-3"
+                    onClick={handleContactClick}
+                    size={isMobile ? "icon" : "default"}
+                  >
+                    <Icons.mail className="h-4 w-4 sm:mr-1" />
+                    {isMobile
+                      ? undefined
+                      : `聯絡${isReferrer ? "推薦人" : "用戶"}`}
+                  </Button>
+                </div>
               </div>
-            </div>
 
-            {/* location, industry, year of exp */}
-            <CardDescription className="text-overflow-ellipsis mb-5 mt-2 flex flex-wrap items-center justify-start gap-4">
-              {(city || province || country) && (
-                <LocationDisplay
-                  city={city}
-                  province={province}
-                  country={country}
-                  className="xs:max-w-full max-w-sm"
+              {/* location, industry, year of exp */}
+              <CardDescription className="text-overflow-ellipsis mb-5 mt-2 flex flex-wrap items-center justify-start gap-4">
+                {(city || province || country) && (
+                  <LocationDisplay
+                    city={city}
+                    province={province}
+                    country={country}
+                    className="xs:max-w-full max-w-sm"
+                  />
+                )}
+                {industry && (
+                  <IndustryDisplay
+                    industry={industry}
+                    className="xs:max-w-full max-w-xs"
+                  />
+                )}
+                {yearOfExperience !== null && (
+                  <YearsOfExperienceDisplay
+                    yearOfExperience={yearOfExperience}
+                    className="xs:max-w-full max-w-xs"
+                  />
+                )}
+              </CardDescription>
+
+              <Separator />
+            </CardHeader>
+
+            {/* desc */}
+            <CardContent>
+              {description && (
+                <CollapsibleTextWrapper
+                  text={description}
+                  className="mt-2 whitespace-pre-wrap break-all text-sm "
+                  expandButtonProps={{ className: "mt-2" }}
                 />
               )}
-              {industry && (
-                <IndustryDisplay
-                  industry={industry}
-                  className="xs:max-w-full max-w-xs"
-                />
-              )}
-              {yearOfExperience !== null && (
-                <YearsOfExperienceDisplay
-                  yearOfExperience={yearOfExperience}
-                  className="xs:max-w-full max-w-xs"
-                />
-              )}
-            </CardDescription>
-
-            <Separator />
-          </CardHeader>
-
-          {/* desc */}
-          <CardContent>
-            {description && (
-              <CollapsibleTextWrapper
-                text={description}
-                className="mt-2 whitespace-pre-wrap break-all text-sm "
-                expandButtonProps={{ className: "mt-2" }}
-              />
-            )}
-          </CardContent>
-        </div>
-
-        {/* created at */}
-        <CardFooter className="justify-end">
-          <CardDescription>{formattedCreatedAt}</CardDescription>
-        </CardFooter>
+            </CardContent>
+          </div>
+          {/* created at */}
+          <CardFooter className="justify-end">
+            <CardDescription>{formattedCreatedAt}</CardDescription>
+          </CardFooter>
+        </Link>
       </Card>
 
       <ContactDialog
         open={isContactFormOpen}
-        username={username}
+        username={username || "?"}
         onContactFormClose={() => setIsContactFormOpen(false)}
         toUuid={toUuid}
         messageType={messageType}

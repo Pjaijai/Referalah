@@ -1,6 +1,8 @@
+import { PostStatus } from "@/types/common/post-status"
+
 export interface ISearchPostResponse {
   id: number
-  created_at: Date
+  created_at: string // date time string
   created_by: string
   uuid: string | null
   user: {
@@ -26,4 +28,8 @@ export interface ISearchPostResponse {
   industry: {
     cantonese_name: string
   }
+}
+
+export interface IGetPostResponse extends Omit<ISearchPostResponse, "id"> {
+  status: PostStatus
 }
