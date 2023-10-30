@@ -15,11 +15,10 @@ import PageStatusLayout from "@/components/layouts/page-status"
 
 interface ReferralPostDetailsPageProps {
   postUuid: string | null
-  referralType: ReferralType
 }
 const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   ReferralPostDetailsPageProps
-> = ({ postUuid, referralType }) => {
+> = ({ postUuid }) => {
   const { data: post, isLoading, isSuccess } = useGetPost(postUuid)
 
   return (
@@ -75,7 +74,6 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
               toUuid={post.created_by}
               postUuid={post.uuid}
               className="basis-1/3"
-              referralType={referralType}
             />
           </div>
           <div className="whitespace-pre-wrap break-all">

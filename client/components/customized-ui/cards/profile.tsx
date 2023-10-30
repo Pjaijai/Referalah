@@ -21,7 +21,6 @@ interface IProfileCardProps
   uuid: string | null
   username: string
   photoUrl: string | null
-  referralType: ReferralType
   className?: string
 }
 const ProfileCard: React.FunctionComponent<IProfileCardProps> = ({
@@ -32,7 +31,6 @@ const ProfileCard: React.FunctionComponent<IProfileCardProps> = ({
   receiverType,
   toUuid,
   postUuid,
-  referralType,
   className,
 }) => {
   const [isContactFormOpen, setIsContactFormOpen] = useState(false)
