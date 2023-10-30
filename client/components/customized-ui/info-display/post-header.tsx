@@ -19,7 +19,7 @@ const PostHeader: React.FunctionComponent<
 
   return (
     <div className={className}>
-      <CardTitle className="inline-block whitespace-pre-wrap break-all">
+      <CardTitle className="inline-block">
         {title}
         {url && (
           <TooltipWrapper

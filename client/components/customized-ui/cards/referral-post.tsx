@@ -90,14 +90,15 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
 
   return (
     <>
-      <Link
-        href={`${
-          isReferrer
-            ? siteConfig.page.referrerPost.href
-            : siteConfig.page.refereePost.href
-        }/${uuid}`}
-      >
-        <Card className="flex flex-col justify-between rounded shadow-md">
+      <Card className="flex flex-col justify-between rounded shadow-md">
+        {" "}
+        <Link
+          href={`${
+            isReferrer
+              ? siteConfig.page.referrerPost.href
+              : siteConfig.page.refereePost.href
+          }/${uuid}`}
+        >
           <div className="flex flex-col items-start justify-start">
             <CardHeader className="w-full pb-2">
               {/* title, subtitle, url, avatar, quick action */}
@@ -199,13 +200,12 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
               )}
             </CardContent>
           </div>
-
           {/* created at */}
           <CardFooter className="justify-end">
             <CardDescription>{formattedCreatedAt}</CardDescription>
           </CardFooter>
-        </Card>
-      </Link>
+        </Link>
+      </Card>
 
       <ContactDialog
         open={isContactFormOpen}
