@@ -4,7 +4,7 @@ import React from "react"
 
 import { MessageType } from "@/types/common/message-type"
 import { ReferralType } from "@/types/common/referral-type"
-import useGetPostDetails from "@/hooks/api/post/get-post-details"
+import useGetPost from "@/hooks/api/post/get-post"
 import ProfileCard from "@/components/customized-ui/cards/profile"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
@@ -20,7 +20,7 @@ interface ReferralPostDetailsPageProps {
 const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   ReferralPostDetailsPageProps
 > = ({ postUuid, referralType }) => {
-  const { data: post, isLoading, isSuccess } = useGetPostDetails(postUuid)
+  const { data: post, isLoading, isSuccess } = useGetPost(postUuid)
 
   return (
     <PageStatusLayout

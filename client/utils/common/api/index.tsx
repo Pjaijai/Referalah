@@ -295,7 +295,7 @@ const apiService = {
       throw error
     }
   },
-  getPostDetails: async ({ queryKey }: any) => {
+  getPost: async (uuid: string) => {
     try {
       let query = supabase
         .from("post")
@@ -328,7 +328,7 @@ const apiService = {
               )
             `
         )
-        .eq("uuid", queryKey[1].postId)
+        .eq("uuid", uuid)
         .single()
 
       const { data, error } = await query
