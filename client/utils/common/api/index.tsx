@@ -5,7 +5,7 @@ import { IContactReferralRequest } from "@/types/api/request/contact/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { IIndustryResponse } from "@/types/api/response/industry"
-import { IPostDetailsResponse } from "@/types/api/response/referer-post"
+import { IGetPostResponse } from "@/types/api/response/referer-post"
 import { IReferralResponse } from "@/types/api/response/referral"
 import { IUserResponse } from "@/types/api/response/user"
 import { ReferralType } from "@/types/common/referral-type"
@@ -299,6 +299,7 @@ const apiService = {
     try {
       let query = supabase
         .from("post")
+
         .select(
           `   uuid,
               status,
@@ -328,6 +329,7 @@ const apiService = {
               )
             `
         )
+
         .eq("uuid", uuid)
         .single()
 
@@ -335,7 +337,7 @@ const apiService = {
 
       if (error) throw error
 
-      return data as unknown as IPostDetailsResponse
+      return data as IGetPostResponse
     } catch (err) {
       throw err
     }

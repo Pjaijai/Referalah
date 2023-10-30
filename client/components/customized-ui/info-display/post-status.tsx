@@ -1,10 +1,10 @@
+import { PostStatus } from "@/types/common/post-status"
 import { ReferralType, ReferralTypeZh } from "@/types/common/referral-type"
-import { Status } from "@/types/common/status"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 
 interface PostStatusDisplayProps {
-  postStatus: Status
+  postStatus: PostStatus
   postType: ReferralType
   className?: string
 }
@@ -14,7 +14,7 @@ const PostStatusDisplay = ({
   postType,
   className,
 }: PostStatusDisplayProps) => {
-  const isActive = postStatus === Status.ACTIVE
+  const isActive = postStatus === PostStatus.ACTIVE
 
   return (
     <div className={cn("flex gap-1", className)}>
