@@ -56,6 +56,7 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   yearOfExperience,
   receiverType,
   createdAt,
+  createdBy,
 }) => {
   const isReferrer = receiverType === ReferralType.REFERRER
 
@@ -90,11 +91,15 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
                   />
                 </div>
 
-                <BaseAvatar
-                  fallBack={username ? username[0] : "?"}
-                  alt={username}
-                  url={photoUrl || undefined}
-                />
+                <Link href={`${siteConfig.page.profile.href}/${createdBy}`}>
+                  <div>
+                    <BaseAvatar
+                      fallBack={username ? username[0] : "?"}
+                      alt={username}
+                      url={photoUrl || undefined}
+                    />
+                  </div>
+                </Link>
               </div>
 
               {/* location, industry, year of exp */}
