@@ -41,6 +41,7 @@ interface IReferralPostCardProps
   createdAt?: string
   createdBy: string
 }
+
 const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   uuid,
   jobTitle,
@@ -74,6 +75,7 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
               ? siteConfig.page.referrerPost.href
               : siteConfig.page.refereePost.href
           }/${uuid}`}
+          onClick={(e) => e.stopPropagation()}
         >
           <div className="flex flex-col items-start justify-start">
             <CardHeader className="w-full pb-2">
@@ -92,13 +94,11 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
                 </div>
 
                 <Link href={`${siteConfig.page.profile.href}/${createdBy}`}>
-                  <div>
-                    <BaseAvatar
-                      fallBack={username ? username[0] : "?"}
-                      alt={username}
-                      url={photoUrl || undefined}
-                    />
-                  </div>
+                  <BaseAvatar
+                    fallBack={username ? username[0] : "?"}
+                    alt={username}
+                    url={photoUrl || undefined}
+                  />
                 </Link>
               </div>
 

@@ -13,7 +13,8 @@ interface IPostHeaderProps {
 const PostHeader: React.FunctionComponent<
   PropsWithChildren<IPostHeaderProps>
 > = ({ title, subtitle, url, className }) => {
-  const handleUrlClick = () => {
+  const handleUrlClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault()
     if (url) window.open(url, "_blank")
   }
 
@@ -23,9 +24,10 @@ const PostHeader: React.FunctionComponent<
         {title}
         {url && (
           <TooltipWrapper
+            tooltipTriggerProps={{ className: "ml-2" }}
             tooltipTrigger={
               <a onClick={handleUrlClick} className="align-middle">
-                <Icons.link className="ml-2 h-4 w-4" />
+                <Icons.link className="h-4 w-4" />
               </a>
             }
             tooltipContent={<span>相關連結</span>}
