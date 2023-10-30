@@ -1,5 +1,6 @@
 import React, { useMemo } from "react"
 import Link from "next/link"
+import PostHeader from "@/modules/post/components/info-display/header"
 import { IContactDialogProps } from "@/modules/referral/components/dialog/contact"
 import { formatCreatedAt } from "@/utils/common/helpers/format/date"
 
@@ -16,7 +17,6 @@ import BaseAvatar from "@/components/customized-ui/avatars/base"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import IndustryDisplay from "@/components/customized-ui/info-display/industry"
 import LocationDisplay from "@/components/customized-ui/info-display/location"
-import PostHeader from "@/components/customized-ui/info-display/post-header"
 import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
 import CollapsibleTextWrapper from "@/components/customized-ui/tool/collapsible-text-wrapper"
 

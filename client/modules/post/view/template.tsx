@@ -1,15 +1,15 @@
 "use client"
 
 import React from "react"
+import PostDetailsInfoDisplay from "@/modules/post/components/info-display/details-info"
+import PostHeader from "@/modules/post/components/info-display/header"
+import PostStatusDisplay from "@/modules/post/components/info-display/status"
 
 import { MessageType } from "@/types/common/message-type"
 import useGetPost from "@/hooks/api/post/get-post"
 import ProfileCard from "@/components/customized-ui/cards/profile"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
-import PostDetailsInfoDisplay from "@/components/customized-ui/info-display/post-details-info"
-import PostHeader from "@/components/customized-ui/info-display/post-header"
-import PostStatusDisplay from "@/components/customized-ui/info-display/post-status"
 import PageStatusLayout from "@/components/layouts/page-status"
 
 interface ReferralPostDetailsPageProps {
