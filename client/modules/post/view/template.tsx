@@ -35,7 +35,6 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
               <div className="mb-3 flex w-full basis-full flex-row items-center justify-between">
                 <PostStatusDisplay
                   postStatus={post.status}
-                  postType={referralType}
                   className="flex-end"
                 />
                 <CreatedAtDisplay

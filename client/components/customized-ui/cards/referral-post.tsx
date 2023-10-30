@@ -3,7 +3,6 @@ import Link from "next/link"
 import { IContactDialogProps } from "@/modules/referral/components/dialog/contact"
 import { formatCreatedAt } from "@/utils/common/helpers/format/date"
 
-import { ReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
 import {
   Card,
