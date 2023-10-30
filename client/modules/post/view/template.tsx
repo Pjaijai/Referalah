@@ -14,13 +14,13 @@ import PostStatusDisplay from "@/components/customized-ui/info-display/post-stat
 import PageStatusLayout from "@/components/layouts/page-status"
 
 interface ReferralPostDetailsPageProps {
-  postId: string | null
+  postUuid: string | null
   referralType: ReferralType
 }
 const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   ReferralPostDetailsPageProps
-> = ({ postId, referralType }) => {
-  const { data: post, isLoading, isSuccess } = useGetPostDetails(postId)
+> = ({ postUuid, referralType }) => {
+  const { data: post, isLoading, isSuccess } = useGetPostDetails(postUuid)
 
   return (
     <PageStatusLayout

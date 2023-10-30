@@ -3,10 +3,10 @@ import ReferralPostDetailsPageTemplate from "@/modules/post/view/template"
 
 import { ReferralType } from "@/types/common/referral-type"
 
-const RefererPostDetailsPage = ({ params }: { params: { postId: string } }) => {
+const RefererPostDetailsPage = ({ params }: { params: { uuid: string } }) => {
   return (
     <ReferralPostDetailsPageTemplate
-      postId={params.postId}
+      postUuid={params.uuid}
       referralType={ReferralType.REFERRER}
     />
   )
