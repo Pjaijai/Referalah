@@ -28,7 +28,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
       isLoading={isLoading}
       isSuccess={isSuccess}
     >
-      {post ? (
+      {post && (
         <div className="mt-5 flex h-full w-full flex-col md:mt-0">
           <div className="my-0 mb-5 flex flex-col justify-between gap-4 md:my-5 md:flex-row">
             <div className="flex w-full flex-col">
@@ -83,7 +83,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
             {post.description}
           </div>
         </div>
-      ) : null}
+      )}
     </PageStatusLayout>
   )
 }
