@@ -29,7 +29,7 @@ export const siteConfig = {
       href: "/post/create",
     },
     referrerPost: {
-      name: "工搵人",
+      name: "街招",
       href: "/post/referer",
     },
     about: {

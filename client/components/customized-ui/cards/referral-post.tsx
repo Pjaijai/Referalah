@@ -59,8 +59,6 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   createdAt,
   createdBy,
 }) => {
-  const isReferrer = receiverType === ReferralType.REFERRER
-
   const formattedCreatedAt = useMemo(
     () => formatCreatedAt(createdAt),
     [createdAt]
