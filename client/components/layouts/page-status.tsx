@@ -9,6 +9,7 @@ interface PageStatusLayoutProps {
   children: ReactNode
 }
 
+// TODO : Convert this to page fallback and apply on all page
 const PageStatusLayout = ({
   error,
   isLoading,
