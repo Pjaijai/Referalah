@@ -12,12 +12,16 @@ interface ICreatedAtDisplayProps {
 const CreatedAtDisplay: React.FunctionComponent<
   PropsWithChildren<ICreatedAtDisplayProps>
 > = ({ createdAt, className }) => {
+  const formattedCreatedAt = formatCreatedAt(createdAt)
   return (
     <div className={cn("flex items-center justify-start", className)}>
       <div>
         <Icons.createdAt width="13" height="13" />
       </div>
-      <span className="ml-1">創建於{formatCreatedAt(createdAt)}前</span>
+      <span className="ml-1">
+        創建於{formattedCreatedAt}
+        {formattedCreatedAt !== "今日" && "前"}
+      </span>
     </div>
   )
 }
