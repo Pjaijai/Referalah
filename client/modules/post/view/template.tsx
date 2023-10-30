@@ -3,7 +3,6 @@
 import React from "react"
 
 import { MessageType } from "@/types/common/message-type"
-import { ReferralType } from "@/types/common/referral-type"
 import useGetPost from "@/hooks/api/post/get-post"
 import ProfileCard from "@/components/customized-ui/cards/profile"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"

@@ -5,7 +5,6 @@ import ContactDialog, {
 } from "@/modules/referral/components/dialog/contact"
 import UserSignInDialog from "@/modules/referral/components/dialog/userSignIn"
 
-import { ReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import useUserStore from "@/hooks/state/user/store"
