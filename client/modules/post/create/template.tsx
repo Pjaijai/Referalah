@@ -35,7 +35,6 @@ const CreatePostTemplate: React.FunctionComponent<
   ICreatePostTemplateProps
 > = () => {
   const formSchema = z.object({
-    type: z.string().nonempty("俾幫手填下🙏🏻"),
     url: maximumWordValidation(20000)
       .url({
         message: "無效連結",
@@ -106,7 +105,6 @@ const CreatePostTemplate: React.FunctionComponent<
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      type: ReferralType.REFERRER,
       description: "",
       companyName: "",
       jobTitle: "",
@@ -123,7 +121,6 @@ const CreatePostTemplate: React.FunctionComponent<
   const countryWatch = form.watch("countryUuid")
   const provinceWatch = form.watch("provinceUuid")
   const yeoWatch = form.watch("yearOfExperience")
-  const typeWatch = form.watch("type")
   const urlWatch = form.watch("url")
   const router = useRouter()
   const user = useUserStore((state) => state)
@@ -204,18 +201,14 @@ const CreatePostTemplate: React.FunctionComponent<
           industryUuid: values.industryUuid,
           yearOfExperience: parseInt(values.yearOfExperience),
           createdBy: user.uuid!,
-          type: values.type,
+          type: ReferralType.REFERRER,
           companyName: values.companyName.trim(),
           jobTitle: values.jobTitle.trim(),
           description: values.description.trim(),
         },
         {
           onSuccess: () => {
-            if (values.type === ReferralType.REFERRER) {
-              router.push("/post/referer")
-            } else {
-              router.push("/post/referee")
-            }
+            router.push("/post/referer")
           },
           onError: () => {
             return toast({
@@ -240,12 +233,6 @@ const CreatePostTemplate: React.FunctionComponent<
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4"
         >
-          <FormSelect
-            options={postTypeOptions}
-            control={form.control}
-            label="類型"
-            name="type"
-          />
           <FormTextInput
             control={form.control}
             label="相關網址"
@@ -269,11 +256,7 @@ const CreatePostTemplate: React.FunctionComponent<
             control={form.control}
             label="內容"
             name="description"
-            description={
-              typeWatch === ReferralType.REFERRER
-                ? "講吓想搵啲咩人？"
-                : "大概講吓你自己點解match呢個職位，建議唔好公開自己聯絡資訊。"
-            }
+            description={"講吓想搵啲咩人？"}
           />
 
           <FormSelect
