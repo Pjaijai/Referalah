@@ -1,16 +1,10 @@
-import React, { useMemo, useState } from "react"
+import React, { useMemo } from "react"
 import Link from "next/link"
-import ContactDialog, {
-  IContactDialogProps,
-} from "@/modules/referral/components/dialog/contact"
-import UserSignInDialog from "@/modules/referral/components/dialog/userSignIn"
+import { IContactDialogProps } from "@/modules/referral/components/dialog/contact"
 import { formatCreatedAt } from "@/utils/common/helpers/format/date"
 
 import { ReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
-import useViewport from "@/hooks/common/useViewport"
-import useUserStore from "@/hooks/state/user/store"
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -26,8 +20,6 @@ import LocationDisplay from "@/components/customized-ui/info-display/location"
 import PostHeader from "@/components/customized-ui/info-display/post-header"
 import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
 import CollapsibleTextWrapper from "@/components/customized-ui/tool/collapsible-text-wrapper"
-import TooltipWrapper from "@/components/customized-ui/tool/tooltip-wrapper"
-import { Icons } from "@/components/icons"
 
 interface IReferralPostCardProps
   extends Omit<
@@ -62,26 +54,10 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   url,
   username,
   yearOfExperience,
-  messageType,
-  postUuid,
   receiverType,
-  toUuid,
   createdAt,
-  createdBy,
 }) => {
-  const [isContactFormOpen, setIsContactFormOpen] = useState(false)
-  const [isAuthOpen, setIsAuthOpen] = useState(false)
-  const isUserSignIn = useUserStore((state) => state.isSignIn)
   const isReferrer = receiverType === ReferralType.REFERRER
-  const { isMobile } = useViewport()
-
-  const handleContactClick = () => {
-    if (isUserSignIn) {
-      setIsContactFormOpen(true)
-    } else {
-      setIsAuthOpen(true)
-    }
-  }
 
   const formattedCreatedAt = useMemo(
     () => formatCreatedAt(createdAt),
@@ -91,7 +67,6 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   return (
     <>
       <Card className="flex flex-col justify-between rounded shadow-md">
-        {" "}
         <Link
           href={`${
             isReferrer
@@ -104,22 +79,6 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
               {/* title, subtitle, url, avatar, quick action */}
               <div className="flex flex-row items-start justify-between gap-3 sm:gap-1">
                 <div className="mb-2 flex basis-full items-center gap-3 sm:basis-2/3 md:basis-3/5">
-                  {!isReferrer && (
-                    <TooltipWrapper
-                      tooltipTrigger={
-                        <Link
-                          href={`${siteConfig.page.profile.href}/${createdBy}`}
-                        >
-                          <BaseAvatar
-                            fallBack={username ? username[0] : "?"}
-                            alt={username}
-                            url={photoUrl || undefined}
-                          />
-                        </Link>
-                      }
-                      tooltipContent={<span>查看用戶檔案</span>}
-                    />
-                  )}
                   <PostHeader
                     title={jobTitle}
                     subtitle={
@@ -130,36 +89,12 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
                     url={url}
                   />
                 </div>
-                <div className="flex items-center">
-                  {isReferrer && (
-                    <div className="mr-2">
-                      <TooltipWrapper
-                        tooltipTrigger={
-                          <Link
-                            href={`${siteConfig.page.profile.href}/${createdBy}`}
-                          >
-                            <BaseAvatar
-                              fallBack={username ? username[0] : "?"}
-                              alt={username}
-                              url={photoUrl || undefined}
-                            />
-                          </Link>
-                        }
-                        tooltipContent={<span>查看推薦人檔案</span>}
-                      />
-                    </div>
-                  )}
-                  <Button
-                    className="px-3"
-                    onClick={handleContactClick}
-                    size={isMobile ? "icon" : "default"}
-                  >
-                    <Icons.mail className="h-4 w-4 sm:mr-1" />
-                    {isMobile
-                      ? undefined
-                      : `聯絡${isReferrer ? "推薦人" : "用戶"}`}
-                  </Button>
-                </div>
+
+                <BaseAvatar
+                  fallBack={username ? username[0] : "?"}
+                  alt={username}
+                  url={photoUrl || undefined}
+                />
               </div>
 
               {/* location, industry, year of exp */}
@@ -206,21 +141,6 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
           </CardFooter>
         </Link>
       </Card>
-
-      <ContactDialog
-        open={isContactFormOpen}
-        username={username || "?"}
-        onContactFormClose={() => setIsContactFormOpen(false)}
-        toUuid={toUuid}
-        messageType={messageType}
-        postUuid={postUuid}
-        receiverType={receiverType}
-      />
-
-      <UserSignInDialog
-        open={isAuthOpen}
-        onDialogClose={() => setIsAuthOpen(false)}
-      />
     </>
   )
 }
