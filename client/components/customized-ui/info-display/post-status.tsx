@@ -1,5 +1,7 @@
+import { ReferralTypeTranslationMapper } from "@/utils/common/mappers/translation/referral-type"
+
 import { PostStatus } from "@/types/common/post-status"
-import { ReferralType, ReferralTypeZh } from "@/types/common/referral-type"
+import { ReferralType } from "@/types/common/referral-type"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 
@@ -28,7 +30,7 @@ const PostStatusDisplay = ({
         variant={postType === ReferralType.REFERRER ? "purple" : "blue"}
         className="flex justify-center border-2"
       >
-        {ReferralTypeZh[postType]}
+        {ReferralTypeTranslationMapper[postType].zh}
       </Badge>
     </div>
   )
