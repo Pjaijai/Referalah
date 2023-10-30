@@ -26,12 +26,6 @@ const PostStatusDisplay = ({
       >
         {isActive ? "開放" : "已關閉"}
       </Badge>
-      <Badge
-        variant={postType === ReferralType.REFERRER ? "purple" : "blue"}
-        className="flex justify-center border-2"
-      >
-        {ReferralTypeTranslationMapper[postType].zh}
-      </Badge>
     </div>
   )
 }
