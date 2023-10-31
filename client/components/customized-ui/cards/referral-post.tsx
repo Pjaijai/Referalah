@@ -37,8 +37,8 @@ interface IReferralPostCardProps
   city: string | null
   industry: string | null
   url: string | null
-  createdAt?: string
-  createdBy: string
+  createdAt?: string | null
+  createdBy: string | null
 }
 
 const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({

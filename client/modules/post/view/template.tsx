@@ -36,7 +36,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                   className="flex-end"
                 />
                 <CreatedAtDisplay
-                  createdAt={post.created_at.toString()}
+                  createdAt={post.created_at && post.created_at.toString()}
                   className="justify-end text-xs text-muted-foreground"
                 />
               </div>
@@ -57,18 +57,18 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
               </div>
 
               <PostDetailsInfoDisplay
-                city={post.city.cantonese_name}
-                province={post.province.cantonese_name}
-                country={post.country.cantonese_name}
-                industry={post.industry.cantonese_name}
+                city={post.city && post.city.cantonese_name}
+                province={post.province && post.province.cantonese_name}
+                country={post.country && post.country.cantonese_name}
+                industry={post.industry && post.industry.cantonese_name}
                 yearOfExperience={post.year_of_experience}
               />
             </div>
 
             <ProfileCard
               uuid={post.created_by}
-              username={post.user.username}
-              photoUrl={post.user.avatar_url}
+              username={post.user && post.user.username}
+              photoUrl={post.user && post.user.avatar_url}
               messageType={MessageType.POST}
               toUuid={post.created_by}
               postUuid={post.uuid}

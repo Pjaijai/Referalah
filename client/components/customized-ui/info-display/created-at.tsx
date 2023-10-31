@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 
 interface ICreatedAtDisplayProps {
-  createdAt: string
+  createdAt: string | null
   className?: string
 }
 

@@ -1,9 +1,9 @@
-import { PostStatus } from "@/types/common/post-status"
+import { PostStatus, PostStatusType } from "@/types/common/post-status"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 
 interface PostStatusDisplayProps {
-  postStatus: PostStatus
+  postStatus: PostStatusType
   className?: string
 }
 
