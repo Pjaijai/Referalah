@@ -31,7 +31,7 @@ import { useToast } from "@/components/ui/use-toast"
 
 export interface IContactDialogProps {
   open: boolean
-  username: string
+  username: string | null
   onContactFormClose: () => void
   messageType: MessageType
   receiverType?: ReferralType

@@ -18,7 +18,7 @@ interface IProfileCardProps
     "open" | "username" | "onContactFormClose"
   > {
   uuid: string | null
-  username: string
+  username: string | null
   photoUrl: string | null
   className?: string
 }
@@ -84,7 +84,7 @@ const ProfileCard: React.FunctionComponent<IProfileCardProps> = ({
 
       <ContactDialog
         open={isContactFormOpen}
-        username={username}
+        username={username && username}
         onContactFormClose={() => setIsContactFormOpen(false)}
         toUuid={toUuid}
         messageType={messageType}

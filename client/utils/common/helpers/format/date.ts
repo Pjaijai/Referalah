@@ -1,6 +1,6 @@
 import compareDateDifferenceHelper from "@/utils/common/helpers/time/compareDateDifference"
 
-export const formatCreatedAt = (createdAt?: string) => {
+export const formatCreatedAt = (createdAt?: string | null) => {
   if (createdAt) {
     const difference = compareDateDifferenceHelper({
       newDate: new Date().toString(),
