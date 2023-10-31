@@ -344,7 +344,7 @@ const apiService = {
 
       if (error) throw error
 
-      return data as IGetPostResponse
+      return data satisfies IGetPostResponse
     } catch (err) {
       throw err
     }
