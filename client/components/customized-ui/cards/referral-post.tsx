@@ -1,9 +1,9 @@
 import React, { useMemo } from "react"
 import Link from "next/link"
+import PostHeader from "@/modules/post/components/info-display/header"
 import { IContactDialogProps } from "@/modules/referral/components/dialog/contact"
 import { formatCreatedAt } from "@/utils/common/helpers/format/date"
 
-import { ReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
 import {
   Card,
@@ -17,7 +17,6 @@ import BaseAvatar from "@/components/customized-ui/avatars/base"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import IndustryDisplay from "@/components/customized-ui/info-display/industry"
 import LocationDisplay from "@/components/customized-ui/info-display/location"
-import PostHeader from "@/components/customized-ui/info-display/post-header"
 import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
 import CollapsibleTextWrapper from "@/components/customized-ui/tool/collapsible-text-wrapper"
 
@@ -59,8 +58,6 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   createdAt,
   createdBy,
 }) => {
-  const isReferrer = receiverType === ReferralType.REFERRER
-
   const formattedCreatedAt = useMemo(
     () => formatCreatedAt(createdAt),
     [createdAt]
@@ -70,11 +67,7 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
     <>
       <Card className="flex flex-col justify-between rounded shadow-md">
         <Link
-          href={`${
-            isReferrer
-              ? siteConfig.page.referrerPost.href
-              : siteConfig.page.refereePost.href
-          }/${uuid}`}
+          href={`${siteConfig.page.referrerPost.href}/${uuid}`}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex flex-col items-start justify-start">

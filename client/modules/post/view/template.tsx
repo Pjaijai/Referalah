@@ -1,25 +1,23 @@
 "use client"
 
 import React from "react"
+import PostDetailsInfoDisplay from "@/modules/post/components/info-display/details-info"
+import PostHeader from "@/modules/post/components/info-display/header"
+import PostStatusDisplay from "@/modules/post/components/info-display/status"
 
 import { MessageType } from "@/types/common/message-type"
-import { ReferralType } from "@/types/common/referral-type"
 import useGetPost from "@/hooks/api/post/get-post"
 import ProfileCard from "@/components/customized-ui/cards/profile"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
-import PostDetailsInfoDisplay from "@/components/customized-ui/info-display/post-details-info"
-import PostHeader from "@/components/customized-ui/info-display/post-header"
-import PostStatusDisplay from "@/components/customized-ui/info-display/post-status"
 import PageStatusLayout from "@/components/layouts/page-status"
 
 interface ReferralPostDetailsPageProps {
   postUuid: string | null
-  referralType: ReferralType
 }
 const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   ReferralPostDetailsPageProps
-> = ({ postUuid, referralType }) => {
+> = ({ postUuid }) => {
   const { data: post, isLoading, isSuccess } = useGetPost(postUuid)
 
   return (
@@ -35,7 +33,6 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
               <div className="mb-3 flex w-full basis-full flex-row items-center justify-between">
                 <PostStatusDisplay
                   postStatus={post.status}
-                  postType={referralType}
                   className="flex-end"
                 />
                 <CreatedAtDisplay
@@ -76,7 +73,6 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
               toUuid={post.created_by}
               postUuid={post.uuid}
               className="basis-1/3"
-              referralType={referralType}
             />
           </div>
           <div className="whitespace-pre-wrap break-all">

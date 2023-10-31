@@ -5,7 +5,6 @@ import ContactDialog, {
 } from "@/modules/referral/components/dialog/contact"
 import UserSignInDialog from "@/modules/referral/components/dialog/userSignIn"
 
-import { ReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import useUserStore from "@/hooks/state/user/store"
@@ -21,7 +20,6 @@ interface IProfileCardProps
   uuid: string | null
   username: string
   photoUrl: string | null
-  referralType: ReferralType
   className?: string
 }
 const ProfileCard: React.FunctionComponent<IProfileCardProps> = ({
@@ -32,14 +30,12 @@ const ProfileCard: React.FunctionComponent<IProfileCardProps> = ({
   receiverType,
   toUuid,
   postUuid,
-  referralType,
   className,
 }) => {
   const [isContactFormOpen, setIsContactFormOpen] = useState(false)
   const [isAuthOpen, setIsAuthOpen] = useState(false)
   const isUserSignIn = useUserStore((state) => state.isSignIn)
   const router = useRouter()
-  const isReferrer = referralType === ReferralType.REFERRER
 
   const handleContactClick = () => {
     if (isUserSignIn) {
@@ -73,7 +69,7 @@ const ProfileCard: React.FunctionComponent<IProfileCardProps> = ({
         <div className="flex flex-row gap-3 p-0 pt-3 md:flex-col md:gap-0 md:pt-4">
           <Button className="w-full" onClick={handleContactClick}>
             <Icons.mail className="mr-1 h-4 w-4" />
-            聯絡{isReferrer ? "推薦人" : "用戶"}
+            聯絡推薦人
           </Button>
 
           <Button
@@ -81,7 +77,7 @@ const ProfileCard: React.FunctionComponent<IProfileCardProps> = ({
             className="mt-0 w-full md:mt-2"
             onClick={handleProfileClick}
           >
-            查看{isReferrer ? "推薦人" : "用戶"}檔案
+            查看推薦人
           </Button>
         </div>
       </div>
