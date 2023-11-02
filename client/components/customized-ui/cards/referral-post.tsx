@@ -21,10 +21,7 @@ import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/ye
 import CollapsibleTextWrapper from "@/components/customized-ui/tool/collapsible-text-wrapper"
 
 interface IReferralPostCardProps
-  extends Omit<
-    IContactDialogProps,
-    "open" | "username" | "onContactFormClose"
-  > {
+   {
   uuid: string | null
   username: string | null
   photoUrl: string | null
@@ -54,7 +51,6 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   url,
   username,
   yearOfExperience,
-  receiverType,
   createdAt,
   createdBy,
 }) => {
