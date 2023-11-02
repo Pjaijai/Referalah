@@ -5,6 +5,7 @@ import { formatDate } from "@/utils/common/helpers/format/date"
 
 import { PostStatusType } from "@/types/common/post-status"
 import { siteConfig } from "@/config/site"
+import { buttonVariants } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -56,71 +57,68 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
 
   return (
     <Card className="flex flex-col justify-between rounded shadow-md">
-      <Link
-        href={`${siteConfig.page.referrerPost.href}/${uuid}`}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex flex-col items-start justify-start">
-          <CardHeader className="w-full pb-2">
-            {/* title, subtitle, url, avatar, quick action */}
-            <div className="flex flex-row items-start justify-between gap-3 sm:gap-1">
-              <div className="mb-2 flex basis-full flex-row items-center gap-3 sm:basis-2/3 md:basis-3/5">
-                <PostHeader
-                  title={jobTitle}
-                  subtitle={
-                    companyName ? (
-                      <CompanyNameDisplay name={companyName} />
-                    ) : undefined
-                  }
-                  url={url}
-                  status={status}
-                />
-              </div>
+      <div className="flex flex-col items-start justify-start">
+        <CardHeader className="w-full pb-2">
+          {/* title, subtitle, url, avatar, quick action */}
+          <div className="flex flex-row items-start justify-between gap-3 sm:gap-1">
+            <div className="mb-2 flex basis-full flex-row items-center gap-3 sm:basis-2/3 md:basis-3/5">
+              <PostHeader
+                title={jobTitle}
+                subtitle={
+                  companyName ? (
+                    <CompanyNameDisplay name={companyName} />
+                  ) : undefined
+                }
+                url={url}
+                status={status}
+              />
             </div>
+          </div>
 
-            {/* location, industry, year of exp */}
-            <CardDescription className="text-overflow-ellipsis mb-5 mt-2 flex flex-wrap items-center justify-start gap-4">
-              {(city || province || country) && (
-                <LocationDisplay
-                  city={city}
-                  province={province}
-                  country={country}
-                  className="xs:max-w-full max-w-sm"
-                />
-              )}
-              {industry && (
-                <IndustryDisplay
-                  industry={industry}
-                  className="xs:max-w-full max-w-xs"
-                />
-              )}
-              {yearOfExperience !== null && (
-                <YearsOfExperienceDisplay
-                  yearOfExperience={yearOfExperience}
-                  className="xs:max-w-full max-w-xs"
-                />
-              )}
-            </CardDescription>
-
-            <Separator />
-          </CardHeader>
-
-          {/* desc */}
-          <CardContent>
-            {description && (
-              <CollapsibleTextWrapper
-                text={description}
-                className="mt-2 whitespace-pre-wrap break-all text-sm "
-                expandButtonProps={{ className: "mt-2" }}
+          {/* location, industry, year of exp */}
+          <CardDescription className="text-overflow-ellipsis mb-5 mt-2 flex flex-wrap items-center justify-start gap-4">
+            {(city || province || country) && (
+              <LocationDisplay
+                city={city}
+                province={province}
+                country={country}
+                className="xs:max-w-full max-w-sm"
               />
             )}
-          </CardContent>
+            {industry && (
+              <IndustryDisplay
+                industry={industry}
+                className="xs:max-w-full max-w-xs"
+              />
+            )}
+            {yearOfExperience !== null && (
+              <YearsOfExperienceDisplay
+                yearOfExperience={yearOfExperience}
+                className="xs:max-w-full max-w-xs"
+              />
+            )}
+          </CardDescription>
+
+          <Separator />
+        </CardHeader>
+      </div>
+      {/* created at */}
+      <CardFooter className="justify-between">
+        <div className="flex gap-2">
+          <Link
+            href={`${siteConfig.page.referrerPost.href}/${uuid}`}
+            className={buttonVariants({ variant: "default" })}
+          >
+            查看
+          </Link>
+
+          <Link href={``} className={buttonVariants({ variant: "ghost" })}>
+            編輯
+          </Link>
         </div>
-        {/* created at */}
-        <CardFooter className="justify-end">
-          <CardDescription>{formattedCreatedAt}</CardDescription>
-        </CardFooter>
-      </Link>
+
+        <CardDescription>{formattedCreatedAt}</CardDescription>
+      </CardFooter>
     </Card>
   )
 }
