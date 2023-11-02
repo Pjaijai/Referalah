@@ -7,11 +7,11 @@ import useListPostByUserUuid from "@/hooks/api/post/list-post-by-user-uuid"
 import CommonPageLayout from "@/components/layouts/common"
 
 const PostHistoryPage = ({ params }: { params: { userUuid: string } }) => {
-  const { data } = useListPostByUserUuid(params.userUuid)
+  const { data, isLoading } = useListPostByUserUuid(params.userUuid)
 
   return (
     <CommonPageLayout>
-      <PostHistoryTemplate data={data} />
+      <PostHistoryTemplate data={data} isLoading={isLoading} />
     </CommonPageLayout>
   )
 }
