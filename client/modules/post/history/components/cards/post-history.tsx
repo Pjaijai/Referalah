@@ -8,7 +8,6 @@ import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -18,12 +17,10 @@ import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import IndustryDisplay from "@/components/customized-ui/info-display/industry"
 import LocationDisplay from "@/components/customized-ui/info-display/location"
 import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
-import CollapsibleTextWrapper from "@/components/customized-ui/tool/collapsible-text-wrapper"
 
 interface IReferralPostCardProps {
   uuid: string | null
   photoUrl: string | null
-  description: string | null
   companyName: string | null
   jobTitle: string | null
   yearOfExperience: number | null
@@ -42,7 +39,6 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
   city,
   companyName,
   country,
-  description,
   industry,
   province,
   url,

@@ -26,7 +26,6 @@ const PostHistoryTemplate: React.FunctionComponent<
               companyName={data.company_name}
               country={data.country && data.country.cantonese_name}
               status={data.status}
-              description={data.description}
               industry={data.industry && data.industry.cantonese_name}
               jobTitle={data.job_title}
               photoUrl={data.user && data.user.avatar_url}
