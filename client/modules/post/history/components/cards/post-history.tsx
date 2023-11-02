@@ -1,8 +1,6 @@
 import React, { useMemo } from "react"
 import Link from "next/link"
 import PostHeader from "@/modules/post/components/info-display/header"
-import PostStatusDisplay from "@/modules/post/components/info-display/status"
-import { formatCreatedAt } from "@/utils/common/helpers/format/created-at"
 import { formatDate } from "@/utils/common/helpers/format/date"
 
 import { PostStatusType } from "@/types/common/post-status"
@@ -15,7 +13,6 @@ import {
   CardHeader,
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import BaseAvatar from "@/components/customized-ui/avatars/base"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import IndustryDisplay from "@/components/customized-ui/info-display/industry"
 import LocationDisplay from "@/components/customized-ui/info-display/location"
