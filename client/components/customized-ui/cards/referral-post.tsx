@@ -1,7 +1,6 @@
 import React, { useMemo } from "react"
 import Link from "next/link"
 import PostHeader from "@/modules/post/components/info-display/header"
-import { IContactDialogProps } from "@/modules/referral/components/dialog/contact"
 import { formatCreatedAt } from "@/utils/common/helpers/format/date"
 
 import { siteConfig } from "@/config/site"
@@ -60,7 +59,6 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   )
 
   return (
-    <>
       <Card className="flex flex-col justify-between rounded shadow-md">
         <Link
           href={`${siteConfig.page.referrerPost.href}/${uuid}`}
@@ -135,7 +133,6 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
           </CardFooter>
         </Link>
       </Card>
-    </>
   )
 }
 
