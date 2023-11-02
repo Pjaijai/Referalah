@@ -1,0 +1,17 @@
+{
+    "theme_color": "#3b82f6",
+    "background_color": "#f8fafc",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/",
+    "name": "Referalah - WPA",
+    "short_name": "Referalah",
+    "description": "A PWA boilerplate with Next Js TypeScript",
+    "icons": [
+      {
+        "src": "/icon-48x48.png",
+        "sizes": "48x48",
+        "type": "image/png"
+      }
+    ]
+  }
