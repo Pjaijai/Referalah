@@ -1,2 +1,5 @@
 .idea
 .vscode
+node_modules
+client/components/customized-ui/skeletons /card.tsx
+client/components/customized-ui/skeletons /card-list.tsx
