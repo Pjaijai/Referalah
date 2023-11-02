@@ -18,6 +18,7 @@ import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
+  manifest: "../manifest.json",
   title: {
     default: `${siteConfig.name} | 海外港人搵Referral平台`,
     template: `%s - ${siteConfig.name}`,
