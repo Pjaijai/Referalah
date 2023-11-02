@@ -1,10 +1,10 @@
 import React, { PropsWithChildren, ReactNode } from "react"
+import PostStatusDisplay from "@/modules/post/components/info-display/status"
 
+import { PostStatusType } from "@/types/common/post-status"
 import { CardTitle } from "@/components/ui/card"
 import TooltipWrapper from "@/components/customized-ui/tool/tooltip-wrapper"
 import { Icons } from "@/components/icons"
-import { PostStatusType } from "@/types/common/post-status"
-import PostStatusDisplay from "@/modules/post/components/info-display/status"
 
 interface IPostHeaderProps {
   title: ReactNode | string
@@ -15,7 +15,7 @@ interface IPostHeaderProps {
 }
 const PostHeader: React.FunctionComponent<
   PropsWithChildren<IPostHeaderProps>
-> = ({ title, subtitle, url, className ,status}) => {
+> = ({ title, subtitle, url, className, status }) => {
   const handleUrlClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
     if (url) window.open(url, "_blank")
@@ -25,9 +25,7 @@ const PostHeader: React.FunctionComponent<
     <div className={className}>
       <CardTitle className="flex flex-row gap-2">
         {title}
-        {
-            status && <PostStatusDisplay postStatus={status}/>
-          }
+        {status && <PostStatusDisplay postStatus={status} />}
         {url && (
           <TooltipWrapper
             // tooltipTriggerProps={{ className: "ml-2" }}
@@ -38,9 +36,7 @@ const PostHeader: React.FunctionComponent<
             }
             tooltipContent={<span>相關連結</span>}
           />
-        
         )}
-         
       </CardTitle>
       <div className="flex items-center justify-start text-sm text-muted-foreground">
         {subtitle}
