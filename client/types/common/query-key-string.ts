@@ -10,6 +10,7 @@ enum QueryKeyString {
   SEARCH_REFERRER = "search-referrer",
   SEARCH_REFEREE = "search-referee",
   POST_DETAILS = "post-details",
+  LIST_POSTS = "list-posts",
 }
 
 export { QueryKeyString }
