@@ -28,7 +28,7 @@ const PostHeader: React.FunctionComponent<
         {status && <PostStatusDisplay postStatus={status} />}
         {url && (
           <TooltipWrapper
-            // tooltipTriggerProps={{ className: "ml-2" }}
+      
             tooltipTrigger={
               <a onClick={handleUrlClick} className="align-middle">
                 <Icons.link className="h-4 w-4" />
