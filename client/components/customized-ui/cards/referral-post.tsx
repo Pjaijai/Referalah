@@ -1,7 +1,7 @@
 import React, { useMemo } from "react"
 import Link from "next/link"
 import PostHeader from "@/modules/post/components/info-display/header"
-import { formatCreatedAt } from "@/utils/common/helpers/format/createdAt"
+import { formatCreatedAt } from "@/utils/common/helpers/format/created-at"
 
 import { siteConfig } from "@/config/site"
 import {
