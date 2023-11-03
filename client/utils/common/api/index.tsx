@@ -320,15 +320,19 @@ const apiService = {
               job_title,
               year_of_experience,
               country(
+                  uuid,
                   cantonese_name
               ),
               province(
+                  uuid,
                   cantonese_name
               ),
               city(
+                 uuid,
                   cantonese_name
               ),
               industry(
+                  uuid,
                   cantonese_name
               ),
               user (
