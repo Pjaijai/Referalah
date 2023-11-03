@@ -51,22 +51,25 @@ create or replace trigger on_auth_user_created
   for each row execute procedure public.handle_new_user();
 ```
 
-### 5.Frontend
+## 5.Frontend
 
 1.  Open your terminal.
 2.  Navigate to the 'client' directory using the `cd client` command.
 3.  Run the development server using `yarn dev`.
 4.  Clone `.env.template` and rename it to `.env`.
-5.  Find Supabase URL and anon key from Project Setting > API and configure `.env`.
+5.  For non localhost developemnt, find Supabase URL and anon key from Project Setting > API and configure `.env`.
+6.  For local development, Run `supabase status` to get the anon key and API URL.
+7.  Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in `.env`.
 
-### 6.Backend (local)
+
+## 6.Backend (local)
 
 1. Install [Supabase CLI](https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli)
 2. Navigate to the 'supabase' directory using the `cd supabase` command.
 3. Run `supabase start`
 4. Connect Supabase database to your favourite database IDE/or using supabase local[http://localhost:54323/project/default]. Run [SQL Script](#to-solve-user-data-cannot-be-inserted-after-registration) to insert user data upon registration.
 5. Create a [Resend](https://resend.com) account for email sending. Link it to your Supabase project and get an API key.
-6. configure your `.env.local`, add your `RESEND_API_KEY` from Resend and use your Resend email account as `RESEND_TO_EMAIL`.
+6. Configure your `.env.local`, add your `RESEND_API_KEY` from Resend and use your Resend email account as `RESEND_TO_EMAIL`.
 7. To start local edge function, create a `.env.local` at the root of supabase folder. Run command `supabase functions serve --env-file ./supabase/.env.local`.
 
 ### 7.Backend Migration
