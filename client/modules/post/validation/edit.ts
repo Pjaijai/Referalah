@@ -1,11 +1,11 @@
 import { createPostValidationSchema } from "@/modules/post/validation/create"
 import { z } from "zod"
 
-import { PostStatus } from "@/types/common/post-status"
+import { PostStatusType } from "@/types/common/post-status"
 
 const editPostValidationSchema = z
   .object({
-    status: z.enum([PostStatus.ACTIVE, PostStatus.INACTIVE]),
+    status: z.enum(["active", "inactive"]),
   })
   .merge(createPostValidationSchema)
 
