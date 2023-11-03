@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react"
-import { formatCreatedAt } from "@/utils/common/helpers/format/date"
+import { formatCreatedAt } from "@/utils/common/helpers/format/created-at"
 
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"

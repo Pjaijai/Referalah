@@ -6,7 +6,10 @@ import { ICreatePostRequest } from "@/types/api/request/post/create"
 import { ISearchPostsRequest } from "@/types/api/request/post/search"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { IIndustryResponse } from "@/types/api/response/industry"
-import { IGetPostResponse } from "@/types/api/response/referer-post"
+import {
+  IGetPostResponse,
+  IListPostResponse,
+} from "@/types/api/response/referer-post"
 import { IReferralResponse } from "@/types/api/response/referral"
 import { IUserResponse } from "@/types/api/response/user"
 import { ReferralType } from "@/types/common/referral-type"
@@ -306,7 +309,6 @@ const apiService = {
     try {
       let query = supabase
         .from("post")
-
         .select(
           `   uuid,
               status,
@@ -347,6 +349,40 @@ const apiService = {
       return data satisfies IGetPostResponse
     } catch (err) {
       throw err
+    }
+  },
+  getPostListByUserUuid: async (userUuid: string) => {
+    try {
+      const { data, error } = await supabase
+        .from("post")
+        .select(
+          `
+        *, 
+        country(
+          cantonese_name
+        ),
+        province(
+          cantonese_name
+        ),
+        city(
+          cantonese_name
+        ),
+        industry(
+          cantonese_name
+        ),
+        user(
+          username,
+          avatar_url
+        )
+        `
+        )
+        .eq("created_by", userUuid)
+
+      if (error) throw error
+
+      return data satisfies IListPostResponse[]
+    } catch (error) {
+      throw error
     }
   },
 

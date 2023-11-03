@@ -1,20 +1,7 @@
-import compareDateDifferenceHelper from "@/utils/common/helpers/time/compareDateDifference"
+import dayjs from "dayjs"
 
-export const formatCreatedAt = (createdAt?: string | null) => {
-  if (createdAt) {
-    const difference = compareDateDifferenceHelper({
-      newDate: new Date().toString(),
-      oldDate: createdAt,
-      unit: "day",
-    })
+export const formatDate = (format: string, date?: string | null) => {
+  if (!date) return "--"
 
-    if (difference === 0) {
-      return "今日"
-    } else if (difference > 0 && difference < 30) {
-      return `${difference}日`
-    } else {
-      return `30日+`
-    }
-  }
-  return "--"
+  return dayjs(date).format(format)
 }
