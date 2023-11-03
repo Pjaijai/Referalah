@@ -5,11 +5,11 @@ import { QueryKeyString } from "@/types/common/query-key-string"
 
 const getPosts = ({ queryKey }: any) => {
   const uuid = queryKey[1].userUuid
-  const res = apiService.listPostByUserUuid(uuid)
+  const res = apiService.getPostListByUserUuid(uuid)
   return res
 }
 
-const useListPostByUserUuid = (userUuid: string) => {
+const useGetPostListByUserUuid = (userUuid: string) => {
   return useQuery({
     queryKey: [QueryKeyString.LIST_POSTS, { userUuid }],
     queryFn: getPosts,
@@ -17,4 +17,4 @@ const useListPostByUserUuid = (userUuid: string) => {
   })
 }
 
-export default useListPostByUserUuid
+export default useGetPostListByUserUuid

@@ -351,7 +351,7 @@ const apiService = {
       throw err
     }
   },
-  listPostByUserUuid: async (userUuid: string) => {
+  getPostListByUserUuid: async (userUuid: string) => {
     try {
       const { data, error } = await supabase
         .from("post")
