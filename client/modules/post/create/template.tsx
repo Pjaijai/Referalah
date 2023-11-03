@@ -133,16 +133,6 @@ const CreatePostTemplate: React.FunctionComponent<
   const provinceOptions = useProvinceOptions(provinceList, countryWatch)
   const cityOptions = useCityOptions(cityList, provinceWatch)
   const { mutate: createPost, isLoading: isCreatePostLoading } = useCreatePost()
-  const postTypeOptions = [
-    {
-      value: ReferralType.REFERRER,
-      title: "工搵人",
-    },
-    {
-      value: ReferralType.REFEREE,
-      title: "人搵工",
-    },
-  ]
 
   useEffect(() => {
     form.setValue("cityUuid", "")
@@ -208,7 +198,7 @@ const CreatePostTemplate: React.FunctionComponent<
         },
         {
           onSuccess: () => {
-            router.push("/post/referer")
+            router.push(siteConfig.page.referrer.href)
           },
           onError: () => {
             return toast({

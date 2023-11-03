@@ -168,10 +168,6 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     defaultValues: useMemo(() => {
       return {
         username: username || undefined,
-        // chineseFirstName: chineseFirstName || undefined,
-        // chineseLastName: chineseLastName || undefined,
-        // englishFirstName: englishFirstName || undefined,
-        // englishLastName: englishLastName || undefined,
         description: description || undefined,
         company: company || undefined,
         jobTitle: jobTitle || undefined,
@@ -179,7 +175,6 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         countryUuid: countryUuid || undefined,
         provinceUuid: provinceUuid || undefined,
         cityUuid: cityUuid || undefined,
-        // resumeUrl: resumeUrl || undefined,
         socialMediaUrl: socialMediaUrl || undefined,
         isReferer: isReferer || false,
         isReferee: isReferee || false,
