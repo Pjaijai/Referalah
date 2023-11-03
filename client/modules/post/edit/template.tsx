@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import { editPostValidationSchema } from "@/modules/post/validation/edit"
 import { maximumWordValidation } from "@/modules/profile/form/validation.ts/max-word"
@@ -31,19 +31,24 @@ import FormTextArea from "@/components/customized-ui/form/text-area"
 
 interface IEditPostPageTemplateProps {
   postDate?: IGetPostResponse
-  isLoading: boolean
+  isPostDataLoading: boolean
 }
 const EditPostPageTemplate: React.FunctionComponent<
   IEditPostPageTemplateProps
-> = ({ postDate, isLoading }) => {
+> = ({ postDate, isPostDataLoading }) => {
   const formSchema = editPostValidationSchema
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   })
+
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  // const [isSetInitialValues, setIsSetInitialValues] = useState(false)
+  const isSetInitialValues = useRef(false)
   const countryWatch = form.watch("countryUuid")
   const provinceWatch = form.watch("provinceUuid")
+  const asdasd = form.watch("cityUuid")
+  console.log(12312, asdasd)
   const yeoWatch = form.watch("yearOfExperience")
   const urlWatch = form.watch("url")
   const router = useRouter()
@@ -58,11 +63,40 @@ const EditPostPageTemplate: React.FunctionComponent<
   const cityOptions = useCityOptions(cityList, provinceWatch)
   const { mutate: createPost, isLoading: isCreatePostLoading } = useCreatePost()
 
+  console.log(123123, provinceOptions)
+  // Hook to setting values
   useEffect(() => {
-    if (!isLoading && postDate) {
-      form.setValue("description", postDate.description || "")
+    if (
+      !isPostDataLoading &&
+      !isSetInitialValues.current &&
+      provinceOptions &&
+      cityOptions
+    ) {
+      form.reset({
+        countryUuid: postDate.country.uuid,
+        status: postDate.status,
+        description: postDate.description,
+        companyName: postDate.company_name,
+        jobTitle: postDate.job_title,
+        yearOfExperience: postDate.year_of_experience,
+        provinceUuid: postDate.province?.uuid,
+        cityUuid: postDate.city.uuid,
+        industryUuid: postDate.industry.uuid,
+        url: postDate.url,
+      })
+
+      if (provinceOptions && cityOptions) {
+        isSetInitialValues.current = true
+      }
     }
-  }, [isLoading])
+  }, [
+    form,
+    isPostDataLoading,
+    postDate,
+    countryOptions,
+    provinceOptions,
+    cityOptions,
+  ])
 
   useEffect(() => {
     form.setValue("cityUuid", "")
@@ -153,7 +187,7 @@ const EditPostPageTemplate: React.FunctionComponent<
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4"
         >
-          <FormTextInput control={form.control} label="stauts" name="status" />
+          <FormTextInput control={form.control} label="status" name="status" />
 
           <FormTextInput
             control={form.control}
@@ -198,6 +232,7 @@ const EditPostPageTemplate: React.FunctionComponent<
             label="省份"
             name="provinceUuid"
             options={provinceOptions as any}
+            defaultValue={provinceWatch}
           />
 
           <FormSelect
