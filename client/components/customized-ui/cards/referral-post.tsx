@@ -1,16 +1,9 @@
-import React, { useMemo, useState } from "react"
+import React, { useMemo } from "react"
 import Link from "next/link"
-import ContactDialog, {
-  IContactDialogProps,
-} from "@/modules/referral/components/dialog/contact"
-import UserSignInDialog from "@/modules/referral/components/dialog/userSignIn"
-import { formatCreatedAt } from "@/utils/common/helpers/format/date"
+import PostHeader from "@/modules/post/components/info-display/header"
+import { formatCreatedAt } from "@/utils/common/helpers/format/created-at"
 
-import { ReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
-import useViewport from "@/hooks/common/useViewport"
-import useUserStore from "@/hooks/state/user/store"
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -23,19 +16,12 @@ import BaseAvatar from "@/components/customized-ui/avatars/base"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import IndustryDisplay from "@/components/customized-ui/info-display/industry"
 import LocationDisplay from "@/components/customized-ui/info-display/location"
-import PostHeader from "@/components/customized-ui/info-display/post-header"
 import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
 import CollapsibleTextWrapper from "@/components/customized-ui/tool/collapsible-text-wrapper"
-import TooltipWrapper from "@/components/customized-ui/tool/tooltip-wrapper"
-import { Icons } from "@/components/icons"
 
-interface IReferralPostCardProps
-  extends Omit<
-    IContactDialogProps,
-    "open" | "username" | "onContactFormClose"
-  > {
+interface IReferralPostCardProps {
   uuid: string | null
-  username: string
+  username: string | null
   photoUrl: string | null
   description: string | null
   companyName: string | null
@@ -46,10 +32,12 @@ interface IReferralPostCardProps
   city: string | null
   industry: string | null
   url: string | null
-  createdAt?: string
-  createdBy: string
+  createdAt?: string | null
+  createdBy: string | null
 }
+
 const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
+  uuid,
   jobTitle,
   city,
   companyName,
@@ -61,56 +49,25 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   url,
   username,
   yearOfExperience,
-  messageType,
-  postUuid,
-  receiverType,
-  toUuid,
   createdAt,
   createdBy,
 }) => {
-  const [isContactFormOpen, setIsContactFormOpen] = useState(false)
-  const [isAuthOpen, setIsAuthOpen] = useState(false)
-  const isUserSignIn = useUserStore((state) => state.isSignIn)
-  const isReferrer = receiverType === ReferralType.REFERRER
-  const { isMobile } = useViewport()
-
-  const handleContactClick = () => {
-    if (isUserSignIn) {
-      setIsContactFormOpen(true)
-    } else {
-      setIsAuthOpen(true)
-    }
-  }
-
   const formattedCreatedAt = useMemo(
     () => formatCreatedAt(createdAt),
     [createdAt]
   )
 
   return (
-    <>
-      <Card className="flex flex-col justify-between rounded shadow-md">
+    <Card className="flex flex-col justify-between rounded shadow-md">
+      <Link
+        href={`${siteConfig.page.referrerPost.href}/${uuid}`}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex flex-col items-start justify-start">
           <CardHeader className="w-full pb-2">
             {/* title, subtitle, url, avatar, quick action */}
             <div className="flex flex-row items-start justify-between gap-3 sm:gap-1">
               <div className="mb-2 flex basis-full items-center gap-3 sm:basis-2/3 md:basis-3/5">
-                {!isReferrer && (
-                  <TooltipWrapper
-                    tooltipTrigger={
-                      <Link
-                        href={`${siteConfig.page.profile.href}/${createdBy}`}
-                      >
-                        <BaseAvatar
-                          fallBack={username[0]}
-                          alt={username}
-                          url={photoUrl || undefined}
-                        />
-                      </Link>
-                    }
-                    tooltipContent={<span>查看用戶檔案</span>}
-                  />
-                )}
                 <PostHeader
                   title={jobTitle}
                   subtitle={
@@ -121,34 +78,14 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
                   url={url}
                 />
               </div>
-              <div className="flex items-center">
-                {isReferrer && (
-                  <div className="mr-2">
-                    <TooltipWrapper
-                      tooltipTrigger={
-                        <Link
-                          href={`${siteConfig.page.profile.href}/${createdBy}`}
-                        >
-                          <BaseAvatar
-                            fallBack={username[0]}
-                            alt={username}
-                            url={photoUrl || undefined}
-                          />
-                        </Link>
-                      }
-                      tooltipContent={<span>查看推薦人檔案</span>}
-                    />
-                  </div>
-                )}
-                <Button
-                  className="px-3"
-                  onClick={handleContactClick}
-                  size={isMobile ? "icon" : "default"}
-                >
-                  <Icons.mail className="h-4 w-4 sm:mr-1" />
-                  {isMobile ? undefined : `聯絡${isReferrer ? "推薦人" : "我"}`}
-                </Button>
-              </div>
+
+              <Link href={`${siteConfig.page.profile.href}/${createdBy}`}>
+                <BaseAvatar
+                  fallBack={username ? username[0] : "?"}
+                  alt={username}
+                  url={photoUrl || undefined}
+                />
+              </Link>
             </div>
 
             {/* location, industry, year of exp */}
@@ -189,28 +126,12 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
             )}
           </CardContent>
         </div>
-
         {/* created at */}
         <CardFooter className="justify-end">
           <CardDescription>{formattedCreatedAt}</CardDescription>
         </CardFooter>
-      </Card>
-
-      <ContactDialog
-        open={isContactFormOpen}
-        username={username}
-        onContactFormClose={() => setIsContactFormOpen(false)}
-        toUuid={toUuid}
-        messageType={messageType}
-        postUuid={postUuid}
-        receiverType={receiverType}
-      />
-
-      <UserSignInDialog
-        open={isAuthOpen}
-        onDialogClose={() => setIsAuthOpen(false)}
-      />
-    </>
+      </Link>
+    </Card>
   )
 }
 

@@ -32,7 +32,7 @@ const AuthPageTemplate = () => {
   }
 
   return (
-    <div className="w-[40rem]">
+    <div className="w-full">
       {!isSubmitted && <AuthForm onSubmit={onSubmit} />}
 
       {isSubmitted && (

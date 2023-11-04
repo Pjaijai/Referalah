@@ -100,17 +100,17 @@ For accurate information, please check supabase local dev doc here[https://supab
 
 ### To start a local development server
 
-1. Navigate to the 'client' directory\
+1. Navigate to the 'client' directory
    ```bash
    cd client
    ```
-1. Install dependencies\
+1. Install dependencies
    ```bash
-   npm install
+   yarn
    ```
 1. Start the development server
    ```bash
-   npm run preview
+   yarn dev
    ```
 1. View the website at [http://localhost:3000](http://localhost:3000)
 

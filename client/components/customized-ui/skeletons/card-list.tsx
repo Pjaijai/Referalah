@@ -3,7 +3,7 @@ import React from "react"
 import { cn } from "@/lib/utils"
 import CardSkeleton, {
   CardSkeletonProps,
-} from "@/components/customized-ui/skeletons /card"
+} from "@/components/customized-ui/skeletons/card"
 
 interface CardSkeletonListProps {
   className?: string

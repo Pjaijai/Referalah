@@ -15,20 +15,14 @@ import {
 
 const components: { title: string; href: string; description: string }[] = [
   {
-    title: "貼街招",
+    title: siteConfig.page.createPost.name,
     href: siteConfig.page.createPost.href,
-    description:
-      "你公司請人又想搵香港人？網上睇到份工又想人幫手？係到貼個街招，等人聯絡你。",
+    description: "你公司請人又想搵香港人？係到貼個街招，等人聯絡你。",
   },
   {
-    title: "工搵人",
+    title: siteConfig.page.referrerPost.name,
     href: siteConfig.page.referrerPost.href,
     description: "係到搵有乜工搵人推薦。",
-  },
-  {
-    title: "人搵工",
-    href: siteConfig.page.refereePost.href,
-    description: "係到搵有乜人需要幫手。",
   },
 ]
 

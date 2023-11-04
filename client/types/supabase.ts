@@ -96,7 +96,7 @@ export interface Database {
           industry_uuid: string | null
           job_title: string | null
           province_uuid: string | null
-          status: string | null
+          status: Database["public"]["Enums"]["post_status"]
           type: string | null
           url: string | null
           uuid: string | null
@@ -113,7 +113,7 @@ export interface Database {
           industry_uuid?: string | null
           job_title?: string | null
           province_uuid?: string | null
-          status?: string | null
+          status?: Database["public"]["Enums"]["post_status"]
           type?: string | null
           url?: string | null
           uuid?: string | null
@@ -130,7 +130,7 @@ export interface Database {
           industry_uuid?: string | null
           job_title?: string | null
           province_uuid?: string | null
-          status?: string | null
+          status?: Database["public"]["Enums"]["post_status"]
           type?: string | null
           url?: string | null
           uuid?: string | null
@@ -390,7 +390,7 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      post_status: "active" | "inactive"
     }
     CompositeTypes: {
       [_ in never]: never

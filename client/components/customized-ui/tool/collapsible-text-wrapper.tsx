@@ -7,12 +7,14 @@ import { Icons } from "@/components/icons"
 
 interface ICollapsibleTextWrapperProps {
   text: string
+  expandable?: boolean
   className?: string
   expandButtonProps?: ButtonProps
 }
 
 const CollapsibleTextWrapper = ({
   text,
+  expandable,
   className,
   expandButtonProps,
 }: ICollapsibleTextWrapperProps) => {
@@ -35,7 +37,7 @@ const CollapsibleTextWrapper = ({
       >
         {text}
       </p>
-      {isTruncated && (
+      {isTruncated && expandable && (
         <Button
           variant="link"
           size="sm"

@@ -29,12 +29,8 @@ export const siteConfig = {
       href: "/post/create",
     },
     referrerPost: {
-      name: "工搵人",
+      name: "街招",
       href: "/post/referer",
-    },
-    refereePost: {
-      name: "人搵工",
-      href: "/post/referee",
     },
     about: {
       name: "關於本平台",

@@ -3,9 +3,13 @@ import { supabase } from "@/utils/services/supabase/config"
 import { IContactThroughPostRequest } from "@/types/api/request/contact/post"
 import { IContactReferralRequest } from "@/types/api/request/contact/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
+import { ISearchPostsRequest } from "@/types/api/request/post/search"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
-import { ICityResponse } from "@/types/api/response/city"
 import { IIndustryResponse } from "@/types/api/response/industry"
+import {
+  IGetPostResponse,
+  IListPostResponse,
+} from "@/types/api/response/referer-post"
 import { IReferralResponse } from "@/types/api/response/referral"
 import { IUserResponse } from "@/types/api/response/user"
 import { ReferralType } from "@/types/common/referral-type"
@@ -207,21 +211,26 @@ const apiService = {
       throw error
     }
   },
-  searchPost: async ({ pageParam = 0, queryKey }: any) => {
+  searchPost: async ({
+    cityUuid,
+    companyName,
+    industryUuid,
+    jobTitle,
+    numberOfDataPerPage,
+    countryUuid,
+    page,
+    provinceUuid,
+    sortingType,
+    type,
+    maxYearOfExperience,
+    minYearOfExperience,
+  }: ISearchPostsRequest) => {
     try {
-      const NUMBER_OF_DATE_PER_FETCH = 5
-      const type = queryKey[1].type as ReferralType
-      const countryUuid = queryKey[1].filterMeta.countryUuid
-      const provinceUuid = queryKey[1].filterMeta.provinceUuid
-      const cityUuid = queryKey[1].filterMeta.cityUuid
-      const industryUuid = queryKey[1].filterMeta.industryUuid
-      const companyName = queryKey[1].filterMeta.companyName
-      const jobTitle = queryKey[1].filterMeta.jobTitle
-      const sort = queryKey[1].sorting.split(",")
-      const sortingType = sort[0]
+      const sort = sortingType.split(",")
+      const sortedBy = sort[0]
       const order = sort[1] === "dec" ? false : true
-      const from = pageParam + pageParam * NUMBER_OF_DATE_PER_FETCH
-      const to = from + NUMBER_OF_DATE_PER_FETCH
+      const from = page + page * numberOfDataPerPage
+      const to = from + numberOfDataPerPage
 
       let query = supabase
         .from("post")
@@ -256,14 +265,15 @@ const apiService = {
         .eq("status", "active")
         .lte("year_of_experience", 100)
         .gte("year_of_experience", 0)
-
+        .lte("year_of_experience", maxYearOfExperience)
+        .gte("year_of_experience", minYearOfExperience)
         .range(from, to)
 
-      if (sortingType === "createdAt") {
+      if (sortedBy === "createdAt") {
         query = query.order("created_at", { ascending: order })
       }
 
-      if (sortingType === "yoe") {
+      if (sortedBy === "yoe") {
         query = query.order("year_of_experience", { ascending: order })
       }
       if (countryUuid !== undefined) {
@@ -291,6 +301,86 @@ const apiService = {
       if (error) throw error
 
       return data
+    } catch (error) {
+      throw error
+    }
+  },
+  getPost: async (uuid: string) => {
+    try {
+      let query = supabase
+        .from("post")
+        .select(
+          `   uuid,
+              status,
+              created_at,
+              created_by,
+              url,
+              description,
+              company_name,
+              job_title,
+              year_of_experience,
+              country(
+                  cantonese_name
+              ),
+              province(
+                  cantonese_name
+              ),
+              city(
+                  cantonese_name
+              ),
+              industry(
+                  cantonese_name
+              ),
+              user (
+                  username,
+                  avatar_url,
+                  job_title
+              )
+            `
+        )
+
+        .eq("uuid", uuid)
+        .single()
+
+      const { data, error } = await query
+
+      if (error) throw error
+
+      return data satisfies IGetPostResponse
+    } catch (err) {
+      throw err
+    }
+  },
+  getPostListByUserUuid: async (userUuid: string) => {
+    try {
+      const { data, error } = await supabase
+        .from("post")
+        .select(
+          `
+        *, 
+        country(
+          cantonese_name
+        ),
+        province(
+          cantonese_name
+        ),
+        city(
+          cantonese_name
+        ),
+        industry(
+          cantonese_name
+        ),
+        user(
+          username,
+          avatar_url
+        )
+        `
+        )
+        .eq("created_by", userUuid)
+
+      if (error) throw error
+
+      return data satisfies IListPostResponse[]
     } catch (error) {
       throw error
     }

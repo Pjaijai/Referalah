@@ -13,7 +13,7 @@ import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import ResetButton from "@/components/customized-ui/buttons/reset"
 import ReferralCard from "@/components/customized-ui/cards/referral"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
-import CardSkeletonList from "@/components/customized-ui/skeletons /card-list"
+import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 
 interface IRefereePageTemplateProps {}
 const RefereePageTemplate: React.FunctionComponent<
