@@ -23,8 +23,7 @@ const PostHeader: React.FunctionComponent<
 
   return (
     <div className={className}>
-      <CardTitle className="flex flex-row gap-2">
-        {title}
+      <CardTitle className="flex flex-col gap-2">
         {status && <PostStatusDisplay postStatus={status} />}
         {url && (
           <TooltipWrapper
@@ -37,7 +36,7 @@ const PostHeader: React.FunctionComponent<
           />
         )}
       </CardTitle>
-      <div className="flex items-center justify-start text-sm text-muted-foreground">
+      <div className="mt-1 flex items-center justify-start text-sm text-muted-foreground">
         {subtitle}
       </div>
     </div>

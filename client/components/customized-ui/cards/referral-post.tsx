@@ -14,6 +14,7 @@ import {
 import { Separator } from "@/components/ui/separator"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
+import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
 import IndustryDisplay from "@/components/customized-ui/info-display/industry"
 import LocationDisplay from "@/components/customized-ui/info-display/location"
 import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
@@ -32,7 +33,7 @@ interface IReferralPostCardProps {
   city: string | null
   industry: string | null
   url: string | null
-  createdAt?: string | null
+  createdAt: string | null
   createdBy: string | null
 }
 
@@ -52,11 +53,6 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   createdAt,
   createdBy,
 }) => {
-  const formattedCreatedAt = useMemo(
-    () => formatCreatedAt(createdAt),
-    [createdAt]
-  )
-
   return (
     <Card className="flex flex-col justify-between rounded shadow-md">
       <Link
@@ -128,7 +124,9 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
         </div>
         {/* created at */}
         <CardFooter className="justify-end">
-          <CardDescription>{formattedCreatedAt}</CardDescription>
+          <CardDescription>
+            <CreatedAtDisplay applyTo="card" createdAt={createdAt} />
+          </CardDescription>
         </CardFooter>
       </Link>
     </Card>

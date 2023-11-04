@@ -7,10 +7,11 @@ import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 interface IPostHistoryTemplateProps {
   data?: IListPostResponse[]
   isLoading: boolean
+  isViewingOwnProfile: boolean
 }
 const PostHistoryTemplate: React.FunctionComponent<
   IPostHistoryTemplateProps
-> = ({ data, isLoading }) => {
+> = ({ data, isLoading, isViewingOwnProfile }) => {
   return (
     <>
       {isLoading && (
@@ -40,6 +41,7 @@ const PostHistoryTemplate: React.FunctionComponent<
               createdAt={data.created_at}
               uuid={data.uuid}
               url={data.url}
+              isViewingOwnProfile={isViewingOwnProfile}
             />
           ))}
         </div>

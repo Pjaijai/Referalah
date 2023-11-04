@@ -6,10 +6,16 @@ import PostHeader from "@/modules/post/components/info-display/header"
 import PostStatusDisplay from "@/modules/post/components/info-display/status"
 
 import { MessageType } from "@/types/common/message-type"
+import { ReferralType } from "@/types/common/referral-type"
 import useGetPost from "@/hooks/api/post/get-post"
+import useUserStore from "@/hooks/state/user/store"
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+import ContactButton from "@/components/customized-ui/buttons/contact"
 import ProfileCard from "@/components/customized-ui/cards/profile"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
+import { Icons } from "@/components/icons"
 import PageStatusLayout from "@/components/layouts/page-status"
 
 interface ReferralPostDetailsPageProps {
@@ -19,10 +25,17 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   ReferralPostDetailsPageProps
 > = ({ postUuid }) => {
   const { data: post, isLoading, isSuccess } = useGetPost(postUuid)
+  const userUuid = useUserStore((state) => state.uuid)
+  const isViewingOwnProfile = post?.created_by === userUuid
+
+  const handleEditClick = () => {
+    console.log("TODO: GO TO EDIT POST DETAILS PAGE")
+    // router.push(`${siteConfig.page.profile.href}/${uuid}`)
+  }
 
   return (
     <PageStatusLayout
-      error={"搵唔到街招資料，請稍後再試。"}
+      error="搵唔到街招資料，請稍後再試。"
       isLoading={isLoading}
       isSuccess={isSuccess}
     >
@@ -36,6 +49,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                   className="flex-end"
                 />
                 <CreatedAtDisplay
+                  applyTo="page"
                   createdAt={post.created_at && post.created_at.toString()}
                   className="justify-end text-xs text-muted-foreground"
                 />
@@ -56,6 +70,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                 </div>
               </div>
 
+              <Separator className="my-3" />
               <PostDetailsInfoDisplay
                 city={post.city && post.city.cantonese_name}
                 province={post.province && post.province.cantonese_name}
@@ -64,17 +79,35 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                 yearOfExperience={post.year_of_experience}
               />
             </div>
+            {/* separator that is only shown on mobile */}
+            <Separator className="md:hidden" />
 
-            <ProfileCard
-              uuid={post.created_by}
-              username={post.user && post.user.username}
-              photoUrl={post.user && post.user.avatar_url}
-              messageType={MessageType.POST}
-              toUuid={post.created_by}
-              postUuid={post.uuid}
-              className="basis-1/3"
-            />
+            <div className="flex min-w-[200px] flex-col gap-4 md:basis-1/4">
+              {isViewingOwnProfile ? (
+                <Button className="w-full" onClick={handleEditClick}>
+                  <Icons.pencil className="mr-1 h-4 w-4" />
+                  編輯街招
+                </Button>
+              ) : (
+                <ContactButton
+                  username={post.user?.username || "?"}
+                  toUuid={post.created_by}
+                  messageType={MessageType.POST}
+                  postUuid={post.uuid}
+                  receiverType={ReferralType.REFERRER}
+                />
+              )}
+              <ProfileCard
+                uuid={post.created_by}
+                username={post.user && post.user.username}
+                photoUrl={post.user && post.user.avatar_url}
+              />
+            </div>
           </div>
+
+          {/* separator that is only shown on tablet or larger */}
+          <Separator className="mb-5 hidden md:block" />
+
           <div className="whitespace-pre-wrap break-all">
             {post.description}
           </div>

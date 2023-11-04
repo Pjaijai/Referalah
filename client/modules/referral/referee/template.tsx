@@ -133,9 +133,6 @@ const RefereePageTemplate: React.FunctionComponent<
                   yearOfExperience={referee.year_of_experience}
                   uuid={referee.uuid}
                   key={referee.uuid}
-                  messageType={MessageType.REFERRAL}
-                  postUuid={referee.uuid}
-                  toUuid={referee.uuid}
                   receiverType={ReferralType.REFEREE}
                 />
               )

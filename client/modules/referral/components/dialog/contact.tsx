@@ -36,7 +36,7 @@ export interface IContactDialogProps {
   messageType: MessageType
   receiverType?: ReferralType
   toUuid: string | null
-  postUuid: string | null
+  postUuid?: string | null
 }
 
 const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({

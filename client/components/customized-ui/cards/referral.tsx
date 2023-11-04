@@ -1,14 +1,10 @@
-import React, { useState } from "react"
+import React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import ContactDialog, {
-  IContactDialogProps,
-} from "@/modules/referral/components/dialog/contact"
-import UserSignInDialog from "@/modules/referral/components/dialog/userSignIn"
 
+import { MessageType } from "@/types/common/message-type"
 import { ReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
-import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -19,6 +15,7 @@ import {
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
+import ContactButton from "@/components/customized-ui/buttons/contact"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import IndustryDisplay from "@/components/customized-ui/info-display/industry"
 import LocationDisplay from "@/components/customized-ui/info-display/location"
@@ -26,11 +23,7 @@ import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/ye
 import TooltipWrapper from "@/components/customized-ui/tool/tooltip-wrapper"
 import { Icons } from "@/components/icons"
 
-interface IReferralCardProps
-  extends Omit<
-    IContactDialogProps,
-    "open" | "username" | "onContactFormClose"
-  > {
+interface IReferralCardProps {
   uuid: string | null
   username: string | null
   photoUrl: string | null
@@ -43,8 +36,9 @@ interface IReferralCardProps
   city: string | null
   industry: string | null
   socialMediaUrl: string | null
-  createdAt?: string
+  receiverType: ReferralType
 }
+
 const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
   jobTitle,
   city,
@@ -58,23 +52,9 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
   username,
   uuid,
   yearOfExperience,
-  messageType,
-  postUuid,
   receiverType,
-  toUuid,
 }) => {
-  const [isContactFormOpen, setIsContactFormOpen] = useState(false)
-  const [isAuthOpen, setIsAuthOpen] = useState(false)
-  const isUserSignIn = useUserStore((state) => state.isSignIn)
   const router = useRouter()
-
-  const handleContactClick = () => {
-    if (isUserSignIn) {
-      setIsContactFormOpen(true)
-    } else {
-      setIsAuthOpen(true)
-    }
-  }
 
   const handleProfileClick = () => {
     router.push(`${siteConfig.page.profile.href}/${uuid}`)
@@ -85,98 +65,79 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
   }
 
   return (
-    <>
-      <Card className="flex flex-col justify-between rounded p-2 shadow-md">
-        {/* avatar, username , title, company, desc, url */}
-        <CardHeader className="relative flex flex-col items-center justify-center space-y-0 pb-0 text-center">
-          {socialMediaUrl && (
-            <div className="absolute right-3 top-3">
-              <TooltipWrapper
-                tooltipTrigger={
-                  <Button variant="link" size="icon" onClick={handleUrlClick}>
-                    <Icons.link className="h-4 w-4" />
-                  </Button>
-                }
-                tooltipContent={<span>個人連結</span>}
-              />
-            </div>
-          )}
-          <Link href={`${siteConfig.page.profile.href}/${uuid}`}>
-            <BaseAvatar
-              fallBack={username ? username[0] : "?"}
-              alt={username}
-              url={photoUrl || undefined}
-              size="large"
+    <Card className="flex flex-col justify-between rounded p-2 shadow-md">
+      {/* avatar, username , title, company, desc, url */}
+      <CardHeader className="relative flex flex-col items-center justify-center space-y-0 pb-0 text-center">
+        {socialMediaUrl && (
+          <div className="absolute right-3 top-3">
+            <TooltipWrapper
+              tooltipTrigger={
+                <Button variant="link" size="icon" onClick={handleUrlClick}>
+                  <Icons.link className="h-4 w-4" />
+                </Button>
+              }
+              tooltipContent={<span>個人連結</span>}
             />
-          </Link>
-          <Link href={`${siteConfig.page.profile.href}/${uuid}`}>
-            <p className="pt-5 text-center text-xs">@{username}</p>
-          </Link>
-          <p className="text-center text-lg font-semibold">{jobTitle}</p>
-          {receiverType === ReferralType.REFERRER && companyName && (
-            <CompanyNameDisplay name={companyName} />
+          </div>
+        )}
+        <Link href={`${siteConfig.page.profile.href}/${uuid}`}>
+          <BaseAvatar
+            fallBack={username ? username[0] : "?"}
+            alt={username}
+            url={photoUrl || undefined}
+            size="large"
+          />
+        </Link>
+        <Link href={`${siteConfig.page.profile.href}/${uuid}`}>
+          <p className="pt-5 text-center text-xs">@{username}</p>
+        </Link>
+        <p className="text-center text-lg font-semibold">{jobTitle}</p>
+        {companyName && <CompanyNameDisplay name={companyName} />}
+        <p className="line-clamp-4 whitespace-pre-wrap break-all pt-6 text-center text-sm">
+          {description}
+        </p>
+      </CardHeader>
+
+      {/* location, industry, year of exp */}
+      <CardContent className="justify-start">
+        <Separator className="my-4" />
+        <CardDescription className="text-overflow-ellipsis flex flex-col">
+          {(city || province || country) && (
+            <LocationDisplay
+              city={city}
+              province={province}
+              country={country}
+              className="mb-1"
+            />
           )}
-          <p className="line-clamp-4 whitespace-pre-wrap break-all pt-6 text-center text-sm">
-            {description}
-          </p>
-        </CardHeader>
+          {industry && <IndustryDisplay industry={industry} className="mb-1" />}
+          {yearOfExperience !== null && (
+            <YearsOfExperienceDisplay
+              yearOfExperience={yearOfExperience}
+              className="mb-1"
+            />
+          )}
+        </CardDescription>
 
-        {/* location, industry, year of exp */}
-        <CardContent className="justify-start">
-          <Separator className="my-4" />
-          <CardDescription className="text-overflow-ellipsis flex flex-col">
-            {(city || province || country) && (
-              <LocationDisplay
-                city={city}
-                province={province}
-                country={country}
-                className="mb-1"
-              />
-            )}
-            {industry && (
-              <IndustryDisplay industry={industry} className="mb-1" />
-            )}
-            {yearOfExperience !== null && (
-              <YearsOfExperienceDisplay
-                yearOfExperience={yearOfExperience}
-                className="mb-1"
-              />
-            )}
-          </CardDescription>
+        {/* quick actions  */}
+        <CardFooter className="flex-col p-0 pt-7">
+          <ContactButton
+            username={username || "?"}
+            toUuid={uuid}
+            messageType={MessageType.REFERRAL}
+            receiverType={receiverType}
+          />
 
-          {/* quick actions  */}
-          <CardFooter className="flex-col p-0 pt-7">
-            <Button className="w-full" onClick={handleContactClick}>
-              <Icons.mail className="mr-1 h-4 w-4" />
-              聯絡我
-            </Button>
-
-            <Button
-              variant="outline"
-              className="mt-2 w-full"
-              onClick={handleProfileClick}
-            >
-              查看用戶檔案
-            </Button>
-          </CardFooter>
-        </CardContent>
-      </Card>
-
-      <ContactDialog
-        open={isContactFormOpen}
-        username={username || "?"}
-        onContactFormClose={() => setIsContactFormOpen(false)}
-        toUuid={toUuid}
-        messageType={messageType}
-        postUuid={postUuid}
-        receiverType={receiverType}
-      />
-
-      <UserSignInDialog
-        open={isAuthOpen}
-        onDialogClose={() => setIsAuthOpen(false)}
-      />
-    </>
+          <Button
+            variant="outline"
+            className="mt-2 w-full"
+            onClick={handleProfileClick}
+          >
+            查看用戶檔案
+          </Button>
+        </CardFooter>
+      </CardContent>
+    </Card>
   )
 }
 
