@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { createPostValidationSchema } from "@/modules/post/validation/create"
-import { maximumWordValidation } from "@/modules/profile/form/validation.ts/max-word"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -46,7 +45,6 @@ const CreatePostTemplate: React.FunctionComponent<
       countryUuid: "",
       provinceUuid: "",
       cityUuid: "",
-
       industryUuid: "",
     },
   })
