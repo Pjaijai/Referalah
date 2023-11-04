@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
+import { postStatusOptions } from "@/modules/post/common/post-status-options"
 import { editPostValidationSchema } from "@/modules/post/validation/edit"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Link } from "lucide-react"
@@ -165,7 +166,12 @@ const EditPostPageTemplate: React.FunctionComponent<
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4"
         >
-          <FormTextInput control={form.control} label="status" name="status" />
+          <FormSelect
+            control={form.control}
+            label="狀態"
+            name="status"
+            options={postStatusOptions as any}
+          />
 
           <FormTextInput
             control={form.control}
@@ -205,12 +211,12 @@ const EditPostPageTemplate: React.FunctionComponent<
             label="國家"
             name="countryUuid"
           />
+
           <FormSelect
             control={form.control}
             label="省份"
             name="provinceUuid"
             options={provinceOptions as any}
-            // defaultValue={provinceWatch}
           />
 
           <FormSelect
