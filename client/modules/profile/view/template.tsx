@@ -49,7 +49,7 @@ const ViewProfileTemplate: React.FunctionComponent<
   const userUuid = useUserStore((state) => state.uuid)
   const isViewingOwnProfile = slug === userUuid
   return (
-    <div className="mt-28 flex w-full flex-col gap-y-2">
+    <div className="flex w-full flex-col gap-y-2">
       <div className="mx-8 flex w-full flex-row justify-end gap-2">
         {socialMediaUrl && <LinkTooltip url={socialMediaUrl} />}
 
@@ -58,7 +58,7 @@ const ViewProfileTemplate: React.FunctionComponent<
             onClick={() => {
               setIsEditMode(true)
             }}
-            className=" gap-2"
+            className="gap-2"
           >
             <Icons.pencil />
             編輯
