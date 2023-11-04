@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import { editPostValidationSchema } from "@/modules/post/validation/edit"
-import { maximumWordValidation } from "@/modules/profile/form/validation.ts/max-word"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Link } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -37,18 +36,32 @@ const EditPostPageTemplate: React.FunctionComponent<
   IEditPostPageTemplateProps
 > = ({ postDate, isPostDataLoading }) => {
   const formSchema = editPostValidationSchema
+  const isSetInitialValues = useRef(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: useMemo(() => {
+      isSetInitialValues.current = true
+      return {
+        status: postDate?.status || "active",
+        description: postDate?.description || "",
+        companyName: postDate?.company_name || "",
+        jobTitle: postDate?.job_title || "",
+        yearOfExperience: postDate?.year_of_experience?.toString() || "0",
+        url: postDate?.url || "",
+        countryUuid: postDate?.country?.uuid || "",
+        provinceUuid: postDate?.province?.uuid || "",
+        cityUuid: postDate?.city?.uuid || "",
+        industryUuid: postDate?.industry?.uuid || "",
+      }
+    }, [isPostDataLoading]),
   })
 
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
   // const [isSetInitialValues, setIsSetInitialValues] = useState(false)
-  const isSetInitialValues = useRef(false)
+
   const countryWatch = form.watch("countryUuid")
   const provinceWatch = form.watch("provinceUuid")
-  const asdasd = form.watch("cityUuid")
-  console.log(12312, asdasd)
   const yeoWatch = form.watch("yearOfExperience")
   const urlWatch = form.watch("url")
   const router = useRouter()
@@ -63,44 +76,11 @@ const EditPostPageTemplate: React.FunctionComponent<
   const cityOptions = useCityOptions(cityList, provinceWatch)
   const { mutate: createPost, isLoading: isCreatePostLoading } = useCreatePost()
 
-  console.log(123123, provinceOptions)
-  // Hook to setting values
   useEffect(() => {
-    if (
-      !isPostDataLoading &&
-      !isSetInitialValues.current &&
-      provinceOptions &&
-      cityOptions
-    ) {
-      form.reset({
-        countryUuid: postDate.country.uuid,
-        status: postDate.status,
-        description: postDate.description,
-        companyName: postDate.company_name,
-        jobTitle: postDate.job_title,
-        yearOfExperience: postDate.year_of_experience,
-        provinceUuid: postDate.province?.uuid,
-        cityUuid: postDate.city.uuid,
-        industryUuid: postDate.industry.uuid,
-        url: postDate.url,
-      })
-
-      if (provinceOptions && cityOptions) {
-        isSetInitialValues.current = true
-      }
+    if (provinceWatch !== postDate?.province?.uuid) {
+      form.setValue("cityUuid", "")
     }
-  }, [
-    form,
-    isPostDataLoading,
-    postDate,
-    countryOptions,
-    provinceOptions,
-    cityOptions,
-  ])
-
-  useEffect(() => {
-    form.setValue("cityUuid", "")
-  }, [provinceWatch])
+  }, [form, isPostDataLoading, provinceWatch])
 
   useEffect(() => {
     if (urlWatch === "") {
@@ -232,7 +212,7 @@ const EditPostPageTemplate: React.FunctionComponent<
             label="省份"
             name="provinceUuid"
             options={provinceOptions as any}
-            defaultValue={provinceWatch}
+            // defaultValue={provinceWatch}
           />
 
           <FormSelect

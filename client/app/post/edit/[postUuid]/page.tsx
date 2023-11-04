@@ -11,7 +11,9 @@ const EditPostPage = ({ params }: { params: { postUuid: string } }) => {
 
   return (
     <CommonPageLayout>
-      <EditPostPageTemplate postDate={post} isPostDataLoading={isLoading} />
+      {!isLoading && (
+        <EditPostPageTemplate postDate={post} isPostDataLoading={isLoading} />
+      )}
     </CommonPageLayout>
   )
 }
