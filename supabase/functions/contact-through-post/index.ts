@@ -91,7 +91,7 @@ serve(async (req: any) => {
             <html lang="zh-Hk">
             <body>
                 <p>Hi ${post.user.username}!</p>
-                <p>${sender.username}對於你你份街招有興趣</p>
+                <p>${sender.username}對於你份街招有興趣</p>
                 <p>街招連結:<a href="${WEB_BASE_URL}/post/referer/${post.uuid}">${WEB_BASE_URL}/post/referer/${post.uuid}</a></p>
                 <p>職位: ${post.job_title}</p>
                 <p>公司名稱: ${post.company_name}</p>
