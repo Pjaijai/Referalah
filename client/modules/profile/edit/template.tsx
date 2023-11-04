@@ -330,7 +330,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   }
 
   return (
-    <div className="mt-28 flex h-full w-full flex-col p-4">
+    <div className="flex h-full w-full flex-col p-4">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
