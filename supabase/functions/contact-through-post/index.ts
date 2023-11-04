@@ -4,7 +4,7 @@ import { initSupabaseClient } from "../_shared/client.ts"
 import { corsHeaders, ENV_IS_LOCAL } from "../_shared/cors.ts"
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")
-
+const WEB_BASE_URL = Deno.env.get("WEB_BASE_URL")
 serve(async (req: any) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders })
@@ -86,31 +86,23 @@ serve(async (req: any) => {
       })
     }
 
-    const subject = `${sender.username}對於你份街招${
-      post.type === "referer" ? "(工搵人)" : "(人搵工)"
-    }有興趣`
+    const subject = `${sender.username}對於你份街招有興趣`
     const body = `
             <html lang="zh-Hk">
             <body>
                 <p>Hi ${post.user.username}!</p>
-                <p>${sender.username}對於你你份街招${
-      post.type === "referer" ? "(工搵人)" : "(人搵工)"
-    }有興趣</p>
+                <p>${sender.username}對於你你份街招有興趣</p>
+                <p>街招連結:<a href="${WEB_BASE_URL}/post/referer/${post.uuid}">${WEB_BASE_URL}/post/referer/${post.uuid}</a></p>
                 <p>職位: ${post.job_title}</p>
                 <p>公司名稱: ${post.company_name}</p>
-                <p>佢個電郵地址: ${
-                  sender.email
-                } (回覆此Email可以直接聯絡對方)</p>
-                <p>相關網站連結: <a href=${post.url}>${post.url}</p>
+                <p>佢個電郵地址: ${sender.email} (回覆此Email可以直接聯絡對方)</p>
+                <p>佢個個人檔案: <a href="${WEB_BASE_URL}/profile/${user.uuid}">${WEB_BASE_URL}/profile/${user.uuid}</a></p>
+               
                 <p>佢個訊息</p>
                 <div style="word-break: break-word; white-space: pre-wrap;">
                     ${message}
                 </div>
 
-                  <p>Post 原文</p>
-                  <div style="word-break: break-word; white-space: pre-wrap; color: gray;">
-                  ${post.description}
-                  </div>
                   <p>溫馨提示：保持警覺，祝大家順利！</p>
             </body>
             </html>
