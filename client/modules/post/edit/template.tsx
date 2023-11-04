@@ -14,7 +14,7 @@ import useGetIndustryList from "@/hooks/api/industry/get-Industry-list"
 import useGetCityList from "@/hooks/api/location/get-city-list"
 import useGetCountryList from "@/hooks/api/location/get-country-list"
 import useGetProvinceList from "@/hooks/api/location/get-province-list"
-import useCreatePost from "@/hooks/api/post/create-post"
+import useUpdatePost from "@/hooks/api/post/update-post"
 import useCityOptions from "@/hooks/common/options/city-options"
 import useCountryOptions from "@/hooks/common/options/country-options"
 import useIndustryOptions from "@/hooks/common/options/industry-options"
@@ -32,10 +32,11 @@ import FormTextArea from "@/components/customized-ui/form/text-area"
 interface IEditPostPageTemplateProps {
   postDate?: IGetPostResponse
   isPostDataLoading: boolean
+  postUuid: string
 }
 const EditPostPageTemplate: React.FunctionComponent<
   IEditPostPageTemplateProps
-> = ({ postDate, isPostDataLoading }) => {
+> = ({ postDate, isPostDataLoading, postUuid }) => {
   const formSchema = editPostValidationSchema
   const isSetInitialValues = useRef(false)
   const form = useForm<z.infer<typeof formSchema>>({
@@ -73,7 +74,8 @@ const EditPostPageTemplate: React.FunctionComponent<
   const countryOptions = useCountryOptions(countryList)
   const provinceOptions = useProvinceOptions(provinceList, countryWatch)
   const cityOptions = useCityOptions(cityList, provinceWatch)
-  const { mutate: createPost, isLoading: isCreatePostLoading } = useCreatePost()
+  const { mutate: updatePost, isLoading: isUpdatingPostLoading } =
+    useUpdatePost()
 
   useEffect(() => {
     if (provinceWatch !== postDate?.province?.uuid) {
@@ -111,22 +113,12 @@ const EditPostPageTemplate: React.FunctionComponent<
   const onSubmit = async (values: z.infer<typeof formSchema>, e: any) => {
     e.preventDefault()
     try {
-      if (!user.isSignIn)
-        return toast({
-          title: "未登入",
-          description: "登入咗先可以貼街招",
-          variant: "destructive",
-          action: (
-            <ToastAction altText="登入">
-              <Link href={siteConfig.page.auth.href}>登入</Link>
-            </ToastAction>
-          ),
-        })
-
       setIsSubmitting(true)
 
-      createPost(
+      updatePost(
         {
+          uuid: postUuid,
+          status: values.status,
           url: values.url,
           countryUuid: values.countryUuid,
           provinceUuid: values.provinceUuid,
@@ -232,7 +224,7 @@ const EditPostPageTemplate: React.FunctionComponent<
             name="yearOfExperience"
           />
 
-          <Button type="submit" disabled={isCreatePostLoading}>
+          <Button type="submit" disabled={isUpdatingPostLoading}>
             {isSubmitting ? "請等等" : "提交"}
           </Button>
         </form>

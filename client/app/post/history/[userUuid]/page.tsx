@@ -3,7 +3,7 @@
 import React from "react"
 import PostHistoryTemplate from "@/modules/post/history/template"
 
-import useGetPostListByUserUuid from "@/hooks/api/post/list-post-by-user-uuid"
+import useGetPostListByUserUuid from "@/hooks/api/post/get-post-list-by-user-uuid"
 import CommonPageLayout from "@/components/layouts/common"
 
 const PostHistoryPage = ({ params }: { params: { userUuid: string } }) => {

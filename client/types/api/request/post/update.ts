@@ -3,4 +3,5 @@ import { PostStatusType } from "@/types/common/post-status"
 
 export interface IUpdatePostRequest extends ICreatePostRequest {
   status?: PostStatusType
+  uuid: string
 }
