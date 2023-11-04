@@ -58,8 +58,6 @@ const EditPostPageTemplate: React.FunctionComponent<
 
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  // const [isSetInitialValues, setIsSetInitialValues] = useState(false)
-
   const countryWatch = form.watch("countryUuid")
   const provinceWatch = form.watch("provinceUuid")
   const yeoWatch = form.watch("yearOfExperience")
