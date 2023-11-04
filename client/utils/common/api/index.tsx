@@ -214,7 +214,7 @@ const apiService = {
   },
   updatePost: async (req: IUpdatePostRequest) => {
     try {
-      await supabase
+      const { data, error } = await supabase
         .from("post")
         .update({
           status: req.status,
@@ -231,6 +231,9 @@ const apiService = {
           description: req.description.trim(),
         })
         .eq("uuid", req.uuid)
+
+      if (error) throw error
+      return data
     } catch (error) {
       throw error
     }
