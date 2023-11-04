@@ -34,6 +34,8 @@ const RefererPageTemplate: React.FunctionComponent<
     handleYoeMinChange,
     handleYoeMaxChange,
     handleJobTitleChange,
+    handleSubmitChange,
+    handleKeyPressSubmitChange,
     handleReset,
     jobTitle,
     companyName,
@@ -60,11 +62,13 @@ const RefererPageTemplate: React.FunctionComponent<
       <div className="mt-8 flex h-full w-full flex-col-reverse gap-4 md:flex-row">
         <Input
           onChange={handleCompanyChange}
+          onKeyDown={handleKeyPressSubmitChange}
           value={companyName}
           placeholder="公司名稱"
         />
         <Input
           onChange={handleJobTitleChange}
+          onKeyDown={handleKeyPressSubmitChange}
           value={jobTitle}
           placeholder="職位/工作名稱"
         />
@@ -84,6 +88,7 @@ const RefererPageTemplate: React.FunctionComponent<
             onSortingChange={handleSortingChange}
             onYeoMinChange={handleYoeMinChange}
             onYeoMaxChange={handleYoeMaxChange}
+            onSubmitChange={handleSubmitChange}
             currentSorting={sorting}
             currentCityUuid={cityUuid}
             currentCountryUuid={countryUuid}
