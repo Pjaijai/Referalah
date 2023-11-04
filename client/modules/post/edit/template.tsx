@@ -133,7 +133,7 @@ const EditPostPageTemplate: React.FunctionComponent<
         },
         {
           onSuccess: () => {
-            router.back()
+            router.push(`${siteConfig.page.referrerPost.href}/${postUuid}`)
           },
           onError: () => {
             return toast({
