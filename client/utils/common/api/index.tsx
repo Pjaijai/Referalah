@@ -4,6 +4,7 @@ import { IContactThroughPostRequest } from "@/types/api/request/contact/post"
 import { IContactReferralRequest } from "@/types/api/request/contact/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
 import { ISearchPostsRequest } from "@/types/api/request/post/search"
+import { IUpdatePostRequest } from "@/types/api/request/post/update"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import {
@@ -211,6 +212,29 @@ const apiService = {
       throw error
     }
   },
+  updatePost: async (req: IUpdatePostRequest) => {
+    try {
+      await supabase
+        .from("post")
+        .update({
+          status: req.status,
+          url: req.url,
+          country_uuid: req.countryUuid,
+          province_uuid: req.provinceUuid,
+          city_uuid: req.cityUuid,
+          industry_uuid: req.industryUuid,
+          year_of_experience: req.yearOfExperience,
+          created_by: req.createdBy,
+          type: req.type,
+          company_name: req.companyName.trim(),
+          job_title: req.jobTitle.trim(),
+          description: req.description.trim(),
+        })
+        .eq("uuid", req.uuid)
+    } catch (error) {
+      throw error
+    }
+  },
   searchPost: async ({
     cityUuid,
     companyName,
@@ -336,6 +360,7 @@ const apiService = {
                   cantonese_name
               ),
               user (
+                  uuid,
                   username,
                   avatar_url,
                   job_title
