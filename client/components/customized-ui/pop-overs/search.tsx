@@ -11,7 +11,7 @@ import { MessageType } from "@/types/common/message-type"
 import useCityOptions from "@/hooks/common/options/city-options"
 import useCountryOptions from "@/hooks/common/options/country-options"
 import useIndustryOptions from "@/hooks/common/options/industry-options"
-import useProvinceOptions from "@/hooks/common/options/province-pptions"
+import useProvinceOptions from "@/hooks/common/options/province-options"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {

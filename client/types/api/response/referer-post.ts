@@ -29,7 +29,25 @@ export interface IGetPostResponse
   extends Omit<
     Post,
     "id" | "city_uuid" | "province_uuid" | "country_uuid" | "industry_uuid"
-  > {}
+  > {
+  country: {
+    uuid: string | null
+    cantonese_name: string | null
+  } | null
+  province: {
+    uuid: string | null
+    cantonese_name: string | null
+  } | null
+  city: {
+    uuid: string | null
+    cantonese_name: string | null
+  } | null
+
+  industry: {
+    uuid: string | null
+    cantonese_name: string | null
+  } | null
+}
 
 export interface IListPostResponse extends Post {
   country: {
