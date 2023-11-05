@@ -14,6 +14,7 @@ import ResetButton from "@/components/customized-ui/buttons/reset"
 import ReferralCard from "@/components/customized-ui/cards/referral"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
+import { Button } from "@/components/ui/button"
 
 interface IRefereePageTemplateProps {}
 const RefereePageTemplate: React.FunctionComponent<
@@ -31,6 +32,8 @@ const RefereePageTemplate: React.FunctionComponent<
     handleYoeMaxChange,
     handleJobTitleChange,
     handleReset,
+    handleSubmitChange,
+    handleKeyPressSubmitChange,
     jobTitle,
     companyName,
     provinceUuid,
@@ -62,11 +65,13 @@ const RefereePageTemplate: React.FunctionComponent<
       <div className="mt-8 flex h-full w-full flex-col-reverse gap-4 md:flex-row">
         <Input
           onChange={handleCompanyChange}
+          onKeyDown={handleKeyPressSubmitChange}
           value={companyName}
           placeholder="公司名稱"
         />
         <Input
           onChange={handleJobTitleChange}
+          onKeyDown={handleKeyPressSubmitChange}
           value={jobTitle}
           placeholder="職位/工作名稱"
         />
@@ -85,6 +90,7 @@ const RefereePageTemplate: React.FunctionComponent<
             onSortingChange={handleSortingChange}
             onYeoMinChange={handleYoeMinChange}
             onYeoMaxChange={handleYoeMaxChange}
+            onSubmitChange={handleSubmitChange}
             currentSorting={sorting}
             currentCityUuid={cityUuid}
             currentCountryUuid={countryUuid}
@@ -95,6 +101,12 @@ const RefereePageTemplate: React.FunctionComponent<
             type={MessageType.REFERRAL}
           />
           <ResetButton onClick={handleReset} />
+          <Button
+            onClick={handleSubmitChange}
+            className="whitespace-nowrap"
+          >
+            確定
+          </Button>
         </div>
       </div>
       {!isRefereeListLoading && !isFetching && list.length === 0 && (

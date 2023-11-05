@@ -85,6 +85,15 @@ const contributors: IContributor[] = [
     },
     contributedArea: ["software_development"],
   },
+  {
+    name: "Martin Tsang",
+    links: {
+      linkedin: "https://www.linkedin.com/in/marttsang2/",
+      github: "https://github.com/marttsang2",
+      website: "https://marttsang.com/"
+    },
+    contributedArea: ["software_development"],
+  }
 ]
 
 export default contributors

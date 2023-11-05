@@ -15,6 +15,7 @@ import ResetButton from "@/components/customized-ui/buttons/reset"
 import ReferralPostCard from "@/components/customized-ui/cards/referral-post"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
+import { Button } from "@/components/ui/button"
 
 interface IRefererPostPageProps {}
 const RefererPostPageTemplate: React.FunctionComponent<
@@ -37,6 +38,8 @@ const RefererPostPageTemplate: React.FunctionComponent<
     handleYoeMaxChange,
     handleJobTitleChange,
     handleReset,
+    handleSubmitChange,
+    handleKeyPressSubmitChange,
     companyName,
     jobTitle,
     provinceUuid,
@@ -57,11 +60,13 @@ const RefererPostPageTemplate: React.FunctionComponent<
       <div className="mt-8 flex h-full w-full flex-col-reverse gap-4 md:flex-row">
         <Input
           onChange={handleCompanyChange}
+          onKeyDown={handleKeyPressSubmitChange}
           value={companyName}
           placeholder="公司名稱"
         />
         <Input
           onChange={handleJobTitleChange}
+          onKeyDown={handleKeyPressSubmitChange}
           value={jobTitle}
           placeholder="職位/工作名稱"
         />
@@ -81,6 +86,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
             onSortingChange={handleSortingChange}
             onYeoMinChange={handleYoeMinChange}
             onYeoMaxChange={handleYoeMaxChange}
+            onSubmitChange={handleSubmitChange}
             currentSorting={sorting}
             currentCityUuid={cityUuid}
             currentCountryUuid={countryUuid}
@@ -91,6 +97,12 @@ const RefererPostPageTemplate: React.FunctionComponent<
             type={MessageType.POST}
           />
           <ResetButton onClick={handleReset} />
+          <Button
+            onClick={handleSubmitChange}
+            className="whitespace-nowrap"
+          >
+            確定
+          </Button>
         </div>
       </div>
 

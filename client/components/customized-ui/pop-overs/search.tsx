@@ -36,6 +36,7 @@ interface ISearchPopoverProps {
   onSortingChange: (value: string) => void
   onYeoMinChange: (e: ChangeEvent<HTMLInputElement>) => void
   onYeoMaxChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onSubmitChange: () => void
   currentCountryUuid?: string
   currentProvinceUuid?: string
   currentCityUuid?: string
@@ -142,7 +143,6 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
                 value={currentCityUuid}
               />
             </div>
-
             <div className="grid grid-cols-3 items-center gap-4">
               <Label>行業</Label>
               <BaseSelect

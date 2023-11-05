@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 
 import { MessageType } from "@/types/common/message-type"
@@ -6,18 +8,18 @@ import useGetIndustryList from "@/hooks/api/industry/get-Industry-list"
 import useGetCityList from "@/hooks/api/location/get-city-list"
 import useGetCountryList from "@/hooks/api/location/get-country-list"
 import useGetProvinceList from "@/hooks/api/location/get-province-list"
-import useSearchReferral from "@/hooks/api/referral/search-referral"
+import useSearchPost from "@/hooks/api/post/search-post"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import ResetButton from "@/components/customized-ui/buttons/reset"
-import ReferralCard from "@/components/customized-ui/cards/referral"
+import ReferralPostCard from "@/components/customized-ui/cards/referral-post"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 import { Button } from "@/components/ui/button"
 
-interface IRefererPageTemplateProps {}
-const RefererPageTemplate: React.FunctionComponent<
-  IRefererPageTemplateProps
+interface IRefereePostPageProps {}
+const RefereePostPageTemplate: React.FunctionComponent<
+  IRefereePostPageProps
 > = () => {
   const { data: industryList } = useGetIndustryList()
   const { data: cityList } = useGetCityList()
@@ -35,11 +37,11 @@ const RefererPageTemplate: React.FunctionComponent<
     handleYoeMinChange,
     handleYoeMaxChange,
     handleJobTitleChange,
+    handleReset,
     handleSubmitChange,
     handleKeyPressSubmitChange,
-    handleReset,
-    jobTitle,
     companyName,
+    jobTitle,
     provinceUuid,
     cityUuid,
     countryUuid,
@@ -47,16 +49,11 @@ const RefererPageTemplate: React.FunctionComponent<
     yoeMax,
     yoeMin,
     sorting,
-  } = useSearchReferral(ReferralType.REFERRER)
+  } = useSearchPost(ReferralType.REFEREE)
 
-  const {
-    data: refererListData,
-    isLoading: isRefererListLoading,
-    fetchNextPage,
-    isFetching,
-  } = result
+  const { data, fetchNextPage, isLoading, isFetching } = result
 
-  const list = refererListData ? refererListData?.pages.flatMap((d) => d) : []
+  const list = data ? data?.pages.flatMap((d) => d) : []
 
   return (
     <>
@@ -97,7 +94,7 @@ const RefererPageTemplate: React.FunctionComponent<
             currentProvinceUuid={provinceUuid}
             currentYeoMax={yoeMax}
             currentYeoMin={yoeMin}
-            type={MessageType.REFERRAL}
+            type={MessageType.POST}
           />
           <ResetButton onClick={handleReset} />
           <Button
@@ -108,49 +105,47 @@ const RefererPageTemplate: React.FunctionComponent<
           </Button>
         </div>
       </div>
-      {!isRefererListLoading && !isFetching && list.length === 0 && (
+
+      {!isLoading && !isFetching && list.length === 0 && (
         <div className="mt-8 rounded-lg border-2 p-4 text-center">
-          冇資料🥲不如成為推薦人？
+          冇資料🥲不如開個Post先？？
         </div>
       )}
 
-      {isRefererListLoading && (
-        <CardSkeletonList className="xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" />
+      {isLoading && (
+        <CardSkeletonList className="xs:grid-cols-1 lg:grid-cols-2" />
       )}
 
-      {!isRefererListLoading && list.length > 0 && (
+      {!isLoading && list.length > 0 && (
         <BaseInfiniteScroll
           dataLength={list ? list.length : 0} //This is important field to render the next data
           next={fetchNextPage}
           hasMore={
-            (refererListData &&
-              refererListData.pages &&
-              refererListData.pages[refererListData.pages.length - 1].length !==
-                0) ??
+            (data &&
+              data.pages &&
+              data.pages[data.pages.length - 1].length !== 0) ??
             true
           }
         >
-          <div className="xs:grid-cols-1 mt-8 grid w-full gap-6 overflow-hidden sm:grid-cols-2 lg:grid-cols-3">
-            {list.map((referer) => {
+          <div className="mt-8 grid w-full grid-cols-1 gap-4 overflow-hidden lg:grid-cols-2">
+            {list.map((data) => {
               return (
-                <ReferralCard
-                  jobTitle={referer.job_title}
-                  username={referer.username}
-                  photoUrl={referer.avatar_url}
-                  province={referer.province && referer.province.cantonese_name}
-                  country={referer.country && referer.country.cantonese_name}
-                  city={referer.city && referer.city.cantonese_name}
-                  companyName={referer.company_name}
-                  description={referer.description}
-                  industry={referer.industry && referer.industry.cantonese_name}
-                  socialMediaUrl={referer.social_media_url}
-                  yearOfExperience={referer.year_of_experience}
-                  uuid={referer.uuid}
-                  key={referer.uuid}
-                  messageType={MessageType.REFERRAL}
-                  postUuid={referer.uuid}
-                  toUuid={referer.uuid}
-                  receiverType={ReferralType.REFERRER}
+                <ReferralPostCard
+                  jobTitle={data.job_title}
+                  username={data.user && data.user.username}
+                  photoUrl={data.user && data.user.avatar_url}
+                  province={data.province && data.province.cantonese_name}
+                  country={data.country && data.country.cantonese_name}
+                  city={data.city && data.city.cantonese_name}
+                  industry={data.industry && data.industry.cantonese_name}
+                  companyName={data.company_name}
+                  description={data.description}
+                  url={data.url}
+                  yearOfExperience={data.year_of_experience}
+                  uuid={data.uuid}
+                  key={data.uuid}
+                  createdAt={data.created_at && data.created_at.toString()}
+                  createdBy={data.created_by}
                 />
               )
             })}
@@ -161,4 +156,4 @@ const RefererPageTemplate: React.FunctionComponent<
   )
 }
 
-export default RefererPageTemplate
+export default RefereePostPageTemplate
