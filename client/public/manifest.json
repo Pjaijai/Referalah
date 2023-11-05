@@ -1,17 +1,15 @@
 {
-  "theme_color": "#000",
-  "background_color": "#ffff",
-  "display": "standalone",
-  "scope": "/",
-  "start_url": "/",
   "name": "Referalah",
   "short_name": "Referalah",
-  "description": "海外港人搵Referral平台。",
+  "theme_color": "#0000",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "any",
+  "scope": "/",
+  "start_url": "/",
   "icons": [
-    {
-      "src": "/icon-48x48.png",
-      "sizes": "48x48",
-      "type": "image/png"
-    }
+    { "src": "/Referalah-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/Referalah-256.png", "type": "image/png", "sizes": "256x256" },
+    { "src": "/Referalah-512.png", "type": "image/png", "sizes": "512x512" }
   ]
 }
