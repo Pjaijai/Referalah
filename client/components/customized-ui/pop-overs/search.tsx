@@ -60,7 +60,6 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
   onSortingChange,
   onYeoMinChange,
   onYeoMaxChange,
-  onSubmitChange,
   currentCountryUuid,
   currentProvinceUuid,
   currentCityUuid,
@@ -152,7 +151,6 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
                 value={currentIndustryUuid}
               />
             </div>
-            <Button type='button' onClick={onSubmitChange}>確定</Button>
           </div>
         </div>
       </PopoverContent>
