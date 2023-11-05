@@ -1,7 +1,7 @@
-import React, { useMemo } from "react"
+import React from "react"
 import Link from "next/link"
+import PostCardInfoDisplay from "@/modules/post/components/info-display/card-info"
 import PostHeader from "@/modules/post/components/info-display/header"
-import { formatCreatedAt } from "@/utils/common/helpers/format/created-at"
 
 import { siteConfig } from "@/config/site"
 import {
@@ -15,9 +15,6 @@ import { Separator } from "@/components/ui/separator"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
-import IndustryDisplay from "@/components/customized-ui/info-display/industry"
-import LocationDisplay from "@/components/customized-ui/info-display/location"
-import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
 import CollapsibleTextWrapper from "@/components/customized-ui/tool/collapsible-text-wrapper"
 
 interface IReferralPostCardProps {
@@ -85,29 +82,13 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
             </div>
 
             {/* location, industry, year of exp */}
-            <CardDescription className="text-overflow-ellipsis mb-5 mt-2 flex flex-wrap items-center justify-start gap-4">
-              {(city || province || country) && (
-                <LocationDisplay
-                  city={city}
-                  province={province}
-                  country={country}
-                  className="xs:max-w-full max-w-sm"
-                />
-              )}
-              {industry && (
-                <IndustryDisplay
-                  industry={industry}
-                  className="xs:max-w-full max-w-xs"
-                />
-              )}
-              {yearOfExperience !== null && (
-                <YearsOfExperienceDisplay
-                  yearOfExperience={yearOfExperience}
-                  className="xs:max-w-full max-w-xs"
-                />
-              )}
-            </CardDescription>
-
+            <PostCardInfoDisplay
+              city={city}
+              province={province}
+              country={country}
+              industry={industry}
+              yearOfExperience={yearOfExperience}
+            />
             <Separator />
           </CardHeader>
 

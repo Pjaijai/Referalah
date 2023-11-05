@@ -1,7 +1,6 @@
 "use client"
 
 import React from "react"
-import PostDetailsInfoDisplay from "@/modules/post/components/info-display/details-info"
 import PostHeader from "@/modules/post/components/info-display/header"
 import PostStatusDisplay from "@/modules/post/components/info-display/status"
 
@@ -15,6 +14,9 @@ import ContactButton from "@/components/customized-ui/buttons/contact"
 import ProfileCard from "@/components/customized-ui/cards/profile"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
+import IndustryDisplay from "@/components/customized-ui/info-display/industry"
+import LocationDisplay from "@/components/customized-ui/info-display/location"
+import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
 import { Icons } from "@/components/icons"
 import PageStatusLayout from "@/components/layouts/page-status"
 
@@ -71,13 +73,28 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
               </div>
 
               <Separator className="my-3" />
-              <PostDetailsInfoDisplay
-                city={post.city && post.city.cantonese_name}
-                province={post.province && post.province.cantonese_name}
-                country={post.country && post.country.cantonese_name}
-                industry={post.industry && post.industry.cantonese_name}
-                yearOfExperience={post.year_of_experience}
-              />
+              <div className="text-sm">
+                {(post.city || post.province || post.country) && (
+                  <LocationDisplay
+                    city={post.city?.cantonese_name || null}
+                    province={post.province?.cantonese_name || null}
+                    country={post.country?.cantonese_name || null}
+                    className="xs:max-w-full mb-2 max-w-sm"
+                  />
+                )}
+                {post.industry && (
+                  <IndustryDisplay
+                    industry={post.industry.cantonese_name}
+                    className="xs:max-w-full mb-2 max-w-xs"
+                  />
+                )}
+                {post.year_of_experience !== null && (
+                  <YearsOfExperienceDisplay
+                    yearOfExperience={post.year_of_experience}
+                    className="xs:max-w-full  max-w-xs"
+                  />
+                )}
+              </div>
             </div>
             {/* separator that is only shown on mobile */}
             <Separator className="md:hidden" />

@@ -1,8 +1,9 @@
+import { CardDescription } from "@/components/ui/card"
 import IndustryDisplay from "@/components/customized-ui/info-display/industry"
 import LocationDisplay from "@/components/customized-ui/info-display/location"
 import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
 
-interface PostDetailsInfoDisplayProps {
+interface PostCardInfoDisplayProps {
   city: string | null
   province: string | null
   country: string | null
@@ -10,37 +11,37 @@ interface PostDetailsInfoDisplayProps {
   yearOfExperience: number | null
 }
 
-const PostDetailsInfoDisplay = ({
+const PostCardInfoDisplay = ({
   city,
   province,
   country,
   industry,
   yearOfExperience,
-}: PostDetailsInfoDisplayProps) => {
+}: PostCardInfoDisplayProps) => {
   return (
-    <div className="text-sm">
+    <CardDescription className="text-overflow-ellipsis flex basis-full flex-wrap items-center justify-start gap-4 sm:basis-3/4">
       {(city || province || country) && (
         <LocationDisplay
           city={city}
           province={province}
           country={country}
-          className="xs:max-w-full mb-2 max-w-sm"
+          className="xs:max-w-full max-w-sm"
         />
       )}
       {industry && (
         <IndustryDisplay
           industry={industry}
-          className="xs:max-w-full mb-2 max-w-xs"
+          className="xs:max-w-full max-w-xs"
         />
       )}
       {yearOfExperience !== null && (
         <YearsOfExperienceDisplay
           yearOfExperience={yearOfExperience}
-          className="xs:max-w-full  max-w-xs"
+          className="xs:max-w-full max-w-xs"
         />
       )}
-    </div>
+    </CardDescription>
   )
 }
 
-export default PostDetailsInfoDisplay
+export default PostCardInfoDisplay

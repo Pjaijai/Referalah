@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "next/link"
+import PostCardInfoDisplay from "@/modules/post/components/info-display/card-info"
 import PostHeader from "@/modules/post/components/info-display/header"
 
 import { PostStatusType } from "@/types/common/post-status"
@@ -9,9 +10,6 @@ import { buttonVariants } from "@/components/ui/button"
 import { Card, CardDescription, CardHeader } from "@/components/ui/card"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
-import IndustryDisplay from "@/components/customized-ui/info-display/industry"
-import LocationDisplay from "@/components/customized-ui/info-display/location"
-import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
 import { Icons } from "@/components/icons"
 
 interface IReferralPostCardProps {
@@ -71,12 +69,12 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
 
               {isViewingOwnProfile && (
                 <Link
-                  href={""}
+                  href={""} // TODO
                   className={buttonVariants({
                     size: isMobile ? "icon" : "sm",
                   })}
                 >
-                  <Icons.pencil className="h-4 w-4 sm:mr-2" />
+                  <Icons.pencil className="m-0 h-4 w-4 sm:mr-2" />
                   {!isMobile && "編輯"}
                 </Link>
               )}
@@ -84,29 +82,13 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
 
             <div className="mb-5 flex flex-col justify-between sm:flex-row">
               {/* location, industry, year of exp */}
-              <CardDescription className="text-overflow-ellipsis flex basis-full flex-wrap items-center justify-start gap-4 sm:basis-3/4">
-                {(city || province || country) && (
-                  <LocationDisplay
-                    city={city}
-                    province={province}
-                    country={country}
-                    className="xs:max-w-full max-w-sm"
-                  />
-                )}
-                {industry && (
-                  <IndustryDisplay
-                    industry={industry}
-                    className="xs:max-w-full max-w-xs"
-                  />
-                )}
-                {yearOfExperience !== null && (
-                  <YearsOfExperienceDisplay
-                    yearOfExperience={yearOfExperience}
-                    className="xs:max-w-full max-w-xs"
-                  />
-                )}
-              </CardDescription>
-
+              <PostCardInfoDisplay
+                city={city}
+                province={province}
+                country={country}
+                industry={industry}
+                yearOfExperience={yearOfExperience}
+              />
               <CardDescription className="flex-end mt-5 flex items-end justify-end sm:mt-0">
                 <CreatedAtDisplay applyTo="card" createdAt={createdAt} />
               </CardDescription>
