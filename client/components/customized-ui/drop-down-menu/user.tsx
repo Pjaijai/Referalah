@@ -13,6 +13,10 @@ import {
 import { useToast } from "@/components/ui/use-toast"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 
+
+
+
+
 const UserDropDownMenu = () => {
   const user = useUserStore((state) => state)
   const userState = useUserStore((state) => state)
@@ -55,18 +59,16 @@ const UserDropDownMenu = () => {
         <span>{user.username}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {nav.map((n) => {
-          return (
-            <DropdownMenuItem>
-              <Link
-                href={n.href}
-                className="flex w-full items-center  justify-center space-x-2"
-              >
-                {n.title}
-              </Link>
-            </DropdownMenuItem>
-          )
-        })}
+        {nav.map((n) => (
+          <DropdownMenuItem key={n.href}>
+            <Link
+              href={n.href}
+              className="flex w-full items-center  justify-center space-x-2"
+            >
+              {n.title}
+            </Link>
+          </DropdownMenuItem>
+        ))}
 
         <DropdownMenuItem
           className="flex cursor-pointer justify-center"

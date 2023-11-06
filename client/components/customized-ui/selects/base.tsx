@@ -10,10 +10,15 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+
+
+
+
 export interface ISelectOption {
   value: string
   title: string
 }
+
 interface IBaseSelectProps {
   triggerClassName?: string
   placeholder?: string
@@ -22,6 +27,7 @@ interface IBaseSelectProps {
   defaultValue?: string
   value?: string
 }
+
 const BaseSelect: React.FunctionComponent<IBaseSelectProps> = ({
   triggerClassName,
   placeholder,
@@ -38,11 +44,11 @@ const BaseSelect: React.FunctionComponent<IBaseSelectProps> = ({
       <SelectContent className="max-h-[300px]">
         <ScrollArea>
           {options &&
-            options.map((option) => {
-              return (
-                <SelectItem value={option.value}>{option.title}</SelectItem>
-              )
-            })}
+            options.map((option) => (
+              <SelectItem value={option.value} key={option.value}>
+                {option.title}
+              </SelectItem>
+            ))}
         </ScrollArea>
       </SelectContent>
     </Select>

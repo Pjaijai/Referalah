@@ -18,10 +18,15 @@ import {
 } from "@/components/ui/select"
 import { IFormTextInputProps } from "@/components/customized-ui/form/input"
 
+
+
+
+
 interface IFormSelectProps extends IFormTextInputProps {
   options: { value: string; title: string }[]
   defaultValue?: string
 }
+
 const FormSelect: React.FunctionComponent<IFormSelectProps> = ({
   control,
   name,
@@ -52,13 +57,11 @@ const FormSelect: React.FunctionComponent<IFormSelectProps> = ({
               <ScrollArea>
                 {options &&
                   options.length > 0 &&
-                  options.map((option) => {
-                    return (
-                      <SelectItem value={option.value}>
-                        {option.title}
-                      </SelectItem>
-                    )
-                  })}
+                  options.map((option) => (
+                    <SelectItem value={option.value} key={option.value}>
+                      {option.title}
+                    </SelectItem>
+                  ))}
               </ScrollArea>
             </SelectContent>
           </Select>
