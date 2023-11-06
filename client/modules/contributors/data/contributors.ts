@@ -93,6 +93,23 @@ const contributors: IContributor[] = [
       website: "https://marttsang.com/"
     },
     contributedArea: ["software_development"],
+  },
+  {
+    name: "Tommy Tsang",
+    links: {
+      linkedin: "https://www.linkedin.com/in/tommy-tsang-ting-fung/",
+      github: "https://github.com/tommyttf/",
+    },
+    contributedArea: ["software_development"],
+  },
+  {
+    name: "Lulu Tung",
+    links: {
+      linkedin: "https://www.linkedin.com/in/lulu-the-flaneur",
+      github: "https://github.com/511234",
+      website: "https://lublog.vercel.app/"
+    },
+    contributedArea: ["software_development"],
   }
 ]
 
