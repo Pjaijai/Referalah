@@ -67,7 +67,8 @@ export const siteConfig = {
       href: "/privacy-policy",
       metadata: {
         title: '隱私權政策 Private Policy',
-        description: METEDATA_DEFAULT_DESCRIPTION
+        description: METEDATA_DEFAULT_DESCRIPTION,
+        robots: 'noindex,nofollow'
       }
     },
     termsAndConditions: {
@@ -75,7 +76,8 @@ export const siteConfig = {
       href: "/terms-and-conditions",
       metadata: {
         title: '條款及細則 Terms and Conditions',
-        description: METEDATA_DEFAULT_DESCRIPTION
+        description: METEDATA_DEFAULT_DESCRIPTION,
+        robots: 'noindex,nofollow'
       }
     },
     contributors: {
