@@ -1,10 +1,9 @@
 import { ChangeEvent, useCallback, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import apiService from "@/utils/common/api"
+import { searchPostApi } from "@/utils/common/api"
 import { postSortingOptions } from "@/utils/common/sorting/post"
 import { UseInfiniteQueryResult, useInfiniteQuery } from "@tanstack/react-query"
 
-import { ISearchPostsRequest } from "@/types/api/request/post/search"
 import { ISearchPostResponse } from "@/types/api/response/referer-post"
 import { QueryKeyString } from "@/types/common/query-key-string"
 import { ReferralType } from "@/types/common/referral-type"
@@ -20,11 +19,16 @@ interface IFilterMeta {
   yoeMin: string // string number
   yoeMax: string // string number
 }
+
 const searchPost = ({ pageParam = 0, queryKey }: any) => {
   pageParam satisfies number
   queryKey satisfies [
     string,
-    { type: ReferralType; filterMeta: IFilterMeta; sorting: string },
+    {
+      type: ReferralType
+      filterMeta: IFilterMeta
+      sorting: string
+    },
   ]
 
   const NUMBER_OF_DATE_PER_FETCH = 5
@@ -43,7 +47,7 @@ const searchPost = ({ pageParam = 0, queryKey }: any) => {
   const yoeMax = filterMeta.yoeMax
   const yoeMin = filterMeta.yoeMin
 
-  const param: ISearchPostsRequest = {
+  return searchPostApi({
     companyName: companyName,
     numberOfDataPerPage: NUMBER_OF_DATE_PER_FETCH,
     cityUuid,
@@ -56,9 +60,7 @@ const searchPost = ({ pageParam = 0, queryKey }: any) => {
     sortingType,
     maxYearOfExperience: parseInt(yoeMax),
     minYearOfExperience: parseInt(yoeMin),
-  }
-
-  return apiService.searchPost(param)
+  })
 }
 const useSearchPost = (type: ReferralType) => {
   const keyString =
