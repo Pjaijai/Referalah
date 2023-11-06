@@ -90,16 +90,7 @@ const contributors: IContributor[] = [
     links: {
       linkedin: "https://www.linkedin.com/in/marttsang2/",
       github: "https://github.com/marttsang2",
-      website: "https://marttsang.com/",
-    },
-    contributedArea: ["software_development"],
-  },
-  {
-    name: "Martin Tsang",
-    links: {
-      linkedin: "https://www.linkedin.com/in/marttsang2/",
-      github: "https://github.com/marttsang2",
-      website: "https://marttsang.com/",
+      website: "https://marttsang.com/"
     },
     contributedArea: ["software_development"],
   },
@@ -111,6 +102,15 @@ const contributors: IContributor[] = [
     },
     contributedArea: ["software_development"],
   },
+  {
+    name: "Lulu Tung",
+    links: {
+      linkedin: "https://www.linkedin.com/in/lulu-the-flaneur",
+      github: "https://github.com/511234",
+      website: "https://lublog.vercel.app/"
+    },
+    contributedArea: ["software_development"],
+  }
 ]
 
 export default contributors

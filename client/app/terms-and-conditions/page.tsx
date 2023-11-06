@@ -1,11 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react"
+import { siteConfig } from "@/config/site";
+
+export const metadata = siteConfig.page.termsAndConditions.metadata
 
 const TncPage = () => {
   return (
     <article>
-      <title>AGREEMENT TO OUR TERMS</title>
-
       <h2 className="mt-2 font-semibold">AGREEMENT TO OUR TERMS</h2>
 
       <p>We are Referalah ("we," "us," "our").</p>

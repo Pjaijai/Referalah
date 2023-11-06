@@ -17,6 +17,17 @@ import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
+  keywords: [
+    "Referalah",
+    "Hong Kong",
+    "Hong Kong referral",
+    "job referrals",
+    "referee",
+    "referrer",
+    "香港",
+    "香港人",
+    "海外",
+  ],
   manifest: "../manifest.json",
   title: {
     default: `${siteConfig.name} | 海外港人搵Referral平台`,

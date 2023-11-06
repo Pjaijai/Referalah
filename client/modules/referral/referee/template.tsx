@@ -1,3 +1,5 @@
+'use client'
+
 import React from "react"
 
 import { MessageType } from "@/types/common/message-type"
