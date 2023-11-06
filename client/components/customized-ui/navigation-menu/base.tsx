@@ -64,7 +64,7 @@ export function BaseNavigationMenu() {
           <NavigationMenuContent>
             <ul className="flex w-[200px] flex-col ">
               {components.map((component) => (
-                <Link href={component.href}>
+                <Link href={component.href} key={component.href}>
                   <ListItem key={component.title} title={component.title}>
                     {component.description}
                   </ListItem>
