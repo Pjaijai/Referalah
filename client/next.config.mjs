@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+
+import withPWA from "next-pwa"
+
+const pwaWrapper = withPWA({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+})
+export default pwaWrapper({
   reactStrictMode: true,
   experimental: {
     appDir: true,
@@ -7,6 +15,4 @@ const nextConfig = {
   images: {
     domains: ["localhost"], // Add the domain where your images are hosted
   },
-}
-
-export default nextConfig
+})

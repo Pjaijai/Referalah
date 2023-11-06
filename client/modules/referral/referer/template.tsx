@@ -7,13 +7,13 @@ import useGetCityList from "@/hooks/api/location/get-city-list"
 import useGetCountryList from "@/hooks/api/location/get-country-list"
 import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useSearchReferral from "@/hooks/api/referral/search-referral"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import ResetButton from "@/components/customized-ui/buttons/reset"
 import ReferralCard from "@/components/customized-ui/cards/referral"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
-import { Button } from "@/components/ui/button"
 
 interface IRefererPageTemplateProps {}
 const RefererPageTemplate: React.FunctionComponent<
@@ -100,10 +100,7 @@ const RefererPageTemplate: React.FunctionComponent<
             type={MessageType.REFERRAL}
           />
           <ResetButton onClick={handleReset} />
-          <Button
-            onClick={handleSubmitChange}
-            className="whitespace-nowrap"
-          >
+          <Button onClick={handleSubmitChange} className="whitespace-nowrap">
             確定
           </Button>
         </div>

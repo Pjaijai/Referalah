@@ -1,0 +1,15 @@
+{
+  "name": "Referalah",
+  "short_name": "Referalah",
+  "theme_color": "#0000",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "any",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    { "src": "/Referalah-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/Referalah-256.png", "type": "image/png", "sizes": "256x256" },
+    { "src": "/Referalah-512.png", "type": "image/png", "sizes": "512x512" }
+  ]
+}
