@@ -1,12 +1,15 @@
-import apiService from "@/utils/common/api"
+import { getPostListByUserUuid } from "@/utils/common/api"
 import { useQuery } from "@tanstack/react-query"
 
 import { QueryKeyString } from "@/types/common/query-key-string"
 
+
+
+
+
 const getPosts = ({ queryKey }: any) => {
   const uuid = queryKey[1].userUuid
-  const res = apiService.getPostListByUserUuid(uuid)
-  return res
+  return getPostListByUserUuid(uuid)
 }
 
 const useGetPostListByUserUuid = (userUuid: string) => {

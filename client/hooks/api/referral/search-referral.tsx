@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import apiService from "@/utils/common/api"
+import { searchReferral } from "@/utils/common/api"
 import { referralSortingOptions } from "@/utils/common/sorting/referer"
 import { UseInfiniteQueryResult, useInfiniteQuery } from "@tanstack/react-query"
 
@@ -163,7 +163,7 @@ const useSearchReferral = (type: ReferralType) => {
   }
   const result: UseInfiniteQueryResult<IReferralResponse[]> = useInfiniteQuery({
     queryKey: [keyString, { sorting: filterMeta.sorting, filterMeta, type }],
-    queryFn: apiService.searchReferral,
+    queryFn: searchReferral,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, allPages: any[]) => {

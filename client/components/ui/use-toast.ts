@@ -3,6 +3,10 @@ import * as React from "react"
 
 import type { ToastActionElement, ToastProps } from "@/components/ui/toast"
 
+
+
+
+
 const TOAST_LIMIT = 1
 const TOAST_REMOVE_DELAY = 1000000
 
@@ -13,13 +17,6 @@ type ToasterToast = ToastProps & {
   action?: ToastActionElement
 }
 
-const actionTypes = {
-  ADD_TOAST: "ADD_TOAST",
-  UPDATE_TOAST: "UPDATE_TOAST",
-  DISMISS_TOAST: "DISMISS_TOAST",
-  REMOVE_TOAST: "REMOVE_TOAST",
-} as const
-
 let count = 0
 
 function genId() {
@@ -27,23 +24,28 @@ function genId() {
   return count.toString()
 }
 
-type ActionType = typeof actionTypes
+enum EActionTypes {
+  ADD_TOAST = "ADD_TOAST",
+  UPDATE_TOAST = "UPDATE_TOAST",
+  DISMISS_TOAST = "DISMISS_TOAST",
+  REMOVE_TOAST = "REMOVE_TOAST",
+}
 
 type Action =
   | {
-      type: ActionType["ADD_TOAST"]
+      type: EActionTypes.ADD_TOAST
       toast: ToasterToast
     }
   | {
-      type: ActionType["UPDATE_TOAST"]
+      type: EActionTypes.UPDATE_TOAST
       toast: Partial<ToasterToast>
     }
   | {
-      type: ActionType["DISMISS_TOAST"]
+      type: EActionTypes.DISMISS_TOAST
       toastId?: ToasterToast["id"]
     }
   | {
-      type: ActionType["REMOVE_TOAST"]
+      type: EActionTypes.REMOVE_TOAST
       toastId?: ToasterToast["id"]
     }
 
@@ -61,7 +63,7 @@ const addToRemoveQueue = (toastId: string) => {
   const timeout = setTimeout(() => {
     toastTimeouts.delete(toastId)
     dispatch({
-      type: "REMOVE_TOAST",
+      type: EActionTypes.REMOVE_TOAST,
       toastId: toastId,
     })
   }, TOAST_REMOVE_DELAY)
@@ -71,13 +73,13 @@ const addToRemoveQueue = (toastId: string) => {
 
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case "ADD_TOAST":
+    case EActionTypes.ADD_TOAST:
       return {
         ...state,
         toasts: [action.toast, ...state.toasts].slice(0, TOAST_LIMIT),
       }
 
-    case "UPDATE_TOAST":
+    case EActionTypes.UPDATE_TOAST:
       return {
         ...state,
         toasts: state.toasts.map((t) =>
@@ -85,7 +87,7 @@ export const reducer = (state: State, action: Action): State => {
         ),
       }
 
-    case "DISMISS_TOAST": {
+    case EActionTypes.DISMISS_TOAST: {
       const { toastId } = action
 
       // ! Side effects ! - This could be extracted into a dismissToast() action,
@@ -110,7 +112,7 @@ export const reducer = (state: State, action: Action): State => {
         ),
       }
     }
-    case "REMOVE_TOAST":
+    case EActionTypes.REMOVE_TOAST:
       if (action.toastId === undefined) {
         return {
           ...state,
@@ -142,13 +144,14 @@ function toast({ ...props }: Toast) {
 
   const update = (props: ToasterToast) =>
     dispatch({
-      type: "UPDATE_TOAST",
+      type: EActionTypes.UPDATE_TOAST,
       toast: { ...props, id },
     })
-  const dismiss = () => dispatch({ type: "DISMISS_TOAST", toastId: id })
+  const dismiss = () =>
+    dispatch({ type: EActionTypes.DISMISS_TOAST, toastId: id })
 
   dispatch({
-    type: "ADD_TOAST",
+    type: EActionTypes.ADD_TOAST,
     toast: {
       ...props,
       id,
@@ -182,7 +185,8 @@ function useToast() {
   return {
     ...state,
     toast,
-    dismiss: (toastId?: string) => dispatch({ type: "DISMISS_TOAST", toastId }),
+    dismiss: (toastId?: string) =>
+      dispatch({ type: EActionTypes.DISMISS_TOAST, toastId }),
   }
 }
 

@@ -10,10 +10,6 @@ import { z } from "zod"
 
 import { ReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
-import useGetIndustryList from "@/hooks/api/industry/get-Industry-list"
-import useGetCityList from "@/hooks/api/location/get-city-list"
-import useGetCountryList from "@/hooks/api/location/get-country-list"
-import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useCreatePost from "@/hooks/api/post/create-post"
 import useCityOptions from "@/hooks/common/options/city-options"
 import useCountryOptions from "@/hooks/common/options/country-options"
@@ -28,6 +24,10 @@ import FormTextInput from "@/components/customized-ui/form/input"
 import FormNumberInput from "@/components/customized-ui/form/number"
 import FormSelect from "@/components/customized-ui/form/select"
 import FormTextArea from "@/components/customized-ui/form/text-area"
+
+
+
+
 
 interface ICreatePostTemplateProps {}
 
@@ -56,14 +56,11 @@ const CreatePostTemplate: React.FunctionComponent<
   const urlWatch = form.watch("url")
   const router = useRouter()
   const user = useUserStore((state) => state)
-  const { data: industryList } = useGetIndustryList()
-  const { data: cityList } = useGetCityList()
-  const { data: countryList } = useGetCountryList()
-  const { data: provinceList } = useGetProvinceList()
-  const industryOptions = useIndustryOptions(industryList)
-  const countryOptions = useCountryOptions(countryList)
-  const provinceOptions = useProvinceOptions(provinceList, countryWatch)
-  const cityOptions = useCityOptions(cityList, provinceWatch)
+
+  const industryOptions = useIndustryOptions()
+  const countryOptions = useCountryOptions()
+  const provinceOptions = useProvinceOptions(countryWatch)
+  const cityOptions = useCityOptions(provinceWatch)
   const { mutate: createPost, isLoading: isCreatePostLoading } = useCreatePost()
 
   useEffect(() => {

@@ -1,9 +1,13 @@
-import apiService from "@/utils/common/api"
+import { contactReferral } from "@/utils/common/api"
 import { useMutation } from "@tanstack/react-query"
+
+
+
+
 
 const useContactReferral = () => {
   return useMutation({
-    mutationFn: apiService.contactReferral,
+    mutationFn: contactReferral,
   })
 }
 
