@@ -3,10 +3,6 @@ import { useQuery } from "@tanstack/react-query"
 
 import { QueryKeyString } from "@/types/common/query-key-string"
 
-
-
-
-
 const getPosts = ({ queryKey }: any) => {
   const uuid = queryKey[1].userUuid
   return getPostListByUserUuid(uuid)

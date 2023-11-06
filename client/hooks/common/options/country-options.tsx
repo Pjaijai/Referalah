@@ -3,10 +3,6 @@ import { useMemo } from "react"
 import useGetCountryList from "@/hooks/api/location/get-country-list"
 import { ISelectOption } from "@/components/customized-ui/selects/base"
 
-
-
-
-
 const useCountryOptions = () => {
   const { data } = useGetCountryList()
 

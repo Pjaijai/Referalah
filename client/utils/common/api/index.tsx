@@ -18,10 +18,6 @@ import { IReferralResponse } from "@/types/api/response/referral"
 import { IUserResponse } from "@/types/api/response/user"
 import { ReferralType } from "@/types/common/referral-type"
 
-
-
-
-
 // const apiService = {
 // User Profile
 export const getUserProfile = async (arg: any) => {

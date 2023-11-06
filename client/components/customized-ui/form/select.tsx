@@ -18,10 +18,6 @@ import {
 } from "@/components/ui/select"
 import { IFormTextInputProps } from "@/components/customized-ui/form/input"
 
-
-
-
-
 interface IFormSelectProps extends IFormTextInputProps {
   options: { value: string; title: string }[]
   defaultValue?: string

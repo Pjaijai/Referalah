@@ -1,9 +1,5 @@
 import { IContributor } from "@/modules/contributors/types/contributor"
 
-
-
-
-
 const contributors: IContributor[] = [
   {
     name: "Paul Wong (aka R1R69)",

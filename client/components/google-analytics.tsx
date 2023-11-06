@@ -4,10 +4,6 @@ import { useEffect } from "react"
 import { usePathname } from "next/navigation"
 import Script from "next/script"
 
-
-
-
-
 declare const window: any
 
 export default function GoogleAnalytics() {

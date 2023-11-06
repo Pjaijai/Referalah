@@ -18,10 +18,6 @@ import {
 import BaseSelect from "@/components/customized-ui/selects/base"
 import { Icons } from "@/components/icons"
 
-
-
-
-
 interface ISearchPopoverProps {
   countryUuid?: string
   provinceUuid?: string

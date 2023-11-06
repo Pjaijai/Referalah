@@ -13,10 +13,6 @@ import ReferralPostCard from "@/components/customized-ui/cards/referral-post"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 
-
-
-
-
 interface IRefererPostPageProps {}
 
 const RefererPostPageTemplate: React.FunctionComponent<

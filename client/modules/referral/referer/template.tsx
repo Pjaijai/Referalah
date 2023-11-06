@@ -11,10 +11,6 @@ import ReferralCard from "@/components/customized-ui/cards/referral"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 
-
-
-
-
 interface IRefererPageTemplateProps {}
 
 const RefererPageTemplate: React.FunctionComponent<

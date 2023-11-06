@@ -3,10 +3,6 @@ import { useMemo } from "react"
 import useGetCityList from "@/hooks/api/location/get-city-list"
 import { ISelectOption } from "@/components/customized-ui/selects/base"
 
-
-
-
-
 const useCityOptions = (provinceUuid?: string) => {
   const { data } = useGetCityList()
 

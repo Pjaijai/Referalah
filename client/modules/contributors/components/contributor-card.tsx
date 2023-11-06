@@ -6,10 +6,6 @@ import { IContributor } from "@/modules/contributors/types/contributor"
 import { Card, CardTitle } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
 
-
-
-
-
 interface IContributorCard extends IContributor {}
 
 const ContributorCard: React.FunctionComponent<IContributorCard> = ({
