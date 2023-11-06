@@ -2,12 +2,12 @@
 
 import withPWA from "next-pwa"
 
-const pwaConfig = withPWA({
+const pwaWrapper = withPWA({
   dest: "public",
   register: true,
   skipWaiting: true,
 })
-export default pwaConfig({
+export default pwaWrapper({
   reactStrictMode: true,
   experimental: {
     appDir: true,
