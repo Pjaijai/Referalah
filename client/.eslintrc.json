@@ -6,7 +6,9 @@
     "prettier",
     "plugin:tailwindcss/recommended"
   ],
-  "plugins": ["tailwindcss"],
+  "plugins": [
+    "tailwindcss"
+  ],
   "rules": {
     "@next/next/no-html-link-for-pages": "off",
     "react/jsx-key": "off",
@@ -14,16 +16,23 @@
   },
   "settings": {
     "tailwindcss": {
-      "callees": ["cn"],
+      "callees": [
+        "cn"
+      ],
       "config": "tailwind.config.js"
     },
     "next": {
-      "rootDir": ["./"]
+      "rootDir": [
+        "./"
+      ]
     }
   },
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx"],
+      "files": [
+        "*.ts",
+        "*.tsx"
+      ],
       "parser": "@typescript-eslint/parser"
     }
   ]

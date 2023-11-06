@@ -2,13 +2,8 @@
 
 import React from "react"
 
-import { IReferralResponse } from "@/types/api/response/referral"
 import { MessageType } from "@/types/common/message-type"
 import { ReferralType } from "@/types/common/referral-type"
-import useGetIndustryList from "@/hooks/api/industry/get-Industry-list"
-import useGetCityList from "@/hooks/api/location/get-city-list"
-import useGetCountryList from "@/hooks/api/location/get-country-list"
-import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useSearchReferral from "@/hooks/api/referral/search-referral"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -19,6 +14,7 @@ import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 
 interface IRefereePageTemplateProps {}
+
 const RefereePageTemplate: React.FunctionComponent<
   IRefereePageTemplateProps
 > = () => {
@@ -54,14 +50,8 @@ const RefereePageTemplate: React.FunctionComponent<
     isFetching,
   } = result
 
-  const { data: industryList } = useGetIndustryList()
-  const { data: cityList } = useGetCityList()
-  const { data: countryList } = useGetCountryList()
-  const { data: provinceList } = useGetProvinceList()
-
-  const list = refereeListData
-    ? (refereeListData?.pages.flatMap((d) => d) as IReferralResponse[])
-    : []
+  const list =
+    refereeListData !== undefined ? refereeListData.pages.flatMap((d) => d) : []
   return (
     <>
       <div className="mt-8 flex h-full w-full flex-col-reverse gap-4 md:flex-row">
@@ -79,10 +69,6 @@ const RefereePageTemplate: React.FunctionComponent<
         />
         <div className="flex flex-row justify-end gap-2">
           <SearchPopover
-            countryList={countryList}
-            provinceList={provinceList}
-            cityList={cityList}
-            industryList={industryList}
             provinceUuid={provinceUuid}
             countryUuid={countryUuid}
             onCityChange={handleCityChange}

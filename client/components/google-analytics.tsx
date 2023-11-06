@@ -10,10 +10,8 @@ export default function GoogleAnalytics() {
   const pathname = usePathname()
 
   useEffect(() => {
-    const url = pathname
-
-    window.gtag("config", process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID as string, {
-      page_path: url,
+    window.gtag("config", process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID, {
+      page_path: pathname,
     })
   }, [pathname, process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID])
 

@@ -55,18 +55,16 @@ const UserDropDownMenu = () => {
         <span>{user.username}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {nav.map((n) => {
-          return (
-            <DropdownMenuItem>
-              <Link
-                href={n.href}
-                className="flex w-full items-center  justify-center space-x-2"
-              >
-                {n.title}
-              </Link>
-            </DropdownMenuItem>
-          )
-        })}
+        {nav.map((n) => (
+          <DropdownMenuItem key={n.href}>
+            <Link
+              href={n.href}
+              className="flex w-full items-center  justify-center space-x-2"
+            >
+              {n.title}
+            </Link>
+          </DropdownMenuItem>
+        ))}
 
         <DropdownMenuItem
           className="flex cursor-pointer justify-center"
