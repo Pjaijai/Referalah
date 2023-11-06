@@ -1,5 +1,5 @@
 import { Separator } from "@/components/ui/separator"
-import { siteConfig } from "@/config/site.ts";
+import { siteConfig } from "@/config/site";
 
 export const metadata = siteConfig.page.about.metadata
 

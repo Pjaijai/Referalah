@@ -1,13 +1,13 @@
 'use client'
 
 import Link from "next/link";
-import {siteConfig} from "@/config/site.ts";
-import {Icons} from "@/components/icons.tsx";
-import CommonPageLayout from "@/components/layouts/common.tsx";
-import ViewProfileTemplate from "@/modules/profile/view/template.tsx";
-import EditProfileTemplate from "@/modules/profile/edit/template.tsx";
+import {siteConfig} from "@/config/site";
+import {Icons} from "@/components/icons";
+import CommonPageLayout from "@/components/layouts/common";
+import ViewProfileTemplate from "@/modules/profile/view/template";
+import EditProfileTemplate from "@/modules/profile/edit/template";
 import React, {useState} from "react";
-import useGetUserprofile from "@/hooks/api/user/get-user-profile.tsx";
+import useGetUserprofile from "@/hooks/api/user/get-user-profile";
 
 const ProfileTemplate = ({userUuid}: { userUuid: string }) => {
     const [isEditMode, setIsEditMode] = useState(false)
@@ -79,6 +79,8 @@ const ProfileTemplate = ({userUuid}: { userUuid: string }) => {
                 )}
             </CommonPageLayout>
         )
+
+    return (<></>)
 }
 
 export default ProfileTemplate

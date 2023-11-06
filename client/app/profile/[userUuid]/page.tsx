@@ -1,7 +1,7 @@
-import ProfileTemplate from "@/modules/profile/template.tsx";
-import apiService from "@/utils/common/api/index.tsx";
+import ProfileTemplate from "@/modules/profile/template";
+import apiService from "@/utils/common/api/index";
 
-export async function generateMetadata({params}) {
+export async function generateMetadata({ params }: { params: { userUuid: string }}) {
     const { userUuid } = params
     try {
         const res = await apiService.getUserProfile({ queryKey: [, { userUuid } ] })
