@@ -1,4 +1,5 @@
 import { ChangeEvent, useCallback, useState } from "react"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import apiService from "@/utils/common/api"
 import { postSortingOptions } from "@/utils/common/sorting/post"
 import { UseInfiniteQueryResult, useInfiniteQuery } from "@tanstack/react-query"
@@ -7,7 +8,6 @@ import { ISearchPostsRequest } from "@/types/api/request/post/search"
 import { ISearchPostResponse } from "@/types/api/response/referer-post"
 import { QueryKeyString } from "@/types/common/query-key-string"
 import { ReferralType } from "@/types/common/referral-type"
-import { useSearchParams, useRouter, usePathname } from "next/navigation"
 
 interface IFilterMeta {
   companyName: string
@@ -69,21 +69,39 @@ const useSearchPost = (type: ReferralType) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const [companyName, setCompanyName] = useState(searchParams.get("company")?.toString() || "")
-  const [jobTitle, setJobTitle] = useState(searchParams.get("jobTitle")?.toString() || "")
-  const [provinceUuid, setProvinceUuid] = useState<undefined | string>(searchParams.get("province")?.toString())
-  const [countryUuid, setCountryUuid] = useState<undefined | string>(searchParams.get("country")?.toString())
-  const [cityUuid, setCityUuid] = useState<undefined | string>(searchParams.get("city")?.toString())
-  const [industryUuid, setIndustryUuid] = useState<undefined | string>(searchParams.get("industry")?.toString())
-  const [yoeMin, setYoeMin] = useState<undefined | string>(searchParams.get("yoeMin")?.toString() || "0")
-  const [yoeMax, setYoeMax] = useState<undefined | string>(searchParams.get("yoeMax")?.toString() || "100")
-  const [sorting, setSorting] = useState(searchParams.get("sorting")?.toString() || postSortingOptions[0].value)
+  const [companyName, setCompanyName] = useState(
+    searchParams.get("company")?.toString() || ""
+  )
+  const [jobTitle, setJobTitle] = useState(
+    searchParams.get("jobTitle")?.toString() || ""
+  )
+  const [provinceUuid, setProvinceUuid] = useState<undefined | string>(
+    searchParams.get("province")?.toString()
+  )
+  const [countryUuid, setCountryUuid] = useState<undefined | string>(
+    searchParams.get("country")?.toString()
+  )
+  const [cityUuid, setCityUuid] = useState<undefined | string>(
+    searchParams.get("city")?.toString()
+  )
+  const [industryUuid, setIndustryUuid] = useState<undefined | string>(
+    searchParams.get("industry")?.toString()
+  )
+  const [yoeMin, setYoeMin] = useState<undefined | string>(
+    searchParams.get("yoeMin")?.toString() || "0"
+  )
+  const [yoeMax, setYoeMax] = useState<undefined | string>(
+    searchParams.get("yoeMax")?.toString() || "100"
+  )
+  const [sorting, setSorting] = useState(
+    searchParams.get("sorting")?.toString() || postSortingOptions[0].value
+  )
   const [params] = useState(new URLSearchParams(searchParams.toString()))
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
       params.set(name, value)
- 
+
       return params.toString()
     },
     [params]
@@ -175,7 +193,9 @@ const useSearchPost = (type: ReferralType) => {
     router.push(pathname + "?" + params.toString())
   }
 
-  const handleKeyPressSubmitChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyPressSubmitChange = (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
     if (e.key === "Enter") {
       handleSubmitChange()
     }
@@ -188,7 +208,8 @@ const useSearchPost = (type: ReferralType) => {
     countryUuid: searchParams.get("country")?.toString() || undefined,
     industryUuid: searchParams.get("industry")?.toString() || undefined,
     provinceUuid: searchParams.get("province")?.toString() || undefined,
-    sorting: searchParams.get("sorting")?.toString() || postSortingOptions[0].value,
+    sorting:
+      searchParams.get("sorting")?.toString() || postSortingOptions[0].value,
     yoeMin: searchParams.get("yoeMin")?.toString() || "0",
     yoeMax: searchParams.get("yoeMax")?.toString() || "100",
   }

@@ -7,6 +7,7 @@ import { Card, CardTitle } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
 
 interface IContributorCard extends IContributor {}
+
 const ContributorCard: React.FunctionComponent<IContributorCard> = ({
   contributedArea,
   links,
@@ -42,8 +43,8 @@ const ContributorCard: React.FunctionComponent<IContributorCard> = ({
       </div>
 
       <div className="flex flex-row gap-2">
-        {contributedArea.map((data, index) => (
-          <ContributionAreaBadge area={data} key={index} />
+        {contributedArea.map((data) => (
+          <ContributionAreaBadge area={data} key={data} />
         ))}
       </div>
     </Card>
