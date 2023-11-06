@@ -1,9 +1,7 @@
 import { Separator } from "@/components/ui/separator"
-import {siteConfig} from "@/config/site.ts";
+import { siteConfig } from "@/config/site.ts";
 
-export function generateMetadata() {
-    return siteConfig.page.about.metadata
-}
+export const metadata = siteConfig.page.about.metadata
 
 const AboutPage = () => {
   return (

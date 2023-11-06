@@ -4,9 +4,8 @@ import Link from "next/link"
 
 import { siteConfig } from "@/config/site"
 
-export function generateMetadata() {
-  return siteConfig.page.privacyPolicy.metadata
-}
+export const metadata = siteConfig.page.privacyPolicy.metadata
+
 
 const PrivacyPage = () => {
   return (

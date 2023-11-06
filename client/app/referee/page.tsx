@@ -4,9 +4,8 @@ import RefereePageTemplate from "@/modules/referral/referee/template"
 import { siteConfig } from "@/config/site"
 import CommonPageLayout from "@/components/layouts/common"
 
-export function generateMetadata() {
-    return siteConfig.page.referee.metadata
-}
+export const metadata = siteConfig.page.referee.metadata
+
 
 const RefereePage: NextPage = () => {
   return (

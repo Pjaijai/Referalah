@@ -1,8 +1,9 @@
-import React from "react"
 import RefererPostPageTemplate from "@/modules/post/referer/template"
 
 import { siteConfig } from "@/config/site"
 import CommonPageLayout from "@/components/layouts/common"
+
+export const metadata = siteConfig.page.referrerPost.metadata
 
 const RefererPostPage = () => {
   return (

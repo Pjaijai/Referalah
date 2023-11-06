@@ -1,10 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react"
-import {siteConfig} from "@/config/site.ts";
+import { siteConfig } from "@/config/site.ts";
 
-export function generateMetadata() {
-  return siteConfig.page.termsAndConditions.metadata
-}
+export const metadata = siteConfig.page.termsAndConditions.metadata
 
 const TncPage = () => {
   return (
