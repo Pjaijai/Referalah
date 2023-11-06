@@ -28,6 +28,10 @@ export const siteConfig = {
       name: "貼街招",
       href: "/post/create",
     },
+    editPost: {
+      name: "編輯街招",
+      href: "/post/edit",
+    },
     referrerPost: {
       name: "街招",
       href: "/post/referer",
