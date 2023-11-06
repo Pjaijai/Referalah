@@ -22,7 +22,7 @@ const EditPostPage = ({ params }: { params: { postUuid: string } }) => {
   }, [isLoading, post, router, userUuid])
 
   return (
-    <CommonPageLayout>
+    <CommonPageLayout title={siteConfig.page.editPost.name}>
       {!isLoading && (
         <EditPostPageTemplate
           postDate={post}

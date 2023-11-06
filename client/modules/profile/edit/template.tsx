@@ -13,10 +13,6 @@ import { v4 as uuidv4 } from "uuid"
 import { z } from "zod"
 
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
-import useGetIndustryList from "@/hooks/api/industry/get-Industry-list"
-import useGetCityList from "@/hooks/api/location/get-city-list"
-import useGetCountryList from "@/hooks/api/location/get-country-list"
-import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useUpdateUserProfile from "@/hooks/api/user/update-user-profile"
 import useCityOptions from "@/hooks/common/options/city-options"
 import useCountryOptions from "@/hooks/common/options/country-options"
@@ -106,11 +102,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           (value) => {
             if (value) {
               const number = parseFloat(value)
-              if (!isNaN(number) && number >= 0 && number <= 100) {
-                return true
-              } else {
-                return false
-              }
+              return !isNaN(number) && number >= 0 && number <= 100
             }
 
             return true
@@ -189,15 +181,10 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   const provinceWatch = watch("provinceUuid")
   const yeoWatch = watch("yearOfExperience")
 
-  const { data: industryList } = useGetIndustryList()
-  const { data: countryList } = useGetCountryList()
-  const { data: provinceList } = useGetProvinceList()
-  const { data: cityList } = useGetCityList()
-
-  const industryOptions = useIndustryOptions(industryList)
-  const countryOptions = useCountryOptions(countryList)
-  const provinceOptions = useProvinceOptions(provinceList, countryWatch)
-  const cityOptions = useCityOptions(cityList, provinceWatch)
+  const industryOptions = useIndustryOptions()
+  const countryOptions = useCountryOptions()
+  const provinceOptions = useProvinceOptions(countryWatch)
+  const cityOptions = useCityOptions(provinceWatch)
 
   useEffect(() => {
     if (provinceWatch !== provinceUuid) {

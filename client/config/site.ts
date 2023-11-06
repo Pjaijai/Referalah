@@ -51,6 +51,10 @@ export const siteConfig = {
           "你公司請人又想搵香港人？網上睇到份工又想人幫手？係到貼個街招，等人聯絡你。 Is your company hiring and looking for folks from Hong Kong? Stick a job posting here to get contacted.",
       },
     },
+    editPost: {
+      name: "編輯街招",
+      href: "/post/edit",
+    },
     referrerPost: {
       name: "街招",
       href: "/post/referer",

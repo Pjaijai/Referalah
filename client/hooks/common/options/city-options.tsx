@@ -1,28 +1,21 @@
 import { useMemo } from "react"
 
-import { ICityResponse } from "@/types/api/response/city"
+import useGetCityList from "@/hooks/api/location/get-city-list"
 import { ISelectOption } from "@/components/customized-ui/selects/base"
 
-const useCityOptions = (cityList?: ICityResponse[], provinceUuid?: string) => {
-  const cityOptions = useMemo(() => {
-    const res: (ISelectOption | undefined)[] = cityList
-      ? cityList.map((city) => {
-          if (city.province_uuid === provinceUuid) {
-            return {
-              value: city.uuid,
-              title: `${city.english_name} | ${city.cantonese_name}`,
-            } as { value: string; title: string }
-          }
+const useCityOptions = (provinceUuid?: string) => {
+  const { data } = useGetCityList()
 
-          return undefined
-        })
+  return useMemo<ISelectOption[]>(() => {
+    return Array.isArray(data)
+      ? data
+          .filter((city) => city.province_uuid === provinceUuid)
+          .map((city) => ({
+            value: city.uuid,
+            title: `${city.english_name} | ${city.cantonese_name}`,
+          }))
       : []
-
-    const filteredCityOptions = res.filter((r) => r !== undefined)
-    return filteredCityOptions
-  }, [cityList, provinceUuid])
-
-  return cityOptions as ISelectOption[]
+  }, [data, provinceUuid])
 }
 
 export default useCityOptions
