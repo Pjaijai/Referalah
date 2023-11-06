@@ -1,10 +1,10 @@
 import ProfileTemplate from "@/modules/profile/template";
-import apiService from "@/utils/common/api/index";
+import {getUserProfile} from "@/utils/common/api/index";
 
 export async function generateMetadata({ params }: { params: { userUuid: string }}) {
     const { userUuid } = params
     try {
-        const res = await apiService.getUserProfile({ queryKey: [, { userUuid } ] })
+        const res = await getUserProfile({ queryKey: [, { userUuid } ] })
         return {
             title: res.username + ' 用戶檔案',
             description: res.description ?? `用戶：${res.username}`
