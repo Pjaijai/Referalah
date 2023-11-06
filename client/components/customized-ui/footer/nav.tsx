@@ -11,11 +11,12 @@ const NavFooter = () => {
     <footer className="mt-12 flex flex-col items-center justify-center gap-2 border-t-2 p-2 md:flex-row ">
       <div className="flex flex-col items-center gap-3 text-sm text-muted-foreground ">
         <div className="flex flex-row gap-3">
-          <a href="mailto:r1r69.referalah@gmail.com">
+          <a aria-label="author-email" href="mailto:r1r69.referalah@gmail.com">
             <Icons.mail />
           </a>
 
           <Link
+            aria-label="referalah-project-github"
             className="text-sm text-muted-foreground"
             href={siteConfig.links.github}
             target="_blank"
