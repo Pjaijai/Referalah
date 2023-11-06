@@ -1,6 +1,10 @@
 import ContributorCard from "@/modules/contributors/components/contributor-card"
 import contributors from "@/modules/contributors/data/contributors"
 
+
+
+
+
 const ContributorsPageTemplate = () => {
   return (
     <>
