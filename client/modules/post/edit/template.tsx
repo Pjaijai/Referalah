@@ -1,20 +1,19 @@
-"use client"
-
-import React, { useEffect, useState } from "react"
-import Link from "next/link"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
-import { createPostValidationSchema } from "@/modules/post/validation/create"
+import { postStatusOptions } from "@/modules/post/common/post-status-options"
+import { editPostValidationSchema } from "@/modules/post/validation/edit"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { IGetPostResponse } from "@/types/api/response/referer-post"
 import { ReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
 import useGetIndustryList from "@/hooks/api/industry/get-Industry-list"
 import useGetCityList from "@/hooks/api/location/get-city-list"
 import useGetCountryList from "@/hooks/api/location/get-country-list"
 import useGetProvinceList from "@/hooks/api/location/get-province-list"
-import useCreatePost from "@/hooks/api/post/create-post"
+import useUpdatePost from "@/hooks/api/post/update-post"
 import useCityOptions from "@/hooks/common/options/city-options"
 import useCountryOptions from "@/hooks/common/options/country-options"
 import useIndustryOptions from "@/hooks/common/options/industry-options"
@@ -22,32 +21,41 @@ import useProvinceOptions from "@/hooks/common/options/province-options"
 import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
-import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
 import FormTextInput from "@/components/customized-ui/form/input"
 import FormNumberInput from "@/components/customized-ui/form/number"
 import FormSelect from "@/components/customized-ui/form/select"
 import FormTextArea from "@/components/customized-ui/form/text-area"
 
-interface ICreatePostTemplateProps {}
-
-const CreatePostTemplate: React.FunctionComponent<
-  ICreatePostTemplateProps
-> = () => {
-  const formSchema = createPostValidationSchema
+interface IEditPostPageTemplateProps {
+  postDate?: IGetPostResponse
+  isPostDataLoading: boolean
+  postUuid: string
+}
+const EditPostPageTemplate: React.FunctionComponent<
+  IEditPostPageTemplateProps
+> = ({ postDate, isPostDataLoading, postUuid }) => {
+  const formSchema = editPostValidationSchema
+  const isSetInitialValues = useRef(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      description: "",
-      companyName: "",
-      jobTitle: "",
-      yearOfExperience: "0",
-      countryUuid: "",
-      provinceUuid: "",
-      cityUuid: "",
-      industryUuid: "",
-    },
+    defaultValues: useMemo(() => {
+      isSetInitialValues.current = true
+      return {
+        status: postDate?.status || "active",
+        description: postDate?.description || "",
+        companyName: postDate?.company_name || "",
+        jobTitle: postDate?.job_title || "",
+        yearOfExperience: postDate?.year_of_experience?.toString() || "0",
+        url: postDate?.url || "",
+        countryUuid: postDate?.country?.uuid || "",
+        provinceUuid: postDate?.province?.uuid || "",
+        cityUuid: postDate?.city?.uuid || "",
+        industryUuid: postDate?.industry?.uuid || "",
+      }
+    }, [isPostDataLoading]),
   })
+
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const countryWatch = form.watch("countryUuid")
@@ -64,11 +72,14 @@ const CreatePostTemplate: React.FunctionComponent<
   const countryOptions = useCountryOptions(countryList)
   const provinceOptions = useProvinceOptions(provinceList, countryWatch)
   const cityOptions = useCityOptions(cityList, provinceWatch)
-  const { mutate: createPost, isLoading: isCreatePostLoading } = useCreatePost()
+  const { mutate: updatePost, isLoading: isUpdatingPostLoading } =
+    useUpdatePost()
 
   useEffect(() => {
-    form.setValue("cityUuid", "")
-  }, [provinceWatch])
+    if (provinceWatch !== postDate?.province?.uuid) {
+      form.setValue("cityUuid", "")
+    }
+  }, [form, isPostDataLoading, provinceWatch])
 
   useEffect(() => {
     if (urlWatch === "") {
@@ -100,22 +111,12 @@ const CreatePostTemplate: React.FunctionComponent<
   const onSubmit = async (values: z.infer<typeof formSchema>, e: any) => {
     e.preventDefault()
     try {
-      if (!user.isSignIn)
-        return toast({
-          title: "未登入",
-          description: "登入咗先可以貼街招",
-          variant: "destructive",
-          action: (
-            <ToastAction altText="登入">
-              <Link href={siteConfig.page.auth.href}>登入</Link>
-            </ToastAction>
-          ),
-        })
-
       setIsSubmitting(true)
 
-      createPost(
+      updatePost(
         {
+          uuid: postUuid,
+          status: values.status,
           url: values.url,
           countryUuid: values.countryUuid,
           provinceUuid: values.provinceUuid,
@@ -130,7 +131,7 @@ const CreatePostTemplate: React.FunctionComponent<
         },
         {
           onSuccess: () => {
-            router.push(siteConfig.page.referrer.href)
+            router.push(`${siteConfig.page.referrerPost.href}/${postUuid}`)
           },
           onError: () => {
             return toast({
@@ -155,6 +156,13 @@ const CreatePostTemplate: React.FunctionComponent<
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4"
         >
+          <FormSelect
+            control={form.control}
+            label="狀態"
+            name="status"
+            options={postStatusOptions as any}
+          />
+
           <FormTextInput
             control={form.control}
             label="相關網址"
@@ -193,6 +201,7 @@ const CreatePostTemplate: React.FunctionComponent<
             label="國家"
             name="countryUuid"
           />
+
           <FormSelect
             control={form.control}
             label="省份"
@@ -213,7 +222,7 @@ const CreatePostTemplate: React.FunctionComponent<
             name="yearOfExperience"
           />
 
-          <Button type="submit" disabled={isCreatePostLoading}>
+          <Button type="submit" disabled={isUpdatingPostLoading}>
             {isSubmitting ? "請等等" : "提交"}
           </Button>
         </form>
@@ -222,4 +231,4 @@ const CreatePostTemplate: React.FunctionComponent<
   )
 }
 
-export default CreatePostTemplate
+export default EditPostPageTemplate
