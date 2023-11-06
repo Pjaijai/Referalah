@@ -1,7 +1,6 @@
 import "@/styles/globals.css"
 import { Metadata } from "next"
 import { cookies } from "next/headers"
-import { supabase as supabaseClient } from "@/utils/services/supabase/config"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Analytics } from "@vercel/analytics/react"
 
@@ -18,6 +17,7 @@ import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
+  keywords: ["Referalah", "Hong Kong", "Hong Kong referral", "job referrals", "referee", "referrer"],
   manifest: "../manifest.json",
   title: {
     default: `${siteConfig.name} | 海外港人搵Referral平台`,
