@@ -1,5 +1,9 @@
 import { IContributor } from "@/modules/contributors/types/contributor"
 
+
+
+
+
 const contributors: IContributor[] = [
   {
     name: "Paul Wong (aka R1R69)",
@@ -90,10 +94,27 @@ const contributors: IContributor[] = [
     links: {
       linkedin: "https://www.linkedin.com/in/marttsang2/",
       github: "https://github.com/marttsang2",
-      website: "https://marttsang.com/"
+      website: "https://marttsang.com/",
     },
     contributedArea: ["software_development"],
-  }
+  },
+  {
+    name: "Martin Tsang",
+    links: {
+      linkedin: "https://www.linkedin.com/in/marttsang2/",
+      github: "https://github.com/marttsang2",
+      website: "https://marttsang.com/",
+    },
+    contributedArea: ["software_development"],
+  },
+  {
+    name: "Tommy Tsang",
+    links: {
+      linkedin: "https://www.linkedin.com/in/tommy-tsang-ting-fung/",
+      github: "https://github.com/tommyttf/",
+    },
+    contributedArea: ["software_development"],
+  },
 ]
 
 export default contributors
