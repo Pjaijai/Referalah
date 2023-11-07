@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import React from "react"
 
@@ -135,9 +135,6 @@ const RefererPageTemplate: React.FunctionComponent<
                   yearOfExperience={referer.year_of_experience}
                   uuid={referer.uuid}
                   key={referer.uuid}
-                  messageType={MessageType.REFERRAL}
-                  postUuid={referer.uuid}
-                  toUuid={referer.uuid}
                   receiverType={ReferralType.REFERRER}
                 />
               )

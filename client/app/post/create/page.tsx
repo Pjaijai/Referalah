@@ -5,7 +5,6 @@ import CommonPageLayout from "@/components/layouts/common"
 
 export const metadata = siteConfig.page.createPost.metadata
 
-
 const CreatePostPage = () => {
   return (
     <CommonPageLayout title={siteConfig.page.createPost.name}>

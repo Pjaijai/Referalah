@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react"
-import { siteConfig } from "@/config/site";
+
+import { siteConfig } from "@/config/site"
 
 export const metadata = siteConfig.page.termsAndConditions.metadata
 

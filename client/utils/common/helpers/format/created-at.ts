@@ -1,6 +1,9 @@
+import { formatDate } from "@/utils/common/helpers/format/date"
 import compareDateDifferenceHelper from "@/utils/common/helpers/time/compareDateDifference"
 
-export const formatCreatedAt = (date?: string | null) => {
+export const formatCreatedAt = (
+  date?: string | null
+): { formattedDate: string; isExact?: boolean } => {
   if (date) {
     const difference = compareDateDifferenceHelper({
       newDate: new Date().toString(),
@@ -9,12 +12,15 @@ export const formatCreatedAt = (date?: string | null) => {
     })
 
     if (difference === 0) {
-      return "今日"
+      return { formattedDate: "今日", isExact: true }
     } else if (difference > 0 && difference < 30) {
-      return `${difference}日`
+      return { formattedDate: `${difference}日`, isExact: false }
     } else {
-      return `30日+`
+      return {
+        formattedDate: formatDate("YYYY年MM月DD日", date),
+        isExact: true,
+      }
     }
   }
-  return "--"
+  return { formattedDate: "--" }
 }

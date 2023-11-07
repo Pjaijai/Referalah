@@ -1,15 +1,25 @@
 "use client"
 
 import React from "react"
-import PostDetailsInfoDisplay from "@/modules/post/components/info-display/details-info"
+import Link from "next/link"
 import PostHeader from "@/modules/post/components/info-display/header"
 import PostStatusDisplay from "@/modules/post/components/info-display/status"
 
 import { MessageType } from "@/types/common/message-type"
+import { ReferralType } from "@/types/common/referral-type"
+import { siteConfig } from "@/config/site"
 import useGetPost from "@/hooks/api/post/get-post"
+import useUserStore from "@/hooks/state/user/store"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+import ContactButton from "@/components/customized-ui/buttons/contact"
 import ProfileCard from "@/components/customized-ui/cards/profile"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
+import IndustryDisplay from "@/components/customized-ui/info-display/industry"
+import LocationDisplay from "@/components/customized-ui/info-display/location"
+import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
+import { Icons } from "@/components/icons"
 import PageStatusLayout from "@/components/layouts/page-status"
 
 interface ReferralPostDetailsPageProps {
@@ -19,10 +29,12 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   ReferralPostDetailsPageProps
 > = ({ postUuid }) => {
   const { data: post, isLoading, isSuccess } = useGetPost(postUuid)
+  const userUuid = useUserStore((state) => state.uuid)
+  const isViewingOwnProfile = post?.created_by === userUuid
 
   return (
     <PageStatusLayout
-      error={"搵唔到街招資料，請稍後再試。"}
+      error="搵唔到街招資料，請稍後再試。"
       isLoading={isLoading}
       isSuccess={isSuccess}
     >
@@ -36,6 +48,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                   className="flex-end"
                 />
                 <CreatedAtDisplay
+                  applyTo="page"
                   createdAt={post.created_at && post.created_at.toString()}
                   className="justify-end text-xs text-muted-foreground"
                 />
@@ -56,25 +69,63 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                 </div>
               </div>
 
-              <PostDetailsInfoDisplay
-                city={post.city && post.city.cantonese_name}
-                province={post.province && post.province.cantonese_name}
-                country={post.country && post.country.cantonese_name}
-                industry={post.industry && post.industry.cantonese_name}
-                yearOfExperience={post.year_of_experience}
+              <Separator className="my-3" />
+              <div className="text-sm">
+                {(post.city || post.province || post.country) && (
+                  <LocationDisplay
+                    city={post.city?.cantonese_name || null}
+                    province={post.province?.cantonese_name || null}
+                    country={post.country?.cantonese_name || null}
+                    className="xs:max-w-full mb-2 max-w-sm"
+                  />
+                )}
+                {post.industry && (
+                  <IndustryDisplay
+                    industry={post.industry.cantonese_name}
+                    className="xs:max-w-full mb-2 max-w-xs"
+                  />
+                )}
+                {post.year_of_experience !== null && (
+                  <YearsOfExperienceDisplay
+                    yearOfExperience={post.year_of_experience}
+                    className="xs:max-w-full  max-w-xs"
+                  />
+                )}
+              </div>
+            </div>
+            {/* separator that is only shown on mobile */}
+            <Separator className="md:hidden" />
+
+            <div className="flex min-w-[200px] flex-col gap-4 md:basis-1/4">
+              {isViewingOwnProfile && (
+                <Link
+                  className={buttonVariants({ variant: "default" })}
+                  href={`${siteConfig.page.editPost.href}/${postUuid}`}
+                >
+                  <Icons.pencil className="mr-1 h-4 w-4" />
+                  編輯街招
+                </Link>
+              )}
+              {!isViewingOwnProfile && (
+                <ContactButton
+                  username={post.user?.username || "?"}
+                  toUuid={post.created_by}
+                  messageType={MessageType.POST}
+                  postUuid={post.uuid}
+                  receiverType={ReferralType.REFERRER}
+                />
+              )}
+              <ProfileCard
+                uuid={post.created_by}
+                username={post.user && post.user.username}
+                photoUrl={post.user && post.user.avatar_url}
               />
             </div>
-
-            <ProfileCard
-              uuid={post.created_by}
-              username={post.user && post.user.username}
-              photoUrl={post.user && post.user.avatar_url}
-              messageType={MessageType.POST}
-              toUuid={post.created_by}
-              postUuid={post.uuid}
-              className="basis-1/3"
-            />
           </div>
+
+          {/* separator that is only shown on tablet or larger */}
+          <Separator className="mb-5 hidden md:block" />
+
           <div className="whitespace-pre-wrap break-all">
             {post.description}
           </div>

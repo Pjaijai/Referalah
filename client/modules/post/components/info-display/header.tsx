@@ -23,21 +23,23 @@ const PostHeader: React.FunctionComponent<
 
   return (
     <div className={className}>
-      <CardTitle className="flex flex-row gap-2">
-        {title}
+      <CardTitle className="flex flex-col gap-2">
         {status && <PostStatusDisplay postStatus={status} />}
-        {url && (
-          <TooltipWrapper
-            tooltipTrigger={
-              <a onClick={handleUrlClick} className="align-middle">
-                <Icons.link className="h-4 w-4" />
-              </a>
-            }
-            tooltipContent={<span>相關連結</span>}
-          />
-        )}
+        <div className="inline-block">
+          {title}
+          {url && (
+            <TooltipWrapper
+              tooltipTrigger={
+                <a onClick={handleUrlClick} className=" align-middle">
+                  <Icons.link className="ml-2 h-4 w-4" />
+                </a>
+              }
+              tooltipContent={<span>相關連結</span>}
+            />
+          )}
+        </div>
       </CardTitle>
-      <div className="flex items-center justify-start text-sm text-muted-foreground">
+      <div className="mt-1 flex items-center justify-start text-sm text-muted-foreground">
         {subtitle}
       </div>
     </div>

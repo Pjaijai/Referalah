@@ -1,9 +1,12 @@
 import {
+  AlertTriangle,
   Briefcase,
   Building2,
   CalendarClock,
   CheckCircle2,
   ChevronDown,
+  ClipboardCheck,
+  ClipboardX,
   Clock,
   Github,
   Instagram,
@@ -20,9 +23,12 @@ import {
   RotateCcw,
   SlidersHorizontal,
   SunMedium,
+  Trash,
   Twitter,
   Undo2,
   User,
+  Verified,
+  XCircle,
   type Icon as LucideIcon,
 } from "lucide-react"
 
@@ -86,4 +92,7 @@ export const Icons = {
   company: Building2,
   yearsOfExperience: CalendarClock,
   createdAt: Clock,
+  verified: Verified,
+  deactivatePost: ClipboardX,
+  activatePost: ClipboardCheck,
 }

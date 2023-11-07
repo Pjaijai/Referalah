@@ -1,22 +1,16 @@
-import React, { useMemo } from "react"
+import React from "react"
 import Link from "next/link"
+import PostCardInfoDisplay from "@/modules/post/components/info-display/card-info"
 import PostHeader from "@/modules/post/components/info-display/header"
-import { formatDate } from "@/utils/common/helpers/format/date"
 
 import { PostStatusType } from "@/types/common/post-status"
 import { siteConfig } from "@/config/site"
+import useViewport from "@/hooks/common/useViewport"
 import { buttonVariants } from "@/components/ui/button"
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
+import { Card, CardDescription, CardHeader } from "@/components/ui/card"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
-import IndustryDisplay from "@/components/customized-ui/info-display/industry"
-import LocationDisplay from "@/components/customized-ui/info-display/location"
-import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
+import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
+import { Icons } from "@/components/icons"
 
 interface IReferralPostCardProps {
   uuid: string | null
@@ -29,8 +23,9 @@ interface IReferralPostCardProps {
   city: string | null
   industry: string | null
   url: string | null
-  createdAt?: string | null
+  createdAt: string | null
   status: PostStatusType
+  isViewingOwnProfile: boolean
 }
 
 const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
@@ -45,76 +40,62 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
   yearOfExperience,
   createdAt,
   status,
+  isViewingOwnProfile,
 }) => {
-  const formattedCreatedAt = useMemo(
-    () => formatDate("YYYY年MM月DD日", createdAt),
-    [createdAt]
-  )
+  const { isMobile } = useViewport()
 
   return (
     <Card className="flex flex-col justify-between rounded shadow-md">
-      <div className="flex flex-col items-start justify-start">
-        <CardHeader className="w-full pb-2">
-          {/* title, subtitle, url, avatar, quick action */}
-          <div className="flex flex-row items-start justify-between gap-3 sm:gap-1">
-            <div className="mb-2 flex basis-full flex-row items-center gap-3 sm:basis-2/3 md:basis-3/5">
-              <PostHeader
-                title={jobTitle}
-                subtitle={
-                  companyName ? (
-                    <CompanyNameDisplay name={companyName} />
-                  ) : undefined
-                }
-                url={url}
-                status={status}
-              />
-            </div>
-          </div>
+      <Link
+        href={`${siteConfig.page.referrerPost.href}/${uuid}`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex flex-col items-start justify-start">
+          <CardHeader className="w-full">
+            {/* title, subtitle, url, avatar, quick action */}
+            <div className="flex flex-row items-start justify-between gap-3 sm:gap-1">
+              <div className="mb-2 flex basis-full items-center gap-3 sm:basis-2/3 md:basis-3/5">
+                <PostHeader
+                  title={jobTitle}
+                  subtitle={
+                    companyName ? (
+                      <CompanyNameDisplay name={companyName} />
+                    ) : undefined
+                  }
+                  url={url}
+                  status={status}
+                />
+              </div>
 
-          {/* location, industry, year of exp */}
-          <CardDescription className="text-overflow-ellipsis mb-5 mt-2 flex flex-wrap items-center justify-start gap-4">
-            {(city || province || country) && (
-              <LocationDisplay
+              {isViewingOwnProfile && (
+                <Link
+                  href={`${siteConfig.page.editPost.href}/${uuid}`} 
+                  className={buttonVariants({
+                    size: isMobile ? "icon" : "sm",
+                  })}
+                >
+                  <Icons.pencil className="m-0 h-4 w-4 sm:mr-2" />
+                  {!isMobile && "編輯"}
+                </Link>
+              )}
+            </div>
+
+            <div className="mb-5 flex flex-col justify-between sm:flex-row">
+              {/* location, industry, year of exp */}
+              <PostCardInfoDisplay
                 city={city}
                 province={province}
                 country={country}
-                className="xs:max-w-full max-w-sm"
-              />
-            )}
-            {industry && (
-              <IndustryDisplay
                 industry={industry}
-                className="xs:max-w-full max-w-xs"
-              />
-            )}
-            {yearOfExperience !== null && (
-              <YearsOfExperienceDisplay
                 yearOfExperience={yearOfExperience}
-                className="xs:max-w-full max-w-xs"
               />
-            )}
-          </CardDescription>
-
-          <Separator />
-        </CardHeader>
-      </div>
-      {/* created at */}
-      <CardFooter className="justify-between">
-        <div className="flex gap-2">
-          <Link
-            href={`${siteConfig.page.referrerPost.href}/${uuid}`}
-            className={buttonVariants({ variant: "default" })}
-          >
-            查看
-          </Link>
-
-          <Link href={``} className={buttonVariants({ variant: "ghost" })}>
-            編輯
-          </Link>
+              <CardDescription className="flex-end mt-5 flex items-end justify-end sm:mt-0">
+                <CreatedAtDisplay applyTo="card" createdAt={createdAt} />
+              </CardDescription>
+            </div>
+          </CardHeader>
         </div>
-
-        <CardDescription>{formattedCreatedAt}</CardDescription>
-      </CardFooter>
+      </Link>
     </Card>
   )
 }

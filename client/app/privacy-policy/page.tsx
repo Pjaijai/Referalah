@@ -6,7 +6,6 @@ import { siteConfig } from "@/config/site"
 
 export const metadata = siteConfig.page.privacyPolicy.metadata
 
-
 const PrivacyPage = () => {
   return (
     <article className="mt-10">
