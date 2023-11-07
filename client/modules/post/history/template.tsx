@@ -1,17 +1,22 @@
+"use client"
+
 import React from "react"
 import PostHistoryCard from "@/modules/post/history/components/cards/post-history"
 
-import { IListPostResponse } from "@/types/api/response/referer-post"
+import useGetPostListByUserUuid from "@/hooks/api/post/get-post-list-by-user-uuid"
+import useUserStore from "@/hooks/state/user/store"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 
 interface IPostHistoryTemplateProps {
-  data?: IListPostResponse[]
-  isLoading: boolean
-  isViewingOwnProfile: boolean
+  slug: string
 }
 const PostHistoryTemplate: React.FunctionComponent<
   IPostHistoryTemplateProps
-> = ({ data, isLoading, isViewingOwnProfile }) => {
+> = ({ slug }) => {
+  const { data, isLoading } = useGetPostListByUserUuid(slug)
+  const userUuid = useUserStore((state) => state.uuid)
+  const isViewingOwnProfile = slug === userUuid
+
   return (
     <>
       {isLoading && (

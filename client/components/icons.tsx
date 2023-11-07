@@ -1,5 +1,4 @@
 import {
-  AlertTriangle,
   Briefcase,
   Building2,
   CalendarClock,
@@ -9,6 +8,7 @@ import {
   ClipboardX,
   Clock,
   Github,
+  History,
   Instagram,
   Laptop,
   Link,
@@ -23,12 +23,10 @@ import {
   RotateCcw,
   SlidersHorizontal,
   SunMedium,
-  Trash,
   Twitter,
   Undo2,
   User,
   Verified,
-  XCircle,
   type Icon as LucideIcon,
 } from "lucide-react"
 
@@ -53,6 +51,7 @@ export const Icons = {
   linkedin: Linkedin,
   rotateRight: RotateCcw,
   slidersHorizontal: SlidersHorizontal,
+  history: History,
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path
