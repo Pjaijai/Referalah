@@ -2,35 +2,30 @@ import { ChangeEvent, useCallback, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { searchPostApi } from "@/utils/common/api"
 import { postSortingOptions } from "@/utils/common/sorting/post"
-import { UseInfiniteQueryResult, useInfiniteQuery } from "@tanstack/react-query"
+import { useInfiniteQuery } from "@tanstack/react-query"
 
-import { ISearchPostResponse } from "@/types/api/response/referer-post"
+import { IFilterMeta } from "@/types/api/request/post/filter-meta"
 import { QueryKeyString } from "@/types/common/query-key-string"
 import { ReferralType } from "@/types/common/referral-type"
 
-interface IFilterMeta {
-  companyName: string
-  jobTitle: string
-  cityUuid: string | undefined
-  countryUuid: string | undefined
-  industryUuid: string | undefined
-  provinceUuid: string | undefined
-  sorting: string
-  yoeMin: string // string number
-  yoeMax: string // string number
-}
 
-const searchPost = ({ pageParam = 0, queryKey }: any) => {
-  pageParam satisfies number
-  queryKey satisfies [
-    string,
+
+
+
+const searchPost = ({
+  pageParam = 0,
+  queryKey,
+}: {
+  pageParam?: number
+  queryKey: [
+    QueryKeyString,
     {
-      type: ReferralType
-      filterMeta: IFilterMeta
       sorting: string
+      filterMeta: IFilterMeta
+      type: ReferralType
     },
   ]
-
+}) => {
   const NUMBER_OF_DATE_PER_FETCH = 5
 
   const queryKeyItem = queryKey[1]
@@ -216,20 +211,19 @@ const useSearchPost = (type: ReferralType) => {
     yoeMax: searchParams.get("yoeMax")?.toString() || "100",
   }
 
-  const result: UseInfiniteQueryResult<ISearchPostResponse[]> =
-    useInfiniteQuery({
-      queryKey: [keyString, { sorting: filterMeta.sorting, filterMeta, type }],
-      queryFn: searchPost,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      getNextPageParam: (lastPage, allPages: any[]) => {
-        if (lastPage && lastPage.length > 0) {
-          return allPages.length
-        } else {
-          return null
-        }
-      },
-    })
+  const result = useInfiniteQuery({
+    queryKey: [keyString, { sorting: filterMeta.sorting, filterMeta, type }],
+    queryFn: searchPost,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    getNextPageParam: (lastPage, allPages) => {
+      if (Array.isArray(lastPage)) {
+        return allPages.length
+      } else {
+        return null
+      }
+    },
+  })
   return {
     result,
     handleCompanyChange,

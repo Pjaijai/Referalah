@@ -1,5 +1,9 @@
 import { Post } from "@/types/common/post"
 
+
+
+
+
 export interface ISearchPostResponse
   extends Omit<
     Post,
@@ -46,6 +50,12 @@ export interface IGetPostResponse
   industry: {
     uuid: string | null
     cantonese_name: string | null
+  } | null
+
+  user: {
+    uuid: string | null
+    username: string | null
+    avatar_url: string | null
   } | null
 }
 
