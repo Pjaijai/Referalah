@@ -64,6 +64,10 @@ export const siteConfig = {
           "係到搵有乜工搵人推薦。 Look for job postings and get referred.",
       },
     },
+    postHistory: {
+      name: "街招記錄",
+      href: "/post/history",
+    },
     about: {
       name: "關於本平台",
       href: "/about",
