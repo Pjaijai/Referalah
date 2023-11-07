@@ -1,14 +1,16 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 import PostHeader from "@/modules/post/components/info-display/header"
 import PostStatusDisplay from "@/modules/post/components/info-display/status"
 
 import { MessageType } from "@/types/common/message-type"
 import { ReferralType } from "@/types/common/referral-type"
+import { siteConfig } from "@/config/site"
 import useGetPost from "@/hooks/api/post/get-post"
 import useUserStore from "@/hooks/state/user/store"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import ContactButton from "@/components/customized-ui/buttons/contact"
 import ProfileCard from "@/components/customized-ui/cards/profile"
@@ -29,11 +31,6 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   const { data: post, isLoading, isSuccess } = useGetPost(postUuid)
   const userUuid = useUserStore((state) => state.uuid)
   const isViewingOwnProfile = post?.created_by === userUuid
-
-  const handleEditClick = () => {
-    console.log("TODO: GO TO EDIT POST DETAILS PAGE")
-    // router.push(`${siteConfig.page.profile.href}/${uuid}`)
-  }
 
   return (
     <PageStatusLayout
@@ -100,12 +97,16 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
             <Separator className="md:hidden" />
 
             <div className="flex min-w-[200px] flex-col gap-4 md:basis-1/4">
-              {isViewingOwnProfile ? (
-                <Button className="w-full" onClick={handleEditClick}>
+              {isViewingOwnProfile && (
+                <Link
+                  className={buttonVariants({ variant: "default" })}
+                  href={`${siteConfig.page.editPost.href}/${postUuid}`}
+                >
                   <Icons.pencil className="mr-1 h-4 w-4" />
                   編輯街招
-                </Button>
-              ) : (
+                </Link>
+              )}
+              {!isViewingOwnProfile && (
                 <ContactButton
                   username={post.user?.username || "?"}
                   toUuid={post.created_by}
