@@ -47,6 +47,12 @@ export interface IGetPostResponse
     uuid: string | null
     cantonese_name: string | null
   } | null
+
+  user: {
+    uuid: string | null
+    username: string | null
+    avatar_url: string | null
+  } | null
 }
 
 export interface IListPostResponse extends Post {

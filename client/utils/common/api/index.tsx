@@ -3,6 +3,7 @@ import { supabase } from "@/utils/services/supabase/config"
 import { IContactThroughPostRequest } from "@/types/api/request/contact/post"
 import { IContactReferralRequest } from "@/types/api/request/contact/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
+import { IFilterMeta } from "@/types/api/request/post/filter-meta"
 import { ISearchPostsRequest } from "@/types/api/request/post/search"
 import { IUpdatePostRequest } from "@/types/api/request/post/update"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
@@ -13,9 +14,11 @@ import { IProvinceResponse } from "@/types/api/response/province"
 import {
   IGetPostResponse,
   IListPostResponse,
+  ISearchPostResponse,
 } from "@/types/api/response/referer-post"
 import { IReferralResponse } from "@/types/api/response/referral"
 import { IUserResponse } from "@/types/api/response/user"
+import { QueryKeyString } from "@/types/common/query-key-string"
 import { ReferralType } from "@/types/common/referral-type"
 
 // User Profile
@@ -61,61 +64,66 @@ export const getUserProfile = async (arg: any) => {
   return data
 }
 export const updateUserProfile = async (req: IUpdateUserProfileRequest) => {
-  try {
-    const { data, error } = await supabase
-      .from("user")
-      .update({
-        avatar_url: req.avatarUrl,
-        username: req.username,
-        description: req.description,
-        company_name: req.companyName,
-        job_title: req.jobTitle,
-        year_of_experience: req.yearOfExperience,
-        country_uuid: req.countryUuid,
-        province_uuid: req.provinceUuid,
-        city_uuid: req.cityUuid,
-        industry_uuid: req.industryUuid,
-        social_media_url: req.socialMediaUrl,
-        is_referer: req.isReferer,
-        is_referee: req.isReferee,
-      })
-      .eq("uuid", req.userUuid)
+  const { data, error } = await supabase
+    .from("user")
+    .update({
+      avatar_url: req.avatarUrl,
+      username: req.username,
+      description: req.description,
+      company_name: req.companyName,
+      job_title: req.jobTitle,
+      year_of_experience: req.yearOfExperience,
+      country_uuid: req.countryUuid,
+      province_uuid: req.provinceUuid,
+      city_uuid: req.cityUuid,
+      industry_uuid: req.industryUuid,
+      social_media_url: req.socialMediaUrl,
+      is_referer: req.isReferer,
+      is_referee: req.isReferee,
+    })
+    .eq("uuid", req.userUuid)
 
-    if (error) {
-      throw error
-    }
-
-    return data
-  } catch (error) {
+  if (error) {
     throw error
   }
+
+  return data
 }
 export const searchReferral = async ({
   pageParam = 0,
   queryKey,
-}: any): Promise<IReferralResponse[]> => {
-  try {
-    const NUMBER_OF_DATE_PER_FETCH = 5
-    const countryUuid = queryKey[1].filterMeta.countryUuid
-    const provinceUuid = queryKey[1].filterMeta.provinceUuid
-    const cityUuid = queryKey[1].filterMeta.cityUuid
-    const industryUuid = queryKey[1].filterMeta.industryUuid
-    const companyName = queryKey[1].filterMeta.companyName
-    const jobTitle = queryKey[1].filterMeta.jobTitle
-    const yoeMax = queryKey[1].filterMeta.yoeMax
-    const yoeMin = queryKey[1].filterMeta.yoeMin
-    const type = queryKey[1].type satisfies ReferralType
+}: {
+  pageParam?: number
+  queryKey: [
+    QueryKeyString,
+    {
+      sorting: string
+      filterMeta: IFilterMeta
+      type: ReferralType
+    },
+  ]
+}) => {
+  const NUMBER_OF_DATE_PER_FETCH = 5
+  const countryUuid = queryKey[1].filterMeta.countryUuid
+  const provinceUuid = queryKey[1].filterMeta.provinceUuid
+  const cityUuid = queryKey[1].filterMeta.cityUuid
+  const industryUuid = queryKey[1].filterMeta.industryUuid
+  const companyName = queryKey[1].filterMeta.companyName
+  const jobTitle = queryKey[1].filterMeta.jobTitle
+  const yoeMax = queryKey[1].filterMeta.yoeMax
+  const yoeMin = queryKey[1].filterMeta.yoeMin
+  const type = queryKey[1].type
 
-    const sort = queryKey[1].sorting.split(",")
-    const order = sort[1] === "dec" ? false : true
+  const sort = queryKey[1].sorting.split(",")
+  const order = sort[1] !== "dec"
 
-    const from = pageParam + pageParam * NUMBER_OF_DATE_PER_FETCH
-    const to = from + NUMBER_OF_DATE_PER_FETCH
+  const from = pageParam + pageParam * NUMBER_OF_DATE_PER_FETCH
+  const to = from + NUMBER_OF_DATE_PER_FETCH
 
-    let query = supabase
-      .from("user")
-      .select(
-        `
+  let query = supabase
+    .from("user")
+    .select<string, IReferralResponse>(
+      `
             uuid,
             username,
             avatar_url,
@@ -143,50 +151,48 @@ export const searchReferral = async ({
             is_referer,
             is_referee
           `
-      )
-      .lte("year_of_experience", yoeMax ? parseInt(yoeMax) : 100)
-      .gte("year_of_experience", yoeMin ? parseInt(yoeMin) : 0)
-      .order("year_of_experience", { ascending: order })
-      .order("id", { ascending: true })
-      .range(from, to)
+    )
+    .lte("year_of_experience", yoeMax ? parseInt(yoeMax) : 100)
+    .gte("year_of_experience", yoeMin ? parseInt(yoeMin) : 0)
+    .order("year_of_experience", { ascending: order })
+    .order("id", { ascending: true })
+    .range(from, to)
 
-    if (type === ReferralType.REFERRER) {
-      query = query.eq("is_referer", true)
-    }
-
-    if (type === ReferralType.REFEREE) {
-      query = query.eq("is_referee", true)
-    }
-
-    if (countryUuid) {
-      query = query.eq("country_uuid", countryUuid)
-    }
-    if (provinceUuid) {
-      query = query.eq("province_uuid", provinceUuid)
-    }
-    if (cityUuid) {
-      query = query.eq("city_uuid", cityUuid)
-    }
-    if (industryUuid) {
-      query = query.eq("industry_uuid", industryUuid)
-    }
-
-    if (companyName.length > 0) {
-      query = query.ilike("company_name", `%${companyName}%`)
-    }
-
-    if (jobTitle.length > 0) {
-      query = query.ilike("job_title", `%${jobTitle}%`)
-    }
-
-    const { data, error } = await query
-
-    if (error) throw error
-
-    return data satisfies IReferralResponse[]
-  } catch (error) {
-    throw error
+  if (type === ReferralType.REFERRER) {
+    query = query.eq("is_referer", true)
   }
+
+  if (type === ReferralType.REFEREE) {
+    query = query.eq("is_referee", true)
+  }
+
+  if (countryUuid) {
+    query = query.eq("country_uuid", countryUuid)
+  }
+  if (provinceUuid) {
+    query = query.eq("province_uuid", provinceUuid)
+  }
+  if (cityUuid) {
+    query = query.eq("city_uuid", cityUuid)
+  }
+  if (industryUuid) {
+    query = query.eq("industry_uuid", industryUuid)
+  }
+
+  if (companyName.length > 0) {
+    query = query.ilike("company_name", `%${companyName}%`)
+  }
+
+  if (jobTitle.length > 0) {
+    query = query.ilike("job_title", `%${jobTitle}%`)
+  }
+
+  const { data, error } = await query
+
+  if (error) throw error
+  if (data === null) return []
+
+  return data
 }
 
 // Post
@@ -258,7 +264,7 @@ export const searchPostApi = async ({
 
     let query = supabase
       .from("post")
-      .select(
+      .select<string, ISearchPostResponse>(
         `   uuid,
               created_at,
               created_by,
@@ -323,6 +329,7 @@ export const searchPostApi = async ({
     const { data, error } = await query.order("id", { ascending: true })
 
     if (error) throw error
+    if (data === null) return []
 
     return data
   } catch (error) {
@@ -330,11 +337,10 @@ export const searchPostApi = async ({
   }
 }
 export const getPostByUuid = async (uuid: string) => {
-  try {
-    let query = supabase
-      .from("post")
-      .select(
-        `   uuid,
+  const { data, error } = await supabase
+    .from("post")
+    .select<string, IGetPostResponse>(
+      `   uuid,
               status,
               created_at,
               created_by,
@@ -366,25 +372,21 @@ export const getPostByUuid = async (uuid: string) => {
                   job_title
               )
             `
-      )
+    )
+    .eq("uuid", uuid)
+    .single()
 
-      .eq("uuid", uuid)
-      .single()
+  if (error) throw error
+  if (data === null) throw new Error(`Post not found for uuid ${uuid}`)
 
-    const { data, error } = await query
-
-    if (error) throw error
-
-    return data satisfies IGetPostResponse
-  } catch (err) {
-    throw err
-  }
+  return data
 }
+
 export const getPostListByUserUuid = async (userUuid: string) => {
   try {
     const { data, error } = await supabase
       .from("post")
-      .select(
+      .select<string, IListPostResponse>(
         `
         *,
         country(
@@ -409,7 +411,7 @@ export const getPostListByUserUuid = async (userUuid: string) => {
 
     if (error) throw error
 
-    return data satisfies IListPostResponse[]
+    return data
   } catch (error) {
     throw error
   }

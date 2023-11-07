@@ -426,14 +426,14 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             control={form.control}
             label="省份"
             name="provinceUuid"
-            options={provinceOptions as any}
+            options={provinceOptions}
           />
 
           <FormSelect
             control={form.control}
             label="城市"
             name="cityUuid"
-            options={cityOptions as any}
+            options={cityOptions}
           />
           <FormTextInput
             control={form.control}

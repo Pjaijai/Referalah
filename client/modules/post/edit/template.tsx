@@ -1,10 +1,9 @@
-import React, { useEffect, useMemo, useRef, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { postStatusOptions } from "@/modules/post/common/post-status-options"
 import { editPostValidationSchema } from "@/modules/post/validation/edit"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 
 import { IGetPostResponse } from "@/types/api/response/referer-post"
 import { ReferralType } from "@/types/common/referral-type"
@@ -29,15 +28,25 @@ interface IEditPostPageTemplateProps {
   postUuid: string
 }
 
+interface IForm {
+  description: string
+  status: "active" | "inactive"
+  countryUuid: string
+  provinceUuid: string
+  cityUuid: string
+  industryUuid: string
+  yearOfExperience: string
+  companyName: string
+  jobTitle: string
+  url?: string
+}
+
 const EditPostPageTemplate: React.FunctionComponent<
   IEditPostPageTemplateProps
 > = ({ postDate, isPostDataLoading, postUuid }) => {
-  const formSchema = editPostValidationSchema
-  const isSetInitialValues = useRef(false)
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<IForm>({
+    resolver: zodResolver(editPostValidationSchema),
     defaultValues: useMemo(() => {
-      isSetInitialValues.current = true
       return {
         status: postDate?.status || "active",
         description: postDate?.description || "",
@@ -58,13 +67,14 @@ const EditPostPageTemplate: React.FunctionComponent<
   const countryWatch = form.watch("countryUuid")
   const provinceWatch = form.watch("provinceUuid")
   const yeoWatch = form.watch("yearOfExperience")
-  const urlWatch = form.watch("url")
   const router = useRouter()
   const user = useUserStore((state) => state)
+
   const industryOptions = useIndustryOptions()
   const countryOptions = useCountryOptions()
   const provinceOptions = useProvinceOptions(countryWatch)
   const cityOptions = useCityOptions(provinceWatch)
+
   const { mutate: updatePost, isLoading: isUpdatingPostLoading } =
     useUpdatePost()
 
@@ -75,17 +85,11 @@ const EditPostPageTemplate: React.FunctionComponent<
   }, [form, isPostDataLoading, provinceWatch])
 
   useEffect(() => {
-    if (urlWatch === "") {
-      form.setValue("url", undefined)
-    }
-  }, [urlWatch])
-
-  useEffect(() => {
     // Convert yeoWatch to a number
     const yeoWatchNumber = parseFloat(yeoWatch)
 
     // Check if yeoWatchNumber is a valid number and not NaN
-    if (!isNaN(yeoWatchNumber) && typeof yeoWatchNumber === "number") {
+    if (!isNaN(yeoWatchNumber)) {
       // If yeoWatchNumber is negative, set yearOfExperience to '0'
       if (yeoWatchNumber < 0) {
         form.setValue("yearOfExperience", "0")
@@ -101,7 +105,7 @@ const EditPostPageTemplate: React.FunctionComponent<
     }
   }, [yeoWatch])
 
-  const onSubmit = async (values: z.infer<typeof formSchema>, e: any) => {
+  const onSubmit = async (values: IForm, e: any) => {
     e.preventDefault()
     try {
       setIsSubmitting(true)
@@ -153,7 +157,7 @@ const EditPostPageTemplate: React.FunctionComponent<
             control={form.control}
             label="狀態"
             name="status"
-            options={postStatusOptions as any}
+            options={postStatusOptions}
           />
 
           <FormTextInput
@@ -199,14 +203,14 @@ const EditPostPageTemplate: React.FunctionComponent<
             control={form.control}
             label="省份"
             name="provinceUuid"
-            options={provinceOptions as any}
+            options={provinceOptions}
           />
 
           <FormSelect
             control={form.control}
             label="城市"
             name="cityUuid"
-            options={cityOptions as any}
+            options={cityOptions}
           />
 
           <FormNumberInput

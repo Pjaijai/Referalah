@@ -2,9 +2,8 @@ import { ChangeEvent, useCallback, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { searchReferral } from "@/utils/common/api"
 import { referralSortingOptions } from "@/utils/common/sorting/referer"
-import { UseInfiniteQueryResult, useInfiniteQuery } from "@tanstack/react-query"
+import { useInfiniteQuery } from "@tanstack/react-query"
 
-import { IReferralResponse } from "@/types/api/response/referral"
 import { QueryKeyString } from "@/types/common/query-key-string"
 import { ReferralType } from "@/types/common/referral-type"
 
@@ -161,13 +160,13 @@ const useSearchReferral = (type: ReferralType) => {
     yoeMin: searchParams.get("yoeMin")?.toString() || "0",
     yoeMax: searchParams.get("yoeMax")?.toString() || "100",
   }
-  const result: UseInfiniteQueryResult<IReferralResponse[]> = useInfiniteQuery({
+  const result = useInfiniteQuery({
     queryKey: [keyString, { sorting: filterMeta.sorting, filterMeta, type }],
     queryFn: searchReferral,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    getNextPageParam: (lastPage, allPages: any[]) => {
-      if (lastPage && lastPage.length > 0) {
+    getNextPageParam: (lastPage, allPages) => {
+      if (Array.isArray(lastPage)) {
         return allPages.length
       } else {
         return null
