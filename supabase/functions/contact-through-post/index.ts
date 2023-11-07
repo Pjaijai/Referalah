@@ -2,6 +2,7 @@ import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
 
 import { initSupabaseClient } from "../_shared/client.ts"
 import { corsHeaders, ENV_IS_LOCAL } from "../_shared/cors.ts"
+import { EPostStatus } from "../_shared/types/post/status.js"
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")
 const WEB_BASE_URL = Deno.env.get("WEB_BASE_URL")
@@ -83,6 +84,13 @@ serve(async (req: any) => {
       return new Response("Same user", {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 400,
+      })
+    }
+
+    if (post.status === EPostStatus.INACTIVE) {
+      return new Response("Post is closed", {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 403,
       })
     }
 
