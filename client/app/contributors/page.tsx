@@ -5,7 +5,6 @@ import CommonPageLayout from "@/components/layouts/common"
 
 export const metadata = siteConfig.page.contributors.metadata
 
-
 const ContributorsPage = () => {
   return (
     <CommonPageLayout title={siteConfig.page.contributors.name}>
