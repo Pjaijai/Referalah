@@ -29,11 +29,7 @@ import FormTextInput from "@/components/customized-ui/form/input"
 import FormNumberInput from "@/components/customized-ui/form/number"
 import FormSelect from "@/components/customized-ui/form/select"
 import FormTextArea from "@/components/customized-ui/form/text-area"
-import { Icons } from "@/components/icons";
-
-
-
-
+import { Icons } from "@/components/icons"
 
 interface IEdiProfileTemplate {
   isProfileLoading: boolean

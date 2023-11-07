@@ -7,10 +7,6 @@ import { useInfiniteQuery } from "@tanstack/react-query"
 import { QueryKeyString } from "@/types/common/query-key-string"
 import { ReferralType } from "@/types/common/referral-type"
 
-
-
-
-
 const useSearchReferral = (type: ReferralType) => {
   const keyString =
     type === ReferralType.REFEREE

@@ -8,10 +8,6 @@ import { IFilterMeta } from "@/types/api/request/post/filter-meta"
 import { QueryKeyString } from "@/types/common/query-key-string"
 import { ReferralType } from "@/types/common/referral-type"
 
-
-
-
-
 const searchPost = ({
   pageParam = 0,
   queryKey,

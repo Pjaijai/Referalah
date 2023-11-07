@@ -1,9 +1,5 @@
 import { Post } from "@/types/common/post"
 
-
-
-
-
 export interface ISearchPostResponse
   extends Omit<
     Post,

@@ -69,7 +69,7 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
 
               {isViewingOwnProfile && (
                 <Link
-                  href={`${siteConfig.page.editPost.href}/${uuid}`} 
+                  href={`${siteConfig.page.editPost.href}/${uuid}`}
                   className={buttonVariants({
                     size: isMobile ? "icon" : "sm",
                   })}
