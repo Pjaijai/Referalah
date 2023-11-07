@@ -9,7 +9,6 @@ const contributors: IContributor[] = [
     },
     contributedArea: ["software_development", "uiux_design"],
   },
-
   {
     name: "Sonia Yeung",
     links: {
@@ -68,7 +67,6 @@ const contributors: IContributor[] = [
     },
     contributedArea: ["marketing", "graphic_design"],
   },
-
   {
     name: "Chak Yuen Leung",
     links: {
