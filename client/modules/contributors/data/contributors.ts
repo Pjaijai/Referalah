@@ -110,6 +110,14 @@ const contributors: IContributor[] = [
       website: "https://lublog.vercel.app/"
     },
     contributedArea: ["software_development"],
+  },
+  {
+    name: "Ken Tung",
+    links: {
+      linkedin: "https://www.linkedin.com/in/ken-tung-developer",
+      github: "https://github.com/ken31ee",
+    },
+    contributedArea: ["software_development"],
   }
 ]
 
