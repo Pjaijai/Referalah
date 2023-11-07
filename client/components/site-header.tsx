@@ -25,7 +25,7 @@ export function SiteHeader() {
         </div>
 
         <div className="flex  items-center justify-end space-x-4">
-          <nav className="flex items-center space-x-1">
+          <nav className="flex items-center gap-2">
             <ThemeToggle />
             <Link
               aria-label="referalah-project-github"
