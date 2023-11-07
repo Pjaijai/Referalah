@@ -86,7 +86,7 @@ const RefereePostPageTemplate: React.FunctionComponent<
           />
           <ResetButton onClick={handleReset} />
           <Button onClick={handleSubmitChange} className="whitespace-nowrap">
-            確定
+            搜尋
           </Button>
         </div>
       </div>
