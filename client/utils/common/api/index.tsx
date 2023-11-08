@@ -213,7 +213,7 @@ export const createPost = async (req: ICreatePostRequest) => {
         job_title: req.jobTitle.trim(),
         description: req.description.trim(),
       })
-      .select("*")
+      .select("uuid")
       .single()
 
     if (error) throw error
