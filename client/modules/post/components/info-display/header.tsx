@@ -30,9 +30,10 @@ const PostHeader: React.FunctionComponent<
           {url && (
             <TooltipWrapper
               tooltipTrigger={
-                <a onClick={handleUrlClick} className="align-middle">
-                  <Icons.link className="h-4 w-4" />
-                </a>
+                <Icons.link
+                  className="h-4 w-4 align-middle"
+                  onClick={handleUrlClick}
+                />
               }
               tooltipContent={<span>相關連結</span>}
               tooltipTriggerProps={{ className: "ml-2" }}
