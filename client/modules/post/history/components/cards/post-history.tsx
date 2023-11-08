@@ -1,12 +1,13 @@
 import React from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import PostCardInfoDisplay from "@/modules/post/components/info-display/card-info"
 import PostHeader from "@/modules/post/components/info-display/header"
 
 import { PostStatusType } from "@/types/common/post-status"
 import { siteConfig } from "@/config/site"
 import useViewport from "@/hooks/common/useViewport"
-import { buttonVariants } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardHeader } from "@/components/ui/card"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
@@ -43,6 +44,14 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
   isViewingOwnProfile,
 }) => {
   const { isMobile } = useViewport()
+  const router = useRouter()
+
+  const handleEditOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    router.push(`${siteConfig.page.editPost.href}/${uuid}`)
+  }
+
+  // NOTE: please use onClick with e.preventDefault() for any links inside this component to prevent validateDOMNesting warning
 
   return (
     <Card className="flex flex-col justify-between rounded shadow-md">
@@ -68,15 +77,13 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
               </div>
 
               {isViewingOwnProfile && (
-                <Link
-                  href={`${siteConfig.page.editPost.href}/${uuid}`}
-                  className={buttonVariants({
-                    size: isMobile ? "icon" : "sm",
-                  })}
+                <Button
+                  onClick={handleEditOnClick}
+                  size={isMobile ? "icon" : "sm"}
                 >
                   <Icons.pencil className="m-0 h-4 w-4 sm:mr-2" />
                   {!isMobile && "編輯"}
-                </Link>
+                </Button>
               )}
             </div>
 
