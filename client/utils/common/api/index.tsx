@@ -198,19 +198,26 @@ export const searchReferral = async ({
 // Post
 export const createPost = async (req: ICreatePostRequest) => {
   try {
-    await supabase.from("post").insert({
-      url: req.url,
-      country_uuid: req.countryUuid,
-      province_uuid: req.provinceUuid,
-      city_uuid: req.cityUuid,
-      industry_uuid: req.industryUuid,
-      year_of_experience: req.yearOfExperience,
-      created_by: req.createdBy,
-      type: req.type,
-      company_name: req.companyName.trim(),
-      job_title: req.jobTitle.trim(),
-      description: req.description.trim(),
-    })
+    const { data, error } = await supabase
+      .from("post")
+      .insert({
+        url: req.url,
+        country_uuid: req.countryUuid,
+        province_uuid: req.provinceUuid,
+        city_uuid: req.cityUuid,
+        industry_uuid: req.industryUuid,
+        year_of_experience: req.yearOfExperience,
+        created_by: req.createdBy,
+        type: req.type,
+        company_name: req.companyName.trim(),
+        job_title: req.jobTitle.trim(),
+        description: req.description.trim(),
+      })
+      .select("*")
+      .single()
+
+    if (error) throw error
+    return data
   } catch (error) {
     throw error
   }
