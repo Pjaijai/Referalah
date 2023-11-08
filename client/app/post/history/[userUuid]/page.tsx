@@ -11,6 +11,7 @@ export async function generateMetadata({
   params: { userUuid: string }
 }) {
   const { userUuid } = params
+  JSON.parse(userUuid)
   try {
     const res = await getUserProfile(userUuid)
     return {

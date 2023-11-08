@@ -14,7 +14,7 @@ const ProfileTemplate = ({ userUuid }: { userUuid: string }) => {
   const [isEditMode, setIsEditMode] = useState(false)
   const { data: profile, isLoading } = useGetUserprofile(userUuid)
 
-  if (userUuid === "null" || (!isLoading && !profile))
+  if (!userUuid || (!isLoading && !profile))
     return (
       <div className="flex h-screen  flex-col items-center justify-center gap-4 rounded-lg  p-4">
         <span className="text-5xl">🥲</span>
