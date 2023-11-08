@@ -5,7 +5,7 @@ import { Icons } from "@/components/icons"
 interface PageStatusLayoutProps {
   isLoading: boolean
   isSuccess: boolean
-  error?: ReactNode | string
+  error?: Error | string
   children: ReactNode
 }
 
@@ -23,12 +23,7 @@ const PageStatusLayout = ({
       </div>
     )
   } else if (!isSuccess) {
-    return (
-      <div className="flex h-[500px] flex-col items-center justify-center gap-4">
-        <span className="text-5xl">🥲</span>
-        <h6>{error ?? "睇嚟有啲問題，請稍後再試。"}</h6>
-      </div>
-    )
+    throw error
   } else {
     return children ? <>{children}</> : null
   }
