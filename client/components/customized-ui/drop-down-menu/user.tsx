@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { supabase } from "@/utils/services/supabase/config"
 
 import { siteConfig } from "@/config/site"
@@ -14,6 +15,7 @@ import { useToast } from "@/components/ui/use-toast"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 
 const UserDropDownMenu = () => {
+  const pathname = usePathname()
   const user = useUserStore((state) => state)
   const userState = useUserStore((state) => state)
   const { toast } = useToast()
@@ -78,7 +80,9 @@ const UserDropDownMenu = () => {
         {nav.map((n) => (
           <DropdownMenuItem
             key={n.href}
-            className={`${n.hideOnLargeScreen && "md:hidden"}`}
+            className={`${n.hideOnLargeScreen && "md:hidden"} ${
+              pathname === "/" && n.hideOnLargeScreen && "hidden"
+            }`}
           >
             <Link
               href={n.href}
