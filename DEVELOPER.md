@@ -24,6 +24,7 @@ after insert on auth.users
 for each row execute procedure public.handle_new_user();
 
 ````
+You Can find magic link emails in [http://localhost:54324/](http://localhost:54324/)
 
 ## 5.Frontend
 
