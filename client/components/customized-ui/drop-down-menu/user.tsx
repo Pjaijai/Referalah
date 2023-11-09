@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { supabase } from "@/utils/services/supabase/config"
 
 import { siteConfig } from "@/config/site"
@@ -14,6 +15,7 @@ import { useToast } from "@/components/ui/use-toast"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 
 const UserDropDownMenu = () => {
+  const pathname = usePathname()
   const user = useUserStore((state) => state)
   const userState = useUserStore((state) => state)
   const { toast } = useToast()
@@ -37,11 +39,31 @@ const UserDropDownMenu = () => {
   }
 
   const nav = [
-    { href: `${siteConfig.page.profile.href}/${user.uuid}`, title: "用戶檔案" },
-    { href: siteConfig.page.referrer.href, title: "推薦人" },
-    { href: siteConfig.page.referee.href, title: "受薦人" },
-    { href: siteConfig.page.createPost.href, title: "貼街招" },
-    { href: siteConfig.page.referrerPost.href, title: "工搵人" },
+    {
+      href: `${siteConfig.page.profile.href}/${user.uuid}`,
+      title: "用戶檔案",
+      hideOnLargeScreen: false,
+    },
+    {
+      href: siteConfig.page.referrer.href,
+      title: "推薦人",
+      hideOnLargeScreen: true,
+    },
+    {
+      href: siteConfig.page.referee.href,
+      title: "受薦人",
+      hideOnLargeScreen: true,
+    },
+    {
+      href: siteConfig.page.createPost.href,
+      title: "貼街招",
+      hideOnLargeScreen: true,
+    },
+    {
+      href: siteConfig.page.referrerPost.href,
+      title: "街招",
+      hideOnLargeScreen: true,
+    },
   ]
 
   return (
@@ -56,7 +78,12 @@ const UserDropDownMenu = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {nav.map((n) => (
-          <DropdownMenuItem key={n.href}>
+          <DropdownMenuItem
+            key={n.href}
+            className={`${n.hideOnLargeScreen && "md:hidden"} ${
+              pathname === "/" && n.hideOnLargeScreen && "hidden"
+            }`}
+          >
             <Link
               href={n.href}
               className="flex w-full items-center  justify-center space-x-2"
@@ -67,7 +94,7 @@ const UserDropDownMenu = () => {
         ))}
 
         <DropdownMenuItem
-          className="flex cursor-pointer justify-center"
+          className="flex cursor-pointer justify-center text-red-500"
           onClick={handleSignOut}
         >
           登出
