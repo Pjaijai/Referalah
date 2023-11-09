@@ -27,7 +27,7 @@ for each row execute procedure public.handle_new_user();
 
 ```
 
-You Can find magic link emails in [http://localhost:54324/](http://localhost:54324/) after kicking start supabase.
+You can find magic link emails in [http://localhost:54324/](http://localhost:54324/) after kicking start supabase.
 
 ## 5.Frontend
 
