@@ -19,11 +19,14 @@ Check [here](https://dbdiagram.io/d/Referalah-651b7b71ffbf5169f0e71a7a)
 Supabase do not allow to include auth.user in migration script. To successfully create user please run following cod ein SQL editor. [reference](https://github.com/supabase/cli/issues/120)
 
 -- trigger the function every time a user is created
+
+```
 create or replace trigger on_auth_user_created
 after insert on auth.users
 for each row execute procedure public.handle_new_user();
 
-````
+```
+
 You Can find magic link emails in [http://localhost:54324/](http://localhost:54324/) after kicking start supabase.
 
 ## 5.Frontend
@@ -35,7 +38,6 @@ You Can find magic link emails in [http://localhost:54324/](http://localhost:543
 5.  For non localhost developemnt, find Supabase URL and anon key from Project Setting > API and configure `.env`.
 6.  For local development, Run `supabase status` to get the anon key and API URL.
 7.  Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in `.env`.
-
 
 ## 6.Backend (local)
 
@@ -78,6 +80,8 @@ For accurate information, please check supabase local dev doc here[https://supab
 1. Navigate to the 'client' directory
    ```bash
    cd client
+   ```
+
 ````
 
 1. Install dependencies
@@ -115,3 +119,4 @@ Naming your PR with category. For example `Feature/I Go To School By Bus`
 | refactor      |                             refactoring                              |
 
 Now you have both the frontend and backend of Referalah up and running locally, allowing you to work on and test your changes effectively. Happy coding!
+````
