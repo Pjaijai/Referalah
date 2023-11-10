@@ -148,39 +148,49 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
       <DialogContent className="w-full md:w-1/2">
         <DialogHeader>
           <DialogTitle>Send信息俾 {username}</DialogTitle>
-          <DialogDescription>
-            注意: 以下信息會連同你嘅Email地址send畀對方，同時cc埋你。
-          </DialogDescription>
+
           {receiverType === "referer" && messageType === "referral" && (
-            <DialogDescription>
-              提示: 搵對方前，建議搵定個Job post射俾對方，推薦人冇義務幫你搵工。
-            </DialogDescription>
+            <>
+              <DialogDescription>
+                提示: 搵對方前，建議搵定個Job
+                post射俾對方，推薦人冇義務幫你搵工。
+              </DialogDescription>
+
+              <span className="text-sm font-semibold text-red-500">
+                警告 : 使用AI代寫會大幅降低成功機會。
+              </span>
+            </>
           )}
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="message"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{"信息"}</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder={
-                        receiverType === "referer"
-                          ? `- 自我介紹\n- 想見邊份工？\n- 點聯絡你？
+            <div>
+              <FormField
+                control={form.control}
+                name="message"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{"信息"}</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder={
+                          receiverType === "referer"
+                            ? `- 自我介紹\n- 想見邊份工？\n- 點聯絡你？
                       `
-                          : ""
-                      }
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                            : ""
+                        }
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <p className="mt-2 text-sm text-muted-foreground">
+                以上信息會連同你嘅Email地址send畀對方，同時cc埋你。
+              </p>
+            </div>
 
             <DialogFooter className="mt-4">
               <Button
