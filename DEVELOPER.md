@@ -14,7 +14,7 @@ Analytic : GA, Vercel Analytic
 
 Check [here](https://dbdiagram.io/d/Referalah-651b7b71ffbf5169f0e71a7a)
 
-## 4.To solve user data cannot be inserted after registration
+## 4. To solve user data cannot be inserted after registration
 
 Supabase do not allow to include auth.user in migration script. To successfully create user please run following cod ein SQL editor. [reference](https://github.com/supabase/cli/issues/120)
 
@@ -27,9 +27,6 @@ for each row execute procedure public.handle_new_user();
 
 ```
 
-If you are running supabase local, You can find magic link emails in [http://localhost:54324/](http://localhost:54324/) after kicking start supabase.
-Also change the port in the `redirect_to` in the magic link to `3000`.
-
 ## 5.Frontend
 
 1.  Open your terminal.
@@ -38,7 +35,8 @@ Also change the port in the `redirect_to` in the magic link to `3000`.
 4.  Clone `.env.template` and rename it to `.env`.
 5.  For non localhost developemnt, find Supabase URL and anon key from Project Setting > API and configure `.env`.
 6.  For local development, Run `supabase status` to get the anon key and API URL.
-7.  Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in `.env`.
+7.  Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in `.env`.
+8.  `NEXT_PUBLIC_WEB_URL`= `http://localhost:3000` in `.env`.
 
 ## 6.Backend (local)
 
