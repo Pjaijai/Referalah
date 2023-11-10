@@ -23,10 +23,8 @@ const PostHistoryTemplate: React.FunctionComponent<
         <CardSkeletonList className="xs:grid-cols-1 lg:grid-cols-2" />
       )}
 
-      {!isLoading && !data && (
-        <div className="mt-8 rounded-lg border-2 p-4 text-center">
-          冇資料🥲不如開個Post先？？
-        </div>
+      {!isLoading && data && !(data.length > 0) && (
+        <div className="mt-8 rounded-lg border-2 p-4 text-center">冇資料🥲</div>
       )}
 
       {!isLoading && data && (
