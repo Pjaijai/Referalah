@@ -104,7 +104,7 @@ serve(async (req: any) => {
                 <p>職位: ${post.job_title}</p>
                 <p>公司名稱: ${post.company_name}</p>
                 <p>佢嘅電郵地址: ${sender.email} (回覆此Email可以直接聯絡對方)</p>
-                <p>佢嘅個人檔案: <a href="${WEB_BASE_URL}/profile/${user.uuid}">${WEB_BASE_URL}/profile/${user.uuid}</a></p>
+                <p>佢嘅個人檔案: <a href="${WEB_BASE_URL}/profile/${sender.uuid}">${WEB_BASE_URL}/profile/${sender.uuid}</a></p>
                
                 <p>佢個訊息</p>
                 <div style="word-break: break-word; white-space: pre-wrap;">
