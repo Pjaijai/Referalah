@@ -1,29 +1,76 @@
-export interface ISearchPostResponse {
-  id: number
-  created_at: Date
-  created_by: string
-  uuid: string | null
-  user: {
-    username: string
-    avatar_url: string | null
-  }
+import { Post } from "@/types/common/post"
 
-  description: string | null
-  company_name: string | null
-  job_title: string | null
-  year_of_experience: number | null
+export interface ISearchPostResponse
+  extends Omit<
+    Post,
+    "city_uuid" | "province_uuid" | "country_uuid" | "status" | "industry_uuid"
+  > {
+  user: {
+    username: string | null
+    avatar_url: string | null
+  } | null
+
   country: {
-    cantonese_name: string
-  }
+    cantonese_name: string | null
+  } | null
   province: {
-    cantonese_name: string
-  }
+    cantonese_name: string | null
+  } | null
   city: {
-    cantonese_name: string
-  }
-  url: string | null
+    cantonese_name: string | null
+  } | null
 
   industry: {
-    cantonese_name: string
-  }
+    cantonese_name: string | null
+  } | null
+}
+
+export interface IGetPostResponse
+  extends Omit<
+    Post,
+    "id" | "city_uuid" | "province_uuid" | "country_uuid" | "industry_uuid"
+  > {
+  country: {
+    uuid: string | null
+    cantonese_name: string | null
+  } | null
+  province: {
+    uuid: string | null
+    cantonese_name: string | null
+  } | null
+  city: {
+    uuid: string | null
+    cantonese_name: string | null
+  } | null
+
+  industry: {
+    uuid: string | null
+    cantonese_name: string | null
+  } | null
+
+  user: {
+    uuid: string | null
+    username: string | null
+    avatar_url: string | null
+  } | null
+}
+
+export interface IListPostResponse extends Post {
+  country: {
+    cantonese_name: string | null
+  } | null
+  province: {
+    cantonese_name: string | null
+  } | null
+  city: {
+    cantonese_name: string | null
+  } | null
+
+  industry: {
+    cantonese_name: string | null
+  } | null
+  user: {
+    username: string | null
+    avatar_url: string | null
+  } | null
 }

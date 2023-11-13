@@ -1,56 +1,136 @@
-import { ChangeEvent, useState } from "react"
-import apiService from "@/utils/common/api"
+import { ChangeEvent, useCallback, useState } from "react"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { searchPostApi } from "@/utils/common/api"
 import { postSortingOptions } from "@/utils/common/sorting/post"
-import { UseInfiniteQueryResult, useInfiniteQuery } from "@tanstack/react-query"
+import { useInfiniteQuery } from "@tanstack/react-query"
 
-import { ISearchPostResponse } from "@/types/api/response/referer-post"
+import { IFilterMeta } from "@/types/api/request/post/filter-meta"
 import { QueryKeyString } from "@/types/common/query-key-string"
 import { ReferralType } from "@/types/common/referral-type"
-import useDebounce from "@/hooks/common/debounce"
 
+const searchPost = ({
+  pageParam = 0,
+  queryKey,
+}: {
+  pageParam?: number
+  queryKey: [
+    QueryKeyString,
+    {
+      sorting: string
+      filterMeta: IFilterMeta
+      type: ReferralType
+    },
+  ]
+}) => {
+  const NUMBER_OF_DATE_PER_FETCH = 5
+
+  const queryKeyItem = queryKey[1]
+
+  const { type, filterMeta, sorting } = queryKeyItem
+
+  const countryUuid = filterMeta.countryUuid
+  const provinceUuid = filterMeta.provinceUuid
+  const cityUuid = filterMeta.cityUuid
+  const industryUuid = filterMeta.industryUuid
+  const companyName = filterMeta.companyName
+  const jobTitle = filterMeta.jobTitle
+  const sortingType = sorting
+  const yoeMax = filterMeta.yoeMax
+  const yoeMin = filterMeta.yoeMin
+
+  return searchPostApi({
+    companyName: companyName,
+    numberOfDataPerPage: NUMBER_OF_DATE_PER_FETCH,
+    cityUuid,
+    countryUuid,
+    industryUuid,
+    jobTitle,
+    provinceUuid,
+    page: pageParam,
+    type,
+    sortingType,
+    maxYearOfExperience: parseInt(yoeMax),
+    minYearOfExperience: parseInt(yoeMin),
+  })
+}
 const useSearchPost = (type: ReferralType) => {
   const keyString =
     type === ReferralType.REFEREE
       ? QueryKeyString.SEARCH_REFEREE_POST
       : QueryKeyString.SEARCH_REFERRER_POST
 
-  const [companyName, setCompanyName] = useState("")
-  const [jobTitle, setJobTitle] = useState("")
-  const [provinceUuid, setProvinceUuid] = useState<undefined | string>()
-  const [countryUuid, setCountryUuid] = useState<undefined | string>()
-  const [cityUuid, setCityUuid] = useState<undefined | string>()
-  const [industryUuid, setIndustryUuid] = useState<undefined | string>()
-  const [yoeMin, setYoeMin] = useState<undefined | string>("0")
-  const [yoeMax, setYoeMax] = useState<undefined | string>("100")
-  const [sorting, setSorting] = useState(postSortingOptions[0].value)
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const [companyName, setCompanyName] = useState(
+    searchParams.get("company")?.toString() || ""
+  )
+  const [jobTitle, setJobTitle] = useState(
+    searchParams.get("jobTitle")?.toString() || ""
+  )
+  const [provinceUuid, setProvinceUuid] = useState<undefined | string>(
+    searchParams.get("province")?.toString()
+  )
+  const [countryUuid, setCountryUuid] = useState<undefined | string>(
+    searchParams.get("country")?.toString()
+  )
+  const [cityUuid, setCityUuid] = useState<undefined | string>(
+    searchParams.get("city")?.toString()
+  )
+  const [industryUuid, setIndustryUuid] = useState<undefined | string>(
+    searchParams.get("industry")?.toString()
+  )
+  const [yoeMin, setYoeMin] = useState<undefined | string>(
+    searchParams.get("yoeMin")?.toString() || "0"
+  )
+  const [yoeMax, setYoeMax] = useState<undefined | string>(
+    searchParams.get("yoeMax")?.toString() || "100"
+  )
+  const [sorting, setSorting] = useState(
+    searchParams.get("sorting")?.toString() || postSortingOptions[0].value
+  )
+  const [params] = useState(new URLSearchParams(searchParams.toString()))
 
-  const debouncedCompanyName = useDebounce(companyName, 800)
-  const debouncedJobTitle = useDebounce(jobTitle, 800)
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      params.set(name, value)
+
+      return params.toString()
+    },
+    [params]
+  )
 
   const handleCompanyChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCompanyName(e.target.value)
+    createQueryString("company", e.target.value)
   }
 
   const handleJobTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setJobTitle(e.target.value)
+    createQueryString("jobTitle", e.target.value)
   }
 
   const handleCountryChange = (value: string) => {
     setCountryUuid(value)
+    createQueryString("country", value)
   }
   const handleProvinceChange = (value: string) => {
     setProvinceUuid(value)
+    createQueryString("province", value)
   }
   const handleCityChange = (value: string) => {
     setCityUuid(value)
+    createQueryString("city", value)
   }
 
   const handleIndustryChange = (value: string) => {
     setIndustryUuid(value)
+    createQueryString("industry", value)
   }
 
   const handleSortingChange = (value: string) => {
     setSorting(value)
+    createQueryString("sorting", value)
   }
 
   const handleYoeMinChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -63,9 +143,11 @@ const useSearchPost = (type: ReferralType) => {
     if (!isNaN(integerValue) && integerValue >= 0) {
       // If it's a non-negative integer, set the value as is
       setYoeMin(integerValue.toString())
+      createQueryString("yoeMin", integerValue.toString())
     } else {
       // If it's negative or not a valid integer, set it to '0'
       setYoeMin("0")
+      createQueryString("yoeMin", "0")
     }
   }
 
@@ -79,9 +161,11 @@ const useSearchPost = (type: ReferralType) => {
     if (!isNaN(integerValue) && integerValue >= 0) {
       // If it's a non-negative integer, set the value as is
       setYoeMax(integerValue.toString())
+      createQueryString("yoeMax", integerValue.toString())
     } else {
       // If it's negative or not a valid integer, set it to '0'
       setYoeMax("0")
+      createQueryString("yoeMax", "0")
     }
   }
 
@@ -95,34 +179,47 @@ const useSearchPost = (type: ReferralType) => {
     setYoeMax("100")
     setYoeMin("0")
     setSorting(postSortingOptions[0].value)
+    router.push(pathname)
+  }
+
+  const handleSubmitChange = () => {
+    router.push(pathname + "?" + params.toString())
+  }
+
+  const handleKeyPressSubmitChange = (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === "Enter") {
+      handleSubmitChange()
+    }
   }
 
   const filterMeta = {
-    companyName: debouncedCompanyName,
-    jobTitle: debouncedJobTitle,
-    cityUuid,
-    countryUuid,
-    industryUuid,
-    provinceUuid,
-    sorting,
-    yoeMin,
-    yoeMax,
+    companyName: searchParams.get("company")?.toString() || "",
+    jobTitle: searchParams.get("jobTitle")?.toString() || "",
+    cityUuid: searchParams.get("city")?.toString() || undefined,
+    countryUuid: searchParams.get("country")?.toString() || undefined,
+    industryUuid: searchParams.get("industry")?.toString() || undefined,
+    provinceUuid: searchParams.get("province")?.toString() || undefined,
+    sorting:
+      searchParams.get("sorting")?.toString() || postSortingOptions[0].value,
+    yoeMin: searchParams.get("yoeMin")?.toString() || "0",
+    yoeMax: searchParams.get("yoeMax")?.toString() || "100",
   }
 
-  const result: UseInfiniteQueryResult<ISearchPostResponse[]> =
-    useInfiniteQuery({
-      queryKey: [keyString, { sorting, filterMeta, type }],
-      queryFn: apiService.searchPost,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      getNextPageParam: (lastPage, allPages: any[]) => {
-        if (lastPage && lastPage.length > 0) {
-          return allPages.length
-        } else {
-          return null
-        }
-      },
-    })
+  const result = useInfiniteQuery({
+    queryKey: [keyString, { sorting: filterMeta.sorting, filterMeta, type }],
+    queryFn: searchPost,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    getNextPageParam: (lastPage, allPages) => {
+      if (Array.isArray(lastPage)) {
+        return allPages.length
+      } else {
+        return null
+      }
+    },
+  })
   return {
     result,
     handleCompanyChange,
@@ -135,6 +232,8 @@ const useSearchPost = (type: ReferralType) => {
     handleYoeMaxChange,
     handleJobTitleChange,
     handleReset,
+    handleSubmitChange,
+    handleKeyPressSubmitChange,
     jobTitle,
     companyName,
     provinceUuid,

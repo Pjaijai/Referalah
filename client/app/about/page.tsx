@@ -1,8 +1,7 @@
-"use client"
-
-import React from "react"
-
+import { siteConfig } from "@/config/site"
 import { Separator } from "@/components/ui/separator"
+
+export const metadata = siteConfig.page.about.metadata
 
 const AboutPage = () => {
   return (

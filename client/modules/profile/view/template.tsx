@@ -1,10 +1,13 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 
+import { siteConfig } from "@/config/site"
+import { cn } from "@/lib/utils"
 import useUserStore from "@/hooks/state/user/store"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import LinkTooltip from "@/components/customized-ui/tool/Link"
@@ -49,16 +52,22 @@ const ViewProfileTemplate: React.FunctionComponent<
   const userUuid = useUserStore((state) => state.uuid)
   const isViewingOwnProfile = slug === userUuid
   return (
-    <div className="mt-28 flex w-full flex-col gap-y-2">
-      <div className="mx-8 flex w-full flex-row justify-end gap-2">
+    <div className="flex w-full flex-col gap-y-2">
+      <div className="mx-8 flex w-full flex-row justify-end gap-2 p-4">
         {socialMediaUrl && <LinkTooltip url={socialMediaUrl} />}
-
+        <Link
+          className={cn(buttonVariants({ variant: "ghost" }), "gap-2")}
+          href={`${siteConfig.page.postHistory.href}/${slug}`}
+        >
+          <Icons.history />
+          {siteConfig.page.postHistory.name}
+        </Link>
         {isViewingOwnProfile && (
           <Button
             onClick={() => {
               setIsEditMode(true)
             }}
-            className=" gap-2"
+            className="gap-2"
           >
             <Icons.pencil />
             編輯

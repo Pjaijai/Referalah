@@ -1,7 +1,6 @@
 import "@/styles/globals.css"
 import { Metadata } from "next"
 import { cookies } from "next/headers"
-import { supabase as supabaseClient } from "@/utils/services/supabase/config"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Analytics } from "@vercel/analytics/react"
 
@@ -18,6 +17,18 @@ import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
+  keywords: [
+    "Referalah",
+    "Hong Kong",
+    "Hong Kong referral",
+    "job referrals",
+    "referee",
+    "referrer",
+    "香港",
+    "香港人",
+    "海外",
+  ],
+  manifest: "../manifest.json",
   title: {
     default: `${siteConfig.name} | 海外港人搵Referral平台`,
     template: `%s - ${siteConfig.name}`,
@@ -26,6 +37,7 @@ export const metadata: Metadata = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },
+    { color: "#ffffff" },
   ],
   icons: {
     icon: "/favicon.ico",
@@ -51,33 +63,31 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   const accessToken = session?.access_token || null
 
   return (
-    <>
-      <html lang="zh-Hk" suppressHydrationWarning>
-        <head />
-        <body
-          className={cn(
-            "min-h-screen bg-background font-sans antialiased",
-            fontSans.variable
-          )}
-        >
-          <GoogleAnalytics />
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <APIProvider>
-              <AuthProvider accessToken={accessToken}>
-                <ToastProvider>
-                  <div className="flex min-h-screen flex-col">
-                    <SiteHeader />
-                    <div className="container flex-grow">{children}</div>
-                    <NavFooter />
-                  </div>
-                  <Analytics />
-                  <TailwindIndicator />
-                </ToastProvider>
-              </AuthProvider>
-            </APIProvider>
-          </ThemeProvider>
-        </body>
-      </html>
-    </>
+    <html lang="zh-Hant-HK" suppressHydrationWarning>
+      <head />
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
+      >
+        <GoogleAnalytics />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <APIProvider>
+            <AuthProvider accessToken={accessToken}>
+              <ToastProvider>
+                <div className="flex min-h-screen flex-col">
+                  <SiteHeader />
+                  <div className="container grow">{children}</div>
+                  <NavFooter />
+                </div>
+                <Analytics />
+                <TailwindIndicator />
+              </ToastProvider>
+            </AuthProvider>
+          </APIProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   )
 }

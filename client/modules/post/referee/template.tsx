@@ -4,27 +4,20 @@ import React from "react"
 
 import { MessageType } from "@/types/common/message-type"
 import { ReferralType } from "@/types/common/referral-type"
-import useGetIndustryList from "@/hooks/api/industry/get-Industry-list"
-import useGetCityList from "@/hooks/api/location/get-city-list"
-import useGetCountryList from "@/hooks/api/location/get-country-list"
-import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useSearchPost from "@/hooks/api/post/search-post"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import ResetButton from "@/components/customized-ui/buttons/reset"
 import ReferralPostCard from "@/components/customized-ui/cards/referral-post"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
-import CardSkeletonList from "@/components/customized-ui/skeletons /card-list"
+import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 
 interface IRefereePostPageProps {}
+
 const RefereePostPageTemplate: React.FunctionComponent<
   IRefereePostPageProps
 > = () => {
-  const { data: industryList } = useGetIndustryList()
-  const { data: cityList } = useGetCityList()
-  const { data: countryList } = useGetCountryList()
-  const { data: provinceList } = useGetProvinceList()
-
   const {
     result,
     handleCompanyChange,
@@ -37,6 +30,8 @@ const RefereePostPageTemplate: React.FunctionComponent<
     handleYoeMaxChange,
     handleJobTitleChange,
     handleReset,
+    handleSubmitChange,
+    handleKeyPressSubmitChange,
     companyName,
     jobTitle,
     provinceUuid,
@@ -50,28 +45,26 @@ const RefereePostPageTemplate: React.FunctionComponent<
 
   const { data, fetchNextPage, isLoading, isFetching } = result
 
-  const list = data ? data?.pages.flatMap((d) => d) : []
+  const list = data !== undefined ? data.pages.flatMap((d) => d) : []
 
   return (
     <>
       <div className="mt-8 flex h-full w-full flex-col-reverse gap-4 md:flex-row">
         <Input
           onChange={handleCompanyChange}
+          onKeyDown={handleKeyPressSubmitChange}
           value={companyName}
           placeholder="公司名稱"
         />
         <Input
           onChange={handleJobTitleChange}
+          onKeyDown={handleKeyPressSubmitChange}
           value={jobTitle}
           placeholder="職位/工作名稱"
         />
 
         <div className="flex flex-row justify-end gap-2">
           <SearchPopover
-            countryList={countryList}
-            provinceList={provinceList}
-            cityList={cityList}
-            industryList={industryList}
             provinceUuid={provinceUuid}
             countryUuid={countryUuid}
             onCityChange={handleCityChange}
@@ -81,6 +74,7 @@ const RefereePostPageTemplate: React.FunctionComponent<
             onSortingChange={handleSortingChange}
             onYeoMinChange={handleYoeMinChange}
             onYeoMaxChange={handleYoeMaxChange}
+            onSubmitChange={handleSubmitChange}
             currentSorting={sorting}
             currentCityUuid={cityUuid}
             currentCountryUuid={countryUuid}
@@ -90,8 +84,10 @@ const RefereePostPageTemplate: React.FunctionComponent<
             currentYeoMin={yoeMin}
             type={MessageType.POST}
           />
-
           <ResetButton onClick={handleReset} />
+          <Button onClick={handleSubmitChange} className="whitespace-nowrap">
+            搜尋
+          </Button>
         </div>
       </div>
 
@@ -121,23 +117,19 @@ const RefereePostPageTemplate: React.FunctionComponent<
               return (
                 <ReferralPostCard
                   jobTitle={data.job_title}
-                  username={data.user.username}
-                  photoUrl={data.user.avatar_url}
-                  province={data.province.cantonese_name}
-                  country={data.country.cantonese_name}
-                  city={data.city.cantonese_name}
-                  industry={data.industry.cantonese_name}
+                  username={data.user && data.user.username}
+                  photoUrl={data.user && data.user.avatar_url}
+                  province={data.province && data.province.cantonese_name}
+                  country={data.country && data.country.cantonese_name}
+                  city={data.city && data.city.cantonese_name}
+                  industry={data.industry && data.industry.cantonese_name}
                   companyName={data.company_name}
                   description={data.description}
                   url={data.url}
                   yearOfExperience={data.year_of_experience}
                   uuid={data.uuid}
                   key={data.uuid}
-                  messageType={MessageType.POST}
-                  postUuid={data.uuid}
-                  toUuid={data.created_by}
-                  receiverType={ReferralType.REFEREE}
-                  createdAt={data.created_at.toString()}
+                  createdAt={data.created_at && data.created_at.toString()}
                   createdBy={data.created_by}
                 />
               )

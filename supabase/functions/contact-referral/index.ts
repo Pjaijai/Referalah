@@ -4,7 +4,7 @@ import { initSupabaseClient } from "../_shared/client.ts"
 import { corsHeaders, ENV_IS_LOCAL } from "../_shared/cors.ts"
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")
-
+const WEB_BASE_URL = Deno.env.get("WEB_BASE_URL")
 serve(async (req: any) => {
   try {
     if (req.method === "OPTIONS") {
@@ -104,7 +104,9 @@ serve(async (req: any) => {
       <html lang="zh-Hk">
       <body>
           <p>Hi ${receiver.username}!</p>
-          <p>${sender.username} send咗個訊息俾你。佢個電郵地址: ${sender.email} (回覆此Email可以直接聯絡對方)</p>
+          <p>${sender.username} send咗個訊息俾你。</p>
+          <p>佢嘅電郵地址: ${sender.email} (回覆此Email可以直接聯絡對方)</p>
+          <p>佢嘅個人檔案: <a href="${WEB_BASE_URL}/profile/${sender.uuid}">${WEB_BASE_URL}/profile/${sender.uuid}</a></p>
           <p>佢個訊息</p>
           <div id="emailContent" style="word-break: break-word; white-space: pre-wrap;">
               ${message}

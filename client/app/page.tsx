@@ -15,7 +15,6 @@ export default function IndexPage() {
   const { data } = useGetUserCount()
   return (
     <>
-      <div></div>
       <div className="mt-4 flex justify-center md:hidden">
         <BaseNavigationMenu />
       </div>

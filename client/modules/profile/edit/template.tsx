@@ -13,15 +13,11 @@ import { v4 as uuidv4 } from "uuid"
 import { z } from "zod"
 
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
-import useGetIndustryList from "@/hooks/api/industry/get-Industry-list"
-import useGetCityList from "@/hooks/api/location/get-city-list"
-import useGetCountryList from "@/hooks/api/location/get-country-list"
-import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useUpdateUserProfile from "@/hooks/api/user/update-user-profile"
 import useCityOptions from "@/hooks/common/options/city-options"
 import useCountryOptions from "@/hooks/common/options/country-options"
 import useIndustryOptions from "@/hooks/common/options/industry-options"
-import useProvinceOptions from "@/hooks/common/options/province-pptions"
+import useProvinceOptions from "@/hooks/common/options/province-options"
 import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
@@ -106,11 +102,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           (value) => {
             if (value) {
               const number = parseFloat(value)
-              if (!isNaN(number) && number >= 0 && number <= 100) {
-                return true
-              } else {
-                return false
-              }
+              return !isNaN(number) && number >= 0 && number <= 100
             }
 
             return true
@@ -168,10 +160,6 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     defaultValues: useMemo(() => {
       return {
         username: username || undefined,
-        // chineseFirstName: chineseFirstName || undefined,
-        // chineseLastName: chineseLastName || undefined,
-        // englishFirstName: englishFirstName || undefined,
-        // englishLastName: englishLastName || undefined,
         description: description || undefined,
         company: company || undefined,
         jobTitle: jobTitle || undefined,
@@ -179,7 +167,6 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         countryUuid: countryUuid || undefined,
         provinceUuid: provinceUuid || undefined,
         cityUuid: cityUuid || undefined,
-        // resumeUrl: resumeUrl || undefined,
         socialMediaUrl: socialMediaUrl || undefined,
         isReferer: isReferer || false,
         isReferee: isReferee || false,
@@ -194,15 +181,10 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   const provinceWatch = watch("provinceUuid")
   const yeoWatch = watch("yearOfExperience")
 
-  const { data: industryList } = useGetIndustryList()
-  const { data: countryList } = useGetCountryList()
-  const { data: provinceList } = useGetProvinceList()
-  const { data: cityList } = useGetCityList()
-
-  const industryOptions = useIndustryOptions(industryList)
-  const countryOptions = useCountryOptions(countryList)
-  const provinceOptions = useProvinceOptions(provinceList, countryWatch)
-  const cityOptions = useCityOptions(cityList, provinceWatch)
+  const industryOptions = useIndustryOptions()
+  const countryOptions = useCountryOptions()
+  const provinceOptions = useProvinceOptions(countryWatch)
+  const cityOptions = useCityOptions(provinceWatch)
 
   useEffect(() => {
     if (provinceWatch !== provinceUuid) {
@@ -330,7 +312,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   }
 
   return (
-    <div className="mt-28 flex h-full w-full flex-col p-4">
+    <div className="flex h-full w-full flex-col p-4">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -444,14 +426,14 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             control={form.control}
             label="省份"
             name="provinceUuid"
-            options={provinceOptions as any}
+            options={provinceOptions}
           />
 
           <FormSelect
             control={form.control}
             label="城市"
             name="cityUuid"
-            options={cityOptions as any}
+            options={cityOptions}
           />
           <FormTextInput
             control={form.control}

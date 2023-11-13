@@ -18,16 +18,20 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
-      <div className="container flex h-16 items-center justify-between space-x-4 sm:space-x-0">
-        <MainNav />
-        <div className="hidden justify-center md:flex">
+      <div className="container flex h-16 items-center justify-center space-x-4 sm:space-x-0">
+        <div className="flex-1">
+          <MainNav />
+        </div>
+
+        <div className="hidden flex-1 justify-center md:flex">
           <BaseNavigationMenu />
         </div>
 
-        <div className="flex  items-center justify-end space-x-4">
-          <nav className="flex items-center space-x-1">
+        <div className="flex flex-1 items-center justify-end space-x-4">
+          <nav className="flex items-center gap-2">
             <ThemeToggle />
             <Link
+              aria-label="referalah-project-github"
               href={siteConfig.links.github}
               target="_blank"
               rel="noreferrer"

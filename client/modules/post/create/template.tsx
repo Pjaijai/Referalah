@@ -3,22 +3,18 @@
 import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { maximumWordValidation } from "@/modules/profile/form/validation.ts/max-word"
+import { createPostValidationSchema } from "@/modules/post/validation/create"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { ReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
-import useGetIndustryList from "@/hooks/api/industry/get-Industry-list"
-import useGetCityList from "@/hooks/api/location/get-city-list"
-import useGetCountryList from "@/hooks/api/location/get-country-list"
-import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useCreatePost from "@/hooks/api/post/create-post"
 import useCityOptions from "@/hooks/common/options/city-options"
 import useCountryOptions from "@/hooks/common/options/country-options"
 import useIndustryOptions from "@/hooks/common/options/industry-options"
-import useProvinceOptions from "@/hooks/common/options/province-pptions"
+import useProvinceOptions from "@/hooks/common/options/province-options"
 import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
@@ -34,79 +30,10 @@ interface ICreatePostTemplateProps {}
 const CreatePostTemplate: React.FunctionComponent<
   ICreatePostTemplateProps
 > = () => {
-  const formSchema = z.object({
-    type: z.string().nonempty("俾幫手填下🙏🏻"),
-    url: maximumWordValidation(20000)
-      .url({
-        message: "無效連結",
-      })
-      .optional()
-      .or(z.literal("")),
-    description: z
-      .string()
-      .max(3000, {
-        message: `俾盡3000粒字，唔夠用請聯絡我🙏🏻`,
-      })
-      .min(10, {
-        message: `至少有要10粒字`,
-      }),
-
-    countryUuid: z.string().min(1, {
-      message: `俾幫手填下🙏🏻`,
-    }),
-    provinceUuid: z.string().min(1, {
-      message: `俾幫手填下🙏🏻`,
-    }),
-    cityUuid: z.string().min(1, {
-      message: `俾幫手填下🙏🏻`,
-    }),
-    industryUuid: z.string().min(1, {
-      message: `俾幫手填下🙏🏻`,
-    }),
-    yearOfExperience: z
-      .string()
-      .min(1, {
-        message: `俾幫手填下🙏🏻`,
-      })
-      .refine(
-        (value) => {
-          if (value) {
-            const number = parseFloat(value)
-            if (!isNaN(number) && number >= 0 && number <= 100) {
-              return true
-            } else {
-              return false
-            }
-          }
-
-          return true
-          // Check if it's a valid number and falls within the range 1 to 100
-        },
-        {
-          message: "必須喺0到100之間，如果唔夠用請聯絡我🙇🏻‍♂️", // Specify the custom error message here
-        }
-      ),
-    companyName: z
-      .string()
-      .min(1, {
-        message: `俾幫手填下🙏🏻`,
-      })
-      .max(30, {
-        message: `俾盡30粒字，唔夠用請聯絡我🙏🏻`,
-      }),
-    jobTitle: z
-      .string()
-      .min(1, {
-        message: `俾幫手填下🙏🏻`,
-      })
-      .max(30, {
-        message: `俾盡30粒字，唔夠用請聯絡我🙏🏻`,
-      }),
-  })
+  const formSchema = createPostValidationSchema
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      type: ReferralType.REFERRER,
       description: "",
       companyName: "",
       jobTitle: "",
@@ -114,7 +41,6 @@ const CreatePostTemplate: React.FunctionComponent<
       countryUuid: "",
       provinceUuid: "",
       cityUuid: "",
-
       industryUuid: "",
     },
   })
@@ -123,29 +49,15 @@ const CreatePostTemplate: React.FunctionComponent<
   const countryWatch = form.watch("countryUuid")
   const provinceWatch = form.watch("provinceUuid")
   const yeoWatch = form.watch("yearOfExperience")
-  const typeWatch = form.watch("type")
   const urlWatch = form.watch("url")
   const router = useRouter()
   const user = useUserStore((state) => state)
-  const { data: industryList } = useGetIndustryList()
-  const { data: cityList } = useGetCityList()
-  const { data: countryList } = useGetCountryList()
-  const { data: provinceList } = useGetProvinceList()
-  const industryOptions = useIndustryOptions(industryList)
-  const countryOptions = useCountryOptions(countryList)
-  const provinceOptions = useProvinceOptions(provinceList, countryWatch)
-  const cityOptions = useCityOptions(cityList, provinceWatch)
+
+  const industryOptions = useIndustryOptions()
+  const countryOptions = useCountryOptions()
+  const provinceOptions = useProvinceOptions(countryWatch)
+  const cityOptions = useCityOptions(provinceWatch)
   const { mutate: createPost, isLoading: isCreatePostLoading } = useCreatePost()
-  const postTypeOptions = [
-    {
-      value: ReferralType.REFERRER,
-      title: "工搵人",
-    },
-    {
-      value: ReferralType.REFEREE,
-      title: "人搵工",
-    },
-  ]
 
   useEffect(() => {
     form.setValue("cityUuid", "")
@@ -204,18 +116,14 @@ const CreatePostTemplate: React.FunctionComponent<
           industryUuid: values.industryUuid,
           yearOfExperience: parseInt(values.yearOfExperience),
           createdBy: user.uuid!,
-          type: values.type,
+          type: ReferralType.REFERRER,
           companyName: values.companyName.trim(),
           jobTitle: values.jobTitle.trim(),
           description: values.description.trim(),
         },
         {
-          onSuccess: () => {
-            if (values.type === ReferralType.REFERRER) {
-              router.push("/post/referer")
-            } else {
-              router.push("/post/referee")
-            }
+          onSuccess: (res) => {
+            router.push(`${siteConfig.page.referrerPost.href}/${res.uuid}`)
           },
           onError: () => {
             return toast({
@@ -240,12 +148,6 @@ const CreatePostTemplate: React.FunctionComponent<
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4"
         >
-          <FormSelect
-            options={postTypeOptions}
-            control={form.control}
-            label="類型"
-            name="type"
-          />
           <FormTextInput
             control={form.control}
             label="相關網址"
@@ -269,11 +171,7 @@ const CreatePostTemplate: React.FunctionComponent<
             control={form.control}
             label="內容"
             name="description"
-            description={
-              typeWatch === ReferralType.REFERRER
-                ? "講吓想搵啲咩人？"
-                : "大概講吓你自己點解match呢個職位，建議唔好公開自己聯絡資訊。"
-            }
+            description={"講吓想搵啲咩人？"}
           />
 
           <FormSelect

@@ -9,13 +9,14 @@ import { Icons } from "@/components/icons"
 const NavFooter = () => {
   return (
     <footer className="mt-12 flex flex-col items-center justify-center gap-2 border-t-2 p-2 md:flex-row ">
-      <div className="flex flex-col items-center gap-1 text-sm text-muted-foreground ">
-        <div className="flex flex-row gap-2">
-          <a href="mailto:r1r69.referalah@gmail.com">
+      <div className="flex flex-col items-center gap-3 text-sm text-muted-foreground ">
+        <div className="flex flex-row gap-3">
+          <a aria-label="author-email" href="mailto:r1r69.referalah@gmail.com">
             <Icons.mail />
           </a>
 
           <Link
+            aria-label="referalah-project-github"
             className="text-sm text-muted-foreground"
             href={siteConfig.links.github}
             target="_blank"
@@ -25,7 +26,7 @@ const NavFooter = () => {
           </Link>
         </div>
 
-        <div className="flex flex-col gap-2 md:flex-row">
+        <div className="flex flex-col gap-3 md:flex-row">
           <Link
             className="text-center text-sm text-muted-foreground"
             href={siteConfig.page.privacyPolicy.href}

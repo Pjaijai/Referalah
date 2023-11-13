@@ -4,8 +4,11 @@ import {
   CalendarClock,
   CheckCircle2,
   ChevronDown,
-  ChevronDownIcon,
+  ClipboardCheck,
+  ClipboardX,
+  Clock,
   Github,
+  History,
   Instagram,
   Laptop,
   Link,
@@ -23,6 +26,7 @@ import {
   Twitter,
   Undo2,
   User,
+  Verified,
   type Icon as LucideIcon,
 } from "lucide-react"
 
@@ -47,6 +51,7 @@ export const Icons = {
   linkedin: Linkedin,
   rotateRight: RotateCcw,
   slidersHorizontal: SlidersHorizontal,
+  history: History,
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path
@@ -85,4 +90,8 @@ export const Icons = {
   location: MapPin,
   company: Building2,
   yearsOfExperience: CalendarClock,
+  createdAt: Clock,
+  verified: Verified,
+  deactivatePost: ClipboardX,
+  activatePost: ClipboardCheck,
 }

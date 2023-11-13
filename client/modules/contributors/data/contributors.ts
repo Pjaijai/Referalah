@@ -9,7 +9,6 @@ const contributors: IContributor[] = [
     },
     contributedArea: ["software_development", "uiux_design"],
   },
-
   {
     name: "Sonia Yeung",
     links: {
@@ -68,12 +67,71 @@ const contributors: IContributor[] = [
     },
     contributedArea: ["marketing", "graphic_design"],
   },
-
   {
     name: "Chak Yuen Leung",
     links: {
       linkedin: "http://linkedin.com/in/chak-yuen-leung-9a8853194",
       github: "https://github.com/BenjamincyLeung",
+    },
+    contributedArea: ["software_development"],
+  },
+  {
+    name: "Vardy Ng",
+    links: {
+      linkedin: "https://www.linkedin.com/in/vardyng/",
+      github: "https://github.com/VardyNg",
+    },
+    contributedArea: ["software_development"],
+  },
+  {
+    name: "Martin Tsang",
+    links: {
+      linkedin: "https://www.linkedin.com/in/marttsang2/",
+      github: "https://github.com/marttsang2",
+      website: "https://marttsang.com/",
+    },
+    contributedArea: ["software_development"],
+  },
+  {
+    name: "Tommy Tsang",
+    links: {
+      linkedin: "https://www.linkedin.com/in/tommy-tsang-ting-fung/",
+      github: "https://github.com/tommyttf/",
+    },
+    contributedArea: ["software_development"],
+  },
+  {
+    name: "Lulu Tung",
+    links: {
+      linkedin: "https://www.linkedin.com/in/lulu-the-flaneur",
+      github: "https://github.com/511234",
+      website: "https://lublog.vercel.app/",
+    },
+    contributedArea: ["software_development"],
+  },
+  {
+    name: "Ken Tung",
+    links: {
+      linkedin: "https://www.linkedin.com/in/ken-tung-developer",
+      github: "https://github.com/ken31ee",
+    },
+    contributedArea: ["software_development"],
+  },
+  {
+    name: "Paco Wong",
+    links: {
+      linkedin: "https://www.linkedin.com/in/paco-wong-5725521a5/",
+      github: "https://github.com/paco0161",
+      website: "https://paco0161.github.io/",
+    },
+    contributedArea: ["software_development"],
+  },
+  {
+    name: "Cyrus Chan",
+    links: {
+      linkedin: "https://www.linkedin.com/in/cyruscsc",
+      github: "https://github.com/cyruscsc",
+      website: "https://cyruscsc.com/",
     },
     contributedArea: ["software_development"],
   },
