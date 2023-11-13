@@ -122,8 +122,8 @@ const CreatePostTemplate: React.FunctionComponent<
           description: values.description.trim(),
         },
         {
-          onSuccess: () => {
-            router.push(siteConfig.page.referrer.href)
+          onSuccess: (res) => {
+            router.push(`${siteConfig.page.referrerPost.href}/${res.uuid}`)
           },
           onError: () => {
             return toast({

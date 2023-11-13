@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import PostCardInfoDisplay from "@/modules/post/components/info-display/card-info"
 import PostHeader from "@/modules/post/components/info-display/header"
 
@@ -34,6 +35,8 @@ interface IReferralPostCardProps {
   createdBy: string | null
 }
 
+// NOTE: please use onClick with e.preventDefault() for any links inside this component to prevent validateDOMNesting warning
+
 const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   uuid,
   jobTitle,
@@ -50,13 +53,21 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   createdAt,
   createdBy,
 }) => {
+  const router = useRouter()
+
+  const handleAvatarOnClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault()
+    router.push(`${siteConfig.page.profile.href}/${createdBy}`)
+  }
+
   return (
-    <Card className="flex flex-col justify-between rounded shadow-md">
+    <Card className="flex h-full flex-col justify-between rounded shadow-md ">
       <Link
         href={`${siteConfig.page.referrerPost.href}/${uuid}`}
         onClick={(e) => e.stopPropagation()}
+        className="flex h-full flex-col items-start justify-start"
       >
-        <div className="flex flex-col items-start justify-start">
+        <div className="flex w-full flex-col items-start justify-start">
           <CardHeader className="w-full pb-2">
             {/* title, subtitle, url, avatar, quick action */}
             <div className="flex flex-row items-start justify-between gap-3 sm:gap-1">
@@ -72,13 +83,13 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
                 />
               </div>
 
-              <Link href={`${siteConfig.page.profile.href}/${createdBy}`}>
+              <div onClick={handleAvatarOnClick}>
                 <BaseAvatar
                   fallBack={username ? username[0] : "?"}
                   alt={username}
                   url={photoUrl || undefined}
                 />
-              </Link>
+              </div>
             </div>
 
             {/* location, industry, year of exp */}
@@ -97,14 +108,15 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
             {description && (
               <CollapsibleTextWrapper
                 text={description}
-                className="mt-2 whitespace-pre-wrap break-all text-sm "
+                className="mt-2 whitespace-pre-wrap break-all text-sm"
                 expandButtonProps={{ className: "mt-2" }}
               />
             )}
           </CardContent>
         </div>
+
         {/* created at */}
-        <CardFooter className="justify-end">
+        <CardFooter className="mt-auto w-full justify-end">
           <CardDescription>
             <CreatedAtDisplay applyTo="card" createdAt={createdAt} />
           </CardDescription>

@@ -22,6 +22,7 @@ import LocationDisplay from "@/components/customized-ui/info-display/location"
 import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
 import { Icons } from "@/components/icons"
 import PageStatusLayout from "@/components/layouts/page-status"
+import { PostNotFoundError } from "@/lib/exceptions"
 
 interface ReferralPostDetailsPageProps {
   postUuid: string | null
@@ -36,7 +37,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
 
   return (
     <PageStatusLayout
-      error="搵唔到街招資料，請稍後再試。"
+      error={new PostNotFoundError()}
       isLoading={isLoading}
       isSuccess={isSuccess}
     >

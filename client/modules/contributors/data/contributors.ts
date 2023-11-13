@@ -117,6 +117,24 @@ const contributors: IContributor[] = [
     },
     contributedArea: ["software_development"],
   },
+  {
+    name: "Paco Wong",
+    links: {
+      linkedin: "https://www.linkedin.com/in/paco-wong-5725521a5/",
+      github: "https://github.com/paco0161",
+      website: "https://paco0161.github.io/",
+    },
+    contributedArea: ["software_development"],
+  },
+  {
+    name: "Cyrus Chan",
+    links: {
+      linkedin: "https://www.linkedin.com/in/cyruscsc",
+      github: "https://github.com/cyruscsc",
+      website: "https://cyruscsc.com/",
+    },
+    contributedArea: ["software_development"],
+  },
 ]
 
 export default contributors
