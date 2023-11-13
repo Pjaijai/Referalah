@@ -141,6 +141,20 @@ const CreatePostTemplate: React.FunctionComponent<
     }
   }
 
+  if (!user.isSignIn || user.uuid === null) {
+    return (<div className="flex h-screen  flex-col items-center justify-center gap-4 rounded-lg  p-4">
+      <span className="text-5xl">🥲</span>
+      <h6>
+        <Link
+          href={siteConfig.page.auth.href}
+          className="border-b-2 border-green-700 text-green-700 dark:border-yellow-300 dark:text-yellow-300 "
+        >
+          登入
+        </Link>咗先可以貼街招!
+      </h6>
+    </div>)
+  }
+
   return (
     <div className=" flex h-full w-full flex-col p-4">
       <Form {...form}>
