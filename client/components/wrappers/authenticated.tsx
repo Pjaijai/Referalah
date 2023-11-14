@@ -1,7 +1,6 @@
 "use client"
 
 import React, { PropsWithChildren } from "react"
-import Link from "next/link"
 
 import { siteConfig } from "@/config/site"
 import useUserStore from "@/hooks/state/user/store"
