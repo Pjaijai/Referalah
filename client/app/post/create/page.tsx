@@ -1,8 +1,8 @@
 import CreatePostTemplate from "@/modules/post/create/template"
 
 import { siteConfig } from "@/config/site"
-import AuthenticatedPageLayout from "@/components/layouts/authenticated"
 import CommonPageLayout from "@/components/layouts/common"
+import AuthenticatedPageLayout from "@/components/wrappers/authenticated"
 
 export const metadata = siteConfig.page.createPost.metadata
 
