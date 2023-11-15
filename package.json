@@ -4,6 +4,6 @@
     "add-pre-commit": "npx husky add .husky/pre-commit \"cd ./client && npx lint-staged\""
   },
   "devDependencies": {
-    "husky": "^8.0.3"
+    "husky": "8.0.3"
   }
 }
