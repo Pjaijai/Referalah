@@ -14,41 +14,17 @@ Analytic : GA, Vercel Analytic
 
 Check [here](https://dbdiagram.io/d/Referalah-651b7b71ffbf5169f0e71a7a)
 
-## 4.To solve user data cannot be inserted after registration
+## 4. To solve user data cannot be inserted after registration
 
-I'm uncertain about the reason why, but there should be a trigger that inserts user data into the user table after registration. I did execute the migration, but unfortunately, it did not generate the trigger as expected. To address this issue, please run the following SQL command in your local SQL editor:
-
-```line_numbers,js
-create or replace function public.handle_new_user()
-returns trigger
-language plpgsql
-security definer set search_path = public
-as $$
-DECLARE
-  username_text TEXT;
-BEGIN
-  -- Extract the username from the email (word before @), limited to 4 characters
-  username_text := SUBSTRING(NEW.email FROM 1 FOR POSITION('@' IN NEW.email) - 1);
-  IF LENGTH(username_text) > 4 THEN
-    username_text := LEFT(username_text, 4);
-  END IF;
-
-  -- Append the first 4 characters of the uuid (id) to the username
-  username_text := username_text || LEFT(NEW.id::TEXT, 4);
-
-  -- Insert the new user with the generated username
-  INSERT INTO public.user (uuid, email, username)
-  VALUES (NEW.id, NEW.email, username_text);
-
-  RETURN NEW;
-END;
-$$
-;
+Supabase do not allow to include auth.user in migration script. To successfully create user please run following cod ein SQL editor. [reference](https://github.com/supabase/cli/issues/120)
 
 -- trigger the function every time a user is created
+
+```
 create or replace trigger on_auth_user_created
-  after insert on auth.users
-  for each row execute procedure public.handle_new_user();
+after insert on auth.users
+for each row execute procedure public.handle_new_user();
+
 ```
 
 ## 5.Frontend
@@ -59,8 +35,8 @@ create or replace trigger on_auth_user_created
 4.  Clone `.env.template` and rename it to `.env`.
 5.  For non localhost developemnt, find Supabase URL and anon key from Project Setting > API and configure `.env`.
 6.  For local development, Run `supabase status` to get the anon key and API URL.
-7.  Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in `.env`.
-
+7.  Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in `.env`.
+8.  `NEXT_PUBLIC_WEB_URL`= `http://localhost:3000` in `.env`.
 
 ## 6.Backend (local)
 
@@ -104,6 +80,9 @@ For accurate information, please check supabase local dev doc here[https://supab
    ```bash
    cd client
    ```
+
+````
+
 1. Install dependencies
    ```bash
    yarn
@@ -139,3 +118,4 @@ Naming your PR with category. For example `Feature/I Go To School By Bus`
 | refactor      |                             refactoring                              |
 
 Now you have both the frontend and backend of Referalah up and running locally, allowing you to work on and test your changes effectively. Happy coding!
+````
