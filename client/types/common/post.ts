@@ -1,4 +1,4 @@
-import { PostStatusType } from "@/types/common/post-status"
+import { TPostStatusType } from "@/types/common/post-status"
 
 export interface Post {
   id: number
@@ -14,5 +14,5 @@ export interface Post {
   city_uuid: string | null
   industry_uuid: string | null
   url: string | null
-  status: PostStatusType
+  status: TPostStatusType
 }

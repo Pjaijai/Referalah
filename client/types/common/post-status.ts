@@ -3,4 +3,4 @@ export enum PostStatus {
   INACTIVE = "inactive",
 }
 
-export type PostStatusType = "active" | "inactive"
+export type TPostStatusType = "active" | "inactive"
