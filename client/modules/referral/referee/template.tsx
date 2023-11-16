@@ -3,7 +3,7 @@
 import React from "react"
 
 import { EMessageType } from "@/types/common/message-type"
-import { ReferralType } from "@/types/common/referral-type"
+import { EReferralType } from "@/types/common/referral-type"
 import useSearchReferral from "@/hooks/api/referral/search-referral"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -41,7 +41,7 @@ const RefereePageTemplate: React.FunctionComponent<
     yoeMax,
     yoeMin,
     sorting,
-  } = useSearchReferral(ReferralType.REFEREE)
+  } = useSearchReferral(EReferralType.REFEREE)
 
   const {
     data: refereeListData,
@@ -133,7 +133,7 @@ const RefereePageTemplate: React.FunctionComponent<
                   yearOfExperience={referee.year_of_experience}
                   uuid={referee.uuid}
                   key={referee.uuid}
-                  receiverType={ReferralType.REFEREE}
+                  receiverType={EReferralType.REFEREE}
                 />
               )
             })}

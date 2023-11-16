@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { EMessageType } from "@/types/common/message-type"
-import { ReferralType } from "@/types/common/referral-type"
+import { EReferralType } from "@/types/common/referral-type"
 import useContactReferral from "@/hooks/api/contact/referral"
 import useContactThroughPost from "@/hooks/api/contact/through-post"
 import { Button } from "@/components/ui/button"
@@ -34,7 +34,7 @@ export interface IContactDialogProps {
   username: string | null
   onContactFormClose: () => void
   messageType: EMessageType
-  receiverType?: ReferralType
+  receiverType?: EReferralType
   toUuid: string | null
   postUuid?: string | null
 }

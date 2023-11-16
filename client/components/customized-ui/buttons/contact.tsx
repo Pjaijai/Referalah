@@ -3,7 +3,7 @@ import ContactDialog from "@/modules/referral/components/dialog/contact"
 import UserSignInDialog from "@/modules/referral/components/dialog/userSignIn"
 
 import { EMessageType } from "@/types/common/message-type"
-import { ReferralType } from "@/types/common/referral-type"
+import { EReferralType } from "@/types/common/referral-type"
 import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
@@ -13,7 +13,7 @@ interface IContactButtonProps {
   toUuid: string | null
   messageType: EMessageType
   postUuid?: string | null
-  receiverType?: ReferralType
+  receiverType?: EReferralType
 }
 const ContactButton: React.FunctionComponent<IContactButtonProps> = ({
   username,

@@ -3,7 +3,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 
 import { EMessageType } from "@/types/common/message-type"
-import { ReferralType } from "@/types/common/referral-type"
+import { EReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
 import { Button } from "@/components/ui/button"
 import {
@@ -36,7 +36,7 @@ interface IReferralCardProps {
   city: string | null
   industry: string | null
   socialMediaUrl: string | null
-  receiverType: ReferralType
+  receiverType: EReferralType
 }
 
 const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({

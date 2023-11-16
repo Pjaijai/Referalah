@@ -5,11 +5,11 @@ import { referralSortingOptions } from "@/utils/common/sorting/referer"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { EQueryKeyString } from "@/types/common/query-key-string"
-import { ReferralType } from "@/types/common/referral-type"
+import { EReferralType } from "@/types/common/referral-type"
 
-const useSearchReferral = (type: ReferralType) => {
+const useSearchReferral = (type: EReferralType) => {
   const keyString =
-    type === ReferralType.REFEREE
+    type === EReferralType.REFEREE
       ? EQueryKeyString.SEARCH_REFEREE
       : EQueryKeyString.SEARCH_REFERRER
 

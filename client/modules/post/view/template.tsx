@@ -7,7 +7,7 @@ import PostStatusDisplay from "@/modules/post/components/info-display/status"
 
 import { EMessageType } from "@/types/common/message-type"
 import { EPostStatus } from "@/types/common/post-status"
-import { ReferralType } from "@/types/common/referral-type"
+import { EReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
 import { PostNotFoundError } from "@/lib/exceptions"
 import useGetPost from "@/hooks/api/post/get-post"
@@ -115,7 +115,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                   toUuid={post.created_by}
                   messageType={EMessageType.POST}
                   postUuid={post.uuid}
-                  receiverType={ReferralType.REFERRER}
+                  receiverType={EReferralType.REFERRER}
                 />
               )}
               <ProfileCard

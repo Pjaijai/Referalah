@@ -6,7 +6,7 @@ import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { IFilterMeta } from "@/types/api/request/post/filter-meta"
 import { EQueryKeyString } from "@/types/common/query-key-string"
-import { ReferralType } from "@/types/common/referral-type"
+import { EReferralType } from "@/types/common/referral-type"
 
 const searchPost = ({
   pageParam = 0,
@@ -18,7 +18,7 @@ const searchPost = ({
     {
       sorting: string
       filterMeta: IFilterMeta
-      type: ReferralType
+      type: EReferralType
     },
   ]
 }) => {
@@ -53,9 +53,9 @@ const searchPost = ({
     minYearOfExperience: parseInt(yoeMin),
   })
 }
-const useSearchPost = (type: ReferralType) => {
+const useSearchPost = (type: EReferralType) => {
   const keyString =
-    type === ReferralType.REFEREE
+    type === EReferralType.REFEREE
       ? EQueryKeyString.SEARCH_REFEREE_POST
       : EQueryKeyString.SEARCH_REFERRER_POST
 
