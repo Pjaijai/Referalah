@@ -1,6 +1,6 @@
 import { TPostStatusType } from "@/types/common/post-status"
 
-export interface Post {
+export interface IPost {
   id: number
   created_at: string | null // date time string
   created_by: string | null
