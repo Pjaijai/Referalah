@@ -1,9 +1,9 @@
-import { PostStatus } from "@/types/common/post-status"
+import { EPostStatus } from "@/types/common/post-status"
 import { ISelectOption } from "@/components/customized-ui/selects/base"
 
 const postStatusOptions: ISelectOption[] = [
-  { title: "開放", value: PostStatus.ACTIVE },
-  { title: "關閉", value: PostStatus.INACTIVE },
+  { title: "開放", value: EPostStatus.ACTIVE },
+  { title: "關閉", value: EPostStatus.INACTIVE },
 ]
 
 export { postStatusOptions }

@@ -1,4 +1,4 @@
-export enum PostStatus {
+export enum EPostStatus {
   ACTIVE = "active",
   INACTIVE = "inactive",
 }

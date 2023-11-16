@@ -6,7 +6,7 @@ import PostHeader from "@/modules/post/components/info-display/header"
 import PostStatusDisplay from "@/modules/post/components/info-display/status"
 
 import { EMessageType } from "@/types/common/message-type"
-import { PostStatus } from "@/types/common/post-status"
+import { EPostStatus } from "@/types/common/post-status"
 import { ReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
 import { PostNotFoundError } from "@/lib/exceptions"
@@ -33,7 +33,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   const { data: post, isLoading, isSuccess } = useGetPost(postUuid)
   const userUuid = useUserStore((state) => state.uuid)
   const isViewingOwnProfile = post?.created_by === userUuid
-  const isOpen = post?.status === PostStatus.ACTIVE
+  const isOpen = post?.status === EPostStatus.ACTIVE
 
   return (
     <PageStatusLayout
