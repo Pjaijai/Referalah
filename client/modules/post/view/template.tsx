@@ -5,10 +5,11 @@ import Link from "next/link"
 import PostHeader from "@/modules/post/components/info-display/header"
 import PostStatusDisplay from "@/modules/post/components/info-display/status"
 
-import { MessageType } from "@/types/common/message-type"
+import { EMessageType } from "@/types/common/message-type"
 import { PostStatus } from "@/types/common/post-status"
 import { ReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
+import { PostNotFoundError } from "@/lib/exceptions"
 import useGetPost from "@/hooks/api/post/get-post"
 import useUserStore from "@/hooks/state/user/store"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -22,7 +23,6 @@ import LocationDisplay from "@/components/customized-ui/info-display/location"
 import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
 import { Icons } from "@/components/icons"
 import PageStatusLayout from "@/components/layouts/page-status"
-import { PostNotFoundError } from "@/lib/exceptions"
 
 interface ReferralPostDetailsPageProps {
   postUuid: string | null
@@ -113,7 +113,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                 <ContactButton
                   username={post.user?.username || "?"}
                   toUuid={post.created_by}
-                  messageType={MessageType.POST}
+                  messageType={EMessageType.POST}
                   postUuid={post.uuid}
                   receiverType={ReferralType.REFERRER}
                 />

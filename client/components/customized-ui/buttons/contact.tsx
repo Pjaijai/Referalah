@@ -2,7 +2,7 @@ import React, { memo, useState } from "react"
 import ContactDialog from "@/modules/referral/components/dialog/contact"
 import UserSignInDialog from "@/modules/referral/components/dialog/userSignIn"
 
-import { MessageType } from "@/types/common/message-type"
+import { EMessageType } from "@/types/common/message-type"
 import { ReferralType } from "@/types/common/referral-type"
 import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
@@ -11,7 +11,7 @@ import { Icons } from "@/components/icons"
 interface IContactButtonProps {
   username: string | null
   toUuid: string | null
-  messageType: MessageType
+  messageType: EMessageType
   postUuid?: string | null
   receiverType?: ReferralType
 }
@@ -38,7 +38,7 @@ const ContactButton: React.FunctionComponent<IContactButtonProps> = ({
     <>
       <Button className="w-full" onClick={handleContactClick}>
         <Icons.mail className="mr-1 h-4 w-4" />
-        聯絡{messageType === MessageType.POST ? "推薦人" : "我"}
+        聯絡{messageType === EMessageType.POST ? "推薦人" : "我"}
       </Button>
 
       <ContactDialog

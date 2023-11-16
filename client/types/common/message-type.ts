@@ -1,4 +1,4 @@
-export enum MessageType {
+export enum EMessageType {
   POST = "post",
   REFERRAL = "referral",
 }

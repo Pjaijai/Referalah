@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import { MessageType } from "@/types/common/message-type"
+import { EMessageType } from "@/types/common/message-type"
 import { ReferralType } from "@/types/common/referral-type"
 import useSearchPost from "@/hooks/api/post/search-post"
 import { Button } from "@/components/ui/button"
@@ -82,7 +82,7 @@ const RefereePostPageTemplate: React.FunctionComponent<
             currentProvinceUuid={provinceUuid}
             currentYeoMax={yoeMax}
             currentYeoMin={yoeMin}
-            type={MessageType.POST}
+            type={EMessageType.POST}
           />
           <ResetButton onClick={handleReset} />
           <Button onClick={handleSubmitChange} className="whitespace-nowrap">
