@@ -18,7 +18,7 @@ import {
 } from "@/types/api/response/referer-post"
 import { IReferralResponse } from "@/types/api/response/referral"
 import { IUserResponse } from "@/types/api/response/user"
-import { QueryKeyString } from "@/types/common/query-key-string"
+import { EQueryKeyString } from "@/types/common/query-key-string"
 import { ReferralType } from "@/types/common/referral-type"
 
 // User Profile
@@ -100,7 +100,7 @@ export const searchReferral = async ({
 }: {
   pageParam?: number
   queryKey: [
-    QueryKeyString,
+    EQueryKeyString,
     {
       sorting: string
       filterMeta: IFilterMeta

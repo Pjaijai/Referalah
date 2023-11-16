@@ -5,7 +5,7 @@ import { postSortingOptions } from "@/utils/common/sorting/post"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { IFilterMeta } from "@/types/api/request/post/filter-meta"
-import { QueryKeyString } from "@/types/common/query-key-string"
+import { EQueryKeyString } from "@/types/common/query-key-string"
 import { ReferralType } from "@/types/common/referral-type"
 
 const searchPost = ({
@@ -14,7 +14,7 @@ const searchPost = ({
 }: {
   pageParam?: number
   queryKey: [
-    QueryKeyString,
+    EQueryKeyString,
     {
       sorting: string
       filterMeta: IFilterMeta
@@ -56,8 +56,8 @@ const searchPost = ({
 const useSearchPost = (type: ReferralType) => {
   const keyString =
     type === ReferralType.REFEREE
-      ? QueryKeyString.SEARCH_REFEREE_POST
-      : QueryKeyString.SEARCH_REFERRER_POST
+      ? EQueryKeyString.SEARCH_REFEREE_POST
+      : EQueryKeyString.SEARCH_REFERRER_POST
 
   const router = useRouter()
   const pathname = usePathname()
