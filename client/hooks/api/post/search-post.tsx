@@ -7,6 +7,9 @@ import { useInfiniteQuery } from "@tanstack/react-query"
 import { IFilterMeta } from "@/types/api/request/post/filter-meta"
 import { EQueryKeyString } from "@/types/common/query-key-string"
 import { EReferralType } from "@/types/common/referral-type"
+import useIndustryOptions from "@/hooks/api/industry/get-Industry-list"
+import useGetCountryList from "@/hooks/api/location/get-country-list"
+import useGetProvinceList from "@/hooks/api/location/get-province-list"
 
 const searchPost = ({
   pageParam = 0,
@@ -53,7 +56,11 @@ const searchPost = ({
     minYearOfExperience: parseInt(yoeMin),
   })
 }
-const useSearchPost = (type: EReferralType) => {
+const useSearchPost = (type: ReferralType) => {
+  const countryData = useGetCountryList().data
+  const provinceData = useGetProvinceList().data
+  const industryData = useIndustryOptions().data
+
   const keyString =
     type === EReferralType.REFEREE
       ? EQueryKeyString.SEARCH_REFEREE_POST
@@ -112,11 +119,17 @@ const useSearchPost = (type: EReferralType) => {
 
   const handleCountryChange = (value: string) => {
     setCountryUuid(value)
-    createQueryString("country", value)
+    createQueryString(
+      "country",
+      countryData?.find((item) => item.uuid === value)?.value ?? value
+    )
   }
   const handleProvinceChange = (value: string) => {
     setProvinceUuid(value)
-    createQueryString("province", value)
+    createQueryString(
+      "province",
+      provinceData?.find((item) => item.uuid === value)?.value ?? value
+    )
   }
   const handleCityChange = (value: string) => {
     setCityUuid(value)
@@ -125,7 +138,10 @@ const useSearchPost = (type: EReferralType) => {
 
   const handleIndustryChange = (value: string) => {
     setIndustryUuid(value)
-    createQueryString("industry", value)
+    createQueryString(
+      "industry",
+      industryData?.find((item) => item.uuid === value)?.value ?? value
+    )
   }
 
   const handleSortingChange = (value: string) => {
@@ -194,13 +210,28 @@ const useSearchPost = (type: EReferralType) => {
     }
   }
 
+  const getUUid = (meta: string, value?: string) => {
+    if (!value) return undefined
+    if (meta === "country")
+      return countryData?.find((item) => item.value === value)?.uuid
+    if (meta === "province")
+      return provinceData?.find((item) => item.value === value)?.uuid
+    if (meta === "industry")
+      return industryData?.find((item) => item.value === value)?.uuid
+  }
+
   const filterMeta = {
     companyName: searchParams.get("company")?.toString() || "",
     jobTitle: searchParams.get("jobTitle")?.toString() || "",
     cityUuid: searchParams.get("city")?.toString() || undefined,
-    countryUuid: searchParams.get("country")?.toString() || undefined,
-    industryUuid: searchParams.get("industry")?.toString() || undefined,
-    provinceUuid: searchParams.get("province")?.toString() || undefined,
+    countryUuid:
+      getUUid("country", searchParams.get("country")?.toString()) || undefined,
+    industryUuid:
+      getUUid("industry", searchParams.get("industry")?.toString()) ||
+      undefined,
+    provinceUuid:
+      getUUid("province", searchParams.get("province")?.toString()) ||
+      undefined,
     sorting:
       searchParams.get("sorting")?.toString() || postSortingOptions[0].value,
     yoeMin: searchParams.get("yoeMin")?.toString() || "0",
