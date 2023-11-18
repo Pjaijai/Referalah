@@ -22,11 +22,12 @@ import { QueryKeyString } from "@/types/common/query-key-string"
 import { ReferralType } from "@/types/common/referral-type"
 
 // User Profile
-export const getUserProfile = async (arg: any) => {
-  const { data, error } = await supabase
-    .from("user")
-    .select<string, IUserResponse>(
-      `
+export const getUserProfile = async (userUuid: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("user")
+      .select<string, IUserResponse>(
+        `
             uuid,
             email,
             username,
@@ -55,13 +56,17 @@ export const getUserProfile = async (arg: any) => {
       is_referer,
       is_referee
       `
-    )
-    .eq("uuid", arg.queryKey[1].userUuid)
-    .single()
+      )
+      .eq("uuid", userUuid)
+      .single()
 
-  if (error) throw error
+    if (error) throw error
+    if (data === null) throw new Error(`Cannot found user ${userUuid}`)
 
-  return data
+    return data
+  } catch (error) {
+    throw error
+  }
 }
 export const updateUserProfile = async (req: IUpdateUserProfileRequest) => {
   const { data, error } = await supabase

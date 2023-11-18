@@ -12,7 +12,7 @@ export async function generateMetadata({
 }) {
   const { userUuid } = params
   try {
-    const res = await getUserProfile({ queryKey: [, { userUuid }] })
+    const res = await getUserProfile(userUuid)
     return {
       title: res.username + "街招記錄",
     }
