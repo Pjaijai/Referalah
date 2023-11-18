@@ -8,6 +8,6 @@ Welcome to Referalah! Referalah is a platform that connects people, facilitating
 
 ## Developer | IT 人
 
-Please check [Introduction.md](docs/Introduction.md)
+Please check [INTRODUCTION.md](docs/INTRODUCTION.md)
 
-詳情請睇 [Introduction.md](docs/Introduction.md)
+詳情請睇 [INTRODUCTION.md](docs/INTRODUCTION.md)
