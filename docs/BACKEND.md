@@ -61,16 +61,20 @@ create or replace trigger on_auth_user_created
   for each row execute procedure public.handle_new_user();
 ```
 
-### Configure Resend
-1. Create a [Resend](https://resend.com) account for email sending. Link it to your Supabase project and get an API key.
-1. Create or edit `.env.local`
-  - set `RESEND_API_KEY` by Resend API key
-  - set `RESEND_TO_EMAIL` by Resend email account
+### Configure Email service
+#### Use [Inbucket](http://localhost:54324) in local environment
+
 
 ### Start Local Edge Function
 ```sh
 $ supabase functions serve --env-file ./supabase/.env.local
 ```
+
+## Configure Resend
+1. Create a [Resend](https://resend.com) account for email sending. Link it to your Supabase project and get an API key.
+1. Create or edit `.env.local`
+  - set `RESEND_API_KEY` by Resend API key
+  - set `RESEND_TO_EMAIL` by Resend email account
 
 ## Table Structure
 
