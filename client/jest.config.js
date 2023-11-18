@@ -5,4 +5,5 @@ module.exports = {
   moduleNameMapper: {
     "@/(.*)": "<rootDir>/$1",
   },
+  collectCoverageFrom: ["**/*.{ts,tsx}", "!**/node_modules/**"],
 }
