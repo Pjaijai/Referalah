@@ -13,7 +13,10 @@
     "typecheck": "tsc --noEmit",
     "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
-    "test": "jest"
+    "test": "jest --coverage",
+    "test:unit": "yarn run test -- --group=unit",
+    "test:int": "yarn run test -- --group=integration",
+    "test:e2e": "yarn run test -- --group=e2e"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
