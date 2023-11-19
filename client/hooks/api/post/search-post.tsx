@@ -56,7 +56,7 @@ const searchPost = ({
     minYearOfExperience: parseInt(yoeMin),
   })
 }
-const useSearchPost = (type: ReferralType) => {
+const useSearchPost = (type: EReferralType) => {
   const countryData = useGetCountryList().data
   const provinceData = useGetProvinceList().data
   const industryData = useIndustryOptions().data

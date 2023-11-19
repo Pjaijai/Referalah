@@ -10,7 +10,7 @@ import useIndustryOptions from "@/hooks/api/industry/get-Industry-list"
 import useGetCountryList from "@/hooks/api/location/get-country-list"
 import useGetProvinceList from "@/hooks/api/location/get-province-list"
 
-const useSearchReferral = (type: ReferralType) => {
+const useSearchReferral = (type: EReferralType) => {
   const countryData = useGetCountryList().data
   const provinceData = useGetProvinceList().data
   const industryData = useIndustryOptions().data
