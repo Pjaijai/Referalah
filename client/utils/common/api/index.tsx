@@ -18,8 +18,8 @@ import {
 } from "@/types/api/response/referer-post"
 import { IReferralResponse } from "@/types/api/response/referral"
 import { IUserResponse } from "@/types/api/response/user"
-import { QueryKeyString } from "@/types/common/query-key-string"
-import { ReferralType } from "@/types/common/referral-type"
+import { EQueryKeyString } from "@/types/common/query-key-string"
+import { EReferralType } from "@/types/common/referral-type"
 
 // User Profile
 export const getUserProfile = async (userUuid: string) => {
@@ -100,11 +100,11 @@ export const searchReferral = async ({
 }: {
   pageParam?: number
   queryKey: [
-    QueryKeyString,
+    EQueryKeyString,
     {
       sorting: string
       filterMeta: IFilterMeta
-      type: ReferralType
+      type: EReferralType
     },
   ]
 }) => {
@@ -163,11 +163,11 @@ export const searchReferral = async ({
     .order("id", { ascending: true })
     .range(from, to)
 
-  if (type === ReferralType.REFERRER) {
+  if (type === EReferralType.REFERRER) {
     query = query.eq("is_referer", true)
   }
 
-  if (type === ReferralType.REFEREE) {
+  if (type === EReferralType.REFEREE) {
     query = query.eq("is_referee", true)
   }
 

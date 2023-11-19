@@ -1,6 +1,6 @@
-export enum PostStatus {
+export enum EPostStatus {
   ACTIVE = "active",
   INACTIVE = "inactive",
 }
 
-export type PostStatusType = "active" | "inactive"
+export type TPostStatusType = "active" | "inactive"
