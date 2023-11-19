@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { ReferralType } from "@/types/common/referral-type"
+import { EReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
 import useCreatePost from "@/hooks/api/post/create-post"
 import useCityOptions from "@/hooks/common/options/city-options"
@@ -116,7 +116,7 @@ const CreatePostTemplate: React.FunctionComponent<
           industryUuid: values.industryUuid,
           yearOfExperience: parseInt(values.yearOfExperience),
           createdBy: user.uuid!,
-          type: ReferralType.REFERRER,
+          type: EReferralType.REFERRER,
           companyName: values.companyName.trim(),
           jobTitle: values.jobTitle.trim(),
           description: values.description.trim(),

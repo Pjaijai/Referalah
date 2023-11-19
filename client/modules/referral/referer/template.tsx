@@ -2,8 +2,8 @@
 
 import React from "react"
 
-import { MessageType } from "@/types/common/message-type"
-import { ReferralType } from "@/types/common/referral-type"
+import { EMessageType } from "@/types/common/message-type"
+import { EReferralType } from "@/types/common/referral-type"
 import useSearchReferral from "@/hooks/api/referral/search-referral"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -41,7 +41,7 @@ const RefererPageTemplate: React.FunctionComponent<
     yoeMax,
     yoeMin,
     sorting,
-  } = useSearchReferral(ReferralType.REFERRER)
+  } = useSearchReferral(EReferralType.REFERRER)
 
   const {
     data: refererListData,
@@ -88,7 +88,7 @@ const RefererPageTemplate: React.FunctionComponent<
             currentProvinceUuid={provinceUuid}
             currentYeoMax={yoeMax}
             currentYeoMin={yoeMin}
-            type={MessageType.REFERRAL}
+            type={EMessageType.REFERRAL}
           />
           <ResetButton onClick={handleReset} />
           <Button onClick={handleSubmitChange} className="whitespace-nowrap">
@@ -135,7 +135,7 @@ const RefererPageTemplate: React.FunctionComponent<
                   yearOfExperience={referer.year_of_experience}
                   uuid={referer.uuid}
                   key={referer.uuid}
-                  receiverType={ReferralType.REFERRER}
+                  receiverType={EReferralType.REFERRER}
                 />
               )
             })}

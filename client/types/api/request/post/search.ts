@@ -1,8 +1,8 @@
-import { ReferralType } from "@/types/common/referral-type"
+import { EReferralType } from "@/types/common/referral-type"
 
 export interface ISearchPostsRequest {
   numberOfDataPerPage: number
-  type: ReferralType
+  type: EReferralType
   countryUuid?: string
   provinceUuid?: string
   cityUuid?: string

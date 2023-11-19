@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation"
 import PostCardInfoDisplay from "@/modules/post/components/info-display/card-info"
 import PostHeader from "@/modules/post/components/info-display/header"
 
-import { PostStatusType } from "@/types/common/post-status"
+import { TPostStatusType } from "@/types/common/post-status"
 import { siteConfig } from "@/config/site"
 import useViewport from "@/hooks/common/useViewport"
 import { Button } from "@/components/ui/button"
@@ -25,7 +25,7 @@ interface IReferralPostCardProps {
   industry: string | null
   url: string | null
   createdAt: string | null
-  status: PostStatusType
+  status: TPostStatusType
   isViewingOwnProfile: boolean
 }
 
