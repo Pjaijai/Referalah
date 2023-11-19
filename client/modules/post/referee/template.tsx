@@ -2,8 +2,8 @@
 
 import React from "react"
 
-import { MessageType } from "@/types/common/message-type"
-import { ReferralType } from "@/types/common/referral-type"
+import { EMessageType } from "@/types/common/message-type"
+import { EReferralType } from "@/types/common/referral-type"
 import useSearchPost from "@/hooks/api/post/search-post"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -41,7 +41,7 @@ const RefereePostPageTemplate: React.FunctionComponent<
     yoeMax,
     yoeMin,
     sorting,
-  } = useSearchPost(ReferralType.REFEREE)
+  } = useSearchPost(EReferralType.REFEREE)
 
   const { data, fetchNextPage, isLoading, isFetching } = result
 
@@ -82,7 +82,7 @@ const RefereePostPageTemplate: React.FunctionComponent<
             currentProvinceUuid={provinceUuid}
             currentYeoMax={yoeMax}
             currentYeoMin={yoeMin}
-            type={MessageType.POST}
+            type={EMessageType.POST}
           />
           <ResetButton onClick={handleReset} />
           <Button onClick={handleSubmitChange} className="whitespace-nowrap">

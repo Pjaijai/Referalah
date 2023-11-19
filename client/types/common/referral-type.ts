@@ -1,4 +1,4 @@
-export enum ReferralType {
+export enum EReferralType {
   REFERRER = "referer",
   REFEREE = "referee",
 }

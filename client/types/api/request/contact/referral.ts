@@ -1,7 +1,7 @@
-import { ReferralType } from "@/types/common/referral-type"
+import { EReferralType } from "@/types/common/referral-type"
 
 export interface IContactReferralRequest {
-  type: ReferralType
+  type: EReferralType
   message: string
   toUuid: string
 }

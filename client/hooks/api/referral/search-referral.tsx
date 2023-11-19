@@ -4,14 +4,14 @@ import { searchReferral } from "@/utils/common/api"
 import { referralSortingOptions } from "@/utils/common/sorting/referer"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
-import { QueryKeyString } from "@/types/common/query-key-string"
-import { ReferralType } from "@/types/common/referral-type"
+import { EQueryKeyString } from "@/types/common/query-key-string"
+import { EReferralType } from "@/types/common/referral-type"
 
-const useSearchReferral = (type: ReferralType) => {
+const useSearchReferral = (type: EReferralType) => {
   const keyString =
-    type === ReferralType.REFEREE
-      ? QueryKeyString.SEARCH_REFEREE
-      : QueryKeyString.SEARCH_REFERRER
+    type === EReferralType.REFEREE
+      ? EQueryKeyString.SEARCH_REFEREE
+      : EQueryKeyString.SEARCH_REFERRER
 
   const router = useRouter()
   const pathname = usePathname()
