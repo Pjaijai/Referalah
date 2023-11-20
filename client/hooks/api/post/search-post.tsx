@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from "react"
+import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { searchPostApi } from "@/utils/common/api"
 import { postSortingOptions } from "@/utils/common/sorting/post"
@@ -8,6 +8,7 @@ import { IFilterMeta } from "@/types/api/request/post/filter-meta"
 import { EQueryKeyString } from "@/types/common/query-key-string"
 import { EReferralType } from "@/types/common/referral-type"
 import useIndustryOptions from "@/hooks/api/industry/get-Industry-list"
+import useGetCityList from "@/hooks/api/location/get-city-list"
 import useGetCountryList from "@/hooks/api/location/get-country-list"
 import useGetProvinceList from "@/hooks/api/location/get-province-list"
 
@@ -56,37 +57,49 @@ const searchPost = ({
     minYearOfExperience: parseInt(yoeMin),
   })
 }
+
 const useSearchPost = (type: EReferralType) => {
-  const countryData = useGetCountryList().data
-  const provinceData = useGetProvinceList().data
-  const industryData = useIndustryOptions().data
+  const { data: countryData, isLoading: isCountryDataLoading } =
+    useGetCountryList()
+  const { data: provinceData, isLoading: isProvinceDataLoading } =
+    useGetProvinceList()
+  const { data: cityData, isLoading: isCityDataLoading } = useGetCityList()
+  const { data: industryData, isLoading: isIndustryDataLoading } =
+    useIndustryOptions()
 
   const keyString =
     type === EReferralType.REFEREE
       ? EQueryKeyString.SEARCH_REFEREE_POST
       : EQueryKeyString.SEARCH_REFERRER_POST
 
+  const getUUid = useCallback(
+    (meta: "country" | "industry" | "province" | "city", value?: string) => {
+      if (!value) return undefined
+      if (meta === "country")
+        return countryData?.find((item) => item.value === value)?.uuid
+      if (meta === "province")
+        return provinceData?.find((item) => item.value === value)?.uuid
+      if (meta === "city")
+        return cityData?.find((item) => item.value === value)?.uuid
+      if (meta === "industry")
+        return industryData?.find((item) => item.value === value)?.uuid
+    },
+    [cityData, countryData, industryData, provinceData]
+  )
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+
   const [companyName, setCompanyName] = useState(
     searchParams.get("company")?.toString() || ""
   )
   const [jobTitle, setJobTitle] = useState(
     searchParams.get("jobTitle")?.toString() || ""
   )
-  const [provinceUuid, setProvinceUuid] = useState<undefined | string>(
-    searchParams.get("province")?.toString()
-  )
-  const [countryUuid, setCountryUuid] = useState<undefined | string>(
-    searchParams.get("country")?.toString()
-  )
-  const [cityUuid, setCityUuid] = useState<undefined | string>(
-    searchParams.get("city")?.toString()
-  )
-  const [industryUuid, setIndustryUuid] = useState<undefined | string>(
-    searchParams.get("industry")?.toString()
-  )
+  const [provinceUuid, setProvinceUuid] = useState<undefined | string>()
+  const [countryUuid, setCountryUuid] = useState<undefined | string>()
+  const [cityUuid, setCityUuid] = useState<undefined | string>()
+  const [industryUuid, setIndustryUuid] = useState<undefined | string>()
   const [yoeMin, setYoeMin] = useState<undefined | string>(
     searchParams.get("yoeMin")?.toString() || "0"
   )
@@ -96,7 +109,9 @@ const useSearchPost = (type: EReferralType) => {
   const [sorting, setSorting] = useState(
     searchParams.get("sorting")?.toString() || postSortingOptions[0].value
   )
-  const [params] = useState(new URLSearchParams(searchParams.toString()))
+  const [params, setParams] = useState(
+    new URLSearchParams(searchParams.toString())
+  )
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -133,7 +148,10 @@ const useSearchPost = (type: EReferralType) => {
   }
   const handleCityChange = (value: string) => {
     setCityUuid(value)
-    createQueryString("city", value)
+    createQueryString(
+      "city",
+      cityData?.find((item) => item.uuid === value)?.value ?? value
+    )
   }
 
   const handleIndustryChange = (value: string) => {
@@ -195,6 +213,7 @@ const useSearchPost = (type: EReferralType) => {
     setYoeMax("100")
     setYoeMin("0")
     setSorting(postSortingOptions[0].value)
+    setParams(new URLSearchParams())
     router.push(pathname)
   }
 
@@ -210,20 +229,30 @@ const useSearchPost = (type: EReferralType) => {
     }
   }
 
-  const getUUid = (meta: string, value?: string) => {
-    if (!value) return undefined
-    if (meta === "country")
-      return countryData?.find((item) => item.value === value)?.uuid
-    if (meta === "province")
-      return provinceData?.find((item) => item.value === value)?.uuid
-    if (meta === "industry")
-      return industryData?.find((item) => item.value === value)?.uuid
-  }
+  // To set the initial data back to uuid
+  useEffect(() => {
+    setCountryUuid(getUUid("country", searchParams.get("country")?.toString()))
+    setProvinceUuid(
+      getUUid("province", searchParams.get("province")?.toString())
+    )
+    setCityUuid(getUUid("city", searchParams.get("city")?.toString()))
+    setIndustryUuid(
+      getUUid("industry", searchParams.get("industry")?.toString())
+    )
+  }, [
+    isProvinceDataLoading,
+    isCountryDataLoading,
+    isCityDataLoading,
+    isIndustryDataLoading,
+    getUUid,
+    searchParams,
+  ])
 
   const filterMeta = {
     companyName: searchParams.get("company")?.toString() || "",
     jobTitle: searchParams.get("jobTitle")?.toString() || "",
-    cityUuid: searchParams.get("city")?.toString() || undefined,
+    cityUuid:
+      getUUid("city", searchParams.get("city")?.toString()) || undefined,
     countryUuid:
       getUUid("country", searchParams.get("country")?.toString()) || undefined,
     industryUuid:
@@ -243,6 +272,11 @@ const useSearchPost = (type: EReferralType) => {
     queryFn: searchPost,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
+    enabled:
+      !isCountryDataLoading &&
+      !isProvinceDataLoading &&
+      !isCityDataLoading &&
+      !isIndustryDataLoading,
     getNextPageParam: (lastPage, allPages) => {
       if (Array.isArray(lastPage)) {
         return allPages.length
