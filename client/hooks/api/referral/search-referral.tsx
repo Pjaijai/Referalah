@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from "react"
+import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { searchReferral } from "@/utils/common/api"
 import { referralSortingOptions } from "@/utils/common/sorting/referer"
@@ -7,18 +7,38 @@ import { useInfiniteQuery } from "@tanstack/react-query"
 import { EQueryKeyString } from "@/types/common/query-key-string"
 import { EReferralType } from "@/types/common/referral-type"
 import useIndustryOptions from "@/hooks/api/industry/get-Industry-list"
+import useGetCityList from "@/hooks/api/location/get-city-list"
 import useGetCountryList from "@/hooks/api/location/get-country-list"
 import useGetProvinceList from "@/hooks/api/location/get-province-list"
 
 const useSearchReferral = (type: EReferralType) => {
-  const countryData = useGetCountryList().data
-  const provinceData = useGetProvinceList().data
-  const industryData = useIndustryOptions().data
+  const { data: countryData, isLoading: isCountryDataLoading } =
+    useGetCountryList()
+  const { data: provinceData, isLoading: isProvinceDataLoading } =
+    useGetProvinceList()
+  const { data: cityData, isLoading: isCityDataLoading } = useGetCityList()
+  const { data: industryData, isLoading: isIndustryDataLoading } =
+    useIndustryOptions()
 
   const keyString =
     type === EReferralType.REFEREE
       ? EQueryKeyString.SEARCH_REFEREE
       : EQueryKeyString.SEARCH_REFERRER
+
+  const getUUid = useCallback(
+    (meta: "country" | "industry" | "province" | "city", value?: string) => {
+      if (!value) return undefined
+      if (meta === "country")
+        return countryData?.find((item) => item.value === value)?.uuid
+      if (meta === "province")
+        return provinceData?.find((item) => item.value === value)?.uuid
+      if (meta === "city")
+        return cityData?.find((item) => item.value === value)?.uuid
+      if (meta === "industry")
+        return industryData?.find((item) => item.value === value)?.uuid
+    },
+    [cityData, countryData, industryData, provinceData]
+  )
 
   const router = useRouter()
   const pathname = usePathname()
@@ -29,18 +49,10 @@ const useSearchReferral = (type: EReferralType) => {
   const [jobTitle, setJobTitle] = useState(
     searchParams.get("jobTitle")?.toString() || ""
   )
-  const [provinceUuid, setProvinceUuid] = useState<undefined | string>(
-    searchParams.get("province")?.toString() || ""
-  )
-  const [countryUuid, setCountryUuid] = useState<undefined | string>(
-    searchParams.get("country")?.toString() || ""
-  )
-  const [cityUuid, setCityUuid] = useState<undefined | string>(
-    searchParams.get("city")?.toString() || ""
-  )
-  const [industryUuid, setIndustryUuid] = useState<undefined | string>(
-    searchParams.get("industry")?.toString() || ""
-  )
+  const [provinceUuid, setProvinceUuid] = useState<undefined | string>()
+  const [countryUuid, setCountryUuid] = useState<undefined | string>()
+  const [cityUuid, setCityUuid] = useState<undefined | string>()
+  const [industryUuid, setIndustryUuid] = useState<undefined | string>()
   const [yoeMin, setYoeMin] = useState<undefined | string>(
     searchParams.get("yoeMin")?.toString() || "0"
   )
@@ -50,7 +62,9 @@ const useSearchReferral = (type: EReferralType) => {
   const [sorting, setSorting] = useState(
     searchParams.get("sorting")?.toString() || referralSortingOptions[0].value
   )
-  const [params] = useState(new URLSearchParams(searchParams.toString()))
+  const [params, setParams] = useState(
+    new URLSearchParams(searchParams.toString())
+  )
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -87,7 +101,11 @@ const useSearchReferral = (type: EReferralType) => {
   }
   const handleCityChange = (value: string) => {
     setCityUuid(value)
-    createQueryString("city", value)
+
+    createQueryString(
+      "city",
+      cityData?.find((item) => item.uuid === value)?.value ?? value
+    )
   }
 
   const handleIndustryChange = (value: string) => {
@@ -108,6 +126,7 @@ const useSearchReferral = (type: EReferralType) => {
     setYoeMax("100")
     setYoeMin("0")
     setSorting(referralSortingOptions[0].value)
+    setParams(new URLSearchParams())
     router.push(pathname)
   }
   const handleSortingChange = (value: string) => {
@@ -163,20 +182,30 @@ const useSearchReferral = (type: EReferralType) => {
     }
   }
 
-  const getUUid = (meta: string, value?: string) => {
-    if (!value) return undefined
-    if (meta === "country")
-      return countryData?.find((item) => item.value === value)?.uuid
-    if (meta === "province")
-      return provinceData?.find((item) => item.value === value)?.uuid
-    if (meta === "industry")
-      return industryData?.find((item) => item.value === value)?.uuid
-  }
+  // To set the initial data back to uuid
+  useEffect(() => {
+    setCountryUuid(getUUid("country", searchParams.get("country")?.toString()))
+    setProvinceUuid(
+      getUUid("province", searchParams.get("province")?.toString())
+    )
+    setCityUuid(getUUid("city", searchParams.get("city")?.toString()))
+    setIndustryUuid(
+      getUUid("industry", searchParams.get("industry")?.toString())
+    )
+  }, [
+    isProvinceDataLoading,
+    isCountryDataLoading,
+    isCityDataLoading,
+    isIndustryDataLoading,
+    getUUid,
+    searchParams,
+  ])
 
   const filterMeta = {
     companyName: searchParams.get("company")?.toString() || "",
     jobTitle: searchParams.get("jobTitle")?.toString() || "",
-    cityUuid: searchParams.get("city")?.toString() || undefined,
+    cityUuid:
+      getUUid("city", searchParams.get("city")?.toString()) || undefined,
     countryUuid:
       getUUid("country", searchParams.get("country")?.toString()) || undefined,
     industryUuid:
@@ -196,6 +225,11 @@ const useSearchReferral = (type: EReferralType) => {
     queryFn: searchReferral,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
+    enabled:
+      !isCountryDataLoading &&
+      !isProvinceDataLoading &&
+      !isCityDataLoading &&
+      !isIndustryDataLoading,
     getNextPageParam: (lastPage, allPages) => {
       if (Array.isArray(lastPage)) {
         return allPages.length
