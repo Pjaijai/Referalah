@@ -2,7 +2,8 @@
   "scripts": {
     "prepare": "husky install .husky",
     "add-pre-commit": "npx husky add .husky/pre-commit \"cd ./client && npx lint-staged\"",
-    "configure-husky": "npx husky install && npx husky add .husky/pre-commit \"npx --no-install lint-staged\""
+    "configure-husky": "npx husky install && npx husky add .husky/pre-commit \"npx --no-install lint-staged\"",
+    "commit": "cz"
   },
   "devDependencies": {
     "husky": "8.0.3"
@@ -11,5 +12,11 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "dependencies": {
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "18.4.3",
+    "@commitlint/cz-commitlint": "^18.4.3",
+    "commitizen": "^4.3.0"
   }
 }
