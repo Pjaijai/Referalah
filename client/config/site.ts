@@ -24,6 +24,30 @@ export const siteConfig = {
           "透過魔術連結登入或註冊。無須密碼。 Sign in or sign up with magic link. Password is not required.",
       },
     },
+    signUp: {
+      name: "auth",
+      href: "/auth/sign-up",
+      metadata: {
+        title: "註冊 Sign Up",
+        description: "立即加入，永遠唔會遲！ Join now, never too late!",
+      },
+    },
+    signIn: {
+      name: "auth",
+      href: "/auth/sign-in",
+      metadata: {
+        title: "登入 Sign In",
+        description: "登入 Sign in",
+      },
+    },
+    forgetPassword: {
+      name: "auth",
+      href: "/auth/forgot-password",
+      metadata: {
+        title: "忘記密碼 Forgot Password",
+        description: "忘記密碼 Forgot Password",
+      },
+    },
     referrer: {
       name: "推薦人",
       href: "/referer",
