@@ -1,9 +1,15 @@
 {
   "scripts": {
     "prepare": "husky install .husky",
-    "add-pre-commit": "npx husky add .husky/pre-commit \"cd ./client && npx lint-staged\""
+    "add-pre-commit": "npx husky add .husky/pre-commit \"cd ./client && npx lint-staged\"",
+    "configure-husky": "npx husky install && npx husky add .husky/pre-commit \"npx --no-install lint-staged\""
   },
   "devDependencies": {
     "husky": "8.0.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
