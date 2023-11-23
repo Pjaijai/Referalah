@@ -1,9 +1,9 @@
-import { PostStatus, PostStatusType } from "@/types/common/post-status"
+import { EPostStatus, TPostStatusType } from "@/types/common/post-status"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 
 interface PostStatusDisplayProps {
-  postStatus: PostStatusType
+  postStatus: TPostStatusType
   className?: string
 }
 
@@ -11,7 +11,7 @@ const PostStatusDisplay = ({
   postStatus,
   className,
 }: PostStatusDisplayProps) => {
-  const isActive = postStatus === PostStatus.ACTIVE
+  const isActive = postStatus === EPostStatus.ACTIVE
 
   return (
     <div className={cn("flex gap-1", className)}>

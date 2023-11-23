@@ -1,11 +1,11 @@
 import { getIndustryList } from "@/utils/common/api"
 import { useQuery } from "@tanstack/react-query"
 
-import { QueryKeyString } from "@/types/common/query-key-string"
+import { EQueryKeyString } from "@/types/common/query-key-string"
 
 const useGetIndustryList = () => {
   return useQuery({
-    queryKey: [QueryKeyString.INDUSTRY_LIST],
+    queryKey: [EQueryKeyString.INDUSTRY_LIST],
     queryFn: getIndustryList,
     refetchOnMount: false,
     refetchOnWindowFocus: false,

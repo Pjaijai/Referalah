@@ -1,8 +1,8 @@
-import { Post } from "@/types/common/post"
+import { IPost } from "@/types/common/post"
 
 export interface ISearchPostResponse
   extends Omit<
-    Post,
+    IPost,
     "city_uuid" | "province_uuid" | "country_uuid" | "status" | "industry_uuid"
   > {
   user: {
@@ -27,7 +27,7 @@ export interface ISearchPostResponse
 
 export interface IGetPostResponse
   extends Omit<
-    Post,
+    IPost,
     "id" | "city_uuid" | "province_uuid" | "country_uuid" | "industry_uuid"
   > {
   country: {
@@ -55,7 +55,7 @@ export interface IGetPostResponse
   } | null
 }
 
-export interface IListPostResponse extends Post {
+export interface IListPostResponse extends IPost {
   country: {
     cantonese_name: string | null
   } | null

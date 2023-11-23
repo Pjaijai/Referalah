@@ -1,4 +1,4 @@
-enum QueryKeyString {
+enum EQueryKeyString {
   INDUSTRY_LIST = "industry-list",
   CITY_LIST = "city-list",
   COUNTRY_LIST = "country-list",
@@ -13,4 +13,4 @@ enum QueryKeyString {
   LIST_POSTS = "list-posts",
 }
 
-export { QueryKeyString }
+export { EQueryKeyString }

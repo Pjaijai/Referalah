@@ -3,7 +3,7 @@ import { postSortingOptions } from "@/utils/common/sorting/post"
 import { referralSortingOptions } from "@/utils/common/sorting/referer"
 import { Label } from "@radix-ui/react-label"
 
-import { MessageType } from "@/types/common/message-type"
+import { EMessageType } from "@/types/common/message-type"
 import useCityOptions from "@/hooks/common/options/city-options"
 import useCountryOptions from "@/hooks/common/options/country-options"
 import useIndustryOptions from "@/hooks/common/options/industry-options"
@@ -36,7 +36,7 @@ interface ISearchPopoverProps {
   currentYeoMin?: string
   currentYeoMax?: string
   currentSorting: string
-  type: MessageType
+  type: EMessageType
 }
 
 const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
