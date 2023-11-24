@@ -40,7 +40,7 @@ const searchPost = ({
   const jobTitle = filterMeta.jobTitle
   const sortingType = sorting
   const maxYearOfExperience = filterMeta.maxYearOfExperience
-  const yearOfExperienceMin = filterMeta.yearOfExperienceMin
+  const minYearOfExperience = filterMeta.minYearOfExperience
 
   return searchPostApi({
     companyName: companyName,
@@ -54,7 +54,7 @@ const searchPost = ({
     type,
     sortingType,
     maxYearOfExperience: parseInt(maxYearOfExperience),
-    minYearOfExperience: parseInt(yearOfExperienceMin),
+    minYearOfExperience: parseInt(minYearOfExperience),
   })
 }
 
@@ -100,9 +100,9 @@ const useSearchPost = (type: EReferralType) => {
   const [countryUuid, setCountryUuid] = useState<undefined | string>()
   const [cityUuid, setCityUuid] = useState<undefined | string>()
   const [industryUuid, setIndustryUuid] = useState<undefined | string>()
-  const [yearOfExperienceMin, setYearOfExperienceMin] = useState<
+  const [minYearOfExperience, setMinYearOfExperience] = useState<
     undefined | string
-  >(searchParams.get("yearOfExperienceMin")?.toString() || "0")
+  >(searchParams.get("minYearOfExperience")?.toString() || "0")
   const [maxYearOfExperience, setMaxYearOfExperience] = useState<
     undefined | string
   >(searchParams.get("maxYearOfExperience")?.toString() || "100")
@@ -167,7 +167,7 @@ const useSearchPost = (type: EReferralType) => {
     createQueryString("sorting", value)
   }
 
-  const handleYearOfExperienceMinChange = (
+  const handleMinYearOfExperienceChange = (
     e: ChangeEvent<HTMLInputElement>
   ) => {
     const rawValue = e.target.value
@@ -178,12 +178,12 @@ const useSearchPost = (type: EReferralType) => {
     // Check if the parsed value is a valid integer
     if (!isNaN(integerValue) && integerValue >= 0) {
       // If it's a non-negative integer, set the value as is
-      setYearOfExperienceMin(integerValue.toString())
-      createQueryString("yearOfExperienceMin", integerValue.toString())
+      setMinYearOfExperience(integerValue.toString())
+      createQueryString("minYearOfExperience", integerValue.toString())
     } else {
       // If it's negative or not a valid integer, set it to '0'
-      setYearOfExperienceMin("0")
-      createQueryString("yearOfExperienceMin", "0")
+      setMinYearOfExperience("0")
+      createQueryString("minYearOfExperience", "0")
     }
   }
 
@@ -215,7 +215,7 @@ const useSearchPost = (type: EReferralType) => {
     setCityUuid(undefined)
     setIndustryUuid(undefined)
     setMaxYearOfExperience("100")
-    setYearOfExperienceMin("0")
+    setMinYearOfExperience("0")
     setSorting(postSortingOptions[0].value)
     setParams(new URLSearchParams())
     router.push(pathname)
@@ -267,8 +267,8 @@ const useSearchPost = (type: EReferralType) => {
       undefined,
     sorting:
       searchParams.get("sorting")?.toString() || postSortingOptions[0].value,
-    yearOfExperienceMin:
-      searchParams.get("yearOfExperienceMin")?.toString() || "0",
+    minYearOfExperience:
+      searchParams.get("minYearOfExperience")?.toString() || "0",
     maxYearOfExperience:
       searchParams.get("maxYearOfExperience")?.toString() || "100",
   }
@@ -299,7 +299,7 @@ const useSearchPost = (type: EReferralType) => {
     handleCityChange,
     handleSortingChange,
     handleIndustryChange,
-    handleYearOfExperienceMinChange,
+    handleMinYearOfExperienceChange,
     handleMaxYearOfExperienceChange,
     handleJobTitleChange,
     handleReset,
@@ -312,7 +312,7 @@ const useSearchPost = (type: EReferralType) => {
     countryUuid,
     industryUuid,
     maxYearOfExperience,
-    yearOfExperienceMin,
+    minYearOfExperience,
     sorting,
   }
 }

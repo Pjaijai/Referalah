@@ -116,7 +116,7 @@ export const searchReferral = async ({
   const companyName = queryKey[1].filterMeta.companyName
   const jobTitle = queryKey[1].filterMeta.jobTitle
   const maxYearOfExperience = queryKey[1].filterMeta.maxYearOfExperience
-  const yearOfExperienceMin = queryKey[1].filterMeta.yearOfExperienceMin
+  const minYearOfExperience = queryKey[1].filterMeta.minYearOfExperience
   const type = queryKey[1].type
 
   const sort = queryKey[1].sorting.split(",")
@@ -163,7 +163,7 @@ export const searchReferral = async ({
     )
     .gte(
       "year_of_experience",
-      yearOfExperienceMin ? parseInt(yearOfExperienceMin) : 0
+      minYearOfExperience ? parseInt(minYearOfExperience) : 0
     )
     .order("year_of_experience", { ascending: order })
     .order("id", { ascending: true })

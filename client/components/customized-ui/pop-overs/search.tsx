@@ -26,14 +26,14 @@ interface ISearchPopoverProps {
   onCityChange: (value: string) => void
   onIndustryChange: (value: string) => void
   onSortingChange: (value: string) => void
-  onYearOfExperienceMinChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onMinYearOfExperienceChange: (e: ChangeEvent<HTMLInputElement>) => void
   onMaxYearOfExperienceChange: (e: ChangeEvent<HTMLInputElement>) => void
   onSubmitChange: () => void
   currentCountryUuid?: string
   currentProvinceUuid?: string
   currentCityUuid?: string
   currentIndustryUuid?: string
-  currentYearOfExperienceMin?: string
+  currentMinYearOfExperience?: string
   currentMaxYearOfExperience?: string
   currentSorting: string
   type: EMessageType
@@ -47,13 +47,13 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
   onProvinceChange,
   onIndustryChange,
   onSortingChange,
-  onYearOfExperienceMinChange,
+  onMinYearOfExperienceChange,
   onMaxYearOfExperienceChange,
   currentCountryUuid,
   currentProvinceUuid,
   currentCityUuid,
   currentIndustryUuid,
-  currentYearOfExperienceMin,
+  currentMinYearOfExperience,
   currentMaxYearOfExperience,
   currentSorting,
   type,
@@ -96,8 +96,8 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
               {/* <div className="grid grid-cols-3 items-center gap-4"> */}
               <Input
                 type="number"
-                onChange={onYearOfExperienceMinChange}
-                value={currentYearOfExperienceMin}
+                onChange={onMinYearOfExperienceChange}
+                value={currentMinYearOfExperience}
                 placeholder="下限"
               />
 

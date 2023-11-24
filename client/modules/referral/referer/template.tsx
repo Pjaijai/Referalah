@@ -27,7 +27,7 @@ const RefererPageTemplate: React.FunctionComponent<
     handleSortingChange,
     handleIndustryChange,
     handleMaxYearOfExperienceChange,
-    handleYearOfExperienceMinChange,
+    handleMinYearOfExperienceChange,
     handleJobTitleChange,
     handleSubmitChange,
     handleKeyPressSubmitChange,
@@ -39,7 +39,7 @@ const RefererPageTemplate: React.FunctionComponent<
     countryUuid,
     industryUuid,
     maxYearOfExperience,
-    yearOfExperienceMin,
+    minYearOfExperience,
     sorting,
   } = useSearchReferral(EReferralType.REFERRER)
 
@@ -78,7 +78,7 @@ const RefererPageTemplate: React.FunctionComponent<
             onProvinceChange={handleProvinceChange}
             onIndustryChange={handleIndustryChange}
             onSortingChange={handleSortingChange}
-            onYearOfExperienceMinChange={handleYearOfExperienceMinChange}
+            onMinYearOfExperienceChange={handleMinYearOfExperienceChange}
             onMaxYearOfExperienceChange={handleMaxYearOfExperienceChange}
             onSubmitChange={handleSubmitChange}
             currentSorting={sorting}
@@ -87,7 +87,7 @@ const RefererPageTemplate: React.FunctionComponent<
             currentIndustryUuid={industryUuid}
             currentProvinceUuid={provinceUuid}
             currentMaxYearOfExperience={maxYearOfExperience}
-            currentYearOfExperienceMin={yearOfExperienceMin}
+            currentMinYearOfExperience={minYearOfExperience}
             type={EMessageType.REFERRAL}
           />
           <ResetButton onClick={handleReset} />
