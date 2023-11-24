@@ -7,5 +7,5 @@ export interface IFilterMeta {
   provinceUuid: string | undefined
   sorting: string
   yearOfExperienceMin: string // string number
-  yearOfExperienceMax: string // string number
+  maxYearOfExperience: string // string number
 }

@@ -115,7 +115,7 @@ export const searchReferral = async ({
   const industryUuid = queryKey[1].filterMeta.industryUuid
   const companyName = queryKey[1].filterMeta.companyName
   const jobTitle = queryKey[1].filterMeta.jobTitle
-  const yearOfExperienceMax = queryKey[1].filterMeta.yearOfExperienceMax
+  const maxYearOfExperience = queryKey[1].filterMeta.maxYearOfExperience
   const yearOfExperienceMin = queryKey[1].filterMeta.yearOfExperienceMin
   const type = queryKey[1].type
 
@@ -159,7 +159,7 @@ export const searchReferral = async ({
     )
     .lte(
       "year_of_experience",
-      yearOfExperienceMax ? parseInt(yearOfExperienceMax) : 100
+      maxYearOfExperience ? parseInt(maxYearOfExperience) : 100
     )
     .gte(
       "year_of_experience",

@@ -27,14 +27,14 @@ interface ISearchPopoverProps {
   onIndustryChange: (value: string) => void
   onSortingChange: (value: string) => void
   onYearOfExperienceMinChange: (e: ChangeEvent<HTMLInputElement>) => void
-  onYearOfExperienceMaxChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onMaxYearOfExperienceChange: (e: ChangeEvent<HTMLInputElement>) => void
   onSubmitChange: () => void
   currentCountryUuid?: string
   currentProvinceUuid?: string
   currentCityUuid?: string
   currentIndustryUuid?: string
   currentYearOfExperienceMin?: string
-  currentYearOfExperienceMax?: string
+  currentMaxYearOfExperience?: string
   currentSorting: string
   type: EMessageType
 }
@@ -48,13 +48,13 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
   onIndustryChange,
   onSortingChange,
   onYearOfExperienceMinChange,
-  onYearOfExperienceMaxChange,
+  onMaxYearOfExperienceChange,
   currentCountryUuid,
   currentProvinceUuid,
   currentCityUuid,
   currentIndustryUuid,
   currentYearOfExperienceMin,
-  currentYearOfExperienceMax,
+  currentMaxYearOfExperience,
   currentSorting,
   type,
 }) => {
@@ -103,8 +103,8 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
 
               <Input
                 type="number"
-                onChange={onYearOfExperienceMaxChange}
-                value={currentYearOfExperienceMax}
+                onChange={onMaxYearOfExperienceChange}
+                value={currentMaxYearOfExperience}
                 placeholder="上限"
               />
             </div>

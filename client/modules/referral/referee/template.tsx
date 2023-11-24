@@ -26,7 +26,7 @@ const RefereePageTemplate: React.FunctionComponent<
     handleCityChange,
     handleSortingChange,
     handleIndustryChange,
-    handleYearOfExperienceMaxChange,
+    handleMaxYearOfExperienceChange,
     handleYearOfExperienceMinChange,
     handleJobTitleChange,
     handleReset,
@@ -38,7 +38,7 @@ const RefereePageTemplate: React.FunctionComponent<
     cityUuid,
     countryUuid,
     industryUuid,
-    yearOfExperienceMax,
+    maxYearOfExperience,
     yearOfExperienceMin,
     sorting,
   } = useSearchReferral(EReferralType.REFEREE)
@@ -77,14 +77,14 @@ const RefereePageTemplate: React.FunctionComponent<
             onIndustryChange={handleIndustryChange}
             onSortingChange={handleSortingChange}
             onYearOfExperienceMinChange={handleYearOfExperienceMinChange}
-            onYearOfExperienceMaxChange={handleYearOfExperienceMaxChange}
+            onMaxYearOfExperienceChange={handleMaxYearOfExperienceChange}
             onSubmitChange={handleSubmitChange}
             currentSorting={sorting}
             currentCityUuid={cityUuid}
             currentCountryUuid={countryUuid}
             currentIndustryUuid={industryUuid}
             currentProvinceUuid={provinceUuid}
-            currentYearOfExperienceMax={yearOfExperienceMax}
+            currentMaxYearOfExperience={maxYearOfExperience}
             currentYearOfExperienceMin={yearOfExperienceMin}
             type={EMessageType.REFERRAL}
           />

@@ -56,9 +56,9 @@ const useSearchReferral = (type: EReferralType) => {
   const [yearOfExperienceMin, setYearOfExperienceMin] = useState<
     undefined | string
   >(searchParams.get("yearOfExperienceMin")?.toString() || "0")
-  const [yearOfExperienceMax, setYearOfExperienceMax] = useState<
+  const [maxYearOfExperience, setMaxYearOfExperience] = useState<
     undefined | string
-  >(searchParams.get("yearOfExperienceMax")?.toString() || "100")
+  >(searchParams.get("maxYearOfExperience")?.toString() || "100")
   const [sorting, setSorting] = useState(
     searchParams.get("sorting")?.toString() || referralSortingOptions[0].value
   )
@@ -123,7 +123,7 @@ const useSearchReferral = (type: EReferralType) => {
     setProvinceUuid(undefined)
     setCityUuid(undefined)
     setIndustryUuid(undefined)
-    setYearOfExperienceMax("100")
+    setMaxYearOfExperience("100")
     setYearOfExperienceMin("0")
     setSorting(referralSortingOptions[0].value)
     setParams(new URLSearchParams())
@@ -154,7 +154,7 @@ const useSearchReferral = (type: EReferralType) => {
     }
   }
 
-  const handleYearOfExperienceMaxChange = (
+  const handleMaxYearOfExperienceChange = (
     e: ChangeEvent<HTMLInputElement>
   ) => {
     const rawValue = e.target.value
@@ -165,12 +165,12 @@ const useSearchReferral = (type: EReferralType) => {
     // Check if the parsed value is a valid integer
     if (!isNaN(integerValue) && integerValue >= 0) {
       // If it's a non-negative integer, set the value as is
-      setYearOfExperienceMax(integerValue.toString())
-      createQueryString("yearOfExperienceMax", integerValue.toString())
+      setMaxYearOfExperience(integerValue.toString())
+      createQueryString("maxYearOfExperience", integerValue.toString())
     } else {
       // If it's negative or not a valid integer, set it to '0'
-      setYearOfExperienceMax("0")
-      createQueryString("yearOfExperienceMax", "0")
+      setMaxYearOfExperience("0")
+      createQueryString("maxYearOfExperience", "0")
     }
   }
 
@@ -223,8 +223,8 @@ const useSearchReferral = (type: EReferralType) => {
       referralSortingOptions[0].value,
     yearOfExperienceMin:
       searchParams.get("yearOfExperienceMin")?.toString() || "0",
-    yearOfExperienceMax:
-      searchParams.get("yearOfExperienceMax")?.toString() || "100",
+    maxYearOfExperience:
+      searchParams.get("maxYearOfExperience")?.toString() || "100",
   }
   const result = useInfiniteQuery({
     queryKey: [keyString, { sorting: filterMeta.sorting, filterMeta, type }],
@@ -254,7 +254,7 @@ const useSearchReferral = (type: EReferralType) => {
     handleSortingChange,
     handleIndustryChange,
     handleYearOfExperienceMinChange,
-    handleYearOfExperienceMaxChange,
+    handleMaxYearOfExperienceChange,
     handleJobTitleChange,
     handleSubmitChange,
     handleKeyPressSubmitChange,
@@ -264,7 +264,7 @@ const useSearchReferral = (type: EReferralType) => {
     cityUuid,
     countryUuid,
     industryUuid,
-    yearOfExperienceMax,
+    maxYearOfExperience,
     yearOfExperienceMin,
     sorting,
     handleReset,
