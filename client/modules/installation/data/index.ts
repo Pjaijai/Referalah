@@ -1,2 +1,2 @@
-export { default as pageData } from "./page-data"
-export { default as tabsData } from "./tabs-data"
+export { default as pageData } from "./page"
+export { default as tabsData } from "./tabs"

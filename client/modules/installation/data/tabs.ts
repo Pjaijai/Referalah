@@ -1,7 +1,7 @@
 const tabsData = [
   {
     title: "IOS",
-    slug: "ios",
+    value: "ios",
     steps: [
       "打開Safari，前往referalah.com，撳下面嘅分享圖標。",
       "見到唔同嘅選項之後向下滑，直至見到「加到主頁 / Add to Home Screen」，然後撳佢。",
@@ -11,7 +11,7 @@ const tabsData = [
   },
   {
     title: "Android",
-    slug: "android",
+    value: "android",
     steps: [
       "打開Chrome，前往referalah.com，撳右上角嘅三個點。",
       "見到唔同嘅選項之後向下滑，直至見到「加到主頁 / Add to Home Screen」，然後撳佢。",

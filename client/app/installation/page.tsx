@@ -1,4 +1,4 @@
-import InstallationTabs from "@/modules/installation/components/installation-tabs"
+import InstallationTabs from "@/modules/installation/components/tabs/installation"
 import { pageData } from "@/modules/installation/data"
 
 import { siteConfig } from "@/config/site"
@@ -6,7 +6,7 @@ import CommonPageLayout from "@/components/layouts/common"
 
 export const metadata = siteConfig.page.installation.metadata
 
-const Installation = () => {
+const InstallationPage = () => {
   return (
     <CommonPageLayout title={siteConfig.page.installation.name}>
       <article className="mx-auto flex w-full flex-col items-start justify-center gap-8 py-8 md:w-3/4 lg:w-3/5">
@@ -27,4 +27,4 @@ const Installation = () => {
   )
 }
 
-export default Installation
+export default InstallationPage

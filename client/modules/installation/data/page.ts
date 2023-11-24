@@ -3,7 +3,7 @@ const pageData = [
     section: "intro",
     title: "",
     content: [
-      "隨住v1.5.0嘅更新，Referalah嘅PWA功能都正式上線啦！我哋呼籲各位盡量安裝Referalah嘅PWA，因為呢個係我哋未來嘅發展方向，大家將來可能會喺PWA上享受到最齊嘅功能同最好嘅用戶體驗。",
+      "Referalah嘅PWA功能都正式上線啦！我哋呼籲各位盡量安裝Referalah嘅PWA，因為呢個係我哋未來嘅發展方向，大家將來可能會喺PWA上享受到最齊嘅功能同最好嘅用戶體驗。",
     ],
   },
   {
