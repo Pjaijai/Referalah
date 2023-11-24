@@ -127,6 +127,14 @@ export const siteConfig = {
         description: METADATA_DEFAULT_DESCRIPTION,
       },
     },
+    installation: {
+      name: "安裝Referalah",
+      href: "/installation",
+      metadata: {
+        title: "安裝Referalah Install Referalah",
+        description: METADATA_DEFAULT_DESCRIPTION,
+      },
+    },
   },
   links: {
     instagram: "https://instagram.com/referalah?igshid=NGVhN2U2NjQ0Yg==",

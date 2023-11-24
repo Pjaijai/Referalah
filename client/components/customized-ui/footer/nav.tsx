@@ -54,6 +54,13 @@ const NavFooter = () => {
           >
             {siteConfig.page.contributors.name}
           </Link>
+
+          <Link
+            className="text-center text-sm text-muted-foreground"
+            href={siteConfig.page.installation.href}
+          >
+            {siteConfig.page.installation.name}
+          </Link>
         </div>
       </div>
     </footer>
