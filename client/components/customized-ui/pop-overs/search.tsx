@@ -26,15 +26,15 @@ interface ISearchPopoverProps {
   onCityChange: (value: string) => void
   onIndustryChange: (value: string) => void
   onSortingChange: (value: string) => void
-  onYeoMinChange: (e: ChangeEvent<HTMLInputElement>) => void
-  onYeoMaxChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onYearOfExperienceMinChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onYearOfExperienceMaxChange: (e: ChangeEvent<HTMLInputElement>) => void
   onSubmitChange: () => void
   currentCountryUuid?: string
   currentProvinceUuid?: string
   currentCityUuid?: string
   currentIndustryUuid?: string
-  currentYeoMin?: string
-  currentYeoMax?: string
+  currentYearOfExperienceMin?: string
+  currentYearOfExperienceMax?: string
   currentSorting: string
   type: EMessageType
 }
@@ -47,14 +47,14 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
   onProvinceChange,
   onIndustryChange,
   onSortingChange,
-  onYeoMinChange,
-  onYeoMaxChange,
+  onYearOfExperienceMinChange,
+  onYearOfExperienceMaxChange,
   currentCountryUuid,
   currentProvinceUuid,
   currentCityUuid,
   currentIndustryUuid,
-  currentYeoMin,
-  currentYeoMax,
+  currentYearOfExperienceMin,
+  currentYearOfExperienceMax,
   currentSorting,
   type,
 }) => {
@@ -96,15 +96,15 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
               {/* <div className="grid grid-cols-3 items-center gap-4"> */}
               <Input
                 type="number"
-                onChange={onYeoMinChange}
-                value={currentYeoMin}
+                onChange={onYearOfExperienceMinChange}
+                value={currentYearOfExperienceMin}
                 placeholder="下限"
               />
 
               <Input
                 type="number"
-                onChange={onYeoMaxChange}
-                value={currentYeoMax}
+                onChange={onYearOfExperienceMaxChange}
+                value={currentYearOfExperienceMax}
                 placeholder="上限"
               />
             </div>

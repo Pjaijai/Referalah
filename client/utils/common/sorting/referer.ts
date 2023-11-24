@@ -1,10 +1,10 @@
 const referralSortingOptions = [
   {
-    value: "yoe,ace",
+    value: "year_of_experience,ace",
     title: "年資-由低到高",
   },
   {
-    value: "yoe,dec",
+    value: "year_of_experience,dec",
     title: "年資-由高到低",
   },
 ]
