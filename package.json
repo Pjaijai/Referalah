@@ -1,9 +1,28 @@
 {
+  "name": "Referalah",
+  "description": "An open source online platform for oversea Hong Kong People to connect each other",
+  "version": "1.6.0",
+  "license": "Apache-2.0",
   "scripts": {
     "prepare": "husky install .husky",
-    "add-pre-commit": "npx husky add .husky/pre-commit \"cd ./client && npx lint-staged\""
+    "add-pre-commit": "npx husky add .husky/pre-commit \"cd ./client && npx lint-staged\"",
+    "configure-husky": "npx husky install && npx husky add .husky/pre-commit \"npx --no-install lint-staged\"",
+    "commit": "cz",
+    "release": "standard-version"
   },
   "devDependencies": {
     "husky": "8.0.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "dependencies": {
+    "@commitlint/cli": "18.4.3",
+    "@commitlint/config-conventional": "18.4.3",
+    "@commitlint/cz-commitlint": "18.4.3",
+    "commitizen": "4.3.0",
+    "standard-version": "9.5.0"
   }
 }
