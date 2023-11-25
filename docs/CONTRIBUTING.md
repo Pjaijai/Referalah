@@ -9,6 +9,7 @@ Naming your branch with category. For example `feature/i-go-to-school-by-bus`. P
 | feature       |             for adding, removing or modifying a feature              |
 | doc           |                               document                               |
 | refactor      |                             refactoring                              |
+| test          |                    Adding test or modifying test                     |
 
 ### Creating Pull Request
 
@@ -21,4 +22,4 @@ Naming your PR with category. For example `Feature/I Go To School By Bus`
 | Feature       |             for adding, removing or modifying a feature              |
 | Doc           |                               document                               |
 | refactor      |                             refactoring                              |
-
+| test          |                    Adding test or modifying test                     |
