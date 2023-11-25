@@ -115,8 +115,8 @@ export const searchReferral = async ({
   const industryUuid = queryKey[1].filterMeta.industryUuid
   const companyName = queryKey[1].filterMeta.companyName
   const jobTitle = queryKey[1].filterMeta.jobTitle
-  const yoeMax = queryKey[1].filterMeta.yoeMax
-  const yoeMin = queryKey[1].filterMeta.yoeMin
+  const maxYearOfExperience = queryKey[1].filterMeta.maxYearOfExperience
+  const minYearOfExperience = queryKey[1].filterMeta.minYearOfExperience
   const type = queryKey[1].type
 
   const sort = queryKey[1].sorting.split(",")
@@ -157,8 +157,14 @@ export const searchReferral = async ({
             is_referee
           `
     )
-    .lte("year_of_experience", yoeMax ? parseInt(yoeMax) : 100)
-    .gte("year_of_experience", yoeMin ? parseInt(yoeMin) : 0)
+    .lte(
+      "year_of_experience",
+      maxYearOfExperience ? parseInt(maxYearOfExperience) : 100
+    )
+    .gte(
+      "year_of_experience",
+      minYearOfExperience ? parseInt(minYearOfExperience) : 0
+    )
     .order("year_of_experience", { ascending: order })
     .order("id", { ascending: true })
     .range(from, to)
@@ -315,7 +321,7 @@ export const searchPostApi = async ({
       query = query.order("created_at", { ascending: order })
     }
 
-    if (sortedBy === "yoe") {
+    if (sortedBy === "year_of_experience") {
       query = query.order("year_of_experience", { ascending: order })
     }
     if (countryUuid !== undefined) {

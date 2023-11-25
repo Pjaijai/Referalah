@@ -6,6 +6,6 @@ export interface IFilterMeta {
   industryUuid: string | undefined
   provinceUuid: string | undefined
   sorting: string
-  yoeMin: string // string number
-  yoeMax: string // string number
+  minYearOfExperience: string // string number
+  maxYearOfExperience: string // string number
 }

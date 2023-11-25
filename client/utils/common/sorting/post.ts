@@ -8,11 +8,11 @@ const postSortingOptions = [
     title: "貼街招時間-遠到近",
   },
   {
-    value: "yoe,asc",
+    value: "year_of_experience,asc",
     title: "年資-由低到高",
   },
   {
-    value: "yoe,dec",
+    value: "year_of_experience,dec",
     title: "年資-由高到低",
   },
 ]
