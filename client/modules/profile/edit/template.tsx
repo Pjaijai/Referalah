@@ -179,7 +179,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
 
   const countryWatch = watch("countryUuid")
   const provinceWatch = watch("provinceUuid")
-  const yeoWatch = watch("yearOfExperience")
+  const yearOfExperienceWatch = watch("yearOfExperience")
 
   const industryOptions = useIndustryOptions()
   const countryOptions = useCountryOptions()
@@ -193,25 +193,30 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   }, [provinceOptions, provinceWatch])
 
   useEffect(() => {
-    // Convert yeoWatch to a number
-    const yeoWatchNumber = yeoWatch ? parseFloat(yeoWatch) : 0
+    // Convert yearOfExperienceWatch to a number
+    const yearOfExperienceWatchNumber = yearOfExperienceWatch
+      ? parseFloat(yearOfExperienceWatch)
+      : 0
 
-    // Check if yeoWatchNumber is a valid number and not NaN
-    if (!isNaN(yeoWatchNumber) && typeof yeoWatchNumber === "number") {
-      // If yeoWatchNumber is negative, set yearOfExperience to '0'
-      if (yeoWatchNumber < 0) {
+    // Check if yearOfExperienceWatchNumber is a valid number and not NaN
+    if (
+      !isNaN(yearOfExperienceWatchNumber) &&
+      typeof yearOfExperienceWatchNumber === "number"
+    ) {
+      // If yearOfExperienceWatchNumber is negative, set yearOfExperience to '0'
+      if (yearOfExperienceWatchNumber < 0) {
         form.setValue("yearOfExperience", "0")
       } else {
-        // Round yeoWatchNumber to the nearest integer and set it as yearOfExperience
-        const roundedValue = Math.round(yeoWatchNumber)
+        // Round yearOfExperienceWatchNumber to the nearest integer and set it as yearOfExperience
+        const roundedValue = Math.round(yearOfExperienceWatchNumber)
         form.setValue("yearOfExperience", roundedValue.toString())
       }
     } else {
-      // Handle cases where yeoWatchNumber is not a valid number
+      // Handle cases where yearOfExperienceWatchNumber is not a valid number
       // Set a default value or handle it as needed
       form.setValue("yearOfExperience", "0")
     }
-  }, [yeoWatch])
+  }, [yearOfExperienceWatch])
 
   const onSubmit = async (values: z.infer<typeof formSchema>, e: any) => {
     e.preventDefault()

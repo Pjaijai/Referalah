@@ -135,6 +135,14 @@ const contributors: IContributor[] = [
     },
     contributedArea: ["software_development"],
   },
+  {
+    name: "Trevor Wong",
+    links: {
+      linkedin: "https://www.linkedin.com/in/trevor-wong-/",
+      github: "https://github.com/trevorwongtw",
+    },
+    contributedArea: ["software_development"],
+  },
 ]
 
 export default contributors
