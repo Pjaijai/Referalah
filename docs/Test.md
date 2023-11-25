@@ -8,7 +8,8 @@ The following dependencies are used for testing the client:
 
 - [jest](https://jestjs.io/)
 - [ts-jest](https://www.npmjs.com/package/ts-jest)
-- [@types/jest](https://www.npmjs.com/package/@types/jest) -[@testing-library/react](https://testing-library.com/docs/react-testing-library/intro/)
+- [@types/jest](https://www.npmjs.com/package/@types/jest)
+- [@testing-library/react](https://testing-library.com/docs/react-testing-library/intro/)
 
 ### Test conventions and commands
 
