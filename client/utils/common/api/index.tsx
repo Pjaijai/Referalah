@@ -6,6 +6,7 @@ import { ICreatePostRequest } from "@/types/api/request/post/create"
 import { IFilterMeta } from "@/types/api/request/post/filter-meta"
 import { ISearchPostsRequest } from "@/types/api/request/post/search"
 import { IUpdatePostRequest } from "@/types/api/request/post/update"
+import { ICreateUserEmailPasswordRequest } from "@/types/api/request/user/create-user-with-email-password"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
@@ -63,6 +64,26 @@ export const getUserProfile = async (userUuid: string) => {
     if (error) throw error
     if (data === null) throw new Error(`Cannot found user ${userUuid}`)
 
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+// Auth
+export const createUserWithEmailPassword = async (
+  req: ICreateUserEmailPasswordRequest
+) => {
+  const { email, password } = req
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    })
+
+    if (error) {
+      throw error
+    }
     return data
   } catch (error) {
     throw error
