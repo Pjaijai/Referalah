@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { siteConfig } from "@/config/site"
-import useCreateUserWithEmailPassword from "@/hooks/auth/create-user-with-email-password"
+import useSignUpWithEmailPassword from "@/hooks/auth/sign-up-with-email-password"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
@@ -29,7 +29,7 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
     },
   })
 
-  const { mutate: createUser } = useCreateUserWithEmailPassword()
+  const { mutate: createUser } = useSignUpWithEmailPassword()
   const onSubmit = (values: z.infer<typeof signUpFormSchema>) => {
     createUser({ email: values.email, password: values.password })
   }
