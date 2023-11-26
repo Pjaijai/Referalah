@@ -38,6 +38,7 @@ Naming your branch with category. For example `feature/i-go-to-school-by-bus`. P
 | doc           |                               document                               |
 | refactor      |                             refactoring                              |
 | test          |                    Adding test or modifying test                     |
+| ci            |          Changes to our CI configuration files and scripts           |
 
 ### Creating Pull Request
 
@@ -51,3 +52,4 @@ Naming your PR with category. For example `Feature/I Go To School By Bus`
 | Doc           |                               document                               |
 | refactor      |                             refactoring                              |
 | Test          |                    Adding test or modifying test                     |
+| CI            |          Changes to our CI configuration files and scripts           |
