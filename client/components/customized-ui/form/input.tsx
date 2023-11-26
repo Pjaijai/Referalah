@@ -1,4 +1,4 @@
-import React from "react"
+import React, { HTMLInputTypeAttribute } from "react"
 import { Control } from "react-hook-form"
 
 import {
@@ -17,6 +17,7 @@ export interface IFormTextInputProps {
   label: string
   placeholder?: string
   description?: string
+  type?: HTMLInputTypeAttribute
 }
 
 const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
@@ -25,6 +26,7 @@ const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
   label,
   placeholder,
   description,
+  type,
 }) => {
   return (
     <FormField
@@ -34,7 +36,7 @@ const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input placeholder={placeholder} {...field} />
+            <Input placeholder={placeholder} type={type || "text"} {...field} />
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
