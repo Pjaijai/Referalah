@@ -1,7 +1,12 @@
 import React from "react"
+import SignUpForm from "@/modules/auth/components/forms/sign-up"
 
 const SignUpPageTemplate = () => {
-  return <div>SignUpPageTemplate</div>
+  return (
+    <>
+      <SignUpForm />
+    </>
+  )
 }
 
 export default SignUpPageTemplate
