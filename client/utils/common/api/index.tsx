@@ -6,7 +6,8 @@ import { ICreatePostRequest } from "@/types/api/request/post/create"
 import { IFilterMeta } from "@/types/api/request/post/filter-meta"
 import { ISearchPostsRequest } from "@/types/api/request/post/search"
 import { IUpdatePostRequest } from "@/types/api/request/post/update"
-import { ICreateUserEmailPasswordRequest } from "@/types/api/request/user/create-user-with-email-password"
+import { ISignInEmailPasswordRequest } from "@/types/api/request/user/sign-in-with-email-password"
+import { ISignUpEmailPasswordRequest } from "@/types/api/request/user/sign-up-with-email-password"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
@@ -71,8 +72,8 @@ export const getUserProfile = async (userUuid: string) => {
 }
 
 // Auth
-export const createUserWithEmailPassword = async (
-  req: ICreateUserEmailPasswordRequest
+export const signUpWithEmailPassword = async (
+  req: ISignUpEmailPasswordRequest
 ) => {
   const { email, password } = req
   try {
@@ -92,6 +93,26 @@ export const createUserWithEmailPassword = async (
     throw error
   }
 }
+
+export const signInWithEmailPassword = async (
+  req: ISignInEmailPasswordRequest
+) => {
+  const { email, password } = req
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+
+    if (error) {
+      throw error
+    }
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
 export const updateUserProfile = async (req: IUpdateUserProfileRequest) => {
   const { data, error } = await supabase
     .from("user")

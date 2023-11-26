@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import useSignInWithEmailPassword from "@/hooks/auth/sign-in-with-email-password"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import FormTextInput from "@/components/customized-ui/form/input"
@@ -22,7 +23,11 @@ const SignInForm: React.FunctionComponent<ISignInFormProps> = ({}) => {
     },
   })
 
-  const onSubmit = (values: z.infer<typeof signInFormSchema>) => {}
+  const { mutate: signIn } = useSignInWithEmailPassword()
+
+  const onSubmit = (values: z.infer<typeof signInFormSchema>) => {
+    signIn({ email: values.email, password: values.password })
+  }
 
   return (
     <Form {...form}>
