@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { useRouter } from "next/navigation"
 import { signUpFormSchema } from "@/modules/auth/validations/sign-up"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -11,6 +12,7 @@ import useSignUpWithEmailPassword from "@/hooks/auth/sign-up-with-email-password
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
+import { useToast } from "@/components/ui/use-toast"
 import FormCheckBox from "@/components/customized-ui/form/check-box"
 import FormTextInput from "@/components/customized-ui/form/input"
 import FormPasswordInput from "@/components/customized-ui/form/password"
@@ -19,6 +21,8 @@ import HighlightedLink from "@/components/customized-ui/links/highlighted"
 interface ISignUpFormProps {}
 
 const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
+  const { toast } = useToast()
+  const router = useRouter()
   const form = useForm<z.infer<typeof signUpFormSchema>>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
@@ -31,7 +35,31 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
 
   const { mutate: createUser } = useSignUpWithEmailPassword()
   const onSubmit = (values: z.infer<typeof signUpFormSchema>) => {
-    createUser({ email: values.email, password: values.password })
+    createUser(
+      { email: values.email, password: values.password },
+      {
+        onSuccess: (res) => {
+          toast({
+            title: "註冊成功！",
+          })
+          router.push(siteConfig.page.main.href)
+        },
+        onError: (error: any) => {
+          if (error.message.includes("User already registered")) {
+            return toast({
+              title: "same email",
+              description: "change another one",
+              variant: "destructive",
+            })
+          }
+          return toast({
+            title: "出事！",
+            description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+            variant: "destructive",
+          })
+        },
+      }
+    )
   }
 
   return (
