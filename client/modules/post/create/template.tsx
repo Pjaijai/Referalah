@@ -132,6 +132,7 @@ const CreatePostTemplate: React.FunctionComponent<
             return toast({
               title: "出事！",
               description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+              variant: "destructive",
             })
           },
         }
