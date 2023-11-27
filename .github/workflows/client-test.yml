@@ -1,0 +1,36 @@
+# .github/workflows/tests.yml
+
+name: Run Client Tests
+
+on:
+  push:
+    branches:
+      - "*"
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20.5.1"
+
+      - name: Install dependencies
+        run: |
+          cd client
+          yarn install
+
+      - name: Run tests
+        run: |
+          cd client
+          yarn test:unit
+          yarn test:int
+          yarn test:e2e
