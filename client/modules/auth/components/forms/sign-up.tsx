@@ -56,6 +56,18 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
               variant: "destructive",
             })
           }
+          if (
+            error.message.includes(
+              'duplicate key value violates unique constraint "user_username_key"'
+            )
+          ) {
+            return toast({
+              title: "same username",
+              description: "change another one",
+              variant: "destructive",
+            })
+          }
+
           return toast({
             title: "出事！",
             description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
