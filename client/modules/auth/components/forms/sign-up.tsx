@@ -36,7 +36,11 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
   const { mutate: createUser } = useSignUpWithEmailPassword()
   const onSubmit = (values: z.infer<typeof signUpFormSchema>) => {
     createUser(
-      { email: values.email, password: values.password },
+      {
+        email: values.email,
+        password: values.password,
+        username: values.username,
+      },
       {
         onSuccess: (res) => {
           toast({

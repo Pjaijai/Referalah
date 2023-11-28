@@ -82,6 +82,9 @@ export const signUpWithEmailPassword = async (
       password,
       options: {
         emailRedirectTo: `${process.env.NEXT_PUBLIC_WEB_URL}`,
+        data: {
+          username: req.username,
+        },
       },
     })
 
