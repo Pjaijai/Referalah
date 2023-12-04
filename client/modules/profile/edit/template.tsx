@@ -2,7 +2,6 @@
 
 import React, { useEffect, useMemo, useState } from "react"
 import { StaticImport } from "next/dist/shared/lib/get-img-props"
-import { useRouter } from "next/navigation"
 import { conditionalValidation } from "@/modules/profile/form/validation.ts/conditional"
 import { maximumWordValidation } from "@/modules/profile/form/validation.ts/max-word"
 import { nameValidation } from "@/modules/profile/form/validation.ts/name"
@@ -48,6 +47,7 @@ interface IEdiProfileTemplate {
   isReferer: boolean
   isReferee: boolean
   setIsEditMode: (value: boolean) => void
+  refetchProfile: () => void
 }
 
 const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
@@ -66,6 +66,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   isReferee,
   isProfileLoading,
   setIsEditMode,
+  refetchProfile,
 }) => {
   const formSchema = z
     .object({
@@ -144,7 +145,6 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       }
     )
 
-  const router = useRouter()
   const { toast } = useToast()
   const [image, setImage] = useState<any | null>(null)
   const [base64Image, setBase64Image] = useState<string | StaticImport | null>(
@@ -280,7 +280,8 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           toast({
             title: "個人檔案更改成功!",
           })
-          router.push("/")
+          setIsEditMode(false)
+          refetchProfile()
         },
         onSettled: () => {
           setIsSubmitting(false)
