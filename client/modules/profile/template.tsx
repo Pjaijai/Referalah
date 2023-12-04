@@ -12,7 +12,7 @@ import CommonPageLayout from "@/components/layouts/common"
 
 const ProfileTemplate = ({ userUuid }: { userUuid: string }) => {
   const [isEditMode, setIsEditMode] = useState(false)
-  const { data: profile, isLoading } = useGetUserprofile(userUuid)
+  const { data: profile, isLoading, refetch } = useGetUserprofile(userUuid)
 
   if (!userUuid || (!isLoading && !profile))
     return (
@@ -76,6 +76,7 @@ const ProfileTemplate = ({ userUuid }: { userUuid: string }) => {
             isReferer={profile.is_referer}
             isProfileLoading={isLoading}
             setIsEditMode={setIsEditMode}
+            refetchProfile={refetch}
           />
         )}
       </CommonPageLayout>
