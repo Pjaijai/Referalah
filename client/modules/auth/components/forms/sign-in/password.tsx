@@ -81,8 +81,7 @@ const PasswordSignInForm: React.FunctionComponent<
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex h-56  flex-col  justify-between gap-4
-        "
+        className="flex h-56 flex-col justify-between gap-4"
       >
         <FormTextInput control={form.control} label="電郵" name="email" />
 
