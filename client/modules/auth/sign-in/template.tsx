@@ -1,11 +1,26 @@
+"use client"
+
 import React from "react"
-import SignInForm from "@/modules/auth/components/forms/sign-in"
+import Link from "next/link"
+import SignInTab from "@/modules/auth/components/tabs/sign-in"
+
+import { siteConfig } from "@/config/site"
 
 const SignInPageTemplate = () => {
   return (
-    <>
-      <SignInForm />
-    </>
+    <div className="flex h-full flex-col items-center justify-center">
+      <h1 className="text-3xl font-bold">登入</h1>
+      <SignInTab />
+      <p className="mt-4 w-full text-center  font-normal ">
+        未有帳號？係
+        <Link
+          href={siteConfig.page.signUp.href}
+          className="border-black hover:border-b"
+        >
+          呢度註冊
+        </Link>
+      </p>
+    </div>
   )
 }
 
