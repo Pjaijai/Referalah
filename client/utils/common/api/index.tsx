@@ -1,13 +1,14 @@
 import { supabase } from "@/utils/services/supabase/config"
 
+import { ISignInEmailPasswordRequest } from "@/types/api/request/auth/sign-in-with-email-password"
+import { ISignInEmailMagicLinkRequest } from "@/types/api/request/auth/sign-in-with-magic-link"
+import { ISignUpEmailPasswordRequest } from "@/types/api/request/auth/sign-up-with-email-password"
 import { IContactThroughPostRequest } from "@/types/api/request/contact/post"
 import { IContactReferralRequest } from "@/types/api/request/contact/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
 import { IFilterMeta } from "@/types/api/request/post/filter-meta"
 import { ISearchPostsRequest } from "@/types/api/request/post/search"
 import { IUpdatePostRequest } from "@/types/api/request/post/update"
-import { ISignInEmailPasswordRequest } from "@/types/api/request/user/sign-in-with-email-password"
-import { ISignUpEmailPasswordRequest } from "@/types/api/request/user/sign-up-with-email-password"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
@@ -115,6 +116,28 @@ export const signInWithEmailPassword = async (
     throw error
   }
 }
+export const signInWithMagicLink = async (
+  req: ISignInEmailMagicLinkRequest
+) => {
+  const { email } = req
+  try {
+    const { data, error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_WEB_URL}`,
+      },
+    })
+
+    if (error) {
+      throw error
+    }
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+// Profile
 
 export const updateUserProfile = async (req: IUpdateUserProfileRequest) => {
   const { data, error } = await supabase
