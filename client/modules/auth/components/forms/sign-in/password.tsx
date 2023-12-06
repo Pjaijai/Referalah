@@ -1,28 +1,45 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { signInFormSchema } from "@/modules/auth/validations/sign-in"
+import { passwordSignInFormSchema } from "@/modules/auth/validations/password-sign-in"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { AuthError } from "@supabase/supabase-js"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { siteConfig } from "@/config/site"
 import useSignInWithEmailPassword from "@/hooks/auth/sign-in-with-email-password"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { useToast } from "@/components/ui/use-toast"
 import FormTextInput from "@/components/customized-ui/form/input"
 import FormPasswordInput from "@/components/customized-ui/form/password"
 
-interface ISignInFormProps {}
+interface IPasswordSignInFormProps {}
 
-const SignInForm: React.FunctionComponent<ISignInFormProps> = ({}) => {
+const ForgetPassWordLink = () => {
+  return (
+    <Link
+      href={"/"}
+      className={buttonVariants({
+        variant: "link",
+        size: "sm",
+        className: "h-fit px-0 py-0 text-sm ",
+      })}
+    >
+      忘記密碼？
+    </Link>
+  )
+}
+
+const PasswordSignInForm: React.FunctionComponent<
+  IPasswordSignInFormProps
+> = ({}) => {
   const { toast } = useToast()
   const router = useRouter()
-  const form = useForm<z.infer<typeof signInFormSchema>>({
-    resolver: zodResolver(signInFormSchema),
+  const form = useForm<z.infer<typeof passwordSignInFormSchema>>({
+    resolver: zodResolver(passwordSignInFormSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -31,7 +48,7 @@ const SignInForm: React.FunctionComponent<ISignInFormProps> = ({}) => {
 
   const { mutate: signIn } = useSignInWithEmailPassword()
 
-  const onSubmit = (values: z.infer<typeof signInFormSchema>) => {
+  const onSubmit = (values: z.infer<typeof passwordSignInFormSchema>) => {
     signIn(
       { email: values.email, password: values.password },
       {
@@ -64,24 +81,21 @@ const SignInForm: React.FunctionComponent<ISignInFormProps> = ({}) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-4"
+        className="flex h-full flex-col  justify-between gap-4"
       >
-        <FormTextInput
-          control={form.control}
-          label="電郵 | Email"
-          name="email"
-        />
+        <FormTextInput control={form.control} label="電郵" name="email" />
 
         <FormPasswordInput
           control={form.control}
-          label="password"
-          name="password"
+          label="密碼"
+          name="密碼"
+          leftLabel={<ForgetPassWordLink />}
         />
 
-        <Button type="submit"> 登入 | Sign in </Button>
+        <Button type="submit">登入</Button>
       </form>
     </Form>
   )
 }
 
-export default SignInForm
+export default PasswordSignInForm
