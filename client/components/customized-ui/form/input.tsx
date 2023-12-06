@@ -17,6 +17,7 @@ export interface IFormTextInputProps {
   label: string
   placeholder?: string
   description?: string
+  leftLabel?: string | React.ReactNode
   type?: HTMLInputTypeAttribute
 }
 
@@ -27,6 +28,7 @@ const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
   placeholder,
   description,
   type,
+  leftLabel,
 }) => {
   return (
     <FormField
@@ -34,7 +36,11 @@ const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
+          <div className="flex w-full flex-row items-center justify-between">
+            <FormLabel>{label}</FormLabel>
+            {leftLabel}
+          </div>
+
           <FormControl>
             <Input placeholder={placeholder} type={type || "text"} {...field} />
           </FormControl>

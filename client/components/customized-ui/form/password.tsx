@@ -11,6 +11,7 @@ const FormPasswordInput: React.FunctionComponent<IFormPasswordInputProps> = ({
   name,
   description,
   placeholder,
+  leftLabel,
 }) => {
   return (
     <FormTextInput
@@ -20,6 +21,7 @@ const FormPasswordInput: React.FunctionComponent<IFormPasswordInputProps> = ({
       description={description}
       placeholder={placeholder}
       type="password"
+      leftLabel={leftLabel}
     />
   )
 }
