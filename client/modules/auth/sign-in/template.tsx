@@ -5,7 +5,6 @@ import Link from "next/link"
 import SignInTab from "@/modules/auth/components/tabs/sign-in"
 
 import { siteConfig } from "@/config/site"
-import { buttonVariants } from "@/components/ui/button"
 
 const SignInPageTemplate = () => {
   return (
