@@ -5,6 +5,7 @@ import Link from "next/link"
 import SignInTab from "@/modules/auth/components/tabs/sign-in"
 
 import { siteConfig } from "@/config/site"
+import { buttonVariants } from "@/components/ui/button"
 
 const SignInPageTemplate = () => {
   return (
@@ -13,10 +14,7 @@ const SignInPageTemplate = () => {
       <SignInTab />
       <p className="mt-4 w-full text-center  font-normal ">
         未有帳號？係
-        <Link
-          href={siteConfig.page.signUp.href}
-          className="border-black hover:border-b"
-        >
+        <Link href={siteConfig.page.signUp.href} className="border-foreground">
           呢度註冊
         </Link>
       </p>
