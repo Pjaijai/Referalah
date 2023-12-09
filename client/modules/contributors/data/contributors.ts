@@ -143,6 +143,14 @@ const contributors: IContributor[] = [
     },
     contributedArea: ["software_development"],
   },
+  {
+    name: "Yanny Yau",
+    links: {
+      linkedin: "https://www.linkedin.com/in/wanyingyau/",
+      website: "https://www.wanyingyau.com/",
+    },
+    contributedArea: ["graphic_design"],
+  },
 ]
 
 export default contributors
