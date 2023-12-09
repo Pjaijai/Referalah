@@ -21,7 +21,7 @@ interface IPasswordSignInFormProps {}
 const ForgetPassWordLink = () => {
   return (
     <Link
-      href={"/"}
+      href={siteConfig.page.forgetPassword.href}
       className={buttonVariants({
         variant: "link",
         size: "sm",

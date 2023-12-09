@@ -40,7 +40,7 @@ const EmailVerificationPageTemplate = () => {
   return (
     <div className="flex h-full w-full justify-center ">
       <div className="mt-8 w-full max-w-md text-center">
-        <h6 className="text-lg"> 請撳電郵入面嘅 magic link 嚟登入。</h6>
+        <h6 className="text-lg">請撳電郵入面嘅 magic link 嚟登入。</h6>
         <Button onClick={redirectToEmail} className="mt-4 w-full" size={"sm"}>
           打開郵箱
         </Button>
