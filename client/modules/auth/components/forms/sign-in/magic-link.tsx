@@ -1,7 +1,8 @@
 "use client"
 
 import React from "react"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { EEmaiVerification } from "@/modules/auth/types/email-verification"
 import { magicLinkSignInFormSchema } from "@/modules/auth/validations/magic-link-sign-in"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -21,6 +22,8 @@ const MagicLinkSignInForm: React.FunctionComponent<
 > = ({}) => {
   const { toast } = useToast()
   const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   const form = useForm<z.infer<typeof magicLinkSignInFormSchema>>({
     resolver: zodResolver(magicLinkSignInFormSchema),
     defaultValues: {
@@ -35,10 +38,14 @@ const MagicLinkSignInForm: React.FunctionComponent<
       { email: values.email },
       {
         onSuccess: (res) => {
-          toast({
-            title: "登入成功！",
-          })
-          router.push(siteConfig.page.main.href)
+          const queryString = new URLSearchParams({
+            type: EEmaiVerification.MAGIC_LINK,
+            email: values.email,
+          }).toString()
+
+          router.push(
+            `${siteConfig.page.emailVerification.href}` + "?" + queryString
+          )
         },
         onError: (error: any) => {
           if (error.message.includes("Invalid login credentials")) {

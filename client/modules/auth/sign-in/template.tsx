@@ -9,7 +9,6 @@ import { siteConfig } from "@/config/site"
 const SignInPageTemplate = () => {
   return (
     <div className="flex h-full flex-col items-center justify-center">
-      <h1 className="text-3xl font-bold">登入</h1>
       <SignInTab />
       <p className="mt-4 w-full text-center  font-normal ">
         未有帳號？係
