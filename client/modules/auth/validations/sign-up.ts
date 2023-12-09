@@ -7,11 +7,11 @@ export const signUpFormSchema = z
     email: authEmailValidationSchema,
     username: z
       .string()
-      .min(1, { message: "too short" })
-      .max(12, { message: "too long" })
-      .nonempty("俾個Email嚟先？")
+      .min(1, { message: "至少有要1粒字" })
+      .max(20, { message: "俾盡20粒字，唔夠用請聯絡我🙏🏻" })
+      .nonempty("不如俾個用戶名稱嚟？")
       .refine((value) => !/\s/.test(value), {
-        message: "Whitespace is not allowed in the username.",
+        message: "唔可以有空白字元",
       }),
     password: authPasswordValidationSchema,
     confirmPassword: authPasswordValidationSchema,
@@ -23,11 +23,11 @@ export const signUpFormSchema = z
         return true
       },
       {
-        message: "Password doesn't match",
+        message: "請了解下🙇🏻‍♂️",
       }
     ),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
+    message: "同密碼唔對喎😂",
     path: ["confirmPassword"],
   })

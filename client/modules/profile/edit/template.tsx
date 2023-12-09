@@ -72,7 +72,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     .object({
       photoUrl: z.any().optional(),
       resumeUrl: z.any().optional(),
-      username: nameValidation(12).min(1, {
+      username: nameValidation(20).min(1, {
         message: `至少有要1粒字`,
       }),
       company: conditionalValidation(30).optional(),
