@@ -149,7 +149,7 @@ const contributors: IContributor[] = [
       linkedin: "https://www.linkedin.com/in/wanyingyau/",
       website: "https://www.wanyingyau.com/",
     },
-    contributedArea: ["graphic_design"],
+    contributedArea: ["uiux_design"],
   },
 ]
 
