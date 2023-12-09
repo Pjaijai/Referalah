@@ -3,9 +3,11 @@ import SignUpForm from "@/modules/auth/components/forms/sign-up"
 
 const SignUpPageTemplate = () => {
   return (
-    <>
-      <SignUpForm />
-    </>
+    <div className="flex h-full w-full justify-center">
+      <div className="h-full w-full max-w-[400px]">
+        <SignUpForm />
+      </div>
+    </div>
   )
 }
 

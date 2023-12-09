@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { signUpFormSchema } from "@/modules/auth/validations/sign-up"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -9,11 +10,9 @@ import { z } from "zod"
 
 import { siteConfig } from "@/config/site"
 import useSignUpWithEmailPassword from "@/hooks/auth/sign-up-with-email-password"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { useToast } from "@/components/ui/use-toast"
-import FormCheckBox from "@/components/customized-ui/form/check-box"
 import FormTextInput from "@/components/customized-ui/form/input"
 import FormPasswordInput from "@/components/customized-ui/form/password"
 import HighlightedLink from "@/components/customized-ui/links/highlighted"
@@ -26,10 +25,10 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
   const form = useForm<z.infer<typeof signUpFormSchema>>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
+      username: "",
       email: "",
       password: "",
       confirmPassword: "",
-      privacyPolicy: false,
     },
   })
 
@@ -51,8 +50,7 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
         onError: (error: any) => {
           if (error.message.includes("User already registered")) {
             return toast({
-              title: "same email",
-              description: "change another one",
+              title: "此電郵已被其他人使用",
               variant: "destructive",
             })
           }
@@ -62,8 +60,7 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
             )
           ) {
             return toast({
-              title: "same username",
-              description: "change another one",
+              title: "此用戶名稱已被其他人使用",
               variant: "destructive",
             })
           }
@@ -82,41 +79,26 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-4"
+        className="flex w-full flex-col gap-4"
       >
+        <FormTextInput control={form.control} label="電郵" name="email" />
         <FormTextInput
           control={form.control}
-          label="電郵 | Email"
-          name="email"
-        />
-        <FormTextInput
-          control={form.control}
-          label="username"
+          label="用戶名稱"
           name="username"
         />
         <FormPasswordInput
           control={form.control}
-          label="password"
+          label="密碼"
           name="password"
         />
         <FormPasswordInput
           control={form.control}
-          label="confirmPassword"
+          label="入多次密碼"
           name="confirmPassword"
         />
-        <FormCheckBox
-          control={form.control}
-          label="privacyPolicy"
-          name="privacyPolicy"
-        />
-        <Alert>
-          <AlertTitle>你會收到條登入Link，唔洗密碼👍🏻</AlertTitle>
-          <AlertDescription>
-            你個電郵Email只會係你主動聯絡人個時先話俾對方知。
-          </AlertDescription>
-        </Alert>
-        <p className="text-muted-foreground">
-          點擊「登入/註冊」按鈕即表示你同意
+        <p className="text-xs text-muted-foreground">
+          點擊「確定 | Confirm」按鈕即表示你同意
           <HighlightedLink href={siteConfig.page.privacyPolicy.href}>
             私隱政策
           </HighlightedLink>
@@ -125,17 +107,27 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
             服務條款
           </HighlightedLink>
           。<br />
+          By clicking the &quot;確定 | Confirm&quot; button, you agree to the{" "}
           <HighlightedLink href={siteConfig.page.privacyPolicy.href}>
-            privacy policy
-          </HighlightedLink>{" "}
-          <span className="m-2">and</span>{" "}
+            Privacy Policy
+          </HighlightedLink>
+          {""} and {""}
           <HighlightedLink href={siteConfig.page.termsAndConditions.href}>
             Terms and Conditions
           </HighlightedLink>
           .
         </p>
-        <Button type="submit"> 登入/註冊 | Sign in/Sign up </Button>
+        <Button type="submit">確定 | Confirm</Button>
       </form>
+      <p className="mt-4 w-full text-center  font-normal ">
+        已有帳號？係
+        <Link
+          href={siteConfig.page.signIn.href}
+          className="border-b border-foreground"
+        >
+          呢度登入
+        </Link>
+      </p>
     </Form>
   )
 }
