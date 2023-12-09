@@ -15,17 +15,6 @@ export const signUpFormSchema = z
       }),
     password: authPasswordValidationSchema,
     confirmPassword: authPasswordValidationSchema,
-    privacyPolicy: z.boolean().refine(
-      (value) => {
-        if (!value) {
-          return false
-        }
-        return true
-      },
-      {
-        message: "請了解下🙇🏻‍♂️",
-      }
-    ),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "同密碼唔對喎😂",
