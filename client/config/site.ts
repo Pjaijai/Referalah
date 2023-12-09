@@ -40,6 +40,13 @@ export const siteConfig = {
         description: "登入 Sign in",
       },
     },
+    emailVerification: {
+      name: "電郵認證",
+      href: "/auth/email-verification",
+      metadata: {
+        title: "電郵認證 Email Verification",
+      },
+    },
     forgetPassword: {
       name: "auth",
       href: "/auth/forgot-password",
