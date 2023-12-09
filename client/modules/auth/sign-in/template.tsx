@@ -12,7 +12,10 @@ const SignInPageTemplate = () => {
       <SignInTab />
       <p className="mt-4 w-full text-center  font-normal ">
         未有帳號？係
-        <Link href={siteConfig.page.signUp.href} className="border-foreground">
+        <Link
+          href={siteConfig.page.signUp.href}
+          className="border-b border-foreground"
+        >
           呢度註冊
         </Link>
       </p>

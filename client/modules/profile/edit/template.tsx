@@ -387,7 +387,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
 
           <FormTextInput
             control={form.control}
-            label="使用者名稱"
+            label="用戶名稱"
             name="username"
           />
 

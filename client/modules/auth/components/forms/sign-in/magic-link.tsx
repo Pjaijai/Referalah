@@ -50,8 +50,7 @@ const MagicLinkSignInForm: React.FunctionComponent<
         onError: (error: any) => {
           if (error.message.includes("Invalid login credentials")) {
             return toast({
-              title: "Invalid login credentials",
-              description: "change another one",
+              title: "電郵錯誤",
               variant: "destructive",
             })
           }
