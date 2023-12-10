@@ -7,6 +7,8 @@ import {
   ClipboardCheck,
   ClipboardX,
   Clock,
+  Eye,
+  EyeOff,
   Github,
   History,
   Instagram,
@@ -52,6 +54,8 @@ export const Icons = {
   rotateRight: RotateCcw,
   slidersHorizontal: SlidersHorizontal,
   history: History,
+  eye: Eye,
+  eyeOff: EyeOff,
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path

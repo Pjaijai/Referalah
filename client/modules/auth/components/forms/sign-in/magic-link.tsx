@@ -69,10 +69,8 @@ const MagicLinkSignInForm: React.FunctionComponent<
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex h-56 flex-col  justify-between gap-4"
+        className="flex h-60 flex-col  justify-between gap-8"
       >
-        <div />
-
         <div className="flex flex-col">
           <FormTextInput control={form.control} label="電郵" name="email" />
           <p className="text-sm text-muted-foreground ">

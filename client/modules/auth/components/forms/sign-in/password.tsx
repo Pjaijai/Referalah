@@ -25,7 +25,7 @@ const ForgetPassWordLink = () => {
       className={buttonVariants({
         variant: "link",
         size: "sm",
-        className: "h-fit px-0 py-0 text-sm ",
+        className: "h-fit px-0 py-0 text-sm underline",
       })}
     >
       忘記密碼？
@@ -80,7 +80,7 @@ const PasswordSignInForm: React.FunctionComponent<
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex h-56 flex-col justify-between gap-4"
+        className="flex h-60 flex-col justify-between gap-8"
       >
         <FormTextInput control={form.control} label="電郵" name="email" />
 
@@ -91,7 +91,9 @@ const PasswordSignInForm: React.FunctionComponent<
           leftLabel={<ForgetPassWordLink />}
         />
 
-        <Button type="submit">登入</Button>
+        <Button type="submit" className="shrink-0">
+          登入
+        </Button>
       </form>
     </Form>
   )

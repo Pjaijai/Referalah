@@ -18,6 +18,7 @@ export interface IFormTextInputProps {
   placeholder?: string
   description?: string
   leftLabel?: string | React.ReactNode
+  Icon?: React.ReactNode
   type?: HTMLInputTypeAttribute
 }
 
@@ -28,6 +29,7 @@ const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
   placeholder,
   description,
   type,
+  Icon,
   leftLabel,
 }) => {
   return (
@@ -42,7 +44,18 @@ const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
           </div>
 
           <FormControl>
-            <Input placeholder={placeholder} type={type || "text"} {...field} />
+            <div className="relative">
+              <Input
+                placeholder={placeholder}
+                type={type || "text"}
+                {...field}
+              />
+              {Icon && (
+                <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                  {Icon}
+                </div>
+              )}
+            </div>
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />

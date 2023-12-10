@@ -79,13 +79,14 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex w-full flex-col gap-4"
+        className="flex w-full flex-col gap-8"
       >
         <FormTextInput control={form.control} label="電郵" name="email" />
         <FormTextInput
           control={form.control}
           label="用戶名稱"
           name="username"
+          description="註冊後可以更改"
         />
         <FormPasswordInput
           control={form.control}
@@ -98,7 +99,7 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
           name="confirmPassword"
         />
         <p className="text-xs text-muted-foreground">
-          點擊「確定 | Confirm」按鈕即表示你同意
+          點擊「註冊 | Register」按鈕即表示你同意
           <HighlightedLink href={siteConfig.page.privacyPolicy.href}>
             私隱政策
           </HighlightedLink>
@@ -107,7 +108,7 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
             服務條款
           </HighlightedLink>
           。<br />
-          By clicking the &quot;確定 | Confirm&quot; button, you agree to the{" "}
+          By clicking the &quot;註冊 | Register&quot; button, you agree to the{" "}
           <HighlightedLink href={siteConfig.page.privacyPolicy.href}>
             Privacy Policy
           </HighlightedLink>
@@ -117,7 +118,7 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
           </HighlightedLink>
           .
         </p>
-        <Button type="submit">確定 | Confirm</Button>
+        <Button type="submit">註冊 | Register</Button>
       </form>
       <p className="mt-4 w-full text-center  font-normal ">
         已有帳號？係
