@@ -1,5 +1,8 @@
 import { supabase } from "@/utils/services/supabase/config"
 
+import { ISignInEmailPasswordRequest } from "@/types/api/request/auth/sign-in-with-email-password"
+import { ISignInEmailMagicLinkRequest } from "@/types/api/request/auth/sign-in-with-magic-link"
+import { ISignUpEmailPasswordRequest } from "@/types/api/request/auth/sign-up-with-email-password"
 import { IContactThroughPostRequest } from "@/types/api/request/contact/post"
 import { IContactReferralRequest } from "@/types/api/request/contact/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
@@ -68,6 +71,74 @@ export const getUserProfile = async (userUuid: string) => {
     throw error
   }
 }
+
+// Auth
+export const signUpWithEmailPassword = async (
+  req: ISignUpEmailPasswordRequest
+) => {
+  const { email, password } = req
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_WEB_URL}`,
+        data: {
+          username: req.username,
+        },
+      },
+    })
+
+    if (error) {
+      throw error
+    }
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const signInWithEmailPassword = async (
+  req: ISignInEmailPasswordRequest
+) => {
+  const { email, password } = req
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+
+    if (error) {
+      throw error
+    }
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+export const signInWithMagicLink = async (
+  req: ISignInEmailMagicLinkRequest
+) => {
+  const { email } = req
+  try {
+    const { data, error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_WEB_URL}`,
+      },
+    })
+
+    if (error) {
+      throw error
+    }
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+// Profile
+
 export const updateUserProfile = async (req: IUpdateUserProfileRequest) => {
   const { data, error } = await supabase
     .from("user")

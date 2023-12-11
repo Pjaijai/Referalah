@@ -8,6 +8,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form"
 
 interface ICheckBoxProps {
@@ -36,6 +37,7 @@ const FormCheckBox: React.FunctionComponent<ICheckBoxProps> = ({
             <FormLabel>{label}</FormLabel>
             {description && <FormDescription>{description}</FormDescription>}
           </div>
+          <FormMessage />
         </FormItem>
       )}
     />

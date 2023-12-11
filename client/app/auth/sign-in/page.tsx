@@ -8,7 +8,7 @@ export const metadata = siteConfig.page.signIn.metadata
 
 const SignInPage = () => {
   return (
-    <CommonPageLayout>
+    <CommonPageLayout title="登入">
       <SignInPageTemplate />
     </CommonPageLayout>
   )
