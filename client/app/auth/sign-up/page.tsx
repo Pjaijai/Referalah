@@ -8,7 +8,7 @@ export const metadata = siteConfig.page.signUp.metadata
 
 const SignUpPage = () => {
   return (
-    <CommonPageLayout>
+    <CommonPageLayout title="註冊帳戶">
       <SignUpPageTemplate />
     </CommonPageLayout>
   )

@@ -72,7 +72,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     .object({
       photoUrl: z.any().optional(),
       resumeUrl: z.any().optional(),
-      username: nameValidation(10).min(1, {
+      username: nameValidation(20).min(1, {
         message: `至少有要1粒字`,
       }),
       company: conditionalValidation(30).optional(),
@@ -290,6 +290,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           return toast({
             title: "出事！",
             description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+            variant: "destructive",
           })
         },
       })
@@ -386,7 +387,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
 
           <FormTextInput
             control={form.control}
-            label="使用者名稱"
+            label="用戶名稱"
             name="username"
           />
 
