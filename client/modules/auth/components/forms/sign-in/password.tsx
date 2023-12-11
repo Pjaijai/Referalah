@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useCallback } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { passwordSignInFormSchema } from "@/modules/auth/validations/password-sign-in"
@@ -48,33 +48,36 @@ const PasswordSignInForm: React.FunctionComponent<
 
   const { mutate: signIn } = useSignInWithEmailPassword()
 
-  const onSubmit = (values: z.infer<typeof passwordSignInFormSchema>) => {
-    signIn(
-      { email: values.email, password: values.password },
-      {
-        onSuccess: (res) => {
-          toast({
-            title: "登入成功！",
-          })
-          router.push(siteConfig.page.main.href)
-        },
-        onError: (error: any) => {
-          if (error.message.includes("Invalid login credentials")) {
+  const onSubmit = useCallback(
+    (values: z.infer<typeof passwordSignInFormSchema>) => {
+      signIn(
+        { email: values.email, password: values.password },
+        {
+          onSuccess: () => {
+            toast({
+              title: "登入成功！",
+            })
+            router.push(siteConfig.page.main.href)
+          },
+          onError: (error: any) => {
+            if (error.message.includes("Invalid login credentials")) {
+              return toast({
+                title: "電郵或密碼錯誤",
+                variant: "destructive",
+              })
+            }
+
             return toast({
-              title: "電郵或密碼錯誤",
+              title: "出事！",
+              description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
               variant: "destructive",
             })
-          }
-
-          return toast({
-            title: "出事！",
-            description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
-            variant: "destructive",
-          })
-        },
-      }
-    )
-  }
+          },
+        }
+      )
+    },
+    [router, signIn, toast]
+  )
 
   return (
     <Form {...form}>
@@ -87,7 +90,7 @@ const PasswordSignInForm: React.FunctionComponent<
         <FormPasswordInput
           control={form.control}
           label="密碼"
-          name="密碼"
+          name="password"
           leftLabel={<ForgetPassWordLink />}
         />
 

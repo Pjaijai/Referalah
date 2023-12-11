@@ -18,7 +18,7 @@ const FormPasswordInput: React.FunctionComponent<IFormPasswordInputProps> = ({
   const [isVisible, setIsVisible] = useState(false)
 
   const handleClick = () => {
-    setIsVisible(!isVisible)
+    setIsVisible((isVisible) => !isVisible)
   }
 
   const VisibleIcon = () => (
