@@ -50,7 +50,7 @@ const EmailVerificationPageTemplate = () => {
         </p>
         <p className="mt-2 text-xs">
           或{" "}
-          <Link href={redirectUrl} className="border-foreground hover:border-b">
+          <Link href={redirectUrl} className="border-b border-foreground">
             重新發送連結
           </Link>
         </p>
