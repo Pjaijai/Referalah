@@ -32,6 +32,13 @@ export const siteConfig = {
         description: "立即加入，永遠唔會遲！ Join now, never too late!",
       },
     },
+    signUpConfirmation: {
+      name: "註冊成功",
+      href: "/auth/sign-up-confirmation",
+      metadata: {
+        title: "註冊成功! Registration success!",
+      },
+    },
     signIn: {
       name: "auth",
       href: "/auth/sign-in",

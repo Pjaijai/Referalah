@@ -23,6 +23,7 @@ import { IReferralResponse } from "@/types/api/response/referral"
 import { IUserResponse } from "@/types/api/response/user"
 import { EQueryKeyString } from "@/types/common/query-key-string"
 import { EReferralType } from "@/types/common/referral-type"
+import { siteConfig } from "@/config/site"
 
 // User Profile
 export const getUserProfile = async (userUuid: string) => {
@@ -76,13 +77,16 @@ export const getUserProfile = async (userUuid: string) => {
 export const signUpWithEmailPassword = async (
   req: ISignUpEmailPasswordRequest
 ) => {
+  const url = new URL(
+    `${process.env.NEXT_PUBLIC_WEB_URL}${siteConfig.page.signUpConfirmation.href}`
+  )
   const { email, password } = req
   try {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_WEB_URL}`,
+        emailRedirectTo: url.href,
         data: {
           username: req.username,
         },

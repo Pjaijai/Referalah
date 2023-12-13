@@ -3,6 +3,7 @@
 import React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { EEmaiVerification } from "@/modules/auth/types/email-verification"
 import { signUpFormSchema } from "@/modules/auth/validations/sign-up"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -45,7 +46,14 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
           toast({
             title: "註冊成功！",
           })
-          router.push(siteConfig.page.main.href)
+          const queryString = new URLSearchParams({
+            type: EEmaiVerification.EMAIL_PASSWORD_SIGN_UP,
+            email: values.email,
+          }).toString()
+
+          router.push(
+            `${siteConfig.page.emailVerification.href}` + "?" + queryString
+          )
         },
         onError: (error: any) => {
           if (error.message.includes("User already registered")) {
@@ -92,6 +100,7 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
           control={form.control}
           label="密碼"
           name="password"
+          description="密碼必須為8至20字元之間"
         />
         <FormPasswordInput
           control={form.control}

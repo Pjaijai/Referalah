@@ -1,5 +1,5 @@
 import React from "react"
-import SignInPageTemplate from "@/modules/auth/sign-in/template"
+import SignInPageTemplate from "@/modules/auth/components/templates/sign-in/template"
 
 import { siteConfig } from "@/config/site"
 import CommonPageLayout from "@/components/layouts/common"
