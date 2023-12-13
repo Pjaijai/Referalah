@@ -1,18 +1,30 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useMemo, useState } from "react"
 import Link from "next/link"
 import EditProfileTemplate from "@/modules/profile/edit/template"
 import ViewProfileTemplate from "@/modules/profile/view/template"
 
 import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
+import useUserStore from "@/hooks/state/user/store"
 import { Icons } from "@/components/icons"
 import CommonPageLayout from "@/components/layouts/common"
 
-const ProfileTemplate = ({ userUuid }: { userUuid: string }) => {
+const ProfileTemplate = ({ userUuid }: { userUuid?: string }) => {
   const [isEditMode, setIsEditMode] = useState(false)
-  const { data: profile, isLoading, refetch } = useGetUserprofile(userUuid)
+  const userStoreUuid = useUserStore((state) => state.uuid)
+  const uuid = useMemo(() => {
+    if (userUuid) {
+      return userUuid
+    } else if (userStoreUuid) {
+      return userStoreUuid
+    } else {
+      return null
+    }
+  }, [userStoreUuid, userUuid])
+
+  const { data: profile, isLoading, refetch } = useGetUserprofile(uuid)
 
   if (!userUuid || (!isLoading && !profile))
     return (
