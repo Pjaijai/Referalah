@@ -5,7 +5,7 @@ import { formatCreatedAt } from "@/utils/common/helpers/format/created-at"
  *
  * @group unit
  */
-jest.useFakeTimers().setSystemTime(new Date("2023-12-01"))
+jest.useFakeTimers().setSystemTime(new Date("2023-12-02"))
 
 describe("formatCreatedAt", () => {
   beforeEach(() => {
@@ -13,14 +13,14 @@ describe("formatCreatedAt", () => {
   })
 
   it("returns formatted date for today with isExact true", () => {
-    const result = formatCreatedAt("2023-12-01")
+    const result = formatCreatedAt("2023-12-02")
     expect(result.formattedDate).toBe("今日")
     expect(result.isExact).toBe(true)
   })
 
   it("returns formatted date for the last 5 days with isExact false", () => {
     const result = formatCreatedAt("2023-11-26")
-    expect(result.formattedDate).toBe("4日")
+    expect(result.formattedDate).toBe("5日")
     expect(result.isExact).toBe(false)
   })
 
