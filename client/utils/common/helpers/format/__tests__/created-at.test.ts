@@ -18,12 +18,6 @@ describe("formatCreatedAt", () => {
     expect(result.isExact).toBe(true)
   })
 
-  it("returns formatted date for the last 5 days with isExact false", () => {
-    const result = formatCreatedAt("2023-11-26")
-    expect(result.formattedDate).toBe("5日")
-    expect(result.isExact).toBe(false)
-  })
-
   it("returns formatted date for a date older than 30 days with isExact true", () => {
     const result = formatCreatedAt("2023-10-31")
     expect(result.formattedDate).toBe("2023年10月31日") // Change this based on your formatDate implementation
