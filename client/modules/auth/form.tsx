@@ -52,7 +52,7 @@ const AuthForm: React.FunctionComponent<IAuthFormProps> = ({ onSubmit }) => {
             服務條款
           </HighlightedLink>
           。<br />
-          By clicking the "Sign in/Sign up" button, you agree to the{" "}
+          By clicking the Sign in/Sign up button, you agree to the
           <HighlightedLink href={siteConfig.page.privacyPolicy.href}>
             privacy policy
           </HighlightedLink>{" "}
