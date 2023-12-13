@@ -1,5 +1,5 @@
 import React from "react"
-import ForgotPasswordPageTemplate from "@/modules/auth/forgot-password/template"
+import ForgotPasswordPageTemplate from "@/modules/auth/components/templates/forgot-password/template"
 
 import { siteConfig } from "@/config/site"
 import CommonPageLayout from "@/components/layouts/common"
