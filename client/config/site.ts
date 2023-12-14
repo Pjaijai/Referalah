@@ -54,16 +54,16 @@ export const siteConfig = {
         title: "電郵認證 Email Verification",
       },
     },
-    forgetPassword: {
+    resetPassword: {
       name: "重置密碼",
-      href: "/auth/rest-password",
+      href: "/auth/reset-password",
       metadata: {
         title: "重置密碼 Reset Password",
       },
     },
-    resetPassword: {
-      name: "忘記密碼",
-      href: "/auth/reset-password",
+    forgetPassword: {
+      name: "重置密碼",
+      href: "/auth/forgot-password",
       metadata: {
         title: "忘記密碼 Forgot Password",
         description: "忘記密碼 Forgot Password",
