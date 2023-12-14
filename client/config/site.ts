@@ -55,8 +55,15 @@ export const siteConfig = {
       },
     },
     forgetPassword: {
-      name: "auth",
-      href: "/auth/forgot-password",
+      name: "重置密碼",
+      href: "/auth/rest-password",
+      metadata: {
+        title: "重置密碼 Reset Password",
+      },
+    },
+    resetPassword: {
+      name: "忘記密碼",
+      href: "/auth/reset-password",
       metadata: {
         title: "忘記密碼 Forgot Password",
         description: "忘記密碼 Forgot Password",

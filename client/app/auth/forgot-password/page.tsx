@@ -8,7 +8,7 @@ export const metadata = siteConfig.page.forgetPassword.metadata
 
 const ForgotPasswordPage = () => {
   return (
-    <CommonPageLayout>
+    <CommonPageLayout title={siteConfig.page.forgetPassword.name}>
       <ForgotPasswordPageTemplate />
     </CommonPageLayout>
   )

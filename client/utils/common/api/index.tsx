@@ -1,8 +1,10 @@
 import { supabase } from "@/utils/services/supabase/config"
 
+import { IResetPasswordRequest } from "@/types/api/request/auth/reset-password"
 import { ISignInEmailPasswordRequest } from "@/types/api/request/auth/sign-in-with-email-password"
 import { ISignInEmailMagicLinkRequest } from "@/types/api/request/auth/sign-in-with-magic-link"
 import { ISignUpEmailPasswordRequest } from "@/types/api/request/auth/sign-up-with-email-password"
+import { IUpdatePasswordRequest } from "@/types/api/request/auth/update-password"
 import { IContactThroughPostRequest } from "@/types/api/request/contact/post"
 import { IContactReferralRequest } from "@/types/api/request/contact/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
@@ -135,6 +137,34 @@ export const signInWithMagicLink = async (
     if (error) {
       throw error
     }
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const resetPassword = async (req: IResetPasswordRequest) => {
+  try {
+    const url = new URL(
+      `${process.env.NEXT_PUBLIC_WEB_URL}${siteConfig.page.resetPassword.href}`
+    )
+    url.searchParams.set("email", req.email)
+
+    await supabase.auth.resetPasswordForEmail(req.email, {
+      redirectTo: url.href,
+    })
+  } catch (error) {
+    throw error
+  }
+}
+
+export const updatePassword = async (req: IUpdatePasswordRequest) => {
+  try {
+    const { data, error } = await supabase.auth.updateUser({
+      password: req.password,
+    })
+
+    if (error) throw error
     return data
   } catch (error) {
     throw error
