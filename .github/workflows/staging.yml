@@ -24,4 +24,4 @@ jobs:
 
       - run: supabase link --project-ref $SUPABASE_PROJECT_ID
       - run: supabase db push
-      - run: supabase functions deploy
+      - run: supabase functions deploy --project-ref $SUPABASE_PROJECT_ID
