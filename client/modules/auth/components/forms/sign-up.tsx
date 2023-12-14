@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { EEmaiVerification } from "@/modules/auth/types/email-verification"
@@ -23,6 +23,7 @@ interface ISignUpFormProps {}
 const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
   const { toast } = useToast()
   const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
   const form = useForm<z.infer<typeof signUpFormSchema>>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
@@ -35,6 +36,7 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
 
   const { mutate: createUser } = useSignUpWithEmailPassword()
   const onSubmit = (values: z.infer<typeof signUpFormSchema>) => {
+    setIsLoading(true)
     createUser(
       {
         email: values.email,
@@ -78,6 +80,9 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
             description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
             variant: "destructive",
           })
+        },
+        onSettled: () => {
+          setIsLoading(false)
         },
       }
     )
@@ -127,7 +132,9 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
           </HighlightedLink>
           .
         </p>
-        <Button type="submit">註冊 | Register</Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? "等等" : "註冊 | Register"}
+        </Button>
       </form>
       <p className="mt-4 w-full text-center  font-normal ">
         已有帳號？係
