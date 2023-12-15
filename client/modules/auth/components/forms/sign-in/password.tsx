@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback } from "react"
+import React, { useCallback, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { passwordSignInFormSchema } from "@/modules/auth/validations/password-sign-in"
@@ -38,6 +38,7 @@ const PasswordSignInForm: React.FunctionComponent<
 > = ({}) => {
   const { toast } = useToast()
   const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
   const form = useForm<z.infer<typeof passwordSignInFormSchema>>({
     resolver: zodResolver(passwordSignInFormSchema),
     defaultValues: {
@@ -50,6 +51,7 @@ const PasswordSignInForm: React.FunctionComponent<
 
   const onSubmit = useCallback(
     (values: z.infer<typeof passwordSignInFormSchema>) => {
+      setIsLoading(true)
       signIn(
         { email: values.email, password: values.password },
         {
@@ -73,6 +75,9 @@ const PasswordSignInForm: React.FunctionComponent<
               variant: "destructive",
             })
           },
+          onSettled: () => {
+            setIsLoading(false)
+          },
         }
       )
     },
@@ -95,7 +100,7 @@ const PasswordSignInForm: React.FunctionComponent<
         />
 
         <Button type="submit" className="shrink-0">
-          登入
+          {isLoading ? "等等" : "登入"}
         </Button>
       </form>
     </Form>

@@ -44,10 +44,10 @@ export function SiteHeader() {
             ) : (
               <Button
                 onClick={() => {
-                  router.push("/auth")
+                  router.push(`${siteConfig.page.signIn.href}`)
                 }}
               >
-                登入/註冊
+                登入
               </Button>
             )}
           </nav>
