@@ -20,7 +20,6 @@ export interface IFormTextInputProps {
   leftLabel?: string | React.ReactNode
   Icon?: React.ReactNode
   type?: HTMLInputTypeAttribute
-  disabled?: boolean
 }
 
 const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
@@ -32,7 +31,6 @@ const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
   type,
   Icon,
   leftLabel,
-  disabled,
 }) => {
   return (
     <FormField
@@ -48,7 +46,7 @@ const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
           <FormControl>
             <div className="relative">
               <Input
-                disabled={disabled}
+                disabled
                 placeholder={placeholder}
                 type={type || "text"}
                 {...field}

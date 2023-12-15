@@ -14,6 +14,7 @@ import { Form } from "@/components/ui/form"
 import { useToast } from "@/components/ui/use-toast"
 import FormTextInput from "@/components/customized-ui/form/input"
 import FormPasswordInput from "@/components/customized-ui/form/password"
+import TextInput from "@/components/customized-ui/inputs/text"
 
 const ResetPasswordPageTemplate = () => {
   const { toast } = useToast()
@@ -24,7 +25,6 @@ const ResetPasswordPageTemplate = () => {
   const form = useForm<z.infer<typeof resetPasswordFormSchema>>({
     resolver: zodResolver(resetPasswordFormSchema),
     defaultValues: {
-      email: "",
       password: "",
       confirmPassword: "",
     },
@@ -60,12 +60,6 @@ const ResetPasswordPageTemplate = () => {
     [router, toast]
   )
 
-  useEffect(() => {
-    if (email) {
-      form.setValue("email", email)
-    }
-  }, [email])
-
   return (
     <div className="flex h-full w-full justify-center ">
       <div className="mt-8 w-full max-w-md ">
@@ -74,12 +68,7 @@ const ResetPasswordPageTemplate = () => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="mt-8 flex flex-col justify-between gap-8"
           >
-            <FormTextInput
-              control={form.control}
-              label="電郵"
-              name="email"
-              disabled
-            />
+            <TextInput value={email || ""} label="電郵" disabled />
             <FormPasswordInput
               control={form.control}
               label="新密碼"
