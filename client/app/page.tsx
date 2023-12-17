@@ -27,15 +27,6 @@ export default function IndexPage() {
         </div>
         <div className={"flex flex-wrap gap-4"}>
           <Link
-            href={siteConfig.page.contributors.href}
-            className={buttonVariants({
-              variant: isUserSignIn ? "default" : "outline",
-            })}
-          >
-            {siteConfig.page.contributors.name}
-          </Link>
-
-          <Link
             href={siteConfig.links.instagram}
             className={cn(
               buttonVariants({ variant: isUserSignIn ? "default" : "outline" }),
@@ -47,10 +38,10 @@ export default function IndexPage() {
           </Link>
           {!isUserSignIn && (
             <Link
-              href={siteConfig.page.signIn.href}
+              href={siteConfig.page.signUp.href}
               className={buttonVariants({ variant: "default" })}
             >
-              登入/註冊
+              註冊
             </Link>
           )}
           <h2 className="mt-4 border-b-2 border-green-700 text-end text-sm dark:border-yellow-300">
