@@ -103,7 +103,7 @@ const CreatePostTemplate: React.FunctionComponent<
           variant: "destructive",
           action: (
             <ToastAction altText="登入">
-              <Link href={siteConfig.page.auth.href}>登入</Link>
+              <Link href={siteConfig.page.signIn.href}>登入</Link>
             </ToastAction>
           ),
         })

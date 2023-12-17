@@ -15,15 +15,6 @@ export const siteConfig = {
       name: "用戶檔案",
       href: "/profile",
     },
-    auth: {
-      name: "auth",
-      href: "/auth",
-      metadata: {
-        title: "登入 / 註冊 Sign In / Sign Up",
-        description:
-          "透過魔術連結登入或註冊。無須密碼。 Sign in or sign up with magic link. Password is not required.",
-      },
-    },
     signUp: {
       name: "auth",
       href: "/auth/sign-up",

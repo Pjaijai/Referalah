@@ -19,7 +19,7 @@ const AuthenticatedPageWrapper: React.FunctionComponent<
         <span className="text-5xl">🥲</span>
         <h6>
           請先
-          <HighlightedLink href={siteConfig.page.auth.href}>
+          <HighlightedLink href={siteConfig.page.signIn.href}>
             登入
           </HighlightedLink>
         </h6>
