@@ -6,6 +6,8 @@ import AuthenticatedPageWrapper from "@/components/wrappers/authenticated"
 
 export const metadata = siteConfig.page.createPost.metadata
 
+export const metadata = siteConfig.page.createPost.metadata
+
 const CreatePostPage = () => {
   return (
     <AuthenticatedPageWrapper>
