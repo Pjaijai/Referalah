@@ -47,7 +47,7 @@ export default function IndexPage() {
           </Link>
           {!isUserSignIn && (
             <Link
-              href={siteConfig.page.auth.href}
+              href={siteConfig.page.signIn.href}
               className={buttonVariants({ variant: "default" })}
             >
               登入/註冊

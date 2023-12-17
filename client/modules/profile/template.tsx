@@ -33,7 +33,7 @@ const ProfileTemplate = ({ userUuid }: { userUuid?: string }) => {
         <h6>
           搵唔到用戶資料請refresh網頁或先
           <Link
-            href={siteConfig.page.auth.href}
+            href={siteConfig.page.signIn.href}
             className="border-b-2 border-green-700 text-green-700 dark:border-yellow-300 dark:text-yellow-300 "
           >
             登入
