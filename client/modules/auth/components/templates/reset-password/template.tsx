@@ -45,6 +45,13 @@ const ResetPasswordPageTemplate = () => {
             router.push(`${siteConfig.page.main.href}`)
           },
           onError: (error: any) => {
+            if (error.message === "Auth session missing!") {
+              return toast({
+                title: "過期認證連結！",
+                description: "請重新發送認證連結🙏🏻",
+                variant: "destructive",
+              })
+            }
             return toast({
               title: "出事！",
               description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
