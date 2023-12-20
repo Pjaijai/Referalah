@@ -96,13 +96,13 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
             },
             onSuccess: () => {
               onContactFormClose()
+              reset()
               return toast({
                 title: "成功！！！！！！！",
                 description: "祝一切順利！",
               })
             },
             onSettled: () => {
-              reset()
               setIsLoading(false)
             },
           }
