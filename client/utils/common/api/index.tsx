@@ -35,7 +35,6 @@ export const getUserProfile = async (userUuid: string) => {
       .select<string, IUserResponse>(
         `
             uuid,
-            email,
             username,
             avatar_url,
             description,
