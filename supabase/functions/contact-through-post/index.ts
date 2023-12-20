@@ -45,7 +45,7 @@ serve(async (req: any) => {
 
     const { data: sender, error } = await client
       .from("user")
-      .select("*")
+      .select("uuid,username, email")
       .eq("uuid", user.id)
       .single()
 
