@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useTranslations } from "next-intl"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
@@ -13,8 +14,11 @@ import { Icons } from "@/components/icons"
 export default function IndexPage() {
   const isUserSignIn = useUserStore((state) => state.isSignIn)
   const { data } = useGetUserCount()
+  const t = useTranslations("Index")
+
   return (
     <>
+      <h1>{t("title")}</h1>;
       <div className="mt-4 flex justify-center md:hidden">
         <BaseNavigationMenu />
       </div>
