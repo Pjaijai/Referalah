@@ -85,16 +85,16 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         .or(z.literal("")),
       description: conditionalValidation(3000).optional(),
       countryUuid: z.string().min(1, {
-        message: `俾幫手填下🙏🏻`,
+        message: `幫手填下🙏🏻`,
       }),
       provinceUuid: z.string().min(1, {
-        message: `俾幫手填下🙏🏻`,
+        message: `幫手填下🙏🏻`,
       }),
       cityUuid: z.string().min(1, {
-        message: `俾幫手填下🙏🏻`,
+        message: `幫手填下🙏🏻`,
       }),
       industryUuid: z.string().min(1, {
-        message: `俾幫手填下🙏🏻`,
+        message: `幫手填下🙏🏻`,
       }),
       yearOfExperience: z
         .string()
