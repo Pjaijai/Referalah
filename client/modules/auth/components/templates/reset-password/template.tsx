@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { resetPasswordFormSchema } from "@/modules/auth/validations/reset-poassword"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -12,7 +12,6 @@ import useUpdatePassword from "@/hooks/auth/update-password"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { useToast } from "@/components/ui/use-toast"
-import FormTextInput from "@/components/customized-ui/form/input"
 import FormPasswordInput from "@/components/customized-ui/form/password"
 import TextInput from "@/components/customized-ui/inputs/text"
 

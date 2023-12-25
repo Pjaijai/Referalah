@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { EEmaiVerification } from "@/modules/auth/types/email-verification"
 import { magicLinkSignInFormSchema } from "@/modules/auth/validations/magic-link-sign-in"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -22,8 +22,7 @@ const MagicLinkSignInForm: React.FunctionComponent<
 > = ({}) => {
   const { toast } = useToast()
   const router = useRouter()
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
+
   const form = useForm<z.infer<typeof magicLinkSignInFormSchema>>({
     resolver: zodResolver(magicLinkSignInFormSchema),
     defaultValues: {
