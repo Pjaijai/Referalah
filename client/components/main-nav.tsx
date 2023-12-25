@@ -1,11 +1,11 @@
 import * as React from "react"
 import Link from "next/link"
 
-import { NavItem } from "@/types/nav"
+import { INavItem } from "@/types/nav"
 import { siteConfig } from "@/config/site"
 
 interface MainNavProps {
-  items?: NavItem[]
+  items?: INavItem[]
 }
 
 export function MainNav({ items }: MainNavProps) {

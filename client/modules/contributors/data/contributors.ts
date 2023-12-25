@@ -135,6 +135,22 @@ const contributors: IContributor[] = [
     },
     contributedArea: ["software_development"],
   },
+  {
+    name: "Trevor Wong",
+    links: {
+      linkedin: "https://www.linkedin.com/in/trevor-wong-/",
+      github: "https://github.com/trevorwongtw",
+    },
+    contributedArea: ["software_development"],
+  },
+  {
+    name: "Yanny Yau",
+    links: {
+      linkedin: "https://www.linkedin.com/in/wanyingyau/",
+      website: "https://www.wanyingyau.com/",
+    },
+    contributedArea: ["uiux_design"],
+  },
 ]
 
 export default contributors

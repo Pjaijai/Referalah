@@ -1,5 +1,10 @@
 import { supabase } from "@/utils/services/supabase/config"
 
+import { IResetPasswordRequest } from "@/types/api/request/auth/reset-password"
+import { ISignInEmailPasswordRequest } from "@/types/api/request/auth/sign-in-with-email-password"
+import { ISignInEmailMagicLinkRequest } from "@/types/api/request/auth/sign-in-with-magic-link"
+import { ISignUpEmailPasswordRequest } from "@/types/api/request/auth/sign-up-with-email-password"
+import { IUpdatePasswordRequest } from "@/types/api/request/auth/update-password"
 import { IContactThroughPostRequest } from "@/types/api/request/contact/post"
 import { IContactReferralRequest } from "@/types/api/request/contact/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
@@ -18,17 +23,18 @@ import {
 } from "@/types/api/response/referer-post"
 import { IReferralResponse } from "@/types/api/response/referral"
 import { IUserResponse } from "@/types/api/response/user"
-import { QueryKeyString } from "@/types/common/query-key-string"
-import { ReferralType } from "@/types/common/referral-type"
+import { EQueryKeyString } from "@/types/common/query-key-string"
+import { EReferralType } from "@/types/common/referral-type"
+import { siteConfig } from "@/config/site"
 
 // User Profile
-export const getUserProfile = async (arg: any) => {
-  const { data, error } = await supabase
-    .from("user")
-    .select<string, IUserResponse>(
-      `
+export const getUserProfile = async (userUuid: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("user")
+      .select<string, IUserResponse>(
+        `
             uuid,
-            email,
             username,
             avatar_url,
             description,
@@ -55,14 +61,117 @@ export const getUserProfile = async (arg: any) => {
       is_referer,
       is_referee
       `
-    )
-    .eq("uuid", arg.queryKey[1].userUuid)
-    .single()
+      )
+      .eq("uuid", userUuid)
+      .single()
 
-  if (error) throw error
+    if (error) throw error
+    if (data === null) throw new Error(`Cannot found user ${userUuid}`)
 
-  return data
+    return data
+  } catch (error) {
+    throw error
+  }
 }
+
+// Auth
+export const signUpWithEmailPassword = async (
+  req: ISignUpEmailPasswordRequest
+) => {
+  const url = new URL(
+    `${process.env.NEXT_PUBLIC_WEB_URL}${siteConfig.page.signUpConfirmation.href}`
+  )
+  const { email, password } = req
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: url.href,
+        data: {
+          username: req.username,
+        },
+      },
+    })
+
+    if (error) {
+      throw error
+    }
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const signInWithEmailPassword = async (
+  req: ISignInEmailPasswordRequest
+) => {
+  const { email, password } = req
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+
+    if (error) {
+      throw error
+    }
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+export const signInWithMagicLink = async (
+  req: ISignInEmailMagicLinkRequest
+) => {
+  const { email } = req
+  try {
+    const { data, error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_WEB_URL}`,
+      },
+    })
+
+    if (error) {
+      throw error
+    }
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const resetPassword = async (req: IResetPasswordRequest) => {
+  try {
+    const url = new URL(
+      `${process.env.NEXT_PUBLIC_WEB_URL}${siteConfig.page.resetPassword.href}`
+    )
+    url.searchParams.set("email", req.email)
+
+    await supabase.auth.resetPasswordForEmail(req.email, {
+      redirectTo: url.href,
+    })
+  } catch (error) {
+    throw error
+  }
+}
+
+export const updatePassword = async (req: IUpdatePasswordRequest) => {
+  try {
+    const { data, error } = await supabase.auth.updateUser({
+      password: req.password,
+    })
+
+    if (error) throw error
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+// Profile
+
 export const updateUserProfile = async (req: IUpdateUserProfileRequest) => {
   const { data, error } = await supabase
     .from("user")
@@ -95,11 +204,11 @@ export const searchReferral = async ({
 }: {
   pageParam?: number
   queryKey: [
-    QueryKeyString,
+    EQueryKeyString,
     {
       sorting: string
       filterMeta: IFilterMeta
-      type: ReferralType
+      type: EReferralType
     },
   ]
 }) => {
@@ -110,8 +219,8 @@ export const searchReferral = async ({
   const industryUuid = queryKey[1].filterMeta.industryUuid
   const companyName = queryKey[1].filterMeta.companyName
   const jobTitle = queryKey[1].filterMeta.jobTitle
-  const yoeMax = queryKey[1].filterMeta.yoeMax
-  const yoeMin = queryKey[1].filterMeta.yoeMin
+  const maxYearOfExperience = queryKey[1].filterMeta.maxYearOfExperience
+  const minYearOfExperience = queryKey[1].filterMeta.minYearOfExperience
   const type = queryKey[1].type
 
   const sort = queryKey[1].sorting.split(",")
@@ -152,17 +261,23 @@ export const searchReferral = async ({
             is_referee
           `
     )
-    .lte("year_of_experience", yoeMax ? parseInt(yoeMax) : 100)
-    .gte("year_of_experience", yoeMin ? parseInt(yoeMin) : 0)
+    .lte(
+      "year_of_experience",
+      maxYearOfExperience ? parseInt(maxYearOfExperience) : 100
+    )
+    .gte(
+      "year_of_experience",
+      minYearOfExperience ? parseInt(minYearOfExperience) : 0
+    )
     .order("year_of_experience", { ascending: order })
     .order("id", { ascending: true })
     .range(from, to)
 
-  if (type === ReferralType.REFERRER) {
+  if (type === EReferralType.REFERRER) {
     query = query.eq("is_referer", true)
   }
 
-  if (type === ReferralType.REFEREE) {
+  if (type === EReferralType.REFEREE) {
     query = query.eq("is_referee", true)
   }
 
@@ -310,7 +425,7 @@ export const searchPostApi = async ({
       query = query.order("created_at", { ascending: order })
     }
 
-    if (sortedBy === "yoe") {
+    if (sortedBy === "year_of_experience") {
       query = query.order("year_of_experience", { ascending: order })
     }
     if (countryUuid !== undefined) {

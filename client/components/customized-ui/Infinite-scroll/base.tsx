@@ -1,4 +1,4 @@
-import React from "react"
+import React, { ReactNode } from "react"
 import InfiniteScroll from "react-infinite-scroll-component"
 
 import { Badge } from "@/components/ui/badge"
@@ -7,7 +7,7 @@ interface IBaseInfiniteScrollProps {
   dataLength: number
   next: any
   hasMore: boolean
-  children: React.ReactNode
+  children: ReactNode
 }
 const BaseInfiniteScroll: React.FunctionComponent<IBaseInfiniteScrollProps> = ({
   dataLength,
@@ -35,7 +35,7 @@ const BaseInfiniteScroll: React.FunctionComponent<IBaseInfiniteScrollProps> = ({
         </div>
       }
     >
-      {children}
+      <>{children}</>
     </InfiniteScroll>
   )
 }

@@ -5,8 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { MessageType } from "@/types/common/message-type"
-import { ReferralType } from "@/types/common/referral-type"
+import { EMessageType } from "@/types/common/message-type"
+import { EReferralType } from "@/types/common/referral-type"
 import useContactReferral from "@/hooks/api/contact/referral"
 import useContactThroughPost from "@/hooks/api/contact/through-post"
 import { Button } from "@/components/ui/button"
@@ -33,8 +33,8 @@ export interface IContactDialogProps {
   open: boolean
   username: string | null
   onContactFormClose: () => void
-  messageType: MessageType
-  receiverType?: ReferralType
+  messageType: EMessageType
+  receiverType?: EReferralType
   toUuid: string | null
   postUuid?: string | null
 }
@@ -96,13 +96,13 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
             },
             onSuccess: () => {
               onContactFormClose()
+              reset()
               return toast({
                 title: "成功！！！！！！！",
                 description: "祝一切順利！",
               })
             },
             onSettled: () => {
-              reset()
               setIsLoading(false)
             },
           }

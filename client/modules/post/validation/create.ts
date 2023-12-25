@@ -18,21 +18,21 @@ const createPostValidationSchema = z.object({
     }),
 
   countryUuid: z.string().min(1, {
-    message: `俾幫手填下🙏🏻`,
+    message: `幫手填下🙏🏻`,
   }),
   provinceUuid: z.string().min(1, {
-    message: `俾幫手填下🙏🏻`,
+    message: `幫手填下🙏🏻`,
   }),
   cityUuid: z.string().min(1, {
-    message: `俾幫手填下🙏🏻`,
+    message: `幫手填下🙏🏻`,
   }),
   industryUuid: z.string().min(1, {
-    message: `俾幫手填下🙏🏻`,
+    message: `幫手填下🙏🏻`,
   }),
   yearOfExperience: z
     .string()
     .min(1, {
-      message: `俾幫手填下🙏🏻`,
+      message: `幫手填下🙏🏻`,
     })
     .refine(
       (value) => {
@@ -55,7 +55,7 @@ const createPostValidationSchema = z.object({
   companyName: z
     .string()
     .min(1, {
-      message: `俾幫手填下🙏🏻`,
+      message: `幫手填下🙏🏻`,
     })
     .max(30, {
       message: `俾盡30粒字，唔夠用請聯絡我🙏🏻`,
@@ -63,7 +63,7 @@ const createPostValidationSchema = z.object({
   jobTitle: z
     .string()
     .min(1, {
-      message: `俾幫手填下🙏🏻`,
+      message: `幫手填下🙏🏻`,
     })
     .max(30, {
       message: `俾盡30粒字，唔夠用請聯絡我🙏🏻`,

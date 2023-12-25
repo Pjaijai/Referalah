@@ -30,7 +30,7 @@ const UserSignInDialog = ({ open, onDialogClose }: IUserSignInDialogProps) => {
           <Button onClick={onDialogClose} variant={"ghost"}>
             下次先
           </Button>
-          <Link href={siteConfig.page.auth.href} className={buttonVariants()}>
+          <Link href={siteConfig.page.signIn.href} className={buttonVariants()}>
             登入/註冊
           </Link>
         </DialogFooter>

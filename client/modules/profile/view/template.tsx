@@ -2,6 +2,7 @@
 
 import React from "react"
 import Link from "next/link"
+import LinkTooltip from "@/modules/profile/components/tool-tip/link"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
@@ -10,7 +11,6 @@ import { Badge } from "@/components/ui/badge"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
-import LinkTooltip from "@/components/customized-ui/tool/Link"
 import { Icons } from "@/components/icons"
 
 export interface IViewProfileTemplateProps {

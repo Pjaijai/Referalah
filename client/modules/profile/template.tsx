@@ -1,27 +1,39 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useMemo, useState } from "react"
 import Link from "next/link"
 import EditProfileTemplate from "@/modules/profile/edit/template"
 import ViewProfileTemplate from "@/modules/profile/view/template"
 
 import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
+import useUserStore from "@/hooks/state/user/store"
 import { Icons } from "@/components/icons"
 import CommonPageLayout from "@/components/layouts/common"
 
-const ProfileTemplate = ({ userUuid }: { userUuid: string }) => {
+const ProfileTemplate = ({ userUuid }: { userUuid?: string }) => {
   const [isEditMode, setIsEditMode] = useState(false)
-  const { data: profile, isLoading } = useGetUserprofile(userUuid)
+  const userStoreUuid = useUserStore((state) => state.uuid)
+  const uuid = useMemo(() => {
+    if (userUuid) {
+      return userUuid
+    } else if (userStoreUuid) {
+      return userStoreUuid
+    } else {
+      return null
+    }
+  }, [userStoreUuid, userUuid])
 
-  if (userUuid === "null" || (!isLoading && !profile))
+  const { data: profile, isLoading, refetch } = useGetUserprofile(uuid)
+
+  if (!userUuid || (!isLoading && !profile))
     return (
       <div className="flex h-screen  flex-col items-center justify-center gap-4 rounded-lg  p-4">
         <span className="text-5xl">🥲</span>
         <h6>
           搵唔到用戶資料請refresh網頁或先
           <Link
-            href={siteConfig.page.auth.href}
+            href={siteConfig.page.signIn.href}
             className="border-b-2 border-green-700 text-green-700 dark:border-yellow-300 dark:text-yellow-300 "
           >
             登入
@@ -76,6 +88,7 @@ const ProfileTemplate = ({ userUuid }: { userUuid: string }) => {
             isReferer={profile.is_referer}
             isProfileLoading={isLoading}
             setIsEditMode={setIsEditMode}
+            refetchProfile={refetch}
           />
         )}
       </CommonPageLayout>

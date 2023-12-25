@@ -2,8 +2,8 @@
 
 import React from "react"
 
-import { MessageType } from "@/types/common/message-type"
-import { ReferralType } from "@/types/common/referral-type"
+import { EMessageType } from "@/types/common/message-type"
+import { EReferralType } from "@/types/common/referral-type"
 import useSearchPost from "@/hooks/api/post/search-post"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -26,8 +26,8 @@ const RefererPostPageTemplate: React.FunctionComponent<
     handleCityChange,
     handleSortingChange,
     handleIndustryChange,
-    handleYoeMinChange,
-    handleYoeMaxChange,
+    handleMaxYearOfExperienceChange,
+    handleMinYearOfExperienceChange,
     handleJobTitleChange,
     handleReset,
     handleSubmitChange,
@@ -38,10 +38,10 @@ const RefererPostPageTemplate: React.FunctionComponent<
     cityUuid,
     countryUuid,
     industryUuid,
-    yoeMax,
-    yoeMin,
+    maxYearOfExperience,
+    minYearOfExperience,
     sorting,
-  } = useSearchPost(ReferralType.REFERRER)
+  } = useSearchPost(EReferralType.REFERRER)
 
   const { data, fetchNextPage, isLoading, isFetching } = result
 
@@ -72,17 +72,17 @@ const RefererPostPageTemplate: React.FunctionComponent<
             onProvinceChange={handleProvinceChange}
             onIndustryChange={handleIndustryChange}
             onSortingChange={handleSortingChange}
-            onYeoMinChange={handleYoeMinChange}
-            onYeoMaxChange={handleYoeMaxChange}
+            onMinYearOfExperienceChange={handleMinYearOfExperienceChange}
+            onMaxYearOfExperienceChange={handleMaxYearOfExperienceChange}
             onSubmitChange={handleSubmitChange}
             currentSorting={sorting}
             currentCityUuid={cityUuid}
             currentCountryUuid={countryUuid}
             currentIndustryUuid={industryUuid}
             currentProvinceUuid={provinceUuid}
-            currentYeoMax={yoeMax}
-            currentYeoMin={yoeMin}
-            type={MessageType.POST}
+            currentMaxYearOfExperience={maxYearOfExperience}
+            currentMinYearOfExperience={minYearOfExperience}
+            type={EMessageType.POST}
           />
           <ResetButton onClick={handleReset} />
           <Button onClick={handleSubmitChange} className="whitespace-nowrap">

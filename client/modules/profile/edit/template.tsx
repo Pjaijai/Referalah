@@ -2,7 +2,6 @@
 
 import React, { useEffect, useMemo, useState } from "react"
 import { StaticImport } from "next/dist/shared/lib/get-img-props"
-import { useRouter } from "next/navigation"
 import { conditionalValidation } from "@/modules/profile/form/validation.ts/conditional"
 import { maximumWordValidation } from "@/modules/profile/form/validation.ts/max-word"
 import { nameValidation } from "@/modules/profile/form/validation.ts/name"
@@ -48,6 +47,7 @@ interface IEdiProfileTemplate {
   isReferer: boolean
   isReferee: boolean
   setIsEditMode: (value: boolean) => void
+  refetchProfile: () => void
 }
 
 const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
@@ -66,12 +66,13 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   isReferee,
   isProfileLoading,
   setIsEditMode,
+  refetchProfile,
 }) => {
   const formSchema = z
     .object({
       photoUrl: z.any().optional(),
       resumeUrl: z.any().optional(),
-      username: nameValidation(10).min(1, {
+      username: nameValidation(20).min(1, {
         message: `至少有要1粒字`,
       }),
       company: conditionalValidation(30).optional(),
@@ -84,16 +85,16 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         .or(z.literal("")),
       description: conditionalValidation(3000).optional(),
       countryUuid: z.string().min(1, {
-        message: `俾幫手填下🙏🏻`,
+        message: `幫手填下🙏🏻`,
       }),
       provinceUuid: z.string().min(1, {
-        message: `俾幫手填下🙏🏻`,
+        message: `幫手填下🙏🏻`,
       }),
       cityUuid: z.string().min(1, {
-        message: `俾幫手填下🙏🏻`,
+        message: `幫手填下🙏🏻`,
       }),
       industryUuid: z.string().min(1, {
-        message: `俾幫手填下🙏🏻`,
+        message: `幫手填下🙏🏻`,
       }),
       yearOfExperience: z
         .string()
@@ -144,7 +145,6 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       }
     )
 
-  const router = useRouter()
   const { toast } = useToast()
   const [image, setImage] = useState<any | null>(null)
   const [base64Image, setBase64Image] = useState<string | StaticImport | null>(
@@ -179,7 +179,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
 
   const countryWatch = watch("countryUuid")
   const provinceWatch = watch("provinceUuid")
-  const yeoWatch = watch("yearOfExperience")
+  const yearOfExperienceWatch = watch("yearOfExperience")
 
   const industryOptions = useIndustryOptions()
   const countryOptions = useCountryOptions()
@@ -193,25 +193,30 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   }, [provinceOptions, provinceWatch])
 
   useEffect(() => {
-    // Convert yeoWatch to a number
-    const yeoWatchNumber = yeoWatch ? parseFloat(yeoWatch) : 0
+    // Convert yearOfExperienceWatch to a number
+    const yearOfExperienceWatchNumber = yearOfExperienceWatch
+      ? parseFloat(yearOfExperienceWatch)
+      : 0
 
-    // Check if yeoWatchNumber is a valid number and not NaN
-    if (!isNaN(yeoWatchNumber) && typeof yeoWatchNumber === "number") {
-      // If yeoWatchNumber is negative, set yearOfExperience to '0'
-      if (yeoWatchNumber < 0) {
+    // Check if yearOfExperienceWatchNumber is a valid number and not NaN
+    if (
+      !isNaN(yearOfExperienceWatchNumber) &&
+      typeof yearOfExperienceWatchNumber === "number"
+    ) {
+      // If yearOfExperienceWatchNumber is negative, set yearOfExperience to '0'
+      if (yearOfExperienceWatchNumber < 0) {
         form.setValue("yearOfExperience", "0")
       } else {
-        // Round yeoWatchNumber to the nearest integer and set it as yearOfExperience
-        const roundedValue = Math.round(yeoWatchNumber)
+        // Round yearOfExperienceWatchNumber to the nearest integer and set it as yearOfExperience
+        const roundedValue = Math.round(yearOfExperienceWatchNumber)
         form.setValue("yearOfExperience", roundedValue.toString())
       }
     } else {
-      // Handle cases where yeoWatchNumber is not a valid number
+      // Handle cases where yearOfExperienceWatchNumber is not a valid number
       // Set a default value or handle it as needed
       form.setValue("yearOfExperience", "0")
     }
-  }, [yeoWatch])
+  }, [yearOfExperienceWatch])
 
   const onSubmit = async (values: z.infer<typeof formSchema>, e: any) => {
     e.preventDefault()
@@ -275,7 +280,8 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           toast({
             title: "個人檔案更改成功!",
           })
-          router.push("/")
+          setIsEditMode(false)
+          refetchProfile()
         },
         onSettled: () => {
           setIsSubmitting(false)
@@ -284,6 +290,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           return toast({
             title: "出事！",
             description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+            variant: "destructive",
           })
         },
       })
@@ -380,7 +387,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
 
           <FormTextInput
             control={form.control}
-            label="使用者名稱"
+            label="用戶名稱"
             name="username"
           />
 

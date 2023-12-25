@@ -15,13 +15,49 @@ export const siteConfig = {
       name: "用戶檔案",
       href: "/profile",
     },
-    auth: {
+    signUp: {
       name: "auth",
-      href: "/auth",
+      href: "/auth/sign-up",
       metadata: {
-        title: "登入 / 註冊 Sign In / Sign Up",
-        description:
-          "透過魔術連結登入或註冊。無須密碼。 Sign in or sign up with magic link. Password is not required.",
+        title: "註冊 Sign Up",
+        description: "立即加入，永遠唔會遲！ Join now, never too late!",
+      },
+    },
+    signUpConfirmation: {
+      name: "註冊成功",
+      href: "/auth/sign-up-confirmation",
+      metadata: {
+        title: "註冊成功! Registration success!",
+      },
+    },
+    signIn: {
+      name: "auth",
+      href: "/auth/sign-in",
+      metadata: {
+        title: "登入 Sign In",
+        description: "登入 Sign in",
+      },
+    },
+    emailVerification: {
+      name: "電郵認證",
+      href: "/auth/email-verification",
+      metadata: {
+        title: "電郵認證 Email Verification",
+      },
+    },
+    resetPassword: {
+      name: "重置密碼",
+      href: "/auth/reset-password",
+      metadata: {
+        title: "重置密碼 Reset Password",
+      },
+    },
+    forgetPassword: {
+      name: "重置密碼",
+      href: "/auth/forgot-password",
+      metadata: {
+        title: "忘記密碼 Forgot Password",
+        description: "忘記密碼 Forgot Password",
       },
     },
     referrer: {
@@ -100,6 +136,14 @@ export const siteConfig = {
       href: "/contributors",
       metadata: {
         title: "貢獻者名單 Contributor List",
+        description: METADATA_DEFAULT_DESCRIPTION,
+      },
+    },
+    installation: {
+      name: "安裝Referalah",
+      href: "/installation",
+      metadata: {
+        title: "安裝Referalah Install Referalah",
         description: METADATA_DEFAULT_DESCRIPTION,
       },
     },

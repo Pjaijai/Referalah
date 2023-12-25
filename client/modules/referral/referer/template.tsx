@@ -2,8 +2,8 @@
 
 import React from "react"
 
-import { MessageType } from "@/types/common/message-type"
-import { ReferralType } from "@/types/common/referral-type"
+import { EMessageType } from "@/types/common/message-type"
+import { EReferralType } from "@/types/common/referral-type"
 import useSearchReferral from "@/hooks/api/referral/search-referral"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -26,8 +26,8 @@ const RefererPageTemplate: React.FunctionComponent<
     handleCityChange,
     handleSortingChange,
     handleIndustryChange,
-    handleYoeMinChange,
-    handleYoeMaxChange,
+    handleMaxYearOfExperienceChange,
+    handleMinYearOfExperienceChange,
     handleJobTitleChange,
     handleSubmitChange,
     handleKeyPressSubmitChange,
@@ -38,10 +38,10 @@ const RefererPageTemplate: React.FunctionComponent<
     cityUuid,
     countryUuid,
     industryUuid,
-    yoeMax,
-    yoeMin,
+    maxYearOfExperience,
+    minYearOfExperience,
     sorting,
-  } = useSearchReferral(ReferralType.REFERRER)
+  } = useSearchReferral(EReferralType.REFERRER)
 
   const {
     data: refererListData,
@@ -78,17 +78,17 @@ const RefererPageTemplate: React.FunctionComponent<
             onProvinceChange={handleProvinceChange}
             onIndustryChange={handleIndustryChange}
             onSortingChange={handleSortingChange}
-            onYeoMinChange={handleYoeMinChange}
-            onYeoMaxChange={handleYoeMaxChange}
+            onMinYearOfExperienceChange={handleMinYearOfExperienceChange}
+            onMaxYearOfExperienceChange={handleMaxYearOfExperienceChange}
             onSubmitChange={handleSubmitChange}
             currentSorting={sorting}
             currentCityUuid={cityUuid}
             currentCountryUuid={countryUuid}
             currentIndustryUuid={industryUuid}
             currentProvinceUuid={provinceUuid}
-            currentYeoMax={yoeMax}
-            currentYeoMin={yoeMin}
-            type={MessageType.REFERRAL}
+            currentMaxYearOfExperience={maxYearOfExperience}
+            currentMinYearOfExperience={minYearOfExperience}
+            type={EMessageType.REFERRAL}
           />
           <ResetButton onClick={handleReset} />
           <Button onClick={handleSubmitChange} className="whitespace-nowrap">
@@ -135,7 +135,7 @@ const RefererPageTemplate: React.FunctionComponent<
                   yearOfExperience={referer.year_of_experience}
                   uuid={referer.uuid}
                   key={referer.uuid}
-                  receiverType={ReferralType.REFERRER}
+                  receiverType={EReferralType.REFERRER}
                 />
               )
             })}

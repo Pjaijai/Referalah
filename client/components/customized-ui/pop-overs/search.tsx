@@ -3,7 +3,7 @@ import { postSortingOptions } from "@/utils/common/sorting/post"
 import { referralSortingOptions } from "@/utils/common/sorting/referer"
 import { Label } from "@radix-ui/react-label"
 
-import { MessageType } from "@/types/common/message-type"
+import { EMessageType } from "@/types/common/message-type"
 import useCityOptions from "@/hooks/common/options/city-options"
 import useCountryOptions from "@/hooks/common/options/country-options"
 import useIndustryOptions from "@/hooks/common/options/industry-options"
@@ -26,17 +26,17 @@ interface ISearchPopoverProps {
   onCityChange: (value: string) => void
   onIndustryChange: (value: string) => void
   onSortingChange: (value: string) => void
-  onYeoMinChange: (e: ChangeEvent<HTMLInputElement>) => void
-  onYeoMaxChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onMinYearOfExperienceChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onMaxYearOfExperienceChange: (e: ChangeEvent<HTMLInputElement>) => void
   onSubmitChange: () => void
   currentCountryUuid?: string
   currentProvinceUuid?: string
   currentCityUuid?: string
   currentIndustryUuid?: string
-  currentYeoMin?: string
-  currentYeoMax?: string
+  currentMinYearOfExperience?: string
+  currentMaxYearOfExperience?: string
   currentSorting: string
-  type: MessageType
+  type: EMessageType
 }
 
 const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
@@ -47,14 +47,14 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
   onProvinceChange,
   onIndustryChange,
   onSortingChange,
-  onYeoMinChange,
-  onYeoMaxChange,
+  onMinYearOfExperienceChange,
+  onMaxYearOfExperienceChange,
   currentCountryUuid,
   currentProvinceUuid,
   currentCityUuid,
   currentIndustryUuid,
-  currentYeoMin,
-  currentYeoMax,
+  currentMinYearOfExperience,
+  currentMaxYearOfExperience,
   currentSorting,
   type,
 }) => {
@@ -96,15 +96,15 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
               {/* <div className="grid grid-cols-3 items-center gap-4"> */}
               <Input
                 type="number"
-                onChange={onYeoMinChange}
-                value={currentYeoMin}
+                onChange={onMinYearOfExperienceChange}
+                value={currentMinYearOfExperience}
                 placeholder="下限"
               />
 
               <Input
                 type="number"
-                onChange={onYeoMaxChange}
-                value={currentYeoMax}
+                onChange={onMaxYearOfExperienceChange}
+                value={currentMaxYearOfExperience}
                 placeholder="上限"
               />
             </div>
