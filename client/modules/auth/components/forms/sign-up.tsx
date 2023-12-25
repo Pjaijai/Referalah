@@ -113,7 +113,7 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
           name="confirmPassword"
         />
         <p className="text-xs text-muted-foreground">
-          點擊「註冊」按鈕即表示你同意
+          點擊「註冊 | Register」按鈕即表示你同意
           <HighlightedLink href={siteConfig.page.privacyPolicy.href}>
             私隱政策
           </HighlightedLink>
