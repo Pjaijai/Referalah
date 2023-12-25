@@ -51,6 +51,17 @@ const ResetPasswordPageTemplate = () => {
                 variant: "destructive",
               })
             }
+
+            if (
+              error.message ===
+              "New password should be different from the old password."
+            ) {
+              return toast({
+                title: "新密碼不能重用舊密碼",
+                description: "俾少少創意先？",
+                variant: "destructive",
+              })
+            }
             return toast({
               title: "出事！",
               description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
