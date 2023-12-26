@@ -1,6 +1,7 @@
 import "@/styles/globals.css"
 import { Metadata } from "next"
 import { cookies } from "next/headers"
+import { I18nProviderClient } from "@/utils/services/internationalization/client"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Analytics } from "@vercel/analytics/react"
 
@@ -48,12 +49,16 @@ export const metadata: Metadata = {
 
 interface RootLayoutProps {
   children: React.ReactNode
+  params: { locale: string }
 }
 
 // do not cache this layout
 export const revalidate = 0
 
-export default async function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({
+  children,
+  params: { locale },
+}: RootLayoutProps) {
   const supabase = createServerComponentClient({ cookies })
 
   const {
@@ -72,19 +77,22 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         )}
       >
         <GoogleAnalytics />
+
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <APIProvider>
-            <AuthProvider accessToken={accessToken}>
-              <ToastProvider>
-                <div className="flex min-h-screen flex-col">
-                  <SiteHeader />
-                  <div className="container grow">{children}</div>
-                  <NavFooter />
-                </div>
-                <Analytics />
-                <TailwindIndicator />
-              </ToastProvider>
-            </AuthProvider>
+            <I18nProviderClient locale={locale}>
+              <AuthProvider accessToken={accessToken}>
+                <ToastProvider>
+                  <div className="flex min-h-screen flex-col">
+                    <SiteHeader />
+                    <div className="container grow">{children}</div>
+                    <NavFooter />
+                  </div>
+                  <Analytics />
+                  <TailwindIndicator />
+                </ToastProvider>
+              </AuthProvider>
+            </I18nProviderClient>
           </APIProvider>
         </ThemeProvider>
       </body>
