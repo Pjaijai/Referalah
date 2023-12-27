@@ -16,7 +16,7 @@ const ChatRoomCard: React.FunctionComponent<IChatRoomCardProps> = ({
 }) => {
   const truncatedText = text.slice(0, 50)
   return (
-    <div className="flex flex-row items-center gap-x-3 p-2">
+    <div className="flex flex-row items-center gap-x-3 rounded-sm  p-2 hover:bg-gray-100 dark:hover:bg-gray-700">
       <BaseAvatar fallBack={"A"} size="medium" url="" alt={""} />
       <div className="flex w-full flex-col">
         <div className="flex flex-row items-center justify-between ">
