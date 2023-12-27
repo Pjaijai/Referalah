@@ -7,7 +7,7 @@ interface IBaseAvatar {
   url?: string
   alt: string | null
   fallBack: string | null
-  size?: "large"
+  size?: "large" | "medium"
   className?: string
 }
 const BaseAvatar: React.FunctionComponent<IBaseAvatar> = ({
@@ -19,7 +19,12 @@ const BaseAvatar: React.FunctionComponent<IBaseAvatar> = ({
 }) => {
   return (
     <Avatar
-      className={cn(size === "large" ? "h-24 w-24 text-2xl" : "", className)}
+      className={cn(
+        size === "large" && "h-24 w-24 text-2xl",
+
+        size === "medium" && "h-12 w-12 text-2xl",
+        className
+      )}
     >
       <AvatarImage src={url ? url : ""} alt={alt ? alt : ""} />
       <AvatarFallback>{fallBack}</AvatarFallback>

@@ -23,16 +23,18 @@ import {
   MoreVertical,
   Pencil,
   RotateCcw,
+  Send,
+  SendHorizontal,
   SlidersHorizontal,
   SunMedium,
   Twitter,
   Undo2,
   User,
   Verified,
-  type Icon as LucideIcon,
+  type XIcon as LucideIcon,
 } from "lucide-react"
 
-export type Icon = LucideIcon
+export type Icon = typeof LucideIcon
 
 export const Icons = {
   sun: SunMedium,
@@ -56,6 +58,8 @@ export const Icons = {
   history: History,
   eye: Eye,
   eyeOff: EyeOff,
+  sendHorizontal: SendHorizontal,
+  send: Send,
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path
