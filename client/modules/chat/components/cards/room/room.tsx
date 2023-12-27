@@ -1,15 +1,18 @@
 import React from "react"
 
 import BaseAvatar from "@/components/customized-ui/avatars/base"
+import { Icons } from "@/components/icons"
 
 interface IChatRoomCardProps {
   text: string
   username: string
+  unread: boolean
 }
 
 const ChatRoomCard: React.FunctionComponent<IChatRoomCardProps> = ({
   username,
   text,
+  unread,
 }) => {
   const truncatedText = text.slice(0, 50)
   return (
@@ -21,7 +24,14 @@ const ChatRoomCard: React.FunctionComponent<IChatRoomCardProps> = ({
           <p className="text-sm text-muted-foreground">08:00</p>
         </div>
 
-        <p className="w-5/6 truncate text-muted-foreground">{truncatedText}</p>
+        <div className="flex w-full flex-row items-center justify-between">
+          <p className="w-5/6 truncate text-muted-foreground">
+            {truncatedText}
+          </p>
+          {unread && (
+            <Icons.bigDot className="text-green-700  dark:text-yellow-300" />
+          )}
+        </div>
       </div>
     </div>
   )
