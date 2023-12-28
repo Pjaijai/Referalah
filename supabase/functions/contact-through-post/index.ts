@@ -12,7 +12,7 @@ serve(async (req: any) => {
     return new Response("ok", { headers: corsHeaders })
   }
   const client = initSupabaseClient(req)
-  const sever = initSupabaseServer()
+  const server = initSupabaseServer()
   const { message, post_uuid } = await req.json()
 
   if (!client) {
@@ -45,13 +45,13 @@ serve(async (req: any) => {
       data: { user },
     } = await client.auth.getUser()
 
-    const { data: sender, error } = await sever
+    const { data: sender, error } = await server
       .from("user")
       .select("uuid,username, email")
       .eq("uuid", user.id)
       .single()
 
-    const { data: post } = await sever
+    const { data: post } = await server
       .from("post")
       .select(
         `   type,
@@ -143,7 +143,7 @@ serve(async (req: any) => {
       })
     }
 
-    const { error: insertError } = await sever
+    const { error: insertError } = await server
       .from("post_contact_history")
       .insert({
         post_uuid: post.uuid,
