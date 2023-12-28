@@ -3,6 +3,7 @@ import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
 import { initSupabaseClient } from "../_shared/client.ts"
 import { corsHeaders, ENV_IS_LOCAL } from "../_shared/cors.ts"
 import { EPostStatus } from "../_shared/types/post/status.ts"
+import { initSupabaseServer } from "../_shared/server.ts"
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")
 const WEB_BASE_URL = Deno.env.get("WEB_BASE_URL")
@@ -11,6 +12,7 @@ serve(async (req: any) => {
     return new Response("ok", { headers: corsHeaders })
   }
   const client = initSupabaseClient(req)
+  const sever = initSupabaseServer()
   const { message, post_uuid } = await req.json()
 
   if (!client) {
@@ -43,13 +45,13 @@ serve(async (req: any) => {
       data: { user },
     } = await client.auth.getUser()
 
-    const { data: sender, error } = await client
+    const { data: sender, error } = await sever
       .from("user")
       .select("uuid,username, email")
       .eq("uuid", user.id)
       .single()
 
-    const { data: post } = await client
+    const { data: post } = await sever
       .from("post")
       .select(
         `   type,
@@ -141,7 +143,7 @@ serve(async (req: any) => {
       })
     }
 
-    const { error: insertError } = await client
+    const { error: insertError } = await sever
       .from("post_contact_history")
       .insert({
         post_uuid: post.uuid,
