@@ -83,7 +83,7 @@ export default async function RootLayout({
             <I18nProviderClient locale={locale}>
               <AuthProvider accessToken={accessToken}>
                 <ToastProvider>
-                  <div className="flex min-h-screen flex-col">
+                  <div className="relative flex h-screen flex-col">
                     <SiteHeader />
                     <div className="flex-1">{children}</div>
                     <NavFooter />
