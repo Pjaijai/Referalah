@@ -16,6 +16,7 @@ const MessageCard: React.FunctionComponent<IMessageCardProps> = ({
         "flex w-full",
         sentByUser ? "justify-end" : " justify-start "
       )}
+      data-testid="message-card"
     >
       <div
         className={cn(
