@@ -1,5 +1,5 @@
 export interface IMessageReferralRequest {
-  type: "referee" | "referrer"
+  type: "referee" | "referer"
   to_uuid: string
   body: string
 }
