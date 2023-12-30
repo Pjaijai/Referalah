@@ -4,7 +4,7 @@ import { initSupabaseClient } from "../_shared/client.ts"
 import { corsHeaders, ENV_IS_LOCAL } from "../_shared/cors.ts"
 import { EPostStatus } from "../_shared/types/enums/post/status.ts"
 import { initSupabaseServer } from "../_shared/server.ts"
-import { IMessagePostCreatorRequest } from "../_shared/types/request/message-post-creator.js"
+import { IMessagePostCreatorRequest } from "../_shared/types/request/message-post-creator.ts"
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")
 const WEB_BASE_URL = Deno.env.get("WEB_BASE_URL")
@@ -13,6 +13,7 @@ serve(async (req: any) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders })
   }
+
   const client = initSupabaseClient(req)
   const server = initSupabaseServer()
   const { post_uuid, body: msgBody }: IMessagePostCreatorRequest =
@@ -54,13 +55,13 @@ serve(async (req: any) => {
       .eq("uuid", user.id)
       .single()
 
-    const { data: post } = await server
+    const { data: post, error: postError } = await server
       .from("post")
       .select(
         `   type,
               user(
-                  username,
-                  email
+                  uuid,
+                  username
               ),
               company_name,
               job_title,
@@ -163,6 +164,8 @@ serve(async (req: any) => {
         .from("conversation")
         .update({ last_message_uuid: message.uuid })
         .eq("uuid", conversation[0].uuid)
+        .select()
+        .single()
     }
 
     const subject = `${sender.username} is interested in you post - ${post.job_title}`
@@ -176,7 +179,7 @@ serve(async (req: any) => {
                 <p>Company: ${post.company_name}</p>
                 <p>${sender.username}'s profile: <a href="${WEB_BASE_URL}/en-ca/profile/${sender.uuid}">${WEB_BASE_URL}/profile/en-ca/${sender.uuid}</a></p>
                 <p>Please click the link below to continue the conversation:</p>
-                <a href="${WEB_BASE_URL}/en-ca/chat/${conversationUuid}">$${WEB_BASE_URL}/en-ca/chat/${conversationUuid}</a>
+                <a href="${WEB_BASE_URL}/en-ca/chat/${conversationUuid}">${WEB_BASE_URL}/en-ca/chat/${conversationUuid}</a>
 
                 <p>Message</p>
                 <div style="word-break: break-word; white-space: pre-wrap;">
@@ -199,7 +202,6 @@ serve(async (req: any) => {
         to: ENV_IS_LOCAL ? Deno.env.get("RESEND_TO_EMAIL") : post.user.email,
         subject: subject,
         html: body,
-        cc: [sender.email],
       }),
     })
 
