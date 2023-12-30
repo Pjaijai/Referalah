@@ -4,16 +4,19 @@ import { initSupabaseClient } from "../_shared/client.ts"
 import { corsHeaders, ENV_IS_LOCAL } from "../_shared/cors.ts"
 import { EPostStatus } from "../_shared/types/enums/post/status.ts"
 import { initSupabaseServer } from "../_shared/server.ts"
+import { IMessagePostCreatorRequest } from "../_shared/types/request/message-post-creator.js"
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")
 const WEB_BASE_URL = Deno.env.get("WEB_BASE_URL")
+
 serve(async (req: any) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders })
   }
   const client = initSupabaseClient(req)
   const server = initSupabaseServer()
-  const { message, post_uuid } = await req.json()
+  const { post_uuid, body: msgBody }: IMessagePostCreatorRequest =
+    await req.json()
 
   if (!client) {
     return new Response("User not signed in", {
@@ -22,7 +25,7 @@ serve(async (req: any) => {
     })
   }
 
-  if (!message) {
+  if (!msgBody) {
     return new Response("Missing Message", {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 400,
@@ -34,7 +37,7 @@ serve(async (req: any) => {
       status: 400,
     })
   }
-  if (message.length > 3000) {
+  if (msgBody.length > 4000) {
     return new Response("Message too long", {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 400,
@@ -64,7 +67,7 @@ serve(async (req: any) => {
               description,
               url,
               uuid
-      `
+      `,
       )
       .eq("uuid", post_uuid)
       .single()
@@ -76,7 +79,7 @@ serve(async (req: any) => {
       })
     }
     if (!post) {
-      return new Response("Post not exits", {
+      return new Response("Post does not exits", {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 404,
       })
@@ -96,29 +99,94 @@ serve(async (req: any) => {
       })
     }
 
-    const subject = `${sender.username}對你份街招有興趣`
+    // prevent_duplicate_conversation to make sure one conversation for two user
+    const { data: conversation, error: qwe } = await server.rpc(
+      "find_conversation",
+      {
+        user1_uuid: sender.uuid,
+        user2_uuid: post.user.uuid,
+      },
+    )
+
+    let conversationUuid
+
+    const newMsgBody = `
+    Post Title/街招 :${post.job_title}
+    company/公司 :${post.company_name}
+
+    ${msgBody}
+    `
+
+    if (!conversation[0]) {
+      const { data: insertConversationRes, error: insertConversationError } =
+        await server
+          .from("conversation")
+          .insert({ sender_uuid: sender.uuid, receiver_uuid: post.user.uuid })
+          .select()
+          .single()
+      conversationUuid = insertConversationRes.uuid
+
+      const { data: insertMessageRes, error: insertMessageError } = await server
+        .from("message")
+        .insert({
+          sender_uuid: sender.uuid,
+          conversation_uuid: insertConversationRes.uuid,
+          body: newMsgBody,
+        })
+        .select()
+        .single()
+
+      const { updateConversationRes, error: updateConversationError } =
+        await server
+          .from("conversation")
+          .update({ last_message_uuid: insertMessageRes.uuid })
+          .eq("uuid", insertConversationRes.uuid)
+    } else {
+      if (conversation[0].is_receiver_accepted === false)
+        return new Response("Receiver has not accepted the conversation", {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 400,
+        })
+
+      conversationUuid = conversation.uuid
+      const { data: message } = await server
+        .from("message")
+        .insert({
+          sender_uuid: sender.uuid,
+          conversation_uuid: conversation[0].uuid,
+          body: newMsgBody,
+        })
+        .select()
+        .single()
+
+      const { data, error } = await server
+        .from("conversation")
+        .update({ last_message_uuid: message.uuid })
+        .eq("uuid", conversation[0].uuid)
+    }
+
+    const subject = `${sender.username} is interested in you post - ${post.job_title}`
     const body = `
-            <html lang="zh-Hk">
+            <html>
             <body>
                 <p>Hi ${post.user.username}!</p>
-                <p>${sender.username}對你份街招有興趣</p>
-                <p>街招連結:<a href="${WEB_BASE_URL}/post/referer/${post.uuid}">${WEB_BASE_URL}/post/referer/${post.uuid}</a></p>
-                <p>職位: ${post.job_title}</p>
-                <p>公司名稱: ${post.company_name}</p>
-                <p>佢嘅電郵地址: ${sender.email} (回覆此Email可以直接聯絡對方)</p>
-                <p>佢嘅個人檔案: <a href="${WEB_BASE_URL}/profile/${sender.uuid}">${WEB_BASE_URL}/profile/${sender.uuid}</a></p>
-               
-                <p>佢個訊息</p>
-                <div style="word-break: break-word; white-space: pre-wrap;">
-                    ${message}
-                </div>
+                <p>${sender.username} sent you a message about your post: ${post.job_title}</p>
+                <p>Post's link:<a href="${WEB_BASE_URL}/en-ca/post/referer/${post.uuid}">${WEB_BASE_URL}/en-ca/post/referer/${post.uuid}</a></p>
+                <p>Job Title: ${post.job_title}</p>
+                <p>Company: ${post.company_name}</p>
+                <p>${sender.username}'s profile: <a href="${WEB_BASE_URL}/en-ca/profile/${sender.uuid}">${WEB_BASE_URL}/profile/en-ca/${sender.uuid}</a></p>
+                <p>Please click the link below to continue the conversation:</p>
+                <a href="${WEB_BASE_URL}/en-ca/chat/${conversationUuid}">$${WEB_BASE_URL}/en-ca/chat/${conversationUuid}</a>
 
-                  <p>溫馨提示：保持警覺，祝大家順利！</p>
+                <p>Message</p>
+                <div style="word-break: break-word; white-space: pre-wrap;">
+                    ${msgBody}
+                </div>
             </body>
             </html>
             `
 
-    const res = await fetch("https://api.resend.com/emails", {
+    const sendEmailRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -128,7 +196,6 @@ serve(async (req: any) => {
         from: ENV_IS_LOCAL
           ? "onboarding@resend.dev"
           : "Referalah <team@referalah.com>",
-        reply_to: sender.email,
         to: ENV_IS_LOCAL ? Deno.env.get("RESEND_TO_EMAIL") : post.user.email,
         subject: subject,
         html: body,
@@ -136,23 +203,21 @@ serve(async (req: any) => {
       }),
     })
 
-    if (res.ok === false) {
+    if (sendEmailRes.ok === false) {
       return new Response("Failed to send email", {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 400,
       })
     }
 
-    const { error: insertError } = await server
-      .from("post_contact_history")
-      .insert({
-        post_uuid: post.uuid,
-        sender_uuid: sender.uuid,
-        type: post.type,
-        message: message,
-      })
+    const res = {
+      data: {
+        conversation_uuid: conversationUuid,
+      },
+      success: true,
+    }
 
-    return new Response(JSON.stringify("success"), {
+    return new Response(JSON.stringify(res), {
       headers: { ...corsHeaders, "Content-Type": "application/json" }, // Be sure to add CORS headers here too
       status: 200,
     })
