@@ -7,6 +7,8 @@ import { ISignUpEmailPasswordRequest } from "@/types/api/request/auth/sign-up-wi
 import { IUpdatePasswordRequest } from "@/types/api/request/auth/update-password"
 import { IContactThroughPostRequest } from "@/types/api/request/contact/post"
 import { IContactReferralRequest } from "@/types/api/request/contact/referral"
+import { IMessagePostCreatorRequest } from "@/types/api/request/message/post-creator"
+import { IMessageReferralRequest } from "@/types/api/request/message/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
 import { IFilterMeta } from "@/types/api/request/post/filter-meta"
 import { ISearchPostsRequest } from "@/types/api/request/post/search"
@@ -15,6 +17,7 @@ import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
+import { IMessageReferralResponse } from "@/types/api/response/message/referral"
 import { IProvinceResponse } from "@/types/api/response/province"
 import {
   IGetPostResponse,
@@ -639,6 +642,51 @@ export const contactThroughPost = async (req: IContactThroughPostRequest) => {
     if (error) {
       throw error
     }
+  } catch (error) {
+    throw error
+  }
+}
+
+// Message
+export const messageReferral = async (req: IMessageReferralRequest) => {
+  try {
+    const { data, error } = await supabase.functions.invoke(
+      "message-referral",
+      {
+        body: {
+          type: req.type,
+          body: req.body,
+          to_uuid: req.toUuid,
+        },
+      }
+    )
+
+    if (error) {
+      throw error
+    }
+
+    return data.data as IMessageReferralResponse
+  } catch (error) {
+    throw error
+  }
+}
+
+export const messagePostCreator = async (req: IMessagePostCreatorRequest) => {
+  try {
+    const { data, error } = await supabase.functions.invoke(
+      "message-post-creator",
+      {
+        body: {
+          post_uuid: req.postUuid,
+          body: req.body,
+        },
+      }
+    )
+
+    if (error) {
+      throw error
+    }
+    return data.data as IMessageReferralResponse
   } catch (error) {
     throw error
   }
