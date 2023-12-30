@@ -9,8 +9,6 @@ import { z } from "zod"
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
-import useContactReferral from "@/hooks/api/contact/referral"
-import useContactThroughPost from "@/hooks/api/contact/through-post"
 import useMessagePostCreator from "@/hooks/api/message/post-creator"
 import useMessageReferral from "@/hooks/api/message/referral"
 import { Button } from "@/components/ui/button"
@@ -71,8 +69,6 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
   })
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
-  // const { mutate: contactReferral } = useContactReferral()
-  // const { mutate: contactThroughPost } = useContactThroughPost()
 
   const { mutate: messageReferral } = useMessageReferral()
   const { mutate: messagePostCreator } = useMessagePostCreator()

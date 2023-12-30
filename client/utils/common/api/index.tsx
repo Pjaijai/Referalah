@@ -5,8 +5,6 @@ import { ISignInEmailPasswordRequest } from "@/types/api/request/auth/sign-in-wi
 import { ISignInEmailMagicLinkRequest } from "@/types/api/request/auth/sign-in-with-magic-link"
 import { ISignUpEmailPasswordRequest } from "@/types/api/request/auth/sign-up-with-email-password"
 import { IUpdatePasswordRequest } from "@/types/api/request/auth/update-password"
-import { IContactThroughPostRequest } from "@/types/api/request/contact/post"
-import { IContactReferralRequest } from "@/types/api/request/contact/referral"
 import { IMessagePostCreatorRequest } from "@/types/api/request/message/post-creator"
 import { IMessageReferralRequest } from "@/types/api/request/message/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
@@ -606,47 +604,6 @@ export const getCityList = async () => {
 
   return data
 }
-// Contact
-export const contactReferral = async (req: IContactReferralRequest) => {
-  try {
-    const { data, error } = await supabase.functions.invoke(
-      "contact-referral",
-      {
-        body: {
-          type: req.type,
-          message: req.message,
-          to_uuid: req.toUuid,
-        },
-      }
-    )
-
-    if (error) {
-      throw error
-    }
-  } catch (error) {
-    throw error
-  }
-}
-export const contactThroughPost = async (req: IContactThroughPostRequest) => {
-  try {
-    const { data, error } = await supabase.functions.invoke(
-      "contact-through-post",
-      {
-        body: {
-          message: req.message,
-          post_uuid: req.postUuid,
-        },
-      }
-    )
-
-    if (error) {
-      throw error
-    }
-  } catch (error) {
-    throw error
-  }
-}
-
 // Message
 export const messageReferral = async (req: IMessageReferralRequest) => {
   try {
