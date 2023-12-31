@@ -13,6 +13,7 @@ import { ISearchPostsRequest } from "@/types/api/request/post/search"
 import { IUpdatePostRequest } from "@/types/api/request/post/update"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { ICityResponse } from "@/types/api/response/city"
+import { IGetConversationListByUserUuidResponse } from "@/types/api/response/conversation-list"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IMessageReferralResponse } from "@/types/api/response/message/referral"
@@ -649,6 +650,130 @@ export const messagePostCreator = async (req: IMessagePostCreatorRequest) => {
   }
 }
 
+export const getConversationListByUserUuid = async ({
+  userUuid,
+  page,
+  numberOfDataPerPage,
+}: {
+  userUuid: string
+  page: number
+  numberOfDataPerPage: number
+}) => {
+  const from = page + page * numberOfDataPerPage
+  const to = from + numberOfDataPerPage
+
+  try {
+    const { data, error } = await supabase
+      .from("conversation")
+      .select(
+        `
+      sender_uuid(username, avatar_url, uuid),
+      receiver_uuid(username,avatar_url, uuid),
+      uuid,
+      is_receiver_accepted,
+      is_receiver_seen,
+      is_sender_seen,
+      last_message_uuid(
+        created_at, 
+        uuid,
+        sender_uuid,
+        body
+      )
+      `
+      )
+      .or(`sender_uuid.eq.${userUuid},receiver_uuid.eq.${userUuid}`)
+      .range(from, to)
+      .returns<IGetConversationListByUserUuidResponse>()
+      .order("last_updated_at")
+
+    if (error) {
+      throw error
+    }
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const getMessageListByConversationUuid = async ({
+  conversationUuid,
+  page,
+  numberOfDataPerPage,
+}: {
+  conversationUuid: string
+  page: number
+  numberOfDataPerPage: number
+}) => {
+  const from = page + page * numberOfDataPerPage
+  const to = from + numberOfDataPerPage
+  try {
+    const { data, error } = await supabase
+      .from("message")
+      .select("*")
+      .eq("conversation_uuid", conversationUuid)
+      .range(from, to)
+
+    if (error) {
+      throw error
+    }
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const createMessage = async ({
+  msgBody,
+  conversationUuid,
+}: {
+  msgBody: string
+  conversationUuid: string
+}) => {
+  try {
+    const { data, error } = await supabase
+      .from("message")
+      .insert({
+        body: msgBody,
+        conversation_uuid: conversationUuid,
+      })
+      .select("created_at, uuid")
+      .single()
+
+    if (error) throw error
+
+    const { error: UpdateError } = await supabase
+      .from("conversation")
+      .update({
+        last_updated_at: data?.created_at,
+        last_message_uuid: data.uuid,
+      })
+      .eq("uuid", conversationUuid)
+
+    if (UpdateError) throw UpdateError
+
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const updateConversationLastUpdateAt = async ({
+  lastUpdatedAt, // string
+}: {
+  lastUpdatedAt: string
+}) => {
+  try {
+    const { data, error } = await supabase.from("conversation").update({
+      last_updated_at: lastUpdatedAt,
+    })
+
+    if (error) throw error
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
 // Statistic
 export const getUserCount = async () => {
   try {
@@ -662,6 +787,3 @@ export const getUserCount = async () => {
     throw error
   }
 }
-// }
-
-// export default apiService

@@ -8,12 +8,14 @@ interface IBaseInfiniteScrollProps {
   next: any
   hasMore: boolean
   children: ReactNode
+  endMessage?: ReactNode
 }
 const BaseInfiniteScroll: React.FunctionComponent<IBaseInfiniteScrollProps> = ({
   dataLength,
   hasMore,
   children,
   next,
+  endMessage,
 }) => {
   return (
     <InfiniteScroll
@@ -21,18 +23,22 @@ const BaseInfiniteScroll: React.FunctionComponent<IBaseInfiniteScrollProps> = ({
       next={next}
       hasMore={hasMore}
       loader={
-        <div className="mt-4 flex justify-center">
-          <Badge variant={"outline"} className="flex justify-center">
-            Load緊...
-          </Badge>
-        </div>
+        endMessage || (
+          <div className="mt-4 flex justify-center">
+            <Badge variant={"outline"} className="flex justify-center">
+              Load緊...
+            </Badge>
+          </div>
+        )
       }
       endMessage={
-        <div className="mt-4 flex justify-center">
-          <Badge variant={"outline"} className="flex justify-center">
-            盡頭了！
-          </Badge>
-        </div>
+        endMessage || (
+          <div className="mt-4 flex justify-center">
+            <Badge variant={"outline"} className="flex justify-center">
+              盡頭了！
+            </Badge>
+          </div>
+        )
       }
     >
       <>{children}</>

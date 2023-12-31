@@ -11,6 +11,8 @@ enum EQueryKeyString {
   SEARCH_REFEREE = "search-referee",
   POST_DETAILS = "post-details",
   LIST_POSTS = "list-posts",
+  CONVERSATION_LIST = "conversation-list",
+  MESSAGE_LIST = "message-list",
 }
 
 export { EQueryKeyString }

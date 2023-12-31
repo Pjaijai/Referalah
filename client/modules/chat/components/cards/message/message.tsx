@@ -20,8 +20,8 @@ const MessageCard: React.FunctionComponent<IMessageCardProps> = ({
     >
       <div
         className={cn(
-          "w-fit max-w-[40%] rounded-lg  px-4 py-2",
-          sentByUser ? "bg-green-200 text-end" : " bg-gray-200"
+          "w-fit max-w-[40%] rounded-lg  px-4 py-2 text-start",
+          sentByUser ? "bg-green-200 " : " bg-gray-200"
         )}
       >
         <p className="whitespace-pre-wrap break-words dark:text-black">
