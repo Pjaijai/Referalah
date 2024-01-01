@@ -69,6 +69,7 @@ export interface Database {
           is_receiver_seen: boolean
           is_sender_seen: boolean
           last_message_uuid: string | null
+          last_updated_at: string
           receiver_uuid: string
           sender_uuid: string
           status: Database["public"]["Enums"]["conversation_status"]
@@ -81,6 +82,7 @@ export interface Database {
           is_receiver_seen?: boolean
           is_sender_seen?: boolean
           last_message_uuid?: string | null
+          last_updated_at?: string
           receiver_uuid: string
           sender_uuid: string
           status?: Database["public"]["Enums"]["conversation_status"]
@@ -93,6 +95,7 @@ export interface Database {
           is_receiver_seen?: boolean
           is_sender_seen?: boolean
           last_message_uuid?: string | null
+          last_updated_at?: string
           receiver_uuid?: string
           sender_uuid?: string
           status?: Database["public"]["Enums"]["conversation_status"]
@@ -185,7 +188,7 @@ export interface Database {
           conversation_uuid: string
           created_at?: string
           id?: number
-          sender_uuid: string
+          sender_uuid?: string
           status?: Database["public"]["Enums"]["message_status"]
           uuid?: string
         }
@@ -199,13 +202,6 @@ export interface Database {
           uuid?: string
         }
         Relationships: [
-          {
-            foreignKeyName: "message_conversation_uuid_fkey"
-            columns: ["conversation_uuid"]
-            isOneToOne: false
-            referencedRelation: "conversation"
-            referencedColumns: ["uuid"]
-          },
           {
             foreignKeyName: "message_sender_uuid_fkey"
             columns: ["sender_uuid"]
