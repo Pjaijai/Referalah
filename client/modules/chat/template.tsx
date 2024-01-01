@@ -5,10 +5,12 @@ import ChatRightSection from "@/modules/chat/components/sections/right/right"
 
 const ChatPageTemplate = () => {
   return (
-    <div className="flex h-full w-full flex-row">
-      <ChatLeftSection />
-      <ChatRightSection />
-    </div>
+    <>
+      <div className="flex h-full max-h-screen w-full flex-row overflow-hidden  border-2">
+        <ChatLeftSection />
+        <ChatRightSection />
+      </div>
+    </>
   )
 }
 

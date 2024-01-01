@@ -1,5 +1,8 @@
-import React from "react"
+import React, { useEffect } from "react"
 import ChatRoomCard from "@/modules/chat/components/cards/room/room"
+import useConversationStore, {
+  IConversation,
+} from "@/modules/chat/state/conversations"
 
 import useGetConversationListByUserUuid from "@/hooks/api/message/get-conversation-by-user-uuid"
 import useUserStore from "@/hooks/state/user/store"
@@ -10,8 +13,48 @@ const ChatRoomList = () => {
   const userUuid = useUserStore((state) => state.uuid)
   const { data, error, isLoading, fetchNextPage } =
     useGetConversationListByUserUuid(userUuid)
-
+  const setConversations = useConversationStore(
+    (state) => state.setConversations
+  )
   const list = data !== undefined ? data.pages.flatMap((d) => d) : []
+
+  useEffect(() => {
+    const conversations: IConversation[] = list.map((con) => {
+      const {
+        last_message_uuid,
+        receiver_uuid,
+        sender_uuid,
+        is_receiver_accepted,
+      } = con
+      const uuid = con.uuid
+      const lastMessage = {
+        body: last_message_uuid?.body,
+        createdByUuid: last_message_uuid?.sender_uuid, // Check if this is intended, or if you meant last_message_uuid?.created_by_uuid
+      }
+
+      const isReceiverAccepted = is_receiver_accepted
+
+      const receiver = {
+        uuid: receiver_uuid.uuid,
+        avatarUrl: receiver_uuid.avatar_url,
+        companyName: receiver_uuid.company_name,
+        jobTitle: receiver_uuid.job_title,
+        username: con.receiver_uuid.username,
+      }
+
+      const sender = {
+        uuid: sender_uuid.uuid,
+        avatarUrl: sender_uuid.avatar_url,
+        companyName: sender_uuid.company_name,
+        jobTitle: sender_uuid.job_title,
+        username: con.sender_uuid.username,
+      }
+
+      return { uuid, lastMessage, receiver, sender, isReceiverAccepted }
+    })
+
+    setConversations(conversations)
+  }, [list])
 
   return (
     <div className="h-full w-full gap-y-2">
@@ -27,6 +70,11 @@ const ChatRoomList = () => {
               return (
                 <ChatRoomCard
                   uuid={data.uuid}
+                  acceptRequest={
+                    userUuid === data.receiver_uuid.uuid
+                      ? data.is_receiver_accepted
+                      : false
+                  }
                   avatarUrl={
                     data.sender_uuid.uuid === userUuid
                       ? data.receiver_uuid.avatar_url
@@ -38,13 +86,16 @@ const ChatRoomList = () => {
                       : data.sender_uuid.username
                   }
                   text={data.last_message_uuid && data.last_message_uuid.body}
-                  unread={
+                  isSeen={
                     data.sender_uuid.uuid === userUuid
                       ? data.is_sender_seen
                       : data.is_receiver_seen
                   }
                   updatedAt={
                     data.last_message_uuid && data.last_message_uuid.created_at
+                  }
+                  type={
+                    data.sender_uuid.uuid === userUuid ? "sender" : "receiver"
                   }
                 />
               )

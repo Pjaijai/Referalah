@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import useCreateMessage from "@/hooks/api/message/creat-message"
-import useUpdateConversationLastUpdatedAt from "@/hooks/api/message/update-conversation-last-updated-at"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import FormTextInput from "@/components/customized-ui/form/input"
@@ -15,10 +14,14 @@ import { Icons } from "@/components/icons"
 
 interface ISendMessageFormProps {
   conversationUuid: string | null
+  type: "sender" | "receiver"
+  isReceiverAccepted: boolean
 }
 
 const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
   conversationUuid,
+  type,
+  isReceiverAccepted,
 }) => {
   const form = useForm<z.infer<typeof sendMessageInFormSchema>>({
     resolver: zodResolver(sendMessageInFormSchema),
@@ -29,7 +32,6 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
   const { watch } = form
   const messageWatch = watch("message")
   const { mutate: create } = useCreateMessage()
-  const { mutate: update } = useUpdateConversationLastUpdatedAt()
   const [messageCreatedAt, setMessageCreatedAt] = useState()
   const onSubmit = async (values: z.infer<typeof sendMessageInFormSchema>) => {
     if (!conversationUuid) return
@@ -49,21 +51,35 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="relative">
-          <FormTextInput control={form.control} name="message" />
+      <form onSubmit={form.handleSubmit(onSubmit)} className="sticky bottom-2">
+        {type === "sender" && !isReceiverAccepted && (
+          <div className="sticky bottom-0 rounded-lg border-2 p-2  text-center">
+            對方未接受請求
+          </div>
+        )}
 
-          <Button
-            type="submit"
-            variant={"ghost"}
-            size={"xs"}
-            className="absolute right-0 top-1/2  -translate-y-1/2 hover:bg-transparent"
-          >
-            {messageWatch && (
-              <Icons.send className="opacity-100 transition-all duration-1000" />
-            )}
-          </Button>
-        </div>
+        {type === "receiver" && !isReceiverAccepted && (
+          <div className="rounded-2 sticky bottom-0 border-2 p-4 text-center">
+            請先接受對話請求
+          </div>
+        )}
+
+        {isReceiverAccepted && (
+          <div className="relative">
+            <FormTextInput control={form.control} name="message" />
+
+            <Button
+              type="submit"
+              variant={"ghost"}
+              size={"xs"}
+              className="absolute right-0 top-1/2  -translate-y-1/2 hover:bg-transparent"
+            >
+              {messageWatch && (
+                <Icons.send className="opacity-100 transition-all duration-1000" />
+              )}
+            </Button>
+          </div>
+        )}
       </form>
     </Form>
   )

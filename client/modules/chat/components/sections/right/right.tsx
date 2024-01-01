@@ -1,22 +1,62 @@
 import React from "react"
 import { useSearchParams } from "next/navigation"
+import AcceptConversationForm from "@/modules/chat/components/forms/accept-conversation/accept-conversation"
 import SendMessageForm from "@/modules/chat/components/forms/message/message"
 import ConversationHeader from "@/modules/chat/components/header/conversation/conversation"
 import MessageList from "@/modules/chat/components/lists/message/message"
+import useConversationStore from "@/modules/chat/state/conversations"
+
+import useUserStore from "@/hooks/state/user/store"
 
 const ChatRightSection = () => {
   const param = useSearchParams()
+  const userUuid = useUserStore((state) => state.uuid)
   const conversation = param.get("conversation")
+  const conversations = useConversationStore((state) => state.conversations)
+  const currentConversation = conversations.find(
+    (con) => con.uuid === conversation
+  )
 
+  if (!currentConversation || !conversation) return
   return (
-    <div className="flex w-[65%] flex-col">
+    <div className="flex h-full w-[65%] flex-col">
       <ConversationHeader
-        username="on99"
-        companyName={"Referalah"}
-        jobTitle={"Free Rider"}
+        username={
+          currentConversation?.sender.uuid === userUuid
+            ? currentConversation.receiver.username
+            : currentConversation.sender.username
+        }
+        companyName={
+          currentConversation?.sender.uuid === userUuid
+            ? currentConversation.receiver.companyName
+            : currentConversation.sender.companyName
+        }
+        jobTitle={
+          currentConversation?.sender.uuid === userUuid
+            ? currentConversation.receiver.jobTitle
+            : currentConversation.sender.jobTitle
+        }
       />
-      <MessageList conversationUuid={conversation} />
-      <SendMessageForm conversationUuid={conversation} />
+      {currentConversation.receiver.uuid === userUuid &&
+        !currentConversation.isReceiverAccepted && (
+          <AcceptConversationForm conversationUuid={conversation} />
+        )}
+
+      <MessageList
+        conversationUuid={conversation}
+        lastMessage={{
+          body: currentConversation.lastMessage?.body,
+          sentByUser:
+            currentConversation.lastMessage?.createdByUuid === userUuid,
+        }}
+      />
+      <SendMessageForm
+        conversationUuid={conversation}
+        type={
+          currentConversation.sender.uuid === userUuid ? "sender" : "receiver"
+        }
+        isReceiverAccepted={currentConversation.isReceiverAccepted}
+      />
     </div>
   )
 }
