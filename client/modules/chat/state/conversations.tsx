@@ -17,9 +17,10 @@ export interface IConversation {
     avatarUrl: string | null
     username: string
   }
-  lastMessage?: {
-    createdByUuid?: string
-    body?: string
+  lastMessage: {
+    createdByUuid: string
+    body: string
+    createdAt: string
   } | null
 }
 
