@@ -24,11 +24,16 @@ const MessageList: React.FunctionComponent<IMessageListProps> = ({
   const list = data !== undefined ? data.pages.flatMap((d) => d) : []
 
   return (
-    <div className="h-full w-full flex-1 overflow-auto ">
+    <div
+      className="flex h-full flex-col-reverse overflow-auto p-2"
+      id="messageScrollDiv"
+    >
       {!isLoading && list.length > 0 && (
         <BaseInfiniteScroll
-          dataLength={list ? list.length : 0} //This is important field to render the next data
+          dataLength={list ? list.length : 0}
           next={fetchNextPage}
+          inverse={true}
+          scrollableTarget="messageScrollDiv"
           hasMore={
             (data &&
               data.pages &&
@@ -37,7 +42,7 @@ const MessageList: React.FunctionComponent<IMessageListProps> = ({
           }
           endMessage={<></>}
         >
-          <div className="flex h-full flex-col gap-2 p-4">
+          <div className="flex h-full flex-col-reverse gap-2 p-4">
             {list.map((data) => {
               return (
                 <MessageCard
