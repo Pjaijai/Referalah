@@ -667,8 +667,8 @@ export const getConversationListByUserUuid = async ({
       .from("conversation")
       .select(
         `
-      sender_uuid(username, avatar_url, uuid),
-      receiver_uuid(username,avatar_url, uuid),
+      sender_uuid(username,company_name, job_title, avatar_url, uuid),
+      receiver_uuid(username,avatar_url,company_name, job_title, uuid),
       uuid,
       is_receiver_accepted,
       is_receiver_seen,
@@ -706,12 +706,14 @@ export const getMessageListByConversationUuid = async ({
 }) => {
   const from = page + page * numberOfDataPerPage
   const to = from + numberOfDataPerPage
+
   try {
     const { data, error } = await supabase
       .from("message")
       .select("*")
       .eq("conversation_uuid", conversationUuid)
       .range(from, to)
+      .order("created_at", { ascending: false })
 
     if (error) {
       throw error
@@ -757,15 +759,26 @@ export const createMessage = async ({
   }
 }
 
-export const updateConversationLastUpdateAt = async ({
-  lastUpdatedAt, // string
+export const updateConversation = async ({
+  isSenderSeen,
+  isReceiverAccepted,
+  isReceiverSeen,
+  conversationUuid,
 }: {
-  lastUpdatedAt: string
+  isSenderSeen?: boolean
+  isReceiverAccepted?: boolean
+  isReceiverSeen?: boolean
+  conversationUuid: string
 }) => {
   try {
-    const { data, error } = await supabase.from("conversation").update({
-      last_updated_at: lastUpdatedAt,
-    })
+    const { data, error } = await supabase
+      .from("conversation")
+      .update({
+        is_sender_seen: isSenderSeen,
+        is_receiver_seen: isReceiverSeen,
+        is_receiver_accepted: isReceiverAccepted,
+      })
+      .eq("uuid", conversationUuid)
 
     if (error) throw error
     return data

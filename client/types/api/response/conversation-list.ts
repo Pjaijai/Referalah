@@ -3,11 +3,15 @@ export interface IGetConversationListByUserUuidResponse {
     username: string
     avatar_url: string | null
     uuid: string
+    company_name: string
+    job_title: string
   }
   receiver_uuid: {
     username: string
     avatar_url: string | null
     uuid: string
+    company_name: string
+    job_title: string
   }
   uuid: string
   is_receiver_accepted: boolean
