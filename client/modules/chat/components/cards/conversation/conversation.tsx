@@ -7,7 +7,7 @@ import useUpdateConversation from "@/hooks/api/message/update-conversation"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import { Icons } from "@/components/icons"
 
-interface IChatRoomCardProps {
+interface IConversationProps {
   username: string
   text: string | null
   isSeen: boolean
@@ -18,7 +18,7 @@ interface IChatRoomCardProps {
   acceptRequest: boolean
 }
 
-const ChatRoomCard: React.FunctionComponent<IChatRoomCardProps> = ({
+const ConversationCard: React.FunctionComponent<IConversationProps> = ({
   text,
   isSeen,
   username,
@@ -35,8 +35,8 @@ const ChatRoomCard: React.FunctionComponent<IChatRoomCardProps> = ({
 
   const truncatedText = text ? text.slice(0, 35) : ""
 
-  const currentChatRoom = searchParams.get("conversation")
-  const isCurrentChatRoom = currentChatRoom === uuid
+  const currentConversation = searchParams.get("conversation")
+  const isCurrentConversation = currentConversation === uuid
 
   const handleClick = async () => {
     if (type === "sender" && !isSeen) {
@@ -62,7 +62,7 @@ const ChatRoomCard: React.FunctionComponent<IChatRoomCardProps> = ({
       onClick={handleClick}
       className={cn(
         "flex w-full flex-row items-center gap-x-3 rounded-sm  p-2 hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700",
-        isCurrentChatRoom && "bg-gray-100 dark:bg-gray-700"
+        isCurrentConversation && "bg-gray-100 dark:bg-gray-700"
       )}
     >
       <BaseAvatar
@@ -97,4 +97,4 @@ const ChatRoomCard: React.FunctionComponent<IChatRoomCardProps> = ({
   )
 }
 
-export default ChatRoomCard
+export default ConversationCard

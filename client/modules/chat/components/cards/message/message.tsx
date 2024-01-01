@@ -5,10 +5,12 @@ import { cn } from "@/lib/utils"
 interface IMessageCardProps {
   text: string
   sentByUser: boolean
+  createdAt: string // datetime string
 }
 const MessageCard: React.FunctionComponent<IMessageCardProps> = ({
   text,
   sentByUser,
+  createdAt,
 }) => {
   return (
     <div

@@ -3,7 +3,6 @@ import MessageCard from "@/modules/chat/components/cards/message/message"
 
 import useGetMessageListByConversationUuid from "@/hooks/api/message/get-message-list-by-conversation-uuid"
 import useUserStore from "@/hooks/state/user/store"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 
 interface IMessageListProps {
@@ -11,6 +10,7 @@ interface IMessageListProps {
   lastMessage: {
     sentByUser: boolean
     body?: string
+    createdAt?: string
   }
 }
 const MessageList: React.FunctionComponent<IMessageListProps> = ({
@@ -44,6 +44,7 @@ const MessageList: React.FunctionComponent<IMessageListProps> = ({
                   text={data.body}
                   sentByUser={userUuid === data.sender_uuid}
                   key={data.uuid}
+                  createdAt={data.created_at}
                 />
               )
             })}
@@ -54,6 +55,7 @@ const MessageList: React.FunctionComponent<IMessageListProps> = ({
         <MessageCard
           text={lastMessage.body || "deleted"}
           sentByUser={lastMessage.sentByUser}
+          createdAt={lastMessage.createdAt || ""}
         />
       )}
     </div>

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import ChatRoomCard from "@/modules/chat/components/cards/room/room"
+import ConversationCard from "@/modules/chat/components/cards/conversation/conversation"
 import useConversationStore, {
   IConversation,
 } from "@/modules/chat/state/conversations"
@@ -9,7 +9,7 @@ import useUserStore from "@/hooks/state/user/store"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 
-const ChatRoomList = () => {
+const ConversationList = () => {
   const userUuid = useUserStore((state) => state.uuid)
   const { data, error, isLoading, fetchNextPage } =
     useGetConversationListByUserUuid(userUuid)
@@ -27,10 +27,13 @@ const ChatRoomList = () => {
         is_receiver_accepted,
       } = con
       const uuid = con.uuid
-      const lastMessage = {
-        body: last_message_uuid?.body,
-        createdByUuid: last_message_uuid?.sender_uuid, // Check if this is intended, or if you meant last_message_uuid?.created_by_uuid
-      }
+      const lastMessage = last_message_uuid
+        ? {
+            body: last_message_uuid.body,
+            createdByUuid: last_message_uuid.sender_uuid,
+            createdAt: last_message_uuid.created_at,
+          }
+        : null
 
       const isReceiverAccepted = is_receiver_accepted
 
@@ -68,7 +71,7 @@ const ChatRoomList = () => {
           <ScrollArea className="h-full">
             {list.map((data) => {
               return (
-                <ChatRoomCard
+                <ConversationCard
                   uuid={data.uuid}
                   acceptRequest={
                     userUuid === data.receiver_uuid.uuid
@@ -107,4 +110,4 @@ const ChatRoomList = () => {
   )
 }
 
-export default ChatRoomList
+export default ConversationList

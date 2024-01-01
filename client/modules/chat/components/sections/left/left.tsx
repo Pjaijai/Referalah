@@ -1,10 +1,10 @@
 import React from "react"
-import ChatRoomList from "@/modules/chat/components/lists/room/room"
+import ConversationList from "@/modules/chat/components/lists/conversation.tsx/conversation"
 
 const ChatLeftSection = () => {
   return (
     <div className="w-[35%] p-2">
-      <ChatRoomList />
+      <ConversationList />
     </div>
   )
 }

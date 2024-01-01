@@ -48,6 +48,7 @@ const ChatRightSection = () => {
           body: currentConversation.lastMessage?.body,
           sentByUser:
             currentConversation.lastMessage?.createdByUuid === userUuid,
+          createdAt: currentConversation.lastMessage?.createdAt,
         }}
       />
       <SendMessageForm
