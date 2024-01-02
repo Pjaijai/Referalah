@@ -6,6 +6,7 @@ import ConversationHeader from "@/modules/chat/components/header/conversation/co
 import MessageList from "@/modules/chat/components/lists/message/message"
 import useConversationStore from "@/modules/chat/state/conversations"
 
+import { cn } from "@/lib/utils"
 import useUserStore from "@/hooks/state/user/store"
 
 const ChatRightSection = () => {
@@ -19,8 +20,20 @@ const ChatRightSection = () => {
 
   if (!currentConversation || !conversation) return
   return (
-    <div className="flex h-full w-[65%] flex-col">
+    <div
+      className={cn(
+        "flex h-full flex-col",
+        !!conversation
+          ? "block w-full md:w-[65%]"
+          : "hidden md:block md:w-[65%]"
+      )}
+    >
       <ConversationHeader
+        uuid={
+          currentConversation?.sender.uuid === userUuid
+            ? currentConversation.receiver.uuid
+            : currentConversation.sender.uuid
+        }
         avatarUrl={
           currentConversation?.sender.uuid === userUuid
             ? currentConversation.receiver.avatarUrl
