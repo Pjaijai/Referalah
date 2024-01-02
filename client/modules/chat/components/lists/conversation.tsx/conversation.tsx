@@ -6,7 +6,6 @@ import useConversationStore, {
 
 import useGetConversationListByUserUuid from "@/hooks/api/message/get-conversation-by-user-uuid"
 import useUserStore from "@/hooks/state/user/store"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 
 const ConversationList = () => {
@@ -60,50 +59,52 @@ const ConversationList = () => {
   }, [list])
 
   return (
-    <div className="h-full w-full gap-y-2">
+    <div
+      className="flex h-full w-full flex-col gap-2 overflow-auto p-2"
+      id="conversationScrollDiv"
+    >
       {!isLoading && list.length > 0 && (
         <BaseInfiniteScroll
           dataLength={list ? list.length : 0} //This is important field to render the next data
+          scrollableTarget="conversationScrollDiv"
           next={fetchNextPage}
           hasMore={!!(data && data.pageParams[0])}
           endMessage={<></>}
         >
-          <ScrollArea className="h-full">
-            {list.map((data) => {
-              return (
-                <ConversationCard
-                  uuid={data.uuid}
-                  acceptRequest={
-                    userUuid === data.receiver_uuid.uuid
-                      ? data.is_receiver_accepted
-                      : false
-                  }
-                  avatarUrl={
-                    data.sender_uuid.uuid === userUuid
-                      ? data.receiver_uuid.avatar_url
-                      : data.sender_uuid.avatar_url
-                  }
-                  username={
-                    data.sender_uuid.uuid === userUuid
-                      ? data.receiver_uuid.username
-                      : data.sender_uuid.username
-                  }
-                  text={data.last_message_uuid && data.last_message_uuid.body}
-                  isSeen={
-                    data.sender_uuid.uuid === userUuid
-                      ? data.is_sender_seen
-                      : data.is_receiver_seen
-                  }
-                  updatedAt={
-                    data.last_message_uuid && data.last_message_uuid.created_at
-                  }
-                  type={
-                    data.sender_uuid.uuid === userUuid ? "sender" : "receiver"
-                  }
-                />
-              )
-            })}
-          </ScrollArea>
+          {list.map((data) => {
+            return (
+              <ConversationCard
+                uuid={data.uuid}
+                acceptRequest={
+                  userUuid === data.receiver_uuid.uuid
+                    ? data.is_receiver_accepted
+                    : false
+                }
+                avatarUrl={
+                  data.sender_uuid.uuid === userUuid
+                    ? data.receiver_uuid.avatar_url
+                    : data.sender_uuid.avatar_url
+                }
+                username={
+                  data.sender_uuid.uuid === userUuid
+                    ? data.receiver_uuid.username
+                    : data.sender_uuid.username
+                }
+                text={data.last_message_uuid && data.last_message_uuid.body}
+                isSeen={
+                  data.sender_uuid.uuid === userUuid
+                    ? data.is_sender_seen
+                    : data.is_receiver_seen
+                }
+                updatedAt={
+                  data.last_message_uuid && data.last_message_uuid.created_at
+                }
+                type={
+                  data.sender_uuid.uuid === userUuid ? "sender" : "receiver"
+                }
+              />
+            )
+          })}
         </BaseInfiniteScroll>
       )}
     </div>

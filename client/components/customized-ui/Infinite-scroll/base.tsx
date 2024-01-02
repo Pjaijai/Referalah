@@ -11,6 +11,7 @@ interface IBaseInfiniteScrollProps {
   endMessage?: ReactNode
   inverse?: boolean
   scrollableTarget?: string
+  className?: string
 }
 const BaseInfiniteScroll: React.FunctionComponent<IBaseInfiniteScrollProps> = ({
   dataLength,
@@ -20,10 +21,12 @@ const BaseInfiniteScroll: React.FunctionComponent<IBaseInfiniteScrollProps> = ({
   endMessage,
   inverse,
   scrollableTarget,
+  className,
 }) => {
   return (
     <InfiniteScroll
       dataLength={dataLength} //This is important field to render the next data
+      className={className}
       next={next}
       hasMore={hasMore}
       inverse={inverse}
