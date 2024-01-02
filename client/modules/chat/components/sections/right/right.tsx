@@ -22,10 +22,8 @@ const ChatRightSection = () => {
   return (
     <div
       className={cn(
-        "flex h-full flex-col",
-        !!conversation
-          ? "block w-full md:w-[65%]"
-          : "hidden md:block md:w-[65%]"
+        " flex h-full flex-col",
+        !!conversation ? "flex w-full md:w-[65%]" : "hidden md:flex md:w-[65%]"
       )}
     >
       <ConversationHeader

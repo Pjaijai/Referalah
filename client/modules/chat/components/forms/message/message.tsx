@@ -31,8 +31,7 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
   })
   const { watch } = form
   const messageWatch = watch("message")
-  const { mutate: create } = useCreateMessage()
-  const [messageCreatedAt, setMessageCreatedAt] = useState()
+  const { mutate: create, isLoading } = useCreateMessage()
   const onSubmit = async (values: z.infer<typeof sendMessageInFormSchema>) => {
     if (!conversationUuid) return
 
@@ -51,7 +50,7 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="sticky bottom-2">
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         {type === "sender" && !isReceiverAccepted && (
           <div className="sticky bottom-0 rounded-lg border-2 p-2  text-center">
             對方未接受請求
@@ -74,9 +73,10 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
               size={"xs"}
               className="absolute right-0 top-1/2  -translate-y-1/2 hover:bg-transparent"
             >
-              {messageWatch && (
+              {messageWatch && !isLoading && (
                 <Icons.send className="opacity-100 transition-all duration-1000" />
               )}
+              {isLoading && <Icons.loader />}
             </Button>
           </div>
         )}
