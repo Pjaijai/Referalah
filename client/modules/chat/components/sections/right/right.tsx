@@ -21,6 +21,11 @@ const ChatRightSection = () => {
   return (
     <div className="flex h-full w-[65%] flex-col">
       <ConversationHeader
+        avatarUrl={
+          currentConversation?.sender.uuid === userUuid
+            ? currentConversation.receiver.avatarUrl
+            : currentConversation.sender.avatarUrl
+        }
         username={
           currentConversation?.sender.uuid === userUuid
             ? currentConversation.receiver.username
