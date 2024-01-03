@@ -4,10 +4,14 @@ import AcceptConversationForm from "@/modules/chat/components/forms/accept-conve
 import SendMessageForm from "@/modules/chat/components/forms/message/message"
 import ConversationHeader from "@/modules/chat/components/header/conversation/conversation"
 import MessageList from "@/modules/chat/components/lists/message/message"
+import MessageListSkeleton from "@/modules/chat/components/skeleton-lists/message"
 import useConversationStore from "@/modules/chat/state/conversations"
 
+import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import useUserStore from "@/hooks/state/user/store"
+import BaseAlert from "@/components/customized-ui/alert/base"
+import HighlightedLink from "@/components/customized-ui/links/highlighted"
 
 const ChatRightSection = () => {
   const param = useSearchParams()
@@ -18,7 +22,30 @@ const ChatRightSection = () => {
     (con) => con.uuid === conversation
   )
 
-  if (!currentConversation || !conversation) return
+  if (!currentConversation || !conversation)
+    return (
+      <div
+        className={cn(
+          "flex w-full items-center p-4",
+          !!conversation
+            ? "flex w-full md:w-[65%]"
+            : "hidden md:flex md:w-[65%]"
+        )}
+      >
+        <BaseAlert
+          title="免安裝下載Referalah"
+          description={
+            <p>
+              撳
+              <HighlightedLink href={siteConfig.page.installation.href}>
+                呢度
+              </HighlightedLink>
+              睇下點下載，又可以收到即時手機通知！
+            </p>
+          }
+        />
+      </div>
+    )
   return (
     <div
       className={cn(

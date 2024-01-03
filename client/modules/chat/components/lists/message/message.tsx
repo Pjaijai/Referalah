@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react"
 import MessageCard from "@/modules/chat/components/cards/message/message"
+import MessageListSkeleton from "@/modules/chat/components/skeleton-lists/message"
 import { supabase } from "@/utils/services/supabase/config"
 
 import { IMessageListResponse } from "@/types/api/response/chat/message-list"
@@ -71,6 +72,8 @@ const MessageList: React.FunctionComponent<IMessageListProps> = ({
       className="flex h-full flex-col-reverse overflow-y-auto  overflow-x-hidden p-2"
       id="messageScrollDiv"
     >
+      {isLoading && <MessageListSkeleton />}
+
       {!isLoading && messages.length > 0 && (
         <BaseInfiniteScroll
           dataLength={messages ? messages.length : 0}

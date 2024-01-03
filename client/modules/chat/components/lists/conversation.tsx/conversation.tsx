@@ -1,12 +1,17 @@
 import React, { useEffect } from "react"
 import ConversationCard from "@/modules/chat/components/cards/conversation/conversation"
+import ConversationListSkeleton from "@/modules/chat/components/skeleton-lists/conversation"
 import useConversationStore, {
   IConversation,
 } from "@/modules/chat/state/conversations"
 
+import { siteConfig } from "@/config/site"
+import { cn } from "@/lib/utils"
 import useGetConversationListByUserUuid from "@/hooks/api/message/get-conversation-by-user-uuid"
 import useUserStore from "@/hooks/state/user/store"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
+import BaseAlert from "@/components/customized-ui/alert/base"
+import HighlightedLink from "@/components/customized-ui/links/highlighted"
 
 const ConversationList = () => {
   const userUuid = useUserStore((state) => state.uuid)
@@ -63,6 +68,23 @@ const ConversationList = () => {
       className="flex h-full w-full flex-col gap-2 overflow-y-auto p-2"
       id="conversationScrollDiv"
     >
+      {isLoading && <ConversationListSkeleton />}
+      {!isLoading && list.length === 0 && (
+        <div className={cn("flex h-full w-full items-center p-4 md:hidden")}>
+          <BaseAlert
+            title="暫時冇任何訊息"
+            description={
+              <p>
+                撳
+                <HighlightedLink href={siteConfig.page.installation.href}>
+                  呢度
+                </HighlightedLink>
+                睇下點下載，又可以收到手機即時通知！
+              </p>
+            }
+          />
+        </div>
+      )}
       {!isLoading && list.length > 0 && (
         <BaseInfiniteScroll
           dataLength={list ? list.length : 0} //This is important field to render the next data

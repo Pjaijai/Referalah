@@ -10,10 +10,10 @@ const ChatLeftSection = () => {
   return (
     <div
       className={cn(
-        "p-2",
+        "p-2 ",
         !!conversation
-          ? "hidden md:block md:w-[35%]"
-          : "xs:block block w-full md:w-[35%]"
+          ? "hidden md:block md:w-[35%] md:border-r"
+          : "xs:block block w-full md:w-[35%] md:border-r"
       )}
     >
       <ConversationList />
