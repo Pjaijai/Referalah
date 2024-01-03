@@ -1,9 +1,12 @@
 import React from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { formatCreatedAt } from "@/utils/common/helpers/format/created-at"
+import { QueryClient, useQueryClient } from "@tanstack/react-query"
 
+import { EQueryKeyString } from "@/types/common/query-key-string"
 import { cn } from "@/lib/utils"
 import useUpdateConversation from "@/hooks/api/message/update-conversation"
+import useUserStore from "@/hooks/state/user/store"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import { Icons } from "@/components/icons"
 
@@ -34,22 +37,40 @@ const ConversationCard: React.FunctionComponent<IConversationProps> = ({
   const { formattedDate } = formatCreatedAt(updatedAt)
 
   const truncatedText = text ? text.slice(0, 35) : ""
-
+  const queryClient = useQueryClient()
   const currentConversation = searchParams.get("conversation")
   const isCurrentConversation = currentConversation === uuid
-
+  const userUuid = useUserStore((state) => state.uuid)
   const handleClick = async () => {
     if (type === "sender" && !isSeen) {
-      update({
-        isSenderSeen: true,
-        conversationUuid: uuid,
-      })
+      update(
+        {
+          isSenderSeen: true,
+          conversationUuid: uuid,
+        },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({
+              queryKey: [EQueryKeyString.CONVERSATION_LIST, { userUuid }],
+            })
+          },
+        }
+      )
     }
     if (type === "receiver" && !isSeen) {
-      update({
-        isReceiverSeen: true,
-        conversationUuid: uuid,
-      })
+      update(
+        {
+          isReceiverSeen: true,
+          conversationUuid: uuid,
+        },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({
+              queryKey: [EQueryKeyString.CONVERSATION_LIST, { userUuid }],
+            })
+          },
+        }
+      )
     }
 
     const param = new URLSearchParams()

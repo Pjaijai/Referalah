@@ -20,7 +20,7 @@ const useGetConversationListByUserUuid = (userUuid: string | null) => {
     queryFn: getConversations,
     enabled: !!userUuid,
     refetchOnMount: false,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
     refetchOnReconnect: false,
     getNextPageParam: (lastPage, allPages) => {
       if (Array.isArray(lastPage)) {

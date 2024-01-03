@@ -10,7 +10,7 @@ import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 
 const ConversationList = () => {
   const userUuid = useUserStore((state) => state.uuid)
-  const { data, error, isLoading, fetchNextPage } =
+  const { data, error, isLoading, fetchNextPage, refetch } =
     useGetConversationListByUserUuid(userUuid)
   const setConversations = useConversationStore(
     (state) => state.setConversations
@@ -60,7 +60,7 @@ const ConversationList = () => {
 
   return (
     <div
-      className="flex h-full w-full flex-col gap-2 overflow-auto p-2"
+      className="flex h-full w-full flex-col gap-2 overflow-y-auto p-2"
       id="conversationScrollDiv"
     >
       {!isLoading && list.length > 0 && (
@@ -75,10 +75,11 @@ const ConversationList = () => {
             return (
               <ConversationCard
                 uuid={data.uuid}
+                key={data.uuid}
                 acceptRequest={
                   userUuid === data.receiver_uuid.uuid
                     ? data.is_receiver_accepted
-                    : false
+                    : true
                 }
                 avatarUrl={
                   data.sender_uuid.uuid === userUuid

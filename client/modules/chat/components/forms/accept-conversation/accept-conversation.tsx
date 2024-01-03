@@ -1,6 +1,9 @@
 import React from "react"
+import { useQueryClient } from "@tanstack/react-query"
 
+import { EQueryKeyString } from "@/types/common/query-key-string"
 import useUpdateConversation from "@/hooks/api/message/update-conversation"
+import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 
 interface IAcceptConversationFormProps {
@@ -11,12 +14,16 @@ const AcceptConversationForm: React.FunctionComponent<
   IAcceptConversationFormProps
 > = ({ conversationUuid }) => {
   const { mutate: update } = useUpdateConversation()
-
+  const queryClient = useQueryClient()
+  const userUuid = useUserStore((state) => state.uuid)
   const handleClick = () => {
     if (conversationUuid) {
       update({
         isReceiverAccepted: true,
         conversationUuid,
+      })
+      queryClient.invalidateQueries({
+        queryKey: [EQueryKeyString.CONVERSATION_LIST, { userUuid }],
       })
     }
   }

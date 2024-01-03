@@ -3,10 +3,14 @@
 import React, { useState } from "react"
 import { sendMessageInFormSchema } from "@/modules/chat/validations/send-messsage"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { EQueryKeyString } from "@/types/common/query-key-string"
 import useCreateMessage from "@/hooks/api/message/creat-message"
+import useUpdateConversation from "@/hooks/api/message/update-conversation"
+import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { useToast } from "@/components/ui/use-toast"
@@ -24,6 +28,8 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
   type,
   isReceiverAccepted,
 }) => {
+  const queryClient = useQueryClient()
+  const userUuid = useUserStore((state) => state.uuid)
   const form = useForm<z.infer<typeof sendMessageInFormSchema>>({
     resolver: zodResolver(sendMessageInFormSchema),
     defaultValues: {
@@ -35,6 +41,7 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
   const messageWatch = watch("message")
   const currentInputMessage = messageWatch.trim()
   const { mutate: create, isLoading } = useCreateMessage()
+  const { mutate: update } = useUpdateConversation()
   const onSubmit = async (values: z.infer<typeof sendMessageInFormSchema>) => {
     if (!conversationUuid) return
 
@@ -46,6 +53,23 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
       {
         onSuccess: () => {
           form.reset()
+
+          if (type === "sender") {
+            update({
+              conversationUuid,
+              isReceiverSeen: false,
+            })
+          }
+          if (type === "receiver") {
+            update({
+              conversationUuid,
+              isSenderSeen: false,
+            })
+          }
+
+          queryClient.invalidateQueries({
+            queryKey: [EQueryKeyString.CONVERSATION_LIST, { userUuid }],
+          })
         },
         onError: () => {
           toast({
