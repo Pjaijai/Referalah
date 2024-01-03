@@ -19,7 +19,7 @@ const useGetConversationListByUserUuid = (userUuid: string | null) => {
     queryKey: [EQueryKeyString.CONVERSATION_LIST, { userUuid }],
     queryFn: getConversations,
     enabled: !!userUuid,
-    refetchOnMount: false,
+    refetchOnMount: true,
     refetchOnWindowFocus: true,
     refetchOnReconnect: false,
     getNextPageParam: (lastPage, allPages) => {
