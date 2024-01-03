@@ -9,6 +9,7 @@ import { z } from "zod"
 import useCreateMessage from "@/hooks/api/message/creat-message"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
+import { useToast } from "@/components/ui/use-toast"
 import FormTextInput from "@/components/customized-ui/form/input"
 import { Icons } from "@/components/icons"
 
@@ -30,7 +31,9 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
     },
   })
   const { watch } = form
+  const { toast } = useToast()
   const messageWatch = watch("message")
+  const currentInputMessage = messageWatch.trim()
   const { mutate: create, isLoading } = useCreateMessage()
   const onSubmit = async (values: z.infer<typeof sendMessageInFormSchema>) => {
     if (!conversationUuid) return
@@ -38,11 +41,17 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
     create(
       {
         conversationUuid,
-        msgBody: values.message,
+        msgBody: values.message.trim(),
       },
       {
-        onSuccess() {
+        onSuccess: () => {
           form.reset()
+        },
+        onError: () => {
+          toast({
+            title: "Send唔到個message :(",
+            variant: "destructive",
+          })
         },
       }
     )
@@ -64,16 +73,21 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
         )}
 
         {isReceiverAccepted && (
-          <div className="relative">
-            <FormTextInput control={form.control} name="message" />
+          <div className="relative p-3">
+            <FormTextInput
+              control={form.control}
+              name="message"
+              placeholder="係到寫啲野俾對方:)"
+            />
 
             <Button
               type="submit"
               variant={"ghost"}
               size={"xs"}
-              className="absolute right-0 top-1/2  -translate-y-1/2 hover:bg-transparent"
+              className="absolute right-2 top-1/2  -translate-y-1/2 hover:bg-transparent"
+              disabled={isLoading}
             >
-              {messageWatch && !isLoading && (
+              {currentInputMessage && !isLoading && (
                 <Icons.send className="opacity-100 transition-all duration-1000" />
               )}
               {isLoading && <Icons.loader />}

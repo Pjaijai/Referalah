@@ -78,7 +78,7 @@ const ConversationCard: React.FunctionComponent<IConversationProps> = ({
         </div>
 
         <div className="relative flex w-full  flex-row items-center justify-between">
-          {acceptRequest ? (
+          {!acceptRequest ? (
             <p className="w-5/6 text-xs text-orange-700 dark:text-blue-400">
               此用戶向您發出對話申請
             </p>
