@@ -36,7 +36,7 @@ const ConversationCard: React.FunctionComponent<IConversationProps> = ({
   const { mutate: update } = useUpdateConversation()
   const { formattedDate } = formatCreatedAt(updatedAt)
 
-  const truncatedText = text ? text.slice(0, 35) : ""
+  const truncatedText = text ? text.slice(0, 25) : ""
   const queryClient = useQueryClient()
   const currentConversation = searchParams.get("conversation")
   const isCurrentConversation = currentConversation === uuid
@@ -82,7 +82,7 @@ const ConversationCard: React.FunctionComponent<IConversationProps> = ({
     <div
       onClick={handleClick}
       className={cn(
-        "flex w-full flex-row items-center gap-x-3 rounded-sm  p-2 hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700",
+        "flex w-full flex-row items-center gap-x-3 overflow-hidden rounded-sm p-2 hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700",
         isCurrentConversation && "bg-gray-100 dark:bg-gray-700"
       )}
     >

@@ -24,13 +24,13 @@ const MessageCard: React.FunctionComponent<IMessageCardProps> = ({
       <div className="flex w-fit max-w-[70%] flex-col">
         <div
           className={cn(
-            " rounded-lg px-2 py-1 text-start",
+            " rounded-lg p-4 text-start",
             sentByUser ? "bg-green-200 " : " bg-gray-200"
           )}
           data-testid="message-card"
         >
           <div className="flex flex-col items-center ">
-            <p className="whitespace-pre-wrap break-words  text-start dark:text-black">
+            <p className="whitespace-pre-wrap break-all  text-start dark:text-black">
               {text}
             </p>
           </div>
