@@ -21,6 +21,9 @@ const useGetMessageListByConversationUuid = (
     queryKey: [EQueryKeyString.MESSAGE_LIST, { conversationUuid }],
     queryFn: getMessages,
     enabled: !!conversationUuid,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, allPages) => {
       if (Array.isArray(lastPage)) {
         return allPages.length
