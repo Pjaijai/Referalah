@@ -1,4 +1,5 @@
 import {
+  ArrowLeft,
   Briefcase,
   Building2,
   CalendarClock,
@@ -35,6 +36,7 @@ import {
 export type Icon = LucideIcon
 
 export const Icons = {
+  arrowLeft: ArrowLeft,
   sun: SunMedium,
   moon: Moon,
   twitter: Twitter,
