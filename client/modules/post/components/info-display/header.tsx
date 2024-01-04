@@ -16,7 +16,7 @@ interface IPostHeaderProps {
 const PostHeader: React.FunctionComponent<
   PropsWithChildren<IPostHeaderProps>
 > = ({ title, subtitle, url, className, status }) => {
-  const handleUrlClick = (e: React.MouseEvent<HTMLElement>) => {
+  const handleUrlClick = (e: any) => {
     e.preventDefault()
     if (url) window.open(url, "_blank")
   }

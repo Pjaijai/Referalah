@@ -12,7 +12,7 @@ import { siteConfig } from "@/config/site"
 import { PostNotFoundError } from "@/lib/exceptions"
 import useGetPost from "@/hooks/api/post/get-post"
 import useUserStore from "@/hooks/state/user/store"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import ContactButton from "@/components/customized-ui/buttons/contact"
 import ProfileCard from "@/components/customized-ui/cards/profile"
@@ -42,8 +42,8 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
       isSuccess={isSuccess}
     >
       <Link href={siteConfig.page.referrerPost.href}>
-        <p className=" my-4 text-muted-foreground">
-          <Icons.arrowLeft className="inline" /> 返回街招
+        <p className="gap my-4 flex flex-row items-center text-sm text-muted-foreground">
+          <Icons.smallArrowLeft className="text-sm" /> <span>返回街招</span>
         </p>
       </Link>
       {post && (
