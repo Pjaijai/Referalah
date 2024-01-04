@@ -41,6 +41,11 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
       isLoading={isLoading}
       isSuccess={isSuccess}
     >
+      <Link href={siteConfig.page.referrerPost.href}>
+        <p className=" my-4 text-muted-foreground">
+          <Icons.arrowLeft className="inline" /> 返回街招
+        </p>
+      </Link>
       {post && (
         <div className="mt-5 flex h-full w-full flex-col md:mt-0">
           <div className="my-0 mb-5 flex flex-col justify-between gap-4 md:my-5 md:flex-row">
