@@ -2,6 +2,7 @@ import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
 
 import { initSupabaseClient } from "../_shared/client.ts"
 import { corsHeaders, ENV_IS_LOCAL } from "../_shared/cors.ts"
+import { initSupabaseServer } from "../_shared/server.ts"
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")
 const WEB_BASE_URL = Deno.env.get("WEB_BASE_URL")
@@ -13,7 +14,7 @@ serve(async (req: any) => {
 
     // // N
     const client = initSupabaseClient(req)
-
+    const server = initSupabaseServer()
     const { type, message, to_uuid } = await req.json()
 
     if (!type) {
@@ -50,13 +51,13 @@ serve(async (req: any) => {
       data: { user },
     } = await client.auth.getUser()
 
-    const { data: sender, error } = await client
+    const { data: sender, error } = await server
       .from("user")
       .select("uuid,username, email")
       .eq("uuid", user.id)
       .single()
 
-    const { data: receiver } = await client
+    const { data: receiver } = await server
       .from("user")
       .select("uuid, username, email, is_referer ,is_referee")
       .eq("uuid", to_uuid)
@@ -141,7 +142,7 @@ serve(async (req: any) => {
       })
     }
 
-    const { error: insertError } = await client
+    const { error: insertError } = await server
       .from("referral_contact_history")
       .insert({
         sender_uuid: sender.uuid,
