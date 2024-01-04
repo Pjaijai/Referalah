@@ -20,7 +20,7 @@ const MessageList: React.FunctionComponent<IMessageListProps> = ({
   conversationUuid,
   lastMessage,
 }) => {
-  const { data, isLoading, fetchNextPage, refetch, error } =
+  const { data, isLoading, fetchNextPage, refetch } =
     useGetMessageListByConversationUuid(conversationUuid)
   const [messages, setMessages] = useState<IMessageListResponse[]>([])
 
@@ -47,16 +47,7 @@ const MessageList: React.FunctionComponent<IMessageListProps> = ({
         },
         (payload) => {
           if (payload.eventType === "INSERT") {
-            const msg = {
-              body: payload.new.body,
-              conversation_uuid: payload.new.conversation_uuid,
-              created_at: payload.new.created_at,
-              id: payload.new.id,
-              sender_uuid: payload.new.sender_uuid,
-              status: payload.new.status,
-              uuid: payload.new.uuid,
-            }
-            setMessages((prevMessages) => [msg, ...prevMessages])
+            refetch()
           }
         }
       )

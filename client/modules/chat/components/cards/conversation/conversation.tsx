@@ -1,7 +1,7 @@
 import React from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { formatCreatedAt } from "@/utils/common/helpers/format/created-at"
-import { QueryClient, useQueryClient } from "@tanstack/react-query"
+import { useQueryClient } from "@tanstack/react-query"
 
 import { EQueryKeyString } from "@/types/common/query-key-string"
 import { cn } from "@/lib/utils"
