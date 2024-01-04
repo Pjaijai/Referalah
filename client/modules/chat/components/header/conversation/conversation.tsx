@@ -21,7 +21,7 @@ const ConversationHeader: React.FunctionComponent<IConversationHeaderProps> = ({
 }) => {
   const router = useRouter()
   const handleBackClick = () => {
-    router.back()
+    router.push(siteConfig.page.chat.href)
   }
 
   const handleAvatarClick = () => {
