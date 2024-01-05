@@ -1,6 +1,6 @@
 import React from "react"
 import { useSearchParams } from "next/navigation"
-import ConversationList from "@/modules/chat/components/lists/conversation.tsx/conversation"
+import ConversationList from "@/modules/chat/components/lists/conversation/conversation"
 
 import { cn } from "@/lib/utils"
 
