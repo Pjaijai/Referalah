@@ -101,13 +101,10 @@ serve(async (req: any) => {
     }
 
     // prevent_duplicate_conversation to make sure one conversation for two user
-    const { data: conversation, error: qwe } = await server.rpc(
-      "find_conversation",
-      {
-        user1_uuid: sender.uuid,
-        user2_uuid: post.user.uuid,
-      },
-    )
+    const { data: conversation } = await server.rpc("find_conversation", {
+      user1_uuid: sender.uuid,
+      user2_uuid: post.user.uuid,
+    })
 
     let conversationUuid
 
