@@ -787,6 +787,19 @@ export const updateConversation = async ({
   }
 }
 
+export const checkHasConversationUnseen = async () => {
+  try {
+    const { data, error } = await supabase.rpc("check_has_conversation_unseen")
+
+    if (error) {
+      throw error
+    }
+
+    return data[0].has_unseen
+  } catch (error) {
+    throw error
+  }
+}
 // Statistic
 export const getUserCount = async () => {
   try {

@@ -528,6 +528,12 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
+      check_has_conversation_unseen: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          has_unseen: boolean
+        }[]
+      }
       find_conversation: {
         Args: {
           user1_uuid: string
