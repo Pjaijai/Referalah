@@ -83,7 +83,10 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="relative mt-8 p-2"
+      >
         {type === "sender" && !isReceiverAccepted && (
           <div className="sticky bottom-0 rounded-lg border-2 p-2  text-center">
             對方未接受請求
@@ -97,7 +100,7 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
         )}
 
         {isReceiverAccepted && (
-          <div className="relative p-3">
+          <div className="fixed bottom-0 w-full p-4 md:w-[65%] ">
             <FormTextInput
               control={form.control}
               name="message"
