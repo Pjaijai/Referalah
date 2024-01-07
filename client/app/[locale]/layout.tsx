@@ -83,15 +83,17 @@ export default async function RootLayout({
           <APIProvider>
             <I18nProviderClient locale={locale}>
               <AuthProvider accessToken={accessToken}>
-                <ToastProvider>
-                  <div className="flex min-h-screen flex-col">
-                    <SiteHeader />
-                    <div className="flex-1 overflow-auto">{children}</div>
-                    <NavFooter />
-                  </div>
-                  <Analytics />
-                  <TailwindIndicator />
-                </ToastProvider>
+                <ChatProvider>
+                  <ToastProvider>
+                    <div className="flex min-h-screen flex-col">
+                      <SiteHeader />
+                      <div className="flex-1 overflow-auto">{children}</div>
+                      <NavFooter />
+                    </div>
+                    <Analytics />
+                    <TailwindIndicator />
+                  </ToastProvider>
+                </ChatProvider>
               </AuthProvider>
             </I18nProviderClient>
           </APIProvider>
