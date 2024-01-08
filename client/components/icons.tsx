@@ -50,6 +50,7 @@ export const Icons = {
   link: Link,
   laptop: Laptop,
   mail: Mail,
+  messageSquareMore: MessageSquareMore,
   pencil: Pencil,
   loader: Loader,
   undo: Undo2,
