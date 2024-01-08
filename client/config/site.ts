@@ -104,6 +104,10 @@ export const siteConfig = {
       name: "街招記錄",
       href: "/post/history",
     },
+    chat: {
+      name: "對話",
+      href: "/chat",
+    },
     about: {
       name: "關於本平台",
       href: "/about",

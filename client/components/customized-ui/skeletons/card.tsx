@@ -9,7 +9,10 @@ export interface CardSkeletonProps {
 
 const CardSkeleton = ({ className }: CardSkeletonProps) => {
   return (
-    <Skeleton className={cn(`h-[300px] rounded-sm md:h-[400px]`, className)} />
+    <Skeleton
+      data-testid="skeleton-card"
+      className={cn(`h-[300px] rounded-sm md:h-[400px]`, className)}
+    />
   )
 }
 

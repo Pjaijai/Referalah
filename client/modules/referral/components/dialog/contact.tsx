@@ -1,14 +1,16 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
-import useContactReferral from "@/hooks/api/contact/referral"
-import useContactThroughPost from "@/hooks/api/contact/through-post"
+import { siteConfig } from "@/config/site"
+import useMessagePostCreator from "@/hooks/api/message/post-creator"
+import useMessageReferral from "@/hooks/api/message/referral"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -27,6 +29,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
+import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
 
 export interface IContactDialogProps {
@@ -65,14 +68,22 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
     },
   })
   const [isLoading, setIsLoading] = useState(false)
-  const { mutate: contactReferral } = useContactReferral()
-  const { mutate: contactThroughPost } = useContactThroughPost()
+  const router = useRouter()
+
+  const { mutate: messageReferral } = useMessageReferral()
+  const { mutate: messagePostCreator } = useMessagePostCreator()
+
   const { toast } = useToast()
   const {
     formState: { errors },
     reset,
   } = form
 
+  const handleCheckClick = (uuid: string) => {
+    const param = new URLSearchParams()
+    param.set("conversation", uuid)
+    router.push(siteConfig.page.chat.href + "?" + param.toString())
+  }
   const onSubmit = async (values: z.infer<typeof formSchema>, e: any) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
@@ -80,10 +91,10 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
     try {
       setIsLoading(true)
       if (messageType === "referral") {
-        contactReferral(
+        messageReferral(
           {
             type: receiverType!,
-            message: values.message,
+            body: values.message,
             toUuid: toUuid!,
           },
           {
@@ -94,12 +105,20 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
                 variant: "destructive",
               })
             },
-            onSuccess: () => {
+            onSuccess: (res) => {
               onContactFormClose()
               reset()
               return toast({
-                title: "成功！！！！！！！",
+                title: "訊息已送出!",
                 description: "祝一切順利！",
+                action: (
+                  <ToastAction
+                    onClick={() => handleCheckClick(res.conversation_uuid)}
+                    altText="Check"
+                  >
+                    查看
+                  </ToastAction>
+                ),
               })
             },
             onSettled: () => {
@@ -108,9 +127,9 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
           }
         )
       } else {
-        contactThroughPost(
+        messagePostCreator(
           {
-            message: values.message,
+            body: values.message,
             postUuid: postUuid!,
           },
           {
@@ -121,12 +140,20 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
                 variant: "destructive",
               })
             },
-            onSuccess: () => {
+            onSuccess: (res) => {
               onContactFormClose()
               reset()
               return toast({
                 title: "成功！！！！！！！",
                 description: "祝一切順利！",
+                action: (
+                  <ToastAction
+                    onClick={() => handleCheckClick(res.conversation_uuid)}
+                    altText="Check"
+                  >
+                    查看
+                  </ToastAction>
+                ),
               })
             },
             onSettled: () => {
@@ -187,9 +214,6 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
                   </FormItem>
                 )}
               />
-              <p className="mt-2 text-sm text-muted-foreground">
-                以上信息會連同你嘅Email地址send畀對方，同時cc埋你。
-              </p>
             </div>
 
             <DialogFooter className="mt-4">

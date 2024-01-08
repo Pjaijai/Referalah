@@ -1,10 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import {
-  useI18n,
-  useScopedI18n,
-} from "@/utils/services/internationalization/client"
+import { useScopedI18n } from "@/utils/services/internationalization/client"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"

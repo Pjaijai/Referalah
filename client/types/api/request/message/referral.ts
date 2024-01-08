@@ -1,7 +1,7 @@
 import { EReferralType } from "@/types/common/referral-type"
 
-export interface IContactReferralRequest {
+export interface IMessageReferralRequest {
   type: EReferralType
-  message: string
+  body: string
   toUuid: string
 }

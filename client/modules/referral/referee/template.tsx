@@ -53,7 +53,7 @@ const RefereePageTemplate: React.FunctionComponent<
   const list =
     refereeListData !== undefined ? refereeListData.pages.flatMap((d) => d) : []
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <div className="mt-8 flex h-full w-full flex-col-reverse gap-4 md:flex-row">
         <Input
           onChange={handleCompanyChange}
@@ -140,7 +140,7 @@ const RefereePageTemplate: React.FunctionComponent<
           </div>
         </BaseInfiniteScroll>
       )}
-    </>
+    </div>
   )
 }
 

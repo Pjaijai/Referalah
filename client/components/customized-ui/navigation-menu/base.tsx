@@ -12,6 +12,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
+import MessageIcon from "@/components/customized-ui/icoins/message"
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -28,6 +29,7 @@ const components: { title: string; href: string; description: string }[] = [
 
 export function BaseNavigationMenu() {
   const userUuid = useUserStore((state) => state.uuid)
+  const isUserSignIn = useUserStore((state) => state.isSignIn)
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -73,6 +75,21 @@ export function BaseNavigationMenu() {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
+
+        {isUserSignIn && (
+          <NavigationMenuItem>
+            <Link href={siteConfig.page.chat.href}>
+              <div
+                className={
+                  "flex h-10 w-max items-center justify-center gap-2 rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none   md:text-lg"
+                }
+              >
+                <MessageIcon />
+                對話
+              </div>
+            </Link>
+          </NavigationMenuItem>
+        )}
       </NavigationMenuList>
     </NavigationMenu>
   )

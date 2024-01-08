@@ -29,7 +29,9 @@ const CreatedAtDisplay: React.FunctionComponent<
           <Icons.createdAt width="13" height="13" />
         </div>
       )}
-      <span className="ml-1">{formattedCreatedAt}</span>
+      <span className="text-xs text-muted-foreground">
+        {formattedCreatedAt}
+      </span>
     </div>
   )
 }
