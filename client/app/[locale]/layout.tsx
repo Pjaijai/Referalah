@@ -12,6 +12,7 @@ import NavFooter from "@/components/customized-ui/footer/nav"
 import GoogleAnalytics from "@/components/google-analytics"
 import APIProvider from "@/components/providers/api"
 import AuthProvider from "@/components/providers/auth"
+import ChatProvider from "@/components/providers/chat"
 import ToastProvider from "@/components/providers/toast"
 import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
@@ -82,15 +83,17 @@ export default async function RootLayout({
           <APIProvider>
             <I18nProviderClient locale={locale}>
               <AuthProvider accessToken={accessToken}>
-                <ToastProvider>
-                  <div className="relative flex h-screen flex-col">
-                    <SiteHeader />
-                    <div className="flex-1">{children}</div>
-                    <NavFooter />
-                  </div>
-                  <Analytics />
-                  <TailwindIndicator />
-                </ToastProvider>
+                <ChatProvider>
+                  <ToastProvider>
+                    <div className="flex min-h-screen flex-col">
+                      <SiteHeader />
+                      <div className="flex-1 overflow-auto">{children}</div>
+                      <NavFooter />
+                    </div>
+                    <Analytics />
+                    <TailwindIndicator />
+                  </ToastProvider>
+                </ChatProvider>
               </AuthProvider>
             </I18nProviderClient>
           </APIProvider>

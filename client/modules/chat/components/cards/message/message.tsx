@@ -1,32 +1,52 @@
 import React from "react"
+import { formatCreatedAt } from "@/utils/common/helpers/format/created-at"
 
 import { cn } from "@/lib/utils"
 
 interface IMessageCardProps {
   text: string
   sentByUser: boolean
+  createdAt: string // datetime string
 }
 const MessageCard: React.FunctionComponent<IMessageCardProps> = ({
   text,
   sentByUser,
+  createdAt,
 }) => {
+  const { formattedDate, isExact } = formatCreatedAt(createdAt)
   return (
     <div
       className={cn(
-        "flex w-full",
+        "flex w-full justify-end",
         sentByUser ? "justify-end" : " justify-start "
       )}
-      data-testid="message-card"
     >
-      <div
-        className={cn(
-          "w-fit max-w-[40%] rounded-lg  px-4 py-2",
-          sentByUser ? "bg-green-200 text-end" : " bg-gray-200"
-        )}
-      >
-        <p className="whitespace-pre-wrap break-words dark:text-black">
-          {text}
-        </p>
+      <div className="flex w-fit max-w-[70%] flex-col">
+        <div
+          className={cn(
+            " rounded-lg p-4 text-start",
+            sentByUser ? "bg-green-200 " : " bg-gray-200"
+          )}
+          data-testid="message-card"
+        >
+          <div className="flex flex-col items-center ">
+            <p className="whitespace-pre-wrap break-all  text-start dark:text-black">
+              {text}
+            </p>
+          </div>
+        </div>
+
+        <div
+          className={cn(
+            "mt-1 flex w-full flex-row ",
+            sentByUser ? "justify-end" : "justify-start"
+          )}
+        >
+          <p className={"text-end text-xs text-muted-foreground"}>
+            {formattedDate}
+            {isExact ? "" : "前"}
+          </p>
+        </div>
       </div>
     </div>
   )

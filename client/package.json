@@ -16,7 +16,8 @@
     "test": "jest --coverage",
     "test:unit": "yarn run test -- --group=unit",
     "test:int": "yarn run test -- --group=integration",
-    "test:e2e": "yarn run test -- --group=e2e"
+    "test:e2e": "yarn run test -- --group=e2e",
+    "type:gen":"supabase gen types typescript --local public > types/supabase.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
