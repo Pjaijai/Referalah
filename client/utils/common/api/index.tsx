@@ -5,16 +5,18 @@ import { ISignInEmailPasswordRequest } from "@/types/api/request/auth/sign-in-wi
 import { ISignInEmailMagicLinkRequest } from "@/types/api/request/auth/sign-in-with-magic-link"
 import { ISignUpEmailPasswordRequest } from "@/types/api/request/auth/sign-up-with-email-password"
 import { IUpdatePasswordRequest } from "@/types/api/request/auth/update-password"
-import { IContactThroughPostRequest } from "@/types/api/request/contact/post"
-import { IContactReferralRequest } from "@/types/api/request/contact/referral"
+import { IMessagePostCreatorRequest } from "@/types/api/request/message/post-creator"
+import { IMessageReferralRequest } from "@/types/api/request/message/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
 import { IFilterMeta } from "@/types/api/request/post/filter-meta"
 import { ISearchPostsRequest } from "@/types/api/request/post/search"
 import { IUpdatePostRequest } from "@/types/api/request/post/update"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { ICityResponse } from "@/types/api/response/city"
+import { IGetConversationListByUserUuidResponse } from "@/types/api/response/conversation-list"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
+import { IMessageReferralResponse } from "@/types/api/response/message/referral"
 import { IProvinceResponse } from "@/types/api/response/province"
 import {
   IGetPostResponse,
@@ -603,15 +605,15 @@ export const getCityList = async () => {
 
   return data
 }
-// Contact
-export const contactReferral = async (req: IContactReferralRequest) => {
+// Message
+export const messageReferral = async (req: IMessageReferralRequest) => {
   try {
     const { data, error } = await supabase.functions.invoke(
-      "contact-referral",
+      "message-referral",
       {
         body: {
           type: req.type,
-          message: req.message,
+          body: req.body,
           to_uuid: req.toUuid,
         },
       }
@@ -620,18 +622,21 @@ export const contactReferral = async (req: IContactReferralRequest) => {
     if (error) {
       throw error
     }
+
+    return data.data as IMessageReferralResponse
   } catch (error) {
     throw error
   }
 }
-export const contactThroughPost = async (req: IContactThroughPostRequest) => {
+
+export const messagePostCreator = async (req: IMessagePostCreatorRequest) => {
   try {
     const { data, error } = await supabase.functions.invoke(
-      "contact-through-post",
+      "message-post-creator",
       {
         body: {
-          message: req.message,
           post_uuid: req.postUuid,
+          body: req.body,
         },
       }
     )
@@ -639,11 +644,162 @@ export const contactThroughPost = async (req: IContactThroughPostRequest) => {
     if (error) {
       throw error
     }
+    return data.data as IMessageReferralResponse
   } catch (error) {
     throw error
   }
 }
 
+export const getConversationListByUserUuid = async ({
+  userUuid,
+  page,
+  numberOfDataPerPage,
+}: {
+  userUuid: string
+  page: number
+  numberOfDataPerPage: number
+}) => {
+  const from = page + page * numberOfDataPerPage
+  const to = from + numberOfDataPerPage
+
+  try {
+    const { data, error } = await supabase
+      .from("conversation")
+      .select(
+        `
+      sender_uuid(username,company_name, job_title, avatar_url, uuid),
+      receiver_uuid(username,avatar_url,company_name, job_title, uuid),
+      uuid,
+      is_receiver_accepted,
+      is_receiver_seen,
+      is_sender_seen,
+      last_message_uuid(
+        created_at, 
+        uuid,
+        sender_uuid,
+        body
+      )
+      `
+      )
+      .or(`sender_uuid.eq.${userUuid},receiver_uuid.eq.${userUuid}`)
+      .range(from, to)
+      .returns<IGetConversationListByUserUuidResponse>()
+      .order("last_updated_at", { ascending: false })
+
+    if (error) {
+      throw error
+    }
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const getMessageListByConversationUuid = async ({
+  conversationUuid,
+  page,
+  numberOfDataPerPage,
+}: {
+  conversationUuid: string
+  page: number
+  numberOfDataPerPage: number
+}) => {
+  const from = page + page * numberOfDataPerPage
+  const to = from + numberOfDataPerPage
+
+  try {
+    const { data, error } = await supabase
+      .from("message")
+      .select("*")
+      .eq("conversation_uuid", conversationUuid)
+      .range(from, to)
+      .order("created_at", { ascending: false })
+
+    if (error) {
+      throw error
+    }
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const createMessage = async ({
+  msgBody,
+  conversationUuid,
+}: {
+  msgBody: string
+  conversationUuid: string
+}) => {
+  try {
+    const { data, error } = await supabase
+      .from("message")
+      .insert({
+        body: msgBody,
+        conversation_uuid: conversationUuid,
+      })
+      .select("created_at, uuid")
+      .single()
+
+    if (error) throw error
+
+    const { error: UpdateError } = await supabase
+      .from("conversation")
+      .update({
+        last_updated_at: data?.created_at,
+        last_message_uuid: data.uuid,
+      })
+      .eq("uuid", conversationUuid)
+
+    if (UpdateError) throw UpdateError
+
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const updateConversation = async ({
+  isSenderSeen,
+  isReceiverAccepted,
+  isReceiverSeen,
+  conversationUuid,
+}: {
+  isSenderSeen?: boolean
+  isReceiverAccepted?: boolean
+  isReceiverSeen?: boolean
+  conversationUuid: string
+}) => {
+  try {
+    const { data, error } = await supabase
+      .from("conversation")
+      .update({
+        is_sender_seen: isSenderSeen,
+        is_receiver_seen: isReceiverSeen,
+        is_receiver_accepted: isReceiverAccepted,
+      })
+      .eq("uuid", conversationUuid)
+
+    if (error) throw error
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const checkHasConversationUnseen = async () => {
+  try {
+    const { data, error } = await supabase.rpc("check_has_conversation_unseen")
+
+    if (error) {
+      throw error
+    }
+
+    return data[0].has_unseen
+  } catch (error) {
+    throw error
+  }
+}
 // Statistic
 export const getUserCount = async () => {
   try {
@@ -657,6 +813,3 @@ export const getUserCount = async () => {
     throw error
   }
 }
-// }
-
-// export default apiService

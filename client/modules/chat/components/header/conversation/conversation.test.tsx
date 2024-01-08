@@ -17,6 +17,7 @@ describe("ConversationHeader", () => {
         companyName={companyName}
         jobTitle={jobTitle}
         username={username}
+        uuid="123"
       />
     )
     test("renders correct text", async () => {
