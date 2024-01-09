@@ -159,6 +159,13 @@ const contributors: IContributor[] = [
     },
     contributedArea: ["uiux_design"],
   },
+  {
+    name: "Selina Lam",
+    links: {
+      linkedin: "http://linkedin.com/in/selina-lam-a318bb157",
+    },
+    contributedArea: ["uiux_design"],
+  },
 ]
 
 export default contributors
