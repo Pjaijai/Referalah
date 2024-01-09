@@ -2,6 +2,7 @@ import React, { PropsWithChildren, ReactNode } from "react"
 import PostStatusDisplay from "@/modules/post/components/info-display/status"
 
 import { TPostStatusType } from "@/types/common/post-status"
+import { Button } from "@/components/ui/button"
 import { CardTitle } from "@/components/ui/card"
 import TooltipWrapper from "@/components/customized-ui/tool/tooltip-wrapper"
 import { Icons } from "@/components/icons"
@@ -30,10 +31,9 @@ const PostHeader: React.FunctionComponent<
           {url && (
             <TooltipWrapper
               tooltipTrigger={
-                <Icons.link
-                  className="h-4 w-4 align-middle"
-                  onClick={handleUrlClick}
-                />
+                <div onClick={handleUrlClick}>
+                  <Icons.link className="h-4 w-4 align-middle" />
+                </div>
               }
               tooltipContent={<span>相關連結</span>}
               tooltipTriggerProps={{ className: "ml-2" }}

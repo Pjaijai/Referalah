@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input"
 export interface IFormTextInputProps {
   control: Control<any>
   name: string
-  label: string
+  label?: string
   placeholder?: string
   description?: string
   leftLabel?: string | React.ReactNode
@@ -38,10 +38,13 @@ const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
       name={name}
       render={({ field }) => (
         <FormItem>
-          <div className="flex w-full flex-row items-center justify-between">
-            <FormLabel>{label}</FormLabel>
-            {leftLabel}
-          </div>
+          {label && leftLabel && (
+            <div className="flex w-full flex-row items-center justify-between">
+              {label ? <FormLabel>{label}</FormLabel> : null}
+
+              {leftLabel}
+            </div>
+          )}
 
           <FormControl>
             <div className="relative">
