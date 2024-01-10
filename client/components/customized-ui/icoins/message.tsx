@@ -1,16 +1,17 @@
 import React from "react"
 
-import useUserStore from "@/hooks/state/user/store"
 import { Icons } from "@/components/icons"
 
-const MessageIcon = () => {
-  const hasConversationUnseen = useUserStore(
-    (state) => state.hasConversationUnseen
-  )
+interface IMessageIconProps {
+  showDot: boolean
+}
+const MessageIcon: React.FunctionComponent<IMessageIconProps> = ({
+  showDot,
+}) => {
   return (
     <div className="relative">
       <Icons.messageSquareMore />
-      {hasConversationUnseen && (
+      {showDot && (
         <Icons.bigDot
           className="absolute right-0 top-0 -translate-y-2 translate-x-2 text-green-700 dark:text-yellow-300"
           width="24"
