@@ -5,6 +5,7 @@ import { ISignInEmailPasswordRequest } from "@/types/api/request/auth/sign-in-wi
 import { ISignInEmailMagicLinkRequest } from "@/types/api/request/auth/sign-in-with-magic-link"
 import { ISignUpEmailPasswordRequest } from "@/types/api/request/auth/sign-up-with-email-password"
 import { IUpdatePasswordRequest } from "@/types/api/request/auth/update-password"
+import { IBulkUpdateNotificationsRequest } from "@/types/api/request/message/bulk-update-notifications"
 import { IMessagePostCreatorRequest } from "@/types/api/request/message/post-creator"
 import { IMessageReferralRequest } from "@/types/api/request/message/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
@@ -830,6 +831,51 @@ export const getNotificationListByUserUuid = async ({
     throw error
   }
 }
+
+export const updateNotificationByUuid = async ({
+  uuid,
+  isSeen,
+}: {
+  uuid: string
+  isSeen: boolean
+}) => {
+  try {
+    const { data, error } = await supabase
+      .from("notification")
+      .update({ is_seen: isSeen })
+      .eq("uuid", uuid)
+
+    if (error) throw error
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const bulkUpdateNotifications = async (
+  param: {
+    uuid: string
+    is_seen: boolean
+  }[]
+) => {
+  try {
+    const res = await Promise.all(
+      param.map(async (p) => {
+        const { data, error } = await supabase
+          .from("notification")
+          .update({ is_seen: p.is_seen })
+          .eq("uuid", p.uuid)
+
+        if (error) throw error
+        return data
+      })
+    )
+    return res
+  } catch (error) {
+    throw error
+  }
+}
+
 // Statistic
 export const getUserCount = async () => {
   try {

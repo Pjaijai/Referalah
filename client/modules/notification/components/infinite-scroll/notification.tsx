@@ -40,6 +40,7 @@ const NotificationInfiniteScroll: React.FunctionComponent<
             createdAt={data.created_at}
             isSeen={data.is_seen}
             key={data.uuid}
+            uuid={data.uuid}
           />
         )
       })}

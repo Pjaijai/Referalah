@@ -211,6 +211,44 @@ export interface Database {
           },
         ]
       }
+      notification: {
+        Row: {
+          body: string
+          created_at: string
+          id: number
+          is_seen: boolean
+          to_uuid: string
+          type: Database["public"]["Enums"]["notification_type"]
+          uuid: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: number
+          is_seen?: boolean
+          to_uuid: string
+          type?: Database["public"]["Enums"]["notification_type"]
+          uuid?: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: number
+          is_seen?: boolean
+          to_uuid?: string
+          type?: Database["public"]["Enums"]["notification_type"]
+          uuid?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notification_to_uuid_fkey"
+            columns: ["to_uuid"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["uuid"]
+          },
+        ]
+      }
       post: {
         Row: {
           city_uuid: string | null
@@ -556,6 +594,7 @@ export interface Database {
     Enums: {
       conversation_status: "active" | "inactive"
       message_status: "active" | "inactive"
+      notification_type: "chat"
       post_status: "active" | "inactive"
     }
     CompositeTypes: {

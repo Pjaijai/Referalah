@@ -5,18 +5,23 @@ import compareDateDifferenceHelper from "@/utils/common/helpers/time/compareDate
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
+import useUpdateNotificationByUuid from "@/hooks/api/notification/update-notification-by-uuid"
 import MessageIcon from "@/components/customized-ui/icons/message"
 
 interface INotificationCardProps {
   createdAt: string //datetime string with timezone
   isSeen: boolean
   body: string
+  uuid: string
 }
 const NotificationCard: React.FunctionComponent<INotificationCardProps> = ({
   body,
   createdAt,
   isSeen,
+  uuid,
 }) => {
+  const { mutate: update } = useUpdateNotificationByUuid()
+
   const formattedCreatedAt = useMemo(() => {
     const dayDiff = compareDateDifferenceHelper({
       oldDate: createdAt,
@@ -34,19 +39,21 @@ const NotificationCard: React.FunctionComponent<INotificationCardProps> = ({
       unit: "minute",
     })
 
-    if (minuteDiff > 720 && minuteDiff <= 1440)
-      return formatDate(createdAt, "HH:MM")
-    if (minuteDiff > 60 && minuteDiff <= 720)
+    if (minuteDiff > 60 && minuteDiff <= 1440)
       return `${Math.ceil(minuteDiff / 60)}h`
     if (minuteDiff > 0 && minuteDiff <= 60) return `${minuteDiff}m`
 
     return formatDate("DD/MM/YY")
   }, [createdAt])
 
+  const handleClick = () => {
+    update({ uuid, isSeen: true })
+  }
   return (
     <Link
       href={siteConfig.page.chat.href}
       className="flex flex-row items-start justify-between border-t border-muted px-2 py-6"
+      onClick={handleClick}
     >
       <div
         className={cn(
