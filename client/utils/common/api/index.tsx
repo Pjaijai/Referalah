@@ -17,6 +17,7 @@ import { IGetConversationListByUserUuidResponse } from "@/types/api/response/con
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IMessageReferralResponse } from "@/types/api/response/message/referral"
+import { INotificationListResponse } from "@/types/api/response/notification/notification-list"
 import { IProvinceResponse } from "@/types/api/response/province"
 import {
   IGetPostResponse,
@@ -683,7 +684,7 @@ export const getConversationListByUserUuid = async ({
       )
       .or(`sender_uuid.eq.${userUuid},receiver_uuid.eq.${userUuid}`)
       .range(from, to)
-      .returns<IGetConversationListByUserUuidResponse>()
+      .returns<IGetConversationListByUserUuidResponse[]>()
       .order("last_updated_at", { ascending: false })
 
     if (error) {
@@ -796,6 +797,35 @@ export const checkHasConversationUnseen = async () => {
     }
 
     return data[0].has_unseen
+  } catch (error) {
+    throw error
+  }
+}
+// Notification
+export const getNotificationListByUserUuid = async ({
+  userUuid,
+  page,
+  numberOfDataPerPage,
+  isAscending,
+}: {
+  userUuid: string
+  page: number
+  numberOfDataPerPage: number
+  isAscending?: boolean
+}) => {
+  const from = page + page * numberOfDataPerPage
+  const to = from + numberOfDataPerPage
+
+  try {
+    const { data, error } = await supabase
+      .from("notification")
+      .select<string, INotificationListResponse>("*")
+      .eq("to_uuid", userUuid)
+      .range(from, to)
+      .order("id", { ascending: isAscending })
+
+    if (error) throw error
+    return data
   } catch (error) {
     throw error
   }

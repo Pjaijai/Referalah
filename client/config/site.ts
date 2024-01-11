@@ -108,6 +108,13 @@ export const siteConfig = {
       name: "對話",
       href: "/chat",
     },
+    notification: {
+      name: "訊息中心",
+      href: "/notification",
+      metadata: {
+        title: "訊息中心",
+      },
+    },
     about: {
       name: "關於本平台",
       href: "/about",

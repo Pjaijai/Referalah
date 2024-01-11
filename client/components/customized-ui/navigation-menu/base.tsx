@@ -12,7 +12,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
-import MessageIcon from "@/components/customized-ui/icoins/message"
+import MessageIcon from "@/components/customized-ui/icons/message"
 
 const components: { title: string; href: string; description: string }[] = [
   {

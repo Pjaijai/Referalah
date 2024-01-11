@@ -1,5 +1,6 @@
 import {
   ArrowLeft,
+  Bell,
   Briefcase,
   Building2,
   CalendarClock,
@@ -42,6 +43,7 @@ export type Icon = typeof LucideIcon
 
 export const Icons = {
   arrowLeft: ArrowLeft,
+  bell: Bell,
   messageSquareMore: MessageSquareMore,
   sun: SunMedium,
   moon: Moon,
