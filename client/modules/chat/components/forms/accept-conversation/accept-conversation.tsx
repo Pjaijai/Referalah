@@ -18,17 +18,24 @@ const AcceptConversationForm: React.FunctionComponent<
   const userUuid = useUserStore((state) => state.uuid)
   const handleClick = () => {
     if (conversationUuid) {
-      update({
-        isReceiverAccepted: true,
-        conversationUuid,
-      })
-      queryClient.invalidateQueries({
-        queryKey: [EQueryKeyString.CONVERSATION_LIST, { userUuid }],
-      })
+      update(
+        {
+          isReceiverAccepted: true,
+          conversationUuid,
+        },
+
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({
+              queryKey: [EQueryKeyString.CONVERSATION_LIST, { userUuid }],
+            })
+          },
+        }
+      )
     }
   }
   return (
-    <div className="flex w-full flex-col items-center justify-between rounded-lg bg-orange-200 p-4 text-orange-700 dark:bg-blue-500 dark:text-white">
+    <div className=" flex w-full flex-col items-center justify-between rounded-lg bg-orange-200 p-4 text-orange-700 dark:bg-blue-500 dark:text-white">
       <p className="w-full">
         此用戶向您發出對話申請，請自行檢驗對方身份後點擊以下以確認展開對話。
       </p>

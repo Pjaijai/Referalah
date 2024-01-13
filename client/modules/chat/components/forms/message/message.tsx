@@ -55,21 +55,35 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
           form.reset()
 
           if (type === "sender") {
-            update({
-              conversationUuid,
-              isReceiverSeen: false,
-            })
+            update(
+              {
+                conversationUuid,
+                isReceiverSeen: false,
+              },
+              {
+                onSuccess: () => {
+                  queryClient.invalidateQueries({
+                    queryKey: [EQueryKeyString.CONVERSATION_LIST, { userUuid }],
+                  })
+                },
+              }
+            )
           }
           if (type === "receiver") {
-            update({
-              conversationUuid,
-              isSenderSeen: false,
-            })
+            update(
+              {
+                conversationUuid,
+                isSenderSeen: false,
+              },
+              {
+                onSuccess: () => {
+                  queryClient.invalidateQueries({
+                    queryKey: [EQueryKeyString.CONVERSATION_LIST, { userUuid }],
+                  })
+                },
+              }
+            )
           }
-
-          queryClient.invalidateQueries({
-            queryKey: [EQueryKeyString.CONVERSATION_LIST, { userUuid }],
-          })
         },
         onError: () => {
           toast({
@@ -94,7 +108,7 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
         )}
 
         {type === "receiver" && !isReceiverAccepted && (
-          <div className="rounded-2 sticky bottom-0 border-2 p-4 text-center">
+          <div className="sticky bottom-0 rounded-lg border-2 p-4 text-center">
             請先接受對話請求
           </div>
         )}
