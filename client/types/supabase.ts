@@ -61,6 +61,24 @@ export interface Database {
         }
         Relationships: []
       }
+      config: {
+        Row: {
+          id: number
+          name: string
+          value: string
+        }
+        Insert: {
+          id?: number
+          name: string
+          value: string
+        }
+        Update: {
+          id?: number
+          name?: string
+          value?: string
+        }
+        Relationships: []
+      }
       conversation: {
         Row: {
           created_at: string
