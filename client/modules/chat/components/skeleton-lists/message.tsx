@@ -7,6 +7,7 @@ const MessageListSkeleton = () => {
   const numberOfCards = 15
   const skeletonCards = Array.from({ length: numberOfCards }, (_, index) => (
     <div
+      key={index}
       className={cn(
         "flex w-full flex-row ",
         index % 3 === 0 ? "justify-start" : "justify-end"
