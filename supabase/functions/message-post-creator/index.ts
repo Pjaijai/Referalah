@@ -178,10 +178,13 @@ serve(async (req: any) => {
                 <p>Please click the link below to continue the conversation:</p>
                 <a href="${WEB_BASE_URL}/en-ca/chat/${conversationUuid}">${WEB_BASE_URL}/en-ca/chat/${conversationUuid}</a>
 
-                <p>Message</p>
-                <div style="word-break: break-word; white-space: pre-wrap;">
-                    ${msgBody}
-                </div>
+                <div class='w-full flex justify-center'>
+                <div class="w-fit">
+                        <div class="bg-[#eee] p-4 word-break: break-word; white-space: pre-wrap; rounded-lg max-w-screen-lg">
+                            <p class="mt-2">  ${msgBody}</p>
+                        </div>
+              </div >
+              </div >
             </body>
             </html>
             `
