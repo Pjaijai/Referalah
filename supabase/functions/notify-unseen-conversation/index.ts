@@ -122,7 +122,7 @@ serve(async (req: any) => {
         })
 
         return {
-          success: true,
+          success: res?.ok,
           to: user.email,
           time: new Date().toISOString(),
           user_uuid: user.uuid,
