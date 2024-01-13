@@ -5,7 +5,7 @@ import ChatRightSection from "@/modules/chat/components/sections/right/right"
 
 const ChatPageTemplate = () => {
   return (
-    <div className="flex h-screen w-full flex-row overflow-hidden border-2">
+    <div className="flex h-screen w-full flex-row overflow-hidden">
       <ChatLeftSection />
       <ChatRightSection />
     </div>
