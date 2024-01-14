@@ -2,13 +2,23 @@
 
 import React from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 import { siteConfig } from "@/config/site"
+import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 
 const NavFooter = () => {
+  const pathname = usePathname()
+  const noShowFooter = pathname.includes(siteConfig.page.chat.href)
   return (
-    <footer className="mt-12 flex flex-col items-center justify-center gap-2 border-t-2 p-2 md:flex-row ">
+    <footer
+      className={cn(
+        noShowFooter
+          ? "hidden"
+          : "mt-12 flex flex-col items-center justify-center gap-2 border-t-2 p-2 md:flex-row "
+      )}
+    >
       <div className="flex flex-col items-center gap-3 text-sm text-muted-foreground ">
         <div className="flex flex-row gap-3">
           <a aria-label="author-email" href="mailto:r1r69.referalah@gmail.com">

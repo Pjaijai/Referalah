@@ -38,7 +38,7 @@ const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
       name={name}
       render={({ field }) => (
         <FormItem>
-          {label && leftLabel && (
+          {(label || leftLabel) && (
             <div className="flex w-full flex-row items-center justify-between">
               {label ? <FormLabel>{label}</FormLabel> : null}
 
