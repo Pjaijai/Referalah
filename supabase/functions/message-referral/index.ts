@@ -13,7 +13,6 @@ serve(async (req: any) => {
       return new Response("ok", { headers: corsHeaders })
     }
 
-    // // N
     const client = initSupabaseClient(req)
     const server = initSupabaseServer()
     const {
@@ -161,11 +160,14 @@ serve(async (req: any) => {
           <p>${sender.username}'s profile: <a href="${WEB_BASE_URL}en-ca/profile/${sender.uuid}">${WEB_BASE_URL}/en-ca/profile/${sender.uuid}</a></p>
           <p>Please click the link below to continue the conversation:</p>
          <a href="${WEB_BASE_URL}en-ca/chat/${conversationUuid}">${WEB_BASE_URL}/en-ca/chat/${conversationUuid}</a>
-
-          <p>Message</p>
-          <div id="emailContent" style="word-break: break-word; white-space: pre-wrap;">
-              ${msgBody}
-          </div>
+         
+         <div class='w-full flex justify-center'>
+         <div class="w-fit">
+                 <div class="bg-[#eee] p-4 word-break: break-word; white-space: pre-wrap; rounded-lg max-w-screen-lg">
+                     <p class="mt-2">  ${msgBody}</p>
+                 </div>
+       </div >
+       </div >
       </body>
       </html>
       `

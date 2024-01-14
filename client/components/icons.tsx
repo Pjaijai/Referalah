@@ -83,6 +83,7 @@ export const Icons = {
       <path d="M19 12H5" />
     </svg>
   ),
+  sendHorizontal: SendHorizontal,
   send: Send,
   dot: Dot,
   bigDot: (props: LucideProps) => (
@@ -101,7 +102,6 @@ export const Icons = {
       <circle cx="12.1" cy="12.1" r="1" />
     </svg>
   ),
-  sendHorizontal: SendHorizontal,
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path
