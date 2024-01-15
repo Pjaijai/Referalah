@@ -138,7 +138,7 @@ serve(async (req: any) => {
           status: 400,
         })
 
-      conversationUuid = conversation.uuid
+      conversationUuid = conversation[0].uuid
       const { data: message } = await server
         .from("message")
         .insert({
@@ -167,7 +167,7 @@ serve(async (req: any) => {
           <p>${sender.username} sent you a message.</p>
           <p>${sender.username}'s profile: <a href="${WEB_BASE_URL}en-ca/profile/${sender.uuid}">${WEB_BASE_URL}/en-ca/profile/${sender.uuid}</a></p>
           <p>Please click the link below to continue the conversation:</p>
-         <a href="${WEB_BASE_URL}en-ca/chat/${conversationUuid}">${WEB_BASE_URL}/en-ca/chat/${conversationUuid}</a>
+         <a href="${WEB_BASE_URL}en-ca/chat?conversation=${conversationUuid}">${WEB_BASE_URL}/en-ca/chat?conversation=${conversationUuid}</a>
          
          <div class='w-full flex justify-center'>
          <div class="w-fit">
