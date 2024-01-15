@@ -139,6 +139,7 @@ serve(async (req: any) => {
         })
 
       conversationUuid = conversation[0].uuid
+      console.log(83183, conversationUuid)
       const { data: message } = await server
         .from("message")
         .insert({
@@ -153,6 +154,8 @@ serve(async (req: any) => {
         .from("conversation")
         .update({ last_message_uuid: message.uuid })
         .eq("uuid", conversation[0].uuid)
+        .select()
+        .single()
 
       console.log(
         `Existing conversation uuid:${data.uuid} for ${sender.uuid} and ${receiver.uuid}. Inserting message: uuid${message.uuid}`,
