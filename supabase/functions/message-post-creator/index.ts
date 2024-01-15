@@ -60,6 +60,7 @@ serve(async (req: any) => {
       .select(
         `   type,
               user(
+                email,
                   uuid,
                   username
               ),
@@ -100,7 +101,6 @@ serve(async (req: any) => {
       })
     }
 
-    // prevent_duplicate_conversation to make sure one conversation for two user
     const { data: conversation } = await server.rpc("find_conversation", {
       user1_uuid: sender.uuid,
       user2_uuid: post.user.uuid,
@@ -139,6 +139,10 @@ serve(async (req: any) => {
           .from("conversation")
           .update({ last_message_uuid: insertMessageRes.uuid })
           .eq("uuid", insertConversationRes.uuid)
+
+      console.log(
+        `Created conversation uuid:${insertConversationRes.uuid} for ${sender.uuid} and ${post.user.uuid}`,
+      )
     } else {
       if (conversation[0].is_receiver_accepted === false)
         return new Response("Receiver has not accepted the conversation", {
@@ -163,6 +167,10 @@ serve(async (req: any) => {
         .eq("uuid", conversation[0].uuid)
         .select()
         .single()
+
+      console.log(
+        `Existing conversation uuid:${data.uuid} for ${sender.uuid} and ${post.user.uuid}. Inserting message: uuid${message.uuid}`,
+      )
     }
 
     const subject = `${sender.username} is interested in you post - ${post.job_title}`

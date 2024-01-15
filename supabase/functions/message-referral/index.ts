@@ -56,7 +56,7 @@ serve(async (req: any) => {
 
     const { data: receiver } = await server
       .from("user")
-      .select("uuid, username, is_referer ,is_referee")
+      .select("uuid, email,username, is_referer ,is_referee")
       .eq("uuid", to_uuid)
       .single()
 
@@ -127,6 +127,10 @@ serve(async (req: any) => {
           .from("conversation")
           .update({ last_message_uuid: insertMessageRes.uuid })
           .eq("uuid", insertConversationRes.uuid)
+
+      console.log(
+        `Created conversation uuid:${insertConversationRes.uuid} for ${sender.uuid} and ${receiver.uuid}`,
+      )
     } else {
       if (conversation[0].is_receiver_accepted === false)
         return new Response("Receiver has not accepted the conversation", {
@@ -149,6 +153,10 @@ serve(async (req: any) => {
         .from("conversation")
         .update({ last_message_uuid: message.uuid })
         .eq("uuid", conversation[0].uuid)
+
+      console.log(
+        `Existing conversation uuid:${data.uuid} for ${sender.uuid} and ${receiver.uuid}. Inserting message: uuid${message.uuid}`,
+      )
     }
 
     const subject = `${sender.username} sent you a message.`
