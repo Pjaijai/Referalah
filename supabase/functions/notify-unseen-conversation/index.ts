@@ -54,6 +54,7 @@ serve(async (req: any) => {
           if (
             conversation.sender_uuid.uuid === user.uuid &&
             conversation.is_sender_seen === false &&
+            conversation.last_message_uuid.sender_uuid !== user.uuid &&
             index < 5
           ) {
             unseenConversationList.push({
@@ -63,6 +64,7 @@ serve(async (req: any) => {
           } else if (
             conversation.receiver_uuid.uuid === user.uuid &&
             conversation.is_receiver_seen === false &&
+            conversation.last_message_uuid.sender_uuid !== user.uuid &&
             index < 5
           ) {
             unseenConversationList.push({
