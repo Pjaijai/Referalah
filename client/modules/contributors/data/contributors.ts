@@ -151,6 +151,21 @@ const contributors: IContributor[] = [
     },
     contributedArea: ["uiux_design"],
   },
+  {
+    name: "Helen Wong",
+    links: {
+      linkedin: "https://www.linkedin.com/in/uxhelenwong/",
+      website: "helenux.squarespace.com",
+    },
+    contributedArea: ["uiux_design"],
+  },
+  {
+    name: "Selina Lam",
+    links: {
+      linkedin: "http://linkedin.com/in/selina-lam-a318bb157",
+    },
+    contributedArea: ["uiux_design"],
+  },
 ]
 
 export default contributors

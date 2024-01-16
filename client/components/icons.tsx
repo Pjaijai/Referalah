@@ -5,9 +5,11 @@ import {
   CalendarClock,
   CheckCircle2,
   ChevronDown,
+  ChevronLeft,
   ClipboardCheck,
   ClipboardX,
   Clock,
+  Dot,
   Eye,
   EyeOff,
   Github,
@@ -21,10 +23,13 @@ import {
   Mail,
   MapPin,
   Menu,
+  MessageSquareMore,
   Moon,
   MoreVertical,
   Pencil,
   RotateCcw,
+  Send,
+  SendHorizontal,
   SlidersHorizontal,
   SunMedium,
   Twitter,
@@ -38,6 +43,7 @@ export type Icon = typeof LucideIcon
 
 export const Icons = {
   arrowLeft: ArrowLeft,
+  messageSquareMore: MessageSquareMore,
   sun: SunMedium,
   moon: Moon,
   twitter: Twitter,
@@ -50,6 +56,7 @@ export const Icons = {
   undo: Undo2,
   moreVertical: MoreVertical,
   chevronDown: ChevronDown,
+  chevronLeft: ChevronLeft,
   checkCircle: CheckCircle2,
   instagram: Instagram,
   github: Github,
@@ -75,6 +82,25 @@ export const Icons = {
     >
       <path d="m12 19-7-7 7-7" />
       <path d="M19 12H5" />
+    </svg>
+  ),
+  sendHorizontal: SendHorizontal,
+  send: Send,
+  dot: Dot,
+  bigDot: (props: LucideProps) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="36"
+      height="36"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      {...props}
+    >
+      <circle cx="12.1" cy="12.1" r="1" />
     </svg>
   ),
   logo: (props: LucideProps) => (
