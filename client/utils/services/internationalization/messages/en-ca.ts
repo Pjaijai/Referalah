@@ -2,12 +2,9 @@
 
 export default {
   index: {
-    connect: "Connect",
-    scattered: " scattered",
-    hongkong: " Hong Kong",
+    connect: "Connect Scattered Hong Kong",
     professionals: "Professionals",
-    subTitle_one: `Wishing you all the best!`,
-    subTitle_two: "",
+    subTitle: `Wishing you all the best!`,
     so_far: "up to the present moment",
     "members#zero": "No member",
     "members#one": "member",
