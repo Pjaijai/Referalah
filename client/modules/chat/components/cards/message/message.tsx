@@ -21,28 +21,29 @@ const MessageCard: React.FunctionComponent<IMessageCardProps> = ({
         sentByUser ? "justify-end" : " justify-start "
       )}
     >
-      <div className="flex w-fit max-w-[70%] flex-col">
+      <div className="flex w-fit max-w-[70%] flex-row">
         <div
           className={cn(
-            " rounded-lg p-4 text-start",
-            sentByUser ? "bg-green-200 " : " bg-gray-200"
+            " flex flex-row rounded-l-2xl p-3",
+            sentByUser
+              ? "bg-green-300 dark:bg-[#164E63] "
+              : " bg-slate-50 shadow-sm dark:bg-slate-600"
           )}
           data-testid="message-card"
         >
-          <div className="flex flex-col items-center ">
-            <p className="whitespace-pre-wrap break-all  text-start dark:text-black">
-              {text}
-            </p>
-          </div>
+          <p className="shrink-0 whitespace-pre-wrap break-all text-start  text-black dark:text-white">
+            {text}
+          </p>
         </div>
-
         <div
           className={cn(
-            "mt-1 flex w-full flex-row ",
-            sentByUser ? "justify-end" : "justify-start"
+            "flex items-end justify-end rounded-r-2xl text-end text-xs  text-slate-700 dark:text-slate-400",
+            sentByUser
+              ? "bg-green-300  dark:bg-[#164E63]"
+              : " bg-slate-50 shadow-sm dark:bg-slate-600"
           )}
         >
-          <p className={"text-end text-xs text-muted-foreground"}>
+          <p className="mb-1 mr-2">
             {formattedDate}
             {isExact ? "" : "前"}
           </p>
