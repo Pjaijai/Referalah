@@ -43,7 +43,9 @@ describe("MessageCard", () => {
       )
 
       const messageCard = screen.getByTestId("message-card")
-      expect(messageCard).toHaveClass("bg-green-200")
+      expect(messageCard).toHaveClass(
+        "flex flex-row rounded-l-2xl p-3 bg-green-300 dark:bg-[#164E63]"
+      )
     })
   })
 })
