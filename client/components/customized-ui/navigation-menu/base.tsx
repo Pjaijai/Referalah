@@ -13,6 +13,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import MessageIcon from "@/components/customized-ui/icoins/message"
+import { Icons } from "@/components/icons"
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -35,7 +36,7 @@ export function BaseNavigationMenu() {
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger className="flex flex-row items-center gap-2 text-sm md:text-lg">
-            🙋 人脈
+            <Icons.personStanding /> 人脈
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="flex w-[200px] flex-col">
@@ -61,7 +62,7 @@ export function BaseNavigationMenu() {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuTrigger className="flex items-center gap-2 text-sm md:text-lg">
-            💼 工作
+            <Icons.briefcase /> 工作
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="flex w-[200px] flex-col ">

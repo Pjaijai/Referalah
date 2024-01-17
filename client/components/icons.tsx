@@ -26,6 +26,7 @@ import {
   Moon,
   MoreVertical,
   Pencil,
+  PersonStanding,
   RotateCcw,
   Send,
   SendHorizontal,
@@ -42,6 +43,7 @@ export type Icon = typeof LucideIcon
 
 export const Icons = {
   arrowLeft: ArrowLeft,
+  briefcase: Briefcase,
   messageSquareMore: MessageSquareMore,
   sun: SunMedium,
   moon: Moon,
@@ -51,6 +53,7 @@ export const Icons = {
   laptop: Laptop,
   mail: Mail,
   pencil: Pencil,
+  personStanding: PersonStanding,
   loader: Loader,
   undo: Undo2,
   moreVertical: MoreVertical,

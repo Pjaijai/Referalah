@@ -1,14 +1,20 @@
 import React from "react"
 
+import { cn } from "@/lib/utils"
 import useUserStore from "@/hooks/state/user/store"
 import { Icons } from "@/components/icons"
 
-const MessageIcon = () => {
+interface IMessageIconProp {
+  className?: string
+}
+const MessageIcon: React.FunctionComponent<IMessageIconProp> = ({
+  className,
+}) => {
   const hasConversationUnseen = useUserStore(
     (state) => state.hasConversationUnseen
   )
   return (
-    <div className="relative">
+    <div className={cn("relative", className)}>
       <Icons.messageSquareMore />
       {hasConversationUnseen && (
         <Icons.bigDot
