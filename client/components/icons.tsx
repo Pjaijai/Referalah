@@ -27,6 +27,7 @@ import {
   Moon,
   MoreVertical,
   Pencil,
+  PersonStanding,
   RotateCcw,
   Send,
   SendHorizontal,
@@ -43,6 +44,7 @@ export type Icon = typeof LucideIcon
 
 export const Icons = {
   arrowLeft: ArrowLeft,
+  briefcase: Briefcase,
   messageSquareMore: MessageSquareMore,
   sun: SunMedium,
   moon: Moon,
@@ -52,6 +54,7 @@ export const Icons = {
   laptop: Laptop,
   mail: Mail,
   pencil: Pencil,
+  personStanding: PersonStanding,
   loader: Loader,
   undo: Undo2,
   moreVertical: MoreVertical,
@@ -101,6 +104,18 @@ export const Icons = {
       {...props}
     >
       <circle cx="12.1" cy="12.1" r="1" />
+    </svg>
+  ),
+  unseenDot: (props: LucideProps) => (
+    <svg
+      width="6"
+      height="6"
+      viewBox="0 0 6 6"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <circle cx="3" cy="3" r="3" fill="#FBBF24" />
     </svg>
   ),
   logo: (props: LucideProps) => (
@@ -183,6 +198,7 @@ export const Icons = {
       viewBox="0 0 18 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <path
         d="M15.5454 0.818184H2.45448C1.55448 0.818184 0.818115 1.55455 0.818115 2.45455V17.1818L4.09084 13.9091H15.5454C16.4454 13.9091 17.1818 13.1727 17.1818 12.2727V2.45455C17.1818 1.55455 16.4454 0.818184 15.5454 0.818184ZM6.54539 8.18182H4.90902V6.54546H6.54539V8.18182ZM9.81812 8.18182H8.18175V6.54546H9.81812V8.18182ZM13.0908 8.18182H11.4545V6.54546H13.0908V8.18182Z"

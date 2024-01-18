@@ -6,7 +6,8 @@ import { useRouter } from "next/navigation"
 import { siteConfig } from "@/config/site"
 import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
-import UserDropDownMenu from "@/components/customized-ui/drop-down-menu/user"
+import BaseAvatar from "@/components/customized-ui/avatars/base"
+import MessageIcon from "@/components/customized-ui/icons/message"
 import { BaseNavigationMenu } from "@/components/customized-ui/navigation-menu/base"
 import { MobileNavigationMenu } from "@/components/customized-ui/navigation-menu/mobile"
 import { Icons } from "@/components/icons"
@@ -14,7 +15,7 @@ import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 export function SiteHeader() {
-  const isUserSignIn = useUserStore((state) => state.isSignIn)
+  const user = useUserStore((state) => state)
   const router = useRouter()
 
   return (
@@ -33,18 +34,36 @@ export function SiteHeader() {
 
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center gap-2">
-            <ThemeToggle className="hidden md:block" />
+            <div className="hidden md:block">
+              <ThemeToggle />
+            </div>
+
             <Link
               aria-label="referalah-project-github"
               href={siteConfig.links.github}
               target="_blank"
               rel="noreferrer"
+              className="hidden md:block"
             >
               <Icons.github />
             </Link>
 
-            {isUserSignIn ? (
-              <UserDropDownMenu />
+            {user.isSignIn && <MessageIcon className="block md:hidden" />}
+
+            {user.isSignIn ? (
+              <Link
+                href={`${siteConfig.page.profile.href}/${user.uuid}`}
+                className="flex flex-row items-center"
+              >
+                <>
+                  <BaseAvatar
+                    fallBack={user.username ? user.username[0] : ""}
+                    url={user.photoUrl || undefined}
+                    alt={user.username ? user.username[0] : ""}
+                  />
+                  <span className="hidden md:block">{user.username}</span>
+                </>
+              </Link>
             ) : (
               <Button
                 onClick={() => {

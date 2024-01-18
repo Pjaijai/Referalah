@@ -21,6 +21,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import MessageIcon from "@/components/customized-ui/icons/message"
 import { Icons } from "@/components/icons"
 import { ThemeToggleMobile } from "@/components/theme-toggle-mobile"
 
@@ -29,7 +30,7 @@ interface MobileNavigationMenuProps {
 }
 
 export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
-  const userUuid = useUserStore((state) => state.uuid)
+  const { uuid: userUuid, isSignIn } = useUserStore((state) => state)
 
   const connectionLinks = [
     { title: "推薦人", url: siteConfig.page.referrer.href },
@@ -116,18 +117,17 @@ export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
                   </div>
                 </AccordionContent>
               </AccordionItem>
-              {/* TO-FIX */}
-              <SheetClose asChild>
-                <div
-                  onClick={() =>
-                    handleLinkOnClick(siteConfig.page.referrerPost.href)
-                  }
-                  className="flex items-center gap-2 py-4 font-bold hover:cursor-pointer"
-                >
-                  <Icons.chat />
-                  對話
-                </div>
-              </SheetClose>
+              {isSignIn && (
+                <SheetClose asChild>
+                  <div
+                    onClick={() => handleLinkOnClick(siteConfig.page.chat.href)}
+                    className="flex items-center gap-2 py-4 font-bold hover:cursor-pointer"
+                  >
+                    <MessageIcon />
+                    對話
+                  </div>
+                </SheetClose>
+              )}
             </Accordion>
           </div>
           <SheetFooter>

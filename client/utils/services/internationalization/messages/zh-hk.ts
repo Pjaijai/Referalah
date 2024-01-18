@@ -2,8 +2,10 @@
 
 export default {
   index: {
-    title: "連結海外港人。",
-    subTitle: "希望呢個平台幫到大家！祝大家一切順利！",
+    connect: "連結海外香港",
+    professionals: "人才",
+    subTitle: `祝大家一切順利！`,
+    so_far: "截至現時",
     "members#zero": "個會員",
     "members#other": "個會員",
   },
