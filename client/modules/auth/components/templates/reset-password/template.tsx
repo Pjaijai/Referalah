@@ -2,7 +2,7 @@
 
 import React, { useCallback, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { resetPasswordFormSchema } from "@/modules/auth/validations/reset-poassword"
+import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -18,9 +18,31 @@ import TextInput from "@/components/customized-ui/inputs/text"
 const ResetPasswordPageTemplate = () => {
   const { toast } = useToast()
   const router = useRouter()
+  const t = useI18n()
   const searchParams = useSearchParams()
   const email = searchParams.get("email")
   const [isLoading, setIsLoading] = useState(false)
+
+  const resetPasswordFormSchema = z
+    .object({
+      password: z
+        .string()
+        .min(8, { message: t("validation.text.minimum_length", { count: 8 }) })
+        .max(20, {
+          message: t("validation.text.maximum_length", { count: 20 }),
+        }),
+      confirmPassword: z
+        .string()
+        .min(8, { message: t("validation.text.minimum_length", { count: 8 }) })
+        .max(20, {
+          message: t("validation.text.maximum_length", { count: 20 }),
+        }),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: t("validation.confirm_password.not_match_with_password"),
+      path: ["confirmPassword"],
+    })
+
   const form = useForm<z.infer<typeof resetPasswordFormSchema>>({
     resolver: zodResolver(resetPasswordFormSchema),
     defaultValues: {
@@ -38,7 +60,7 @@ const ResetPasswordPageTemplate = () => {
         {
           onSuccess: () => {
             toast({
-              title: "密碼更改成功成功！",
+              title: t("auth.reset_password.success"),
             })
 
             router.push(`${siteConfig.page.main.href}`)
@@ -46,8 +68,10 @@ const ResetPasswordPageTemplate = () => {
           onError: (error: any) => {
             if (error.message === "Auth session missing!") {
               return toast({
-                title: "過期認證連結！",
-                description: "請重新發送認證連結🙏🏻",
+                title: t("auth.reset_password.error.invalid_url_title"),
+                description: t(
+                  "auth.reset_password.error.invalid_url_description"
+                ),
                 variant: "destructive",
               })
             }
@@ -57,14 +81,18 @@ const ResetPasswordPageTemplate = () => {
               "New password should be different from the old password."
             ) {
               return toast({
-                title: "新密碼不能重用舊密碼",
-                description: "俾少少創意先？",
+                title: t(
+                  "auth.sign_up.error.new_password_same_as_old_pass_word_title"
+                ),
+                description: t(
+                  "auth.sign_up.error.new_password_same_as_old_pass_word_description"
+                ),
                 variant: "destructive",
               })
             }
             return toast({
-              title: "出事！",
-              description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+              title: t("general.error.title"),
+              description: t("general.error.description"),
               variant: "destructive",
             })
           },
@@ -85,21 +113,25 @@ const ResetPasswordPageTemplate = () => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="mt-8 flex flex-col justify-between gap-8"
           >
-            <TextInput value={email || ""} label="電郵" disabled />
-            <FormPasswordInput
-              control={form.control}
-              label="新密碼"
-              name="password"
-              description="密碼必須為8至20字元之間"
+            <TextInput
+              value={email || ""}
+              label={t("auth.form.email_label")}
+              disabled
             />
             <FormPasswordInput
               control={form.control}
-              label="入多次密碼"
+              label={t("form.auth.new_password_label")}
+              name="password"
+              description={t("form.general.password_description")}
+            />
+            <FormPasswordInput
+              control={form.control}
+              label={t("auth.form.confirm_password_label")}
               name="confirmPassword"
             />
 
             <Button type="submit" className="shrink-0" disabled={isLoading}>
-              {isLoading ? "等等" : "提交"}
+              {isLoading ? t("general.wait") : t("form.general.submit")}
             </Button>
           </form>
         </Form>

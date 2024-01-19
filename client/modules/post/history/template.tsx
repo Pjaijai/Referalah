@@ -2,6 +2,7 @@
 
 import React from "react"
 import PostHistoryCard from "@/modules/post/history/components/cards/post-history"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import useGetPostListByUserUuid from "@/hooks/api/post/get-post-list-by-user-uuid"
 import useUserStore from "@/hooks/state/user/store"
@@ -13,6 +14,7 @@ interface IPostHistoryTemplateProps {
 const PostHistoryTemplate: React.FunctionComponent<
   IPostHistoryTemplateProps
 > = ({ slug }) => {
+  const t = useI18n()
   const { data, isLoading } = useGetPostListByUserUuid(slug)
   const userUuid = useUserStore((state) => state.uuid)
   const isViewingOwnProfile = slug === userUuid
@@ -24,7 +26,9 @@ const PostHistoryTemplate: React.FunctionComponent<
       )}
 
       {!isLoading && data && !(data.length > 0) && (
-        <div className="mt-8 rounded-lg border-2 p-4 text-center">冇資料🥲</div>
+        <div className="mt-8 rounded-lg border-2 p-4 text-center">
+          {t("history.no_data")}
+        </div>
       )}
 
       {!isLoading && data && (

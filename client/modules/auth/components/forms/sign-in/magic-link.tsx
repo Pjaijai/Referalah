@@ -3,7 +3,7 @@
 import React from "react"
 import { useRouter } from "next/navigation"
 import { EEmaiVerification } from "@/modules/auth/types/email-verification"
-import { magicLinkSignInFormSchema } from "@/modules/auth/validations/magic-link-sign-in"
+import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -22,6 +22,11 @@ const MagicLinkSignInForm: React.FunctionComponent<
 > = ({}) => {
   const { toast } = useToast()
   const router = useRouter()
+  const t = useI18n()
+
+  const magicLinkSignInFormSchema = z.object({
+    email: z.string().email(t("validation.email.email_format_not_right")),
+  })
 
   const form = useForm<z.infer<typeof magicLinkSignInFormSchema>>({
     resolver: zodResolver(magicLinkSignInFormSchema),
@@ -49,14 +54,14 @@ const MagicLinkSignInForm: React.FunctionComponent<
         onError: (error: any) => {
           if (error.message.includes("Invalid login credentials")) {
             return toast({
-              title: "電郵錯誤",
+              title: t("auth.sign_in.magic_link.email_invalid_error"),
               variant: "destructive",
             })
           }
 
           return toast({
-            title: "出事！",
-            description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+            title: t("general.error.title"),
+            description: t("general.error.description"),
             variant: "destructive",
           })
         },
@@ -71,13 +76,14 @@ const MagicLinkSignInForm: React.FunctionComponent<
         className="mt-8 flex flex-col  justify-between gap-8"
       >
         <div className="flex flex-col">
-          <FormTextInput control={form.control} label="電郵" name="email" />
-          <p className="text-sm text-muted-foreground ">
-            你會收到條登入連結，唔洗密碼👍🏻
-          </p>
+          <FormTextInput
+            control={form.control}
+            label={t("auth.form.email_label")}
+            name="email"
+          />
         </div>
 
-        <Button type="submit">登入</Button>
+        <Button type="submit">{t("general.sign_in")}</Button>
       </form>
     </Form>
   )

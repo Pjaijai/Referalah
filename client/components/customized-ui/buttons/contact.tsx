@@ -1,6 +1,7 @@
 import React, { memo, useState } from "react"
 import ContactDialog from "@/modules/referral/components/dialog/contact"
 import UserSignInDialog from "@/modules/referral/components/dialog/userSignIn"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
@@ -22,6 +23,7 @@ const ContactButton: React.FunctionComponent<IContactButtonProps> = ({
   postUuid,
   receiverType,
 }) => {
+  const t = useI18n()
   const [isContactFormOpen, setIsContactFormOpen] = useState(false)
   const [isAuthOpen, setIsAuthOpen] = useState(false)
   const isUserSignIn = useUserStore((state) => state.isSignIn)
@@ -38,7 +40,10 @@ const ContactButton: React.FunctionComponent<IContactButtonProps> = ({
     <>
       <Button className="w-full" onClick={handleContactClick}>
         <Icons.mail className="mr-1 h-4 w-4" />
-        聯絡{messageType === EMessageType.POST ? "推薦人" : "我"}
+        {t("general.contact")}
+        {messageType === EMessageType.POST
+          ? t("general.referrer")
+          : t("general.me")}
       </Button>
 
       <ContactDialog

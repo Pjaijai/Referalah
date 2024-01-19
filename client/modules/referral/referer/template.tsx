@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
@@ -18,6 +19,7 @@ interface IRefererPageTemplateProps {}
 const RefererPageTemplate: React.FunctionComponent<
   IRefererPageTemplateProps
 > = () => {
+  const t = useI18n()
   const {
     result,
     handleCompanyChange,
@@ -60,13 +62,13 @@ const RefererPageTemplate: React.FunctionComponent<
           onChange={handleCompanyChange}
           onKeyDown={handleKeyPressSubmitChange}
           value={companyName}
-          placeholder="公司名稱"
+          placeholder={t("general.company_name")}
         />
         <Input
           onChange={handleJobTitleChange}
           onKeyDown={handleKeyPressSubmitChange}
           value={jobTitle}
-          placeholder="職位/工作名稱"
+          placeholder={t("general.job_title")}
         />
 
         <div className="flex flex-row justify-end gap-2">
@@ -92,13 +94,13 @@ const RefererPageTemplate: React.FunctionComponent<
           />
           <ResetButton onClick={handleReset} />
           <Button onClick={handleSubmitChange} className="whitespace-nowrap">
-            搜尋
+            {t("general.search")}
           </Button>
         </div>
       </div>
       {!isRefererListLoading && !isFetching && list.length === 0 && (
         <div className="mt-8 rounded-lg border-2 p-4 text-center">
-          冇資料🥲不如成為推薦人？
+          {"referral.search_referrer.no_data"}
         </div>
       )}
 

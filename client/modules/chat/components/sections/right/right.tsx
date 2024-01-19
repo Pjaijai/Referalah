@@ -4,8 +4,8 @@ import AcceptConversationForm from "@/modules/chat/components/forms/accept-conve
 import SendMessageForm from "@/modules/chat/components/forms/message/message"
 import ConversationHeader from "@/modules/chat/components/header/conversation/conversation"
 import MessageList from "@/modules/chat/components/lists/message/message"
-import MessageListSkeleton from "@/modules/chat/components/skeleton-lists/message"
 import useConversationStore from "@/modules/chat/state/conversations"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
@@ -14,6 +14,7 @@ import BaseAlert from "@/components/customized-ui/alert/base"
 import HighlightedLink from "@/components/customized-ui/links/highlighted"
 
 const ChatRightSection = () => {
+  const t = useI18n()
   const param = useSearchParams()
   const userUuid = useUserStore((state) => state.uuid)
   const conversation = param.get("conversation")
@@ -33,14 +34,13 @@ const ChatRightSection = () => {
         )}
       >
         <BaseAlert
-          title="免安裝下載Referalah"
+          title={t("chat.app_installation")}
           description={
             <p>
-              撳
+              {t("chat.click")}
               <HighlightedLink href={siteConfig.page.installation.href}>
-                呢度
+                {t("chat.here")}
               </HighlightedLink>
-              睇下點下載，又可以收到即時手機通知！
             </p>
           }
         />

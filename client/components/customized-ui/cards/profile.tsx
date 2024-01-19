@@ -1,5 +1,6 @@
 import React from "react"
 import { useRouter } from "next/navigation"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
@@ -18,6 +19,7 @@ const ProfileCard: React.FunctionComponent<IProfileCardProps> = ({
   uuid,
   className,
 }) => {
+  const t = useI18n()
   const router = useRouter()
 
   const handleProfileClick = () => {
@@ -32,7 +34,7 @@ const ProfileCard: React.FunctionComponent<IProfileCardProps> = ({
           className
         )}
       >
-        <span className="mb-2 text-xs text-muted-foreground">推薦人</span>
+        <span className="mb-2 text-xs text-muted-foreground"></span>
         <div className="flex items-center justify-between gap-0 md:flex-col md:items-start md:gap-2">
           <div className="flex items-center">
             <BaseAvatar
@@ -53,7 +55,7 @@ const ProfileCard: React.FunctionComponent<IProfileCardProps> = ({
             onClick={handleProfileClick}
             size="xs"
           >
-            查看用戶檔案
+            {t("general.check_user_profile")}
           </Button>
         </div>
       </div>

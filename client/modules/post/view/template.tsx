@@ -4,6 +4,7 @@ import React from "react"
 import Link from "next/link"
 import PostHeader from "@/modules/post/components/info-display/header"
 import PostStatusDisplay from "@/modules/post/components/info-display/status"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { EMessageType } from "@/types/common/message-type"
 import { EPostStatus } from "@/types/common/post-status"
@@ -30,6 +31,7 @@ interface ReferralPostDetailsPageProps {
 const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   ReferralPostDetailsPageProps
 > = ({ postUuid }) => {
+  const t = useI18n()
   const { data: post, isLoading, isSuccess } = useGetPost(postUuid)
   const userUuid = useUserStore((state) => state.uuid)
   const isViewingOwnProfile = post?.created_by === userUuid
@@ -43,7 +45,8 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
     >
       <Link href={siteConfig.page.referrerPost.href}>
         <p className="gap my-4 flex flex-row items-center text-sm text-muted-foreground">
-          <Icons.smallArrowLeft className="text-sm" /> <span>返回街招</span>
+          <Icons.smallArrowLeft className="text-sm" />{" "}
+          <span>{t("post.back_to_post_page")}</span>
         </p>
       </Link>
       {post && (
@@ -111,7 +114,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                   href={`${siteConfig.page.editPost.href}/${postUuid}`}
                 >
                   <Icons.pencil className="mr-1 h-4 w-4" />
-                  編輯街招
+                  {t("post.edit_post")}
                 </Link>
               )}
               {!isViewingOwnProfile && isOpen && (

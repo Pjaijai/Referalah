@@ -3,12 +3,14 @@
 import React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 
 const NavFooter = () => {
+  const t = useI18n()
   const pathname = usePathname()
   const noShowFooter = pathname.includes(siteConfig.page.chat.href)
   return (
@@ -71,14 +73,14 @@ const NavFooter = () => {
             className="p-2 text-center text-sm text-muted-foreground"
             href={siteConfig.page.privacyPolicy.href}
           >
-            Privacy Policy
+            {t("auth.sign_up.privacy_policy")}
           </Link>
 
           <Link
             className="p-2 text-center text-sm text-muted-foreground "
             href={siteConfig.page.termsAndConditions.href}
           >
-            Terms and Conditions
+            {t("auth.sign_up.terms_and_conditions")}
           </Link>
         </div>
       </div>

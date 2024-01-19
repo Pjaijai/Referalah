@@ -8,15 +8,19 @@ export default {
     so_far: "截至現時",
     "members#zero": "個會員",
     "members#other": "個會員",
+    join_now: "即刻加入！",
+    check_latest_post: "查看最新街招",
   },
   "auth.form.email_label": "電郵",
   "auth.form.username_label": "用戶名稱",
+  "auth.form.username_description": "註冊後可以更改",
   "auth.form.password_label": "密碼",
+
   "auth.form.confirm_password_label": "入多次密碼",
   "auth.sign_up.click_to_agree_text": "點擊「註冊」按鈕即表示你同意",
   "auth.sign_up.privacy_policy": "私隱政策",
   "auth.sign_up.and": "及",
-  "auth.sign_up.terms_and_conditions": "Terms of Service",
+  "auth.sign_up.terms_and_conditions": "服務條款。",
   "auth.sign_up.redirect_to_sign_up": "已有帳號？係",
   "auth.form.sign_up.redirect_to_sign_up.redirect_to_sign_up": "呢度登入",
   "auth.sign_up.error.new_password_same_as_old_pass_word_title":
@@ -24,6 +28,7 @@ export default {
   "auth.sign_up.error.new_password_same_as_old_pass_word_description":
     "俾少少創意先？",
   "general.wait": "請等等",
+  "auth.sign_up.confirm_button_title": "註冊",
   "auth.sign_up.submit.success_message": "註冊成功！",
   "auth.sign_up.email_duplication_error_message": "此電郵已被其他人使用",
   "auth.sign_up.username_duplication_error_message": "此用戶名稱已被其他人使用",
@@ -40,6 +45,7 @@ export default {
   "auth.sign_up_confirmation.verification_success_text":
     "你已成功核實並成為會員會。",
   "auth.sign_up_confirmation.build_your_profile": "即刻建立你嘅個人檔案啦！",
+  "auth.sign_up_confirmation.build_my_profile": "建立個人檔案",
   "general.skip": "略過",
   "auth.email_verification.click_magic_link_in_email_to_sign_in":
     "請撳電郵入面嘅 magic link 嚟登入。",
@@ -89,7 +95,7 @@ export default {
   "contribution.type.translation": "翻譯",
   "pwa.intro":
     "Referalah嘅PWA功能都正式上線啦！我哋呼籲各位盡量安裝Referalah嘅PWA，因為呢個係我哋未來嘅發展方向，大家將來可能會喺PWA上享受到最齊嘅功能同最好嘅用戶體驗。",
-  "pwa.what_ispwa":
+  "pwa.what_is_pwa":
     "Progressive web application (PWA)係一個可以下載並安裝到你電話裡面，當一般應用程式咁樣使用嘅網頁。用PWA嚟代替通過瀏覽器上網有唔少好處：其中比較重要嘅當然係方便，你可以當佢係一個書籤，甚至慳返打開瀏覽器呢一步。仲有就係當你連接唔到網絡時，你都可以使用佢嘅基本功能。",
   "pwa.how_to_install":
     "安裝方法好簡單，只要你電話入面有一個瀏覽器就得。喺下面揀返你手機用緊嘅系統，跟住步驟，就可以將Referalah安裝到你嘅主頁啦！",
@@ -222,4 +228,16 @@ export default {
   "chat.no_message": "暫時冇任何訊息",
   "chat.app_installation": "免安裝下載Referalah",
   "post.back_to_post_page": "返回街招",
+  "general.confirm": "確認",
+  "validation.send_message.required": "一定要寫啲嘢",
+  "pwa.what_is_pwa.title": "咩係PWA？",
+  "pwa.how_to_install.title": "點樣安裝？",
+  "post.create.related_link_description":
+    "例如份工個LinkedIn，Indeed，Glassdoor個連結",
+  "post.create.related_link_title": "相關連結(選填)",
+  "auth.form.sign_out.error": "登出出事！",
+  "general.view": "查看",
+  "general.chat": "對話",
+
+  "nav.become_referrer_or_referrer_title": "成為推薦人/受薦人",
 } as const

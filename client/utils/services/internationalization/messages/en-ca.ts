@@ -10,18 +10,23 @@ export default {
     "members#one": "member",
     "members#two": "members",
     "members#other": "members",
+    join_now: "Join Now !",
+    check_latest_post: "Latest Post",
   },
   "auth.form.email_label": "Email",
   "auth.form.username_label": "Username",
+  "auth.form.username_description": "Changeable after registration",
   "auth.form.password_label": "Password",
-  confirm_password_label: "Confirm Password",
-  click_to_agree_text: 'By clicking the "Register" button you agree',
-  "auth.sign_up.privacy_policy": "Privacy Policy",
-  "auth.sign_up.and": "and",
-  "auth.sign_up.terms_and_conditions": "服務條款。",
+  "auth.form.confirm_password_label": "Confirm Password",
+  "auth.sign_up.click_to_agree_text":
+    'By clicking the "Sign up" button you agree',
+  "auth.sign_up.privacy_policy": " Privacy Policy",
+  "auth.sign_up.and": " and",
+  "auth.sign_up.confirm_button_title": "Sign up",
+  "auth.sign_up.terms_and_conditions": " Terms and conditions",
   "auth.sign_up.redirect_to_sign_up": "Already have an account?",
   "auth.form.sign_up.redirect_to_sign_up.redirect_to_sign_up":
-    "Click here to login",
+    "Click here to sign in",
 
   "auth.sign_up.error.new_password_same_as_old_pass_word_title":
     "The new password cannot be reused from the old password",
@@ -35,7 +40,7 @@ export default {
   "general.error.title": "Oops!",
   "general.error.description":
     "Seems like there is an error. If the issue persists after a few attempts, please contact me 🙏🏻",
-  "general.sign_in": "Log in",
+  "general.sign_in": "Sign in",
   "auth.sign_in.magic_link.email_invalid_error": "Invalid Email",
   "auth.sign_in.email_password.credential_invalid_error":
     "Invalid email or password",
@@ -47,6 +52,7 @@ export default {
   "auth.sign_up_confirmation.verification_success_text":
     "You have been successfully verified and become a member.",
   "auth.sign_up_confirmation.build_your_profile": "Create your profile now!",
+  "auth.sign_up_confirmation.build_my_profile": "Build my profile",
   "general.skip": "Skip",
   "auth.email_verification.click_magic_link_in_email_to_sign_in":
     "Please click on the magic link in your email to log in.",
@@ -61,13 +67,13 @@ export default {
   "auth.email_verification.resend_link": "Resend magic link",
 
   "auth.email_verification.resend_link_later#zero":
-    "or wait {count} seconds and resend the link",
+    "or wait {count} seconds to resend the link",
 
   "auth.email_verification.resend_link_later#one":
-    "or wait {count} second and resend the link",
+    "or wait {count} second to resend the link",
 
   "auth.email_verification.resend_link_later#other":
-    "or wait {count} seconds and resend the link",
+    "or wait {count} seconds to resend the link",
   "general.continue": "Continue",
   "form.general.password_description":
     "Password must be between 8 and 20 characters",
@@ -79,7 +85,7 @@ export default {
   "auth.reset_password.error.invalid_url_description":
     "Please resend the verification link",
   "auth.reset_password.success": "Password change successful!",
-  "auth.sign_in.no_account": "未有帳號？",
+  "auth.sign_in.no_account": "Don't have an account?",
   "auth.sign_in.register_here": "Register here",
   "validation.email.email_format_not_right": "Incorrect email format",
 
@@ -102,7 +108,7 @@ export default {
   "contribution.type.translation": "Translation",
   "pwa.intro":
     "Referalah's PWA features are officially online! We encourage everyone to install Referalah's PWA because this is the direction of our future development, and users may enjoy the most comprehensive features and the best user experience on PWA in the future. - Information/Instruction",
-  "pwa.what_ispwa":
+  "pwa.what_is_pwa":
     "A Progressive Web Application (PWA) is a web page that can be downloaded and installed on your phone, functioning like a regular application. Using PWA instead of browsing through a browser has many benefits: one of the most important, of course, is convenience. You can treat it like a bookmark, and it even saves you the step of opening the browser. Another advantage is that you can use its basic features even when you're not connected to the internet.",
   "pwa.how_to_install":
     "The installation method is very simple; you just need a browser on your phone. Choose your phone's operating system below, follow the steps, and you can install Referalah on your home screen! ",
@@ -115,7 +121,7 @@ export default {
   "pwa.ios.step_four":
     "That's it! You can see the Referalah logo on your home screen, tap it to open Referalah! ",
   "pwa.android.step_one":
-    "打Open Chrome, go to referalah.com, and tap the menu icon(three dots)",
+    "Open Chrome, go to referalah.com, and tap the menu icon(three dots)",
 
   "pwa.android.step_two":
     "Scroll down until you see Add to Home Screen, then tap it.",
@@ -196,8 +202,8 @@ export default {
   "referral.user_not_sing_in_dialog.sign_in": "Sign in",
   "general.link": "Link",
   "general.contact": "Contact",
-  "referral.search_referee.no_data": "Do Data🥲Become the first referee!",
-  "referral.search_referrer.no_data": "Do Data🥲Become the first referrer!",
+  "referral.search_referee.no_data": "No Data🥲 Become the first referee!",
+  "referral.search_referrer.no_data": "No Data🥲 Become the first referrer!",
   "general.today": "Today",
 
   "general.day#zero": "{count}day",
@@ -228,7 +234,7 @@ export default {
     "Select the options in profile!",
   "nav.referrer.description": "Looking for referrers? Check here !",
   "nav.referee.description": "Looking for talents? Check this!",
-  "general.sorting": "Sorting",
+  "general.sorting": "Sort",
   "search.year_of_experience_label": "Years of Experience",
   "search.maximum_year_of_experience_label": "Max",
   "search.minimum_year_of_experience_label": "Min",
@@ -249,4 +255,15 @@ export default {
   "chat.no_message": "No message",
   "chat.app_installation": "Get the App",
   "post.back_to_post_page": "Back to Post",
+  "general.confirm": "Confirm",
+  "validation.send_message.required": "Required",
+  "pwa.what_is_pwa.title": "What is PWA?",
+  "pwa.how_to_install.title": "How to install？",
+  "post.create.related_link_description":
+    "For example, links to job on LinkedIn, Indeed, and Glassdoor.",
+  "post.create.related_link_title": "Link(Optional)",
+  "auth.form.sign_out.error": "Failed to sign out",
+  "general.view": "View",
+  "general.chat": "Chat",
+  "nav.become_referrer_or_referrer_title": "Become Referrer/Referee",
 } as const

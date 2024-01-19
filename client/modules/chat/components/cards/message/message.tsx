@@ -13,6 +13,7 @@ const MessageCard: React.FunctionComponent<IMessageCardProps> = ({
   sentByUser,
   createdAt,
 }) => {
+  // TODO created at
   const { formattedDate, isExact } = formatCreatedAt(createdAt)
   return (
     <div
@@ -45,7 +46,6 @@ const MessageCard: React.FunctionComponent<IMessageCardProps> = ({
         >
           <p className="mb-1 mr-2">
             {formattedDate}
-            {isExact ? "" : "前"}
           </p>
         </div>
       </div>

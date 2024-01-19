@@ -4,6 +4,7 @@ import React, { useMemo, useState } from "react"
 import Link from "next/link"
 import EditProfileTemplate from "@/modules/profile/edit/template"
 import ViewProfileTemplate from "@/modules/profile/view/template"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
@@ -12,6 +13,7 @@ import { Icons } from "@/components/icons"
 import CommonPageLayout from "@/components/layouts/common"
 
 const ProfileTemplate = ({ userUuid }: { userUuid?: string }) => {
+  const t = useI18n()
   const [isEditMode, setIsEditMode] = useState(false)
   const userStoreUuid = useUserStore((state) => state.uuid)
   const uuid = useMemo(() => {
@@ -31,12 +33,12 @@ const ProfileTemplate = ({ userUuid }: { userUuid?: string }) => {
       <div className="flex h-screen  flex-col items-center justify-center gap-4 rounded-lg  p-4">
         <span className="text-5xl">🥲</span>
         <h6>
-          搵唔到用戶資料請refresh網頁或先
+          {t("profile.con_not_find_user")}
           <Link
             href={siteConfig.page.signIn.href}
             className="border-b-2 border-green-700 text-green-700 dark:border-yellow-300 dark:text-yellow-300 "
           >
-            登入
+            {t("general.sign_in")}
           </Link>
         </h6>
       </div>

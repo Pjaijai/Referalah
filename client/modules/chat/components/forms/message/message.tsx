@@ -1,7 +1,7 @@
 "use client"
 
-import React, { useState } from "react"
-import { sendMessageInFormSchema } from "@/modules/chat/validations/send-messsage"
+import React from "react"
+import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
@@ -28,20 +28,32 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
   type,
   isReceiverAccepted,
 }) => {
+  const t = useI18n()
   const queryClient = useQueryClient()
   const userUuid = useUserStore((state) => state.uuid)
+  const { toast } = useToast()
+  const { mutate: create, isLoading } = useCreateMessage()
+  const { mutate: update } = useUpdateConversation()
+  const sendMessageInFormSchema = z.object({
+    message: z
+      .string()
+      .min(1, { message: t("validation.send_message.required") })
+      .max(10000, {
+        message: t("validation.text.maximum_length", { count: 4000 }),
+      }),
+  })
+
   const form = useForm<z.infer<typeof sendMessageInFormSchema>>({
     resolver: zodResolver(sendMessageInFormSchema),
     defaultValues: {
       message: "",
     },
   })
+
   const { watch } = form
-  const { toast } = useToast()
   const messageWatch = watch("message")
   const currentInputMessage = messageWatch.trim()
-  const { mutate: create, isLoading } = useCreateMessage()
-  const { mutate: update } = useUpdateConversation()
+
   const onSubmit = async (values: z.infer<typeof sendMessageInFormSchema>) => {
     if (!conversationUuid) return
 
@@ -87,7 +99,7 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
         },
         onError: () => {
           toast({
-            title: "Send唔到個message :(",
+            title: t("chat.form.error.send_message_failed"),
             variant: "destructive",
           })
         },
@@ -103,13 +115,13 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
       >
         {type === "sender" && !isReceiverAccepted && (
           <div className="sticky bottom-0 rounded-lg border-2 p-2  text-center">
-            對方未接受請求
+            {t("chat.user_has_not_accept_the_request")}
           </div>
         )}
 
         {type === "receiver" && !isReceiverAccepted && (
           <div className="sticky bottom-0 rounded-lg border-2 p-4 text-center">
-            請先接受對話請求
+            {t("chat.need_to_accept_the_request")}
           </div>
         )}
 
@@ -118,7 +130,7 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
             <FormTextInput
               control={form.control}
               name="message"
-              placeholder="係到寫啲野俾對方:)"
+              placeholder={t("chat.form.message_placeholder")}
             />
 
             <Button

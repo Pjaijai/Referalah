@@ -4,11 +4,13 @@ import React, { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { EEmaiVerification } from "@/modules/auth/types/email-verification"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { siteConfig } from "@/config/site"
 import { Button } from "@/components/ui/button"
 
 const EmailVerificationPageTemplate = () => {
+  const t = useI18n()
   const searchParams = useSearchParams()
   const router = useRouter()
   const type = searchParams.get("type")
@@ -22,11 +24,11 @@ const EmailVerificationPageTemplate = () => {
 
   const title = useMemo(() => {
     if (type === EEmaiVerification.MAGIC_LINK)
-      return "請撳電郵入面嘅 magic link 嚟登入。"
+      return t("auth.email_verification.click_magic_link_in_email_to_sign_in")
 
     if (type === EEmaiVerification.RESET_PASSWORD)
-      return "請撳電郵入面嘅連結嚟重置密碼。"
-    return "請撳電郵入面嘅連結嚟做核實。"
+      return t("auth.email_verification.click_link_in_email_to_reset_password")
+    return t("auth.email_verification.click_link_in_email_to_verify")
   }, [type])
 
   const getEmailProvider = (email: string) => {
@@ -65,22 +67,22 @@ const EmailVerificationPageTemplate = () => {
 
   return (
     <div className="flex h-full w-full justify-center ">
-      <div className="mt-8 w-full max-w-md text-center">
+      <div className="mt-8 w-full max-w-lg text-center">
         <h6 className="text-lg">{title}</h6>
         <Button onClick={redirectToEmail} className="mt-4 w-full" size={"sm"}>
-          打開郵箱
+          {t("auth.email_verification.open_mail_box")}
         </Button>
         <p className="mt-4 text-xs">
-          請查看垃圾郵箱，相關電郵地址{" "}
+          {t("auth.email_verification.check_spam_mail_box")}{" "}
           <span className="font-semibold">team@referalah.com</span>
         </p>
         {(type === EEmaiVerification.MAGIC_LINK ||
           type === EEmaiVerification.RESET_PASSWORD) &&
           seconds === 0 && (
             <p className="mt-2 text-xs">
-              或{" "}
+              {t("general.or")}{" "}
               <Link href={redirectUrl} className="border-b border-foreground">
-                重新發送連結
+                {t("auth.email_verification.resend_link")}
               </Link>
             </p>
           )}
@@ -88,7 +90,11 @@ const EmailVerificationPageTemplate = () => {
         {(type === EEmaiVerification.MAGIC_LINK ||
           type === EEmaiVerification.RESET_PASSWORD) &&
           seconds > 0 && (
-            <p className="mt-2 text-xs">或等待{seconds}秒後，重新發送連結</p>
+            <p className="mt-2 text-xs">
+              {t("auth.email_verification.resend_link_later", {
+                count: seconds,
+              })}
+            </p>
           )}
       </div>
     </div>

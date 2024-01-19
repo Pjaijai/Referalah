@@ -15,6 +15,7 @@ const CreatedAtDisplay: React.FunctionComponent<
 > = ({ applyTo, createdAt, className }) => {
   const isCard = applyTo === "card"
 
+  // Todo created at
   const formattedCreatedAt = useMemo(() => {
     const { formattedDate, isExact } = formatCreatedAt(createdAt)
     return isCard || formattedDate === "--"
