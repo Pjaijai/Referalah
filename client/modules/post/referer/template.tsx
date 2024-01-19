@@ -48,7 +48,6 @@ const RefererPostPageTemplate: React.FunctionComponent<
     sorting,
   } = useSearchPost(EReferralType.REFERRER)
   const locale = useCurrentLocale()
-  console.log(123123, locale)
 
   const { data, fetchNextPage, isLoading, isFetching } = result
 

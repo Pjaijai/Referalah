@@ -51,18 +51,15 @@ export function SiteHeader() {
             {user.isSignIn && <MessageIcon className="block md:hidden" />}
 
             {user.isSignIn ? (
-              <Link
-                href={`${siteConfig.page.profile.href}/${user.uuid}`}
-                className="flex flex-row items-center"
-              >
-                <>
+              <Link href={`${siteConfig.page.profile.href}/${user.uuid}`}>
+                <div className="flex flex-row items-center gap-1">
                   <BaseAvatar
                     fallBack={user.username ? user.username[0] : ""}
                     url={user.photoUrl || undefined}
                     alt={user.username ? user.username[0] : ""}
                   />
                   <span className="hidden md:block">{user.username}</span>
-                </>
+                </div>
               </Link>
             ) : (
               <Button
