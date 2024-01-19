@@ -2,7 +2,10 @@
 
 import React from "react"
 import PostHistoryCard from "@/modules/post/history/components/cards/post-history"
-import { useI18n } from "@/utils/services/internationalization/client"
+import {
+  useCurrentLocale,
+  useI18n,
+} from "@/utils/services/internationalization/client"
 
 import useGetPostListByUserUuid from "@/hooks/api/post/get-post-list-by-user-uuid"
 import useUserStore from "@/hooks/state/user/store"
@@ -15,6 +18,7 @@ const PostHistoryTemplate: React.FunctionComponent<
   IPostHistoryTemplateProps
 > = ({ slug }) => {
   const t = useI18n()
+  const locale = useCurrentLocale()
   const { data, isLoading } = useGetPostListByUserUuid(slug)
   const userUuid = useUserStore((state) => state.uuid)
   const isViewingOwnProfile = slug === userUuid
@@ -35,20 +39,36 @@ const PostHistoryTemplate: React.FunctionComponent<
         <div className="mt-8 grid w-full grid-cols-1 gap-4 overflow-hidden lg:grid-cols-2">
           {data.map((data) => (
             <PostHistoryCard
-              city={data.city && data.city.cantonese_name}
               companyName={data.company_name}
-              country={data.country && data.country.cantonese_name}
               status={data.status}
-              industry={data.industry && data.industry.cantonese_name}
               jobTitle={data.job_title}
               photoUrl={data.user && data.user.avatar_url}
-              province={data.province && data.province.cantonese_name}
               yearOfExperience={data.year_of_experience}
               key={data.uuid}
               createdAt={data.created_at}
               uuid={data.uuid}
               url={data.url}
               isViewingOwnProfile={isViewingOwnProfile}
+              province={
+                locale === "zh-hk"
+                  ? data.province && data.province.cantonese_name
+                  : data.province && data.province.english_name
+              }
+              country={
+                locale === "zh-hk"
+                  ? data.country && data.country.cantonese_name
+                  : data.country && data.country.english_name
+              }
+              city={
+                locale === "zh-hk"
+                  ? data.city && data.city.cantonese_name
+                  : data.city && data.city.english_name
+              }
+              industry={
+                locale === "zh-hk"
+                  ? data.industry && data.industry.cantonese_name
+                  : data.industry && data.industry.english_name
+              }
             />
           ))}
         </div>

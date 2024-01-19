@@ -108,7 +108,6 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
             {description && (
               <CollapsibleTextWrapper
                 text={description}
-                className="mt-2 whitespace-pre-wrap break-all text-sm"
                 expandButtonProps={{ className: "mt-2" }}
               />
             )}

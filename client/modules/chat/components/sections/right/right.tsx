@@ -36,7 +36,7 @@ const ChatRightSection = () => {
         <BaseAlert
           title={t("chat.app_installation")}
           description={
-            <p>
+            <p className="flex gap-1">
               {t("chat.click")}
               <HighlightedLink href={siteConfig.page.installation.href}>
                 {t("chat.here")}

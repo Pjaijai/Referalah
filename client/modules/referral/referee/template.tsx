@@ -1,24 +1,28 @@
 "use client"
 
 import React from "react"
-import { useI18n } from "@/utils/services/internationalization/client"
+import {
+  useCurrentLocale,
+  useI18n,
+} from "@/utils/services/internationalization/client"
 
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
-import useSearchPost from "@/hooks/api/post/search-post"
+import useSearchReferral from "@/hooks/api/referral/search-referral"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import ResetButton from "@/components/customized-ui/buttons/reset"
-import ReferralPostCard from "@/components/customized-ui/cards/referral-post"
+import ReferralCard from "@/components/customized-ui/cards/referral"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 
-interface IRefereePostPageProps {}
+interface IRefereePageTemplateProps {}
 
-const RefereePostPageTemplate: React.FunctionComponent<
-  IRefereePostPageProps
+const RefereePageTemplate: React.FunctionComponent<
+  IRefereePageTemplateProps
 > = () => {
+  const locale = useCurrentLocale()
   const t = useI18n()
   const {
     result,
@@ -34,8 +38,8 @@ const RefereePostPageTemplate: React.FunctionComponent<
     handleReset,
     handleSubmitChange,
     handleKeyPressSubmitChange,
-    companyName,
     jobTitle,
+    companyName,
     provinceUuid,
     cityUuid,
     countryUuid,
@@ -43,12 +47,17 @@ const RefereePostPageTemplate: React.FunctionComponent<
     maxYearOfExperience,
     minYearOfExperience,
     sorting,
-  } = useSearchPost(EReferralType.REFEREE)
+  } = useSearchReferral(EReferralType.REFEREE)
 
-  const { data, fetchNextPage, isLoading, isFetching } = result
+  const {
+    data: refereeListData,
+    isLoading: isRefereeListLoading,
+    fetchNextPage,
+    isFetching,
+  } = result
 
-  const list = data !== undefined ? data.pages.flatMap((d) => d) : []
-
+  const list =
+    refereeListData !== undefined ? refereeListData.pages.flatMap((d) => d) : []
   return (
     <div className="flex flex-col gap-4">
       <div className="mt-8 flex h-full w-full flex-col-reverse gap-4 md:flex-row">
@@ -56,15 +65,14 @@ const RefereePostPageTemplate: React.FunctionComponent<
           onChange={handleCompanyChange}
           onKeyDown={handleKeyPressSubmitChange}
           value={companyName}
-          placeholder={t("general.company_name")}
+          placeholder="公司名稱"
         />
         <Input
           onChange={handleJobTitleChange}
           onKeyDown={handleKeyPressSubmitChange}
           value={jobTitle}
-          placeholder={t("general.job_title")}
+          placeholder="職位/工作名稱"
         />
-
         <div className="flex flex-row justify-end gap-2">
           <SearchPopover
             provinceUuid={provinceUuid}
@@ -84,7 +92,7 @@ const RefereePostPageTemplate: React.FunctionComponent<
             currentProvinceUuid={provinceUuid}
             currentMaxYearOfExperience={maxYearOfExperience}
             currentMinYearOfExperience={minYearOfExperience}
-            type={EMessageType.POST}
+            type={EMessageType.REFERRAL}
           />
           <ResetButton onClick={handleReset} />
           <Button onClick={handleSubmitChange} className="whitespace-nowrap">
@@ -92,47 +100,62 @@ const RefereePostPageTemplate: React.FunctionComponent<
           </Button>
         </div>
       </div>
-
-      {!isLoading && !isFetching && list.length === 0 && (
+      {!isRefereeListLoading && !isFetching && list.length === 0 && (
         <div className="mt-8 rounded-lg border-2 p-4 text-center">
-          {t("referral.search_referee.no_data")}
+          {"referral.search_referee.no_data"}
         </div>
       )}
 
-      {isLoading && (
-        <CardSkeletonList className="xs:grid-cols-1 lg:grid-cols-2" />
+      {isRefereeListLoading && (
+        <CardSkeletonList className="xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" />
       )}
 
-      {!isLoading && list.length > 0 && (
+      {!isRefereeListLoading && list.length > 0 && (
         <BaseInfiniteScroll
           dataLength={list ? list.length : 0} //This is important field to render the next data
           next={fetchNextPage}
           hasMore={
-            (data &&
-              data.pages &&
-              data.pages[data.pages.length - 1].length !== 0) ??
+            (refereeListData &&
+              refereeListData.pages &&
+              refereeListData.pages[refereeListData.pages.length - 1].length !==
+                0) ??
             true
           }
         >
-          <div className="mt-8 grid w-full grid-cols-1 gap-4 overflow-hidden lg:grid-cols-2">
-            {list.map((data) => {
+          <div className="xs:grid-cols-1 mt-8 grid w-full gap-6 overflow-hidden sm:grid-cols-2 lg:grid-cols-3">
+            {list.map((referee) => {
               return (
-                <ReferralPostCard
-                  jobTitle={data.job_title}
-                  username={data.user && data.user.username}
-                  photoUrl={data.user && data.user.avatar_url}
-                  province={data.province && data.province.cantonese_name}
-                  country={data.country && data.country.cantonese_name}
-                  city={data.city && data.city.cantonese_name}
-                  industry={data.industry && data.industry.cantonese_name}
-                  companyName={data.company_name}
-                  description={data.description}
-                  url={data.url}
-                  yearOfExperience={data.year_of_experience}
-                  uuid={data.uuid}
-                  key={data.uuid}
-                  createdAt={data.created_at && data.created_at.toString()}
-                  createdBy={data.created_by}
+                <ReferralCard
+                  jobTitle={referee.job_title}
+                  username={referee.username}
+                  photoUrl={referee.avatar_url}
+                  companyName={referee.company_name}
+                  description={referee.description}
+                  socialMediaUrl={referee.social_media_url}
+                  yearOfExperience={referee.year_of_experience}
+                  uuid={referee.uuid}
+                  key={referee.uuid}
+                  receiverType={EReferralType.REFEREE}
+                  province={
+                    locale === "zh-hk"
+                      ? referee.province && referee.province.cantonese_name
+                      : referee.province && referee.province.english_name
+                  }
+                  country={
+                    locale === "zh-hk"
+                      ? referee.country && referee.country.cantonese_name
+                      : referee.country && referee.country.english_name
+                  }
+                  city={
+                    locale === "zh-hk"
+                      ? referee.city && referee.city.cantonese_name
+                      : referee.city && referee.city.english_name
+                  }
+                  industry={
+                    locale === "zh-hk"
+                      ? referee.industry && referee.industry.cantonese_name
+                      : referee.industry && referee.industry.english_name
+                  }
                 />
               )
             })}
@@ -143,4 +166,4 @@ const RefereePostPageTemplate: React.FunctionComponent<
   )
 }
 
-export default RefereePostPageTemplate
+export default RefereePageTemplate

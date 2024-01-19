@@ -12,7 +12,7 @@ export const siteConfig = {
       href: "/",
     },
     profile: {
-      name: "用戶檔案",
+      name: "Profile | 用戶檔案",
       href: "/profile",
     },
     signUp: {

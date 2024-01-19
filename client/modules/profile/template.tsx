@@ -4,7 +4,10 @@ import React, { useMemo, useState } from "react"
 import Link from "next/link"
 import EditProfileTemplate from "@/modules/profile/edit/template"
 import ViewProfileTemplate from "@/modules/profile/view/template"
-import { useI18n } from "@/utils/services/internationalization/client"
+import {
+  useCurrentLocale,
+  useI18n,
+} from "@/utils/services/internationalization/client"
 
 import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
@@ -14,6 +17,7 @@ import CommonPageLayout from "@/components/layouts/common"
 
 const ProfileTemplate = ({ userUuid }: { userUuid?: string }) => {
   const t = useI18n()
+  const locale = useCurrentLocale()
   const [isEditMode, setIsEditMode] = useState(false)
   const userStoreUuid = useUserStore((state) => state.uuid)
   const uuid = useMemo(() => {
@@ -61,15 +65,31 @@ const ProfileTemplate = ({ userUuid }: { userUuid?: string }) => {
             company={profile.company_name}
             jobTitle={profile.job_title}
             yearOfExperience={profile.year_of_experience}
-            country={profile.country && profile.country.cantonese_name}
-            province={profile.province && profile.province.cantonese_name}
-            city={profile.city && profile.city.cantonese_name}
-            industry={profile.industry && profile.industry.cantonese_name}
             socialMediaUrl={profile.social_media_url}
             isReferee={profile.is_referee}
             isReferer={profile.is_referer}
             setIsEditMode={setIsEditMode}
             slug={userUuid}
+            province={
+              locale === "zh-hk"
+                ? profile.province && profile.province.cantonese_name
+                : profile.province && profile.province.english_name
+            }
+            country={
+              locale === "zh-hk"
+                ? profile.country && profile.country.cantonese_name
+                : profile.country && profile.country.english_name
+            }
+            city={
+              locale === "zh-hk"
+                ? profile.city && profile.city.cantonese_name
+                : profile.city && profile.city.english_name
+            }
+            industry={
+              locale === "zh-hk"
+                ? profile.industry && profile.industry.cantonese_name
+                : profile.industry && profile.industry.english_name
+            }
           />
         )}
 

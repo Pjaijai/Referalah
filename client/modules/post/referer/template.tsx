@@ -1,7 +1,10 @@
 "use client"
 
 import React from "react"
-import { useI18n } from "@/utils/services/internationalization/client"
+import {
+  useCurrentLocale,
+  useI18n,
+} from "@/utils/services/internationalization/client"
 
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
@@ -44,6 +47,8 @@ const RefererPostPageTemplate: React.FunctionComponent<
     minYearOfExperience,
     sorting,
   } = useSearchPost(EReferralType.REFERRER)
+  const locale = useCurrentLocale()
+  console.log(123123, locale)
 
   const { data, fetchNextPage, isLoading, isFetching } = result
 
@@ -121,10 +126,26 @@ const RefererPostPageTemplate: React.FunctionComponent<
                   jobTitle={data.job_title}
                   username={data.user && data.user.username}
                   photoUrl={data.user && data.user.avatar_url}
-                  province={data.province && data.province.cantonese_name}
-                  country={data.country && data.country.cantonese_name}
-                  city={data.city && data.city.cantonese_name}
-                  industry={data.industry && data.industry.cantonese_name}
+                  province={
+                    locale === "zh-hk"
+                      ? data.province && data.province.cantonese_name
+                      : data.province && data.province.english_name
+                  }
+                  country={
+                    locale === "zh-hk"
+                      ? data.country && data.country.cantonese_name
+                      : data.country && data.country.english_name
+                  }
+                  city={
+                    locale === "zh-hk"
+                      ? data.city && data.city.cantonese_name
+                      : data.city && data.city.english_name
+                  }
+                  industry={
+                    locale === "zh-hk"
+                      ? data.industry && data.industry.cantonese_name
+                      : data.industry && data.industry.english_name
+                  }
                   companyName={data.company_name}
                   description={data.description}
                   url={data.url}

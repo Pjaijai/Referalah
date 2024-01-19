@@ -76,7 +76,7 @@ const ConversationList = () => {
           <BaseAlert
             title={t("chat.no_message")}
             description={
-              <p>
+              <p className="flex  gap-1">
                 {t("chat.click")}
                 <HighlightedLink href={siteConfig.page.installation.href}>
                   {t("chat.here")}

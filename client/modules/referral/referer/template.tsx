@@ -1,7 +1,10 @@
 "use client"
 
 import React from "react"
-import { useI18n } from "@/utils/services/internationalization/client"
+import {
+  useCurrentLocale,
+  useI18n,
+} from "@/utils/services/internationalization/client"
 
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
@@ -51,7 +54,7 @@ const RefererPageTemplate: React.FunctionComponent<
     fetchNextPage,
     isFetching,
   } = result
-
+  const locale = useCurrentLocale()
   const list =
     refererListData !== undefined ? refererListData.pages.flatMap((d) => d) : []
 
@@ -127,17 +130,33 @@ const RefererPageTemplate: React.FunctionComponent<
                   jobTitle={referer.job_title}
                   username={referer.username}
                   photoUrl={referer.avatar_url}
-                  province={referer.province && referer.province.cantonese_name}
-                  country={referer.country && referer.country.cantonese_name}
-                  city={referer.city && referer.city.cantonese_name}
                   companyName={referer.company_name}
                   description={referer.description}
-                  industry={referer.industry && referer.industry.cantonese_name}
                   socialMediaUrl={referer.social_media_url}
                   yearOfExperience={referer.year_of_experience}
                   uuid={referer.uuid}
                   key={referer.uuid}
                   receiverType={EReferralType.REFERRER}
+                  province={
+                    locale === "zh-hk"
+                      ? referer.province && referer.province.cantonese_name
+                      : referer.province && referer.province.english_name
+                  }
+                  country={
+                    locale === "zh-hk"
+                      ? referer.country && referer.country.cantonese_name
+                      : referer.country && referer.country.english_name
+                  }
+                  city={
+                    locale === "zh-hk"
+                      ? referer.city && referer.city.cantonese_name
+                      : referer.city && referer.city.english_name
+                  }
+                  industry={
+                    locale === "zh-hk"
+                      ? referer.industry && referer.industry.cantonese_name
+                      : referer.industry && referer.industry.english_name
+                  }
                 />
               )
             })}

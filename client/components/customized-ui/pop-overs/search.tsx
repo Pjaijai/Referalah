@@ -1,6 +1,4 @@
 import React, { ChangeEvent } from "react"
-import { postSortingOptions } from "@/utils/common/sorting/post"
-import { referralSortingOptions } from "@/utils/common/sorting/referer"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { Label } from "@radix-ui/react-label"
 
@@ -9,6 +7,8 @@ import useCityOptions from "@/hooks/common/options/city-options"
 import useCountryOptions from "@/hooks/common/options/country-options"
 import useIndustryOptions from "@/hooks/common/options/industry-options"
 import useProvinceOptions from "@/hooks/common/options/province-options"
+import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
+import useReferralSortOptions from "@/hooks/common/sort/referral-sort-options"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -64,6 +64,8 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
   const countryOptions = useCountryOptions()
   const provinceOptions = useProvinceOptions(countryUuid)
   const cityOptions = useCityOptions(provinceUuid)
+  const { data: postSortingOptions } = usePostSortOptions()
+  const { data: referralSortingOptions } = useReferralSortOptions()
 
   return (
     <Popover>

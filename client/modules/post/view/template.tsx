@@ -4,7 +4,10 @@ import React from "react"
 import Link from "next/link"
 import PostHeader from "@/modules/post/components/info-display/header"
 import PostStatusDisplay from "@/modules/post/components/info-display/status"
-import { useI18n } from "@/utils/services/internationalization/client"
+import {
+  useCurrentLocale,
+  useI18n,
+} from "@/utils/services/internationalization/client"
 
 import { EMessageType } from "@/types/common/message-type"
 import { EPostStatus } from "@/types/common/post-status"
@@ -36,6 +39,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   const userUuid = useUserStore((state) => state.uuid)
   const isViewingOwnProfile = post?.created_by === userUuid
   const isOpen = post?.status === EPostStatus.ACTIVE
+  const locale = useCurrentLocale()
 
   return (
     <PageStatusLayout
@@ -84,15 +88,31 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
               <div className="text-sm">
                 {(post.city || post.province || post.country) && (
                   <LocationDisplay
-                    city={post.city?.cantonese_name || null}
-                    province={post.province?.cantonese_name || null}
-                    country={post.country?.cantonese_name || null}
+                    province={
+                      locale === "zh-hk"
+                        ? post.province && post.province.cantonese_name
+                        : post.province && post.province.english_name
+                    }
+                    country={
+                      locale === "zh-hk"
+                        ? post.country && post.country.cantonese_name
+                        : post.country && post.country.english_name
+                    }
+                    city={
+                      locale === "zh-hk"
+                        ? post.city && post.city.cantonese_name
+                        : post.city && post.city.english_name
+                    }
                     className="xs:max-w-full mb-2 max-w-sm"
                   />
                 )}
                 {post.industry && (
                   <IndustryDisplay
-                    industry={post.industry.cantonese_name}
+                    industry={
+                      locale === "zh-hk"
+                        ? post.industry && post.industry.cantonese_name
+                        : post.industry && post.industry.english_name
+                    }
                     className="xs:max-w-full mb-2 max-w-xs"
                   />
                 )}

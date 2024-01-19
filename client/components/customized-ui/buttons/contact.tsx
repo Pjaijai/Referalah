@@ -38,12 +38,12 @@ const ContactButton: React.FunctionComponent<IContactButtonProps> = ({
 
   return (
     <>
-      <Button className="w-full" onClick={handleContactClick}>
+      <Button
+        className="flex w-full flex-row gap-1"
+        onClick={handleContactClick}
+      >
         <Icons.mail className="mr-1 h-4 w-4" />
-        {t("general.contact")}
-        {messageType === EMessageType.POST
-          ? t("general.referrer")
-          : t("general.me")}
+        <p> {t("general.contact")}</p>
       </Button>
 
       <ContactDialog
