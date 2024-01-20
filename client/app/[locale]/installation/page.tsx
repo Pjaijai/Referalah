@@ -1,13 +1,15 @@
 import InstallationPageTemplate from "@/modules/installation/template"
+import { getI18n } from "@/utils/services/internationalization/server"
 
 import { siteConfig } from "@/config/site"
 import CommonPageLayout from "@/components/layouts/common"
 
 export const metadata = siteConfig.page.installation.metadata
 
-const InstallationPage = () => {
+const InstallationPage = async () => {
+  const t = await getI18n()
   return (
-    <CommonPageLayout title={siteConfig.page.installation.name}>
+    <CommonPageLayout title={t("page.installation")}>
       <InstallationPageTemplate />
     </CommonPageLayout>
   )

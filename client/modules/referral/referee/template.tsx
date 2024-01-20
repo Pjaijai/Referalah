@@ -65,13 +65,13 @@ const RefereePageTemplate: React.FunctionComponent<
           onChange={handleCompanyChange}
           onKeyDown={handleKeyPressSubmitChange}
           value={companyName}
-          placeholder="公司名稱"
+          placeholder={t("general.company_name")}
         />
         <Input
           onChange={handleJobTitleChange}
           onKeyDown={handleKeyPressSubmitChange}
           value={jobTitle}
-          placeholder="職位/工作名稱"
+          placeholder={t("general.job_title")}
         />
         <div className="flex flex-row justify-end gap-2">
           <SearchPopover

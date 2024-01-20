@@ -53,7 +53,7 @@ export const siteConfig = {
       },
     },
     forgetPassword: {
-      name: "重置密碼",
+      name: "忘記密碼",
       href: "/auth/forgot-password",
       metadata: {
         title: "忘記密碼 Forgot Password",
@@ -121,7 +121,7 @@ export const siteConfig = {
       name: "privatePolicy",
       href: "/privacy-policy",
       metadata: {
-        title: "隱私權政策 Private Policy",
+        title: "隱私政策 Privacy Policy",
         description: METADATA_DEFAULT_DESCRIPTION,
         robots: "noindex,nofollow",
       },

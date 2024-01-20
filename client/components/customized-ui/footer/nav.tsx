@@ -53,21 +53,21 @@ const NavFooter = () => {
             className="p-2 text-center text-sm text-muted-foreground "
             href={siteConfig.page.contributors.href}
           >
-            {siteConfig.page.contributors.name}
+            {t("page.contributors")}
           </Link>
 
           <Link
             className="p-2 text-center text-sm text-muted-foreground "
             href={siteConfig.page.installation.href}
           >
-            {siteConfig.page.installation.name}
+            {t("page.installation")}
           </Link>
 
           <Link
             className="p-2 text-center text-sm text-muted-foreground "
             href={siteConfig.page.about.href}
           >
-            {siteConfig.page.about.name}
+            {t("page.about")}
           </Link>
           <Link
             className="p-2 text-center text-sm text-muted-foreground"

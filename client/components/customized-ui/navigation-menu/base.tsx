@@ -23,12 +23,12 @@ export function BaseNavigationMenu() {
 
   const components: { title: string; href: string; description: string }[] = [
     {
-      title: siteConfig.page.createPost.name,
+      title: t("page.create_post"),
       href: siteConfig.page.createPost.href,
       description: t("nav.create_post.description"),
     },
     {
-      title: siteConfig.page.referrerPost.name,
+      title: t("page.post"),
       href: siteConfig.page.referrerPost.href,
       description: t("nav.referrer_post.description"),
     },
@@ -42,7 +42,7 @@ export function BaseNavigationMenu() {
             <Icons.personStanding /> {t("general.connection")}
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="flex w-[200px] flex-col">
+            <ul className="flex w-[400px] flex-col">
               <Link href={`${siteConfig.page.profile.href}/${userUuid}`}>
                 <ListItem title={t("nav.become_referrer_or_referrer_title")}>
                   {t("nav.become_referrer_or_referrer_description")}
@@ -68,7 +68,7 @@ export function BaseNavigationMenu() {
             <Icons.briefcase /> {t("general.post")}
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="flex w-[200px] flex-col ">
+            <ul className="flex w-[400px] flex-col ">
               {components.map((component) => (
                 <Link href={component.href} key={component.href}>
                   <ListItem key={component.title} title={component.title}>
