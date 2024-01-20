@@ -12,7 +12,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
-import MessageIcon from "@/components/customized-ui/icoins/message"
+import MessageIcon from "@/components/customized-ui/icons/message"
 import { Icons } from "@/components/icons"
 
 const components: { title: string; href: string; description: string }[] = [
@@ -85,7 +85,7 @@ export function BaseNavigationMenu() {
                   "flex h-10 w-max items-center justify-center gap-2 rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none   md:text-lg"
                 }
               >
-                <MessageIcon />
+                <MessageIcon variant="outlined" />
                 對話
               </div>
             </Link>

@@ -6,22 +6,20 @@ import { Icons } from "@/components/icons"
 
 interface IMessageIconProp {
   className?: string
+  variant?: "outlined" | "filled"
 }
 const MessageIcon: React.FunctionComponent<IMessageIconProp> = ({
   className,
+  variant = "filled",
 }) => {
   const hasConversationUnseen = useUserStore(
     (state) => state.hasConversationUnseen
   )
   return (
     <div className={cn("relative", className)}>
-      <Icons.messageSquareMore />
+      {variant === "outlined" ? <Icons.messageSquareMore /> : <Icons.chat />}
       {hasConversationUnseen && (
-        <Icons.bigDot
-          className="absolute right-0 top-0 -translate-y-2 translate-x-2 text-green-700 dark:text-yellow-300"
-          width="24"
-          height="24"
-        />
+        <Icons.unseenDot className="absolute right-0 top-0" />
       )}
     </div>
   )
