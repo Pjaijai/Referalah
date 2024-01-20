@@ -43,7 +43,7 @@ describe("MessageCard", () => {
       )
 
       const messageCard = screen.getByTestId("message-card")
-      expect(messageCard).toHaveClass("bg-green-200")
+      expect(messageCard).toHaveClass("bg-green-300")
     })
   })
 })
