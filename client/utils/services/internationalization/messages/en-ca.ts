@@ -274,7 +274,7 @@ export default {
   "page.sign_in": "Sign in",
   "page.reset_password": "Reset Password",
   "page.forgot_password": "Forgot Password",
-  "page.referer": "Referer",
+  "page.referrer": "Referrer",
   "page.referee": "Referee",
   "page.create_post": "Create Post",
   "page.edit_post": "Create Post",
@@ -286,4 +286,6 @@ export default {
   "page.terms_and_condition": "Terms and Conditions",
   "page.contributors": "Contributor List",
   "page.installation": "Get the App",
+  "general.dark_mode": "Dark Mode",
+  "general.light_mode": "Light Mode",
 } as const

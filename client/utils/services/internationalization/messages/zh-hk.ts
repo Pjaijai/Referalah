@@ -249,7 +249,7 @@ export default {
   "page.sign_in": "登入",
   "page.reset_password": "重置密碼",
   "page.forgot_password": "忘記密碼",
-  "page.referer": "推薦人",
+  "page.referrer": "推薦人",
   "page.referee": "受薦人",
   "page.create_post": "貼街招",
   "page.edit_post": "編輯街招",
@@ -261,4 +261,6 @@ export default {
   "page.terms_and_condition": "條款及細則",
   "page.contributors": "貢獻者名單",
   "page.installation": "安裝Referalah",
+  "general.dark_mode": "夜間模式",
+  "general.light_mode": "日間模式",
 } as const

@@ -10,7 +10,7 @@ export const metadata = siteConfig.page.referrer.metadata
 const RefererPage: NextPage = async () => {
   const t = await getI18n()
   return (
-    <CommonPageLayout title={t("page.referer")}>
+    <CommonPageLayout title={t("page.referrer")}>
       <RefererPageTemplate />
     </CommonPageLayout>
   )
