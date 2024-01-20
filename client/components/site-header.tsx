@@ -7,6 +7,7 @@ import { siteConfig } from "@/config/site"
 import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
+import LocaleDropDownMenu from "@/components/customized-ui/drop-down-menu/locale"
 import MessageIcon from "@/components/customized-ui/icons/message"
 import { BaseNavigationMenu } from "@/components/customized-ui/navigation-menu/base"
 import { MobileNavigationMenu } from "@/components/customized-ui/navigation-menu/mobile"
@@ -34,20 +35,23 @@ export function SiteHeader() {
 
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center gap-2">
-            <div className="hidden md:block">
-              <ThemeToggle />
-            </div>
-
-            <Link
-              aria-label="referalah-project-github"
-              href={siteConfig.links.github}
-              target="_blank"
-              rel="noreferrer"
-              className="hidden md:block"
-            >
-              <Icons.github />
-            </Link>
-
+            <LocaleDropDownMenu />
+            {
+              <div className="hidden md:block">
+                <ThemeToggle />
+              </div>
+            }
+            {
+              <Link
+                aria-label="referalah-project-github"
+                href={siteConfig.links.github}
+                target="_blank"
+                rel="noreferrer"
+                className="hidden md:block"
+              >
+                <Icons.github />
+              </Link>
+            }
             {user.isSignIn && <MessageIcon className="block md:hidden" />}
 
             {user.isSignIn ? (
