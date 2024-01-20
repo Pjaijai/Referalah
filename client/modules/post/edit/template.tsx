@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
-import { postStatusOptions } from "@/modules/post/common/post-status-options"
-import { editPostValidationSchema } from "@/modules/post/validation/edit"
+import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { z } from "zod"
 
 import { IGetPostResponse } from "@/types/api/response/referer-post"
+import { EPostStatus } from "@/types/common/post-status"
 import { EReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
 import useUpdatePost from "@/hooks/api/post/update-post"
@@ -21,6 +22,7 @@ import FormTextInput from "@/components/customized-ui/form/input"
 import FormNumberInput from "@/components/customized-ui/form/number"
 import FormSelect from "@/components/customized-ui/form/select"
 import FormTextArea from "@/components/customized-ui/form/text-area"
+import { ISelectOption } from "@/components/customized-ui/selects/base"
 
 interface IEditPostPageTemplateProps {
   postDate?: IGetPostResponse
@@ -44,6 +46,81 @@ interface IForm {
 const EditPostPageTemplate: React.FunctionComponent<
   IEditPostPageTemplateProps
 > = ({ postDate, isPostDataLoading, postUuid }) => {
+  const t = useI18n()
+  const editPostValidationSchema = z.object({
+    url: z
+      .string()
+      .max(20000, {
+        message: t("validation.text.maximum_length", { count: 20000 }),
+      })
+      .url({
+        message: t("validation.link.not_valid"),
+      })
+      .optional()
+      .or(z.literal("")),
+    description: z
+      .string()
+      .max(3000, {
+        message: t("validation.text.maximum_length", { count: 3000 }),
+      })
+      .min(10, {
+        message: t("validation.text.minimum_length", { count: 10 }),
+      }),
+
+    countryUuid: z.string().min(1, {
+      message: t("validation.field_required"),
+    }),
+    provinceUuid: z.string().min(1, {
+      message: t("validation.field_required"),
+    }),
+    cityUuid: z.string().min(1, {
+      message: t("validation.field_required"),
+    }),
+    industryUuid: z.string().min(1, {
+      message: t("validation.field_required"),
+    }),
+    yearOfExperience: z
+      .string()
+      .min(1, {
+        message: t("validation.field_required"),
+      })
+      .refine(
+        (value) => {
+          if (value) {
+            const number = parseFloat(value)
+            if (!isNaN(number) && number >= 0 && number <= 100) {
+              return true
+            } else {
+              return false
+            }
+          }
+
+          return true
+          // Check if it's a valid number and falls within the range 1 to 100
+        },
+        {
+          message: t("validation.year_of_experience.exceed_range"), // Specify the custom error message here
+        }
+      ),
+    companyName: z
+      .string()
+      .min(1, {
+        message: t("validation.field_required"),
+      })
+      .max(30, {
+        message: t("validation.text.maximum_length", { count: 30 }),
+      }),
+    jobTitle: z
+      .string()
+      .min(1, {
+        message: t("validation.field_required"),
+      })
+      .max(30, {
+        message: t("validation.text.maximum_length", { count: 30 }),
+      }),
+    status: z.enum(["active", "inactive"]),
+  })
+
   const form = useForm<IForm>({
     resolver: zodResolver(editPostValidationSchema),
     defaultValues: useMemo(() => {
@@ -69,6 +146,10 @@ const EditPostPageTemplate: React.FunctionComponent<
   const yearOfExperienceWatch = form.watch("yearOfExperience")
   const router = useRouter()
   const user = useUserStore((state) => state)
+  const statusOptions: ISelectOption[] = [
+    { title: t("post.status.open"), value: EPostStatus.ACTIVE },
+    { title: t("post.status.close"), value: EPostStatus.INACTIVE },
+  ]
 
   const industryOptions = useIndustryOptions()
   const countryOptions = useCountryOptions()
@@ -132,8 +213,8 @@ const EditPostPageTemplate: React.FunctionComponent<
           },
           onError: () => {
             return toast({
-              title: "出事！",
-              description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+              title: t("general.error.title"),
+              description: t("general.error.description"),
               variant: "destructive",
             })
           },
@@ -141,8 +222,8 @@ const EditPostPageTemplate: React.FunctionComponent<
       )
     } catch (err) {
       return toast({
-        title: "出事！",
-        description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+        title: t("general.error.title"),
+        description: t("general.error.description"),
       })
     }
   }
@@ -156,72 +237,71 @@ const EditPostPageTemplate: React.FunctionComponent<
         >
           <FormSelect
             control={form.control}
-            label="狀態"
+            label={t("post.status_text")}
             name="status"
-            options={postStatusOptions}
+            options={statusOptions}
           />
 
           <FormTextInput
             control={form.control}
-            label="相關網址"
+            label={t("general.link")}
             name="url"
-            description="例如份工個LinkedIn，Indeed，Glassdoor個連結"
+            description={t("post.create.related_link_description")}
           />
 
           <FormTextInput
             control={form.control}
-            label="公司名"
+            label={t("general.company_name")}
             name="companyName"
           />
 
           <FormTextInput
             control={form.control}
-            label="職位名稱"
+            label={t("general.job_title")}
             name="jobTitle"
           />
 
           <FormTextArea
             control={form.control}
-            label="內容"
+            label={t("post.create.content_label")}
             name="description"
-            description={"講吓想搵啲咩人？"}
           />
 
           <FormSelect
             options={industryOptions}
             control={form.control}
-            label="行業"
+            label={t("general.industry")}
             name="industryUuid"
           />
           <FormSelect
             options={countryOptions}
             control={form.control}
-            label="國家"
+            label={t("general.country")}
             name="countryUuid"
           />
 
           <FormSelect
             control={form.control}
-            label="省份"
+            label={t("general.province")}
             name="provinceUuid"
             options={provinceOptions}
           />
 
           <FormSelect
             control={form.control}
-            label="城市"
+            label={t("general.city")}
             name="cityUuid"
             options={cityOptions}
           />
 
           <FormNumberInput
             control={form.control}
-            label="工作年資"
+            label={t("general.year_of_experience")}
             name="yearOfExperience"
           />
 
           <Button type="submit" disabled={isUpdatingPostLoading}>
-            {isSubmitting ? "請等等" : "提交"}
+            {isSubmitting ? t("general.wait") : t("form.general.submit")}
           </Button>
         </form>
       </Form>

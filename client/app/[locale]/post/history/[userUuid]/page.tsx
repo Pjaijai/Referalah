@@ -1,8 +1,8 @@
 import React from "react"
 import PostHistoryTemplate from "@/modules/post/history/template"
 import { getUserProfile } from "@/utils/common/api"
+import { getI18n } from "@/utils/services/internationalization/server"
 
-import { siteConfig } from "@/config/site"
 import CommonPageLayout from "@/components/layouts/common"
 
 export async function generateMetadata({
@@ -24,9 +24,14 @@ export async function generateMetadata({
   }
 }
 
-const PostHistoryPage = ({ params }: { params: { userUuid: string } }) => {
+const PostHistoryPage = async ({
+  params,
+}: {
+  params: { userUuid: string }
+}) => {
+  const t = await getI18n()
   return (
-    <CommonPageLayout title={siteConfig.page.postHistory.name}>
+    <CommonPageLayout title={t("page.post_history")}>
       <PostHistoryTemplate slug={params.userUuid} />
     </CommonPageLayout>
   )

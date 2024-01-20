@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react"
+import { useI18n } from "@/utils/services/internationalization/client"
 import InfiniteScroll from "react-infinite-scroll-component"
 
 import { Badge } from "@/components/ui/badge"
@@ -23,6 +24,7 @@ const BaseInfiniteScroll: React.FunctionComponent<IBaseInfiniteScrollProps> = ({
   scrollableTarget,
   className,
 }) => {
+  const t = useI18n()
   return (
     <InfiniteScroll
       dataLength={dataLength} //This is important field to render the next data
@@ -35,7 +37,7 @@ const BaseInfiniteScroll: React.FunctionComponent<IBaseInfiniteScrollProps> = ({
         endMessage || (
           <div className="mt-4 flex justify-center">
             <Badge variant={"outline"} className="flex justify-center">
-              Load緊...
+              {t("search.loading")}
             </Badge>
           </div>
         )
@@ -44,7 +46,7 @@ const BaseInfiniteScroll: React.FunctionComponent<IBaseInfiniteScrollProps> = ({
         endMessage || (
           <div className="mt-4 flex justify-center">
             <Badge variant={"outline"} className="flex justify-center">
-              盡頭了！
+              {t("search.reach_final_result")}
             </Badge>
           </div>
         )

@@ -1,8 +1,8 @@
 import React, { PropsWithChildren, ReactNode } from "react"
 import PostStatusDisplay from "@/modules/post/components/info-display/status"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { TPostStatusType } from "@/types/common/post-status"
-import { Button } from "@/components/ui/button"
 import { CardTitle } from "@/components/ui/card"
 import TooltipWrapper from "@/components/customized-ui/tool/tooltip-wrapper"
 import { Icons } from "@/components/icons"
@@ -17,6 +17,7 @@ interface IPostHeaderProps {
 const PostHeader: React.FunctionComponent<
   PropsWithChildren<IPostHeaderProps>
 > = ({ title, subtitle, url, className, status }) => {
+  const t = useI18n()
   const handleUrlClick = (e: any) => {
     e.preventDefault()
     if (url) window.open(url, "_blank")
@@ -35,7 +36,7 @@ const PostHeader: React.FunctionComponent<
                   <Icons.link className="h-4 w-4 align-middle" />
                 </div>
               }
-              tooltipContent={<span>相關連結</span>}
+              tooltipContent={<span>{t("general.related_link_text")}</span>}
               tooltipTriggerProps={{ className: "ml-2" }}
             />
           )}

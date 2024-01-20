@@ -1,6 +1,7 @@
 import React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
@@ -54,6 +55,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
   yearOfExperience,
   receiverType,
 }) => {
+  const t = useI18n()
   const router = useRouter()
 
   const handleProfileClick = () => {
@@ -76,7 +78,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
                   <Icons.link className="h-4 w-4" />
                 </Button>
               }
-              tooltipContent={<span>個人連結</span>}
+              tooltipContent={<span>{t("general.personal_link")}</span>}
             />
           </div>
         )}
@@ -133,7 +135,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
             className="mt-2 w-full"
             onClick={handleProfileClick}
           >
-            查看用戶檔案
+            {t("general.check_user_profile")}
           </Button>
         </CardFooter>
       </CardContent>

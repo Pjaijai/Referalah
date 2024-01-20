@@ -21,12 +21,12 @@ export default function IndexPage() {
         <div className="flex flex-row justify-center md:justify-between">
           <div className="flex flex-col justify-center">
             <div className="mt-4 flex justify-center md:justify-start">
-              <div className="flex max-w-2xl flex-col items-center gap-2 text-5xl font-bold md:flex-row md:text-4xl">
+              <div className="flex w-full flex-col items-center  text-5xl font-bold md:flex-row md:text-4xl">
                 <div className="flex shrink-0 flex-row text-center">
                   <h2>{scopedT("connect")}</h2>
                 </div>
 
-                <h2 className="text-green-700 dark:text-yellow-300  ">
+                <h2 className="ml-1 text-green-700 dark:text-yellow-300 ">
                   {scopedT("professionals")}
                 </h2>
               </div>
@@ -51,7 +51,7 @@ export default function IndexPage() {
                   "rounded-xl p-8  text-2xl font-bold md:p-4 md:text-base"
                 )}
               >
-                查看最新街招
+                {scopedT("check_latest_post")}
               </Link>
             )}
 
@@ -66,7 +66,7 @@ export default function IndexPage() {
                   "rounded-xl p-8  text-2xl font-bold md:p-4 md:text-base"
                 )}
               >
-                即刻加入！
+                {scopedT("join_now")}
               </Link>
             )}
 

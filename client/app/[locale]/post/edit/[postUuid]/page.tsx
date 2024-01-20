@@ -3,6 +3,7 @@
 import React, { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import EditPostPageTemplate from "@/modules/post/edit/template"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { siteConfig } from "@/config/site"
 import useGetPost from "@/hooks/api/post/get-post"
@@ -10,6 +11,7 @@ import useUserStore from "@/hooks/state/user/store"
 import CommonPageLayout from "@/components/layouts/common"
 
 const EditPostPage = ({ params }: { params: { postUuid: string } }) => {
+  const t = useI18n()
   const { data: post, isLoading } = useGetPost(params.postUuid)
   const userUuid = useUserStore((state) => state.uuid)
   const router = useRouter()
@@ -22,7 +24,7 @@ const EditPostPage = ({ params }: { params: { postUuid: string } }) => {
   }, [isLoading, post, router, userUuid])
 
   return (
-    <CommonPageLayout title={siteConfig.page.editPost.name}>
+    <CommonPageLayout title={t("page.edit_post")}>
       {!isLoading && (
         <EditPostPageTemplate
           postDate={post}

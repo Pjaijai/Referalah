@@ -11,17 +11,21 @@ export interface ISearchPostResponse
   } | null
 
   country: {
-    cantonese_name: string | null
+    cantonese_name: string
+    english_name: string
   } | null
   province: {
-    cantonese_name: string | null
+    cantonese_name: string
+    english_name: string
   } | null
   city: {
-    cantonese_name: string | null
+    cantonese_name: string
+    english_name: string
   } | null
 
   industry: {
-    cantonese_name: string | null
+    cantonese_name: string
+    english_name: string
   } | null
 }
 
@@ -32,20 +36,24 @@ export interface IGetPostResponse
   > {
   country: {
     uuid: string | null
-    cantonese_name: string | null
+    cantonese_name: string
+    english_name: string
   } | null
   province: {
     uuid: string | null
-    cantonese_name: string | null
+    cantonese_name: string
+    english_name: string
   } | null
   city: {
     uuid: string | null
-    cantonese_name: string | null
+    cantonese_name: string
+    english_name: string
   } | null
 
   industry: {
     uuid: string | null
-    cantonese_name: string | null
+    cantonese_name: string
+    english_name: string
   } | null
 
   user: {
@@ -57,17 +65,21 @@ export interface IGetPostResponse
 
 export interface IListPostResponse extends IPost {
   country: {
-    cantonese_name: string | null
+    cantonese_name: string
+    english_name: string
   } | null
   province: {
-    cantonese_name: string | null
+    cantonese_name: string
+    english_name: string
   } | null
   city: {
-    cantonese_name: string | null
+    cantonese_name: string
+    english_name: string
   } | null
 
   industry: {
-    cantonese_name: string | null
+    cantonese_name: string
+    english_name: string
   } | null
   user: {
     username: string | null

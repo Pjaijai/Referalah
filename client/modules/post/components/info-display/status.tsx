@@ -1,3 +1,5 @@
+import { useI18n } from "@/utils/services/internationalization/client"
+
 import { EPostStatus, TPostStatusType } from "@/types/common/post-status"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -11,6 +13,7 @@ const PostStatusDisplay = ({
   postStatus,
   className,
 }: PostStatusDisplayProps) => {
+  const t = useI18n()
   const isActive = postStatus === EPostStatus.ACTIVE
 
   return (
@@ -19,7 +22,7 @@ const PostStatusDisplay = ({
         variant={isActive ? "success" : "error"}
         className="flex justify-center"
       >
-        {isActive ? "開放" : "已關閉"}
+        {isActive ? t("post.status.open") : t("post.status.close")}
       </Badge>
     </div>
   )

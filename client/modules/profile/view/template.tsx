@@ -4,6 +4,7 @@ import React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import LinkTooltip from "@/modules/profile/components/tool-tip/link"
+import { useI18n } from "@/utils/services/internationalization/client"
 import { supabase } from "@/utils/services/supabase/config"
 
 import { siteConfig } from "@/config/site"
@@ -52,6 +53,7 @@ const ViewProfileTemplate: React.FunctionComponent<
   isReferee,
   slug,
 }) => {
+  const t = useI18n()
   const userUuid = useUserStore((state) => state.uuid)
   const isViewingOwnProfile = slug === userUuid
   const userState = useUserStore((state) => state)
@@ -67,12 +69,12 @@ const ViewProfileTemplate: React.FunctionComponent<
       router.push(siteConfig.page.main.href)
       userState.reSetUser()
       toast({
-        title: "登出成功！",
+        title: t("auth.form.sign_out.success"),
       })
     } catch (err) {
       return toast({
-        title: "登出出事！",
-        description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+        title: t("auth.form.sign_out.error"),
+        description: t("general.error.description"),
         variant: "destructive",
       })
     }
@@ -97,7 +99,7 @@ const ViewProfileTemplate: React.FunctionComponent<
               className="gap-2"
             >
               <Icons.pencil />
-              編輯
+              {t("general.edit")}
             </Button>
           )}
         </div>
@@ -145,7 +147,11 @@ const ViewProfileTemplate: React.FunctionComponent<
 
           {typeof yearOfExperience === "number" && yearOfExperience >= 0 && (
             <ul>
-              <Badge> {yearOfExperience}年經驗</Badge>
+              <Badge>
+                {t("general.year_of_experience_count", {
+                  count: yearOfExperience,
+                })}
+              </Badge>
             </ul>
           )}
         </li>
@@ -154,14 +160,14 @@ const ViewProfileTemplate: React.FunctionComponent<
           <div className="flex flex-row items-center gap-2">
             <Checkbox checked={isReferer} />
             <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              推薦人
+              {t("general.referrer")}
             </label>
           </div>
 
           <div className="flex items-center gap-2">
             <Checkbox checked={isReferee} />
             <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              受薦人
+              {t("general.referee")}
             </label>
           </div>
         </div>
@@ -179,7 +185,7 @@ const ViewProfileTemplate: React.FunctionComponent<
           onClick={handleSignOut}
           variant={"destructive"}
         >
-          登出
+          {t("general.sign_out")}
         </Button>
       )}
     </div>

@@ -1,11 +1,12 @@
 import React from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { formatCreatedAt } from "@/utils/common/helpers/format/created-at"
+import { useI18n } from "@/utils/services/internationalization/client"
 import { useQueryClient } from "@tanstack/react-query"
 
 import { EQueryKeyString } from "@/types/common/query-key-string"
 import { cn } from "@/lib/utils"
 import useUpdateConversation from "@/hooks/api/message/update-conversation"
+import useCreatedAt from "@/hooks/common/created-at"
 import useUserStore from "@/hooks/state/user/store"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import { Icons } from "@/components/icons"
@@ -31,10 +32,11 @@ const ConversationCard: React.FunctionComponent<IConversationProps> = ({
   type,
   acceptRequest,
 }) => {
+  const t = useI18n()
   const searchParams = useSearchParams()
   const router = useRouter()
   const { mutate: update } = useUpdateConversation()
-  const { formattedDate } = formatCreatedAt(updatedAt)
+  const { data: formattedDate } = useCreatedAt({ createdAt: updatedAt })
 
   const truncatedText = text ? text.slice(0, 25) : ""
   const queryClient = useQueryClient()
@@ -101,7 +103,7 @@ const ConversationCard: React.FunctionComponent<IConversationProps> = ({
         <div className="relative flex w-full  flex-row items-center justify-between">
           {!acceptRequest ? (
             <p className="w-5/6 text-xs text-orange-700 dark:text-blue-400">
-              此用戶向您發出對話申請
+              {t("chat.conversation_request")}
             </p>
           ) : (
             <p className="w-5/6 truncate text-muted-foreground">

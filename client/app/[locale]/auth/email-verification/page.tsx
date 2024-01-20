@@ -1,12 +1,13 @@
 import React from "react"
 import EmailVerificationPageTemplate from "@/modules/auth/components/templates/email-verification/template"
+import { getI18n } from "@/utils/services/internationalization/server"
 
-import { siteConfig } from "@/config/site"
 import CommonPageLayout from "@/components/layouts/common"
 
-const EmailVerificationPage = () => {
+const EmailVerificationPage = async () => {
+  const t = await getI18n()
   return (
-    <CommonPageLayout title={siteConfig.page.emailVerification.name}>
+    <CommonPageLayout title={t("page.email_verification")}>
       <EmailVerificationPageTemplate />
     </CommonPageLayout>
   )
