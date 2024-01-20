@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -51,14 +52,15 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
   toUuid,
   postUuid,
 }) => {
+  const t = useI18n()
   const formSchema = z.object({
     message: z
       .string()
       .max(3000, {
-        message: `俾盡3000粒字，唔夠用請聯絡我🙏🏻`,
+        message: t("validation.text.maximum_length", { count: 3000 }),
       })
       .min(1, {
-        message: `至少有要1粒字`,
+        message: t("validation.text.minimum_length", { count: 1 }),
       }),
   })
   const form = useForm<z.infer<typeof formSchema>>({
@@ -100,8 +102,8 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
           {
             onError: () => {
               return toast({
-                title: "Send不到，哭咗🥲",
-                description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+                title: t("referral.form.contact.error.message_failed_title"),
+                description: t("general.error.description"),
                 variant: "destructive",
               })
             },
@@ -109,14 +111,14 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
               onContactFormClose()
               reset()
               return toast({
-                title: "訊息已送出!",
-                description: "祝一切順利！",
+                title: t("referral.form.contact.success_title"),
+                description: t("referral.form.contact.success_description"),
                 action: (
                   <ToastAction
                     onClick={() => handleCheckClick(res.conversation_uuid)}
                     altText="Check"
                   >
-                    查看
+                    {t("general.view")}
                   </ToastAction>
                 ),
               })
@@ -135,8 +137,8 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
           {
             onError: () => {
               return toast({
-                title: "Send不到，哭咗🥲",
-                description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+                title: t("referral.form.contact.error.message_failed_title"),
+                description: t("general.error.description"),
                 variant: "destructive",
               })
             },
@@ -144,14 +146,14 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
               onContactFormClose()
               reset()
               return toast({
-                title: "成功！！！！！！！",
-                description: "祝一切順利！",
+                title: t("referral.form.contact.success_title"),
+                description: t("referral.form.contact.success_description"),
                 action: (
                   <ToastAction
                     onClick={() => handleCheckClick(res.conversation_uuid)}
                     altText="Check"
                   >
-                    查看
+                    {t("general.view")}
                   </ToastAction>
                 ),
               })
@@ -164,8 +166,8 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
       }
     } catch (err) {
       return toast({
-        title: "Send不到，哭咗🥲",
-        description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+        title: t("referral.form.contact.error.message_failed_title"),
+        description: t("general.error.description"),
         variant: "destructive",
       })
     }
@@ -174,17 +176,18 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
     <Dialog open={open}>
       <DialogContent className="w-full md:w-1/2">
         <DialogHeader>
-          <DialogTitle>Send信息俾 {username}</DialogTitle>
+          <DialogTitle>
+            {t("referral.form.send_message_to")} {username}
+          </DialogTitle>
 
           {receiverType === "referer" && messageType === "referral" && (
             <>
               <DialogDescription>
-                提示: 搵對方前，建議搵定個Job
-                post射俾對方，推薦人冇義務幫你搵工。
+                {t("referral.form.find_job_in_advance_reminder")}
               </DialogDescription>
 
               <span className="text-sm font-semibold text-red-500">
-                警告 : 使用AI代寫會大幅降低成功機會。
+                {t("referral.form.ai_warning")}
               </span>
             </>
           )}
@@ -198,13 +201,12 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
                 name="message"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{"信息"}</FormLabel>
+                    <FormLabel>{t("referral.form.message_label")}</FormLabel>
                     <FormControl>
                       <Textarea
                         placeholder={
                           receiverType === "referer"
-                            ? `- 自我介紹\n- 想見邊份工？\n- 點聯絡你？
-                      `
+                            ? t("referral.form.message_placeholder")
                             : ""
                         }
                         {...field}
@@ -222,11 +224,11 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
                 type="button"
                 variant={"ghost"}
               >
-                都係算
+                {t("referral.form.cancel")}
               </Button>
 
               <Button type="submit" disabled={isLoading}>
-                {isLoading ? "請等等" : "傳送"}
+                {isLoading ? t("general.wait") : t("referral.form.submit")}
               </Button>
             </DialogFooter>
           </form>

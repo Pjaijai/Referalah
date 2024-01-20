@@ -69,7 +69,7 @@ export default async function RootLayout({
   const accessToken = session?.access_token || null
 
   return (
-    <html lang="zh-Hant-HK" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <head />
       <body
         className={cn(

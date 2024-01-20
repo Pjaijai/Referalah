@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "next/link"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -15,6 +16,7 @@ interface ILinkTooltipProps {
   url: string
 }
 const LinkTooltip: React.FunctionComponent<ILinkTooltipProps> = ({ url }) => {
+  const t = useI18n()
   return (
     <TooltipProvider>
       <Tooltip>
@@ -27,7 +29,9 @@ const LinkTooltip: React.FunctionComponent<ILinkTooltipProps> = ({ url }) => {
             )}
           >
             <Icons.link />
-            <span>個人連結</span>
+            <span>
+              {t("profile.form.optional_personal_social_media_link_label")}
+            </span>
           </Link>
         </TooltipTrigger>
         <TooltipContent>

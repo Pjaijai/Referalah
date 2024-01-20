@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useMemo } from "react"
-import { formatCreatedAt } from "@/utils/common/helpers/format/created-at"
 
 import { cn } from "@/lib/utils"
+import useCreatedAt from "@/hooks/common/created-at"
 import { Icons } from "@/components/icons"
 
 interface ICreatedAtDisplayProps {
@@ -15,12 +15,7 @@ const CreatedAtDisplay: React.FunctionComponent<
 > = ({ applyTo, createdAt, className }) => {
   const isCard = applyTo === "card"
 
-  const formattedCreatedAt = useMemo(() => {
-    const { formattedDate, isExact } = formatCreatedAt(createdAt)
-    return isCard || formattedDate === "--"
-      ? formattedDate
-      : `創建於${formattedDate}${isExact ? "" : "前"}`
-  }, [createdAt])
+  const { data: formattedCreatedAt } = useCreatedAt({ createdAt })
 
   return (
     <div className={cn("flex items-center justify-start", className)}>

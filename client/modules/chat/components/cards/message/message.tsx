@@ -1,7 +1,7 @@
 import React from "react"
-import { formatCreatedAt } from "@/utils/common/helpers/format/created-at"
 
 import { cn } from "@/lib/utils"
+import useCreatedAt from "@/hooks/common/created-at"
 
 interface IMessageCardProps {
   text: string
@@ -13,7 +13,8 @@ const MessageCard: React.FunctionComponent<IMessageCardProps> = ({
   sentByUser,
   createdAt,
 }) => {
-  const { formattedDate, isExact } = formatCreatedAt(createdAt)
+  const { data: formattedDate } = useCreatedAt({ createdAt })
+
   return (
     <div
       className={cn(
@@ -45,7 +46,6 @@ const MessageCard: React.FunctionComponent<IMessageCardProps> = ({
         >
           <p className="mb-1 mr-2">
             {formattedDate}
-            {isExact ? "" : "前"}
           </p>
         </div>
       </div>

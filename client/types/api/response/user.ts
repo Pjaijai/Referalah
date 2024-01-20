@@ -11,19 +11,23 @@ export interface IUserResponse {
   year_of_experience: number | null
   country: {
     uuid: string
-    cantonese_name: string | null
+    cantonese_name: string
+    english_name: string
   } | null
   province: {
     uuid: string
-    cantonese_name: string | null
+    cantonese_name: string
+    english_name: string
   } | null
   city: {
     uuid: string
-    cantonese_name: string | null
+    cantonese_name: string
+    english_name: string
   } | null
   industry: {
     uuid: string
-    cantonese_name: string | null
+    cantonese_name: string
+    english_name: string
   } | null
   // resume_url: string | null
   social_media_url: string | null

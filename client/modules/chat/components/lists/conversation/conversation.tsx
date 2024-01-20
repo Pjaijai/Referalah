@@ -4,6 +4,7 @@ import ConversationListSkeleton from "@/modules/chat/components/skeleton-lists/c
 import useConversationStore, {
   IConversation,
 } from "@/modules/chat/state/conversations"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
@@ -14,6 +15,7 @@ import BaseAlert from "@/components/customized-ui/alert/base"
 import HighlightedLink from "@/components/customized-ui/links/highlighted"
 
 const ConversationList = () => {
+  const t = useI18n()
   const userUuid = useUserStore((state) => state.uuid)
   const { data, error, isLoading, fetchNextPage, refetch } =
     useGetConversationListByUserUuid(userUuid)
@@ -72,14 +74,13 @@ const ConversationList = () => {
       {!isLoading && list.length === 0 && (
         <div className={cn("flex h-full w-full items-center p-4 md:hidden")}>
           <BaseAlert
-            title="暫時冇任何訊息"
+            title={t("chat.no_message")}
             description={
-              <p>
-                撳
+              <p className="flex  gap-1">
+                {t("chat.click")}
                 <HighlightedLink href={siteConfig.page.installation.href}>
-                  呢度
+                  {t("chat.here")}
                 </HighlightedLink>
-                睇下點下載，又可以收到手機即時通知！
               </p>
             }
           />

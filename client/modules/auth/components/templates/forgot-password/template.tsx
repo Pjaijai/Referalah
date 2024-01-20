@@ -3,7 +3,7 @@
 import React, { useCallback, useState } from "react"
 import { useRouter } from "next/navigation"
 import { EEmaiVerification } from "@/modules/auth/types/email-verification"
-import { forgotPasswordFormSchema } from "@/modules/auth/validations/forgot-password"
+import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -16,9 +16,15 @@ import { useToast } from "@/components/ui/use-toast"
 import FormTextInput from "@/components/customized-ui/form/input"
 
 const ForgotPasswordPageTemplate = () => {
+  const t = useI18n()
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+
+  const forgotPasswordFormSchema = z.object({
+    email: z.string().email(t("validation.email.email_format_not_right")),
+  })
+
   const form = useForm<z.infer<typeof forgotPasswordFormSchema>>({
     resolver: zodResolver(forgotPasswordFormSchema),
     defaultValues: {
@@ -46,8 +52,8 @@ const ForgotPasswordPageTemplate = () => {
           },
           onError: (error: any) => {
             return toast({
-              title: "出事！",
-              description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+              title: t("general.error.title"),
+              description: t("general.error.description"),
               variant: "destructive",
             })
           },
@@ -62,16 +68,20 @@ const ForgotPasswordPageTemplate = () => {
 
   return (
     <div className="flex h-full w-full justify-center ">
-      <div className="mt-8 w-full max-w-md">
+      <div className="mt-8 w-full max-w-lg">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="mt-8 flex flex-col justify-between gap-8"
           >
-            <FormTextInput control={form.control} label="電郵" name="email" />
+            <FormTextInput
+              control={form.control}
+              label={t("auth.form.email_label")}
+              name="email"
+            />
 
             <Button type="submit" className="shrink-0" disabled={isLoading}>
-              {isLoading ? "等等" : "繼續"}
+              {isLoading ? t("general.wait") : t("general.continue")}
             </Button>
           </form>
         </Form>

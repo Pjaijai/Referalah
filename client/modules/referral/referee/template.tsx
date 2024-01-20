@@ -1,6 +1,10 @@
 "use client"
 
 import React from "react"
+import {
+  useCurrentLocale,
+  useI18n,
+} from "@/utils/services/internationalization/client"
 
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
@@ -18,6 +22,8 @@ interface IRefereePageTemplateProps {}
 const RefereePageTemplate: React.FunctionComponent<
   IRefereePageTemplateProps
 > = () => {
+  const locale = useCurrentLocale()
+  const t = useI18n()
   const {
     result,
     handleCompanyChange,
@@ -59,13 +65,13 @@ const RefereePageTemplate: React.FunctionComponent<
           onChange={handleCompanyChange}
           onKeyDown={handleKeyPressSubmitChange}
           value={companyName}
-          placeholder="公司名稱"
+          placeholder={t("general.company_name")}
         />
         <Input
           onChange={handleJobTitleChange}
           onKeyDown={handleKeyPressSubmitChange}
           value={jobTitle}
-          placeholder="職位/工作名稱"
+          placeholder={t("general.job_title")}
         />
         <div className="flex flex-row justify-end gap-2">
           <SearchPopover
@@ -90,13 +96,13 @@ const RefereePageTemplate: React.FunctionComponent<
           />
           <ResetButton onClick={handleReset} />
           <Button onClick={handleSubmitChange} className="whitespace-nowrap">
-            搜尋
+            {t("general.search")}
           </Button>
         </div>
       </div>
       {!isRefereeListLoading && !isFetching && list.length === 0 && (
         <div className="mt-8 rounded-lg border-2 p-4 text-center">
-          冇資料🥲不如成為受薦人？
+          {"referral.search_referee.no_data"}
         </div>
       )}
 
@@ -123,17 +129,33 @@ const RefereePageTemplate: React.FunctionComponent<
                   jobTitle={referee.job_title}
                   username={referee.username}
                   photoUrl={referee.avatar_url}
-                  province={referee.province && referee.province.cantonese_name}
-                  country={referee.country && referee.country.cantonese_name}
-                  city={referee.city && referee.city.cantonese_name}
                   companyName={referee.company_name}
                   description={referee.description}
-                  industry={referee.industry && referee.industry.cantonese_name}
                   socialMediaUrl={referee.social_media_url}
                   yearOfExperience={referee.year_of_experience}
                   uuid={referee.uuid}
                   key={referee.uuid}
                   receiverType={EReferralType.REFEREE}
+                  province={
+                    locale === "zh-hk"
+                      ? referee.province && referee.province.cantonese_name
+                      : referee.province && referee.province.english_name
+                  }
+                  country={
+                    locale === "zh-hk"
+                      ? referee.country && referee.country.cantonese_name
+                      : referee.country && referee.country.english_name
+                  }
+                  city={
+                    locale === "zh-hk"
+                      ? referee.city && referee.city.cantonese_name
+                      : referee.city && referee.city.english_name
+                  }
+                  industry={
+                    locale === "zh-hk"
+                      ? referee.industry && referee.industry.cantonese_name
+                      : referee.industry && referee.industry.english_name
+                  }
                 />
               )
             })}

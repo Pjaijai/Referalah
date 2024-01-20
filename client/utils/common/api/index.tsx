@@ -46,19 +46,23 @@ export const getUserProfile = async (userUuid: string) => {
           social_media_url,
         country(
           uuid,
-          cantonese_name
+          cantonese_name,
+          english_name
       ),
       province(
         uuid,
-          cantonese_name
+          cantonese_name,
+          english_name
       ),
       city(
         uuid,
-          cantonese_name
+          cantonese_name,
+          english_name
       ),
       industry(
         uuid,
-          cantonese_name
+          cantonese_name,
+          english_name
       ),
       is_referer,
       is_referee
@@ -245,19 +249,23 @@ export const searchReferral = async ({
             social_media_url,
             country(
               uuid,
-              cantonese_name
+              cantonese_name,
+              english_name
             ),
             province(
               uuid,
-              cantonese_name
+              cantonese_name,
+              english_name
             ),
             city(
               uuid,
-              cantonese_name
+              cantonese_name,
+              english_name
             ),
             industry(
               uuid,
-              cantonese_name
+              cantonese_name,
+              english_name
             ),
             is_referer,
             is_referee
@@ -398,16 +406,20 @@ export const searchPostApi = async ({
               job_title,
               year_of_experience,
               country(
-                  cantonese_name
+                  cantonese_name,
+                  english_name
               ),
               province(
-                  cantonese_name
+                  cantonese_name,
+                  english_name
               ),
               city(
-                  cantonese_name
+                  cantonese_name,
+                  english_name
               ),
               industry(
-                  cantonese_name
+                  cantonese_name,
+                  english_name
               ),
               user (
                   username,
@@ -475,19 +487,23 @@ export const getPostByUuid = async (uuid: string) => {
               year_of_experience,
               country(
                   uuid,
-                  cantonese_name
+                  cantonese_name,
+                  english_name
               ),
               province(
                   uuid,
-                  cantonese_name
+                  cantonese_name,
+                  english_name
               ),
               city(
                  uuid,
-                  cantonese_name
+                  cantonese_name,
+                  english_name
               ),
               industry(
                   uuid,
-                  cantonese_name
+                  cantonese_name,
+                  english_name
               ),
               user (
                   uuid,
@@ -514,16 +530,20 @@ export const getPostListByUserUuid = async (userUuid: string) => {
         `
         *,
         country(
-          cantonese_name
+          cantonese_name,
+          english_name
         ),
         province(
-          cantonese_name
+          cantonese_name,
+          english_name
         ),
         city(
-          cantonese_name
+          cantonese_name,
+          english_name
         ),
         industry(
-          cantonese_name
+          cantonese_name,
+          english_name
         ),
         user(
           username,

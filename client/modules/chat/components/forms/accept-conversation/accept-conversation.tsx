@@ -1,4 +1,5 @@
 import React from "react"
+import { useI18n } from "@/utils/services/internationalization/client"
 import { useQueryClient } from "@tanstack/react-query"
 
 import { EQueryKeyString } from "@/types/common/query-key-string"
@@ -13,6 +14,7 @@ interface IAcceptConversationFormProps {
 const AcceptConversationForm: React.FunctionComponent<
   IAcceptConversationFormProps
 > = ({ conversationUuid }) => {
+  const t = useI18n()
   const { mutate: update } = useUpdateConversation()
   const queryClient = useQueryClient()
   const userUuid = useUserStore((state) => state.uuid)
@@ -37,7 +39,7 @@ const AcceptConversationForm: React.FunctionComponent<
   return (
     <div className=" flex w-full flex-col items-center justify-between rounded-lg bg-orange-200 p-4 text-orange-700 dark:bg-blue-500 dark:text-white">
       <p className="w-full">
-        此用戶向您發出對話申請，請自行檢驗對方身份後點擊以下以確認展開對話。
+        {t("chat.accept_conversation_user_verification_statement")}
       </p>
       <div className="flex w-full justify-end ">
         <Button
@@ -45,7 +47,7 @@ const AcceptConversationForm: React.FunctionComponent<
           onClick={handleClick}
           className="white bg-white text-orange-700 hover:bg-orange-100 dark:text-blue-500 dark:hover:bg-blue-100"
         >
-          確認
+          {t("general.confirm")}
         </Button>
       </div>
     </div>

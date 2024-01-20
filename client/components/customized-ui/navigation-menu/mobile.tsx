@@ -1,7 +1,7 @@
 "use client"
 
-import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { siteConfig } from "@/config/site"
 import useUserStore from "@/hooks/state/user/store"
@@ -30,20 +30,21 @@ interface MobileNavigationMenuProps {
 }
 
 export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
+  const t = useI18n()
   const { uuid: userUuid, isSignIn } = useUserStore((state) => state)
 
   const connectionLinks = [
-    { title: "推薦人", url: siteConfig.page.referrer.href },
-    { title: "受薦人", url: siteConfig.page.referee.href },
+    { title: t("page.referrer"), url: siteConfig.page.referrer.href },
+    { title: t("page.referee"), url: siteConfig.page.referee.href },
     {
-      title: "成為推薦人/受薦人",
+      title: t("nav.become_referrer_or_referrer_title"),
       url: `${siteConfig.page.profile.href}/${userUuid}`,
     },
   ]
 
   const workLinks = [
-    { title: "街招", url: siteConfig.page.referrerPost.href },
-    { title: "貼街招", url: siteConfig.page.createPost.href },
+    { title: t("page.post"), url: siteConfig.page.referrerPost.href },
+    { title: t("page.create_post"), url: siteConfig.page.createPost.href },
   ]
 
   const router = useRouter()
@@ -76,7 +77,7 @@ export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
                 <AccordionTrigger>
                   <div className="flex items-center gap-2">
                     <Icons.people />
-                    人脈
+                    {t("general.connection")}
                   </div>
                 </AccordionTrigger>
 
@@ -99,7 +100,7 @@ export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
                 <AccordionTrigger>
                   <div className="flex items-center gap-2">
                     <Icons.work />
-                    工作
+                    {t("page.post")}
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
@@ -124,7 +125,7 @@ export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
                     className="flex items-center gap-2 py-4 font-bold hover:cursor-pointer"
                   >
                     <MessageIcon />
-                    對話
+                    {t("page.chat")}
                   </div>
                 </SheetClose>
               )}

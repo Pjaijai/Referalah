@@ -3,6 +3,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import PostCardInfoDisplay from "@/modules/post/components/info-display/card-info"
 import PostHeader from "@/modules/post/components/info-display/header"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { TPostStatusType } from "@/types/common/post-status"
 import { siteConfig } from "@/config/site"
@@ -43,6 +44,7 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
   status,
   isViewingOwnProfile,
 }) => {
+  const t = useI18n()
   const { isMobile } = useViewport()
   const router = useRouter()
 
@@ -82,7 +84,7 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
                   size={isMobile ? "icon" : "sm"}
                 >
                   <Icons.pencil className="m-0 h-4 w-4 sm:mr-2" />
-                  {!isMobile && "編輯"}
+                  {!isMobile && t("general.edit")}
                 </Button>
               )}
             </div>

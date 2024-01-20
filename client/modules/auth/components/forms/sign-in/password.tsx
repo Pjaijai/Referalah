@@ -3,7 +3,7 @@
 import React, { useCallback, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { passwordSignInFormSchema } from "@/modules/auth/validations/password-sign-in"
+import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -19,6 +19,8 @@ import FormPasswordInput from "@/components/customized-ui/form/password"
 interface IPasswordSignInFormProps {}
 
 const ForgetPassWordLink = () => {
+  const t = useI18n()
+
   return (
     <Link
       href={siteConfig.page.forgetPassword.href}
@@ -28,7 +30,7 @@ const ForgetPassWordLink = () => {
         className: "h-fit px-0 py-0 text-sm underline",
       })}
     >
-      忘記密碼？
+      {t("general.forgot_password")}
     </Link>
   )
 }
@@ -36,9 +38,19 @@ const ForgetPassWordLink = () => {
 const PasswordSignInForm: React.FunctionComponent<
   IPasswordSignInFormProps
 > = ({}) => {
+  const t = useI18n()
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+
+  const passwordSignInFormSchema = z.object({
+    email: z.string().email(t("validation.email.email_format_not_right")),
+    password: z
+      .string()
+      .min(8, { message: t("validation.text.minimum_length", { count: 8 }) })
+      .max(20, { message: t("validation.text.maximum_length", { count: 20 }) }),
+  })
+
   const form = useForm<z.infer<typeof passwordSignInFormSchema>>({
     resolver: zodResolver(passwordSignInFormSchema),
     defaultValues: {
@@ -57,21 +69,21 @@ const PasswordSignInForm: React.FunctionComponent<
         {
           onSuccess: () => {
             toast({
-              title: "登入成功！",
+              title: t("auth.sign_in.magic_link.submit.success"),
             })
             router.push(siteConfig.page.main.href)
           },
           onError: (error: any) => {
             if (error.message.includes("Invalid login credentials")) {
               return toast({
-                title: "電郵或密碼錯誤",
+                title: t("auth.sign_in.magic_link.email_invalid_error"),
                 variant: "destructive",
               })
             }
 
             return toast({
-              title: "出事！",
-              description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+              title: t("general.error.title"),
+              description: t("general.error.description"),
               variant: "destructive",
             })
           },
@@ -90,17 +102,21 @@ const PasswordSignInForm: React.FunctionComponent<
         onSubmit={form.handleSubmit(onSubmit)}
         className="mt-8 flex flex-col justify-between gap-8"
       >
-        <FormTextInput control={form.control} label="電郵" name="email" />
+        <FormTextInput
+          control={form.control}
+          label={t("auth.form.email_label")}
+          name="email"
+        />
 
         <FormPasswordInput
           control={form.control}
-          label="密碼"
+          label={t("auth.form.password_label")}
           name="password"
           leftLabel={<ForgetPassWordLink />}
         />
 
         <Button type="submit" className="shrink-0">
-          {isLoading ? "等等" : "登入"}
+          {isLoading ? t("general.wait") : t("general.sign_in")}
         </Button>
       </form>
     </Form>

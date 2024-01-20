@@ -1,7 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { searchPostApi } from "@/utils/common/api"
-import { postSortingOptions } from "@/utils/common/sorting/post"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { IFilterMeta } from "@/types/api/request/post/filter-meta"
@@ -11,6 +10,7 @@ import useIndustryOptions from "@/hooks/api/industry/get-Industry-list"
 import useGetCityList from "@/hooks/api/location/get-city-list"
 import useGetCountryList from "@/hooks/api/location/get-country-list"
 import useGetProvinceList from "@/hooks/api/location/get-province-list"
+import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
 
 const searchPost = ({
   pageParam = 0,
@@ -66,6 +66,7 @@ const useSearchPost = (type: EReferralType) => {
   const { data: cityData, isLoading: isCityDataLoading } = useGetCityList()
   const { data: industryData, isLoading: isIndustryDataLoading } =
     useIndustryOptions()
+  const { data: postSortingOptions } = usePostSortOptions()
 
   const keyString =
     type === EReferralType.REFEREE

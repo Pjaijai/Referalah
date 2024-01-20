@@ -18,11 +18,11 @@ const UserCount: React.FunctionComponent<IUserCountProps> = ({
       >
         <h2
           className="
-      flex flex-row pb-1 font-bold underline"
+       font-bold underline"
         >
           {numberOfMembers || "0"}
         </h2>
-        <h2>{scopedT("members", { count: 1 })}</h2>
+        <h2 className="ml-1">{scopedT("members", { count: 1 })}</h2>
       </div>
     </div>
   )
