@@ -21,7 +21,10 @@ export function ThemeToggleMobile() {
         {theme === "dark" ? <Moon /> : <Sun />}
         {theme === "dark" ? t("general.dark_mode") : t("general.light_mode")}
       </div>
-      <Switch value={theme} onCheckedChange={handleOnCheckedChange} />
+      <Switch
+        checked={theme === "dark"}
+        onCheckedChange={handleOnCheckedChange}
+      />
     </div>
   )
 }
