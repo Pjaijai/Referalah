@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { siteConfig } from "@/config/site"
 import useUserStore from "@/hooks/state/user/store"
@@ -16,12 +17,13 @@ import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 export function SiteHeader() {
+  const t = useI18n()
   const user = useUserStore((state) => state)
   const router = useRouter()
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
-      <div className="container flex h-16 items-center justify-center space-x-4 sm:space-x-0">
+      <div className="flex h-16 items-center justify-between space-x-4 p-2 sm:space-x-0  md:p-4">
         <div className="flex items-center">
           <MobileNavigationMenu className="mr-1 md:hidden" />
 
@@ -29,11 +31,11 @@ export function SiteHeader() {
             <MainNav />
           </div>
         </div>
-        <div className="hidden flex-1 justify-center md:flex">
+        <div className="hidden w-full flex-1 shrink-0 justify-center md:flex">
           <BaseNavigationMenu />
         </div>
 
-        <div className="flex flex-1 items-center justify-end space-x-4">
+        <div className="flex items-center justify-end space-x-4">
           <nav className="flex items-center gap-2">
             <LocaleDropDownMenu />
             {
@@ -71,7 +73,7 @@ export function SiteHeader() {
                   router.push(`${siteConfig.page.signIn.href}`)
                 }}
               >
-                登入
+                {t("page.sign_in")}
               </Button>
             )}
           </nav>

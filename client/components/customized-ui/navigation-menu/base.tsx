@@ -89,7 +89,7 @@ export function BaseNavigationMenu() {
                 }
               >
                 <MessageIcon variant="outlined" />
-                對話
+                {t("page.chat")}
               </div>
             </Link>
           </NavigationMenuItem>

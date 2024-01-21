@@ -24,7 +24,7 @@ const useCreatedAt = ({ createdAt }: { createdAt: string | null }) => {
     if (minuteDiff > 60 && minuteDiff <= 1440)
       return `${Math.ceil(minuteDiff / 60)}h`
     if (minuteDiff > 0 && minuteDiff <= 60) return `${minuteDiff}m`
-
+    if (minuteDiff === 0) return "now"
     return formatDate("DD/MM/YY")
   }, [createdAt])
 
