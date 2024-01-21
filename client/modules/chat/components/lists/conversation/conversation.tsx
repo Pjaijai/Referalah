@@ -6,13 +6,11 @@ import useConversationStore, {
 } from "@/modules/chat/state/conversations"
 import { useI18n } from "@/utils/services/internationalization/client"
 
-import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import useGetConversationListByUserUuid from "@/hooks/api/message/get-conversation-by-user-uuid"
 import useUserStore from "@/hooks/state/user/store"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
-import BaseAlert from "@/components/customized-ui/alert/base"
-import HighlightedLink from "@/components/customized-ui/links/highlighted"
+import { Icons } from "@/components/icons"
 
 const ConversationList = () => {
   const t = useI18n()
@@ -22,6 +20,7 @@ const ConversationList = () => {
   const setConversations = useConversationStore(
     (state) => state.setConversations
   )
+
   const list = data !== undefined ? data.pages.flatMap((d) => d) : []
 
   useEffect(() => {
@@ -72,18 +71,15 @@ const ConversationList = () => {
     >
       {isLoading && <ConversationListSkeleton />}
       {!isLoading && list.length === 0 && (
-        <div className={cn("flex h-full w-full items-center p-4 md:hidden")}>
-          <BaseAlert
-            title={t("chat.no_message")}
-            description={
-              <p className="flex  gap-1">
-                {t("chat.click")}
-                <HighlightedLink href={siteConfig.page.installation.href}>
-                  {t("chat.here")}
-                </HighlightedLink>
-              </p>
-            }
-          />
+        <div
+          className={cn(
+            "w-ful l flex h-full items-center justify-center  p-4 "
+          )}
+        >
+          <div>
+            <Icons.conversation />
+            <p className="text-muted-foreground">{t("chat.no_message")}</p>
+          </div>
         </div>
       )}
       {!isLoading && list.length > 0 && (
