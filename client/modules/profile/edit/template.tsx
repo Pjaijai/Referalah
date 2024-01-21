@@ -79,6 +79,9 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         })
         .min(1, {
           message: t("validation.text.minimum_length", { count: 1 }),
+        })
+        .refine((value) => !/\s/.test(value), {
+          message: t("validation.text.no_white_space"),
         }),
       company: z
         .string()

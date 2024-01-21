@@ -56,7 +56,7 @@ const ProfileTemplate = ({ userUuid }: { userUuid?: string }) => {
     )
   if (!isLoading && profile)
     return (
-      <CommonPageLayout title={siteConfig.page.profile.name}>
+      <CommonPageLayout title={t("page.profile")}>
         {!isEditMode && (
           <ViewProfileTemplate
             photoUrl={profile.avatar_url || undefined}
