@@ -18,7 +18,7 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({
   const setUserState = useUserStore((state) => state.setUser)
   const reSetUserState = useUserStore((state) => state.reSetUser)
   const [userUuid, setUserUuid] = useState<string | null>(null)
-  const user = useUserStore((state) => state)
+
   const router = useRouter()
   const { toast } = useToast()
 
@@ -28,11 +28,7 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({
     } = supabase.auth.onAuthStateChange((event, session) => {
       if (session && session.access_token !== accessToken) {
         router.refresh()
-      } else if (
-        session &&
-        session.access_token === accessToken &&
-        !user.isSignIn
-      ) {
+      } else if (session && session.access_token === accessToken) {
         setUserUuid(session.user.id)
       } else {
         setUserUuid(null)
