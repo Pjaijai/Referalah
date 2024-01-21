@@ -1,5 +1,5 @@
 import React from "react"
-import VerifyEmailTokenPageTemplate from "@/modules/auth/components/templates/verify-one-time-password/template"
+import VerifyEmailOneTimePasswordPageTemplate from "@/modules/auth/components/templates/verify-one-time-password/template"
 import { getI18n } from "@/utils/services/internationalization/server"
 
 import { siteConfig } from "@/config/site"
@@ -11,7 +11,7 @@ const VerifyOneTimePassword = async () => {
   const t = await getI18n()
   return (
     <CommonPageLayout title={t("page.verify_one_time_password")}>
-      <VerifyEmailTokenPageTemplate />
+      <VerifyEmailOneTimePasswordPageTemplate />
     </CommonPageLayout>
   )
 }
