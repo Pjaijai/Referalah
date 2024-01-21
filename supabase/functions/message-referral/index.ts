@@ -139,7 +139,7 @@ serve(async (req: any) => {
         })
 
       conversationUuid = conversation[0].uuid
-      console.log(83183, conversationUuid)
+
       const { data: message } = await server
         .from("message")
         .insert({

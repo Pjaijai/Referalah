@@ -45,6 +45,13 @@ export const siteConfig = {
         title: "電郵認證 Email Verification",
       },
     },
+    verifyOneTimePassword: {
+      name: "驗證一次性密碼",
+      href: "/auth/verify-one-time-password",
+      metadata: {
+        title: "驗證一次性密碼 One Time Password Verification",
+      },
+    },
     resetPassword: {
       name: "重置密碼",
       href: "/auth/reset-password",

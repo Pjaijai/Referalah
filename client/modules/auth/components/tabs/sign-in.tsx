@@ -1,5 +1,5 @@
 import React from "react"
-import MagicLinkSignInForm from "@/modules/auth/components/forms/sign-in/magic-link"
+import OneTimePasswordSignInForm from "@/modules/auth/components/forms/sign-in/one-time-password"
 import PasswordSignInForm from "@/modules/auth/components/forms/sign-in/password"
 import { useI18n } from "@/utils/services/internationalization/client"
 
@@ -13,15 +13,15 @@ const SignInTab = () => {
         <TabsTrigger value="password" className="w-full">
           {t("general.password")}
         </TabsTrigger>
-        <TabsTrigger value="magicLink" className="w-full">
-          {t("general.magic_link")}
+        <TabsTrigger value="oneTimePassword" className="w-full">
+          {t("general.one_time_password")}
         </TabsTrigger>
       </TabsList>
       <TabsContent value="password">
         <PasswordSignInForm />
       </TabsContent>
-      <TabsContent value="magicLink">
-        <MagicLinkSignInForm />
+      <TabsContent value="oneTimePassword">
+        <OneTimePasswordSignInForm />
       </TabsContent>
     </Tabs>
   )
