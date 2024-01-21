@@ -2,9 +2,10 @@ import { supabase } from "@/utils/services/supabase/config"
 
 import { IResetPasswordRequest } from "@/types/api/request/auth/reset-password"
 import { ISignInEmailPasswordRequest } from "@/types/api/request/auth/sign-in-with-email-password"
-import { ISignInEmailMagicLinkRequest } from "@/types/api/request/auth/sign-in-with-magic-link"
+import { ISignInWithOneTimePassWordRequest } from "@/types/api/request/auth/sign-in-with-one-time-password"
 import { ISignUpEmailPasswordRequest } from "@/types/api/request/auth/sign-up-with-email-password"
 import { IUpdatePasswordRequest } from "@/types/api/request/auth/update-password"
+import { IVerifyEmailOneTimePasswordRequest } from "@/types/api/request/auth/verify-email-one-time-password"
 import { IMessagePostCreatorRequest } from "@/types/api/request/message/post-creator"
 import { IMessageReferralRequest } from "@/types/api/request/message/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
@@ -127,8 +128,8 @@ export const signInWithEmailPassword = async (
     throw error
   }
 }
-export const signInWithMagicLink = async (
-  req: ISignInEmailMagicLinkRequest
+export const signInWithOneTimePassword = async (
+  req: ISignInWithOneTimePassWordRequest
 ) => {
   const { email } = req
   try {
@@ -136,7 +137,28 @@ export const signInWithMagicLink = async (
       email,
       options: {
         emailRedirectTo: `${process.env.NEXT_PUBLIC_WEB_URL}`,
+        shouldCreateUser: false,
       },
+    })
+
+    if (error) {
+      throw error
+    }
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const verifyEmailOneTimePassword = async (
+  req: IVerifyEmailOneTimePasswordRequest
+) => {
+  const { email, token } = req
+  try {
+    const { data, error } = await supabase.auth.verifyOtp({
+      email,
+      token,
+      type: "email",
     })
 
     if (error) {

@@ -35,20 +35,19 @@ export default {
   "general.error.title": "出事！",
   "general.error.description": "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
   "general.sign_in": "登入",
-  "auth.sign_in.magic_link.email_invalid_error": "電郵錯誤",
+  "auth.sign_in.one_time_password.email_invalid_error": "電郵錯誤",
   "auth.sign_in.email_password.credential_invalid_error": "電郵或密碼錯誤",
 
   "auth.sign_in.magic_link.submit.success": "登入成功！",
   "general.forgot_password": "忘記密碼？",
   "general.password": "密碼",
-  "general.magic_link": "Magic Link",
+
   "auth.sign_up_confirmation.verification_success_text":
     "你已成功核實並成為會員會。",
   "auth.sign_up_confirmation.build_your_profile": "即刻建立你嘅個人檔案啦！",
   "auth.sign_up_confirmation.build_my_profile": "建立個人檔案",
   "general.skip": "略過",
-  "auth.email_verification.click_magic_link_in_email_to_sign_in":
-    "請撳電郵入面嘅 magic link 嚟登入。",
+
   "auth.email_verification.click_link_in_email_to_reset_password":
     "請撳電郵入面嘅連結嚟重置密碼。",
   "auth.email_verification.click_link_in_email_to_verify":
@@ -66,6 +65,7 @@ export default {
   "auth.email_verification.resend_link_later#other":
     "或等待{count}秒後，重新發送連結",
   "general.continue": "繼續",
+  "auth.email_verification.resend_email": "重發電郵",
 
   "form.general.password_description": "密碼必須為8至20字元之間",
   "form.general.submit": "提交",
@@ -263,4 +263,13 @@ export default {
   "page.installation": "安裝Referalah",
   "general.dark_mode": "夜間模式",
   "general.light_mode": "日間模式",
+
+  "auth.verify_one_time_password.your_one_time_password_label":
+    "你的一次性密碼",
+  "general.verify": "驗証",
+  "page.verify_one_time_password": "驗証你的一次性密碼",
+  "auth.verify_one_time_password.token_expired_or_invalid": "無效密碼或已過期",
+  "auth.verify_one_time_password.user_not_found": "搵唔到會員",
+  "auth.verify_one_time_password.success": "驗證成功！",
+  "general.one_time_password": "一次性密碼",
 } as const

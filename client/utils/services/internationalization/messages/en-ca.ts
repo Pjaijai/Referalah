@@ -41,21 +41,20 @@ export default {
   "general.error.description":
     "Seems like there is an error. If the issue persists after a few attempts, please contact me 🙏🏻",
   "general.sign_in": "Sign in",
-  "auth.sign_in.magic_link.email_invalid_error": "Invalid Email",
+  "auth.sign_in.one_time_password.email_invalid_error": "Invalid Email",
   "auth.sign_in.email_password.credential_invalid_error":
     "Invalid email or password",
 
   "auth.sign_in.magic_link.submit.success": "Login successful!",
   "general.forgot_password": "Forgot password?",
   "general.password": "Password",
-  "general.magic_link": "Magic Link",
+
   "auth.sign_up_confirmation.verification_success_text":
     "You have been successfully verified and become a member.",
   "auth.sign_up_confirmation.build_your_profile": "Create your profile now!",
   "auth.sign_up_confirmation.build_my_profile": "Build my profile",
   "general.skip": "Skip",
-  "auth.email_verification.click_magic_link_in_email_to_sign_in":
-    "Please click on the magic link in your email to log in.",
+
   "auth.email_verification.click_link_in_email_to_reset_password":
     "Please click on the link in your email to reset your password",
   "auth.email_verification.click_link_in_email_to_verify":
@@ -64,13 +63,13 @@ export default {
   "auth.email_verification.check_spam_mail_box":
     "Please check the spam folder for the relevant email address",
   "general.or": "or",
-  "auth.email_verification.resend_link": "Resend magic link",
 
   "auth.email_verification.resend_link_later#zero":
     "or wait {count} seconds to resend the link",
 
   "auth.email_verification.resend_link_later#one":
     "or wait {count} second to resend the link",
+  "auth.email_verification.resend_email": "Resend email",
 
   "auth.email_verification.resend_link_later#other":
     "or wait {count} seconds to resend the link",
@@ -288,4 +287,14 @@ export default {
   "page.installation": "Get the App",
   "general.dark_mode": "Dark Mode",
   "general.light_mode": "Light Mode",
+
+  "auth.verify_one_time_password.your_one_time_password_label":
+    "Your one time password",
+  "general.verify": "Verify",
+  "page.verify_one_time_password": "Verify Your One Time Password",
+  "auth.verify_one_time_password.token_expired_or_invalid":
+    "Token has expired or is invalid ",
+  "auth.verify_one_time_password.user_not_found": "User not found",
+  "auth.verify_one_time_password.success": "Verification success !",
+  "general.one_time_password": "One Time Password",
 } as const

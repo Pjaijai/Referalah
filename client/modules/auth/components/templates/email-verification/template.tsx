@@ -6,7 +6,6 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { EEmaiVerification } from "@/modules/auth/types/email-verification"
 import { useI18n } from "@/utils/services/internationalization/client"
 
-import { siteConfig } from "@/config/site"
 import { Button } from "@/components/ui/button"
 
 const EmailVerificationPageTemplate = () => {
@@ -19,13 +18,9 @@ const EmailVerificationPageTemplate = () => {
 
   if (!type || !email) throw Error
 
-  const redirectUrl =
-    type === EEmaiVerification.MAGIC_LINK ? siteConfig.page.signIn.href : "/"
+  const redirectUrl = "/"
 
   const title = useMemo(() => {
-    if (type === EEmaiVerification.MAGIC_LINK)
-      return t("auth.email_verification.click_magic_link_in_email_to_sign_in")
-
     if (type === EEmaiVerification.RESET_PASSWORD)
       return t("auth.email_verification.click_link_in_email_to_reset_password")
     return t("auth.email_verification.click_link_in_email_to_verify")
@@ -76,26 +71,22 @@ const EmailVerificationPageTemplate = () => {
           {t("auth.email_verification.check_spam_mail_box")}{" "}
           <span className="font-semibold">team@referalah.com</span>
         </p>
-        {(type === EEmaiVerification.MAGIC_LINK ||
-          type === EEmaiVerification.RESET_PASSWORD) &&
-          seconds === 0 && (
-            <p className="mt-2 text-xs">
-              {t("general.or")}{" "}
-              <Link href={redirectUrl} className="border-b border-foreground">
-                {t("auth.email_verification.resend_link")}
-              </Link>
-            </p>
-          )}
+        {type === EEmaiVerification.RESET_PASSWORD && seconds === 0 && (
+          <p className="mt-2 text-xs">
+            {t("general.or")}{" "}
+            <Link href={redirectUrl} className="border-b border-foreground">
+              {t("auth.email_verification.resend_email")}
+            </Link>
+          </p>
+        )}
 
-        {(type === EEmaiVerification.MAGIC_LINK ||
-          type === EEmaiVerification.RESET_PASSWORD) &&
-          seconds > 0 && (
-            <p className="mt-2 text-xs">
-              {t("auth.email_verification.resend_link_later", {
-                count: seconds,
-              })}
-            </p>
-          )}
+        {type === EEmaiVerification.RESET_PASSWORD && seconds > 0 && (
+          <p className="mt-2 text-xs">
+            {t("auth.email_verification.resend_link_later", {
+              count: seconds,
+            })}
+          </p>
+        )}
       </div>
     </div>
   )

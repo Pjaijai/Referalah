@@ -2,14 +2,13 @@
 
 import React from "react"
 import { useRouter } from "next/navigation"
-import { EEmaiVerification } from "@/modules/auth/types/email-verification"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { siteConfig } from "@/config/site"
-import useSignInWithMagicLink from "@/hooks/auth/sign-in-with-magic-link"
+import useSignInWithOneTimePassword from "@/hooks/auth/sign-in-with-one-time-password"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { useToast } from "@/components/ui/use-toast"
@@ -17,44 +16,45 @@ import FormTextInput from "@/components/customized-ui/form/input"
 
 interface IMagicLinkSignInFormProps {}
 
-const MagicLinkSignInForm: React.FunctionComponent<
+const OneTimePasswordSignInForm: React.FunctionComponent<
   IMagicLinkSignInFormProps
 > = ({}) => {
   const { toast } = useToast()
   const router = useRouter()
   const t = useI18n()
 
-  const magicLinkSignInFormSchema = z.object({
+  const oneTimePasswordSignInFormSchema = z.object({
     email: z.string().email(t("validation.email.email_format_not_right")),
   })
 
-  const form = useForm<z.infer<typeof magicLinkSignInFormSchema>>({
-    resolver: zodResolver(magicLinkSignInFormSchema),
+  const form = useForm<z.infer<typeof oneTimePasswordSignInFormSchema>>({
+    resolver: zodResolver(oneTimePasswordSignInFormSchema),
     defaultValues: {
       email: "",
     },
   })
 
-  const { mutate: signIn } = useSignInWithMagicLink()
+  const { mutate: signIn } = useSignInWithOneTimePassword()
 
-  const onSubmit = (values: z.infer<typeof magicLinkSignInFormSchema>) => {
+  const onSubmit = (
+    values: z.infer<typeof oneTimePasswordSignInFormSchema>
+  ) => {
     signIn(
       { email: values.email },
       {
         onSuccess: (res) => {
           const queryString = new URLSearchParams({
-            type: EEmaiVerification.MAGIC_LINK,
             email: values.email,
           }).toString()
 
           router.push(
-            `${siteConfig.page.emailVerification.href}` + "?" + queryString
+            `${siteConfig.page.verifyOneTimePassword.href}` + "?" + queryString
           )
         },
         onError: (error: any) => {
           if (error.message.includes("Invalid login credentials")) {
             return toast({
-              title: t("auth.sign_in.magic_link.email_invalid_error"),
+              title: t("auth.sign_in.one_time_password.email_invalid_error"),
               variant: "destructive",
             })
           }
@@ -89,4 +89,4 @@ const MagicLinkSignInForm: React.FunctionComponent<
   )
 }
 
-export default MagicLinkSignInForm
+export default OneTimePasswordSignInForm
