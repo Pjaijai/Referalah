@@ -17,7 +17,7 @@ export function ThemeToggleMobile() {
 
   return (
     <div className="flex w-full items-center justify-between">
-      <div className="flex items-center font-semibold">
+      <div className="flex flex-row items-center font-semibold">
         {theme === "dark" ? <Moon /> : <Sun />}
         {theme === "dark" ? t("general.dark_mode") : t("general.light_mode")}
       </div>

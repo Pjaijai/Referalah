@@ -32,7 +32,7 @@ const MessageCard: React.FunctionComponent<IMessageCardProps> = ({
           )}
           data-testid="message-card"
         >
-          <p className="shrink-0 whitespace-pre-wrap break-all text-start  text-black dark:text-white">
+          <p className="shrink-1 whitespace-pre-wrap break-all text-start  text-black dark:text-white">
             {text}
           </p>
         </div>
@@ -44,9 +44,7 @@ const MessageCard: React.FunctionComponent<IMessageCardProps> = ({
               : " bg-slate-50 shadow-sm dark:bg-slate-600"
           )}
         >
-          <p className="mb-1 mr-2">
-            {formattedDate}
-          </p>
+          <p className="mb-1 mr-2">{formattedDate}</p>
         </div>
       </div>
     </div>
