@@ -76,7 +76,9 @@ const PasswordSignInForm: React.FunctionComponent<
           onError: (error: any) => {
             if (error.message.includes("Invalid login credentials")) {
               return toast({
-                title: t("auth.sign_in.magic_link.email_invalid_error"),
+                title: t(
+                  "auth.sign_in.email_password.credential_invalid_error"
+                ),
                 variant: "destructive",
               })
             }
