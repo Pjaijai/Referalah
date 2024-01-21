@@ -1,10 +1,10 @@
-import { url } from "inspector"
+"use client"
+
 import React from "react"
 import {
   useChangeLocale,
   useCurrentLocale,
 } from "@/utils/services/internationalization/client"
-import { Link } from "lucide-react"
 
 import {
   DropdownMenu,
@@ -12,11 +12,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Icons } from "@/components/icons"
 
 const LocaleDropDownMenu = () => {
   const locale = useCurrentLocale()
-  const changeLocale = useChangeLocale()
+
+  const changeLocale = useChangeLocale({ preserveSearchParams: true })
   const options = [
     { value: "zh-hk", location: "香港", icon: "🇭🇰", lang: "廣東話" },
     { value: "en-ca", location: "Canada", icon: "🇨🇦", lang: "English" },
@@ -29,6 +29,7 @@ const LocaleDropDownMenu = () => {
   ) => {
     changeLocale(value)
   }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex shrink-0 flex-row items-center justify-center gap-1 text-sm">
