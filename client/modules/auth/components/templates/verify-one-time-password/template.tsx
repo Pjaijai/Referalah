@@ -81,7 +81,7 @@ const VerifyEmailOneTimePasswordPageTemplate = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="mt-8 flex flex-row  justify-center  gap-8 "
       >
-        <div className="flex w-full max-w-lg flex-col gap-4">
+        <div className="flex w-full max-w-sm flex-col gap-4">
           <TextInput
             value={email}
             disabled={true}
