@@ -405,7 +405,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             <div className="w-full">
               <FormCheckBox
                 control={form.control}
-                label={t("general.referee")}
+                label={t("general.talent")}
                 name="isReferee"
                 description={t("profile.form.is_referee_description")}
               />

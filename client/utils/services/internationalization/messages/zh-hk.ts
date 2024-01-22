@@ -147,9 +147,9 @@ export default {
   "general.referrer": "推薦人",
   "profile.form.is_referrer_description":
     "你嘅資料會被公開（Email不會)，如果有人想入你間公司，就可以搵你幫手🙏🏻",
-  "general.referee": "受薦人",
+  "general.talent": "人才",
   "profile.form.is_referee_description":
-    "你嘅資料會被公開（Email不會)，如果有人想招你入佢間公司，就可以搵你，祝一切順利！",
+    "你嘅資料會被公開（Email不會)係人才名單，如果有人想招你入佢間公司，就可以搵你，祝一切順利！",
   "profile.form.personal_description_label": "個人簡介",
   "profile.form.optional_company_label": "公司名(選填)",
   "profile.form.job_title_label": "職位/工作名稱",
@@ -161,7 +161,6 @@ export default {
   "general.year_of_experience_count#one": "{count}年經驗",
   "general.year_of_experience_count#other": "{count}年經驗",
   "profile.con_not_find_user": "搵唔到用戶資料請refresh網頁或先",
-  "referral.form.contact.error.message_failed_title": "Send不到，哭咗🥲",
   "referral.form.contact.success_title": "訊息已送出!",
   "referral.form.contact.success_description": "祝一切順利！",
   "referral.form.send_message_to": "Send信息俾",
@@ -250,7 +249,7 @@ export default {
   "page.reset_password": "重置密碼",
   "page.forgot_password": "忘記密碼",
   "page.referrer": "推薦人",
-  "page.referee": "受薦人",
+  "page.talent": "人才",
   "page.create_post": "貼街招",
   "page.edit_post": "編輯街招",
   "page.post": "街招",
@@ -272,4 +271,8 @@ export default {
   "auth.verify_one_time_password.user_not_found": "搵唔到會員",
   "auth.verify_one_time_password.success": "驗證成功！",
   "general.one_time_password": "一次性密碼",
+  "referral.form.contact.error.conversation_not_accept_title":
+    "The user has not accepted the conversation",
+  "referral.form.contact.error.title": "傳送訊息失敗",
+  "referral.form.contact.error.description": "對方未接受對話，或者Server壞咗。",
 } as const

@@ -35,7 +35,7 @@ export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
 
   const connectionLinks = [
     { title: t("page.referrer"), url: siteConfig.page.referrer.href },
-    { title: t("page.referee"), url: siteConfig.page.referee.href },
+    { title: t("page.talent"), url: siteConfig.page.talent.href },
     {
       title: t("nav.become_referrer_or_referrer_title"),
       url: `${siteConfig.page.profile.href}/${userUuid}`,

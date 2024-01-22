@@ -76,11 +76,11 @@ export const siteConfig = {
           "想搵人推薦你入去？係到搵下啦！ Meet someone to bring you closer to your dream company!",
       },
     },
-    referee: {
+    talent: {
       name: "受薦人",
       href: "/referee",
       metadata: {
-        title: "受薦人 Referees",
+        title: "人才 Talent",
         description:
           "想搵人材？係到睇下有冇合適嘅人啦！ Recommend an amazing talent from Hong Kong to join your company!",
       },

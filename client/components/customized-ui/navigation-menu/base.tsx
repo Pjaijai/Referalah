@@ -55,8 +55,8 @@ export function BaseNavigationMenu() {
                 </ListItem>
               </Link>
 
-              <Link href={siteConfig.page.referee.href}>
-                <ListItem title={t("general.referee")}>
+              <Link href={siteConfig.page.talent.href}>
+                <ListItem title={t("general.talent")}>
                   {t("nav.referee.description")}
                 </ListItem>
               </Link>

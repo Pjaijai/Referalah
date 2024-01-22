@@ -1,4 +1,5 @@
 import { supabase } from "@/utils/services/supabase/config"
+import { FunctionsHttpError } from "@supabase/supabase-js"
 
 import { IResetPasswordRequest } from "@/types/api/request/auth/reset-password"
 import { ISignInEmailPasswordRequest } from "@/types/api/request/auth/sign-in-with-email-password"

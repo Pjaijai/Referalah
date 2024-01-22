@@ -163,9 +163,9 @@ export default {
   "general.referrer": "Referrer",
   "profile.form.is_referrer_description":
     "Your data will be public (except email). If someone wants to join your company, they can reach out to you.",
-  "general.referee": "Referee",
+  "general.talent": "Talent",
   "profile.form.is_referee_description":
-    "Your data will be public (except email). If someone wants to refer you, they can reach out to you. ",
+    "Your data will be public (except email) on talent list. If someone wants to refer you, they can reach out to you. ",
   "profile.form.personal_description_label": "Description",
   "profile.form.optional_company_label": "Company(Optional)",
   "profile.form.job_title_label": "Job Title",
@@ -179,7 +179,6 @@ export default {
   "general.year_of_experience_count#other": "{count} years of experience",
   "profile.con_not_find_user":
     "User data cannot be found, please refresh or sign in.",
-  "referral.form.contact.error.message_failed_title": "Failed to send message",
   "referral.form.contact.success_title": "Message sent!",
   "referral.form.contact.success_description": "Wishing you all the best!",
   "referral.form.send_message_to": "Send a message to ",
@@ -274,7 +273,7 @@ export default {
   "page.reset_password": "Reset Password",
   "page.forgot_password": "Forgot Password",
   "page.referrer": "Referrer",
-  "page.referee": "Referee",
+  "page.talent": "Talent",
   "page.create_post": "Create Post",
   "page.edit_post": "Create Post",
   "page.post": "Post",
@@ -297,4 +296,7 @@ export default {
   "auth.verify_one_time_password.user_not_found": "User not found",
   "auth.verify_one_time_password.success": "Verification success !",
   "general.one_time_password": "One Time Password",
+  "referral.form.contact.error.title": "Failed to send message",
+  "referral.form.contact.error.description":
+    "User has not accepted the conversation, or there is an issue on the server.",
 } as const

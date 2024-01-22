@@ -167,7 +167,7 @@ const ViewProfileTemplate: React.FunctionComponent<
           <div className="flex items-center gap-2">
             <Checkbox checked={isReferee} />
             <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              {t("general.referee")}
+              {t("general.talent")}
             </label>
           </div>
         </div>

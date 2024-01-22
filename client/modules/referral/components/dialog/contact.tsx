@@ -102,8 +102,8 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
           {
             onError: () => {
               return toast({
-                title: t("referral.form.contact.error.message_failed_title"),
-                description: t("general.error.description"),
+                title: t("referral.form.contact.error.title"),
+                description: t("referral.form.contact.error.description"),
                 variant: "destructive",
               })
             },
@@ -137,8 +137,8 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
           {
             onError: () => {
               return toast({
-                title: t("referral.form.contact.error.message_failed_title"),
-                description: t("general.error.description"),
+                title: t("referral.form.contact.error.title"),
+                description: t("referral.form.contact.error.description"),
                 variant: "destructive",
               })
             },
@@ -166,8 +166,8 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
       }
     } catch (err) {
       return toast({
-        title: t("referral.form.contact.error.message_failed_title"),
-        description: t("general.error.description"),
+        title: t("referral.form.contact.error.title"),
+        description: t("referral.form.contact.error.description"),
         variant: "destructive",
       })
     }
