@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo } from "react"
 
 import { cn } from "@/lib/utils"
 import useCreatedAt from "@/hooks/common/created-at"
@@ -15,6 +15,21 @@ const MessageCard: React.FunctionComponent<IMessageCardProps> = ({
 }) => {
   const { data: formattedDate } = useCreatedAt({ createdAt })
 
+  const linkify = (text: string) => {
+    var urlRegex =
+      /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi
+    return text.replace(urlRegex, function (url: string) {
+      return (
+        '<a target="_blank" style="text-decoration: underline;" href="' +
+        url +
+        '">' +
+        url +
+        "</a>"
+      )
+    })
+  }
+
+  const linkifiedText = useMemo(() => linkify(text), [text])
   return (
     <div
       className={cn(
@@ -32,9 +47,10 @@ const MessageCard: React.FunctionComponent<IMessageCardProps> = ({
           )}
           data-testid="message-card"
         >
-          <p className="shrink-1 whitespace-pre-wrap break-all text-start  text-black dark:text-white">
-            {text}
-          </p>
+          <div
+            className="shrink-1 whitespace-pre-wrap break-all text-start  text-black dark:text-white"
+            dangerouslySetInnerHTML={{ __html: linkifiedText }}
+          />
         </div>
         <div
           className={cn(
