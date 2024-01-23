@@ -54,7 +54,11 @@ export function SiteHeader() {
                 <Icons.github />
               </Link>
             }
-            {user.isSignIn && <MessageIcon className="block md:hidden" />}
+            {user.isSignIn && (
+              <Link href={siteConfig.page.chat.href}>
+                <MessageIcon className="block md:hidden" />
+              </Link>
+            )}
 
             {user.isSignIn ? (
               <Link href={`${siteConfig.page.profile.href}/${user.uuid}`}>
