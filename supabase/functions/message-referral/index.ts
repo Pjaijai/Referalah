@@ -175,7 +175,7 @@ serve(async (req: any) => {
   
       <p style="margin: 8px 0; font-size: 16px; color: #333;">Hi ${receiver.username}!</p>
       <p style="margin: 8px 0; font-size: 16px; color: #333;">${sender.username} sent you a message.</p>
-      <p style="margin: 8px 0; font-size: 16px; color: #333;">${sender.username}'s profile: <a href="${WEB_BASE_URL}en-ca/profile/${sender.uuid}" style="color: #007bff; text-decoration: none; font-weight: bold;">${WEB_BASE_URL}/en-ca/profile/${sender.uuid}</a></p>
+      <p style="margin: 8px 0; font-size: 16px; color: #333;">${sender.username}'s profile: <a href="${WEB_BASE_URL}/en-ca/profile/${sender.uuid}" style="color: #007bff; text-decoration: none; font-weight: bold;">${WEB_BASE_URL}/en-ca/profile/${sender.uuid}</a></p>
       <p style="margin: 8px 0; font-size: 16px; color: #333;">Please click the link below to continue the conversation:</p>
       <a href="${WEB_BASE_URL}/en-ca/chat?conversation=${conversationUuid}" style="color: #007bff; text-decoration: none; font-weight: bold;">${WEB_BASE_URL}/en-ca/chat?conversation=${conversationUuid}</a>
   
