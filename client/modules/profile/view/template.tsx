@@ -82,7 +82,7 @@ const ViewProfileTemplate: React.FunctionComponent<
   return (
     <div className="flex h-full flex-col items-center justify-between">
       <div className="flex w-full flex-col gap-y-2">
-        <div className="gap-2p-4 mx-8 flex w-full flex-row justify-end">
+        <div className="mx-8 flex w-full flex-row justify-end gap-2 p-4">
           {socialMediaUrl && <LinkTooltip url={socialMediaUrl} />}
           <Link
             className={cn(buttonVariants({ variant: "ghost" }), "gap-2")}
