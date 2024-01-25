@@ -88,27 +88,35 @@ serve(async (req: any) => {
         const body = `
         <html>
         <body>
-          <p style="margin-bottom: 8px;">Hi ${user.username}!</p>
-          <p style="margin-bottom: 8px;">You ${
-            count === 1 ? "has" : "have"
-          } ${count} unread message${
+        <div style="text-align: center; max-width: 400px; margin: 0 auto; padding: 20px; background-color: #f4f4f4; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <p style="margin-bottom: 8px; font-size: 18px; color: #333;">Hi ${
+          user.username
+        }!</p>
+        <p style="margin-bottom: 8px; font-size: 16px; color: #555;">You ${
+          count === 1 ? "has" : "have"
+        } ${count} unread message${
           count === 1 ? "" : "s"
         } | 你有${count}個未讀訊息</p>
-          <p style="margin-bottom: 8px;">Please click the link below to continue the conversation:</p>
-          <a href="${WEB_BASE_URL}/en-ca/chat" style="margin-bottom: 16px; display: block; text-decoration: none; color: #007bff;">${WEB_BASE_URL}/en-ca/chat</a>
+        <p style="margin-bottom: 8px; font-size: 16px; color: #555;">Please click the link below to continue the conversation:</p>
+        <a href="${WEB_BASE_URL}/en-ca/chat" style="display: inline-block; text-decoration: none; color: #007bff; font-weight: bold; font-size: 16px;">${WEB_BASE_URL}/en-ca/chat</a>
+    </div>
+    
       
         
           ${unseenConversationList
             .map(
               (con) => `
-            <div style="width: 100%; display: flex; justify-content: center;  margin-top: 2rem;">
-              <div style="width: 100%">
-                <div style="width: 100% background: #eee; padding: 16px; border-radius: 8px;">
-                  <p style="text-align: end; font-size: 14px; font-style: italic; margin-bottom: 8px;">${con.username}</p>
-                  <p style="margin-top: 8px;">${con.body}</p>
-                </div>
-              </div>
-            </div>
+              <div style="width: 100%; display: flex; justify-content: center; margin-top: 2rem;">
+      <div style="width: 90%; max-width: 600px;">
+        <div style="width: 100%; background: #f0f0f0; padding: 16px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <p style="text-align: right; font-size: 14px; font-style: italic; margin-bottom: 8px; color: #555; margin-top: 0; padding-top: 0;">
+        <span style="font-weight: bold; color: #007bff;">@${con.username}</span>
+      </p>
+        <p style="margin-top: 8px; font-size: 16px; line-height: 1.5; color: #333;">${con.body}</p>
+      </div>
+    </div>
+    </div>
+
           `,
             )
             .join("")}

@@ -165,21 +165,27 @@ serve(async (req: any) => {
     const subject = `${sender.username} sent you a message.`
     const emailBody = `
       <html>
-      <body>
-          <p>Hi ${receiver.username}!</p>
-          <p>${sender.username} sent you a message.</p>
-          <p>${sender.username}'s profile: <a href="${WEB_BASE_URL}en-ca/profile/${sender.uuid}">${WEB_BASE_URL}/en-ca/profile/${sender.uuid}</a></p>
-          <p>Please click the link below to continue the conversation:</p>
-         <a href="${WEB_BASE_URL}/en-ca/chat?conversation=${conversationUuid}">${WEB_BASE_URL}/en-ca/chat?conversation=${conversationUuid}</a>
-         
-         <div class='w-full flex justify-center'>
-         <div class="w-fit">
-                 <div class="bg-[#eee] p-4 word-break: break-word; white-space: pre-wrap; rounded-lg max-w-screen-lg">
-                     <p class="mt-2">  ${msgBody}</p>
-                 </div>
-       </div >
-       </div >
-      </body>
+      <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>New Message Notification</title>
+    </head>
+  
+  <body style="font-family: 'Arial', sans-serif; background-color: #f8f8f8; margin: 0; padding: 20px; text-align: center;">
+  
+      <p style="margin: 8px 0; font-size: 16px; color: #333;">Hi ${receiver.username}!</p>
+      <p style="margin: 8px 0; font-size: 16px; color: #333;">${sender.username} sent you a message.</p>
+      <p style="margin: 8px 0; font-size: 16px; color: #333;">${sender.username}'s profile: <a href="${WEB_BASE_URL}en-ca/profile/${sender.uuid}" style="color: #007bff; text-decoration: none; font-weight: bold;">${WEB_BASE_URL}/en-ca/profile/${sender.uuid}</a></p>
+      <p style="margin: 8px 0; font-size: 16px; color: #333;">Please click the link below to continue the conversation:</p>
+      <a href="${WEB_BASE_URL}/en-ca/chat?conversation=${conversationUuid}" style="color: #007bff; text-decoration: none; font-weight: bold;">${WEB_BASE_URL}/en-ca/chat?conversation=${conversationUuid}</a>
+  
+      <div style="display: flex; justify-content: center; margin-top: 20px;">
+          <div style="background-color: #eee; padding: 16px; border-radius: 8px; max-width: 600px; width: 100%; word-wrap: break-word; white-space: pre-wrap;">
+              <p>${msgBody}</p>
+          </div>
+      </div>
+  
+  </body>
       </html>
       `
 
