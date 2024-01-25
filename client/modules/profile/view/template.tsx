@@ -89,7 +89,7 @@ const ViewProfileTemplate: React.FunctionComponent<
             href={`${siteConfig.page.postHistory.href}/${slug}`}
           >
             <Icons.history />
-            {siteConfig.page.postHistory.name}
+            {t("page.post_history")}
           </Link>
           {isViewingOwnProfile && (
             <Button
