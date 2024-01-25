@@ -29,9 +29,7 @@ const LinkTooltip: React.FunctionComponent<ILinkTooltipProps> = ({ url }) => {
             )}
           >
             <Icons.link />
-            <span>
-              {t("profile.form.optional_personal_social_media_link_label")}
-            </span>
+            <span>{t("general.link")}</span>
           </Link>
         </TooltipTrigger>
         <TooltipContent>
