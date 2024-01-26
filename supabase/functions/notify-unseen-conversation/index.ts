@@ -2,6 +2,7 @@ import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
 import { corsHeaders, ENV_IS_LOCAL } from "../_shared/cors.ts"
 import { initSupabaseServer } from "../_shared/server.ts"
 import { sendEmail } from "../_shared/modules/notification/email/send-email.ts"
+import Bottleneck from "npm:bottleneck@2.19.5"
 
 const WEB_BASE_URL = Deno.env.get("WEB_BASE_URL")
 serve(async (req: any) => {
@@ -27,6 +28,12 @@ serve(async (req: any) => {
       })
 
     const { data: users } = await server.from("user").select("*")
+
+    const limiter = new Bottleneck({
+      minTime: 180,
+      maxConcurrent: 1,
+    })
+
     const resp: any[] = await Promise.all(
       users.map(async (user) => {
         const { data: conversations, error } = await server
@@ -125,18 +132,30 @@ serve(async (req: any) => {
       </html>
         `
 
-        const res = await sendEmail({
-          subject,
-          body: body,
-          to: ENV_IS_LOCAL ? Deno.env.get("RESEND_TO_EMAIL") : user.email,
-        })
+        const result: {
+          success?: boolean
+          to: string
+          time: string
+          user_uuid: string
+        }[] = []
+        await limiter
+          .schedule(() =>
+            sendEmail({
+              subject,
+              body: body,
+              to: ENV_IS_LOCAL ? Deno.env.get("RESEND_TO_EMAIL") : user.email,
+            }),
+          )
+          .then((res) => {
+            result.push({
+              success: res?.ok,
+              to: user.email,
+              time: new Date().toISOString(),
+              user_uuid: user.uuid,
+            })
+          })
 
-        return {
-          success: res?.ok,
-          to: user.email,
-          time: new Date().toISOString(),
-          user_uuid: user.uuid,
-        }
+        return result
       }),
     )
 
