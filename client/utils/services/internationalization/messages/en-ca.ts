@@ -89,7 +89,7 @@ export default {
   "validation.email.email_format_not_right": "Incorrect email format",
 
   "validation.text.minimum_length#zero": "At least {count} characters",
-  "validation.text.minimum_length#one": "At least {count} characters",
+  "validation.text.minimum_length#one": "At least {count} character",
   "validation.text.minimum_length#other": "At least {count} characters",
 
   "validation.text.maximum_length#zero": "At most {count} characters",
