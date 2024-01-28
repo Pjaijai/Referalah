@@ -88,13 +88,13 @@ export default {
   "auth.sign_in.register_here": "Register here",
   "validation.email.email_format_not_right": "Incorrect email format",
 
-  "validation.text.minimum_length#zero": "At least {count} words",
-  "validation.text.minimum_length#one": "At least {count} word",
-  "validation.text.minimum_length#other": "At least {count} words",
+  "validation.text.minimum_length#zero": "At least {count} characters",
+  "validation.text.minimum_length#one": "At least {count} characters",
+  "validation.text.minimum_length#other": "At least {count} characters",
 
-  "validation.text.maximum_length#zero": "At most {count} words",
-  "validation.text.maximum_length#one": "At most {count} word",
-  "validation.text.maximum_length#other": "At most {count} words",
+  "validation.text.maximum_length#zero": "At most {count} characters",
+  "validation.text.maximum_length#one": "At most {count} character",
+  "validation.text.maximum_length#other": "At most {count} characters",
   "validation.confirm_password.not_match_with_password":
     "Does not match with password",
   "validation.text.no_white_space": "No spaces allowed",
