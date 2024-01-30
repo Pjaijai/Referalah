@@ -102,7 +102,7 @@ const RefereePageTemplate: React.FunctionComponent<
       </div>
       {!isRefereeListLoading && !isFetching && list.length === 0 && (
         <div className="mt-8 rounded-lg border-2 p-4 text-center">
-          {"referral.search_referee.no_data"}
+          {t("referral.search_referee.no_data")}
         </div>
       )}
 
