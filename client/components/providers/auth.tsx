@@ -8,17 +8,13 @@ import useUserStore from "@/hooks/state/user/store"
 import { useToast } from "@/components/ui/use-toast"
 
 interface IAuthProviderProps {
-  accessToken: string | null
   children: React.ReactNode
 }
-const AuthProvider: FunctionComponent<IAuthProviderProps> = ({
-  accessToken,
-  children,
-}) => {
+const AuthProvider: FunctionComponent<IAuthProviderProps> = ({ children }) => {
   const setUserState = useUserStore((state) => state.setUser)
   const reSetUserState = useUserStore((state) => state.reSetUser)
   const [userUuid, setUserUuid] = useState<string | null>(null)
-
+  const [accessToken, setAccessToken] = useState<string | null>(null)
   const router = useRouter()
   const { toast } = useToast()
 
@@ -26,13 +22,22 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({
     const {
       data: { subscription: authListener },
     } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session && session.access_token !== accessToken) {
+      if (session && accessToken && session.access_token !== accessToken) {
         router.refresh()
-      } else if (session && session.access_token === accessToken) {
+      } else if (
+        session &&
+        accessToken &&
+        session.access_token === accessToken
+      ) {
         setUserUuid(session.user.id)
+        setAccessToken(session.access_token)
+      } else if (session && !accessToken) {
+        setUserUuid(session.user.id)
+        setAccessToken(session.access_token)
       } else {
         setUserUuid(null)
         reSetUserState()
+        setAccessToken(null)
       }
     })
 
@@ -74,7 +79,7 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({
     }
 
     fetchData()
-  }, [userUuid])
+  }, [userUuid, reSetUserState, setUserState, toast, supabase])
 
   return <>{children}</>
 }
