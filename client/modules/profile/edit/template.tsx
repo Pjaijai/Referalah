@@ -10,6 +10,10 @@ import { v4 as uuidv4 } from "uuid"
 import { z } from "zod"
 
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
+import { ICityResponse } from "@/types/api/response/city"
+import { ICountryResponse } from "@/types/api/response/country"
+import { IIndustryResponse } from "@/types/api/response/industry"
+import { IProvinceResponse } from "@/types/api/response/province"
 import useUpdateUserProfile from "@/hooks/api/user/update-user-profile"
 import useCityOptions from "@/hooks/common/options/city-options"
 import useCountryOptions from "@/hooks/common/options/country-options"
@@ -46,6 +50,10 @@ interface IEdiProfileTemplate {
   isReferee: boolean
   setIsEditMode: (value: boolean) => void
   refetchProfile: () => void
+  countryList: ICountryResponse[]
+  provinceList: IProvinceResponse[]
+  cityList: ICityResponse[]
+  industryList: IIndustryResponse[]
 }
 
 const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
@@ -65,6 +73,10 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   isProfileLoading,
   setIsEditMode,
   refetchProfile,
+  countryList,
+  provinceList,
+  cityList,
+  industryList,
 }) => {
   const t = useI18n()
 
@@ -208,11 +220,10 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   const provinceWatch = watch("provinceUuid")
   const yearOfExperienceWatch = watch("yearOfExperience")
 
-  const industryOptions = useIndustryOptions()
-  const countryOptions = useCountryOptions()
-  const provinceOptions = useProvinceOptions(countryWatch)
-  const cityOptions = useCityOptions(provinceWatch)
-
+  const industryOptions = useIndustryOptions(industryList)
+  const countryOptions = useCountryOptions(countryList)
+  const provinceOptions = useProvinceOptions(provinceList, countryWatch)
+  const cityOptions = useCityOptions(cityList, provinceWatch)
   useEffect(() => {
     if (provinceWatch !== provinceUuid) {
       setValue("cityUuid", "")
