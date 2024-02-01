@@ -6,6 +6,10 @@ import {
   useI18n,
 } from "@/utils/services/internationalization/client"
 
+import { ICityResponse } from "@/types/api/response/city"
+import { ICountryResponse } from "@/types/api/response/country"
+import { IIndustryResponse } from "@/types/api/response/industry"
+import { IProvinceResponse } from "@/types/api/response/province"
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
 import useSearchReferral from "@/hooks/api/referral/search-referral"
@@ -17,11 +21,16 @@ import ReferralCard from "@/components/customized-ui/cards/referral"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 
-interface IRefererPageTemplateProps {}
+interface IRefererPageTemplateProps {
+  countryList: ICountryResponse[]
+  provinceList: IProvinceResponse[]
+  cityList: ICityResponse[]
+  industryList: IIndustryResponse[]
+}
 
 const RefererPageTemplate: React.FunctionComponent<
   IRefererPageTemplateProps
-> = () => {
+> = ({ cityList, countryList, industryList, provinceList }) => {
   const t = useI18n()
   const {
     result,
@@ -46,7 +55,13 @@ const RefererPageTemplate: React.FunctionComponent<
     maxYearOfExperience,
     minYearOfExperience,
     sorting,
-  } = useSearchReferral(EReferralType.REFERRER)
+  } = useSearchReferral({
+    type: EReferralType.REFERRER,
+    cityList,
+    countryList,
+    industryList,
+    provinceList,
+  })
 
   const {
     data: refererListData,
@@ -94,6 +109,10 @@ const RefererPageTemplate: React.FunctionComponent<
             currentMaxYearOfExperience={maxYearOfExperience}
             currentMinYearOfExperience={minYearOfExperience}
             type={EMessageType.REFERRAL}
+            cityList={cityList}
+            countryList={countryList}
+            industryList={industryList}
+            provinceList={provinceList}
           />
           <ResetButton onClick={handleReset} />
           <Button onClick={handleSubmitChange} className="whitespace-nowrap">
