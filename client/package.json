@@ -17,7 +17,7 @@
     "test:unit": "yarn run test -- --group=unit",
     "test:int": "yarn run test -- --group=integration",
     "test:e2e": "yarn run test -- --group=e2e",
-    "type:gen":"supabase gen types typescript --local public > types/supabase.ts"
+    "type:gen": "supabase gen types typescript --local public > types/supabase.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
@@ -42,7 +42,6 @@
     "@supabase/supabase-js": "^2.36.0",
     "@tanstack/react-query": "4.35.0",
     "@tanstack/react-query-devtools": "^4.35.0",
-    "@tanstack/react-query-next-experimental": "^5.0.0-alpha.80",
     "@testing-library/jest-dom": "6.1.4",
     "@types/gtag.js": "^0.0.13",
     "@types/uuid": "^9.0.3",
