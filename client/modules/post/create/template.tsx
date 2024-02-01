@@ -8,6 +8,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { ICityResponse } from "@/types/api/response/city"
+import { ICountryResponse } from "@/types/api/response/country"
+import { IIndustryResponse } from "@/types/api/response/industry"
+import { IProvinceResponse } from "@/types/api/response/province"
 import { EReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
 import useCreatePost from "@/hooks/api/post/create-post"
@@ -25,11 +29,19 @@ import FormNumberInput from "@/components/customized-ui/form/number"
 import FormSelect from "@/components/customized-ui/form/select"
 import FormTextArea from "@/components/customized-ui/form/text-area"
 
-interface ICreatePostTemplateProps {}
+interface ICreatePostTemplateProps {
+  countryList: ICountryResponse[]
+  provinceList: IProvinceResponse[]
+  cityList: ICityResponse[]
+  industryList: IIndustryResponse[]
+}
 
-const CreatePostTemplate: React.FunctionComponent<
-  ICreatePostTemplateProps
-> = () => {
+const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
+  countryList,
+  provinceList,
+  cityList,
+  industryList,
+}) => {
   const t = useI18n()
   const createPostValidationSchema = z.object({
     url: z
@@ -126,10 +138,10 @@ const CreatePostTemplate: React.FunctionComponent<
   const router = useRouter()
   const user = useUserStore((state) => state)
 
-  const industryOptions = useIndustryOptions()
-  const countryOptions = useCountryOptions()
-  const provinceOptions = useProvinceOptions(countryWatch)
-  const cityOptions = useCityOptions(provinceWatch)
+  const industryOptions = useIndustryOptions(industryList)
+  const countryOptions = useCountryOptions(countryList)
+  const provinceOptions = useProvinceOptions(provinceList, countryWatch)
+  const cityOptions = useCityOptions(cityList, provinceWatch)
   const { mutate: createPost, isLoading: isCreatePostLoading } = useCreatePost()
 
   useEffect(() => {

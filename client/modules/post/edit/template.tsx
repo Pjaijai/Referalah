@@ -5,10 +5,15 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { ICityResponse } from "@/types/api/response/city"
+import { ICountryResponse } from "@/types/api/response/country"
+import { IIndustryResponse } from "@/types/api/response/industry"
+import { IProvinceResponse } from "@/types/api/response/province"
 import { IGetPostResponse } from "@/types/api/response/referer-post"
 import { EPostStatus } from "@/types/common/post-status"
 import { EReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
+import useGetPost from "@/hooks/api/post/get-post"
 import useUpdatePost from "@/hooks/api/post/update-post"
 import useCityOptions from "@/hooks/common/options/city-options"
 import useCountryOptions from "@/hooks/common/options/country-options"
@@ -25,9 +30,11 @@ import FormTextArea from "@/components/customized-ui/form/text-area"
 import { ISelectOption } from "@/components/customized-ui/selects/base"
 
 interface IEditPostPageTemplateProps {
-  postDate?: IGetPostResponse
-  isPostDataLoading: boolean
   postUuid: string
+  countryList: ICountryResponse[]
+  provinceList: IProvinceResponse[]
+  cityList: ICityResponse[]
+  industryList: IIndustryResponse[]
 }
 
 interface IForm {
@@ -41,11 +48,22 @@ interface IForm {
   companyName: string
   jobTitle: string
   url?: string
+  postUuid: string
 }
 
 const EditPostPageTemplate: React.FunctionComponent<
   IEditPostPageTemplateProps
-> = ({ postDate, isPostDataLoading, postUuid }) => {
+> = ({ postUuid, countryList, provinceList, cityList, industryList }) => {
+  const { data: post, isLoading } = useGetPost(postUuid)
+  const userUuid = useUserStore((state) => state.uuid)
+  const router = useRouter()
+  // If not sign in and not viewing by same user
+  useEffect(() => {
+    if (!isLoading && post?.user?.uuid !== userUuid) {
+      router.push(siteConfig.page.main.href)
+    }
+  }, [isLoading, post, router, userUuid])
+
   const t = useI18n()
   const editPostValidationSchema = z.object({
     url: z
@@ -125,18 +143,18 @@ const EditPostPageTemplate: React.FunctionComponent<
     resolver: zodResolver(editPostValidationSchema),
     defaultValues: useMemo(() => {
       return {
-        status: postDate?.status || "active",
-        description: postDate?.description || "",
-        companyName: postDate?.company_name || "",
-        jobTitle: postDate?.job_title || "",
-        yearOfExperience: postDate?.year_of_experience?.toString() || "0",
-        url: postDate?.url || "",
-        countryUuid: postDate?.country?.uuid || "",
-        provinceUuid: postDate?.province?.uuid || "",
-        cityUuid: postDate?.city?.uuid || "",
-        industryUuid: postDate?.industry?.uuid || "",
+        status: post?.status || "active",
+        description: post?.description || "",
+        companyName: post?.company_name || "",
+        jobTitle: post?.job_title || "",
+        yearOfExperience: post?.year_of_experience?.toString() || "0",
+        url: post?.url || "",
+        countryUuid: post?.country?.uuid || "",
+        provinceUuid: post?.province?.uuid || "",
+        cityUuid: post?.city?.uuid || "",
+        industryUuid: post?.industry?.uuid || "",
       }
-    }, [isPostDataLoading]),
+    }, [isLoading]),
   })
 
   const { toast } = useToast()
@@ -144,26 +162,26 @@ const EditPostPageTemplate: React.FunctionComponent<
   const countryWatch = form.watch("countryUuid")
   const provinceWatch = form.watch("provinceUuid")
   const yearOfExperienceWatch = form.watch("yearOfExperience")
-  const router = useRouter()
+
   const user = useUserStore((state) => state)
   const statusOptions: ISelectOption[] = [
     { title: t("post.status.open"), value: EPostStatus.ACTIVE },
     { title: t("post.status.close"), value: EPostStatus.INACTIVE },
   ]
 
-  const industryOptions = useIndustryOptions()
-  const countryOptions = useCountryOptions()
-  const provinceOptions = useProvinceOptions(countryWatch)
-  const cityOptions = useCityOptions(provinceWatch)
+  const industryOptions = useIndustryOptions(industryList)
+  const countryOptions = useCountryOptions(countryList)
+  const provinceOptions = useProvinceOptions(provinceList, countryWatch)
+  const cityOptions = useCityOptions(cityList, provinceWatch)
 
   const { mutate: updatePost, isLoading: isUpdatingPostLoading } =
     useUpdatePost()
 
   useEffect(() => {
-    if (provinceWatch !== postDate?.province?.uuid) {
+    if (provinceWatch !== post?.province?.uuid) {
       form.setValue("cityUuid", "")
     }
-  }, [form, isPostDataLoading, provinceWatch])
+  }, [form, isLoading, provinceWatch])
 
   useEffect(() => {
     // Convert yearOfExperienceWatch to a number
