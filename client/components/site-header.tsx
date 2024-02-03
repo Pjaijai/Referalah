@@ -38,22 +38,21 @@ export function SiteHeader() {
         <div className="flex items-center justify-end space-x-4">
           <nav className="flex items-center gap-2">
             <LocaleDropDownMenu />
-            {
-              <div className="hidden md:block">
-                <ThemeToggle />
-              </div>
-            }
-            {
-              <Link
-                aria-label="referalah-project-github"
-                href={siteConfig.links.github}
-                target="_blank"
-                rel="noreferrer"
-                className="hidden md:block"
-              >
-                <Icons.github />
-              </Link>
-            }
+
+            <div className="hidden md:block">
+              <ThemeToggle />
+            </div>
+
+            <Link
+              aria-label="referalah-project-github"
+              href={siteConfig.links.github}
+              target="_blank"
+              rel="noreferrer"
+              className="hidden md:block"
+            >
+              <Icons.github />
+            </Link>
+
             {user.isSignIn && (
               <Link href={siteConfig.page.chat.href}>
                 <MessageIcon className="block md:hidden" />
