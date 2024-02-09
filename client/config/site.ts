@@ -12,7 +12,7 @@ export const siteConfig = {
       href: "/",
     },
     profile: {
-      name: "用戶檔案",
+      name: "Profile",
       href: "/profile",
     },
     signUp: {
@@ -45,6 +45,13 @@ export const siteConfig = {
         title: "電郵認證 Email Verification",
       },
     },
+    verifyOneTimePassword: {
+      name: "驗證一次性密碼",
+      href: "/auth/verify-one-time-password",
+      metadata: {
+        title: "驗證一次性密碼 One Time Password Verification",
+      },
+    },
     resetPassword: {
       name: "重置密碼",
       href: "/auth/reset-password",
@@ -53,7 +60,7 @@ export const siteConfig = {
       },
     },
     forgetPassword: {
-      name: "重置密碼",
+      name: "忘記密碼",
       href: "/auth/forgot-password",
       metadata: {
         title: "忘記密碼 Forgot Password",
@@ -69,11 +76,11 @@ export const siteConfig = {
           "想搵人推薦你入去？係到搵下啦！ Meet someone to bring you closer to your dream company!",
       },
     },
-    referee: {
+    talent: {
       name: "受薦人",
       href: "/referee",
       metadata: {
-        title: "受薦人 Referees",
+        title: "人才 Talent",
         description:
           "想搵人材？係到睇下有冇合適嘅人啦！ Recommend an amazing talent from Hong Kong to join your company!",
       },
@@ -104,6 +111,10 @@ export const siteConfig = {
       name: "街招記錄",
       href: "/post/history",
     },
+    chat: {
+      name: "對話",
+      href: "/chat",
+    },
     about: {
       name: "關於本平台",
       href: "/about",
@@ -117,7 +128,7 @@ export const siteConfig = {
       name: "privatePolicy",
       href: "/privacy-policy",
       metadata: {
-        title: "隱私權政策 Private Policy",
+        title: "隱私政策 Privacy Policy",
         description: METADATA_DEFAULT_DESCRIPTION,
         robots: "noindex,nofollow",
       },

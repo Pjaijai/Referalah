@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "next/link"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import {
   DropdownMenu,
@@ -16,6 +17,7 @@ interface IReferralCardDropDownMenuProps {
 const ReferralCardDropDownMenu: React.FunctionComponent<
   IReferralCardDropDownMenuProps
 > = ({ url, onContactClick }) => {
+  const t = useI18n()
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -30,7 +32,7 @@ const ReferralCardDropDownMenu: React.FunctionComponent<
               className="grid grid-cols-3 items-center gap-4"
             >
               <Icons.link />
-              <p className="text-lg">連結</p>
+              <p className="text-lg">{t("general.link")}</p>
             </Link>
           </DropdownMenuItem>
         )}
@@ -38,7 +40,7 @@ const ReferralCardDropDownMenu: React.FunctionComponent<
         <DropdownMenuItem onClick={onContactClick}>
           <div className="grid grid-cols-3 items-center gap-4">
             <Icons.mail />
-            <p className="text-lg">聯絡</p>
+            <p className="text-lg">{t("general.contact")}</p>
           </div>
         </DropdownMenuItem>
       </DropdownMenuContent>

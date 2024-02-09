@@ -1,6 +1,10 @@
 "use client"
 
 import React from "react"
+import {
+  useCurrentLocale,
+  useI18n,
+} from "@/utils/services/internationalization/client"
 
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
@@ -18,6 +22,7 @@ interface IRefererPageTemplateProps {}
 const RefererPageTemplate: React.FunctionComponent<
   IRefererPageTemplateProps
 > = () => {
+  const t = useI18n()
   const {
     result,
     handleCompanyChange,
@@ -49,24 +54,24 @@ const RefererPageTemplate: React.FunctionComponent<
     fetchNextPage,
     isFetching,
   } = result
-
+  const locale = useCurrentLocale()
   const list =
     refererListData !== undefined ? refererListData.pages.flatMap((d) => d) : []
 
   return (
-    <>
+    <div className="flex flex-col gap-4 ">
       <div className="mt-8 flex h-full w-full flex-col-reverse gap-4 md:flex-row">
         <Input
           onChange={handleCompanyChange}
           onKeyDown={handleKeyPressSubmitChange}
           value={companyName}
-          placeholder="公司名稱"
+          placeholder={t("general.company_name")}
         />
         <Input
           onChange={handleJobTitleChange}
           onKeyDown={handleKeyPressSubmitChange}
           value={jobTitle}
-          placeholder="職位/工作名稱"
+          placeholder={t("general.job_title")}
         />
 
         <div className="flex flex-row justify-end gap-2">
@@ -92,13 +97,13 @@ const RefererPageTemplate: React.FunctionComponent<
           />
           <ResetButton onClick={handleReset} />
           <Button onClick={handleSubmitChange} className="whitespace-nowrap">
-            搜尋
+            {t("general.search")}
           </Button>
         </div>
       </div>
       {!isRefererListLoading && !isFetching && list.length === 0 && (
         <div className="mt-8 rounded-lg border-2 p-4 text-center">
-          冇資料🥲不如成為推薦人？
+          {"referral.search_referrer.no_data"}
         </div>
       )}
 
@@ -125,24 +130,40 @@ const RefererPageTemplate: React.FunctionComponent<
                   jobTitle={referer.job_title}
                   username={referer.username}
                   photoUrl={referer.avatar_url}
-                  province={referer.province && referer.province.cantonese_name}
-                  country={referer.country && referer.country.cantonese_name}
-                  city={referer.city && referer.city.cantonese_name}
                   companyName={referer.company_name}
                   description={referer.description}
-                  industry={referer.industry && referer.industry.cantonese_name}
                   socialMediaUrl={referer.social_media_url}
                   yearOfExperience={referer.year_of_experience}
                   uuid={referer.uuid}
                   key={referer.uuid}
                   receiverType={EReferralType.REFERRER}
+                  province={
+                    locale === "zh-hk"
+                      ? referer.province && referer.province.cantonese_name
+                      : referer.province && referer.province.english_name
+                  }
+                  country={
+                    locale === "zh-hk"
+                      ? referer.country && referer.country.cantonese_name
+                      : referer.country && referer.country.english_name
+                  }
+                  city={
+                    locale === "zh-hk"
+                      ? referer.city && referer.city.cantonese_name
+                      : referer.city && referer.city.english_name
+                  }
+                  industry={
+                    locale === "zh-hk"
+                      ? referer.industry && referer.industry.cantonese_name
+                      : referer.industry && referer.industry.english_name
+                  }
                 />
               )
             })}
           </div>
         </BaseInfiniteScroll>
       )}
-    </>
+    </div>
   )
 }
 

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { createPostValidationSchema } from "@/modules/post/validation/create"
+import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -30,9 +30,82 @@ interface ICreatePostTemplateProps {}
 const CreatePostTemplate: React.FunctionComponent<
   ICreatePostTemplateProps
 > = () => {
-  const formSchema = createPostValidationSchema
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const t = useI18n()
+  const createPostValidationSchema = z.object({
+    url: z
+      .string()
+      .max(20000, {
+        message: t("validation.text.maximum_length", { count: 20000 }),
+      })
+      .url({
+        message: t("validation.link.not_valid"),
+      })
+      .optional()
+      .or(z.literal("")),
+    description: z
+      .string()
+      .max(3000, {
+        message: t("validation.text.maximum_length", { count: 3000 }),
+      })
+      .min(10, {
+        message: t("validation.text.minimum_length", { count: 10 }),
+      }),
+
+    countryUuid: z.string().min(1, {
+      message: t("validation.field_required"),
+    }),
+    provinceUuid: z.string().min(1, {
+      message: t("validation.field_required"),
+    }),
+    cityUuid: z.string().min(1, {
+      message: t("validation.field_required"),
+    }),
+    industryUuid: z.string().min(1, {
+      message: t("validation.field_required"),
+    }),
+    yearOfExperience: z
+      .string()
+      .min(1, {
+        message: t("validation.field_required"),
+      })
+      .refine(
+        (value) => {
+          if (value) {
+            const number = parseFloat(value)
+            if (!isNaN(number) && number >= 0 && number <= 100) {
+              return true
+            } else {
+              return false
+            }
+          }
+
+          return true
+          // Check if it's a valid number and falls within the range 1 to 100
+        },
+        {
+          message: t("validation.year_of_experience.exceed_range"), // Specify the custom error message here
+        }
+      ),
+    companyName: z
+      .string()
+      .min(1, {
+        message: t("validation.field_required"),
+      })
+      .max(30, {
+        message: t("validation.text.maximum_length", { count: 30 }),
+      }),
+    jobTitle: z
+      .string()
+      .min(1, {
+        message: t("validation.field_required"),
+      })
+      .max(30, {
+        message: t("validation.text.maximum_length", { count: 30 }),
+      }),
+  })
+
+  const form = useForm<z.infer<typeof createPostValidationSchema>>({
+    resolver: zodResolver(createPostValidationSchema),
     defaultValues: {
       description: "",
       companyName: "",
@@ -93,17 +166,22 @@ const CreatePostTemplate: React.FunctionComponent<
     }
   }, [yearOfExperienceWatch])
 
-  const onSubmit = async (values: z.infer<typeof formSchema>, e: any) => {
+  const onSubmit = async (
+    values: z.infer<typeof createPostValidationSchema>,
+    e: any
+  ) => {
     e.preventDefault()
     try {
       if (!user.isSignIn)
         return toast({
-          title: "未登入",
-          description: "登入咗先可以貼街招",
+          title: t("post.create.error.user_not_sign_in_title"),
+          description: t("post.create.error.user_not_sign_in_description"),
           variant: "destructive",
           action: (
-            <ToastAction altText="登入">
-              <Link href={siteConfig.page.signIn.href}>登入</Link>
+            <ToastAction altText={t("general.sign_in")}>
+              <Link href={siteConfig.page.signIn.href}>
+                {t("general.sign_in")}
+              </Link>
             </ToastAction>
           ),
         })
@@ -130,8 +208,8 @@ const CreatePostTemplate: React.FunctionComponent<
           },
           onError: () => {
             return toast({
-              title: "出事！",
-              description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+              title: t("general.error.title"),
+              description: t("general.error.description"),
               variant: "destructive",
             })
           },
@@ -139,8 +217,8 @@ const CreatePostTemplate: React.FunctionComponent<
       )
     } catch (err) {
       return toast({
-        title: "出事！",
-        description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+        title: t("general.error.title"),
+        description: t("general.error.description"),
       })
     }
   }
@@ -154,64 +232,63 @@ const CreatePostTemplate: React.FunctionComponent<
         >
           <FormTextInput
             control={form.control}
-            label="相關網址"
+            label={t("post.create.related_link_title")}
             name="url"
-            description="例如份工個LinkedIn，Indeed，Glassdoor個連結"
+            description={t("post.create.related_link_description")}
           />
 
           <FormTextInput
             control={form.control}
-            label="公司名"
+            label={t("general.company_name")}
             name="companyName"
           />
 
           <FormTextInput
             control={form.control}
-            label="職位名稱"
+            label={t("general.job_title")}
             name="jobTitle"
           />
 
           <FormTextArea
             control={form.control}
-            label="內容"
+            label={t("post.create.content_label")}
             name="description"
-            description={"講吓想搵啲咩人？"}
           />
 
           <FormSelect
             options={industryOptions}
             control={form.control}
-            label="行業"
+            label={t("general.industry")}
             name="industryUuid"
           />
           <FormSelect
             options={countryOptions}
             control={form.control}
-            label="國家"
+            label={t("general.country")}
             name="countryUuid"
           />
           <FormSelect
             control={form.control}
-            label="省份"
+            label={t("general.province")}
             name="provinceUuid"
             options={provinceOptions as any}
           />
 
           <FormSelect
             control={form.control}
-            label="城市"
+            label={t("general.city")}
             name="cityUuid"
             options={cityOptions as any}
           />
 
           <FormNumberInput
             control={form.control}
-            label="工作年資"
+            label={t("general.year_of_experience")}
             name="yearOfExperience"
           />
 
           <Button type="submit" disabled={isCreatePostLoading}>
-            {isSubmitting ? "請等等" : "提交"}
+            {isSubmitting ? t("general.wait") : t("form.general.submit")}
           </Button>
         </form>
       </Form>

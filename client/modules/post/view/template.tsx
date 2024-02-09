@@ -4,6 +4,10 @@ import React from "react"
 import Link from "next/link"
 import PostHeader from "@/modules/post/components/info-display/header"
 import PostStatusDisplay from "@/modules/post/components/info-display/status"
+import {
+  useCurrentLocale,
+  useI18n,
+} from "@/utils/services/internationalization/client"
 
 import { EMessageType } from "@/types/common/message-type"
 import { EPostStatus } from "@/types/common/post-status"
@@ -12,7 +16,7 @@ import { siteConfig } from "@/config/site"
 import { PostNotFoundError } from "@/lib/exceptions"
 import useGetPost from "@/hooks/api/post/get-post"
 import useUserStore from "@/hooks/state/user/store"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import ContactButton from "@/components/customized-ui/buttons/contact"
 import ProfileCard from "@/components/customized-ui/cards/profile"
@@ -30,10 +34,12 @@ interface ReferralPostDetailsPageProps {
 const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   ReferralPostDetailsPageProps
 > = ({ postUuid }) => {
+  const t = useI18n()
   const { data: post, isLoading, isSuccess } = useGetPost(postUuid)
   const userUuid = useUserStore((state) => state.uuid)
   const isViewingOwnProfile = post?.created_by === userUuid
   const isOpen = post?.status === EPostStatus.ACTIVE
+  const locale = useCurrentLocale()
 
   return (
     <PageStatusLayout
@@ -41,6 +47,12 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
       isLoading={isLoading}
       isSuccess={isSuccess}
     >
+      <Link href={siteConfig.page.referrerPost.href}>
+        <p className="gap my-4 flex flex-row items-center text-sm text-muted-foreground">
+          <Icons.smallArrowLeft className="text-sm" />{" "}
+          <span>{t("post.back_to_post_page")}</span>
+        </p>
+      </Link>
       {post && (
         <div className="mt-5 flex h-full w-full flex-col md:mt-0">
           <div className="my-0 mb-5 flex flex-col justify-between gap-4 md:my-5 md:flex-row">
@@ -76,15 +88,31 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
               <div className="text-sm">
                 {(post.city || post.province || post.country) && (
                   <LocationDisplay
-                    city={post.city?.cantonese_name || null}
-                    province={post.province?.cantonese_name || null}
-                    country={post.country?.cantonese_name || null}
+                    province={
+                      locale === "zh-hk"
+                        ? post.province && post.province.cantonese_name
+                        : post.province && post.province.english_name
+                    }
+                    country={
+                      locale === "zh-hk"
+                        ? post.country && post.country.cantonese_name
+                        : post.country && post.country.english_name
+                    }
+                    city={
+                      locale === "zh-hk"
+                        ? post.city && post.city.cantonese_name
+                        : post.city && post.city.english_name
+                    }
                     className="xs:max-w-full mb-2 max-w-sm"
                   />
                 )}
                 {post.industry && (
                   <IndustryDisplay
-                    industry={post.industry.cantonese_name}
+                    industry={
+                      locale === "zh-hk"
+                        ? post.industry && post.industry.cantonese_name
+                        : post.industry && post.industry.english_name
+                    }
                     className="xs:max-w-full mb-2 max-w-xs"
                   />
                 )}
@@ -106,7 +134,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                   href={`${siteConfig.page.editPost.href}/${postUuid}`}
                 >
                   <Icons.pencil className="mr-1 h-4 w-4" />
-                  編輯街招
+                  {t("post.edit_post")}
                 </Link>
               )}
               {!isViewingOwnProfile && isOpen && (

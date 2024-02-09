@@ -1,12 +1,15 @@
 import {
+  ArrowLeft,
   Briefcase,
   Building2,
   CalendarClock,
   CheckCircle2,
   ChevronDown,
+  ChevronLeft,
   ClipboardCheck,
   ClipboardX,
   Clock,
+  Dot,
   Eye,
   EyeOff,
   Github,
@@ -19,22 +22,30 @@ import {
   LucideProps,
   Mail,
   MapPin,
+  Menu,
+  MessageSquareMore,
   Moon,
   MoreVertical,
   Pencil,
+  PersonStanding,
   RotateCcw,
+  Send,
+  SendHorizontal,
   SlidersHorizontal,
   SunMedium,
   Twitter,
   Undo2,
   User,
   Verified,
-  type Icon as LucideIcon,
+  type XIcon as LucideIcon,
 } from "lucide-react"
 
-export type Icon = LucideIcon
+export type Icon = typeof LucideIcon
 
 export const Icons = {
+  arrowLeft: ArrowLeft,
+  briefcase: Briefcase,
+  messageSquareMore: MessageSquareMore,
   sun: SunMedium,
   moon: Moon,
   twitter: Twitter,
@@ -43,10 +54,12 @@ export const Icons = {
   laptop: Laptop,
   mail: Mail,
   pencil: Pencil,
+  personStanding: PersonStanding,
   loader: Loader,
   undo: Undo2,
   moreVertical: MoreVertical,
   chevronDown: ChevronDown,
+  chevronLeft: ChevronLeft,
   checkCircle: CheckCircle2,
   instagram: Instagram,
   github: Github,
@@ -56,6 +69,55 @@ export const Icons = {
   history: History,
   eye: Eye,
   eyeOff: EyeOff,
+  smallArrowLeft: (props: LucideProps) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      className="lucide lucide-arrow-left"
+      {...props}
+    >
+      <path d="m12 19-7-7 7-7" />
+      <path d="M19 12H5" />
+    </svg>
+  ),
+  sendHorizontal: SendHorizontal,
+  send: Send,
+  dot: Dot,
+  bigDot: (props: LucideProps) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="36"
+      height="36"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      {...props}
+    >
+      <circle cx="12.1" cy="12.1" r="1" />
+    </svg>
+  ),
+  unseenDot: (props: LucideProps) => (
+    <svg
+      width="6"
+      height="6"
+      viewBox="0 0 6 6"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <circle cx="3" cy="3" r="3" fill="#FBBF24" />
+    </svg>
+  ),
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path
@@ -98,4 +160,62 @@ export const Icons = {
   verified: Verified,
   deactivatePost: ClipboardX,
   activatePost: ClipboardCheck,
+  menu: Menu,
+  people: (props: LucideProps) => (
+    <svg
+      width="20"
+      height="14"
+      viewBox="0 0 20 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M6 7C7.93437 7 9.5 5.43437 9.5 3.5C9.5 1.56562 7.93437 0 6 0C4.06563 0 2.5 1.56562 2.5 3.5C2.5 5.43437 4.06563 7 6 7ZM8.4 8H8.14062C7.49062 8.3125 6.76875 8.5 6 8.5C5.23125 8.5 4.5125 8.3125 3.85938 8H3.6C1.6125 8 0 9.6125 0 11.6V12.5C0 13.3281 0.671875 14 1.5 14H10.5C11.3281 14 12 13.3281 12 12.5V11.6C12 9.6125 10.3875 8 8.4 8ZM15 7C16.6562 7 18 5.65625 18 4C18 2.34375 16.6562 1 15 1C13.3438 1 12 2.34375 12 4C12 5.65625 13.3438 7 15 7ZM16.5 8H16.3813C15.9469 8.15 15.4875 8.25 15 8.25C14.5125 8.25 14.0531 8.15 13.6187 8H13.5C12.8625 8 12.275 8.18437 11.7594 8.48125C12.5219 9.30312 13 10.3938 13 11.6V12.8C13 12.8688 12.9844 12.9344 12.9812 13H18.5C19.3281 13 20 12.3281 20 11.5C20 9.56563 18.4344 8 16.5 8Z"
+        fill="currentColor"
+      />
+    </svg>
+  ),
+  work: (props: LucideProps) => (
+    <svg
+      width="18"
+      height="16"
+      viewBox="0 0 18 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M11.0454 10.4432C11.0454 10.7257 10.8166 10.9546 10.534 10.9546H7.46584C7.18331 10.9546 6.95448 10.7257 6.95448 10.4432V8.9091H0.818115V13.5114C0.818115 14.3296 1.53402 15.0455 2.35221 15.0455H15.6477C16.4658 15.0455 17.1818 14.3296 17.1818 13.5114V8.9091H11.0454V10.4432ZM15.6477 3.79546H13.0908V2.26137C13.0908 1.44319 12.3749 0.72728 11.5568 0.72728H6.44312C5.62493 0.72728 4.90902 1.44319 4.90902 2.26137V3.79546H2.35221C1.53402 3.79546 0.818115 4.51137 0.818115 5.32955V7.88637H17.1818V5.32955C17.1818 4.51137 16.4658 3.79546 15.6477 3.79546ZM11.0454 3.79546H6.95448V2.77273H11.0454V3.79546Z"
+        fill="currentColor"
+      />
+    </svg>
+  ),
+  chat: (props: LucideProps) => (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M15.5454 0.818184H2.45448C1.55448 0.818184 0.818115 1.55455 0.818115 2.45455V17.1818L4.09084 13.9091H15.5454C16.4454 13.9091 17.1818 13.1727 17.1818 12.2727V2.45455C17.1818 1.55455 16.4454 0.818184 15.5454 0.818184ZM6.54539 8.18182H4.90902V6.54546H6.54539V8.18182ZM9.81812 8.18182H8.18175V6.54546H9.81812V8.18182ZM13.0908 8.18182H11.4545V6.54546H13.0908V8.18182Z"
+        fill="currentColor"
+      />
+    </svg>
+  ),
+  conversation: () => (
+    <svg
+      width="90"
+      height="73"
+      viewBox="0 0 90 73"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="fill-gray-200 dark:fill-[#1E293B]"
+    >
+      <path d="M8.18182 36.5C3.68182 36.5 0 32.85 0 28.3889V8.11111C0 3.65 3.68182 0 8.18182 0H40.9091C45.4091 0 49.0909 3.65 49.0909 8.11111V28.3889C49.0909 32.85 45.4091 36.5 40.9091 36.5H32.7273V48.6667L20.4545 36.5H8.18182ZM81.8182 60.8333C86.3182 60.8333 90 57.1833 90 52.7222V32.4444C90 27.9833 86.3182 24.3333 81.8182 24.3333H57.2727V28.3889C57.2727 37.3111 49.9091 44.6111 40.9091 44.6111V52.7222C40.9091 57.1833 44.5909 60.8333 49.0909 60.8333H57.2727V73L69.5455 60.8333H81.8182Z" />
+    </svg>
+  ),
 }

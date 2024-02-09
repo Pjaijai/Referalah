@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "next/link"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { siteConfig } from "@/config/site"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -18,20 +19,25 @@ interface IUserSignInDialogProps {
 }
 
 const UserSignInDialog = ({ open, onDialogClose }: IUserSignInDialogProps) => {
+  const t = useI18n()
   return (
     <Dialog open={open}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>未登入</DialogTitle>
-          <DialogDescription>要登入咗先可以聯絡對方。</DialogDescription>
+          <DialogTitle>
+            {t("referral.user_not_sing_in_dialog.title")}
+          </DialogTitle>
+          <DialogDescription>
+            {t("referral.user_not_sing_in_dialog.description")}
+          </DialogDescription>
         </DialogHeader>
 
         <DialogFooter className="mt-4 flex gap-2">
           <Button onClick={onDialogClose} variant={"ghost"}>
-            下次先
+            {t("referral.user_not_sing_in_dialog.cancel")}
           </Button>
           <Link href={siteConfig.page.signIn.href} className={buttonVariants()}>
-            登入/註冊
+            {t("general.sign_in")}
           </Link>
         </DialogFooter>
       </DialogContent>

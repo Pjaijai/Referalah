@@ -2,9 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react"
 import { StaticImport } from "next/dist/shared/lib/get-img-props"
-import { conditionalValidation } from "@/modules/profile/form/validation.ts/conditional"
-import { maximumWordValidation } from "@/modules/profile/form/validation.ts/max-word"
-import { nameValidation } from "@/modules/profile/form/validation.ts/name"
+import { useI18n } from "@/utils/services/internationalization/client"
 import { supabase } from "@/utils/services/supabase/config"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -68,33 +66,62 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   setIsEditMode,
   refetchProfile,
 }) => {
+  const t = useI18n()
+
   const formSchema = z
     .object({
       photoUrl: z.any().optional(),
       resumeUrl: z.any().optional(),
-      username: nameValidation(20).min(1, {
-        message: `至少有要1粒字`,
-      }),
-      company: conditionalValidation(30).optional(),
-      jobTitle: conditionalValidation(30).optional(),
-      socialMediaUrl: maximumWordValidation(20000)
+      username: z
+        .string()
+        .max(20, {
+          message: t("validation.text.maximum_length", { count: 20 }),
+        })
+        .min(1, {
+          message: t("validation.text.minimum_length", { count: 1 }),
+        })
+        .refine((value) => !/\s/.test(value), {
+          message: t("validation.text.no_white_space"),
+        }),
+      company: z
+        .string()
+        .max(30, {
+          message: t("validation.text.maximum_length", { count: 30 }),
+        })
+        .optional(),
+      jobTitle: z
+        .string()
+        .max(30, {
+          message: t("validation.text.maximum_length", { count: 30 }),
+        })
+        .optional(),
+      socialMediaUrl: z
+        .string()
+        .max(20000, {
+          message: t("validation.text.maximum_length", { count: 20000 }),
+        })
         .url({
-          message: "無效連結",
+          message: t("validation.link.not_valid"),
         })
         .optional()
         .or(z.literal("")),
-      description: conditionalValidation(3000).optional(),
+      description: z
+        .string()
+        .max(3000, {
+          message: t("validation.text.maximum_length", { count: 3000 }),
+        })
+        .optional(),
       countryUuid: z.string().min(1, {
-        message: `幫手填下🙏🏻`,
+        message: t("validation.field_required"),
       }),
       provinceUuid: z.string().min(1, {
-        message: `幫手填下🙏🏻`,
+        message: t("validation.field_required"),
       }),
       cityUuid: z.string().min(1, {
-        message: `幫手填下🙏🏻`,
+        message: t("validation.field_required"),
       }),
       industryUuid: z.string().min(1, {
-        message: `幫手填下🙏🏻`,
+        message: t("validation.field_required"),
       }),
       yearOfExperience: z
         .string()
@@ -110,7 +137,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             // Check if it's a valid number and falls within the range 1 to 100
           },
           {
-            message: "必須喺0到100之間，如果唔夠用請聯絡我🙇🏻‍♂️", // Specify the custom error message here
+            message: t("validation.year_of_experience.exceed_range"), // Specify the custom error message here
           }
         ),
       isReferer: z.boolean(),
@@ -118,14 +145,14 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     })
     .refine((schema) => (schema.isReferer ? schema.company : true), {
       path: ["company"],
-      message: "如果想成為推薦人，請填一填",
+      message: t("profile.is_referrer.required"),
     })
     .refine(
       (schema) =>
         schema.isReferer || schema.isReferee ? schema.jobTitle : true,
       {
         path: ["jobTitle"],
-        message: "如果想成為推薦人/受薦人，請填一填",
+        message: t("profile.is_referrer_or_referee.required"),
       }
     )
     .refine(
@@ -133,7 +160,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         schema.isReferer || schema.isReferee ? schema.description : true,
       {
         path: ["description"],
-        message: "如果想成為推薦人/受薦人，請填一填",
+        message: t("profile.is_referrer_or_referee.required"),
       }
     )
     .refine(
@@ -141,7 +168,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         schema.isReferer || schema.isReferee ? schema.yearOfExperience : true,
       {
         path: ["yearOfExperience"],
-        message: "如果想成為推薦人/受薦人，請填一填",
+        message: t("profile.is_referrer_or_referee.required"),
       }
     )
 
@@ -246,8 +273,8 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
 
         if (error) {
           return toast({
-            title: "上載嘜頭時出錯！",
-            description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+            title: t("profile.avatar_create_failed"),
+            description: t("general.error.description"),
           })
         }
         const { data: imageUrl } = await supabase.storage
@@ -278,7 +305,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       updateProfile(updateUserRequest, {
         onSuccess: () => {
           toast({
-            title: "個人檔案更改成功!",
+            title: t("profile.edit.success"),
           })
           setIsEditMode(false)
           refetchProfile()
@@ -288,16 +315,16 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         },
         onError: () => {
           return toast({
-            title: "出事！",
-            description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+            title: t("general.error.title"),
+            description: t("general.error.description"),
             variant: "destructive",
           })
         },
       })
     } catch (err) {
       return toast({
-        title: "出事！",
-        description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+        title: t("general.error.title"),
+        description: t("general.error.description"),
       })
     }
   }
@@ -334,7 +361,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
               className=" gap-2"
             >
               <Icons.undo />
-              返回
+              {t("general.back")}
             </Button>
           </div>
 
@@ -359,98 +386,98 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           </div>
 
           <FormFileUpload
-            label="你嘅嘜頭"
+            label={t("profile.form.avatar_label")}
             accept=".jpg, .jpeg, .png"
             onChange={handleProfileImageChange}
-            description="食到JPG，JPEG，PNG，最多1MB。"
+            description={t("profile.form.avatar_description")}
           />
 
           <div className="mt-4   flex w-full flex-col items-center justify-center gap-4 sm:flex-row">
             <div className="w-full">
               <FormCheckBox
                 control={form.control}
-                label="推薦人"
+                label={t("general.referrer")}
                 name="isReferer"
-                description="你嘅資料會被公開（Email不會)，如果有人想入你間公司，就可以搵你幫手🙏🏻"
+                description={t("profile.form.is_referrer_description")}
               />
             </div>
 
             <div className="w-full">
               <FormCheckBox
                 control={form.control}
-                label="受薦人"
+                label={t("general.talent")}
                 name="isReferee"
-                description="你嘅資料會被公開（Email不會)，如果有人想招你入佢間公司，就可以搵你，祝一切順利！"
+                description={t("profile.form.is_referee_description")}
               />
             </div>
           </div>
 
           <FormTextInput
             control={form.control}
-            label="用戶名稱"
+            label={t("auth.form.username_label")}
             name="username"
           />
 
           <FormTextArea
             control={form.control}
-            label="個人簡介"
+            label={t("profile.form.personal_description_label")}
             name="description"
-            description="可以簡介吓你嘅經歷，你當簡單版Resume。"
           />
 
           <FormTextInput
             control={form.control}
-            label="公司名(選填)"
+            label={t("profile.form.optional_company_label")}
             name="company"
           />
 
           <FormTextInput
             control={form.control}
-            label="職位名/工作名稱"
+            label={t("profile.form.job_title_label")}
             name="jobTitle"
-            description="呢度寫翻你個Title，如果搵工就寫翻自己想搵乜工，方便人Search到你。"
           />
 
           <FormNumberInput
             control={form.control}
-            label="工作年資"
+            label={t("general.year_of_experience")}
             name="yearOfExperience"
           />
 
           <FormSelect
             options={industryOptions}
             control={form.control}
-            label="行業"
+            label={t("general.industry")}
             name="industryUuid"
           />
           <FormSelect
             options={countryOptions}
             control={form.control}
-            label="國家"
+            label={t("general.country")}
             name="countryUuid"
           />
           <FormSelect
             control={form.control}
-            label="省份"
+            label={t("general.province")}
             name="provinceUuid"
             options={provinceOptions}
           />
 
           <FormSelect
             control={form.control}
-            label="城市"
+            label={t("general.city")}
             name="cityUuid"
             options={cityOptions}
           />
           <FormTextInput
             control={form.control}
-            label="個人連結(選填)"
+            label={t("profile.form.optional_personal_social_media_link_label")}
             name="socialMediaUrl"
-            description="可以放你LinkedIn/個人網站/Portfolio。"
+            description={t(
+              "profile.form.personal_social_media_link_description"
+            )}
           />
 
           <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "請等等" : "提交"}
+            {isSubmitting ? t("general.wait") : t("form.general.submit")}
           </Button>
         </form>
       </Form>

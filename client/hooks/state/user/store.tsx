@@ -5,6 +5,7 @@ interface IUserState {
   isSignIn: boolean
   uuid: null | string
   photoUrl: string | null
+  hasConversationUnseen: boolean
   setUser: ({
     username,
     uuid,
@@ -15,12 +16,14 @@ interface IUserState {
     photoUrl: string | null
   }) => void
   reSetUser: () => void
+  setConversationSeen: (hasUnseen: boolean) => void
 }
 const useUserStore = create<IUserState>((set) => ({
   username: null,
   isSignIn: false,
   uuid: null,
   photoUrl: null,
+  hasConversationUnseen: false,
   reSetUser: () => {
     set(() => ({
       username: null,
@@ -35,6 +38,13 @@ const useUserStore = create<IUserState>((set) => ({
       isSignIn: true,
       uuid,
       photoUrl,
+      hasConversationUnseen: false,
+    })),
+
+  setConversationSeen: (hasUnseen) =>
+    set((state) => ({
+      ...state,
+      hasConversationUnseen: hasUnseen,
     })),
 }))
 

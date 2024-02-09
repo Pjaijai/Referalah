@@ -1,6 +1,5 @@
 import React, { ChangeEvent } from "react"
-import { postSortingOptions } from "@/utils/common/sorting/post"
-import { referralSortingOptions } from "@/utils/common/sorting/referer"
+import { useI18n } from "@/utils/services/internationalization/client"
 import { Label } from "@radix-ui/react-label"
 
 import { EMessageType } from "@/types/common/message-type"
@@ -8,6 +7,8 @@ import useCityOptions from "@/hooks/common/options/city-options"
 import useCountryOptions from "@/hooks/common/options/country-options"
 import useIndustryOptions from "@/hooks/common/options/industry-options"
 import useProvinceOptions from "@/hooks/common/options/province-options"
+import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
+import useReferralSortOptions from "@/hooks/common/sort/referral-sort-options"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -58,10 +59,13 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
   currentSorting,
   type,
 }) => {
+  const t = useI18n()
   const industryOptions = useIndustryOptions()
   const countryOptions = useCountryOptions()
   const provinceOptions = useProvinceOptions(countryUuid)
   const cityOptions = useCityOptions(provinceUuid)
+  const { data: postSortingOptions } = usePostSortOptions()
+  const { data: referralSortingOptions } = useReferralSortOptions()
 
   return (
     <Popover>
@@ -73,7 +77,7 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
       <PopoverContent className="w-80">
         <div className="grid gap-2">
           <div className="grid grid-cols-3 items-center gap-4">
-            <Label>排列</Label>
+            <Label>{t("general.sorting")}</Label>
             <BaseSelect
               options={
                 type === "referral"
@@ -92,24 +96,24 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
 
           <div className="grid gap-2">
             <div className="grid grid-cols-3 items-center gap-4">
-              <Label>年資</Label>
+              <Label>{t("search.year_of_experience_label")}</Label>
               {/* <div className="grid grid-cols-3 items-center gap-4"> */}
               <Input
                 type="number"
                 onChange={onMinYearOfExperienceChange}
                 value={currentMinYearOfExperience}
-                placeholder="下限"
+                placeholder={t("search.minimum_year_of_experience_label")}
               />
 
               <Input
                 type="number"
                 onChange={onMaxYearOfExperienceChange}
                 value={currentMaxYearOfExperience}
-                placeholder="上限"
+                placeholder={t("search.maximum_year_of_experience_label")}
               />
             </div>
             <div className="grid grid-cols-3 items-center gap-4">
-              <Label>國家</Label>
+              <Label>{t("general.country")}</Label>
               <BaseSelect
                 options={countryOptions}
                 onChange={onCountryChange}
@@ -117,7 +121,7 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
               />
             </div>
             <div className="grid grid-cols-3 items-center gap-4">
-              <Label>省份</Label>
+              <Label>{t("general.province")}</Label>
               <BaseSelect
                 options={provinceOptions}
                 onChange={onProvinceChange}
@@ -125,7 +129,7 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
               />
             </div>
             <div className="grid grid-cols-3 items-center gap-4">
-              <Label>城市</Label>
+              <Label>{t("general.city")}</Label>
               <BaseSelect
                 options={cityOptions}
                 onChange={onCityChange}
@@ -133,7 +137,7 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
               />
             </div>
             <div className="grid grid-cols-3 items-center gap-4">
-              <Label>行業</Label>
+              <Label>{t("general.industry")}</Label>
               <BaseSelect
                 options={industryOptions}
                 onChange={onIndustryChange}

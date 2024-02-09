@@ -1,7 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { searchReferral } from "@/utils/common/api"
-import { referralSortingOptions } from "@/utils/common/sorting/referer"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { EQueryKeyString } from "@/types/common/query-key-string"
@@ -10,6 +9,7 @@ import useIndustryOptions from "@/hooks/api/industry/get-Industry-list"
 import useGetCityList from "@/hooks/api/location/get-city-list"
 import useGetCountryList from "@/hooks/api/location/get-country-list"
 import useGetProvinceList from "@/hooks/api/location/get-province-list"
+import useReferralSortOptions from "@/hooks/common/sort/referral-sort-options"
 
 const useSearchReferral = (type: EReferralType) => {
   const { data: countryData, isLoading: isCountryDataLoading } =
@@ -19,6 +19,7 @@ const useSearchReferral = (type: EReferralType) => {
   const { data: cityData, isLoading: isCityDataLoading } = useGetCityList()
   const { data: industryData, isLoading: isIndustryDataLoading } =
     useIndustryOptions()
+  const { data: referralSortingOptions } = useReferralSortOptions()
 
   const keyString =
     type === EReferralType.REFEREE

@@ -4,7 +4,7 @@ import React, { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { EEmaiVerification } from "@/modules/auth/types/email-verification"
-import { signUpFormSchema } from "@/modules/auth/validations/sign-up"
+import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -21,9 +21,35 @@ import HighlightedLink from "@/components/customized-ui/links/highlighted"
 interface ISignUpFormProps {}
 
 const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
+  const t = useI18n()
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+
+  const passwordSchema = z
+    .string()
+    .min(8, { message: t("validation.text.minimum_length", { count: 8 }) })
+    .max(20, { message: t("validation.text.maximum_length", { count: 20 }) })
+  const signUpFormSchema = z
+    .object({
+      email: z.string().email(t("validation.email.email_format_not_right")),
+      username: z
+        .string()
+        .min(1, { message: t("validation.text.minimum_length", { count: 1 }) })
+        .max(20, {
+          message: t("validation.text.maximum_length", { count: 20 }),
+        })
+        .refine((value) => !/\s/.test(value), {
+          message: t("validation.text.no_white_space"),
+        }),
+      password: passwordSchema,
+      confirmPassword: passwordSchema,
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: t("validation.confirm_password.not_match_with_password"),
+      path: ["confirmPassword"],
+    })
+
   const form = useForm<z.infer<typeof signUpFormSchema>>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
@@ -46,7 +72,7 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
       {
         onSuccess: (res) => {
           toast({
-            title: "註冊成功！",
+            title: t("auth.sign_up.submit.success_message"),
           })
           const queryString = new URLSearchParams({
             type: EEmaiVerification.EMAIL_PASSWORD_SIGN_UP,
@@ -60,7 +86,7 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
         onError: (error: any) => {
           if (error.message.includes("User already registered")) {
             return toast({
-              title: "此電郵已被其他人使用",
+              title: t("auth.sign_up.email_duplication_error_message"),
               variant: "destructive",
             })
           }
@@ -70,14 +96,14 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
             )
           ) {
             return toast({
-              title: "此用戶名稱已被其他人使用",
+              title: t("auth.sign_up.username_duplication_error_message"),
               variant: "destructive",
             })
           }
 
           return toast({
-            title: "出事！",
-            description: "好似有啲錯誤，如果試多幾次都係咁，請聯絡我🙏🏻",
+            title: t("general.error.title"),
+            description: t("general.error.description"),
             variant: "destructive",
           })
         },
@@ -94,55 +120,51 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex w-full flex-col gap-8"
       >
-        <FormTextInput control={form.control} label="電郵" name="email" />
         <FormTextInput
           control={form.control}
-          label="用戶名稱"
+          label={t("auth.form.email_label")}
+          name="email"
+        />
+        <FormTextInput
+          control={form.control}
+          label={t("auth.form.username_label")}
           name="username"
-          description="註冊後可以更改"
+          description={t("auth.form.username_description")}
         />
         <FormPasswordInput
           control={form.control}
-          label="密碼"
+          label={t("auth.form.password_label")}
           name="password"
-          description="密碼必須為8至20字元之間"
+          description={t("form.general.password_description")}
         />
         <FormPasswordInput
           control={form.control}
-          label="入多次密碼"
+          label={t("auth.form.confirm_password_label")}
           name="confirmPassword"
         />
         <p className="text-xs text-muted-foreground">
-          點擊「註冊 | Register」按鈕即表示你同意
+          {t("auth.sign_up.click_to_agree_text")}
           <HighlightedLink href={siteConfig.page.privacyPolicy.href}>
-            私隱政策
+            {t("auth.sign_up.privacy_policy")}
           </HighlightedLink>
-          及
+          {t("auth.sign_up.and")}
           <HighlightedLink href={siteConfig.page.termsAndConditions.href}>
-            服務條款
+            {t("auth.sign_up.terms_and_conditions")}
           </HighlightedLink>
-          。<br />
-          By clicking the &quot;註冊 | Register&quot; button, you agree to the{" "}
-          <HighlightedLink href={siteConfig.page.privacyPolicy.href}>
-            Privacy Policy
-          </HighlightedLink>
-          {""} and {""}
-          <HighlightedLink href={siteConfig.page.termsAndConditions.href}>
-            Terms and Conditions
-          </HighlightedLink>
-          .
         </p>
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? "等等" : "註冊 | Register"}
+          {isLoading
+            ? t("general.wait")
+            : t("auth.sign_up.confirm_button_title")}
         </Button>
       </form>
-      <p className="mt-4 w-full text-center  font-normal ">
-        已有帳號？係
+      <p className="mt-4 flex w-full flex-row items-center justify-center gap-1 text-center  font-normal ">
+        {t("auth.sign_up.redirect_to_sign_up")}
         <Link
           href={siteConfig.page.signIn.href}
           className="border-b border-foreground"
         >
-          呢度登入
+          {t("auth.form.sign_up.redirect_to_sign_up.redirect_to_sign_up")}
         </Link>
       </p>
     </Form>
