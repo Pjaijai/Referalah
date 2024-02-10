@@ -34,7 +34,6 @@ const ProfileCard: React.FunctionComponent<IProfileCardProps> = ({
           className
         )}
       >
-        <span className="mb-2 text-xs text-muted-foreground"></span>
         <div className="flex items-center justify-between gap-0 md:flex-col md:items-start md:gap-2">
           <div className="flex items-center">
             <BaseAvatar
