@@ -1,9 +1,8 @@
 import "@/styles/globals.css"
 import { Metadata } from "next"
-import { cookies } from "next/headers"
 import { I18nProviderClient } from "@/utils/services/internationalization/client"
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
@@ -53,21 +52,10 @@ interface RootLayoutProps {
   params: { locale: string }
 }
 
-// do not cache this layout
-export const revalidate = 0
-
 export default async function RootLayout({
   children,
   params: { locale },
 }: RootLayoutProps) {
-  const supabase = createServerComponentClient({ cookies })
-
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
-
-  const accessToken = session?.access_token || null
-
   return (
     <html lang={locale} suppressHydrationWarning>
       <head />
@@ -82,7 +70,7 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <APIProvider>
             <I18nProviderClient locale={locale}>
-              <AuthProvider accessToken={accessToken}>
+              <AuthProvider>
                 <ChatProvider>
                   <ToastProvider>
                     <div className="flex min-h-screen flex-col">
@@ -93,6 +81,7 @@ export default async function RootLayout({
                       <NavFooter />
                     </div>
                     <Analytics />
+                    <SpeedInsights />
                     <TailwindIndicator />
                   </ToastProvider>
                 </ChatProvider>

@@ -1,3 +1,4 @@
+// local api url ip address is : 172.17.0.1
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
 import { corsHeaders, ENV_IS_LOCAL } from "../_shared/cors.ts"
 import { initSupabaseServer } from "../_shared/server.ts"
@@ -5,6 +6,13 @@ import { sendEmail } from "../_shared/modules/notification/email/send-email.ts"
 import Bottleneck from "npm:bottleneck@2.19.5"
 
 const WEB_BASE_URL = Deno.env.get("WEB_BASE_URL")
+
+interface IUnSeenConversation {
+  email: string
+  username: string
+  unseenList: { username: string; body: string }[]
+}
+
 serve(async (req: any) => {
   try {
     console.log(
@@ -34,7 +42,7 @@ serve(async (req: any) => {
       maxConcurrent: 1,
     })
 
-    const resp: any[] = await Promise.all(
+    const list: (IUnSeenConversation | undefined)[] = await Promise.all(
       users.map(async (user) => {
         const { data: conversations, error } = await server
           .from("conversation")
@@ -84,7 +92,19 @@ serve(async (req: any) => {
         }
 
         if (unseenConversationList.length === 0) return undefined
-        const count = unseenConversationList.length
+        return {
+          email: user.email,
+          username: user.username,
+          unseenList: unseenConversationList,
+        }
+      }),
+    )
+
+    const filteredList = list.filter((l): l is IUnSeenConversation => !!l)
+
+    const result = await Promise.all(
+      filteredList.map(async (data) => {
+        const count = data?.unseenList.length
 
         const subject = `You ${
           count === 1 ? "has" : "have"
@@ -97,7 +117,7 @@ serve(async (req: any) => {
         <body>
         <div style="text-align: center; max-width: 400px; margin: 0 auto; padding: 20px; background-color: #f4f4f4; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
         <p style="margin-bottom: 8px; font-size: 18px; color: #333;">Hi ${
-          user.username
+          data?.username
         }!</p>
         <p style="margin-bottom: 8px; font-size: 16px; color: #555;">You ${
           count === 1 ? "has" : "have"
@@ -107,10 +127,8 @@ serve(async (req: any) => {
         <p style="margin-bottom: 8px; font-size: 16px; color: #555;">Please click the link below to continue the conversation:</p>
         <a href="${WEB_BASE_URL}/en-ca/chat" style="display: inline-block; text-decoration: none; color: #007bff; font-weight: bold; font-size: 16px;">${WEB_BASE_URL}/en-ca/chat</a>
     </div>
-    
-      
-        
-          ${unseenConversationList
+
+          ${data?.unseenList
             .map(
               (con) => `
               <div style="width: 100%; display: flex; justify-content: center; margin-top: 2rem;">
@@ -127,40 +145,42 @@ serve(async (req: any) => {
           `,
             )
             .join("")}
-        
+
         </body>
       </html>
         `
-
-        const result: {
+        let emailResult: {
           success?: boolean
           to: string
           time: string
-          user_uuid: string
-        }[] = []
+        } = {
+          success: false,
+          to: "",
+          time: "",
+        }
+
         await limiter
           .schedule(() =>
             sendEmail({
               subject,
               body: body,
-              to: ENV_IS_LOCAL ? Deno.env.get("RESEND_TO_EMAIL") : user.email,
+              to: ENV_IS_LOCAL ? Deno.env.get("RESEND_TO_EMAIL") : data.email,
             }),
           )
           .then((res) => {
-            result.push({
+            emailResult = {
               success: res?.ok,
-              to: user.email,
+              to: data?.email,
               time: new Date().toISOString(),
-              user_uuid: user.uuid,
-            })
+            }
           })
 
-        return result
+        return emailResult
       }),
     )
 
-    const filteredResp = resp.filter((r) => r)
-    return new Response(JSON.stringify(filteredResp), {
+    // const filteredResp = resp.filter((r) => r)
+    return new Response(JSON.stringify(result), {
       headers: { ...corsHeaders, "Content-Type": "application/json" }, // Be sure to add CORS headers here too
       status: 200,
     })

@@ -3,22 +3,24 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { searchReferral } from "@/utils/common/api"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
+import { ICityResponse } from "@/types/api/response/city"
+import { ICountryResponse } from "@/types/api/response/country"
+import { IIndustryResponse } from "@/types/api/response/industry"
+import { IProvinceResponse } from "@/types/api/response/province"
 import { EQueryKeyString } from "@/types/common/query-key-string"
 import { EReferralType } from "@/types/common/referral-type"
-import useIndustryOptions from "@/hooks/api/industry/get-Industry-list"
-import useGetCityList from "@/hooks/api/location/get-city-list"
-import useGetCountryList from "@/hooks/api/location/get-country-list"
-import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import useReferralSortOptions from "@/hooks/common/sort/referral-sort-options"
 
-const useSearchReferral = (type: EReferralType) => {
-  const { data: countryData, isLoading: isCountryDataLoading } =
-    useGetCountryList()
-  const { data: provinceData, isLoading: isProvinceDataLoading } =
-    useGetProvinceList()
-  const { data: cityData, isLoading: isCityDataLoading } = useGetCityList()
-  const { data: industryData, isLoading: isIndustryDataLoading } =
-    useIndustryOptions()
+interface ISearchReferralProps {
+  type: EReferralType
+  countryList: ICountryResponse[]
+  provinceList: IProvinceResponse[]
+  cityList: ICityResponse[]
+  industryList: IIndustryResponse[]
+}
+
+const useSearchReferral = (props: ISearchReferralProps) => {
+  const { type, countryList, provinceList, cityList, industryList } = props
   const { data: referralSortingOptions } = useReferralSortOptions()
 
   const keyString =
@@ -30,15 +32,15 @@ const useSearchReferral = (type: EReferralType) => {
     (meta: "country" | "industry" | "province" | "city", value?: string) => {
       if (!value) return undefined
       if (meta === "country")
-        return countryData?.find((item) => item.value === value)?.uuid
+        return countryList.find((item) => item.value === value)?.uuid
       if (meta === "province")
-        return provinceData?.find((item) => item.value === value)?.uuid
+        return provinceList?.find((item) => item.value === value)?.uuid
       if (meta === "city")
-        return cityData?.find((item) => item.value === value)?.uuid
+        return cityList?.find((item) => item.value === value)?.uuid
       if (meta === "industry")
-        return industryData?.find((item) => item.value === value)?.uuid
+        return industryList?.find((item) => item.value === value)?.uuid
     },
-    [cityData, countryData, industryData, provinceData]
+    [industryList, countryList, provinceList, cityList]
   )
 
   const router = useRouter()
@@ -90,14 +92,14 @@ const useSearchReferral = (type: EReferralType) => {
     setCountryUuid(value)
     createQueryString(
       "country",
-      countryData?.find((item) => item.uuid === value)?.value ?? value
+      countryList.find((item) => item.uuid === value)?.value ?? value
     )
   }
   const handleProvinceChange = (value: string) => {
     setProvinceUuid(value)
     createQueryString(
       "province",
-      provinceData?.find((item) => item.uuid === value)?.value ?? value
+      provinceList.find((item) => item.uuid === value)?.value ?? value
     )
   }
   const handleCityChange = (value: string) => {
@@ -105,7 +107,7 @@ const useSearchReferral = (type: EReferralType) => {
 
     createQueryString(
       "city",
-      cityData?.find((item) => item.uuid === value)?.value ?? value
+      cityList.find((item) => item.uuid === value)?.value ?? value
     )
   }
 
@@ -113,7 +115,7 @@ const useSearchReferral = (type: EReferralType) => {
     setIndustryUuid(value)
     createQueryString(
       "industry",
-      industryData?.find((item) => item.uuid === value)?.value ?? value
+      industryList.find((item) => item.uuid === value)?.value ?? value
     )
   }
 
@@ -197,14 +199,7 @@ const useSearchReferral = (type: EReferralType) => {
     setIndustryUuid(
       getUUid("industry", searchParams.get("industry")?.toString())
     )
-  }, [
-    isProvinceDataLoading,
-    isCountryDataLoading,
-    isCityDataLoading,
-    isIndustryDataLoading,
-    getUUid,
-    searchParams,
-  ])
+  }, [getUUid, searchParams])
 
   const filterMeta = {
     companyName: searchParams.get("company")?.toString() || "",
@@ -232,11 +227,6 @@ const useSearchReferral = (type: EReferralType) => {
     queryFn: searchReferral,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    enabled:
-      !isCountryDataLoading &&
-      !isProvinceDataLoading &&
-      !isCityDataLoading &&
-      !isIndustryDataLoading,
     getNextPageParam: (lastPage, allPages) => {
       if (Array.isArray(lastPage)) {
         return allPages.length

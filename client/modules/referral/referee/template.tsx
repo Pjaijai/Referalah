@@ -6,6 +6,10 @@ import {
   useI18n,
 } from "@/utils/services/internationalization/client"
 
+import { ICityResponse } from "@/types/api/response/city"
+import { ICountryResponse } from "@/types/api/response/country"
+import { IIndustryResponse } from "@/types/api/response/industry"
+import { IProvinceResponse } from "@/types/api/response/province"
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
 import useSearchReferral from "@/hooks/api/referral/search-referral"
@@ -17,11 +21,16 @@ import ReferralCard from "@/components/customized-ui/cards/referral"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 
-interface IRefereePageTemplateProps {}
+interface IRefereePageTemplateProps {
+  countryList: ICountryResponse[]
+  provinceList: IProvinceResponse[]
+  cityList: ICityResponse[]
+  industryList: IIndustryResponse[]
+}
 
 const RefereePageTemplate: React.FunctionComponent<
   IRefereePageTemplateProps
-> = () => {
+> = ({ cityList, countryList, industryList, provinceList }) => {
   const locale = useCurrentLocale()
   const t = useI18n()
   const {
@@ -47,7 +56,13 @@ const RefereePageTemplate: React.FunctionComponent<
     maxYearOfExperience,
     minYearOfExperience,
     sorting,
-  } = useSearchReferral(EReferralType.REFEREE)
+  } = useSearchReferral({
+    type: EReferralType.REFEREE,
+    cityList,
+    countryList,
+    industryList,
+    provinceList,
+  })
 
   const {
     data: refereeListData,
@@ -93,6 +108,10 @@ const RefereePageTemplate: React.FunctionComponent<
             currentMaxYearOfExperience={maxYearOfExperience}
             currentMinYearOfExperience={minYearOfExperience}
             type={EMessageType.REFERRAL}
+            cityList={cityList}
+            countryList={countryList}
+            industryList={industryList}
+            provinceList={provinceList}
           />
           <ResetButton onClick={handleReset} />
           <Button onClick={handleSubmitChange} className="whitespace-nowrap">
@@ -102,7 +121,7 @@ const RefereePageTemplate: React.FunctionComponent<
       </div>
       {!isRefereeListLoading && !isFetching && list.length === 0 && (
         <div className="mt-8 rounded-lg border-2 p-4 text-center">
-          {"referral.search_referee.no_data"}
+          {t("referral.search_referee.no_data")}
         </div>
       )}
 

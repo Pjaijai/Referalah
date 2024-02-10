@@ -1,19 +1,16 @@
 import { useMemo } from "react"
 
-import useGetIndustryList from "@/hooks/api/industry/get-Industry-list"
+import { IIndustryResponse } from "@/types/api/response/industry"
 import { ISelectOption } from "@/components/customized-ui/selects/base"
 
-const useIndustryOptions = () => {
-  const { data } = useGetIndustryList()
+const useIndustryOptions = (industryList: IIndustryResponse[]) => {
   return useMemo<ISelectOption[]>(
     () =>
-      Array.isArray(data)
-        ? data.map((industry) => ({
-            value: industry.uuid,
-            title: `${industry.english_name} | ${industry.cantonese_name}`,
-          }))
-        : [],
-    [data]
+      industryList.map((industry) => ({
+        value: industry.uuid,
+        title: `${industry.english_name} | ${industry.cantonese_name}`,
+      })),
+    [industryList]
   )
 }
 

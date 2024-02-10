@@ -1,37 +1,34 @@
-"use client"
-
-import React, { useEffect } from "react"
-import { useRouter } from "next/navigation"
+import React from "react"
 import EditPostPageTemplate from "@/modules/post/edit/template"
-import { useI18n } from "@/utils/services/internationalization/client"
+import {
+  getCityList,
+  getCountryList,
+  getIndustryList,
+  getProvinceList,
+} from "@/utils/common/api"
+import { getI18n } from "@/utils/services/internationalization/server"
 
-import { siteConfig } from "@/config/site"
-import useGetPost from "@/hooks/api/post/get-post"
-import useUserStore from "@/hooks/state/user/store"
 import CommonPageLayout from "@/components/layouts/common"
 
-const EditPostPage = ({ params }: { params: { postUuid: string } }) => {
-  const t = useI18n()
-  const { data: post, isLoading } = useGetPost(params.postUuid)
-  const userUuid = useUserStore((state) => state.uuid)
-  const router = useRouter()
+export const revalidate = false
+export const fetchCache = "default-cache"
 
-  // If not sign in and not viewing by same user
-  useEffect(() => {
-    if (!isLoading && post?.user?.uuid !== userUuid) {
-      router.push(siteConfig.page.main.href)
-    }
-  }, [isLoading, post, router, userUuid])
+const EditPostPage = async ({ params }: { params: { postUuid: string } }) => {
+  const t = await getI18n()
+  const countryList = await getCountryList()
+  const provinceList = await getProvinceList()
+  const cityList = await getCityList()
+  const industryList = await getIndustryList()
 
   return (
     <CommonPageLayout title={t("page.edit_post")}>
-      {!isLoading && (
-        <EditPostPageTemplate
-          postDate={post}
-          isPostDataLoading={isLoading}
-          postUuid={params.postUuid}
-        />
-      )}
+      <EditPostPageTemplate
+        postUuid={params.postUuid}
+        cityList={cityList}
+        countryList={countryList}
+        industryList={industryList}
+        provinceList={provinceList}
+      />
     </CommonPageLayout>
   )
 }

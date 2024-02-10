@@ -6,6 +6,10 @@ import {
   useI18n,
 } from "@/utils/services/internationalization/client"
 
+import { ICityResponse } from "@/types/api/response/city"
+import { ICountryResponse } from "@/types/api/response/country"
+import { IIndustryResponse } from "@/types/api/response/industry"
+import { IProvinceResponse } from "@/types/api/response/province"
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
 import useSearchPost from "@/hooks/api/post/search-post"
@@ -17,11 +21,16 @@ import ReferralPostCard from "@/components/customized-ui/cards/referral-post"
 import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 
-interface IRefererPostPageProps {}
+interface IRefererPostPageProps {
+  countryList: ICountryResponse[]
+  provinceList: IProvinceResponse[]
+  cityList: ICityResponse[]
+  industryList: IIndustryResponse[]
+}
 
 const RefererPostPageTemplate: React.FunctionComponent<
   IRefererPostPageProps
-> = () => {
+> = ({ countryList, provinceList, cityList, industryList }) => {
   const t = useI18n()
   const {
     result,
@@ -46,7 +55,13 @@ const RefererPostPageTemplate: React.FunctionComponent<
     maxYearOfExperience,
     minYearOfExperience,
     sorting,
-  } = useSearchPost(EReferralType.REFERRER)
+  } = useSearchPost({
+    type: EReferralType.REFERRER,
+    countryList,
+    provinceList,
+    cityList,
+    industryList,
+  })
   const locale = useCurrentLocale()
 
   const { data, fetchNextPage, isLoading, isFetching } = result
@@ -89,6 +104,10 @@ const RefererPostPageTemplate: React.FunctionComponent<
             currentMaxYearOfExperience={maxYearOfExperience}
             currentMinYearOfExperience={minYearOfExperience}
             type={EMessageType.POST}
+            countryList={countryList}
+            provinceList={provinceList}
+            cityList={cityList}
+            industryList={industryList}
           />
           <ResetButton onClick={handleReset} />
           <Button onClick={handleSubmitChange} className="whitespace-nowrap">
