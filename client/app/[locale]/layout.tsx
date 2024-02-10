@@ -2,6 +2,7 @@ import "@/styles/globals.css"
 import { Metadata } from "next"
 import { I18nProviderClient } from "@/utils/services/internationalization/client"
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
@@ -80,6 +81,7 @@ export default async function RootLayout({
                       <NavFooter />
                     </div>
                     <Analytics />
+                    <SpeedInsights />
                     <TailwindIndicator />
                   </ToastProvider>
                 </ChatProvider>
