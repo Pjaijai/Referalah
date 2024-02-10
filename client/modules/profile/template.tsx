@@ -9,13 +9,28 @@ import {
   useI18n,
 } from "@/utils/services/internationalization/client"
 
+import { ICityResponse } from "@/types/api/response/city"
+import { ICountryResponse } from "@/types/api/response/country"
+import { IIndustryResponse } from "@/types/api/response/industry"
+import { IProvinceResponse } from "@/types/api/response/province"
 import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
 import useUserStore from "@/hooks/state/user/store"
 import { Icons } from "@/components/icons"
 import CommonPageLayout from "@/components/layouts/common"
 
-const ProfileTemplate = ({ userUuid }: { userUuid?: string }) => {
+interface IProfileTemplateProps {
+  userUuid?: string
+  countryList: ICountryResponse[]
+  provinceList: IProvinceResponse[]
+  cityList: ICityResponse[]
+  industryList: IIndustryResponse[]
+}
+
+const ProfileTemplate: React.FunctionComponent<IProfileTemplateProps> = (
+  props
+) => {
+  const { cityList, countryList, industryList, provinceList, userUuid } = props
   const t = useI18n()
   const locale = useCurrentLocale()
   const [isEditMode, setIsEditMode] = useState(false)
@@ -111,6 +126,10 @@ const ProfileTemplate = ({ userUuid }: { userUuid?: string }) => {
             isProfileLoading={isLoading}
             setIsEditMode={setIsEditMode}
             refetchProfile={refetch}
+            countryList={countryList}
+            provinceList={provinceList}
+            cityList={cityList}
+            industryList={industryList}
           />
         )}
       </CommonPageLayout>

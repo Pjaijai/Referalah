@@ -4,12 +4,12 @@ import { searchPostApi } from "@/utils/common/api"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { IFilterMeta } from "@/types/api/request/post/filter-meta"
+import { ICityResponse } from "@/types/api/response/city"
+import { ICountryResponse } from "@/types/api/response/country"
+import { IIndustryResponse } from "@/types/api/response/industry"
+import { IProvinceResponse } from "@/types/api/response/province"
 import { EQueryKeyString } from "@/types/common/query-key-string"
 import { EReferralType } from "@/types/common/referral-type"
-import useIndustryOptions from "@/hooks/api/industry/get-Industry-list"
-import useGetCityList from "@/hooks/api/location/get-city-list"
-import useGetCountryList from "@/hooks/api/location/get-country-list"
-import useGetProvinceList from "@/hooks/api/location/get-province-list"
 import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
 
 const searchPost = ({
@@ -58,14 +58,23 @@ const searchPost = ({
   })
 }
 
-const useSearchPost = (type: EReferralType) => {
-  const { data: countryData, isLoading: isCountryDataLoading } =
-    useGetCountryList()
-  const { data: provinceData, isLoading: isProvinceDataLoading } =
-    useGetProvinceList()
-  const { data: cityData, isLoading: isCityDataLoading } = useGetCityList()
-  const { data: industryData, isLoading: isIndustryDataLoading } =
-    useIndustryOptions()
+interface ISearchPostProps {
+  type: EReferralType
+  countryList: ICountryResponse[]
+  provinceList: IProvinceResponse[]
+  cityList: ICityResponse[]
+  industryList: IIndustryResponse[]
+}
+
+const useSearchPost = (props: ISearchPostProps) => {
+  const {
+    type,
+    countryList: countryData,
+    provinceList: provinceData,
+    cityList: cityData,
+    industryList: industryData,
+  } = props
+
   const { data: postSortingOptions } = usePostSortOptions()
 
   const keyString =
@@ -244,14 +253,7 @@ const useSearchPost = (type: EReferralType) => {
     setIndustryUuid(
       getUUid("industry", searchParams.get("industry")?.toString())
     )
-  }, [
-    isProvinceDataLoading,
-    isCountryDataLoading,
-    isCityDataLoading,
-    isIndustryDataLoading,
-    getUUid,
-    searchParams,
-  ])
+  }, [getUUid, searchParams])
 
   const filterMeta = {
     companyName: searchParams.get("company")?.toString() || "",
@@ -279,11 +281,7 @@ const useSearchPost = (type: EReferralType) => {
     queryFn: searchPost,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
-    enabled:
-      !isCountryDataLoading &&
-      !isProvinceDataLoading &&
-      !isCityDataLoading &&
-      !isIndustryDataLoading,
+
     getNextPageParam: (lastPage, allPages) => {
       if (Array.isArray(lastPage)) {
         return allPages.length

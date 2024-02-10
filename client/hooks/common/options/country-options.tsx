@@ -1,21 +1,15 @@
 import { useMemo } from "react"
 
-import useGetCountryList from "@/hooks/api/location/get-country-list"
+import { ICountryResponse } from "@/types/api/response/country"
 import { ISelectOption } from "@/components/customized-ui/selects/base"
 
-const useCountryOptions = () => {
-  const { data } = useGetCountryList()
-
-  return useMemo<ISelectOption[]>(
-    () =>
-      Array.isArray(data)
-        ? data.map((country) => ({
-            value: country.uuid,
-            title: `${country.english_name} | ${country.cantonese_name}`,
-          }))
-        : [],
-    [data]
-  )
+const useCountryOptions = (countryList: ICountryResponse[]) => {
+  return useMemo<ISelectOption[]>(() => {
+    return countryList.map((country) => ({
+      value: country.uuid,
+      title: `${country.english_name} | ${country.cantonese_name}`,
+    }))
+  }, [countryList])
 }
 
 export default useCountryOptions

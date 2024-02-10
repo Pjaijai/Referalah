@@ -2,6 +2,10 @@ import React, { ChangeEvent } from "react"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { Label } from "@radix-ui/react-label"
 
+import { ICityResponse } from "@/types/api/response/city"
+import { ICountryResponse } from "@/types/api/response/country"
+import { IIndustryResponse } from "@/types/api/response/industry"
+import { IProvinceResponse } from "@/types/api/response/province"
 import { EMessageType } from "@/types/common/message-type"
 import useCityOptions from "@/hooks/common/options/city-options"
 import useCountryOptions from "@/hooks/common/options/country-options"
@@ -38,6 +42,10 @@ interface ISearchPopoverProps {
   currentMaxYearOfExperience?: string
   currentSorting: string
   type: EMessageType
+  countryList: ICountryResponse[]
+  provinceList: IProvinceResponse[]
+  cityList: ICityResponse[]
+  industryList: IIndustryResponse[]
 }
 
 const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
@@ -58,12 +66,16 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
   currentMaxYearOfExperience,
   currentSorting,
   type,
+  cityList,
+  countryList,
+  industryList,
+  provinceList,
 }) => {
   const t = useI18n()
-  const industryOptions = useIndustryOptions()
-  const countryOptions = useCountryOptions()
-  const provinceOptions = useProvinceOptions(countryUuid)
-  const cityOptions = useCityOptions(provinceUuid)
+  const industryOptions = useIndustryOptions(industryList)
+  const countryOptions = useCountryOptions(countryList)
+  const provinceOptions = useProvinceOptions(provinceList, countryUuid)
+  const cityOptions = useCityOptions(cityList, provinceUuid)
   const { data: postSortingOptions } = usePostSortOptions()
   const { data: referralSortingOptions } = useReferralSortOptions()
 
