@@ -7,9 +7,6 @@ const useGetUserprofile = (userUuid: string | null) => {
   return useQuery({
     queryKey: [EQueryKeyString.USER_PROFILE, { userUuid }],
     queryFn: () => getUserProfile(userUuid!),
-    refetchOnWindowFocus: true,
-    refetchOnMount: true,
-    refetchOnReconnect: true,
   })
 }
 
