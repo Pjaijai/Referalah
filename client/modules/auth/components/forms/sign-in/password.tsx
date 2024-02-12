@@ -58,6 +58,8 @@ const PasswordSignInForm: React.FunctionComponent<
       password: "",
     },
   })
+  const { watch } = form
+  const passwordWatch = watch("password")
 
   const { mutate: signIn } = useSignInWithEmailPassword()
 
@@ -115,6 +117,7 @@ const PasswordSignInForm: React.FunctionComponent<
           label={t("auth.form.password_label")}
           name="password"
           leftLabel={<ForgetPassWordLink />}
+          value={passwordWatch}
         />
 
         <Button type="submit" className="shrink-0">

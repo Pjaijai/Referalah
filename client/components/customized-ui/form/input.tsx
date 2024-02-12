@@ -20,6 +20,8 @@ export interface IFormTextInputProps {
   leftLabel?: string | React.ReactNode
   Icon?: React.ReactNode
   type?: HTMLInputTypeAttribute
+  onFocus?: React.FocusEventHandler<HTMLInputElement>
+  onBlur?: React.FocusEventHandler<HTMLInputElement>
 }
 
 const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
@@ -31,6 +33,8 @@ const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
   type,
   Icon,
   leftLabel,
+  onFocus,
+  onBlur,
 }) => {
   return (
     <FormField
@@ -49,10 +53,12 @@ const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
           <FormControl>
             <div className="relative">
               <Input
+                onFocus={onFocus}
                 disabled
                 placeholder={placeholder}
                 type={type || "text"}
                 {...field}
+                onBlur={onBlur}
               />
               {Icon && (
                 <div className="absolute right-2 top-1/2 -translate-y-1/2">
