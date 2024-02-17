@@ -164,7 +164,7 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
             : t("auth.sign_up.confirm_button_title")}
         </Button>
       </form>
-      <p className="mt-4 flex w-full flex-row items-center justify-center gap-1 text-center  font-normal ">
+      <p className="mt-4 flex w-full flex-col items-center justify-center gap-1 text-center font-normal  md:flex-row ">
         {t("auth.sign_up.redirect_to_sign_up")}
         <Link
           href={siteConfig.page.signIn.href}
