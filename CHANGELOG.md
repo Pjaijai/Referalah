@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0](https://github.com/Pjaijai/Referalah/compare/v1.9.0...v1.10.0) (2024-02-17)
+
+
+### Features
+
+* fix sign in link in sign up page ([200ea77](https://github.com/Pjaijai/Referalah/commit/200ea7742718997b6f12270fa10bdd8847819bf9))
+* invalidate instead of refech ([#317](https://github.com/Pjaijai/Referalah/issues/317)) ([1140d3c](https://github.com/Pjaijai/Referalah/commit/1140d3c218803f139d6fb9449c5ce6af47bb5f38))
+
 ## [1.9.0](https://github.com/Pjaijai/Referalah/compare/v1.7.1...v1.9.0) (2024-02-10)
 
 
