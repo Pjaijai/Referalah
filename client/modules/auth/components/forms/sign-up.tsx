@@ -60,6 +60,10 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
     },
   })
 
+  const { watch } = form
+  const passwordWatch = watch("password")
+  const confirmPasswordWatch = watch("confirmPassword")
+
   const { mutate: createUser } = useSignUpWithEmailPassword()
   const onSubmit = (values: z.infer<typeof signUpFormSchema>) => {
     setIsLoading(true)
@@ -136,11 +140,13 @@ const SignUpForm: React.FunctionComponent<ISignUpFormProps> = ({}) => {
           label={t("auth.form.password_label")}
           name="password"
           description={t("form.general.password_description")}
+          value={passwordWatch}
         />
         <FormPasswordInput
           control={form.control}
           label={t("auth.form.confirm_password_label")}
           name="confirmPassword"
+          value={confirmPasswordWatch}
         />
         <p className="text-xs text-muted-foreground">
           {t("auth.sign_up.click_to_agree_text")}

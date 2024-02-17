@@ -1,12 +1,13 @@
 import React, { useState } from "react"
 
-import { Button } from "@/components/ui/button"
 import FormTextInput, {
   IFormTextInputProps,
 } from "@/components/customized-ui/form/input"
 import { Icons } from "@/components/icons"
 
-interface IFormPasswordInputProps extends IFormTextInputProps {}
+interface IFormPasswordInputProps extends IFormTextInputProps {
+  value: string
+}
 const FormPasswordInput: React.FunctionComponent<IFormPasswordInputProps> = ({
   control,
   label,
@@ -14,8 +15,10 @@ const FormPasswordInput: React.FunctionComponent<IFormPasswordInputProps> = ({
   description,
   placeholder,
   leftLabel,
+  value,
 }) => {
   const [isVisible, setIsVisible] = useState(false)
+  const [showIcon, setShowIcon] = useState(false)
 
   const handleClick = () => {
     setIsVisible((isVisible) => !isVisible)
@@ -27,9 +30,21 @@ const FormPasswordInput: React.FunctionComponent<IFormPasswordInputProps> = ({
       {!isVisible && <Icons.eyeOff />}
     </div>
   )
+
+  const handleFocus = () => {
+    setShowIcon(true)
+  }
+
+  const handleBlur = () => {
+    if (!value) {
+      setShowIcon(false)
+    }
+  }
   return (
     <div className="relative">
       <FormTextInput
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         control={control}
         label={label}
         name={name}
@@ -37,7 +52,7 @@ const FormPasswordInput: React.FunctionComponent<IFormPasswordInputProps> = ({
         placeholder={placeholder}
         type={isVisible ? "text" : "password"}
         leftLabel={leftLabel}
-        Icon={<VisibleIcon />}
+        Icon={showIcon ? <VisibleIcon /> : null}
       />
     </div>
   )
