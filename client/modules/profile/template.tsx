@@ -33,7 +33,6 @@ const ProfileTemplate: React.FunctionComponent<IProfileTemplateProps> = (
   const { cityList, countryList, industryList, provinceList, userUuid } = props
   const t = useI18n()
   const locale = useCurrentLocale()
-  const [isEditMode, setIsEditMode] = useState(false)
   const userStoreUuid = useUserStore((state) => state.uuid)
   const uuid = useMemo(() => {
     if (userUuid) {
@@ -72,65 +71,38 @@ const ProfileTemplate: React.FunctionComponent<IProfileTemplateProps> = (
   if (!isLoading && profile)
     return (
       <CommonPageLayout title={t("page.profile")}>
-        {!isEditMode && (
-          <ViewProfileTemplate
-            photoUrl={profile.avatar_url || undefined}
-            username={profile.username}
-            description={profile.description}
-            company={profile.company_name}
-            jobTitle={profile.job_title}
-            yearOfExperience={profile.year_of_experience}
-            socialMediaUrl={profile.social_media_url}
-            isReferee={profile.is_referee}
-            isReferer={profile.is_referer}
-            setIsEditMode={setIsEditMode}
-            slug={userUuid}
-            province={
-              locale === "zh-hk"
-                ? profile.province && profile.province.cantonese_name
-                : profile.province && profile.province.english_name
-            }
-            country={
-              locale === "zh-hk"
-                ? profile.country && profile.country.cantonese_name
-                : profile.country && profile.country.english_name
-            }
-            city={
-              locale === "zh-hk"
-                ? profile.city && profile.city.cantonese_name
-                : profile.city && profile.city.english_name
-            }
-            industry={
-              locale === "zh-hk"
-                ? profile.industry && profile.industry.cantonese_name
-                : profile.industry && profile.industry.english_name
-            }
-          />
-        )}
-
-        {isEditMode && (
-          <EditProfileTemplate
-            photoUrl={profile.avatar_url || undefined}
-            username={profile.username}
-            description={profile.description}
-            company={profile.company_name}
-            jobTitle={profile.job_title}
-            yearOfExperience={profile.year_of_experience}
-            countryUuid={profile.country && profile.country.uuid}
-            provinceUuid={profile.province && profile.province.uuid}
-            cityUuid={profile.city && profile.city.uuid}
-            industryUuid={profile.industry && profile.industry.uuid}
-            socialMediaUrl={profile.social_media_url}
-            isReferee={profile.is_referee}
-            isReferer={profile.is_referer}
-            isProfileLoading={isLoading}
-            setIsEditMode={setIsEditMode}
-            countryList={countryList}
-            provinceList={provinceList}
-            cityList={cityList}
-            industryList={industryList}
-          />
-        )}
+        <ViewProfileTemplate
+          photoUrl={profile.avatar_url || undefined}
+          username={profile.username}
+          description={profile.description}
+          company={profile.company_name}
+          jobTitle={profile.job_title}
+          yearOfExperience={profile.year_of_experience}
+          socialMediaUrl={profile.social_media_url}
+          isReferee={profile.is_referee}
+          isReferer={profile.is_referer}
+          slug={userUuid}
+          province={
+            locale === "zh-hk"
+              ? profile.province && profile.province.cantonese_name
+              : profile.province && profile.province.english_name
+          }
+          country={
+            locale === "zh-hk"
+              ? profile.country && profile.country.cantonese_name
+              : profile.country && profile.country.english_name
+          }
+          city={
+            locale === "zh-hk"
+              ? profile.city && profile.city.cantonese_name
+              : profile.city && profile.city.english_name
+          }
+          industry={
+            locale === "zh-hk"
+              ? profile.industry && profile.industry.cantonese_name
+              : profile.industry && profile.industry.english_name
+          }
+        />
       </CommonPageLayout>
     )
 

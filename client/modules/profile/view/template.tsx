@@ -32,7 +32,6 @@ export interface IViewProfileTemplateProps {
   isReferer: boolean
   isReferee: boolean
   slug: string
-  setIsEditMode: (value: boolean) => void
 }
 const ViewProfileTemplate: React.FunctionComponent<
   IViewProfileTemplateProps
@@ -47,7 +46,6 @@ const ViewProfileTemplate: React.FunctionComponent<
   province,
   city,
   socialMediaUrl,
-  setIsEditMode,
   industry,
   isReferer,
   isReferee,
@@ -94,7 +92,7 @@ const ViewProfileTemplate: React.FunctionComponent<
           {isViewingOwnProfile && (
             <Button
               onClick={() => {
-                setIsEditMode(true)
+                router.push(siteConfig.page.editProfile.href)
               }}
               className="gap-2"
             >

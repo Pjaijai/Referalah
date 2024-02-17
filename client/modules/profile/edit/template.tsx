@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react"
 import { StaticImport } from "next/dist/shared/lib/get-img-props"
+import { useRouter } from "next/navigation"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { supabase } from "@/utils/services/supabase/config"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -15,7 +16,10 @@ import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
+import { IUserResponse } from "@/types/api/response/user"
 import { EQueryKeyString } from "@/types/common/query-key-string"
+import { siteConfig } from "@/config/site"
+import useGetUserprofile from "@/hooks/api/user/get-user-profile"
 import useUpdateUserProfile from "@/hooks/api/user/update-user-profile"
 import useCityOptions from "@/hooks/common/options/city-options"
 import useCountryOptions from "@/hooks/common/options/country-options"
@@ -35,22 +39,6 @@ import FormTextArea from "@/components/customized-ui/form/text-area"
 import { Icons } from "@/components/icons"
 
 interface IEdiProfileTemplate {
-  isProfileLoading: boolean
-  photoUrl?: string
-  username: string | null
-  description: string | null
-  company: string | null
-  jobTitle: string | null
-  yearOfExperience?: number | null
-  countryUuid: string | null
-  provinceUuid: string | null
-  industryUuid: string | null
-  cityUuid: string | null
-  // resumeUrl: string | null
-  socialMediaUrl: string | null
-  isReferer: boolean
-  isReferee: boolean
-  setIsEditMode: (value: boolean) => void
   countryList: ICountryResponse[]
   provinceList: IProvinceResponse[]
   cityList: ICityResponse[]
@@ -58,28 +46,20 @@ interface IEdiProfileTemplate {
 }
 
 const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
-  photoUrl,
-  username,
-  description,
-  company,
-  jobTitle,
-  yearOfExperience,
-  countryUuid,
-  provinceUuid,
-  cityUuid,
-  industryUuid,
-  socialMediaUrl,
-  isReferer,
-  isReferee,
-  isProfileLoading,
-  setIsEditMode,
   countryList,
   provinceList,
   cityList,
   industryList,
 }) => {
+  const userUuid = useUserStore((state) => state.uuid)
   const t = useI18n()
   const queryClient = useQueryClient()
+  const router = useRouter()
+  const { data: profile, isLoading: isProfileLoading } = useGetUserprofile(
+    userUuid
+    // InitialProfile
+  )
+
   const formSchema = z
     .object({
       photoUrl: z.any().optional(),
@@ -197,24 +177,60 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: useMemo(() => {
-      return {
-        username: username || undefined,
-        description: description || undefined,
-        company: company || undefined,
-        jobTitle: jobTitle || undefined,
-        yearOfExperience: yearOfExperience?.toString() || "0",
-        countryUuid: countryUuid || undefined,
-        provinceUuid: provinceUuid || undefined,
-        cityUuid: cityUuid || undefined,
-        socialMediaUrl: socialMediaUrl || undefined,
-        isReferer: isReferer || false,
-        isReferee: isReferee || false,
-        industryUuid: industryUuid || undefined,
+      const res = {
+        username: profile?.username || undefined,
+        description: profile?.description || undefined,
+        company: profile?.company_name || undefined,
+        jobTitle: profile?.job_title || undefined,
+        yearOfExperience: profile?.year_of_experience?.toString() || "0",
+        countryUuid: profile?.country?.uuid || undefined,
+        provinceUuid: profile?.province?.uuid || undefined,
+        cityUuid: profile?.city?.uuid || undefined,
+        socialMediaUrl: profile?.social_media_url || undefined,
+        isReferer: profile?.is_referer || false,
+        isReferee: profile?.is_referee || false,
+        industryUuid: profile?.industry?.uuid || undefined,
       }
-    }, [isProfileLoading]),
+
+      return res
+    }, [profile, isProfileLoading]),
   })
 
-  const { watch, setValue } = form
+  const { watch, setValue, reset } = form
+
+  useEffect(() => {
+    if (profile) {
+      const {
+        city,
+        company_name,
+        country,
+        description,
+        industry,
+        is_referee,
+        is_referer,
+        job_title,
+        username,
+        year_of_experience,
+        province,
+        social_media_url,
+      } = profile
+
+      reset({
+        username: username || undefined,
+        description: description || undefined,
+        company: company_name || undefined,
+        jobTitle: job_title || undefined,
+        yearOfExperience: year_of_experience?.toString() || "0",
+        countryUuid: country?.uuid || undefined,
+        provinceUuid: province?.uuid || undefined,
+        cityUuid: city?.uuid || undefined,
+        socialMediaUrl: social_media_url || undefined,
+        isReferer: is_referer || false,
+        isReferee: is_referee || false,
+        industryUuid: industry?.uuid || undefined,
+      })
+    }
+  }, [profile, isProfileLoading])
 
   const countryWatch = watch("countryUuid")
   const provinceWatch = watch("provinceUuid")
@@ -224,8 +240,9 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   const countryOptions = useCountryOptions(countryList)
   const provinceOptions = useProvinceOptions(provinceList, countryWatch)
   const cityOptions = useCityOptions(cityList, provinceWatch)
+
   useEffect(() => {
-    if (provinceWatch !== provinceUuid) {
+    if (profile && provinceWatch !== profile.province?.uuid) {
       setValue("cityUuid", "")
     }
   }, [provinceOptions, provinceWatch])
@@ -322,7 +339,8 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           queryClient.invalidateQueries({
             queryKey: [EQueryKeyString.USER_PROFILE, { userUuid: user.uuid }],
           })
-          setIsEditMode(false)
+
+          router.push(`${siteConfig.page.profile.href}/${userUuid}`)
         },
         onSettled: () => {
           setIsSubmitting(false)
@@ -361,30 +379,30 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
 
   return (
     <div className="flex h-full w-full flex-col p-4">
+      <div className="flex justify-end">
+        <Button
+          onClick={() => {
+            router.back()
+          }}
+          variant={"ghost"}
+          className=" gap-2"
+        >
+          <Icons.undo />
+          {t("general.back")}
+        </Button>
+      </div>
+
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4"
         >
-          <div className="flex justify-end">
-            <Button
-              onClick={() => {
-                setIsEditMode(false)
-              }}
-              variant={"ghost"}
-              className=" gap-2"
-            >
-              <Icons.undo />
-              {t("general.back")}
-            </Button>
-          </div>
-
           <div className="flex justify-center">
             {!base64Image && (
               <BaseAvatar
-                url={photoUrl}
-                alt={username}
-                fallBack={username && username[0]}
+                url={profile?.avatar_url || undefined}
+                alt={profile?.username || null}
+                fallBack={(profile?.username && profile?.username[0]) || null}
                 size="large"
               />
             )}
@@ -392,8 +410,8 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             {base64Image && (
               <BaseAvatar
                 url={base64Image.toString()}
-                alt={username}
-                fallBack={username && username[0]}
+                alt={profile?.username || null}
+                fallBack={(profile?.username && profile?.username[0]) || null}
                 size="large"
               />
             )}
