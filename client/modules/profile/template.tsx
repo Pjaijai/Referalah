@@ -45,7 +45,7 @@ const ProfileTemplate: React.FunctionComponent<IProfileTemplateProps> = (
     }
   }, [userStoreUuid, userUuid])
 
-  const { data: profile, isLoading, refetch } = useGetUserprofile(uuid)
+  const { data: profile, isLoading } = useGetUserprofile(uuid)
 
   if (!userUuid || (!isLoading && !profile))
     return (
@@ -125,7 +125,6 @@ const ProfileTemplate: React.FunctionComponent<IProfileTemplateProps> = (
             isReferer={profile.is_referer}
             isProfileLoading={isLoading}
             setIsEditMode={setIsEditMode}
-            refetchProfile={refetch}
             countryList={countryList}
             provinceList={provinceList}
             cityList={cityList}
