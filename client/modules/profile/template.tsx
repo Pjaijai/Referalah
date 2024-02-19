@@ -70,7 +70,7 @@ const ProfileTemplate: React.FunctionComponent<IProfileTemplateProps> = (
     )
   if (!isLoading && profile)
     return (
-      <CommonPageLayout title={t("page.profile")}>
+      <CommonPageLayout>
         <ViewProfileTemplate
           photoUrl={profile.avatar_url || undefined}
           username={profile.username}

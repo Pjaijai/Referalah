@@ -16,7 +16,6 @@ import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
-import { IUserResponse } from "@/types/api/response/user"
 import { EQueryKeyString } from "@/types/common/query-key-string"
 import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
@@ -378,20 +377,15 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   }
 
   return (
-    <div className="flex h-full w-full flex-col p-4">
-      <div className="flex justify-end">
-        <Button
-          onClick={() => {
-            router.back()
-          }}
-          variant={"ghost"}
-          className=" gap-2"
-        >
-          <Icons.undo />
-          {t("general.back")}
-        </Button>
-      </div>
-
+    <div className="relative flex h-full w-full flex-col rounded-lg border border-muted p-6 ">
+      <button
+        onClick={() => {
+          router.back()
+        }}
+        className="absolute right-4 flex w-fit items-center justify-center rounded-full border bg-slate-50 p-3 dark:bg-black"
+      >
+        <Icons.undo size={15} />
+      </button>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
