@@ -5,7 +5,7 @@ import { EQueryKeyString } from "@/types/common/query-key-string"
 
 const getConversations = ({ pageParam = 0, queryKey }: any) => {
   const uuid = queryKey[1].userUuid
-  const NUMBER_OF_DATE_PER_FETCH = 5
+  const NUMBER_OF_DATE_PER_FETCH = 30
 
   return getConversationListByUserUuid({
     userUuid: uuid,
