@@ -51,7 +51,6 @@ interface IEdiProfileTemplate {
   isReferer: boolean
   isReferee: boolean
   setIsEditMode: (value: boolean) => void
-
   countryList: ICountryResponse[]
   provinceList: IProvinceResponse[]
   cityList: ICityResponse[]
@@ -74,7 +73,6 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   isReferee,
   isProfileLoading,
   setIsEditMode,
-
   countryList,
   provinceList,
   cityList,
