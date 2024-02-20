@@ -5,6 +5,7 @@ import { StaticImport } from "next/dist/shared/lib/get-img-props"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { supabase } from "@/utils/services/supabase/config"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import { v4 as uuidv4 } from "uuid"
 import { z } from "zod"
@@ -14,6 +15,7 @@ import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
+import { EQueryKeyString } from "@/types/common/query-key-string"
 import useUpdateUserProfile from "@/hooks/api/user/update-user-profile"
 import useCityOptions from "@/hooks/common/options/city-options"
 import useCountryOptions from "@/hooks/common/options/country-options"
@@ -49,7 +51,6 @@ interface IEdiProfileTemplate {
   isReferer: boolean
   isReferee: boolean
   setIsEditMode: (value: boolean) => void
-  refetchProfile: () => void
   countryList: ICountryResponse[]
   provinceList: IProvinceResponse[]
   cityList: ICityResponse[]
@@ -72,14 +73,13 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   isReferee,
   isProfileLoading,
   setIsEditMode,
-  refetchProfile,
   countryList,
   provinceList,
   cityList,
   industryList,
 }) => {
   const t = useI18n()
-
+  const queryClient = useQueryClient()
   const formSchema = z
     .object({
       photoUrl: z.any().optional(),
@@ -318,8 +318,11 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           toast({
             title: t("profile.edit.success"),
           })
+
+          queryClient.invalidateQueries({
+            queryKey: [EQueryKeyString.USER_PROFILE, { userUuid: user.uuid }],
+          })
           setIsEditMode(false)
-          refetchProfile()
         },
         onSettled: () => {
           setIsSubmitting(false)

@@ -50,6 +50,10 @@ const ResetPasswordPageTemplate = () => {
       confirmPassword: "",
     },
   })
+  const { watch } = form
+  const passwordWatch = watch("password")
+  const confirmPasswordWatch = watch("confirmPassword")
+
   const { mutate: update } = useUpdatePassword()
 
   const onSubmit = useCallback(
@@ -123,11 +127,13 @@ const ResetPasswordPageTemplate = () => {
               label={t("form.auth.new_password_label")}
               name="password"
               description={t("form.general.password_description")}
+              value={passwordWatch}
             />
             <FormPasswordInput
               control={form.control}
               label={t("auth.form.confirm_password_label")}
               name="confirmPassword"
+              value={confirmPasswordWatch}
             />
 
             <Button type="submit" className="shrink-0" disabled={isLoading}>
