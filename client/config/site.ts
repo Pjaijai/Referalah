@@ -15,6 +15,10 @@ export const siteConfig = {
       name: "Profile",
       href: "/profile",
     },
+    editProfile: {
+      name: "Profile",
+      href: "/profile/edit",
+    },
     signUp: {
       name: "auth",
       href: "/auth/sign-up",

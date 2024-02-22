@@ -36,26 +36,26 @@ export interface Database {
     Tables: {
       city: {
         Row: {
-          cantonese_name: string | null
-          english_name: string | null
+          cantonese_name: string
+          english_name: string
           id: number
-          province_uuid: string | null
+          province_uuid: string
           uuid: string
           value: string
         }
         Insert: {
-          cantonese_name?: string | null
-          english_name?: string | null
+          cantonese_name: string
+          english_name: string
           id?: number
-          province_uuid?: string | null
+          province_uuid: string
           uuid?: string
           value: string
         }
         Update: {
-          cantonese_name?: string | null
-          english_name?: string | null
+          cantonese_name?: string
+          english_name?: string
           id?: number
-          province_uuid?: string | null
+          province_uuid?: string
           uuid?: string
           value?: string
         }
@@ -145,49 +145,49 @@ export interface Database {
       }
       country: {
         Row: {
-          cantonese_name: string | null
-          english_name: string | null
+          cantonese_name: string
+          english_name: string
           id: number
           uuid: string
-          value: string | null
+          value: string
         }
         Insert: {
-          cantonese_name?: string | null
-          english_name?: string | null
+          cantonese_name: string
+          english_name: string
           id?: number
           uuid?: string
-          value?: string | null
+          value: string
         }
         Update: {
-          cantonese_name?: string | null
-          english_name?: string | null
+          cantonese_name?: string
+          english_name?: string
           id?: number
           uuid?: string
-          value?: string | null
+          value?: string
         }
         Relationships: []
       }
       industry: {
         Row: {
-          cantonese_name: string | null
-          english_name: string | null
+          cantonese_name: string
+          english_name: string
           id: number
           uuid: string
-          value: string | null
+          value: string
         }
         Insert: {
-          cantonese_name?: string | null
-          english_name?: string | null
+          cantonese_name: string
+          english_name: string
           id?: number
           uuid?: string
-          value?: string | null
+          value: string
         }
         Update: {
-          cantonese_name?: string | null
-          english_name?: string | null
+          cantonese_name?: string
+          english_name?: string
           id?: number
           uuid?: string
-          value?: string | null
+          value?: string
         }
         Relationships: []
       }
@@ -366,25 +366,25 @@ export interface Database {
       }
       province: {
         Row: {
-          cantonese_name: string | null
-          country_uuid: string | null
-          english_name: string | null
+          cantonese_name: string
+          country_uuid: string
+          english_name: string
           id: number
           uuid: string
           value: string
         }
         Insert: {
-          cantonese_name?: string | null
-          country_uuid?: string | null
-          english_name?: string | null
+          cantonese_name: string
+          country_uuid: string
+          english_name: string
           id?: number
           uuid?: string
           value: string
         }
         Update: {
-          cantonese_name?: string | null
-          country_uuid?: string | null
-          english_name?: string | null
+          cantonese_name?: string
+          country_uuid?: string
+          english_name?: string
           id?: number
           uuid?: string
           value?: string
