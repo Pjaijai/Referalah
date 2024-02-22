@@ -38,6 +38,22 @@ import FormTextArea from "@/components/customized-ui/form/text-area"
 import { Icons } from "@/components/icons"
 
 interface IEdiProfileTemplate {
+  isProfileLoading: boolean
+  photoUrl?: string
+  username: string | null
+  description: string | null
+  company: string | null
+  jobTitle: string | null
+  yearOfExperience?: number | null
+  countryUuid: string | null
+  provinceUuid: string | null
+  industryUuid: string | null
+  cityUuid: string | null
+  // resumeUrl: string | null
+  socialMediaUrl: string | null
+  isReferer: boolean
+  isReferee: boolean
+  setIsEditMode: (value: boolean) => void
   countryList: ICountryResponse[]
   provinceList: IProvinceResponse[]
   cityList: ICityResponse[]
