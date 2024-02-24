@@ -18,6 +18,9 @@ export async function generateMetadata({
   }
 }
 
+export const revalidate = false
+export const fetchCache = "default-cache"
+
 const RefererPostDetailsPage = ({ params }: { params: { uuid: string } }) => {
   return (
     <CommonPageLayout>
