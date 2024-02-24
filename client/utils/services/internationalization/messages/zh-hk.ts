@@ -145,11 +145,9 @@ export default {
   "profile.form.avatar_label": "你嘅嘜頭",
   "profile.form.avatar_description": "食到JPG，JPEG，PNG，最多1MB。",
   "general.referrer": "推薦人",
-  "profile.form.is_referrer_description":
-    "你嘅資料會被公開（Email不會)，如果有人想入你間公司，就可以搵你幫手🙏🏻",
+  "profile.form.is_referrer_description": "我會推薦人/請人",
   "general.talent": "人才",
-  "profile.form.is_referee_description":
-    "你嘅資料會被公開（Email不會)係人才名單，如果有人想招你入佢間公司，就可以搵你，祝一切順利！",
+  "profile.form.is_referee_description": "我的訴求就是上班",
   "profile.form.personal_description_label": "個人簡介",
   "profile.form.optional_company_label": "公司名(選填)",
   "profile.form.job_title_label": "職位/工作名稱",
@@ -275,4 +273,11 @@ export default {
     "The user has not accepted the conversation",
   "referral.form.contact.error.title": "傳送訊息失敗",
   "referral.form.contact.error.description": "對方未接受對話，或者Server壞咗。",
+
+  "general.user_type": "用戶類型",
+  "general.personal_profile": "個人簡介",
+  "general.work_experience": "工作經驗",
+  "general.year#zero": "{count}年",
+  "general.year#one": "{count}年",
+  "general.year#other": "{count}年",
 } as const

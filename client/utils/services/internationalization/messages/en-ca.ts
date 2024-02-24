@@ -161,11 +161,9 @@ export default {
   "profile.form.avatar_description":
     "Accept JPG, JPEG, PNG, and a maximum of 1MB",
   "general.referrer": "Referrer",
-  "profile.form.is_referrer_description":
-    "Your data will be public (except email). If someone wants to join your company, they can reach out to you.",
+  "profile.form.is_referrer_description": "I refer/hire talents",
   "general.talent": "Talent",
-  "profile.form.is_referee_description":
-    "Your data will be public (except email) on talent list. If someone wants to refer you, they can reach out to you. ",
+  "profile.form.is_referee_description": "I am ready to contribute",
   "profile.form.personal_description_label": "Description",
   "profile.form.optional_company_label": "Company(Optional)",
   "profile.form.job_title_label": "Job Title",
@@ -299,4 +297,11 @@ export default {
   "referral.form.contact.error.title": "Failed to send message",
   "referral.form.contact.error.description":
     "User has not accepted the conversation, or there is an issue on the server.",
+
+  "general.user_type": "User Type",
+  "general.personal_profile": "Personal Profile",
+  "general.work_experience": "Work Experience",
+  "general.year#zero": "{count} years",
+  "general.year#one": "{count} year",
+  "general.year#other": "{count} years",
 } as const

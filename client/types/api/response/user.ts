@@ -1,7 +1,7 @@
 export interface IUserResponse {
-  uuid: string | null
-  email: string | null
-  username: string | null
+  uuid: string
+  email: string
+  username: string
   status: string
   role: string
   avatar_url: string | null
