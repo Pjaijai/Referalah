@@ -7,6 +7,8 @@ import { useI18n } from "@/utils/services/internationalization/client"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import DonationButton from "@/components/customized-ui/buttons/donation"
 import { Icons } from "@/components/icons"
 
 const NavFooter = () => {
@@ -46,6 +48,8 @@ const NavFooter = () => {
           >
             <Icons.github />
           </Link>
+
+          <DonationButton />
         </div>
 
         <div className="flex flex-wrap justify-around gap-3">

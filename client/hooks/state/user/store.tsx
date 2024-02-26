@@ -6,6 +6,7 @@ interface IUserState {
   uuid: null | string
   photoUrl: string | null
   hasConversationUnseen: boolean
+  isDonationDialogOpen: boolean
   setUser: ({
     username,
     uuid,
@@ -17,6 +18,7 @@ interface IUserState {
   }) => void
   reSetUser: () => void
   setConversationSeen: (hasUnseen: boolean) => void
+  setIsDonationDialogOpen: (isOpen: boolean) => void
 }
 const useUserStore = create<IUserState>((set) => ({
   username: null,
@@ -24,6 +26,7 @@ const useUserStore = create<IUserState>((set) => ({
   uuid: null,
   photoUrl: null,
   hasConversationUnseen: false,
+  isDonationDialogOpen: false,
   reSetUser: () => {
     set(() => ({
       username: null,
@@ -45,6 +48,11 @@ const useUserStore = create<IUserState>((set) => ({
     set((state) => ({
       ...state,
       hasConversationUnseen: hasUnseen,
+    })),
+  setIsDonationDialogOpen: (isOpen: boolean) =>
+    set((state) => ({
+      ...state,
+      isDonationDialogOpen: isOpen,
     })),
 }))
 

@@ -304,4 +304,7 @@ export default {
   "general.year#zero": "{count} years",
   "general.year#one": "{count} year",
   "general.year#other": "{count} years",
+  "general.support_us.title": "Support Us",
+  "general.support_us.description":
+    "Our mission is to help overseas Hong Kongers find connections, jobs, and referral opportunities. Your support fuels this mission.",
 } as const

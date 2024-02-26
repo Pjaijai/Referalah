@@ -8,8 +8,8 @@ import { siteConfig } from "@/config/site"
 import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
+import DonationButton from "@/components/customized-ui/buttons/donation"
 import LocaleDropDownMenu from "@/components/customized-ui/drop-down-menu/locale"
-import MessageIcon from "@/components/customized-ui/icons/message"
 import { BaseNavigationMenu } from "@/components/customized-ui/navigation-menu/base"
 import { MobileNavigationMenu } from "@/components/customized-ui/navigation-menu/mobile"
 import { Icons } from "@/components/icons"
@@ -31,11 +31,13 @@ export function SiteHeader() {
             <MainNav />
           </div>
         </div>
+
         <div className="hidden w-full flex-1 shrink-0 justify-center md:flex">
           <BaseNavigationMenu />
         </div>
 
         <div className="flex items-center justify-end space-x-4">
+          <DonationButton />
           <nav className="flex items-center gap-2">
             <LocaleDropDownMenu />
 
@@ -52,12 +54,6 @@ export function SiteHeader() {
             >
               <Icons.github />
             </Link>
-
-            {user.isSignIn && (
-              <Link href={siteConfig.page.chat.href}>
-                <MessageIcon className="block md:hidden" />
-              </Link>
-            )}
 
             {user.isSignIn ? (
               <Link href={`${siteConfig.page.profile.href}/${user.uuid}`}>

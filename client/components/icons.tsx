@@ -14,6 +14,7 @@ import {
   Eye,
   EyeOff,
   Github,
+  Heart,
   History,
   Instagram,
   Laptop,
@@ -73,6 +74,7 @@ export const Icons = {
   history: History,
   eye: Eye,
   eyeOff: EyeOff,
+  heart: Heart,
   smallArrowLeft: (props: LucideProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -280,4 +280,7 @@ export default {
   "general.year#zero": "{count}年",
   "general.year#one": "{count}年",
   "general.year#other": "{count}年",
+  "general.support_us.title": "支持我們",
+  "general.support_us.description":
+    "幫助海外香港人尋找人脈、工作和推薦機會是Referrlah的首要任務。你的捐款使我們可以把Referrlah對所有人免費開放。 請幫助我們保持平台發展。",
 } as const
