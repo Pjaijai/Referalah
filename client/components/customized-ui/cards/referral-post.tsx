@@ -16,7 +16,6 @@ import { Separator } from "@/components/ui/separator"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
-import CollapsibleTextWrapper from "@/components/customized-ui/tool/collapsible-text-wrapper"
 
 interface IReferralPostCardProps {
   uuid: string | null
@@ -59,7 +58,7 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
     e.preventDefault()
     router.push(`${siteConfig.page.profile.href}/${createdBy}`)
   }
-
+  const truncatedText = description ? description.slice(0, 80) : ""
   return (
     <Card className="flex h-full flex-col justify-between rounded shadow-md ">
       <Link
@@ -102,16 +101,6 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
             />
             <Separator />
           </CardHeader>
-
-          {/* desc */}
-          <CardContent>
-            {description && (
-              <CollapsibleTextWrapper
-                text={description}
-                expandButtonProps={{ className: "mt-2" }}
-              />
-            )}
-          </CardContent>
         </div>
 
         {/* created at */}
