@@ -7,7 +7,6 @@ import PostHeader from "@/modules/post/components/info-display/header"
 import { siteConfig } from "@/config/site"
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -58,7 +57,7 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
     e.preventDefault()
     router.push(`${siteConfig.page.profile.href}/${createdBy}`)
   }
-  const truncatedText = description ? description.slice(0, 80) : ""
+
   return (
     <Card className="flex h-full flex-col justify-between rounded shadow-md ">
       <Link
