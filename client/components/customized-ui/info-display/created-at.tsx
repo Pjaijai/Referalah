@@ -18,7 +18,7 @@ const CreatedAtDisplay: React.FunctionComponent<
   const { data: formattedCreatedAt } = useCreatedAt({ createdAt })
 
   return (
-    <div className={cn("flex items-center justify-start", className)}>
+    <div className={cn("flex items-center justify-start space-x-1", className)}>
       {!isCard && (
         <div>
           <Icons.createdAt width="13" height="13" />
