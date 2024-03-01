@@ -1,19 +1,28 @@
-import React from "react"
+import React, { useState } from "react"
 import { CopyToClipboard } from "react-copy-to-clipboard"
 
 interface IBaseClipboardProps {
-  children: React.ReactNode
-  onCopy: () => void
   textValue: string
+  beforeCopyContent: React.ReactNode
+  afterCopyContent: React.ReactNode
+  className?: string
 }
 const BaseClipboard: React.FunctionComponent<IBaseClipboardProps> = ({
-  children,
-  onCopy,
   textValue,
+  className,
+  beforeCopyContent,
+  afterCopyContent,
 }) => {
+  const [isClicked, setIsClicked] = useState(false)
+
+  const onCopy = async () => {
+    setIsClicked(true)
+  }
   return (
     <CopyToClipboard text={textValue} onCopy={onCopy}>
-      {children}
+      <button className={className}>
+        {isClicked ? beforeCopyContent : afterCopyContent}
+      </button>
     </CopyToClipboard>
   )
 }

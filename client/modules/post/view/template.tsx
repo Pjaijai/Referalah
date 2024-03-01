@@ -2,14 +2,13 @@
 
 import React from "react"
 import Link from "next/link"
-import PostShareClipboard from "@/modules/post/components/clipboards/post-share"
+import LinkShareDrawer from "@/modules/post/components/drawers/link-share"
 import PostHeader from "@/modules/post/components/info-display/header"
 import PostStatusDisplay from "@/modules/post/components/info-display/status"
 import {
   useCurrentLocale,
   useI18n,
 } from "@/utils/services/internationalization/client"
-import { WhatsappShareButton } from "react-share"
 
 import { EMessageType } from "@/types/common/message-type"
 import { EPostStatus } from "@/types/common/post-status"
@@ -22,6 +21,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import ContactButton from "@/components/customized-ui/buttons/contact"
 import ProfileCard from "@/components/customized-ui/cards/profile"
+import BaseClipboard from "@/components/customized-ui/clipboards/base"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
 import IndustryDisplay from "@/components/customized-ui/info-display/industry"
@@ -42,7 +42,6 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   const isViewingOwnProfile = post?.created_by === userUuid
   const isOpen = post?.status === EPostStatus.ACTIVE
   const locale = useCurrentLocale()
-  const url = typeof window !== "undefined" ? window.location.href : ""
 
   return (
     <PageStatusLayout
@@ -50,13 +49,36 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
       isLoading={isLoading}
       isSuccess={isSuccess}
     >
-      <Link href={siteConfig.page.referrerPost.href}>
-        <p className="gap my-4 flex flex-row items-center text-sm text-muted-foreground">
-          <Icons.smallArrowLeft className="text-sm" />{" "}
-          <span>{t("post.back_to_post_page")}</span>
-        </p>
-      </Link>
-      <WhatsappShareButton url={url}>whatsapp</WhatsappShareButton>
+      <div className="flex flex-row items-center justify-between">
+        <Link href={siteConfig.page.referrerPost.href}>
+          <p className="gap my-4 flex flex-row items-center text-sm text-muted-foreground">
+            <Icons.smallArrowLeft className="text-sm" />{" "}
+            <span>{t("post.back_to_post_page")}</span>
+          </p>
+        </Link>
+        <div className="block md:hidden">
+          <LinkShareDrawer />
+        </div>
+
+        <div className="hidden md:block">
+          <BaseClipboard
+            className="flex flex-row items-center justify-center space-x-1 border-b border-muted-foreground text-sm"
+            afterCopyContent={
+              <>
+                <p>Copy Link</p> <Icons.copy height={20} width={20} />
+              </>
+            }
+            beforeCopyContent={
+              <>
+                <p>Copied</p>
+                <Icons.copyCheck height={20} width={20} />
+              </>
+            }
+            textValue={window.location.href}
+          />
+        </div>
+      </div>
+
       {post && (
         <div className="mt-5 flex h-full w-full flex-col md:mt-0">
           <div className="my-0 mb-5 flex flex-col justify-between gap-4 md:my-5 md:flex-row">
@@ -84,9 +106,6 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                         )
                       }
                     />
-                  </div>
-                  <div className="hidden md:block">
-                    <PostShareClipboard />
                   </div>
                 </div>
               </div>
