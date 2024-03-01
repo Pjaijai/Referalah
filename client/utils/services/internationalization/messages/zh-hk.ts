@@ -280,4 +280,7 @@ export default {
   "general.year#zero": "{count}年",
   "general.year#one": "{count}年",
   "general.year#other": "{count}年",
+  "share.copy_link": "複製連結",
+  "share.copied": "已複製",
+  "share.share_to": "分享到",
 } as const
