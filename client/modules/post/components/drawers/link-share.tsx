@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { useI18n } from "@/utils/services/internationalization/client"
 import {
   EmailShareButton,
   TelegramShareButton,
@@ -19,7 +20,7 @@ import { Icons } from "@/components/icons"
 
 const LinkShareDrawer = () => {
   const url = typeof window !== "undefined" ? window.location.href : ""
-
+  const t = useI18n()
   return (
     <Drawer>
       <DrawerTrigger>
@@ -27,7 +28,7 @@ const LinkShareDrawer = () => {
       </DrawerTrigger>
       <DrawerContent className="px-2 pb-8">
         <DrawerHeader>
-          <DrawerTitle>Share to</DrawerTitle>
+          <DrawerTitle>{t("share.share_to")}</DrawerTitle>
         </DrawerHeader>
         <div className="flex flex-row items-center justify-around p-4">
           <BaseClipboard

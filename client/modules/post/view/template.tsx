@@ -65,12 +65,13 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
             className="flex flex-row items-center justify-center space-x-1 border-b border-muted-foreground text-sm"
             afterCopyContent={
               <>
-                <p>Copy Link</p> <Icons.copy height={20} width={20} />
+                <p>{t("share.copy_link")}</p>{" "}
+                <Icons.copy height={20} width={20} />
               </>
             }
             beforeCopyContent={
               <>
-                <p>Copied</p>
+                <p>{t("share.copied")}</p>
                 <Icons.copyCheck height={20} width={20} />
               </>
             }
