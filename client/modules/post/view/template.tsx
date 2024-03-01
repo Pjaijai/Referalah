@@ -2,12 +2,14 @@
 
 import React from "react"
 import Link from "next/link"
+import PostShareClipboard from "@/modules/post/components/clipboards/post-share"
 import PostHeader from "@/modules/post/components/info-display/header"
 import PostStatusDisplay from "@/modules/post/components/info-display/status"
 import {
   useCurrentLocale,
   useI18n,
 } from "@/utils/services/internationalization/client"
+import { WhatsappShareButton } from "react-share"
 
 import { EMessageType } from "@/types/common/message-type"
 import { EPostStatus } from "@/types/common/post-status"
@@ -40,6 +42,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   const isViewingOwnProfile = post?.created_by === userUuid
   const isOpen = post?.status === EPostStatus.ACTIVE
   const locale = useCurrentLocale()
+  const url = typeof window !== "undefined" ? window.location.href : ""
 
   return (
     <PageStatusLayout
@@ -53,6 +56,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
           <span>{t("post.back_to_post_page")}</span>
         </p>
       </Link>
+      <WhatsappShareButton url={url}>whatsapp</WhatsappShareButton>
       {post && (
         <div className="mt-5 flex h-full w-full flex-col md:mt-0">
           <div className="my-0 mb-5 flex flex-col justify-between gap-4 md:my-5 md:flex-row">
@@ -69,7 +73,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                 />
               </div>
               <div className="mr-2 flex w-full flex-col-reverse justify-between md:flex-row">
-                <div className="flex items-center gap-1">
+                <div className="flex w-full items-center justify-between gap-1 ">
                   <div className="flex flex-col gap-2 ">
                     <PostHeader
                       title={post.job_title}
@@ -80,6 +84,9 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                         )
                       }
                     />
+                  </div>
+                  <div className="hidden md:block">
+                    <PostShareClipboard />
                   </div>
                 </div>
               </div>
