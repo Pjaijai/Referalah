@@ -1,6 +1,5 @@
 import "@/styles/globals.css"
 import { Metadata } from "next"
-import { I18nProviderClient } from "@/utils/services/internationalization/client"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
@@ -9,13 +8,9 @@ import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import NavFooter from "@/components/customized-ui/footer/nav"
 import GoogleAnalytics from "@/components/google-analytics"
-import APIProvider from "@/components/providers/api"
-import AuthProvider from "@/components/providers/auth"
-import ChatProvider from "@/components/providers/chat"
-import ToastProvider from "@/components/providers/toast"
+import Provider from "@/components/providers"
 import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
-import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
   keywords: [
@@ -67,28 +62,18 @@ export default async function RootLayout({
       >
         <GoogleAnalytics />
 
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <APIProvider>
-            <I18nProviderClient locale={locale}>
-              <AuthProvider>
-                <ChatProvider>
-                  <ToastProvider>
-                    <div className="flex min-h-screen flex-col">
-                      <SiteHeader />
-                      <div className="flex-1 overflow-y-auto overflow-x-hidden ">
-                        {children}
-                      </div>
-                      <NavFooter />
-                    </div>
-                    <Analytics />
-                    <SpeedInsights />
-                    <TailwindIndicator />
-                  </ToastProvider>
-                </ChatProvider>
-              </AuthProvider>
-            </I18nProviderClient>
-          </APIProvider>
-        </ThemeProvider>
+        <Provider locale={locale}>
+          <div className="flex min-h-screen flex-col">
+            <SiteHeader />
+            <div className="flex-1 overflow-y-auto overflow-x-hidden ">
+              {children}
+            </div>
+            <NavFooter />
+          </div>
+          <Analytics />
+          <SpeedInsights />
+          <TailwindIndicator />
+        </Provider>
       </body>
     </html>
   )

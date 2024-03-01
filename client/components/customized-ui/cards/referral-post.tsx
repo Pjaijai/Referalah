@@ -7,7 +7,6 @@ import PostHeader from "@/modules/post/components/info-display/header"
 import { siteConfig } from "@/config/site"
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -16,7 +15,6 @@ import { Separator } from "@/components/ui/separator"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
-import CollapsibleTextWrapper from "@/components/customized-ui/tool/collapsible-text-wrapper"
 
 interface IReferralPostCardProps {
   uuid: string | null
@@ -102,16 +100,6 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
             />
             <Separator />
           </CardHeader>
-
-          {/* desc */}
-          <CardContent>
-            {description && (
-              <CollapsibleTextWrapper
-                text={description}
-                expandButtonProps={{ className: "mt-2" }}
-              />
-            )}
-          </CardContent>
         </div>
 
         {/* created at */}

@@ -304,4 +304,8 @@ export default {
   "general.year#zero": "{count} years",
   "general.year#one": "{count} year",
   "general.year#other": "{count} years",
+
+  "share.copy_link": "Copy Link",
+  "share.copied": "Copied",
+  "share.share_to": "Share to",
 } as const
