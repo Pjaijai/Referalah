@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.11.0](https://github.com/Pjaijai/Referalah/compare/v1.10.3...v1.11.0) (2024-03-01)
+
+
+### Features
+
+* combine providers ([18ec5e1](https://github.com/Pjaijai/Referalah/commit/18ec5e1c48f5a1a5a09113cb9e2520adcb105603))
+* post prefech cache ([4416df9](https://github.com/Pjaijai/Referalah/commit/4416df905cce84be947658b4be03d7ba94885854))
+
+
+### Bug Fixes
+
+* fixtype ([38bfad3](https://github.com/Pjaijai/Referalah/commit/38bfad3d1a9e9910688ab3a577534d5b18106ec9))
+
 ### [1.10.2](https://github.com/Pjaijai/Referalah/compare/v1.10.1...v1.10.2) (2024-02-22)
 
 ### [1.10.1](https://github.com/Pjaijai/Referalah/compare/v1.10.0...v1.10.1) (2024-02-20)
