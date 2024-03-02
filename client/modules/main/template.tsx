@@ -2,21 +2,29 @@
 
 import React from "react"
 import Link from "next/link"
+import PostCarousel from "@/modules/main/components/post-carousel"
 import UserCount from "@/modules/main/components/user-count"
 import { useScopedI18n } from "@/utils/services/internationalization/client"
 
+import { ISearchPostResponse } from "@/types/api/response/referer-post"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import useUserStore from "@/hooks/state/user/store"
 import { buttonVariants } from "@/components/ui/button"
 
-const MainPageTemplate = ({ count }: { count: number | null }) => {
+const MainPageTemplate = ({
+  count,
+  posts,
+}: {
+  count: number | null
+  posts: ISearchPostResponse[]
+}) => {
   const isUserSignIn = useUserStore((state) => state.isSignIn)
 
   const scopedT = useScopedI18n("index")
 
   return (
-    <section className="container flex items-center justify-center gap-6  pb-8 pt-6 md:items-start md:justify-start md:py-10">
+    <div className="container flex h-full flex-col items-center justify-center gap-6 pb-8 pt-6 md:items-start md:justify-start md:py-10">
       <div className="flex flex-col justify-center gap-2  md:justify-between">
         <div className="flex flex-row justify-center md:justify-between">
           <div className="flex flex-col justify-center">
@@ -74,7 +82,11 @@ const MainPageTemplate = ({ count }: { count: number | null }) => {
           </div>
         </div>
       </div>
-    </section>
+
+      <div className="mt-20">
+        <PostCarousel list={posts} />
+      </div>
+    </div>
   )
 }
 

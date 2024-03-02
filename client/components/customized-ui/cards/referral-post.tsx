@@ -5,6 +5,7 @@ import PostCardInfoDisplay from "@/modules/post/components/info-display/card-inf
 import PostHeader from "@/modules/post/components/info-display/header"
 
 import { siteConfig } from "@/config/site"
+import { cn } from "@/lib/utils"
 import {
   Card,
   CardDescription,
@@ -20,7 +21,6 @@ interface IReferralPostCardProps {
   uuid: string | null
   username: string | null
   photoUrl: string | null
-  description: string | null
   companyName: string | null
   jobTitle: string | null
   yearOfExperience: number | null
@@ -31,6 +31,7 @@ interface IReferralPostCardProps {
   url: string | null
   createdAt: string | null
   createdBy: string | null
+  className?: string
 }
 
 // NOTE: please use onClick with e.preventDefault() for any links inside this component to prevent validateDOMNesting warning
@@ -41,7 +42,6 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   city,
   companyName,
   country,
-  description,
   industry,
   photoUrl,
   province,
@@ -50,6 +50,7 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   yearOfExperience,
   createdAt,
   createdBy,
+  className,
 }) => {
   const router = useRouter()
 
@@ -59,7 +60,12 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   }
 
   return (
-    <Card className="flex h-full flex-col justify-between rounded shadow-md ">
+    <Card
+      className={cn(
+        "flex h-full flex-col justify-between rounded shadow-md ",
+        className
+      )}
+    >
       <Link
         href={`${siteConfig.page.referrerPost.href}/${uuid}`}
         onClick={(e) => e.stopPropagation()}
