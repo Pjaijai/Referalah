@@ -51,6 +51,8 @@
     "class-variance-authority": "0.4.0",
     "clsx": "1.2.1",
     "dayjs": "^1.11.9",
+    "embla-carousel-autoplay": "^8.0.0",
+    "embla-carousel-react": "^8.0.0",
     "jest-environment-jsdom": "29.7.0",
     "jest-runner-groups": "2.2.0",
     "lucide-react": "0.302.0",
