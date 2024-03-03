@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.12.2](https://github.com/Pjaijai/Referalah/compare/v1.12.1...v1.12.2) (2024-03-03)
+
+
+### Bug Fixes
+
+* fix carousel ([e2a83c3](https://github.com/Pjaijai/Referalah/commit/e2a83c3eda0f50ca94653fa37f3cddd5f138c6a5))
+
 ### [1.12.1](https://github.com/Pjaijai/Referalah/compare/v1.12.0...v1.12.1) (2024-03-03)
 
 ## [1.12.0](https://github.com/Pjaijai/Referalah/compare/v1.11.0...v1.12.0) (2024-03-02)
