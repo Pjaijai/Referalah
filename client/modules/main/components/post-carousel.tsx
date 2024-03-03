@@ -21,15 +21,16 @@ const PostCarousel: React.FunctionComponent<IPostCarouselProps> = ({
     <Carousel
       plugins={[
         Autoplay({
-          delay: 5000,
+          delay: 3000,
         }),
       ]}
     >
       <CarouselContent>
         {list.map((data) => {
           return (
-            <CarouselItem className="basis-1/5 md:basis-1/4 ">
+            <CarouselItem className=" md:basis-1/2">
               <ReferralPostCard
+                className="max-h-72 md:max-h-fit"
                 jobTitle={data.job_title}
                 username={data.user && data.user.username}
                 photoUrl={data.user && data.user.avatar_url}
@@ -48,14 +49,8 @@ const PostCarousel: React.FunctionComponent<IPostCarouselProps> = ({
                     ? data.city && data.city.cantonese_name
                     : data.city && data.city.english_name
                 }
-                industry={
-                  locale === "zh-hk"
-                    ? data.industry && data.industry.cantonese_name
-                    : data.industry && data.industry.english_name
-                }
                 companyName={data.company_name}
                 url={data.url}
-                yearOfExperience={data.year_of_experience}
                 uuid={data.uuid}
                 createdBy={data.created_by && data.created_by}
                 key={data.uuid}
