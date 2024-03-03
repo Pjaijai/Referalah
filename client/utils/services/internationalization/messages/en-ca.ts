@@ -190,7 +190,7 @@ export default {
     "- Self-introduction\n- Which position are you applying for?\n- How to contact you？",
   "referral.form.cancel": "Not Today",
   "referral.form.submit": "Submit",
-  "referral.user_not_sing_in_dialog.title": "Not signed in.",
+  "referral.user_not_sing_in_dialog.title": "Please sign in",
   "referral.user_not_sing_in_dialog.description":
     "Please sign in to reach out to them",
 

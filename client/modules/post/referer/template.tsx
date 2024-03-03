@@ -165,7 +165,6 @@ const RefererPostPageTemplate: React.FunctionComponent<
                       : data.industry && data.industry.english_name
                   }
                   companyName={data.company_name}
-                  description={data.description}
                   url={data.url}
                   yearOfExperience={data.year_of_experience}
                   uuid={data.uuid}
