@@ -23,11 +23,11 @@ interface IReferralPostCardProps {
   photoUrl: string | null
   companyName: string | null
   jobTitle: string | null
-  yearOfExperience: number | null
+  yearOfExperience?: number | null
   country: string | null
   province: string | null
   city: string | null
-  industry: string | null
+  industry?: string | null
   url: string | null
   createdAt: string | null
   createdBy: string | null

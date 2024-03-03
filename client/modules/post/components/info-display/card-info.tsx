@@ -7,8 +7,8 @@ interface PostCardInfoDisplayProps {
   city: string | null
   province: string | null
   country: string | null
-  industry: string | null
-  yearOfExperience: number | null
+  industry?: string | null
+  yearOfExperience?: number | null
 }
 
 const PostCardInfoDisplay = ({
@@ -34,7 +34,7 @@ const PostCardInfoDisplay = ({
           className="xs:max-w-full max-w-xs"
         />
       )}
-      {yearOfExperience !== null && (
+      {yearOfExperience && (
         <YearsOfExperienceDisplay
           yearOfExperience={yearOfExperience}
           className="xs:max-w-full max-w-xs"
