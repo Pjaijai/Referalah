@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.12.3](https://github.com/Pjaijai/Referalah/compare/v1.12.2...v1.12.3) (2024-03-07)
+
+
+### Bug Fixes
+
+* fix toast not showing ([9beec7c](https://github.com/Pjaijai/Referalah/commit/9beec7c6d3ca1e313b80a14fd346de9d62ee66b1))
+
 ### [1.12.2](https://github.com/Pjaijai/Referalah/compare/v1.12.1...v1.12.2) (2024-03-03)
 
 
