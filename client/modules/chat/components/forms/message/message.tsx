@@ -189,6 +189,15 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
     setFile(undefined)
   }
 
+  const handleUpLoadFile = (files: File[]) => {
+    setFile(files[0])
+    setIsFileUploadDrawerOpen(false)
+  }
+
+  const handleRemoveFile = () => {
+    setFile(undefined)
+  }
+
   return (
     <Form {...form}>
       <form
