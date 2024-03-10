@@ -1,6 +1,7 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
+import FileUploadDrawer from "@/modules/chat/components/drawers/file-upload"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
@@ -8,10 +9,10 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { EQueryKeyString } from "@/types/common/query-key-string"
-import useCreateMessage from "@/hooks/api/message/creat-message"
+import { cn } from "@/lib/utils"
+import useCreateMessage from "@/hooks/api/message/create-message"
 import useUpdateConversation from "@/hooks/api/message/update-conversation"
 import useUserStore from "@/hooks/state/user/store"
-import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { useToast } from "@/components/ui/use-toast"
 import FormTextInput from "@/components/customized-ui/form/input"
@@ -29,6 +30,8 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
   isReceiverAccepted,
 }) => {
   const t = useI18n()
+  const [file, setFile] = useState<File>()
+  const [isFileUploadDrawerOpen, setIsFileUploadDrawerOpen] = useState(false)
   const queryClient = useQueryClient()
   const userUuid = useUserStore((state) => state.uuid)
   const { toast } = useToast()
@@ -107,11 +110,20 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
     )
   }
 
+  const handleUpLoadFile = (files: File[]) => {
+    setFile(files[0])
+    setIsFileUploadDrawerOpen(false)
+  }
+
+  const handleRemoveFile = () => {
+    setFile(undefined)
+  }
+
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="relative mt-8 p-2"
+        className={cn("relative mt-8 p-2", file && "mt-20")}
       >
         {type === "sender" && !isReceiverAccepted && (
           <div className="sticky bottom-0 rounded-lg border-2 p-2  text-center">
@@ -126,25 +138,62 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
         )}
 
         {isReceiverAccepted && (
-          <div className="fixed bottom-0 w-full p-4 md:w-[65%] ">
-            <FormTextInput
-              control={form.control}
-              name="message"
-              placeholder={t("chat.form.message_placeholder")}
-            />
+          <div className="fixed bottom-0 mb-4 w-full  px-4 md:w-[65%] ">
+            {file && (
+              <div className="mb-2 bg-background">
+                <div className="flex w-full flex-row items-center justify-between rounded-lg border-2 p-2">
+                  <div className="flex w-9/12 flex-row items-end space-x-3 ">
+                    <Icons.file className="w-1/12" />
+                    <p className="w-11/12 truncate">{file.name}</p>
+                  </div>
+                  <div className="flex w-3/12 flex-row items-end justify-end space-x-3">
+                    <p className="text-xs ">
+                      {(file.size / 1000).toFixed(1)} kb
+                    </p>
+                    <Icons.cross
+                      className="cursor-pointer"
+                      onClick={handleRemoveFile}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+            <div className="f  lex w-full flex-row">
+              <div className="relative w-full">
+                <FormTextInput
+                  control={form.control}
+                  name="message"
+                  placeholder={t("chat.form.message_placeholder")}
+                />
 
-            <Button
-              type="submit"
-              variant={"ghost"}
-              size={"xs"}
-              className="absolute right-2 top-1/2  -translate-y-1/2 hover:bg-transparent"
-              disabled={isLoading}
-            >
-              {currentInputMessage && !isLoading && (
-                <Icons.send className="opacity-100 transition-all duration-1000" />
-              )}
-              {isLoading && <Icons.loader />}
-            </Button>
+                <div className="absolute right-2 top-1/2  -translate-y-1/2 hover:bg-transparent">
+                  <div className="flex flex-row items-center space-x-1">
+                    {isLoading && <Icons.loader />}
+
+                    {!file && (
+                      <button
+                        onClick={() => setIsFileUploadDrawerOpen(true)}
+                        type="button"
+                      >
+                        <Icons.file className="cursor-pointer" />
+                      </button>
+                    )}
+                    {(file || currentInputMessage) && !isLoading && (
+                      <button type="submit" disabled={isLoading}>
+                        <Icons.send />
+                      </button>
+                    )}
+                  </div>
+                  <FileUploadDrawer
+                    isOpen={isFileUploadDrawerOpen}
+                    onFileDrop={handleUpLoadFile}
+                    onOpenChange={(open: boolean) =>
+                      setIsFileUploadDrawerOpen(open)
+                    }
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </form>
