@@ -6,12 +6,15 @@ import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
+import { v4 as uuidv4 } from "uuid"
 import { z } from "zod"
 
 import { EQueryKeyString } from "@/types/common/query-key-string"
 import { cn } from "@/lib/utils"
 import useCreateMessage from "@/hooks/api/message/create-message"
 import useUpdateConversation from "@/hooks/api/message/update-conversation"
+import useUploadDocument from "@/hooks/api/message/upload-document"
+import useGetMediaPublicUrl from "@/hooks/api/storage/get-media-url"
 import useUserStore from "@/hooks/state/user/store"
 import { Form } from "@/components/ui/form"
 import { useToast } from "@/components/ui/use-toast"
@@ -37,13 +40,12 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
   const { toast } = useToast()
   const { mutate: create, isLoading } = useCreateMessage()
   const { mutate: update } = useUpdateConversation()
+  const { mutate: upload } = useUploadDocument()
+  const { mutate: getPublicUrl } = useGetMediaPublicUrl()
   const sendMessageInFormSchema = z.object({
-    message: z
-      .string()
-      .min(1, { message: t("validation.send_message.required") })
-      .max(10000, {
-        message: t("validation.text.maximum_length", { count: 4000 }),
-      }),
+    message: z.string().max(10000, {
+      message: t("validation.text.maximum_length", { count: 4000 }),
+    }),
   })
 
   const form = useForm<z.infer<typeof sendMessageInFormSchema>>({
@@ -57,18 +59,31 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
   const messageWatch = watch("message")
   const currentInputMessage = messageWatch.trim()
 
-  const onSubmit = async (values: z.infer<typeof sendMessageInFormSchema>) => {
-    if (!conversationUuid) return
-
+  const onCreateMessage = ({
+    conversationUuid,
+    msgBody,
+    fileName,
+    filePath,
+    fileSize,
+  }: {
+    conversationUuid: string
+    msgBody?: string
+    fileName?: string
+    filePath?: string
+    fileSize?: number
+  }) => {
     create(
       {
         conversationUuid,
-        msgBody: values.message.trim(),
+        msgBody: msgBody,
+        fileName,
+        filePath,
+        fileSize,
       },
       {
         onSuccess: () => {
           form.reset()
-
+          setFile(undefined)
           if (type === "sender") {
             update(
               {
@@ -108,6 +123,59 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
         },
       }
     )
+  }
+  const onSubmit = async (values: z.infer<typeof sendMessageInFormSchema>) => {
+    if (!conversationUuid) return
+    if (file) {
+      const uuid = uuidv4()
+      const filePath = `${conversationUuid}/${uuid}_${file.name}`
+      upload(
+        {
+          file: file,
+          path: filePath,
+        },
+        {
+          onSuccess: (data) => {
+            getPublicUrl(
+              {
+                bucketName: "conversation_documents",
+                path: filePath,
+              },
+              {
+                onSuccess: (data) => {
+                  onCreateMessage({
+                    conversationUuid,
+                    fileName: file.name,
+                    filePath: data.publicUrl,
+                    fileSize: file.size,
+                    msgBody: values.message.trim(),
+                  })
+                },
+              }
+            )
+          },
+          onError: (error: any) => {
+            if (!error) {
+              toast({
+                title: t("general.error.title"),
+                variant: "destructive",
+              })
+            }
+            if (error && error.message) {
+              toast({
+                title: error.message,
+                variant: "destructive",
+              })
+            }
+          },
+        }
+      )
+    } else {
+      onCreateMessage({
+        conversationUuid,
+        msgBody: values.message.trim(),
+      })
+    }
   }
 
   const handleUpLoadFile = (files: File[]) => {
@@ -150,6 +218,7 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
                     <p className="text-xs ">
                       {(file.size / 1000).toFixed(1)} kb
                     </p>
+
                     <Icons.cross
                       className="cursor-pointer"
                       onClick={handleRemoveFile}
@@ -158,7 +227,7 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
                 </div>
               </div>
             )}
-            <div className="f  lex w-full flex-row">
+            <div className="flex w-full flex-row">
               <div className="relative w-full">
                 <FormTextInput
                   control={form.control}
