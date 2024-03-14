@@ -6,6 +6,7 @@ import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
+import { v4 as uuidv4 } from "uuid"
 import { z } from "zod"
 
 import { EQueryKeyString } from "@/types/common/query-key-string"
@@ -178,15 +179,6 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
         msgBody: values.message.trim(),
       })
     }
-  }
-
-  const handleUpLoadFile = (files: File[]) => {
-    setFile(files[0])
-    setIsFileUploadDrawerOpen(false)
-  }
-
-  const handleRemoveFile = () => {
-    setFile(undefined)
   }
 
   const handleUpLoadFile = (files: File[]) => {
