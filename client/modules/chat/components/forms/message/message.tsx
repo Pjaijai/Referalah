@@ -6,7 +6,6 @@ import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
-import { v4 as uuidv4 } from "uuid"
 import { z } from "zod"
 
 import { EQueryKeyString } from "@/types/common/query-key-string"
@@ -127,8 +126,7 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
   const onSubmit = async (values: z.infer<typeof sendMessageInFormSchema>) => {
     if (!conversationUuid) return
     if (file) {
-      const uuid = uuidv4()
-      const filePath = `${conversationUuid}/${uuid}_${file.name}`
+      const filePath = `${userUuid}/${new Date().toISOString()}/${file.name}`
       upload(
         {
           file: file,

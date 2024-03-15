@@ -657,6 +657,7 @@ export const messageReferral = async (req: IMessageReferralRequest) => {
           type: req.type,
           body: req.body,
           to_uuid: req.toUuid,
+          document: req.document,
         },
       }
     )
@@ -679,6 +680,7 @@ export const messagePostCreator = async (req: IMessagePostCreatorRequest) => {
         body: {
           post_uuid: req.postUuid,
           body: req.body,
+          document: req.document,
         },
       }
     )
