@@ -775,20 +775,23 @@ export const createMessage = async ({
   fileName,
   filePath,
   fileSize,
+  internalFilePath,
 }: {
   msgBody?: string
   conversationUuid: string
   fileName?: string
   filePath?: string
   fileSize?: number
+  internalFilePath?: string
 }) => {
   try {
     let document = null
-    if (fileName && filePath && fileSize) {
+    if (fileName && filePath && fileSize && internalFilePath) {
       document = {
         name: fileName,
         path: filePath,
         size: fileSize,
+        internalPath: internalFilePath,
       }
     }
     const { data, error } = await supabase

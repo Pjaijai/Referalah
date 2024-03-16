@@ -2,6 +2,7 @@ export interface IMediaResponse {
   path: string
   name: string
   size: number
+  internalPath: string
 }
 
-export type IMediaRequest = IMediaResponse
+export interface IMediaRequest extends IMediaResponse {}

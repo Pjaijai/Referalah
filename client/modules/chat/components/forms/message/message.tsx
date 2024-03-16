@@ -64,12 +64,14 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
     fileName,
     filePath,
     fileSize,
+    internalFilePath,
   }: {
     conversationUuid: string
     msgBody?: string
     fileName?: string
     filePath?: string
     fileSize?: number
+    internalFilePath?: string
   }) => {
     create(
       {
@@ -78,6 +80,7 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
         fileName,
         filePath,
         fileSize,
+        internalFilePath,
       },
       {
         onSuccess: () => {
@@ -146,6 +149,7 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
                     fileName: file.name,
                     filePath: data.publicUrl,
                     fileSize: file.size,
+                    internalFilePath: filePath,
                     msgBody: values.message.trim(),
                   })
                 },

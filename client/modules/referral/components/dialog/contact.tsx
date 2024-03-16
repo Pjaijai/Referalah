@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { IMediaRequest } from "@/types/common/media"
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
@@ -96,7 +97,7 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
 
     try {
       e.preventDefault()
-      let document = null
+      let document: IMediaRequest | null = null
       if (file) {
         const filePath = `${userUuid}/${new Date().toISOString()}/${file.name}`
 
@@ -116,6 +117,7 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
           name: file.name,
           path: publicUrl,
           size: file.size,
+          internalPath: filePath,
         }
       }
 
@@ -261,14 +263,6 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
                 )}
               />
             </div>
-
-            {/* <FormFileUpload
-              label={t("profile.form.avatar_label")}
-              accept=".pdf"
-              name="file"
-              description={t("profile.form.avatar_description")}
-              control={form.control}
-            /> */}
 
             <FormFileUpload
               label={t("profile.form.avatar_label")}
