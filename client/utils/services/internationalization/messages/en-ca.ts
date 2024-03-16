@@ -190,6 +190,10 @@ export default {
     "- Self-introduction\n- Which position are you applying for?\n- How to contact you？",
   "referral.form.cancel": "Not Today",
   "referral.form.submit": "Submit",
+
+  "referral.form.resume_optional_label": "Resume (Optional)",
+  "referral.form.resume_description_label":
+    "Accept PDF only, and maximum of 100kb",
   "referral.user_not_sing_in_dialog.title": "Please sign in",
   "referral.user_not_sing_in_dialog.description":
     "Please sign in to reach out to them",
@@ -308,4 +312,14 @@ export default {
   "share.copy_link": "Copy Link",
   "share.copied": "Copied",
   "share.share_to": "Share to",
+
+  "genera.dropzone.single.drop_here_select_a_file":
+    "Drag a file here, or click to select a file",
+  "genera.dropzone.plural.drop_here_select_a_file":
+    "Drag files here, or click to select files",
+  "genera.dropzone.only_accept_pdf": "Only *.pdf will be accepted",
+  "genera.max_media_kb_size_count#other": "Maximum {count}kb",
+  "genera.max_storage_day#one": "The document will be stored for {count} day",
+  "genera.max_storage_day#other":
+    "The document will be stored for {count} days",
 } as const

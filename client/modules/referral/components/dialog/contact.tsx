@@ -265,10 +265,10 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
             </div>
 
             <FormFileUpload
-              label={t("profile.form.avatar_label")}
+              label={t("referral.form.resume_optional_label")}
               accept=".pdf"
               onChange={handleDocumentChange}
-              description={t("profile.form.avatar_description")}
+              description={t("referral.form.resume_description_label")}
             />
 
             <DialogFooter className="mt-4">
