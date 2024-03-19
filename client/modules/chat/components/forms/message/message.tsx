@@ -39,7 +39,7 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
   const { toast } = useToast()
   const { mutate: create, isLoading } = useCreateMessage()
   const { mutate: update } = useUpdateConversation()
-  const { mutate: upload } = useUploadDocument()
+  const { mutate: upload, isLoading: isUploading } = useUploadDocument()
   const { mutate: getPublicUrl } = useGetMediaPublicUrl()
   const sendMessageInFormSchema = z.object({
     message: z.string().max(10000, {
@@ -221,10 +221,14 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
                       {(file.size / 1000).toFixed(1)} kb
                     </p>
 
-                    <Icons.cross
-                      className="cursor-pointer"
-                      onClick={handleRemoveFile}
-                    />
+                    {!isUploading ? (
+                      <Icons.cross
+                        className="cursor-pointer"
+                        onClick={handleRemoveFile}
+                      />
+                    ) : (
+                      <Icons.loader className="animate-spin" />
+                    )}
                   </div>
                 </div>
               </div>
@@ -239,7 +243,9 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
 
                 <div className="absolute right-2 top-1/2  -translate-y-1/2 hover:bg-transparent">
                   <div className="flex flex-row items-center space-x-1">
-                    {isLoading && <Icons.loader />}
+                    {(isLoading || isUploading) && (
+                      <Icons.loader className="animate-spin" />
+                    )}
 
                     {!file && (
                       <button
@@ -249,11 +255,13 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
                         <Icons.file className="cursor-pointer" />
                       </button>
                     )}
-                    {(file || currentInputMessage) && !isLoading && (
-                      <button type="submit" disabled={isLoading}>
-                        <Icons.send />
-                      </button>
-                    )}
+                    {(file || currentInputMessage) &&
+                      !isLoading &&
+                      !isUploading && (
+                        <button type="submit" disabled={isLoading}>
+                          <Icons.send />
+                        </button>
+                      )}
                   </div>
                   <FileUploadDrawer
                     isOpen={isFileUploadDrawerOpen}
