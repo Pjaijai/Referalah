@@ -226,12 +226,12 @@ export default {
   "search.loading": "Loading...",
   "search.reach_final_result": "That's all",
   "nav.create_post.description":
-    "Is your company hiring and looking for Hong Kongers? Make a post and let people get in touch with you.",
+    "Is your company hiring and looking for Hong Kongers? Make a post and let talents get in touch with you.",
   "nav.referrer_post.description": "Check job referrals",
   "general.connection": "Connections",
   "nav.become_referrer_or_referrer_description":
     "Select the options in profile!",
-  "nav.referrer.description": "Looking for referrers? Check here !",
+  "nav.referrer.description": "Looking for referrers? Check this!",
   "nav.referee.description": "Looking for talents? Check this!",
   "general.sorting": "Sort",
   "search.year_of_experience_label": "Years of Experience",
