@@ -4,7 +4,6 @@ import { initSupabaseClient } from "../_shared/client.ts"
 import { corsHeaders, ENV_IS_LOCAL } from "../_shared/cors.ts"
 import { EPostStatus } from "../_shared/types/enums/post/status.ts"
 import { initSupabaseServer } from "../_shared/server.ts"
-import { IMessagePostCreatorRequest } from "../_shared/types/request/message-post-creator.ts"
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")
 const WEB_BASE_URL = Deno.env.get("WEB_BASE_URL")
@@ -16,8 +15,7 @@ serve(async (req: any) => {
 
   const client = initSupabaseClient(req)
   const server = initSupabaseServer()
-  const { post_uuid, body: msgBody }: IMessagePostCreatorRequest =
-    await req.json()
+  const { post_uuid, body: msgBody, document } = await req.json()
 
   if (!client) {
     return new Response("User not signed in", {
@@ -130,6 +128,7 @@ serve(async (req: any) => {
           sender_uuid: sender.uuid,
           conversation_uuid: insertConversationRes.uuid,
           body: newMsgBody,
+          document: document,
         })
         .select()
         .single()
@@ -157,6 +156,7 @@ serve(async (req: any) => {
           sender_uuid: sender.uuid,
           conversation_uuid: conversation[0].uuid,
           body: newMsgBody,
+          document: document,
         })
         .select()
         .single()

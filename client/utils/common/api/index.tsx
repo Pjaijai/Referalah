@@ -1,5 +1,4 @@
 import { supabase } from "@/utils/services/supabase/config"
-import { FunctionsHttpError } from "@supabase/supabase-js"
 
 import { IResetPasswordRequest } from "@/types/api/request/auth/reset-password"
 import { ISignInEmailPasswordRequest } from "@/types/api/request/auth/sign-in-with-email-password"
@@ -658,6 +657,7 @@ export const messageReferral = async (req: IMessageReferralRequest) => {
           type: req.type,
           body: req.body,
           to_uuid: req.toUuid,
+          document: req.document,
         },
       }
     )
@@ -680,6 +680,7 @@ export const messagePostCreator = async (req: IMessagePostCreatorRequest) => {
         body: {
           post_uuid: req.postUuid,
           body: req.body,
+          document: req.document,
         },
       }
     )
@@ -720,7 +721,8 @@ export const getConversationListByUserUuid = async ({
         created_at, 
         uuid,
         sender_uuid,
-        body
+        body,
+        document
       )
       `
       )
@@ -770,16 +772,34 @@ export const getMessageListByConversationUuid = async ({
 export const createMessage = async ({
   msgBody,
   conversationUuid,
+  fileName,
+  filePath,
+  fileSize,
+  internalFilePath,
 }: {
-  msgBody: string
+  msgBody?: string
   conversationUuid: string
+  fileName?: string
+  filePath?: string
+  fileSize?: number
+  internalFilePath?: string
 }) => {
   try {
+    let document = null
+    if (fileName && filePath && fileSize && internalFilePath) {
+      document = {
+        name: fileName,
+        path: filePath,
+        size: fileSize,
+        internalPath: internalFilePath,
+      }
+    }
     const { data, error } = await supabase
       .from("message")
       .insert({
         body: msgBody,
         conversation_uuid: conversationUuid,
+        document: document,
       })
       .select("created_at, uuid")
       .single()
@@ -855,4 +875,54 @@ export const getUserCount = async () => {
   } catch (error) {
     throw error
   }
+}
+
+// Storage
+export const uploadMedia = async ({
+  bucketName,
+  file,
+  path,
+  contentType,
+}: {
+  bucketName: string
+  file: File
+  path: string
+  contentType?: string
+}) => {
+  const { data, error } = await supabase.storage
+    .from(bucketName)
+    .upload(path, file, {
+      contentType: contentType,
+    })
+
+  if (error) {
+    throw error
+  }
+  return data
+}
+
+export const getMediaPublicUrl = async ({
+  bucketName,
+  path,
+}: {
+  bucketName: string
+  path: string
+}) => {
+  const { data } = supabase.storage.from(bucketName).getPublicUrl(path)
+
+  return data
+}
+
+export const downloadMedia = async ({
+  bucketName,
+  path,
+}: {
+  bucketName: string
+  path: string
+}) => {
+  const { data, error } = await supabase.storage.from(bucketName).download(path)
+
+  if (error) throw error
+
+  return data
 }

@@ -170,6 +170,10 @@ export default {
     "- 自我介紹\n- 想見邊份工？\n- 點聯絡你？",
   "referral.form.cancel": "都係算",
   "referral.form.submit": "傳送",
+
+  "referral.form.resume_optional_label": "CV/Resume (可skip)",
+  "referral.form.resume_description_label": "淨係接受PDF，最多100kb",
+
   "referral.user_not_sing_in_dialog.title": "未登入",
   "referral.user_not_sing_in_dialog.description": "要登入咗先可以聯絡對方。",
   "referral.user_not_sing_in_dialog.cancel": "下次先",
@@ -283,4 +287,13 @@ export default {
   "share.copy_link": "複製連結",
   "share.copied": "已複製",
   "share.share_to": "分享到",
+
+  "genera.dropzone.single.drop_here_select_a_file":
+    "丼文件落嚟，或者篤一下呢到揀文件",
+  "genera.dropzone.plural.drop_here_select_a_file":
+    "丼文件落嚟，或者篤一下呢到揀文件",
+  "genera.dropzone.only_accept_pdf": "淨係可以放PDF",
+  "genera.max_media_kb_size_count#other": "最多 {count}kb",
+  "genera.max_storage_day#one": "文件會被存放{count}日",
+  "genera.max_storage_day#other": "文件會被存放{count}日",
 } as const

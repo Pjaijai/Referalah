@@ -15,6 +15,7 @@ import {
   Dot,
   Eye,
   EyeOff,
+  File,
   Github,
   History,
   Instagram,
@@ -42,6 +43,7 @@ import {
   Undo2,
   User,
   Verified,
+  X,
   type XIcon as LucideIcon,
 } from "lucide-react"
 
@@ -55,6 +57,8 @@ export const Icons = {
   calendarDays: CalendarDays,
   copy: Copy,
   copyCheck: CopyCheck,
+  cross: X,
+  file: File,
   messageSquareMore: MessageSquareMore,
   sun: SunMedium,
   share: Share2,

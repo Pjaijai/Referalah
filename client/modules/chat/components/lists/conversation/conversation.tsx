@@ -122,6 +122,7 @@ const ConversationList = () => {
                 type={
                   data.sender_uuid.uuid === userUuid ? "sender" : "receiver"
                 }
+                documentName={data.last_message_uuid?.document?.name}
               />
             )
           })}
