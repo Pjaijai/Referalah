@@ -43,16 +43,6 @@ export function SiteHeader() {
               <ThemeToggle />
             </div>
 
-            <Link
-              aria-label="referalah-project-github"
-              href={siteConfig.links.github}
-              target="_blank"
-              rel="noreferrer"
-              className="hidden md:block"
-            >
-              <Icons.github />
-            </Link>
-
             {user.isSignIn && (
               <Link href={siteConfig.page.chat.href}>
                 <MessageIcon className="block md:hidden" />
