@@ -58,6 +58,7 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
 }) => {
   const t = useI18n()
   const userUuid = useUserStore((state) => state.uuid)
+
   const formSchema = z.object({
     message: z
       .string()
@@ -94,7 +95,7 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
   const onSubmit = async (values: z.infer<typeof formSchema>, e: any) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-
+    setIsLoading(true)
     try {
       e.preventDefault()
       let document: IMediaRequest | null = null
@@ -121,7 +122,6 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
         }
       }
 
-      setIsLoading(true)
       if (messageType === "referral") {
         messageReferral(
           {
