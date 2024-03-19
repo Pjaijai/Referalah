@@ -5,7 +5,7 @@ export default {
     connect: "Connect Global Hong Kong",
     professionals: "Professionals",
     subTitle: `Wishing you all the best!`,
-    so_far: "up to the present moment",
+    so_far: "We currently have",
     "members#zero": "No member",
     "members#one": "member",
     "members#two": "members",

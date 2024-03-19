@@ -5,7 +5,7 @@ export default {
     connect: "連結海外香港",
     professionals: "人才",
     subTitle: `祝大家一切順利！`,
-    so_far: "截至現時",
+    so_far: "我哋目前有",
     "members#zero": "個會員",
     "members#other": "個會員",
     join_now: "即刻加入！",
