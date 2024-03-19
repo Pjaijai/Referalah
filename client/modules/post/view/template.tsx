@@ -184,7 +184,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
           {/* separator that is only shown on tablet or larger */}
           <Separator className="mb-5 hidden md:block" />
 
-          <div className="whitespace-pre-wrap break-all">
+          <div className="whitespace-pre-wrap break-normal">
             {post.description}
           </div>
         </div>

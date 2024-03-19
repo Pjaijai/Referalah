@@ -95,7 +95,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
         </Link>
         <p className="text-center text-lg font-semibold">{jobTitle}</p>
         {companyName && <CompanyNameDisplay name={companyName} />}
-        <p className="line-clamp-4 whitespace-pre-wrap break-all pt-6 text-center text-sm">
+        <p className="line-clamp-4 whitespace-pre-wrap break-normal pt-6 text-center text-sm">
           {description}
         </p>
       </CardHeader>

@@ -53,7 +53,7 @@ const MessageCard: React.FunctionComponent<IMessageCardProps> = ({
           data-testid="message-card"
         >
           <div
-            className="shrink-1 whitespace-pre-wrap break-all text-start  text-black dark:text-white"
+            className="shrink-1 whitespace-pre-wrap break-normal text-start  text-black dark:text-white"
             dangerouslySetInnerHTML={{ __html: linkifiedText }}
           />
 
