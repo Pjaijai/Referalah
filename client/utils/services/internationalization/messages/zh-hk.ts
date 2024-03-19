@@ -296,4 +296,5 @@ export default {
   "genera.max_media_kb_size_count#other": "最多 {count}kb",
   "genera.max_storage_day#one": "文件會被存放{count}日",
   "genera.max_storage_day#other": "文件會被存放{count}日",
+  "general.reset": "重設",
 } as const

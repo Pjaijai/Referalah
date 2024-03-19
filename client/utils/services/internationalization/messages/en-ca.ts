@@ -322,4 +322,5 @@ export default {
   "genera.max_storage_day#one": "The document will be stored for {count} day",
   "genera.max_storage_day#other":
     "The document will be stored for {count} days",
+  "general.reset": "Reset",
 } as const
