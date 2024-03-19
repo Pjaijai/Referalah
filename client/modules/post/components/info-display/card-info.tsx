@@ -34,7 +34,7 @@ const PostCardInfoDisplay = ({
           className="xs:max-w-full max-w-xs"
         />
       )}
-      {yearOfExperience && (
+      {typeof yearOfExperience === "number" && (
         <YearsOfExperienceDisplay
           yearOfExperience={yearOfExperience}
           className="xs:max-w-full max-w-xs"
