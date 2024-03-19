@@ -131,10 +131,11 @@ const RefererPostPageTemplate: React.FunctionComponent<
           dataLength={list ? list.length : 0} //This is important field to render the next data
           next={fetchNextPage}
           hasMore={
-            (data &&
-              data.pages &&
-              data.pages[data.pages.length - 1].length !== 0) ??
-            true
+            data
+              ? data &&
+                data.pages &&
+                data.pages[data.pages.length - 1].length !== 0
+              : true
           }
         >
           <div className="mt-8 grid w-full grid-cols-1 gap-4 overflow-hidden lg:grid-cols-2">

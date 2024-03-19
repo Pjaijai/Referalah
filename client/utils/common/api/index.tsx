@@ -728,7 +728,7 @@ export const getConversationListByUserUuid = async ({
       )
       .or(`sender_uuid.eq.${userUuid},receiver_uuid.eq.${userUuid}`)
       .range(from, to)
-      .returns<IGetConversationListByUserUuidResponse>()
+      .returns<IGetConversationListByUserUuidResponse[]>()
       .order("last_updated_at", { ascending: false })
 
     if (error) {

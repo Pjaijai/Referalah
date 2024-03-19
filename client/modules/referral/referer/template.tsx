@@ -135,11 +135,12 @@ const RefererPageTemplate: React.FunctionComponent<
           dataLength={list ? list.length : 0} //This is important field to render the next data
           next={fetchNextPage}
           hasMore={
-            (refererListData &&
-              refererListData.pages &&
-              refererListData.pages[refererListData.pages.length - 1].length !==
-                0) ??
-            true
+            refererListData
+              ? refererListData &&
+                refererListData.pages &&
+                refererListData.pages[refererListData.pages.length - 1]
+                  .length !== 0
+              : true
           }
         >
           <div className="xs:grid-cols-1 mt-8 grid w-full gap-6 overflow-hidden sm:grid-cols-2 lg:grid-cols-3">

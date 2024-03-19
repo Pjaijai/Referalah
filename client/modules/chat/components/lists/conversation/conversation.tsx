@@ -87,7 +87,13 @@ const ConversationList = () => {
           dataLength={list ? list.length : 0} //This is important field to render the next data
           scrollableTarget="conversationScrollDiv"
           next={fetchNextPage}
-          hasMore={!!(data && data.pageParams[0])}
+          hasMore={
+            data
+              ? data &&
+                data.pages &&
+                data.pages[data.pages.length - 1].length !== 0
+              : true
+          }
           endMessage={<></>}
         >
           {list.map((data) => {

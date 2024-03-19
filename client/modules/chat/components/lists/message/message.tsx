@@ -74,10 +74,11 @@ const MessageList: React.FunctionComponent<IMessageListProps> = ({
           inverse={true}
           scrollableTarget="messageScrollDiv"
           hasMore={
-            (data &&
-              data.pages &&
-              data.pages[data.pages.length - 1].length !== 0) ??
-            true
+            data
+              ? data &&
+                data.pages &&
+                data.pages[data.pages.length - 1].length !== 0
+              : true
           }
           endMessage={<></>}
         >
