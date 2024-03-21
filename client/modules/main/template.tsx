@@ -100,14 +100,14 @@ const MainPageTemplate = ({
           </motion.div>
         </div>
 
-        {initialTheme.current.value === theme && (
+        {initialTheme.current.value !== theme && (
           <div className="absolute top-0 h-full w-full">
             <Globe />
           </div>
         )}
       </div>
 
-      {initialTheme.current.value !== theme && (
+      {initialTheme.current.value === theme && (
         <div className="fixed top-0 z-0 h-full w-full">
           <BackgroundBeams />
         </div>
