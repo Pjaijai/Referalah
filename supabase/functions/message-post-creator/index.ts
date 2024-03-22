@@ -105,6 +105,7 @@ serve(async (req: any) => {
     })
 
     let conversationUuid
+    let messageUuid
 
     const newMsgBody = `
     Post Title/街招 :${post.job_title}
@@ -132,6 +133,8 @@ serve(async (req: any) => {
         })
         .select()
         .single()
+
+      messageUuid = insertMessageRes.uuid
 
       const { updateConversationRes, error: updateConversationError } =
         await server
@@ -168,10 +171,21 @@ serve(async (req: any) => {
         .select()
         .single()
 
+      messageUuid = message.uuid
+
       console.log(
         `Existing conversation uuid:${data.uuid} for ${sender.uuid} and ${post.user.uuid}. Inserting message: uuid${message.uuid}`,
       )
     }
+
+    const { data: record, error: err } = await server
+      .from("post_contact_history")
+      .insert({
+        sender_uuid: sender.uuid,
+        post_uuid: post.uuid,
+        type: "referer",
+        message_uuid: messageUuid,
+      })
 
     const subject = `${sender.username} is interested in you post - ${post.job_title}`
     const body = `

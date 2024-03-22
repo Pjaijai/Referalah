@@ -103,6 +103,7 @@ serve(async (req: any) => {
     })
 
     let conversationUuid
+    let messageUuid
 
     if (!conversation[0]) {
       const { data: insertConversationRes, error: insertConversationError } =
@@ -123,6 +124,8 @@ serve(async (req: any) => {
         })
         .select()
         .single()
+
+      messageUuid = insertMessageRes.uuid
 
       const { updateConversationRes, error: updateConversationError } =
         await server
@@ -160,10 +163,21 @@ serve(async (req: any) => {
         .select()
         .single()
 
+      messageUuid = message.uuid
+
       console.log(
         `Existing conversation uuid:${data.uuid} for ${sender.uuid} and ${receiver.uuid}. Inserting message: uuid${message.uuid}`,
       )
     }
+
+    const { data: record } = await server
+      .from("referral_contact_history")
+      .insert({
+        sender_uuid: sender.uuid,
+        receiver_uuid: receiver.uuid,
+        type,
+        message_uuid: messageUuid,
+      })
 
     const subject = `${sender.username} sent you a message.`
     const emailBody = `
