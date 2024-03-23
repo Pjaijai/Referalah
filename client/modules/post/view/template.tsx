@@ -75,7 +75,9 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                 <Icons.copyCheck height={20} width={20} />
               </>
             }
-            textValue={window.location.href}
+            textValue={
+              typeof window !== "undefined" ? window.location.href : ""
+            }
           />
         </div>
       </div>
