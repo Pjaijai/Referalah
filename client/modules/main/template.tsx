@@ -64,7 +64,7 @@ const MainPageTemplate = ({
             </div>
 
             <div className="mt-8 flex w-full flex-row justify-center">
-              {isUserSignIn && (
+              {isUserSignIn ? (
                 <Link
                   href={siteConfig.page.referrerPost.href}
                   className={cn(
@@ -77,9 +77,7 @@ const MainPageTemplate = ({
                 >
                   {scopedT("check_latest_post")}
                 </Link>
-              )}
-
-              {!isUserSignIn && (
+              ) : (
                 <Link
                   href={siteConfig.page.signUp.href}
                   className={cn(
