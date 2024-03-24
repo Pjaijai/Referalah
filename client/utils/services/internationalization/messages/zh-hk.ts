@@ -298,4 +298,5 @@ export default {
   "genera.max_storage_day#one": "文件會被存放{count}日",
   "genera.max_storage_day#other": "文件會被存放{count}日",
   "general.reset": "重設",
+  "general.expired": "已過期",
 } as const
