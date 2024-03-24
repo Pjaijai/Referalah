@@ -3,6 +3,7 @@
 INSERT INTO country (id, uuid, value, english_name, cantonese_name)
 VALUES
   (1, 'c55a2a85-bd17-423d-b49f-548dc859ab67', 'canada', 'Canada', '加拿大');
+  (2, 'c55a2a85-bd17-423d-b49f-548dc859ab61', 'japan', 'apan', 'jp');
 
 -- Insert data into the "province" table
 INSERT INTO province (id, uuid, value, country_uuid, english_name, cantonese_name)
