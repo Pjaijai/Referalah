@@ -25,7 +25,7 @@ const FileUploadDrawer: React.FunctionComponent<IFileUploadDrawerProps> = ({
           innerClassName="h-full"
           outerClassName="h-96 p-4"
           description={`${t("genera.dropzone.only_accept_pdf")}`}
-          maxFileSize={100}
+          maxFileSize={2}
           onFileDrop={onFileDrop}
           maxStorageDay={7}
         />

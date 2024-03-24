@@ -96,10 +96,14 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     setIsLoading(true)
+
     try {
       e.preventDefault()
       let document: IMediaRequest | null = null
       if (file) {
+        if (file.size > 2000000) {
+          throw new Error("The document is too large")
+        }
         const filePath = `${userUuid}/${new Date().toISOString()}/${file.name}`
 
         const { path } = await uploadMedia({
@@ -197,13 +201,14 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
         )
       }
     } catch (err: any) {
+      setIsLoading(false)
       if (err && err.message) {
         return toast({
           title: err.message,
-
           variant: "destructive",
         })
       }
+
       return toast({
         title: t("referral.form.contact.error.title"),
         description: t("referral.form.contact.error.description"),

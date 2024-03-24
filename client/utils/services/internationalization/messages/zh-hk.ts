@@ -172,7 +172,8 @@ export default {
   "referral.form.submit": "傳送",
 
   "referral.form.resume_optional_label": "CV/Resume (可skip)",
-  "referral.form.resume_description_label": "淨係接受PDF，最多100kb",
+  "referral.form.resume_description_label":
+    "淨係接受PDF，最多2mb，文件只會存放7日",
 
   "referral.user_not_sing_in_dialog.title": "未登入",
   "referral.user_not_sing_in_dialog.description": "要登入咗先可以聯絡對方。",
@@ -293,7 +294,7 @@ export default {
   "genera.dropzone.plural.drop_here_select_a_file":
     "丼文件落嚟，或者篤一下呢到揀文件",
   "genera.dropzone.only_accept_pdf": "淨係可以放PDF",
-  "genera.max_media_kb_size_count#other": "最多 {count}kb",
+  "genera.max_media_mb_size_count#other": "最多 {count}mb",
   "genera.max_storage_day#one": "文件會被存放{count}日",
   "genera.max_storage_day#other": "文件會被存放{count}日",
   "general.reset": "重設",
