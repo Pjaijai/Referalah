@@ -16,7 +16,7 @@ interface IBaseDropzoneProps {
   innerClassName?: string
   title?: string
   description?: string
-  maxFileSize?: number // in kb
+  maxFileSize?: number // in mb
   maxStorageDay?: number // in days
 }
 const BaseDropzone: React.FunctionComponent<IBaseDropzoneProps> = ({
@@ -69,7 +69,7 @@ const BaseDropzone: React.FunctionComponent<IBaseDropzoneProps> = ({
         {description && <em>{description}</em>}
         {!!maxFileSize && (
           <em>
-            ({t("genera.max_media_kb_size_count", { count: maxFileSize })})
+            ({t("genera.max_media_mb_size_count", { count: maxFileSize })})
           </em>
         )}
         {!!maxStorageDay && (

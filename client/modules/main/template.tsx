@@ -25,7 +25,6 @@ const MainPageTemplate = ({
 }) => {
   const isUserSignIn = useUserStore((state) => state.isSignIn)
   const { theme } = useTheme()
-  const isDarkTheme = theme === "dark"
   const initialTheme = useRef({ value: theme })
 
   const scopedT = useScopedI18n("index")

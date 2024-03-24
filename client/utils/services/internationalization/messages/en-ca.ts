@@ -193,7 +193,7 @@ export default {
 
   "referral.form.resume_optional_label": "Resume (Optional)",
   "referral.form.resume_description_label":
-    "Accept PDF only, and maximum of 100kb",
+    "Only PDF files are accepted, with a maximum size limit of 2 MB. File will be removed after 7 days",
   "referral.user_not_sing_in_dialog.title": "Please sign in",
   "referral.user_not_sing_in_dialog.description":
     "Please sign in to reach out to them",
@@ -318,9 +318,10 @@ export default {
   "genera.dropzone.plural.drop_here_select_a_file":
     "Drag files here, or click to select files",
   "genera.dropzone.only_accept_pdf": "Only *.pdf will be accepted",
-  "genera.max_media_kb_size_count#other": "Maximum {count}kb",
+  "genera.max_media_mb_size_count#other": "Maximum {count}mb",
   "genera.max_storage_day#one": "The document will be stored for {count} day",
   "genera.max_storage_day#other":
     "The document will be stored for {count} days",
   "general.reset": "Reset",
+  "general.expired": "Expired",
 } as const
