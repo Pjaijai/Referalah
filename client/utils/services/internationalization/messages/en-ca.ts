@@ -139,7 +139,7 @@ export default {
   "post.create.content_label": "Description",
   "general.industry": "Industry",
   "general.country": "Country",
-  "general.province": "Province",
+  "general.region": "Region",
   "general.city": "City",
   "general.year_of_experience": "Year of Experience",
   "post.status_text": "Status",
@@ -166,6 +166,8 @@ export default {
   "profile.form.is_referee_description": "I am ready to contribute",
   "profile.form.personal_description_label": "Description",
   "profile.form.optional_company_label": "Company(Optional)",
+  "profile.form.optional_region_label": "Region(Optional)",
+  "profile.form.optional_city_label": "City(Optional)",
   "profile.form.job_title_label": "Job Title",
   "profile.form.optional_personal_social_media_link_label":
     "Social media link(Optional)",

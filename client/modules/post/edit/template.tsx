@@ -179,6 +179,13 @@ const EditPostPageTemplate: React.FunctionComponent<
     useUpdatePost()
 
   useEffect(() => {
+    if (!isLoading && countryWatch !== post?.country?.uuid) {
+      form.setValue("provinceUuid", "")
+      form.setValue("cityUuid", "")
+    }
+  }, [form, isLoading, countryWatch])
+
+  useEffect(() => {
     if (provinceWatch !== post?.province?.uuid) {
       form.setValue("cityUuid", "")
     }
@@ -301,7 +308,7 @@ const EditPostPageTemplate: React.FunctionComponent<
 
           <FormSelect
             control={form.control}
-            label={t("general.province")}
+            label={t("general.region")}
             name="provinceUuid"
             options={provinceOptions}
           />

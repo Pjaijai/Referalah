@@ -123,7 +123,7 @@ export default {
   "post.create.content_label": "內容",
   "general.industry": "行業",
   "general.country": "國家",
-  "general.province": "省份",
+  "general.region": "地區",
   "general.city": "城市",
   "general.year_of_experience": "工作年資",
   "post.status_text": "狀態",
@@ -150,6 +150,8 @@ export default {
   "profile.form.is_referee_description": "我的訴求就是上班",
   "profile.form.personal_description_label": "個人簡介",
   "profile.form.optional_company_label": "公司名(選填)",
+  "profile.form.optional_region_label": "地區(選填)",
+  "profile.form.optional_city_label": "城市(選填)",
   "profile.form.job_title_label": "職位/工作名稱",
   "profile.form.optional_personal_social_media_link_label": "個人連結(選填)",
   "profile.form.personal_social_media_link_description":

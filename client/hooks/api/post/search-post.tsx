@@ -132,6 +132,15 @@ const useSearchPost = (props: ISearchPostProps) => {
     [params]
   )
 
+  const removeQueryString = useCallback(
+    (name: string) => {
+      params.delete(name)
+
+      return params.toString()
+    },
+    [params]
+  )
+
   const handleCompanyChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCompanyName(e.target.value)
     createQueryString("company", e.target.value)
@@ -143,33 +152,62 @@ const useSearchPost = (props: ISearchPostProps) => {
   }
 
   const handleCountryChange = (value: string) => {
-    setCountryUuid(value)
-    createQueryString(
-      "country",
-      countryData?.find((item) => item.uuid === value)?.value ?? value
-    )
+    if (value === "all") {
+      setCountryUuid(undefined)
+      setProvinceUuid(undefined)
+      setCityUuid(undefined)
+      removeQueryString("country")
+      removeQueryString("province")
+      removeQueryString("city")
+    } else {
+      setCountryUuid(value)
+      setProvinceUuid(undefined)
+      setCityUuid(undefined)
+      createQueryString(
+        "country",
+        countryData?.find((item) => item.uuid === value)?.value ?? value
+      )
+    }
   }
   const handleProvinceChange = (value: string) => {
-    setProvinceUuid(value)
-    createQueryString(
-      "province",
-      provinceData?.find((item) => item.uuid === value)?.value ?? value
-    )
+    if (value === "all") {
+      setProvinceUuid(undefined)
+      setCityUuid(undefined)
+      removeQueryString("province")
+      removeQueryString("city")
+    } else {
+      setProvinceUuid(value)
+      setCityUuid(undefined)
+      createQueryString(
+        "province",
+        provinceData?.find((item) => item.uuid === value)?.value ?? value
+      )
+    }
   }
   const handleCityChange = (value: string) => {
-    setCityUuid(value)
-    createQueryString(
-      "city",
-      cityData?.find((item) => item.uuid === value)?.value ?? value
-    )
+    if (value === "all") {
+      setCityUuid(undefined)
+      removeQueryString("city")
+    } else {
+      setCityUuid(value)
+      createQueryString(
+        "city",
+        cityData?.find((item) => item.uuid === value)?.value ?? value
+      )
+    }
   }
 
   const handleIndustryChange = (value: string) => {
-    setIndustryUuid(value)
-    createQueryString(
-      "industry",
-      industryData?.find((item) => item.uuid === value)?.value ?? value
-    )
+    if (value === "all") {
+      setIndustryUuid(undefined)
+      removeQueryString("industry")
+    } else {
+      setIndustryUuid(value)
+      createQueryString(
+        "industry",
+        industryData?.find((item) => item.uuid === value)?.value ?? value
+      )
+    }
   }
 
   const handleSortingChange = (value: string) => {

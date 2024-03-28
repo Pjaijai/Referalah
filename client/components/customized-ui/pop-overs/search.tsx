@@ -72,10 +72,10 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
   provinceList,
 }) => {
   const t = useI18n()
-  const industryOptions = useIndustryOptions(industryList)
-  const countryOptions = useCountryOptions(countryList)
-  const provinceOptions = useProvinceOptions(provinceList, countryUuid)
-  const cityOptions = useCityOptions(cityList, provinceUuid)
+  const industryOptions = useIndustryOptions(industryList, true)
+  const countryOptions = useCountryOptions(countryList, true)
+  const provinceOptions = useProvinceOptions(provinceList, countryUuid, true)
+  const cityOptions = useCityOptions(cityList, provinceUuid, true)
   const { data: postSortingOptions } = usePostSortOptions()
   const { data: referralSortingOptions } = useReferralSortOptions()
 
@@ -133,7 +133,7 @@ const SearchPopover: React.FunctionComponent<ISearchPopoverProps> = ({
               />
             </div>
             <div className="grid grid-cols-3 items-center gap-4">
-              <Label>{t("general.province")}</Label>
+              <Label>{t("general.region")}</Label>
               <BaseSelect
                 options={provinceOptions}
                 onChange={onProvinceChange}

@@ -6,8 +6,8 @@ export interface IUpdateUserProfileRequest {
   jobTitle?: string
   yearOfExperience?: number
   countryUuid?: string
-  provinceUuid?: string
-  cityUuid?: string
+  provinceUuid?: string | null
+  cityUuid?: string | null
   industryUuid?: string
   socialMediaUrl?: string
   isReferer: boolean
