@@ -54,10 +54,8 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   const t = useI18n()
   const queryClient = useQueryClient()
   const router = useRouter()
-  const { data: profile, isLoading: isProfileLoading } = useGetUserprofile(
-    userUuid
-    // InitialProfile
-  )
+  const { data: profile, isLoading: isProfileLoading } =
+    useGetUserprofile(userUuid)
 
   const formSchema = z
     .object({
@@ -105,12 +103,8 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       countryUuid: z.string().min(1, {
         message: t("validation.field_required"),
       }),
-      provinceUuid: z.string().min(1, {
-        message: t("validation.field_required"),
-      }),
-      cityUuid: z.string().min(1, {
-        message: t("validation.field_required"),
-      }),
+      provinceUuid: z.string().optional(),
+      cityUuid: z.string().optional(),
       industryUuid: z.string().min(1, {
         message: t("validation.field_required"),
       }),
@@ -233,12 +227,20 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
 
   const countryWatch = watch("countryUuid")
   const provinceWatch = watch("provinceUuid")
+  const cityWatch = watch("cityUuid")
   const yearOfExperienceWatch = watch("yearOfExperience")
 
   const industryOptions = useIndustryOptions(industryList)
   const countryOptions = useCountryOptions(countryList)
   const provinceOptions = useProvinceOptions(provinceList, countryWatch)
   const cityOptions = useCityOptions(cityList, provinceWatch)
+
+  useEffect(() => {
+    if (profile && countryWatch !== profile.country?.uuid) {
+      setValue("provinceUuid", "")
+      setValue("cityUuid", "")
+    }
+  }, [countryOptions, countryWatch])
 
   useEffect(() => {
     if (profile && provinceWatch !== profile.province?.uuid) {
@@ -321,14 +323,15 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           ? parseInt(values.yearOfExperience)
           : undefined,
         countryUuid: values.countryUuid,
-        provinceUuid: values.provinceUuid,
-        cityUuid: values.cityUuid,
+        provinceUuid: values?.provinceUuid?.length ? values.provinceUuid : null,
+        cityUuid: values?.cityUuid?.length ? values.cityUuid : null,
         industryUuid: values.industryUuid,
         socialMediaUrl: values.socialMediaUrl?.trim(),
         isReferer: values.isReferer,
         isReferee: values.isReferee,
         userUuid: user.uuid!,
       }
+
       updateProfile(updateUserRequest, {
         onSuccess: () => {
           toast({
@@ -482,14 +485,14 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           />
           <FormSelect
             control={form.control}
-            label={t("general.province")}
+            label={t("profile.form.optional_region_label")}
             name="provinceUuid"
             options={provinceOptions}
           />
 
           <FormSelect
             control={form.control}
-            label={t("general.city")}
+            label={t("profile.form.optional_city_label")}
             name="cityUuid"
             options={cityOptions}
           />

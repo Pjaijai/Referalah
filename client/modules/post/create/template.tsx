@@ -145,6 +145,11 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
   const { mutate: createPost, isLoading: isCreatePostLoading } = useCreatePost()
 
   useEffect(() => {
+    form.setValue("provinceUuid", "")
+    form.setValue("cityUuid", "")
+  }, [countryWatch])
+
+  useEffect(() => {
     form.setValue("cityUuid", "")
   }, [provinceWatch])
 
@@ -281,7 +286,7 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
           />
           <FormSelect
             control={form.control}
-            label={t("general.province")}
+            label={t("general.region")}
             name="provinceUuid"
             options={provinceOptions as any}
           />
