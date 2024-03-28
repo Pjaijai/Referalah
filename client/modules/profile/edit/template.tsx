@@ -227,7 +227,6 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
 
   const countryWatch = watch("countryUuid")
   const provinceWatch = watch("provinceUuid")
-  const cityWatch = watch("cityUuid")
   const yearOfExperienceWatch = watch("yearOfExperience")
 
   const industryOptions = useIndustryOptions(industryList)
