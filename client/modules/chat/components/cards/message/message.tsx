@@ -27,7 +27,6 @@ const MessageCard: React.FunctionComponent<IMessageCardProps> = ({
 
   const isDocumentExpired = dayDiff > 7
 
-  console.log(123123, dayDiff)
   const linkify = (text: string | null) => {
     if (!text) return ""
     var urlRegex =
