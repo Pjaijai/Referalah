@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.13.0](https://github.com/Pjaijai/Referalah/compare/v1.12.3...v1.13.0) (2024-03-29)
+
+
+### Features
+
+* add fancy background ([#335](https://github.com/Pjaijai/Referalah/issues/335)) ([41a113f](https://github.com/Pjaijai/Referalah/commit/41a113fc1dd77d0d6205e0b1e48de3232f05fc14))
+
+
+### Bug Fixes
+
+* fix copy ([7fd3e79](https://github.com/Pjaijai/Referalah/commit/7fd3e7923d881eb7dbf7130f6d4899574beb7e33))
+* fix fancy background showing logic ([0cdc69b](https://github.com/Pjaijai/Referalah/commit/0cdc69b10188b005f3f4c759ed9152d5138cdd35))
+* fix infinite scroll infinite loading problem ([6d89fd5](https://github.com/Pjaijai/Referalah/commit/6d89fd5668967188d376d8080348714afc2e592e))
+* fix typo ([d890b8c](https://github.com/Pjaijai/Referalah/commit/d890b8c465b5afbe34c6dd97a1224e0a29061cc0))
+* fix ui ([#339](https://github.com/Pjaijai/Referalah/issues/339)) ([70b798c](https://github.com/Pjaijai/Referalah/commit/70b798c36920f39ebbc12dd8f465c346de50ddde))
+* fix word break ([10b3583](https://github.com/Pjaijai/Referalah/commit/10b35838dbcdd068b760c307fa234a15dfa1ecbc))
+* fix yoe in referral post card ([29d771d](https://github.com/Pjaijai/Referalah/commit/29d771d580cbb1341157bc2d3be2ba68dd0b46f8))
+* remove github in header ([d3ba81d](https://github.com/Pjaijai/Referalah/commit/d3ba81dc862c4812dfa9f42cf5f8c912b1177348))
+* replace reset icon with copy ([6b2feae](https://github.com/Pjaijai/Referalah/commit/6b2feae43c10453a50668f2aa4ccd70ab0f87607))
+
 ### [1.12.3](https://github.com/Pjaijai/Referalah/compare/v1.12.2...v1.12.3) (2024-03-07)
 
 
