@@ -36,7 +36,6 @@ serve(async (req: any) => {
       })
 
     const { data: users } = await server.from("user").select("*")
-
     const limiter = new Bottleneck({
       minTime: 180,
       maxConcurrent: 1,
@@ -52,7 +51,8 @@ serve(async (req: any) => {
               receiver_uuid(uuid,username, email),
               last_message_uuid(
                   sender_uuid,
-                  body
+                  body,
+                  document
               ),
               is_sender_seen,
               is_receiver_seen
@@ -72,20 +72,34 @@ serve(async (req: any) => {
             conversation.last_message_uuid.sender_uuid !== user.uuid &&
             index < 5
           ) {
-            unseenConversationList.push({
-              username: conversation.receiver_uuid.username,
-              body: conversation.last_message_uuid.body,
-            })
+            if (conversation.last_message_uuid.body) {
+              unseenConversationList.push({
+                username: conversation.receiver_uuid.username,
+                body: conversation.last_message_uuid.body,
+              })
+            } else {
+              unseenConversationList.push({
+                username: conversation.receiver_uuid.username,
+                body: conversation.last_message_uuid.document.name,
+              })
+            }
           } else if (
             conversation.receiver_uuid.uuid === user.uuid &&
             conversation.is_receiver_seen === false &&
             conversation.last_message_uuid.sender_uuid !== user.uuid &&
             index < 5
           ) {
-            unseenConversationList.push({
-              username: conversation.sender_uuid.username,
-              body: conversation.last_message_uuid.body,
-            })
+            if (conversation.last_message_uuid.body) {
+              unseenConversationList.push({
+                username: conversation.sender_uuid.username,
+                body: conversation.last_message_uuid.body,
+              })
+            } else {
+              unseenConversationList.push({
+                username: conversation.sender_uuid.username,
+                body: conversation.last_message_uuid.document.name,
+              })
+            }
           } else {
             break
           }
