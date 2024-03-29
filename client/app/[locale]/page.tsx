@@ -20,9 +20,5 @@ export default async function IndexPage() {
     type: EReferralType.REFERRER,
   })
 
-  return (
-    <CommonPageLayout>
-      <MainPageTemplate count={count} posts={posts} />
-    </CommonPageLayout>
-  )
+  return <MainPageTemplate count={count} posts={posts} />
 }
