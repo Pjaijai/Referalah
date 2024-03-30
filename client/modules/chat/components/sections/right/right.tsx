@@ -92,6 +92,7 @@ const ChatRightSection = () => {
           sentByUser:
             currentConversation.lastMessage?.createdByUuid === userUuid,
           createdAt: currentConversation.lastMessage?.createdAt,
+          isDocumentExpired: currentConversation.lastMessage?.isDocumentExpired,
         }}
       />
       <SendMessageForm

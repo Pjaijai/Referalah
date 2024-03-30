@@ -16,6 +16,7 @@ interface IMessageListProps {
     body?: string
     createdAt?: string
     document?: IMediaResponse
+    isDocumentExpired?: boolean
   }
 }
 const MessageList: React.FunctionComponent<IMessageListProps> = ({
@@ -91,6 +92,7 @@ const MessageList: React.FunctionComponent<IMessageListProps> = ({
                   key={data.uuid}
                   createdAt={data.created_at}
                   document={data.document}
+                  isDocumentExpired={data.is_document_expired}
                 />
               )
             })}
@@ -103,6 +105,7 @@ const MessageList: React.FunctionComponent<IMessageListProps> = ({
           sentByUser={lastMessage.sentByUser}
           createdAt={lastMessage.createdAt || ""}
           document={lastMessage.document}
+          isDocumentExpired={lastMessage.isDocumentExpired ?? false}
         />
       )}
     </div>

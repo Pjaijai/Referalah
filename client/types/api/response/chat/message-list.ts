@@ -7,4 +7,5 @@ export interface IMessageListResponse {
   status: "active" | "inactive"
   uuid: string
   document: any //IMediaResponse
+  is_document_expired: boolean
 }

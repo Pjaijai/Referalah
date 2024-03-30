@@ -37,14 +37,27 @@ serve(async (req: any) => {
       .select("*")
       .not("document", "is", null)
       .lte("created_at", date.toISOString())
+      .eq("is_document_expired", false)
 
+    const uuids = data.map((d) => d.uuid)
     const paths = data.map((d) => d.document.internalPath)
 
     const { data: removeRes } = await server.storage
       .from("conversation_documents")
       .remove(paths)
 
-    return new Response(JSON.stringify(removeRes), {
+    const updateRes = await Promise.all(
+      uuids.map(async (uuid) => {
+        const { data, error } = await server
+          .from("message")
+          .update({ is_document_expired: true })
+          .eq("uuid", uuid)
+          .select("uuid")
+        return data
+      }),
+    )
+
+    return new Response(JSON.stringify(updateRes), {
       headers: { ...corsHeaders, "Content-Type": "application/json" }, // Be sure to add CORS headers here too
       status: 200,
     })

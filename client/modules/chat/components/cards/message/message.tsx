@@ -10,22 +10,16 @@ interface IMessageCardProps {
   sentByUser: boolean
   createdAt: string // datetime string
   document?: any
+  isDocumentExpired: boolean
 }
 const MessageCard: React.FunctionComponent<IMessageCardProps> = ({
   text,
   sentByUser,
   createdAt,
   document,
+  isDocumentExpired,
 }) => {
   const { data: formattedDate } = useCreatedAt({ createdAt })
-
-  const dayDiff = compareDateDifferenceHelper({
-    oldDate: createdAt,
-    newDate: new Date().toISOString(),
-    unit: "day",
-  })
-
-  const isDocumentExpired = dayDiff > 7
 
   const linkify = (text: string | null) => {
     if (!text) return ""

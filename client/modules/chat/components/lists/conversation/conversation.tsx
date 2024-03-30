@@ -37,6 +37,7 @@ const ConversationList = () => {
             body: last_message_uuid.body,
             createdByUuid: last_message_uuid.sender_uuid,
             createdAt: last_message_uuid.created_at,
+            isDocumentExpired: last_message_uuid.is_document_expired,
           }
         : null
 

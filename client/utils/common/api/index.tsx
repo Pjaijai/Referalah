@@ -722,7 +722,8 @@ export const getConversationListByUserUuid = async ({
         uuid,
         sender_uuid,
         body,
-        document
+        document,
+        is_document_expired
       )
       `
       )

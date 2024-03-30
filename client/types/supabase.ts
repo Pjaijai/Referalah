@@ -198,6 +198,7 @@ export interface Database {
           created_at: string
           document: Json | null
           id: number
+          is_document_expired: boolean
           sender_uuid: string
           status: Database["public"]["Enums"]["message_status"]
           uuid: string
@@ -208,6 +209,7 @@ export interface Database {
           created_at?: string
           document?: Json | null
           id?: number
+          is_document_expired?: boolean
           sender_uuid?: string
           status?: Database["public"]["Enums"]["message_status"]
           uuid?: string
@@ -218,6 +220,7 @@ export interface Database {
           created_at?: string
           document?: Json | null
           id?: number
+          is_document_expired?: boolean
           sender_uuid?: string
           status?: Database["public"]["Enums"]["message_status"]
           uuid?: string
