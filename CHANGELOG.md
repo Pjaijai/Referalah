@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [1.14.0](https://github.com/Pjaijai/Referalah/compare/v1.13.0...v1.14.0) (2024-03-31)
 
+### Features
+
+- add fancy background ([#335](https://github.com/Pjaijai/Referalah/issues/335)) ([41a113f](https://github.com/Pjaijai/Referalah/commit/41a113fc1dd77d0d6205e0b1e48de3232f05fc14))
 
 ### Features
 
