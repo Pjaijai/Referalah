@@ -12,6 +12,9 @@ import CommonPageLayout from "@/components/layouts/common"
 
 export const metadata = siteConfig.page.referrerPost.metadata
 
+export const revalidate = false
+export const fetchCache = "default-cache"
+
 const RefererPostPage = async () => {
   const t = await getI18n()
   const countryList = await getCountryList()
