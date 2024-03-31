@@ -26,7 +26,7 @@ export async function generateMetadata({
     }
   }
 }
-export const revalidate = false
+export const revalidate = 60
 export const fetchCache = "default-cache"
 
 const Page = async ({ params }: { params: { userUuid: string } }) => {
