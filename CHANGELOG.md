@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.14.0](https://github.com/Pjaijai/Referalah/compare/v1.13.0...v1.14.0) (2024-03-31)
+
+
+### Features
+
+* update clean storage api logic ([6f0e172](https://github.com/Pjaijai/Referalah/commit/6f0e172f22041d6db8056c7e3b442c91220360af))
+
 ## [1.13.0](https://github.com/Pjaijai/Referalah/compare/v1.12.3...v1.13.0) (2024-03-29)
 
 ### Features
