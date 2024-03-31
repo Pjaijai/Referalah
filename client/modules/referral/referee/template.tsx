@@ -73,6 +73,7 @@ const RefereePageTemplate: React.FunctionComponent<
 
   const list =
     refereeListData !== undefined ? refereeListData.pages.flatMap((d) => d) : []
+
   return (
     <div className="flex flex-col gap-4">
       <div className="mt-8 flex h-full w-full flex-col-reverse gap-4 md:flex-row">
@@ -134,11 +135,12 @@ const RefereePageTemplate: React.FunctionComponent<
           dataLength={list ? list.length : 0} //This is important field to render the next data
           next={fetchNextPage}
           hasMore={
-            (refereeListData &&
-              refereeListData.pages &&
-              refereeListData.pages[refereeListData.pages.length - 1].length !==
-                0) ??
-            true
+            refereeListData
+              ? refereeListData &&
+                refereeListData.pages &&
+                refereeListData.pages[refereeListData.pages.length - 1]
+                  .length !== 0
+              : true
           }
         >
           <div className="xs:grid-cols-1 mt-8 grid w-full gap-6 overflow-hidden sm:grid-cols-2 lg:grid-cols-3">

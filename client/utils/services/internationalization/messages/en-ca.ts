@@ -5,7 +5,7 @@ export default {
     connect: "Connect Global Hong Kong",
     professionals: "Professionals",
     subTitle: `Wishing you all the best!`,
-    so_far: "up to the present moment",
+    so_far: "We currently have",
     "members#zero": "No member",
     "members#one": "member",
     "members#two": "members",
@@ -139,7 +139,7 @@ export default {
   "post.create.content_label": "Description",
   "general.industry": "Industry",
   "general.country": "Country",
-  "general.province": "Province",
+  "general.region": "Region",
   "general.city": "City",
   "general.year_of_experience": "Year of Experience",
   "post.status_text": "Status",
@@ -166,6 +166,8 @@ export default {
   "profile.form.is_referee_description": "I am ready to contribute",
   "profile.form.personal_description_label": "Description",
   "profile.form.optional_company_label": "Company(Optional)",
+  "profile.form.optional_region_label": "Region(Optional)",
+  "profile.form.optional_city_label": "City(Optional)",
   "profile.form.job_title_label": "Job Title",
   "profile.form.optional_personal_social_media_link_label":
     "Social media link(Optional)",
@@ -190,6 +192,10 @@ export default {
     "- Self-introduction\n- Which position are you applying for?\n- How to contact you？",
   "referral.form.cancel": "Not Today",
   "referral.form.submit": "Submit",
+
+  "referral.form.resume_optional_label": "Resume (Optional)",
+  "referral.form.resume_description_label":
+    "Only PDF files are accepted, with a maximum size limit of 2 MB. File will be removed after 7 days",
   "referral.user_not_sing_in_dialog.title": "Please sign in",
   "referral.user_not_sing_in_dialog.description":
     "Please sign in to reach out to them",
@@ -222,12 +228,12 @@ export default {
   "search.loading": "Loading...",
   "search.reach_final_result": "That's all",
   "nav.create_post.description":
-    "Is your company hiring and looking for Hong Kongers? Make a post and let people get in touch with you.",
+    "Is your company hiring and looking for Hong Kongers? Make a post and let talents get in touch with you.",
   "nav.referrer_post.description": "Check job referrals",
   "general.connection": "Connections",
   "nav.become_referrer_or_referrer_description":
     "Select the options in profile!",
-  "nav.referrer.description": "Looking for referrers? Check here !",
+  "nav.referrer.description": "Looking for referrers? Check this!",
   "nav.referee.description": "Looking for talents? Check this!",
   "general.sorting": "Sort",
   "search.year_of_experience_label": "Years of Experience",
@@ -308,4 +314,16 @@ export default {
   "share.copy_link": "Copy Link",
   "share.copied": "Copied",
   "share.share_to": "Share to",
+
+  "genera.dropzone.single.drop_here_select_a_file":
+    "Drag a file here, or click to select a file",
+  "genera.dropzone.plural.drop_here_select_a_file":
+    "Drag files here, or click to select files",
+  "genera.dropzone.only_accept_pdf": "Only *.pdf will be accepted",
+  "genera.max_media_mb_size_count#other": "Maximum {count}mb",
+  "genera.max_storage_day#one": "The document will be stored for {count} day",
+  "genera.max_storage_day#other":
+    "The document will be stored for {count} days",
+  "general.reset": "Reset",
+  "general.expired": "Expired",
 } as const

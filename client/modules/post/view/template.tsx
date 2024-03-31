@@ -75,7 +75,9 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                 <Icons.copyCheck height={20} width={20} />
               </>
             }
-            textValue={window.location.href}
+            textValue={
+              typeof window !== "undefined" ? window.location.href : ""
+            }
           />
         </div>
       </div>
@@ -184,7 +186,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
           {/* separator that is only shown on tablet or larger */}
           <Separator className="mb-5 hidden md:block" />
 
-          <div className="whitespace-pre-wrap break-all">
+          <div className="whitespace-pre-wrap break-normal">
             {post.description}
           </div>
         </div>

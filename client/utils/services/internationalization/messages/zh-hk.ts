@@ -5,7 +5,7 @@ export default {
     connect: "連結海外香港",
     professionals: "人才",
     subTitle: `祝大家一切順利！`,
-    so_far: "截至現時",
+    so_far: "我哋目前有",
     "members#zero": "個會員",
     "members#other": "個會員",
     join_now: "即刻加入！",
@@ -123,7 +123,7 @@ export default {
   "post.create.content_label": "內容",
   "general.industry": "行業",
   "general.country": "國家",
-  "general.province": "省份",
+  "general.region": "地區",
   "general.city": "城市",
   "general.year_of_experience": "工作年資",
   "post.status_text": "狀態",
@@ -150,6 +150,8 @@ export default {
   "profile.form.is_referee_description": "我的訴求就是上班",
   "profile.form.personal_description_label": "個人簡介",
   "profile.form.optional_company_label": "公司名(選填)",
+  "profile.form.optional_region_label": "地區(選填)",
+  "profile.form.optional_city_label": "城市(選填)",
   "profile.form.job_title_label": "職位/工作名稱",
   "profile.form.optional_personal_social_media_link_label": "個人連結(選填)",
   "profile.form.personal_social_media_link_description":
@@ -170,6 +172,11 @@ export default {
     "- 自我介紹\n- 想見邊份工？\n- 點聯絡你？",
   "referral.form.cancel": "都係算",
   "referral.form.submit": "傳送",
+
+  "referral.form.resume_optional_label": "CV/Resume (可skip)",
+  "referral.form.resume_description_label":
+    "淨係接受PDF，最多2mb，文件只會存放7日",
+
   "referral.user_not_sing_in_dialog.title": "未登入",
   "referral.user_not_sing_in_dialog.description": "要登入咗先可以聯絡對方。",
   "referral.user_not_sing_in_dialog.cancel": "下次先",
@@ -283,4 +290,15 @@ export default {
   "share.copy_link": "複製連結",
   "share.copied": "已複製",
   "share.share_to": "分享到",
+
+  "genera.dropzone.single.drop_here_select_a_file":
+    "丼文件落嚟，或者篤一下呢到揀文件",
+  "genera.dropzone.plural.drop_here_select_a_file":
+    "丼文件落嚟，或者篤一下呢到揀文件",
+  "genera.dropzone.only_accept_pdf": "淨係可以放PDF",
+  "genera.max_media_mb_size_count#other": "最多 {count}mb",
+  "genera.max_storage_day#one": "文件會被存放{count}日",
+  "genera.max_storage_day#other": "文件會被存放{count}日",
+  "general.reset": "重設",
+  "general.expired": "已過期",
 } as const

@@ -4,6 +4,7 @@ import MessageListSkeleton from "@/modules/chat/components/skeleton-lists/messag
 import { supabase } from "@/utils/services/supabase/config"
 
 import { IMessageListResponse } from "@/types/api/response/chat/message-list"
+import { IMediaResponse } from "@/types/common/media"
 import useGetMessageListByConversationUuid from "@/hooks/api/message/get-message-list-by-conversation-uuid"
 import useUserStore from "@/hooks/state/user/store"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
@@ -14,6 +15,8 @@ interface IMessageListProps {
     sentByUser: boolean
     body?: string
     createdAt?: string
+    document?: IMediaResponse
+    isDocumentExpired?: boolean
   }
 }
 const MessageList: React.FunctionComponent<IMessageListProps> = ({
@@ -26,7 +29,7 @@ const MessageList: React.FunctionComponent<IMessageListProps> = ({
 
   const userUuid = useUserStore((state) => state.uuid)
 
-  const list = useMemo(() => {
+  const list: IMessageListResponse[] = useMemo(() => {
     return data !== undefined ? data.pages.flatMap((d) => d) : []
   }, [data])
 
@@ -72,10 +75,11 @@ const MessageList: React.FunctionComponent<IMessageListProps> = ({
           inverse={true}
           scrollableTarget="messageScrollDiv"
           hasMore={
-            (data &&
-              data.pages &&
-              data.pages[data.pages.length - 1].length !== 0) ??
-            true
+            data
+              ? data &&
+                data.pages &&
+                data.pages[data.pages.length - 1].length !== 0
+              : true
           }
           endMessage={<></>}
         >
@@ -87,6 +91,8 @@ const MessageList: React.FunctionComponent<IMessageListProps> = ({
                   sentByUser={userUuid === data.sender_uuid}
                   key={data.uuid}
                   createdAt={data.created_at}
+                  document={data.document}
+                  isDocumentExpired={data.is_document_expired}
                 />
               )
             })}
@@ -98,6 +104,8 @@ const MessageList: React.FunctionComponent<IMessageListProps> = ({
           text={lastMessage.body || "deleted"}
           sentByUser={lastMessage.sentByUser}
           createdAt={lastMessage.createdAt || ""}
+          document={lastMessage.document}
+          isDocumentExpired={lastMessage.isDocumentExpired ?? false}
         />
       )}
     </div>

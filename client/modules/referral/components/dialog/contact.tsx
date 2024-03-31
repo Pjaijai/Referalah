@@ -2,16 +2,19 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { getMediaPublicUrl, uploadMedia } from "@/utils/common/api"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { IMediaRequest } from "@/types/common/media"
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
 import useMessagePostCreator from "@/hooks/api/message/post-creator"
 import useMessageReferral from "@/hooks/api/message/referral"
+import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -32,6 +35,7 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
+import FormFileUpload from "@/components/customized-ui/form/file"
 
 export interface IContactDialogProps {
   open: boolean
@@ -53,6 +57,8 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
   postUuid,
 }) => {
   const t = useI18n()
+  const userUuid = useUserStore((state) => state.uuid)
+
   const formSchema = z.object({
     message: z
       .string()
@@ -70,8 +76,8 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
     },
   })
   const [isLoading, setIsLoading] = useState(false)
+  const [file, setFile] = useState<File>()
   const router = useRouter()
-
   const { mutate: messageReferral } = useMessageReferral()
   const { mutate: messagePostCreator } = useMessagePostCreator()
 
@@ -89,15 +95,44 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
   const onSubmit = async (values: z.infer<typeof formSchema>, e: any) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    e.preventDefault()
+    setIsLoading(true)
+
     try {
-      setIsLoading(true)
+      e.preventDefault()
+      let document: IMediaRequest | null = null
+      if (file) {
+        if (file.size > 2000000) {
+          throw new Error("The document is too large")
+        }
+        const filePath = `${userUuid}/${new Date().toISOString()}/${file.name}`
+
+        const { path } = await uploadMedia({
+          bucketName: "conversation_documents",
+          file,
+          path: filePath,
+          contentType: "application/pdf",
+        })
+
+        const { publicUrl } = await getMediaPublicUrl({
+          bucketName: "conversation_documents",
+          path: filePath,
+        })
+
+        document = {
+          name: file.name,
+          path: publicUrl,
+          size: file.size,
+          internalPath: filePath,
+        }
+      }
+
       if (messageType === "referral") {
         messageReferral(
           {
             type: receiverType!,
             body: values.message,
             toUuid: toUuid!,
+            document: document,
           },
           {
             onError: () => {
@@ -133,6 +168,7 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
           {
             body: values.message,
             postUuid: postUuid!,
+            document: document,
           },
           {
             onError: () => {
@@ -164,7 +200,15 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
           }
         )
       }
-    } catch (err) {
+    } catch (err: any) {
+      setIsLoading(false)
+      if (err && err.message) {
+        return toast({
+          title: err.message,
+          variant: "destructive",
+        })
+      }
+
       return toast({
         title: t("referral.form.contact.error.title"),
         description: t("referral.form.contact.error.description"),
@@ -172,6 +216,13 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
       })
     }
   }
+
+  const handleDocumentChange = (e: any) => {
+    const file = e.target.files[0]
+
+    setFile(file)
+  }
+
   return (
     <Dialog open={open}>
       <DialogContent className="w-full md:w-1/2">
@@ -217,6 +268,13 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
                 )}
               />
             </div>
+
+            <FormFileUpload
+              label={t("referral.form.resume_optional_label")}
+              accept=".pdf"
+              onChange={handleDocumentChange}
+              description={t("referral.form.resume_description_label")}
+            />
 
             <DialogFooter className="mt-4">
               <Button

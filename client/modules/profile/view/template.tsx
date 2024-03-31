@@ -151,7 +151,7 @@ const ViewProfileTemplate: React.FunctionComponent<
 
           <div className="mt-2 flex w-full justify-center gap-2">
             <InfoCard>
-              <Checkbox checked={isReferer} className="bg-white" />
+              <Checkbox checked={isReferer} />
               <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                 {t("general.referrer")}
               </label>
@@ -196,7 +196,7 @@ const ViewProfileTemplate: React.FunctionComponent<
             {t("general.personal_profile")}
           </h2>
           <div className="container mt-8 text-center">
-            <div className="inline-block whitespace-pre-wrap break-all text-left text-slate-900 dark:text-slate-50 md:break-words">
+            <div className="inline-block whitespace-pre-wrap break-normal text-left text-slate-900 dark:text-slate-50 ">
               {description}
             </div>
           </div>

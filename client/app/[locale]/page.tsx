@@ -5,7 +5,7 @@ import { EReferralType } from "@/types/common/referral-type"
 import CommonPageLayout from "@/components/layouts/common"
 
 // cache for 12 hours
-export const revalidate = 60 * 60 * 12
+export const revalidate = 60 * 60
 
 export default async function IndexPage() {
   const count = await getUserCount()
@@ -20,9 +20,5 @@ export default async function IndexPage() {
     type: EReferralType.REFERRER,
   })
 
-  return (
-    <CommonPageLayout>
-      <MainPageTemplate count={count} posts={posts} />
-    </CommonPageLayout>
-  )
+  return <MainPageTemplate count={count} posts={posts} />
 }
