@@ -14,8 +14,6 @@ import CommonPageLayout from "@/components/layouts/common"
 
 export const metadata = siteConfig.page.referrer.metadata
 
-export const fetchCache = "default-cache"
-
 export default async function RefererPage() {
   const t = await getI18n()
   const countryList = await getCountryList()
