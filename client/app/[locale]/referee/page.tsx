@@ -13,7 +13,7 @@ import CommonPageLayout from "@/components/layouts/common"
 
 export const metadata = siteConfig.page.talent.metadata
 
-export const revalidate = false
+export const revalidate = 60
 export const fetchCache = "default-cache"
 
 const RefereePage: NextPage = async () => {
