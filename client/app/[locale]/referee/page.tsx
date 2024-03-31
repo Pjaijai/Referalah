@@ -13,8 +13,6 @@ import CommonPageLayout from "@/components/layouts/common"
 
 export const metadata = siteConfig.page.talent.metadata
 
-export const fetchCache = "default-cache"
-
 const RefereePage: NextPage = async () => {
   const t = await getI18n()
   const countryList = await getCountryList()
