@@ -14,7 +14,6 @@ import CommonPageLayout from "@/components/layouts/common"
 
 export const metadata = siteConfig.page.referrer.metadata
 
-export const revalidate = false
 export const fetchCache = "default-cache"
 
 export default async function RefererPage() {
