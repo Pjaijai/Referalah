@@ -2,9 +2,8 @@ import MainPageTemplate from "@/modules/main/template"
 import { getUserCount, searchPostApi } from "@/utils/common/api"
 
 import { EReferralType } from "@/types/common/referral-type"
-import CommonPageLayout from "@/components/layouts/common"
 
-// cache for 12 hours
+// cache for 1 hours
 export const revalidate = 60 * 60
 
 export default async function IndexPage() {
