@@ -146,6 +146,7 @@ export default {
   "general.edit": "Edit",
   "general.no_data": "No Data🥲",
   "general.search": "Search",
+  "general.filter": "Filter",
   "history.no_data": "No Data🥲",
   "validation.link.not_valid": "Invalid Link",
   "validation.field_required": "Required",

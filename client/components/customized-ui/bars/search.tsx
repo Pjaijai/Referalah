@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input"
 import ResetButton from "@/components/customized-ui/buttons/reset"
 import BaseSelect from "@/components/customized-ui/selects/base"
 
-interface ISearchSearchBarProps {
+export interface ISearchSearchBarProps {
   countryUuid?: string
   provinceUuid?: string
   onCountryChange: (value: string) => void

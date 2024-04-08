@@ -130,6 +130,7 @@ export default {
   "general.edit": "編輯",
   "general.no_data": "冇資料🥲",
   "general.search": "搜尋",
+  "general.filter": "篩選器",
   "history.no_data": "冇資料🥲不如開個街招先？？",
   "validation.link.not_valid": "無效連結",
   "validation.field_required": "幫手填下🙏🏻",

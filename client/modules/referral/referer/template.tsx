@@ -16,6 +16,7 @@ import useSearchReferral from "@/hooks/api/referral/search-referral"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import SearchBar from "@/components/customized-ui/bars/search"
 import ReferralCard from "@/components/customized-ui/cards/referral"
+import SearchDrawer from "@/components/customized-ui/drawers/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 
 interface IRefererPageTemplateProps {
@@ -72,7 +73,7 @@ const RefererPageTemplate: React.FunctionComponent<
 
   return (
     <div className="flex flex-col gap-4">
-      <SearchBar
+      <SearchDrawer
         provinceUuid={provinceUuid}
         countryUuid={countryUuid}
         onCityChange={handleCityChange}
@@ -103,6 +104,39 @@ const RefererPageTemplate: React.FunctionComponent<
         jobTitle={jobTitle}
         handleSubmit={handleSubmitChange}
       />
+      <div className="hidden md:block">
+        <SearchBar
+          provinceUuid={provinceUuid}
+          countryUuid={countryUuid}
+          onCityChange={handleCityChange}
+          onCountryChange={handleCountryChange}
+          onProvinceChange={handleProvinceChange}
+          onIndustryChange={handleIndustryChange}
+          onSortingChange={handleSortingChange}
+          onMinYearOfExperienceChange={handleMinYearOfExperienceChange}
+          onMaxYearOfExperienceChange={handleMaxYearOfExperienceChange}
+          onSubmitChange={handleSubmitChange}
+          currentSorting={sorting}
+          currentCityUuid={cityUuid}
+          currentCountryUuid={countryUuid}
+          currentIndustryUuid={industryUuid}
+          currentProvinceUuid={provinceUuid}
+          currentMaxYearOfExperience={maxYearOfExperience}
+          currentMinYearOfExperience={minYearOfExperience}
+          type={EMessageType.REFERRAL}
+          cityList={cityList}
+          countryList={countryList}
+          industryList={industryList}
+          provinceList={provinceList}
+          handleCompanyChange={handleCompanyChange}
+          handleKeyPressSubmitChange={handleKeyPressSubmitChange}
+          companyName={companyName}
+          handleJobTitleChange={handleJobTitleChange}
+          handleReset={handleReset}
+          jobTitle={jobTitle}
+          handleSubmit={handleSubmitChange}
+        />
+      </div>
 
       {!isRefererListLoading && !isFetching && list.length === 0 && (
         <div className="mt-8 rounded-lg border-2 p-4 text-center">
