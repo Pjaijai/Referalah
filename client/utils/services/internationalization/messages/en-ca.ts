@@ -236,9 +236,8 @@ export default {
   "nav.referrer.description": "Looking for referrers? Check this!",
   "nav.referee.description": "Looking for talents? Check this!",
   "general.sorting": "Sort",
-  "search.year_of_experience_label": "Years of Experience",
-  "search.maximum_year_of_experience_label": "Max",
-  "search.minimum_year_of_experience_label": "Min",
+  "search.year_of_experience_placeholder": "Experience",
+  "search.year_of_experience.to": "to",
   "auth.sign.error.cannot_sign_in": "Failed to Sign in",
   "chat.conversation_request": "This user has sent you a conversation request.",
 
