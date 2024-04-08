@@ -53,8 +53,12 @@ const searchPost = ({
     page: pageParam,
     type,
     sortingType,
-    maxYearOfExperience: parseInt(maxYearOfExperience),
-    minYearOfExperience: parseInt(minYearOfExperience),
+    maxYearOfExperience: maxYearOfExperience
+      ? parseInt(maxYearOfExperience)
+      : 100,
+    minYearOfExperience: minYearOfExperience
+      ? parseInt(minYearOfExperience)
+      : 0,
   })
 }
 
@@ -112,10 +116,10 @@ const useSearchPost = (props: ISearchPostProps) => {
   const [industryUuid, setIndustryUuid] = useState<undefined | string>()
   const [minYearOfExperience, setMinYearOfExperience] = useState<
     undefined | string
-  >(searchParams.get("minYearOfExperience")?.toString() || "0")
+  >(searchParams.get("minYearOfExperience")?.toString() || undefined)
   const [maxYearOfExperience, setMaxYearOfExperience] = useState<
     undefined | string
-  >(searchParams.get("maxYearOfExperience")?.toString() || "100")
+  >(searchParams.get("maxYearOfExperience")?.toString() || undefined)
   const [sorting, setSorting] = useState(
     searchParams.get("sorting")?.toString() || postSortingOptions[0].value
   )
@@ -262,8 +266,8 @@ const useSearchPost = (props: ISearchPostProps) => {
     setProvinceUuid(undefined)
     setCityUuid(undefined)
     setIndustryUuid(undefined)
-    setMaxYearOfExperience("100")
-    setMinYearOfExperience("0")
+    setMaxYearOfExperience(undefined)
+    setMinYearOfExperience(undefined)
     setSorting(postSortingOptions[0].value)
     setParams(new URLSearchParams())
     router.push(pathname)
@@ -308,10 +312,8 @@ const useSearchPost = (props: ISearchPostProps) => {
       undefined,
     sorting:
       searchParams.get("sorting")?.toString() || postSortingOptions[0].value,
-    minYearOfExperience:
-      searchParams.get("minYearOfExperience")?.toString() || "0",
-    maxYearOfExperience:
-      searchParams.get("maxYearOfExperience")?.toString() || "100",
+    minYearOfExperience: searchParams.get("minYearOfExperience")?.toString(),
+    maxYearOfExperience: searchParams.get("maxYearOfExperience")?.toString(),
   }
 
   const result = useInfiniteQuery({
