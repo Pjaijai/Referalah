@@ -69,7 +69,7 @@ const SearchDrawer: React.FunctionComponent<ISearchDrawerProps> = ({
   }
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger className="fixed bottom-0 z-50 w-full">
+      <DrawerTrigger className="fixed bottom-0 left-0 z-50 w-full md:hidden">
         <div className="flex h-full w-full flex-row items-center justify-center gap-2 rounded-lg border-2 bg-background py-5">
           <Icons.slidersHorizontal />
           {t("general.filter")}
