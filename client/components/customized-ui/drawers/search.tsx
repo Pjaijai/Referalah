@@ -10,13 +10,7 @@ import useProvinceOptions from "@/hooks/common/options/province-options"
 import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
 import useReferralSortOptions from "@/hooks/common/sort/referral-sort-options"
 import { Button } from "@/components/ui/button"
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer"
 import { Input } from "@/components/ui/input"
 import { ISearchSearchBarProps } from "@/components/customized-ui/bars/search"
 import ResetButton from "@/components/customized-ui/buttons/reset"
@@ -75,7 +69,7 @@ const SearchDrawer: React.FunctionComponent<ISearchDrawerProps> = ({
           {t("general.filter")}
         </div>
       </DrawerTrigger>
-      <DrawerContent className="fixed inset-x-0 bottom-0 mt-24 flex h-[85%] flex-col rounded-t-[10px]">
+      <DrawerContent className="fixed bottom-0  flex h-fit flex-col rounded-t-[10px] p-2">
         <div className="container mt-2 flex flex-col gap-4">
           <Input
             onChange={handleCompanyChange}
@@ -155,11 +149,9 @@ const SearchDrawer: React.FunctionComponent<ISearchDrawerProps> = ({
             triggerClassName="w-full"
           />
         </div>
-        <div className="flex w-full flex-col justify-end gap-2 p-4">
+        <div className="mt-4 flex w-full flex-col justify-end gap-2 px-8">
           <ResetButton onClick={handleReset} />
-          <Button onClick={handleSearchSubmit} className="whitespace-nowrap">
-            {t("general.search")}
-          </Button>
+          <Button onClick={handleSearchSubmit}>{t("general.search")}</Button>
         </div>
       </DrawerContent>
     </Drawer>
