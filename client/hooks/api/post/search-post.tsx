@@ -262,7 +262,7 @@ const useSearchPost = (props: ISearchPostProps) => {
   const handleReset = () => {
     setCompanyName("")
     setJobTitle("")
-    setCountryUuid(undefined)
+    setCountryUuid("all")
     setProvinceUuid(undefined)
     setCityUuid(undefined)
     setIndustryUuid(undefined)
