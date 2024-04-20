@@ -65,8 +65,8 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
       .max(3000, {
         message: t("validation.text.maximum_length", { count: 3000 }),
       })
-      .min(1, {
-        message: t("validation.text.minimum_length", { count: 1 }),
+      .min(50, {
+        message: t("validation.text.minimum_length", { count: 50 }),
       }),
   })
   const form = useForm<z.infer<typeof formSchema>>({

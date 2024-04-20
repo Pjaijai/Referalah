@@ -5,6 +5,7 @@ import { getI18n } from "@/utils/services/internationalization/server"
 
 import CommonPageLayout from "@/components/layouts/common"
 
+// TODO: type
 export async function generateMetadata({
   params,
 }: {

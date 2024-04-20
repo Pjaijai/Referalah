@@ -67,7 +67,7 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
       )}
     >
       <Link
-        href={`${siteConfig.page.referrerPost.href}/${uuid}`}
+        href={`${siteConfig.page.viewPost.href}/${uuid}`}
         onClick={(e) => e.stopPropagation()}
         className="flex h-full flex-col items-start justify-start"
       >

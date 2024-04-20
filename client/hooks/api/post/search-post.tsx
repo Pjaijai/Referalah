@@ -22,7 +22,7 @@ const searchPost = ({
     {
       sorting: string
       filterMeta: IFilterMeta
-      type: EReferralType
+      types: EReferralType[]
     },
   ]
 }) => {
@@ -30,7 +30,7 @@ const searchPost = ({
 
   const queryKeyItem = queryKey[1]
 
-  const { type, filterMeta, sorting } = queryKeyItem
+  const { types, filterMeta, sorting } = queryKeyItem
 
   const countryUuid = filterMeta.countryUuid
   const provinceUuid = filterMeta.provinceUuid
@@ -51,7 +51,7 @@ const searchPost = ({
     jobTitle,
     provinceUuid,
     page: pageParam,
-    type,
+    types,
     sortingType,
     maxYearOfExperience: maxYearOfExperience
       ? parseInt(maxYearOfExperience)
@@ -63,7 +63,7 @@ const searchPost = ({
 }
 
 interface ISearchPostProps {
-  type: EReferralType
+  types: EReferralType[]
   countryList: ICountryResponse[]
   provinceList: IProvinceResponse[]
   cityList: ICityResponse[]
@@ -72,7 +72,7 @@ interface ISearchPostProps {
 
 const useSearchPost = (props: ISearchPostProps) => {
   const {
-    type,
+    types,
     countryList: countryData,
     provinceList: provinceData,
     cityList: cityData,
@@ -81,10 +81,7 @@ const useSearchPost = (props: ISearchPostProps) => {
 
   const { data: postSortingOptions } = usePostSortOptions()
 
-  const keyString =
-    type === EReferralType.REFEREE
-      ? EQueryKeyString.SEARCH_REFEREE_POST
-      : EQueryKeyString.SEARCH_REFERRER_POST
+  const keyString = EQueryKeyString.SEARCH_POST
 
   const getUUid = useCallback(
     (meta: "country" | "industry" | "province" | "city", value?: string) => {
@@ -317,11 +314,10 @@ const useSearchPost = (props: ISearchPostProps) => {
   }
 
   const result = useInfiniteQuery({
-    queryKey: [keyString, { sorting: filterMeta.sorting, filterMeta, type }],
+    queryKey: [keyString, { sorting: filterMeta.sorting, filterMeta, types }],
     queryFn: searchPost,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
-
     getNextPageParam: (lastPage, allPages) => {
       if (Array.isArray(lastPage)) {
         return allPages.length

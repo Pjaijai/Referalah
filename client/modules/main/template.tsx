@@ -64,7 +64,7 @@ const MainPageTemplate = ({
           <div className="mt-8 flex w-full flex-row justify-center">
             {isUserSignIn ? (
               <Link
-                href={siteConfig.page.referrerPost.href}
+                href={siteConfig.page.searchPost.href}
                 className={cn(
                   buttonVariants({
                     variant: "default",

@@ -28,6 +28,7 @@ import FormTextInput from "@/components/customized-ui/form/input"
 import FormNumberInput from "@/components/customized-ui/form/number"
 import FormSelect from "@/components/customized-ui/form/select"
 import FormTextArea from "@/components/customized-ui/form/text-area"
+import { ISelectOption } from "@/components/customized-ui/selects/base"
 
 interface ICreatePostTemplateProps {
   countryList: ICountryResponse[]
@@ -43,6 +44,22 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
   industryList,
 }) => {
   const t = useI18n()
+
+  const typeOptions: ISelectOption[] = [
+    {
+      title: t("post.type.referer.title"),
+      value: EReferralType.REFERRER,
+    },
+    {
+      title: t("post.type.referee.title"),
+      value: EReferralType.REFEREE,
+    },
+    {
+      title: t("post.type.hiring.title"),
+      value: EReferralType.HIRING,
+    },
+  ]
+
   const createPostValidationSchema = z.object({
     url: z
       .string()
@@ -62,6 +79,12 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
       .min(10, {
         message: t("validation.text.minimum_length", { count: 10 }),
       }),
+    type: z.enum(
+      [EReferralType.REFEREE, EReferralType.REFERRER, EReferralType.HIRING],
+      {
+        required_error: t("validation.field_required"),
+      }
+    ),
 
     countryUuid: z.string().min(1, {
       message: t("validation.field_required"),
@@ -214,14 +237,14 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
           industryUuid: values.industryUuid,
           yearOfExperience: parseInt(values.yearOfExperience),
           createdBy: user.uuid!,
-          type: EReferralType.REFERRER,
+          type: values.type,
           companyName: values.companyName.trim(),
           jobTitle: values.jobTitle.trim(),
           description: values.description.trim(),
         },
         {
           onSuccess: (res) => {
-            router.push(`${siteConfig.page.referrerPost.href}/${res.uuid}`)
+            router.push(`${siteConfig.page.viewPost.href}/${res.uuid}`)
           },
           onError: () => {
             return toast({
@@ -247,6 +270,12 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4"
         >
+          <FormSelect
+            options={typeOptions}
+            control={form.control}
+            label={t("post.create.type_label")}
+            name="type"
+          />
           <FormTextInput
             control={form.control}
             label={t("post.create.related_link_title")}
@@ -304,7 +333,7 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
             name="yearOfExperience"
           />
 
-          <Button type="submit" disabled={isCreatePostLoading}>
+          <Button type="submit" disabled={isCreatePostLoading || isSubmitting}>
             {isSubmitting ? t("general.wait") : t("form.general.submit")}
           </Button>
         </form>

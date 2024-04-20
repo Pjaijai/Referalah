@@ -6,6 +6,7 @@ import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
 import { EMessageType } from "@/types/common/message-type"
+import { cn } from "@/lib/utils"
 import useCityOptions from "@/hooks/common/options/city-options"
 import useCountryOptions from "@/hooks/common/options/country-options"
 import useIndustryOptions from "@/hooks/common/options/industry-options"
@@ -47,6 +48,7 @@ export interface ISearchSearchBarProps {
   jobTitle: string
   handleReset: () => void
   handleSubmit: () => void
+  bottomLeftSection?: React.ReactNode
 }
 
 const SearchBar: React.FunctionComponent<ISearchSearchBarProps> = ({
@@ -78,6 +80,7 @@ const SearchBar: React.FunctionComponent<ISearchSearchBarProps> = ({
   jobTitle,
   handleReset,
   handleSubmit,
+  bottomLeftSection,
 }) => {
   const t = useI18n()
   const industryOptions = useIndustryOptions(industryList, true)
@@ -168,11 +171,19 @@ const SearchBar: React.FunctionComponent<ISearchSearchBarProps> = ({
           triggerClassName="w-full"
         />
       </div>
-      <div className="mt-4 flex w-full flex-row justify-end gap-2">
-        <ResetButton onClick={handleReset} />
-        <Button onClick={handleSubmit} className="whitespace-nowrap">
-          {t("general.search")}
-        </Button>
+      <div
+        className={cn(
+          "mt-4 flex w-full flex-row ",
+          bottomLeftSection ? "justify-between" : "justify-end"
+        )}
+      >
+        {bottomLeftSection}
+        <div className="justify-row flex flex-row gap-2">
+          <ResetButton onClick={handleReset} />
+          <Button onClick={handleSubmit} className="whitespace-nowrap">
+            {t("general.search")}
+          </Button>
+        </div>
       </div>
     </div>
   )

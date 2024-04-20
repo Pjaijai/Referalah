@@ -43,7 +43,7 @@ export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
   ]
 
   const workLinks = [
-    { title: t("page.post"), url: siteConfig.page.referrerPost.href },
+    { title: t("page.post"), url: siteConfig.page.searchPost.href },
     { title: t("page.create_post"), url: siteConfig.page.createPost.href },
   ]
 

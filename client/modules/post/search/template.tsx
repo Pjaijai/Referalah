@@ -1,6 +1,8 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
+import PostSearchBar from "@/modules/post/components/bars/search"
+import PostSearchDrawer from "@/modules/post/components/drawers/search"
 import {
   useCurrentLocale,
   useI18n,
@@ -14,22 +16,28 @@ import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
 import useSearchPost from "@/hooks/api/post/search-post"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
-import SearchBar from "@/components/customized-ui/bars/search"
 import ReferralPostCard from "@/components/customized-ui/cards/referral-post"
-import SearchDrawer from "@/components/customized-ui/drawers/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 
-interface IRefererPostPageProps {
+interface IPostSearchPageProps {
   countryList: ICountryResponse[]
   provinceList: IProvinceResponse[]
   cityList: ICityResponse[]
   industryList: IIndustryResponse[]
 }
 
-const RefererPostPageTemplate: React.FunctionComponent<
-  IRefererPostPageProps
-> = ({ countryList, provinceList, cityList, industryList }) => {
+const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
+  countryList,
+  provinceList,
+  cityList,
+  industryList,
+}) => {
   const t = useI18n()
+  const [postSearchTypes, setPostSearchTypes] = useState([
+    EReferralType.HIRING,
+    EReferralType.REFEREE,
+    EReferralType.REFERRER,
+  ])
   const {
     result,
     handleCompanyChange,
@@ -54,7 +62,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
     minYearOfExperience,
     sorting,
   } = useSearchPost({
-    type: EReferralType.REFERRER,
+    types: postSearchTypes,
     countryList,
     provinceList,
     cityList,
@@ -68,7 +76,9 @@ const RefererPostPageTemplate: React.FunctionComponent<
 
   return (
     <div className="flex flex-col gap-4">
-      <SearchDrawer
+      <PostSearchDrawer
+        currentTypes={postSearchTypes}
+        setTypes={setPostSearchTypes}
         provinceUuid={provinceUuid}
         countryUuid={countryUuid}
         onCityChange={handleCityChange}
@@ -86,7 +96,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
         currentProvinceUuid={provinceUuid}
         currentMaxYearOfExperience={maxYearOfExperience}
         currentMinYearOfExperience={minYearOfExperience}
-        type={EMessageType.REFERRAL}
+        type={EMessageType.POST}
         cityList={cityList}
         countryList={countryList}
         industryList={industryList}
@@ -100,7 +110,9 @@ const RefererPostPageTemplate: React.FunctionComponent<
         handleSubmit={handleSubmitChange}
       />
       <div className="hidden md:block">
-        <SearchBar
+        <PostSearchBar
+          currentTypes={postSearchTypes}
+          setTypes={setPostSearchTypes}
           provinceUuid={provinceUuid}
           countryUuid={countryUuid}
           onCityChange={handleCityChange}
@@ -118,7 +130,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
           currentProvinceUuid={provinceUuid}
           currentMaxYearOfExperience={maxYearOfExperience}
           currentMinYearOfExperience={minYearOfExperience}
-          type={EMessageType.REFERRAL}
+          type={EMessageType.POST}
           cityList={cityList}
           countryList={countryList}
           industryList={industryList}
@@ -134,7 +146,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
       </div>
       {!isLoading && !isFetching && list.length === 0 && (
         <div className="mt-8 rounded-lg border-2 p-4 text-center">
-          {t("referral.search_referrer.no_data")}
+          {t("post.search_post.no_data")}
         </div>
       )}
 
@@ -198,4 +210,4 @@ const RefererPostPageTemplate: React.FunctionComponent<
   )
 }
 
-export default RefererPostPageTemplate
+export default PostSearchPageTemplate

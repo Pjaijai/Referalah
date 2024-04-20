@@ -405,7 +405,7 @@ export const searchPostApi = async ({
   page,
   provinceUuid,
   sortingType,
-  type,
+  types,
   maxYearOfExperience,
   minYearOfExperience,
 }: ISearchPostsRequest) => {
@@ -449,7 +449,7 @@ export const searchPostApi = async ({
               )
             `
       )
-      .eq("type", type)
+      .in("type", types)
       .eq("status", "active")
       .lte("year_of_experience", 100)
       .gte("year_of_experience", 0)
@@ -498,7 +498,8 @@ export const getPostByUuid = async (uuid: string) => {
   const { data, error } = await supabase
     .from("post")
     .select<string, IGetPostResponse>(
-      `   uuid,
+      `       uuid,
+              type,
               status,
               created_at,
               created_by,

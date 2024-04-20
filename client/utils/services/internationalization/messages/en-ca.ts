@@ -260,6 +260,11 @@ export default {
   "validation.send_message.required": "Required",
   "pwa.what_is_pwa.title": "What is PWA?",
   "pwa.how_to_install.title": "How to install？",
+  "post.type.referer.title": "Job Referral",
+  "post.type.hiring.title": "Hiring",
+  "post.type.referee.title": "Finding Referral",
+  "post.search_post.no_data": "No Data🥲 Create the post now !",
+  "post.create.type_label": "Post Type",
   "post.create.related_link_description":
     "For example, links to job on LinkedIn, Indeed, and Glassdoor.",
   "post.create.related_link_title": "Link(Optional)",

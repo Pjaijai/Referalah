@@ -58,7 +58,7 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
   return (
     <Card className="flex flex-col justify-between rounded shadow-md">
       <Link
-        href={`${siteConfig.page.referrerPost.href}/${uuid}`}
+        href={`${siteConfig.page.searchPost.href}/${uuid}`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex flex-col items-start justify-start">

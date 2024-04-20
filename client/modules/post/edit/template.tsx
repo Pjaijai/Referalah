@@ -235,7 +235,7 @@ const EditPostPageTemplate: React.FunctionComponent<
         },
         {
           onSuccess: () => {
-            router.push(`${siteConfig.page.referrerPost.href}/${postUuid}`)
+            router.push(`${siteConfig.page.viewPost.href}/${postUuid}`)
           },
           onError: () => {
             return toast({

@@ -50,7 +50,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
       isSuccess={isSuccess}
     >
       <div className="flex flex-row items-center justify-between">
-        <Link href={siteConfig.page.referrerPost.href}>
+        <Link href={siteConfig.page.searchPost.href}>
           <p className="gap my-4 flex flex-row items-center text-sm text-muted-foreground">
             <Icons.smallArrowLeft className="text-sm" />{" "}
             <span>{t("post.back_to_post_page")}</span>
