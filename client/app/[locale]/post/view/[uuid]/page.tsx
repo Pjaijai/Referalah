@@ -12,24 +12,31 @@ export async function generateMetadata({
   params: { uuid: string }
 }) {
   const { uuid } = params
+
+  // Fetch internationalization function
   const t = await getI18n()
-  const res = await getPostByUuid(uuid)
-  const postType = res.type
+
+  // Fetch post data
+  const { type: postType, job_title: jobTitle } = await getPostByUuid(uuid)
+
+  // Define type title based on post type
   let typeTitle: string = ""
-  if (postType === EReferralType.HIRING) {
-    typeTitle = t("post.type.hiring.title")
-  }
-
-  if (postType === EReferralType.REFEREE) {
-    typeTitle = t("post.type.referee.title")
-  }
-
-  if (postType === EReferralType.REFERRER) {
-    typeTitle = t("post.type.referer.title")
+  switch (postType) {
+    case EReferralType.HIRING:
+      typeTitle = t("post.type.hiring.title")
+      break
+    case EReferralType.REFEREE:
+      typeTitle = t("post.type.referee.title")
+      break
+    case EReferralType.REFERRER:
+      typeTitle = t("post.type.referer.title")
+      break
+    default:
+      break
   }
 
   return {
-    title: `${res.job_title} | ${typeTitle} | ${t("page.post")}`,
+    title: `${jobTitle} | ${typeTitle} | ${t("page.post")}`,
   }
 }
 

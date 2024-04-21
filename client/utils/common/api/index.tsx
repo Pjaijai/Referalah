@@ -419,7 +419,8 @@ export const searchPostApi = async ({
     let query = supabase
       .from("post")
       .select<string, ISearchPostResponse>(
-        `   uuid,
+        `     uuid,
+              type,
               created_at,
               created_by,
               url,

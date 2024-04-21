@@ -170,6 +170,7 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
             {list.map((data) => {
               return (
                 <ReferralPostCard
+                  type={data.type}
                   jobTitle={data.job_title}
                   username={data.user && data.user.username}
                   photoUrl={data.user && data.user.avatar_url}

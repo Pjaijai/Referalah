@@ -5,6 +5,7 @@ import Link from "next/link"
 import LinkShareDrawer from "@/modules/post/components/drawers/link-share"
 import PostHeader from "@/modules/post/components/info-display/header"
 import PostStatusDisplay from "@/modules/post/components/info-display/status"
+import usePostTypeTitle from "@/modules/post/hooks/post-type-title"
 import {
   useCurrentLocale,
   useI18n,
@@ -17,6 +18,7 @@ import { siteConfig } from "@/config/site"
 import { PostNotFoundError } from "@/lib/exceptions"
 import useGetPost from "@/hooks/api/post/get-post"
 import useUserStore from "@/hooks/state/user/store"
+import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import ContactButton from "@/components/customized-ui/buttons/contact"
@@ -42,6 +44,8 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   const isViewingOwnProfile = post?.created_by === userUuid
   const isOpen = post?.status === EPostStatus.ACTIVE
   const locale = useCurrentLocale()
+
+  const postTyeTitle = usePostTypeTitle(post?.type)
 
   return (
     <PageStatusLayout
@@ -87,10 +91,15 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
           <div className="my-0 mb-5 flex flex-col justify-between gap-4 md:my-5 md:flex-row">
             <div className="flex w-full flex-col">
               <div className="mb-3 flex w-full basis-full flex-row items-center justify-between">
-                <PostStatusDisplay
-                  postStatus={post.status}
-                  className="flex-end"
-                />
+                <div className="flex flex-row gap-2">
+                  <PostStatusDisplay
+                    postStatus={post.status}
+                    className="flex-end"
+                  />
+
+                  {postTyeTitle && <Badge>{postTyeTitle}</Badge>}
+                </div>
+
                 <CreatedAtDisplay
                   applyTo="page"
                   createdAt={post.created_at && post.created_at.toString()}

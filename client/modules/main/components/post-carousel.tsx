@@ -30,6 +30,7 @@ const PostCarousel: React.FunctionComponent<IPostCarouselProps> = ({
           return (
             <CarouselItem className=" md:basis-1/2">
               <ReferralPostCard
+                type={data.type}
                 className="max-h-72 md:max-h-fit"
                 jobTitle={data.job_title}
                 username={data.user && data.user.username}

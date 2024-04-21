@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import usePostTypeOptions from "@/modules/post/hooks/post-type-options"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -28,7 +29,6 @@ import FormTextInput from "@/components/customized-ui/form/input"
 import FormNumberInput from "@/components/customized-ui/form/number"
 import FormSelect from "@/components/customized-ui/form/select"
 import FormTextArea from "@/components/customized-ui/form/text-area"
-import { ISelectOption } from "@/components/customized-ui/selects/base"
 
 interface ICreatePostTemplateProps {
   countryList: ICountryResponse[]
@@ -44,21 +44,6 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
   industryList,
 }) => {
   const t = useI18n()
-
-  const typeOptions: ISelectOption[] = [
-    {
-      title: t("post.type.referer.title"),
-      value: EReferralType.REFERRER,
-    },
-    {
-      title: t("post.type.referee.title"),
-      value: EReferralType.REFEREE,
-    },
-    {
-      title: t("post.type.hiring.title"),
-      value: EReferralType.HIRING,
-    },
-  ]
 
   const createPostValidationSchema = z.object({
     url: z
@@ -165,6 +150,7 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
   const countryOptions = useCountryOptions(countryList)
   const provinceOptions = useProvinceOptions(provinceList, countryWatch)
   const cityOptions = useCityOptions(cityList, provinceWatch)
+  const typeOptions = usePostTypeOptions()
   const { mutate: createPost, isLoading: isCreatePostLoading } = useCreatePost()
 
   useEffect(() => {
