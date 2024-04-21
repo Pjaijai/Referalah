@@ -1,5 +1,4 @@
 import React from "react"
-import { handleTypeClick } from "@/modules/post/utils/handle-type-click"
 import { isTypeExitsInCurrentTypes } from "@/modules/post/utils/is-type-exits-in-current-types"
 import { useI18n } from "@/utils/services/internationalization/client"
 
@@ -10,63 +9,45 @@ import SearchBar, {
 } from "@/components/customized-ui/bars/search"
 
 export interface IPostTypeSectionProps {
-  currentTypes: EReferralType[]
-  setTypes: (v: EReferralType[]) => void
+  currentPostTypes: EReferralType[]
+  onPostTypesChange: (v: EReferralType) => void
 }
 
 const PostTypeSection: React.FunctionComponent<IPostTypeSectionProps> = ({
-  currentTypes,
-  setTypes,
+  currentPostTypes,
+  onPostTypesChange,
 }) => {
   const t = useI18n()
   return (
     <div className="flex flex-row gap-2">
       <Button
         variant={
-          isTypeExitsInCurrentTypes(currentTypes, EReferralType.REFERRER)
+          isTypeExitsInCurrentTypes(currentPostTypes, EReferralType.REFERRER)
             ? "default"
             : "secondary"
         }
-        onClick={() =>
-          handleTypeClick({
-            currentTypes,
-            setTypes,
-            targetType: EReferralType.REFERRER,
-          })
-        }
+        onClick={() => onPostTypesChange(EReferralType.REFERRER)}
       >
         {t("post.type.referer.title")}
       </Button>
 
       <Button
         variant={
-          isTypeExitsInCurrentTypes(currentTypes, EReferralType.REFEREE)
+          isTypeExitsInCurrentTypes(currentPostTypes, EReferralType.REFEREE)
             ? "default"
             : "secondary"
         }
-        onClick={() =>
-          handleTypeClick({
-            currentTypes,
-            setTypes,
-            targetType: EReferralType.REFEREE,
-          })
-        }
+        onClick={() => onPostTypesChange(EReferralType.REFEREE)}
       >
         {t("post.type.referee.title")}
       </Button>
       <Button
         variant={
-          isTypeExitsInCurrentTypes(currentTypes, EReferralType.HIRING)
+          isTypeExitsInCurrentTypes(currentPostTypes, EReferralType.HIRING)
             ? "default"
             : "secondary"
         }
-        onClick={() =>
-          handleTypeClick({
-            currentTypes,
-            setTypes,
-            targetType: EReferralType.HIRING,
-          })
-        }
+        onClick={() => onPostTypesChange(EReferralType.HIRING)}
       >
         {t("post.type.hiring.title")}
       </Button>
@@ -79,13 +60,16 @@ interface IPostSearchBarProps
     IPostTypeSectionProps {}
 
 const PostSearchBar: React.FunctionComponent<IPostSearchBarProps> = ({
-  currentTypes,
-  setTypes,
+  currentPostTypes,
+  onPostTypesChange,
   ...props
 }) => {
   return (
     <SearchBar
-      bottomLeftSection={PostTypeSection({ currentTypes, setTypes })}
+      bottomLeftSection={PostTypeSection({
+        currentPostTypes,
+        onPostTypesChange,
+      })}
       {...props}
     />
   )

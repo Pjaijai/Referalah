@@ -1,6 +1,5 @@
 import React from "react"
 import { IPostTypeSectionProps } from "@/modules/post/components/bars/search"
-import { handleTypeClick } from "@/modules/post/utils/handle-type-click"
 import { isTypeExitsInCurrentTypes } from "@/modules/post/utils/is-type-exits-in-current-types"
 import { useI18n } from "@/utils/services/internationalization/client"
 
@@ -15,58 +14,40 @@ interface IPostSearchDrawerProps
     IPostTypeSectionProps {}
 
 const Fields: React.FunctionComponent<IPostTypeSectionProps> = ({
-  currentTypes,
-  setTypes,
+  currentPostTypes,
+  onPostTypesChange,
 }) => {
   const t = useI18n()
   return (
     <div className="mt-2 grid grid-cols-3 gap-2">
       <Button
         variant={
-          isTypeExitsInCurrentTypes(currentTypes, EReferralType.REFERRER)
+          isTypeExitsInCurrentTypes(currentPostTypes, EReferralType.REFERRER)
             ? "default"
             : "secondary"
         }
-        onClick={() =>
-          handleTypeClick({
-            currentTypes,
-            setTypes,
-            targetType: EReferralType.REFERRER,
-          })
-        }
+        onClick={() => onPostTypesChange(EReferralType.REFERRER)}
       >
         {t("post.type.referer.title")}
       </Button>
 
       <Button
         variant={
-          isTypeExitsInCurrentTypes(currentTypes, EReferralType.REFEREE)
+          isTypeExitsInCurrentTypes(currentPostTypes, EReferralType.REFEREE)
             ? "default"
             : "secondary"
         }
-        onClick={() =>
-          handleTypeClick({
-            currentTypes,
-            setTypes,
-            targetType: EReferralType.REFEREE,
-          })
-        }
+        onClick={() => onPostTypesChange(EReferralType.REFEREE)}
       >
         {t("post.type.referee.title")}
       </Button>
       <Button
         variant={
-          isTypeExitsInCurrentTypes(currentTypes, EReferralType.HIRING)
+          isTypeExitsInCurrentTypes(currentPostTypes, EReferralType.HIRING)
             ? "default"
             : "secondary"
         }
-        onClick={() =>
-          handleTypeClick({
-            currentTypes,
-            setTypes,
-            targetType: EReferralType.HIRING,
-          })
-        }
+        onClick={() => onPostTypesChange(EReferralType.HIRING)}
       >
         {t("post.type.hiring.title")}
       </Button>
@@ -74,13 +55,13 @@ const Fields: React.FunctionComponent<IPostTypeSectionProps> = ({
   )
 }
 const PostSearchDrawer: React.FunctionComponent<IPostSearchDrawerProps> = ({
-  currentTypes,
-  setTypes,
+  currentPostTypes,
+  onPostTypesChange,
   ...props
 }) => {
   return (
     <SearchDrawer
-      additionalFields={Fields({ currentTypes, setTypes })}
+      additionalFields={Fields({ currentPostTypes, onPostTypesChange })}
       {...props}
     />
   )

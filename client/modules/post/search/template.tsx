@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React from "react"
 import PostSearchBar from "@/modules/post/components/bars/search"
 import PostSearchDrawer from "@/modules/post/components/drawers/search"
 import {
@@ -13,7 +13,6 @@ import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
 import { EMessageType } from "@/types/common/message-type"
-import { EReferralType } from "@/types/common/referral-type"
 import useSearchPost from "@/hooks/api/post/search-post"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import ReferralPostCard from "@/components/customized-ui/cards/referral-post"
@@ -33,14 +32,11 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
   industryList,
 }) => {
   const t = useI18n()
-  const [postSearchTypes, setPostSearchTypes] = useState([
-    EReferralType.HIRING,
-    EReferralType.REFEREE,
-    EReferralType.REFERRER,
-  ])
+
   const {
     result,
-    handleCompanyChange,
+    postTypes,
+    handlePostTypesChange,
     handleCountryChange,
     handleProvinceChange,
     handleCityChange,
@@ -61,8 +57,8 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
     maxYearOfExperience,
     minYearOfExperience,
     sorting,
+    handleCompanyChange,
   } = useSearchPost({
-    types: postSearchTypes,
     countryList,
     provinceList,
     cityList,
@@ -77,8 +73,8 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
   return (
     <div className="flex flex-col gap-4">
       <PostSearchDrawer
-        currentTypes={postSearchTypes}
-        setTypes={setPostSearchTypes}
+        currentPostTypes={postTypes}
+        onPostTypesChange={handlePostTypesChange}
         provinceUuid={provinceUuid}
         countryUuid={countryUuid}
         onCityChange={handleCityChange}
@@ -111,8 +107,8 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
       />
       <div className="hidden md:block">
         <PostSearchBar
-          currentTypes={postSearchTypes}
-          setTypes={setPostSearchTypes}
+          currentPostTypes={postTypes}
+          onPostTypesChange={handlePostTypesChange}
           provinceUuid={provinceUuid}
           countryUuid={countryUuid}
           onCityChange={handleCityChange}
