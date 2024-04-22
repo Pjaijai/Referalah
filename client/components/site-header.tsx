@@ -12,7 +12,6 @@ import LocaleDropDownMenu from "@/components/customized-ui/drop-down-menu/locale
 import MessageIcon from "@/components/customized-ui/icons/message"
 import { BaseNavigationMenu } from "@/components/customized-ui/navigation-menu/base"
 import { MobileNavigationMenu } from "@/components/customized-ui/navigation-menu/mobile"
-import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 

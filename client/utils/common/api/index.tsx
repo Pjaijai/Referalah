@@ -9,9 +9,9 @@ import { IVerifyEmailOneTimePasswordRequest } from "@/types/api/request/auth/ver
 import { IMessagePostCreatorRequest } from "@/types/api/request/message/post-creator"
 import { IMessageReferralRequest } from "@/types/api/request/message/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
-import { IFilterMeta } from "@/types/api/request/post/filter-meta"
 import { ISearchPostsRequest } from "@/types/api/request/post/search"
 import { IUpdatePostRequest } from "@/types/api/request/post/update"
+import { IFilterMeta } from "@/types/api/request/search/filter-meta"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { ICityResponse } from "@/types/api/response/city"
 import { IGetConversationListByUserUuidResponse } from "@/types/api/response/conversation-list"
@@ -405,7 +405,7 @@ export const searchPostApi = async ({
   page,
   provinceUuid,
   sortingType,
-  type,
+  types,
   maxYearOfExperience,
   minYearOfExperience,
 }: ISearchPostsRequest) => {
@@ -419,7 +419,8 @@ export const searchPostApi = async ({
     let query = supabase
       .from("post")
       .select<string, ISearchPostResponse>(
-        `   uuid,
+        `     uuid,
+              type,
               created_at,
               created_by,
               url,
@@ -449,7 +450,7 @@ export const searchPostApi = async ({
               )
             `
       )
-      .eq("type", type)
+      .in("type", types)
       .eq("status", "active")
       .lte("year_of_experience", 100)
       .gte("year_of_experience", 0)
@@ -498,7 +499,8 @@ export const getPostByUuid = async (uuid: string) => {
   const { data, error } = await supabase
     .from("post")
     .select<string, IGetPostResponse>(
-      `   uuid,
+      `       uuid,
+              type,
               status,
               created_at,
               created_by,

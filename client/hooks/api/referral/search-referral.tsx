@@ -58,10 +58,10 @@ const useSearchReferral = (props: ISearchReferralProps) => {
   const [industryUuid, setIndustryUuid] = useState<undefined | string>()
   const [minYearOfExperience, setMinYearOfExperience] = useState<
     undefined | string
-  >(searchParams.get("minYearOfExperience")?.toString() || "0")
+  >(searchParams.get("minYearOfExperience")?.toString())
   const [maxYearOfExperience, setMaxYearOfExperience] = useState<
     undefined | string
-  >(searchParams.get("maxYearOfExperience")?.toString() || "100")
+  >(searchParams.get("maxYearOfExperience")?.toString())
   const [sorting, setSorting] = useState(
     searchParams.get("sorting")?.toString() || referralSortingOptions[0].value
   )
@@ -158,12 +158,12 @@ const useSearchReferral = (props: ISearchReferralProps) => {
   const handleReset = () => {
     setCompanyName("")
     setJobTitle("")
-    setCountryUuid(undefined)
+    setCountryUuid("all")
     setProvinceUuid(undefined)
     setCityUuid(undefined)
     setIndustryUuid(undefined)
-    setMaxYearOfExperience("100")
-    setMinYearOfExperience("0")
+    setMaxYearOfExperience(undefined)
+    setMinYearOfExperience(undefined)
     setSorting(referralSortingOptions[0].value)
     setParams(new URLSearchParams())
     router.push(pathname)
@@ -254,9 +254,9 @@ const useSearchReferral = (props: ISearchReferralProps) => {
       searchParams.get("sorting")?.toString() ||
       referralSortingOptions[0].value,
     minYearOfExperience:
-      searchParams.get("minYearOfExperience")?.toString() || "0",
+      searchParams.get("minYearOfExperience")?.toString() || undefined,
     maxYearOfExperience:
-      searchParams.get("maxYearOfExperience")?.toString() || "100",
+      searchParams.get("maxYearOfExperience")?.toString() || undefined,
   }
   const result = useInfiniteQuery({
     queryKey: [keyString, { sorting: filterMeta.sorting, filterMeta, type }],

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
+import usePostTypeOptions from "@/modules/post/hooks/post-type-options"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -50,12 +51,14 @@ interface IForm {
   jobTitle: string
   url?: string
   postUuid: string
+  type: EReferralType
 }
 
 const EditPostPageTemplate: React.FunctionComponent<
   IEditPostPageTemplateProps
 > = ({ postUuid, countryList, provinceList, cityList, industryList }) => {
   const { data: post, isLoading } = useGetPost(postUuid)
+
   const userUuid = useUserStore((state) => state.uuid)
   const router = useRouter()
   // If not sign in and not viewing by same user
@@ -77,6 +80,12 @@ const EditPostPageTemplate: React.FunctionComponent<
       })
       .optional()
       .or(z.literal("")),
+    type: z.enum(
+      [EReferralType.REFEREE, EReferralType.REFERRER, EReferralType.HIRING],
+      {
+        required_error: t("validation.field_required"),
+      }
+    ),
     description: z
       .string()
       .max(3000, {
@@ -154,6 +163,7 @@ const EditPostPageTemplate: React.FunctionComponent<
         provinceUuid: post?.province?.uuid || "",
         cityUuid: post?.city?.uuid || "",
         industryUuid: post?.industry?.uuid || "",
+        type: post?.type,
       }
     }, [isLoading]),
   })
@@ -174,6 +184,7 @@ const EditPostPageTemplate: React.FunctionComponent<
   const countryOptions = useCountryOptions(countryList)
   const provinceOptions = useProvinceOptions(provinceList, countryWatch)
   const cityOptions = useCityOptions(cityList, provinceWatch)
+  const typeOptions = usePostTypeOptions()
 
   const { mutate: updatePost, isLoading: isUpdatingPostLoading } =
     useUpdatePost()
@@ -228,14 +239,14 @@ const EditPostPageTemplate: React.FunctionComponent<
           industryUuid: values.industryUuid,
           yearOfExperience: parseInt(values.yearOfExperience),
           createdBy: user.uuid!,
-          type: EReferralType.REFERRER,
+          type: values.type,
           companyName: values.companyName.trim(),
           jobTitle: values.jobTitle.trim(),
           description: values.description.trim(),
         },
         {
           onSuccess: () => {
-            router.push(`${siteConfig.page.referrerPost.href}/${postUuid}`)
+            router.push(`${siteConfig.page.viewPost.href}/${postUuid}`)
           },
           onError: () => {
             return toast({
@@ -266,6 +277,14 @@ const EditPostPageTemplate: React.FunctionComponent<
             label={t("post.status_text")}
             name="status"
             options={statusOptions}
+          />
+
+          <FormSelect
+            options={typeOptions}
+            control={form.control}
+            label={t("post.create.type_label")}
+            name="type"
+            isDisabled
           />
 
           <FormTextInput

@@ -1,4 +1,5 @@
-import RefererPostPageTemplate from "@/modules/post/referer/template"
+import React from "react"
+import PostSearchPageTemplate from "@/modules/post/search/template"
 import {
   getCityList,
   getCountryList,
@@ -10,9 +11,12 @@ import { getI18n } from "@/utils/services/internationalization/server"
 import { siteConfig } from "@/config/site"
 import CommonPageLayout from "@/components/layouts/common"
 
-export const metadata = siteConfig.page.referrerPost.metadata
+export const metadata = siteConfig.page.searchPost.metadata
 
-const RefererPostPage = async () => {
+export const revalidate = false
+export const fetchCache = "default-cache"
+
+const PostSearchPage = async () => {
   const t = await getI18n()
   const countryList = await getCountryList()
   const provinceList = await getProvinceList()
@@ -20,7 +24,7 @@ const RefererPostPage = async () => {
   const industryList = await getIndustryList()
   return (
     <CommonPageLayout title={t("page.post")}>
-      <RefererPostPageTemplate
+      <PostSearchPageTemplate
         countryList={countryList}
         provinceList={provinceList}
         cityList={cityList}
@@ -30,4 +34,4 @@ const RefererPostPage = async () => {
   )
 }
 
-export default RefererPostPage
+export default PostSearchPage

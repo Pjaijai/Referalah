@@ -1,6 +1,8 @@
 "use client"
 
 import React from "react"
+import PostSearchBar from "@/modules/post/components/bars/search"
+import PostSearchDrawer from "@/modules/post/components/drawers/search"
 import {
   useCurrentLocale,
   useI18n,
@@ -11,30 +13,30 @@ import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
 import { EMessageType } from "@/types/common/message-type"
-import { EReferralType } from "@/types/common/referral-type"
 import useSearchPost from "@/hooks/api/post/search-post"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
-import ResetButton from "@/components/customized-ui/buttons/reset"
 import ReferralPostCard from "@/components/customized-ui/cards/referral-post"
-import SearchPopover from "@/components/customized-ui/pop-overs/search"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 
-interface IRefererPostPageProps {
+interface IPostSearchPageProps {
   countryList: ICountryResponse[]
   provinceList: IProvinceResponse[]
   cityList: ICityResponse[]
   industryList: IIndustryResponse[]
 }
 
-const RefererPostPageTemplate: React.FunctionComponent<
-  IRefererPostPageProps
-> = ({ countryList, provinceList, cityList, industryList }) => {
+const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
+  countryList,
+  provinceList,
+  cityList,
+  industryList,
+}) => {
   const t = useI18n()
+
   const {
     result,
-    handleCompanyChange,
+    postTypes,
+    handlePostTypesChange,
     handleCountryChange,
     handleProvinceChange,
     handleCityChange,
@@ -55,8 +57,8 @@ const RefererPostPageTemplate: React.FunctionComponent<
     maxYearOfExperience,
     minYearOfExperience,
     sorting,
+    handleCompanyChange,
   } = useSearchPost({
-    type: EReferralType.REFERRER,
     countryList,
     provinceList,
     cityList,
@@ -70,55 +72,77 @@ const RefererPostPageTemplate: React.FunctionComponent<
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="mt-8 flex h-full w-full flex-col-reverse gap-4 md:flex-row">
-        <Input
-          onChange={handleCompanyChange}
-          onKeyDown={handleKeyPressSubmitChange}
-          value={companyName}
-          placeholder={t("general.company_name")}
+      <PostSearchDrawer
+        currentPostTypes={postTypes}
+        onPostTypesChange={handlePostTypesChange}
+        provinceUuid={provinceUuid}
+        countryUuid={countryUuid}
+        onCityChange={handleCityChange}
+        onCountryChange={handleCountryChange}
+        onProvinceChange={handleProvinceChange}
+        onIndustryChange={handleIndustryChange}
+        onSortingChange={handleSortingChange}
+        onMinYearOfExperienceChange={handleMinYearOfExperienceChange}
+        onMaxYearOfExperienceChange={handleMaxYearOfExperienceChange}
+        onSubmitChange={handleSubmitChange}
+        currentSorting={sorting}
+        currentCityUuid={cityUuid}
+        currentCountryUuid={countryUuid}
+        currentIndustryUuid={industryUuid}
+        currentProvinceUuid={provinceUuid}
+        currentMaxYearOfExperience={maxYearOfExperience}
+        currentMinYearOfExperience={minYearOfExperience}
+        type={EMessageType.POST}
+        cityList={cityList}
+        countryList={countryList}
+        industryList={industryList}
+        provinceList={provinceList}
+        handleCompanyChange={handleCompanyChange}
+        handleKeyPressSubmitChange={handleKeyPressSubmitChange}
+        companyName={companyName}
+        handleJobTitleChange={handleJobTitleChange}
+        handleReset={handleReset}
+        jobTitle={jobTitle}
+        handleSubmit={handleSubmitChange}
+      />
+      <div className="hidden md:block">
+        <PostSearchBar
+          currentPostTypes={postTypes}
+          onPostTypesChange={handlePostTypesChange}
+          provinceUuid={provinceUuid}
+          countryUuid={countryUuid}
+          onCityChange={handleCityChange}
+          onCountryChange={handleCountryChange}
+          onProvinceChange={handleProvinceChange}
+          onIndustryChange={handleIndustryChange}
+          onSortingChange={handleSortingChange}
+          onMinYearOfExperienceChange={handleMinYearOfExperienceChange}
+          onMaxYearOfExperienceChange={handleMaxYearOfExperienceChange}
+          onSubmitChange={handleSubmitChange}
+          currentSorting={sorting}
+          currentCityUuid={cityUuid}
+          currentCountryUuid={countryUuid}
+          currentIndustryUuid={industryUuid}
+          currentProvinceUuid={provinceUuid}
+          currentMaxYearOfExperience={maxYearOfExperience}
+          currentMinYearOfExperience={minYearOfExperience}
+          type={EMessageType.POST}
+          cityList={cityList}
+          countryList={countryList}
+          industryList={industryList}
+          provinceList={provinceList}
+          handleCompanyChange={handleCompanyChange}
+          handleKeyPressSubmitChange={handleKeyPressSubmitChange}
+          companyName={companyName}
+          handleJobTitleChange={handleJobTitleChange}
+          handleReset={handleReset}
+          jobTitle={jobTitle}
+          handleSubmit={handleSubmitChange}
         />
-        <Input
-          onChange={handleJobTitleChange}
-          onKeyDown={handleKeyPressSubmitChange}
-          value={jobTitle}
-          placeholder={t("general.job_title")}
-        />
-
-        <div className="flex flex-row justify-end gap-2">
-          <SearchPopover
-            provinceUuid={provinceUuid}
-            countryUuid={countryUuid}
-            onCityChange={handleCityChange}
-            onCountryChange={handleCountryChange}
-            onProvinceChange={handleProvinceChange}
-            onIndustryChange={handleIndustryChange}
-            onSortingChange={handleSortingChange}
-            onMinYearOfExperienceChange={handleMinYearOfExperienceChange}
-            onMaxYearOfExperienceChange={handleMaxYearOfExperienceChange}
-            onSubmitChange={handleSubmitChange}
-            currentSorting={sorting}
-            currentCityUuid={cityUuid}
-            currentCountryUuid={countryUuid}
-            currentIndustryUuid={industryUuid}
-            currentProvinceUuid={provinceUuid}
-            currentMaxYearOfExperience={maxYearOfExperience}
-            currentMinYearOfExperience={minYearOfExperience}
-            type={EMessageType.POST}
-            countryList={countryList}
-            provinceList={provinceList}
-            cityList={cityList}
-            industryList={industryList}
-          />
-          <ResetButton onClick={handleReset} />
-          <Button onClick={handleSubmitChange} className="whitespace-nowrap">
-            {t("general.search")}
-          </Button>
-        </div>
       </div>
-
       {!isLoading && !isFetching && list.length === 0 && (
         <div className="mt-8 rounded-lg border-2 p-4 text-center">
-          {t("referral.search_referrer.no_data")}
+          {t("post.search_post.no_data")}
         </div>
       )}
 
@@ -142,6 +166,7 @@ const RefererPostPageTemplate: React.FunctionComponent<
             {list.map((data) => {
               return (
                 <ReferralPostCard
+                  type={data.type}
                   jobTitle={data.job_title}
                   username={data.user && data.user.username}
                   photoUrl={data.user && data.user.avatar_url}
@@ -182,4 +207,4 @@ const RefererPostPageTemplate: React.FunctionComponent<
   )
 }
 
-export default RefererPostPageTemplate
+export default PostSearchPageTemplate

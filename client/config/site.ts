@@ -102,15 +102,22 @@ export const siteConfig = {
       name: "編輯街招",
       href: "/post/edit",
     },
-    referrerPost: {
+    searchPost: {
       name: "街招",
-      href: "/post/referer",
+      href: "/post/search",
       metadata: {
         title: "街招",
-        description:
-          "係到搵有乜工搵人推薦。 Look for job postings and get referred.",
+        description: "係到搵有乜街招。 A wall for posts.",
       },
     },
+    viewPost: {
+      name: "街招",
+      href: "/post/view",
+      metadata: {
+        title: "街招",
+      },
+    },
+
     postHistory: {
       name: "街招記錄",
       href: "/post/history",

@@ -16,7 +16,11 @@ export default async function IndexPage() {
     jobTitle: "",
     maxYearOfExperience: 100,
     minYearOfExperience: 0,
-    type: EReferralType.REFERRER,
+    types: [
+      EReferralType.REFERRER,
+      EReferralType.REFEREE,
+      EReferralType.HIRING,
+    ],
   })
 
   return <MainPageTemplate count={count} posts={posts} />
