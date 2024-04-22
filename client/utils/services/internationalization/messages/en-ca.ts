@@ -262,7 +262,7 @@ export default {
   "pwa.how_to_install.title": "How to install？",
   "post.type.referer.title": "Job Referral",
   "post.type.hiring.title": "Hiring",
-  "post.type.referee.title": "Need help",
+  "post.type.referee.title": "Need Help",
   "post.search_post.no_data": "No Data🥲 Create the post now !",
   "post.create.type_label": "Post Type",
   "post.create.related_link_description":
