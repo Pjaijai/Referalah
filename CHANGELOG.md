@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0](https://github.com/Pjaijai/Referalah/compare/v1.14.0...v1.15.0) (2024-04-22)
+
+
+### Features
+
+* prefrech to edit post ([657105b](https://github.com/Pjaijai/Referalah/commit/657105b2cee3f048b1a3d4dbc98623d981f67d0f))
+
+
+### Bug Fixes
+
+* add back location cache ([f56a089](https://github.com/Pjaijai/Referalah/commit/f56a0890efb1518553a4838657c2c74784469b28))
+* cache options for 60 seconds ([109ffe5](https://github.com/Pjaijai/Referalah/commit/109ffe5255494c5b18350a2fdc0b1da8083c9eb4))
+* fix inistial post search type ([#352](https://github.com/Pjaijai/Referalah/issues/352)) ([6103192](https://github.com/Pjaijai/Referalah/commit/6103192d373b6cab6ae16f0cd38bdfcbd9601aa7))
+* profile apis no store ([6ec2f84](https://github.com/Pjaijai/Referalah/commit/6ec2f8419ed158ef942fe00bf1eca210e74ecc08))
+* remove cache ([b395c0c](https://github.com/Pjaijai/Referalah/commit/b395c0cfbf27a46b6d22a756699b986999859b1a))
+
 ## [1.14.0](https://github.com/Pjaijai/Referalah/compare/v1.13.0...v1.14.0) (2024-03-31)
 
 ### Features
