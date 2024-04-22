@@ -13,8 +13,7 @@ import AuthenticatedPageWrapper from "@/components/wrappers/authenticated"
 
 export const metadata = siteConfig.page.createPost.metadata
 
-export const revalidate = false
-export const fetchCache = "default-cache"
+export const revalidate = 60 * 60 * 24
 
 const CreatePostPage = async () => {
   const t = await getI18n()

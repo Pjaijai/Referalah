@@ -10,7 +10,7 @@ import {
 import CommonPageLayout from "@/components/layouts/common"
 import AuthenticatedPageWrapper from "@/components/wrappers/authenticated"
 
-export const revalidate = 1
+export const revalidate = 60 * 60 * 24
 
 const EditProfilePage = async () => {
   const countryList = await getCountryList()
