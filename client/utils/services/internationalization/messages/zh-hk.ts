@@ -116,6 +116,7 @@ export default {
   "post.status.close": "關閉",
   "post.status.open": "開放",
   "general.related_link_text": "相關連結",
+  "post.create.type_label": "街招類型",
   "post.create.error.user_not_sign_in_title": "未登入",
   "post.create.error.user_not_sign_in_description": "登入咗先可以貼街招",
   "general.company_name": "公司名",
@@ -236,6 +237,10 @@ export default {
   "validation.send_message.required": "一定要寫啲嘢",
   "pwa.what_is_pwa.title": "咩係PWA？",
   "pwa.how_to_install.title": "點樣安裝？",
+  "post.type.referer.title": "內部推薦",
+  "post.type.hiring.title": "請人",
+  "post.type.referee.title": "搵推薦人",
+  "post.search_post.no_data": "冇資料🥲不如貼張街招先？",
   "post.create.related_link_description":
     "例如份工個LinkedIn，Indeed，Glassdoor個連結",
   "post.create.related_link_title": "相關連結(選填)",

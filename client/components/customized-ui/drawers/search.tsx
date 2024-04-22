@@ -17,7 +17,9 @@ import ResetButton from "@/components/customized-ui/buttons/reset"
 import BaseSelect from "@/components/customized-ui/selects/base"
 import { Icons } from "@/components/icons"
 
-interface ISearchDrawerProps extends ISearchSearchBarProps {}
+export interface ISearchDrawerProps extends ISearchSearchBarProps {
+  additionalFields?: React.ReactNode
+}
 const SearchDrawer: React.FunctionComponent<ISearchDrawerProps> = ({
   provinceUuid,
   countryUuid,
@@ -47,6 +49,7 @@ const SearchDrawer: React.FunctionComponent<ISearchDrawerProps> = ({
   jobTitle,
   handleReset,
   handleSubmit,
+  additionalFields,
 }) => {
   const t = useI18n()
   const industryOptions = useIndustryOptions(industryList, true)
@@ -71,6 +74,7 @@ const SearchDrawer: React.FunctionComponent<ISearchDrawerProps> = ({
       </DrawerTrigger>
       <DrawerContent className="fixed bottom-0  flex h-fit flex-col rounded-t-[10px] p-2">
         <div className="container mt-2 flex flex-col gap-4">
+          {additionalFields}
           <Input
             onChange={handleCompanyChange}
             onKeyDown={handleKeyPressSubmitChange}

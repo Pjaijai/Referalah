@@ -2,7 +2,7 @@ import { EReferralType } from "@/types/common/referral-type"
 
 export interface ISearchPostsRequest {
   numberOfDataPerPage: number
-  type: EReferralType
+  types: EReferralType[]
   companyName: string
   maxYearOfExperience: number
   minYearOfExperience: number

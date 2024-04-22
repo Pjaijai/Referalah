@@ -29,7 +29,7 @@ export function BaseNavigationMenu() {
     },
     {
       title: t("page.post"),
-      href: siteConfig.page.referrerPost.href,
+      href: siteConfig.page.searchPost.href,
       description: t("nav.referrer_post.description"),
     },
   ]

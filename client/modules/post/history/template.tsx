@@ -39,6 +39,7 @@ const PostHistoryTemplate: React.FunctionComponent<
         <div className="mt-8 grid w-full grid-cols-1 gap-4 overflow-hidden lg:grid-cols-2">
           {data.map((data) => (
             <PostHistoryCard
+              type={data.type}
               companyName={data.company_name}
               status={data.status}
               jobTitle={data.job_title}

@@ -21,6 +21,7 @@ import { IFormTextInputProps } from "@/components/customized-ui/form/input"
 interface IFormSelectProps extends IFormTextInputProps {
   options: { value: string; title: string }[]
   defaultValue?: string
+  isDisabled?: boolean
 }
 
 const FormSelect: React.FunctionComponent<IFormSelectProps> = ({
@@ -31,6 +32,7 @@ const FormSelect: React.FunctionComponent<IFormSelectProps> = ({
   description,
   options,
   defaultValue,
+  isDisabled,
 }) => {
   return (
     <FormField
@@ -43,6 +45,7 @@ const FormSelect: React.FunctionComponent<IFormSelectProps> = ({
             onValueChange={field.onChange}
             defaultValue={defaultValue}
             value={field.value}
+            disabled={isDisabled}
           >
             <FormControl>
               <SelectTrigger>

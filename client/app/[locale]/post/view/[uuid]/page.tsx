@@ -3,6 +3,7 @@ import ReferralPostDetailsPageTemplate from "@/modules/post/view/template"
 import { getPostByUuid } from "@/utils/common/api"
 import { getI18n } from "@/utils/services/internationalization/server"
 
+import { EReferralType } from "@/types/common/referral-type"
 import CommonPageLayout from "@/components/layouts/common"
 
 export async function generateMetadata({
@@ -11,10 +12,31 @@ export async function generateMetadata({
   params: { uuid: string }
 }) {
   const { uuid } = params
+
+  // Fetch internationalization function
   const t = await getI18n()
-  const res = await getPostByUuid(uuid)
+
+  // Fetch post data
+  const { type: postType, job_title: jobTitle } = await getPostByUuid(uuid)
+
+  // Define type title based on post type
+  let typeTitle: string = ""
+  switch (postType) {
+    case EReferralType.HIRING:
+      typeTitle = t("post.type.hiring.title")
+      break
+    case EReferralType.REFEREE:
+      typeTitle = t("post.type.referee.title")
+      break
+    case EReferralType.REFERRER:
+      typeTitle = t("post.type.referer.title")
+      break
+    default:
+      break
+  }
+
   return {
-    title: `${res.job_title} | ${t("page.post")}`,
+    title: `${jobTitle} | ${typeTitle} | ${t("page.post")}`,
   }
 }
 
