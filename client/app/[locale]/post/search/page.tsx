@@ -13,8 +13,7 @@ import CommonPageLayout from "@/components/layouts/common"
 
 export const metadata = siteConfig.page.searchPost.metadata
 
-export const revalidate = false
-export const fetchCache = "default-cache"
+export const revalidate = 60 * 60 * 24
 
 const PostSearchPage = async () => {
   const t = await getI18n()

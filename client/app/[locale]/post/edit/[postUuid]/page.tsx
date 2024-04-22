@@ -10,8 +10,7 @@ import { getI18n } from "@/utils/services/internationalization/server"
 
 import CommonPageLayout from "@/components/layouts/common"
 
-export const revalidate = false
-export const fetchCache = "default-cache"
+export const revalidate = 60 * 60 * 24
 
 const EditPostPage = async ({ params }: { params: { postUuid: string } }) => {
   const t = await getI18n()
