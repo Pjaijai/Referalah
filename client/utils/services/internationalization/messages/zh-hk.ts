@@ -209,8 +209,8 @@ export default {
   "search.loading": "Load緊...",
   "search.reach_final_result": "盡頭了！",
   "nav.create_post.description":
-    "你公司請人又想搵香港人？係到貼個街招，等人聯絡你。",
-  "nav.referrer_post.description": "係到搵有乜工搵人推薦。",
+    "無論你係搵人才定需要內部推薦機會，開個街招啦！",
+  "nav.search_post.description": "係到搵有乜街招。",
   "general.connection": "人脈",
   "nav.become_referrer_or_referrer_description":
     "去個人檔案剔翻該選項，同埋填翻相認資料就OK啦！",
@@ -239,7 +239,7 @@ export default {
   "pwa.how_to_install.title": "點樣安裝？",
   "post.type.referer.title": "內部推薦",
   "post.type.hiring.title": "請人",
-  "post.type.referee.title": "搵推薦人",
+  "post.type.referee.title": "搵幫手",
   "post.search_post.no_data": "冇資料🥲不如貼張街招先？",
   "post.create.related_link_description":
     "例如份工個LinkedIn，Indeed，Glassdoor個連結",

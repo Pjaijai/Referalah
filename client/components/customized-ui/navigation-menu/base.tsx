@@ -30,7 +30,7 @@ export function BaseNavigationMenu() {
     {
       title: t("page.post"),
       href: siteConfig.page.searchPost.href,
-      description: t("nav.referrer_post.description"),
+      description: t("nav.search_post.description"),
     },
   ]
 

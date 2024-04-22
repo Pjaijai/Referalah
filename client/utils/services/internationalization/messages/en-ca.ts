@@ -229,8 +229,8 @@ export default {
   "search.loading": "Loading...",
   "search.reach_final_result": "That's all",
   "nav.create_post.description":
-    "Is your company hiring and looking for Hong Kongers? Make a post and let talents get in touch with you.",
-  "nav.referrer_post.description": "Check job referrals",
+    "Whether you're scouting for talent, seeking interview assistance, or in need of job referrals - share your post on the wall!",
+  "nav.search_post.description": "Check Posts",
   "general.connection": "Connections",
   "nav.become_referrer_or_referrer_description":
     "Select the options in profile!",
