@@ -349,7 +349,7 @@ const useSearchPost = (props: ISearchPostProps) => {
       searchParams.get("sorting")?.toString() || postSortingOptions[0].value,
     minYearOfExperience: searchParams.get("minYearOfExperience")?.toString(),
     maxYearOfExperience: searchParams.get("maxYearOfExperience")?.toString(),
-    types: initialPostTypes,
+    types: initialPostTypes || defaultPostTypes,
   }
 
   const result = useInfiniteQuery({
