@@ -284,7 +284,7 @@ export default {
   "page.referrer": "Referrer",
   "page.talent": "Talent",
   "page.create_post": "Create Post",
-  "page.edit_post": "Create Post",
+  "page.edit_post": "Edit Post",
   "page.post": "Post",
   "page.post_history": "Post History",
   "page.chat": "Chat",

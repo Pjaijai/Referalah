@@ -165,7 +165,7 @@ const EditPostPageTemplate: React.FunctionComponent<
         industryUuid: post?.industry?.uuid || "",
         type: post?.type,
       }
-    }, [isLoading]),
+    }, [isLoading, post]),
   })
 
   const { toast } = useToast()
