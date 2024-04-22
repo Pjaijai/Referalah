@@ -10,7 +10,8 @@ import {
 import CommonPageLayout from "@/components/layouts/common"
 import AuthenticatedPageWrapper from "@/components/wrappers/authenticated"
 
-export const fetchCache = "default-no-store"
+export const revalidate = false
+export const fetchCache = "default-cache"
 
 const EditProfilePage = async () => {
   const countryList = await getCountryList()

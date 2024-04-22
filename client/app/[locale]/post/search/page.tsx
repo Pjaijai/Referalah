@@ -13,6 +13,9 @@ import CommonPageLayout from "@/components/layouts/common"
 
 export const metadata = siteConfig.page.searchPost.metadata
 
+export const revalidate = false
+export const fetchCache = "default-cache"
+
 const PostSearchPage = async () => {
   const t = await getI18n()
   const countryList = await getCountryList()
