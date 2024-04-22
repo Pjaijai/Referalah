@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.16.0](https://github.com/Pjaijai/Referalah/compare/v1.15.0...v1.16.0) (2024-04-22)
+
+
+### Features
+
+* revalidate location options one day ([ef2c0c2](https://github.com/Pjaijai/Referalah/commit/ef2c0c2300fcff75709da3c4c5689188645034c8))
+
+
+### Bug Fixes
+
+* fix edit post title ([916fd27](https://github.com/Pjaijai/Referalah/commit/916fd275dc23affede09783619515b2272323616))
+
 ### [1.15.1](https://github.com/Pjaijai/Referalah/compare/v1.15.0...v1.15.1) (2024-04-22)
 
 ## [1.15.0](https://github.com/Pjaijai/Referalah/compare/v1.14.0...v1.15.0) (2024-04-22)
