@@ -66,6 +66,7 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
       <Link
         href={`${siteConfig.page.searchPost.href}/${uuid}`}
         onClick={(e) => e.stopPropagation()}
+        prefetch
       >
         <div className="flex flex-col items-start justify-start">
           <CardHeader className="w-full">

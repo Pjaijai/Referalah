@@ -170,6 +170,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                 <Link
                   className={buttonVariants({ variant: "default" })}
                   href={`${siteConfig.page.editPost.href}/${postUuid}`}
+                  prefetch
                 >
                   <Icons.pencil className="mr-1 h-4 w-4" />
                   {t("post.edit_post")}
