@@ -64,7 +64,7 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
   return (
     <Card className="flex flex-col justify-between rounded shadow-md">
       <Link
-        href={`${siteConfig.page.searchPost.href}/${uuid}`}
+        href={`${siteConfig.page.viewPost.href}/${uuid}`}
         onClick={(e) => e.stopPropagation()}
         prefetch
       >
@@ -85,16 +85,6 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
                   status={status}
                 />
               </div>
-
-              {isViewingOwnProfile && (
-                <Button
-                  onClick={handleEditOnClick}
-                  size={isMobile ? "icon" : "sm"}
-                >
-                  <Icons.pencil className="m-0 h-4 w-4 sm:mr-2" />
-                  {!isMobile && t("general.edit")}
-                </Button>
-              )}
             </div>
 
             <div className="mb-5 flex flex-col justify-between sm:flex-row">
