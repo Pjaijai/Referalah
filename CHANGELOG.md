@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.16.2](https://github.com/Pjaijai/Referalah/compare/v1.16.0...v1.16.2) (2024-04-23)
+
+
+### Bug Fixes
+
+* fix post history card ([60e0229](https://github.com/Pjaijai/Referalah/commit/60e022965003b69f28bb28b9ee46cd78f6fe01f6))
+* fix post nav description ([33622b3](https://github.com/Pjaijai/Referalah/commit/33622b367ca4f16be38917cb2a14ecaa63d19ec2))
+* fix post referee title ([621f5db](https://github.com/Pjaijai/Referalah/commit/621f5dbc563c4b458c5d11df84797546ace5a23b))
+* fix typo ([17cc97b](https://github.com/Pjaijai/Referalah/commit/17cc97b3ee6dd64a4d7c987db5ea108f14feac5d))
+* fothix edge function get user null problem ([025eefb](https://github.com/Pjaijai/Referalah/commit/025eefb7015190b7f07dcc216635366e44abd32b))
+
 ### [1.16.1](https://github.com/Pjaijai/Referalah/compare/v1.16.0...v1.16.1) (2024-04-22)
 
 ## [1.16.0](https://github.com/Pjaijai/Referalah/compare/v1.15.0...v1.16.0) (2024-04-22)
