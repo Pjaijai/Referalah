@@ -15,6 +15,8 @@ serve(async (req: any) => {
 
     const client = initSupabaseClient(req)
     const server = initSupabaseServer()
+
+    const jwt = req.headers.get("Authorization")!.split(" ")[1]
     const {
       type,
       body: msgBody,
@@ -47,7 +49,7 @@ serve(async (req: any) => {
 
     const {
       data: { user },
-    } = await client.auth.getUser()
+    } = await client.auth.getUser(jwt)
 
     const { data: sender, error } = await server
       .from("user")
