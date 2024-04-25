@@ -19,7 +19,7 @@ const Fields: React.FunctionComponent<IUserTypeSectionProps> = ({
 }) => {
   const t = useI18n()
   return (
-    <div className="mt-2 grid grid-cols-3 gap-2">
+    <div className="mt-2 grid grid-cols-2 gap-2">
       <Button
         variant={
           isExistsInListHelper(currentUserTypes, EUserType.REFERRER)
@@ -28,7 +28,7 @@ const Fields: React.FunctionComponent<IUserTypeSectionProps> = ({
         }
         onClick={() => onUserTypesChange(EUserType.REFERRER)}
       >
-        {t("post.type.referer.title")}
+        {t("user.type.referrer")}
       </Button>
 
       <Button
@@ -39,7 +39,7 @@ const Fields: React.FunctionComponent<IUserTypeSectionProps> = ({
         }
         onClick={() => onUserTypesChange(EUserType.REFEREE)}
       >
-        {t("post.type.referee.title")}
+        {t("user.type.referee")}
       </Button>
     </div>
   )

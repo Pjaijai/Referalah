@@ -28,7 +28,7 @@ const UserTypeSection: React.FunctionComponent<IUserTypeSectionProps> = ({
         }
         onClick={() => onUserTypesChange(EUserType.REFERRER)}
       >
-        {"post.type.referer.title"}
+        {t("user.type.referrer")}
       </Button>
 
       <Button
@@ -39,7 +39,7 @@ const UserTypeSection: React.FunctionComponent<IUserTypeSectionProps> = ({
         }
         onClick={() => onUserTypesChange(EUserType.REFEREE)}
       >
-        {"post.type.referee.title"}
+        {t("user.type.referee")}
       </Button>
     </div>
   )

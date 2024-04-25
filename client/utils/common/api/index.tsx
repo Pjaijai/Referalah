@@ -28,7 +28,6 @@ import {
 import { IReferralResponse } from "@/types/api/response/referral"
 import { IUserResponse } from "@/types/api/response/user"
 import { EQueryKeyString } from "@/types/common/query-key-string"
-import { EReferralType } from "@/types/common/referral-type"
 import { EUserType } from "@/types/common/user-type"
 import { siteConfig } from "@/config/site"
 
@@ -306,12 +305,15 @@ export const searchReferral = async ({
     .order("id", { ascending: true })
     .range(from, to)
 
-  if (isExistsInListHelper(types, EUserType.REFERRER)) {
-    query = query.eq("is_referer", true)
-  }
+  const isReferrer = isExistsInListHelper(types, EUserType.REFERRER)
+  const isReferee = isExistsInListHelper(types, EUserType.REFEREE)
 
-  if (isExistsInListHelper(types, EUserType.REFEREE)) {
+  if (isReferrer && !isReferee) {
+    query = query.eq("is_referer", true)
+  } else if (isReferee && !isReferrer) {
     query = query.eq("is_referee", true)
+  } else if (isReferrer || isReferee) {
+    query = query.or("is_referer.eq.true,is_referee.eq.true")
   }
 
   if (countryUuid) {

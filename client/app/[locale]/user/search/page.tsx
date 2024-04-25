@@ -24,7 +24,7 @@ export default async function UserSearchPage() {
 
   // TODO title
   return (
-    <CommonPageLayout title={t("page.referrer")}>
+    <CommonPageLayout title={t("page.search_member")}>
       <UserSearchPageTemplate
         cityList={cityList}
         provinceList={provinceList}

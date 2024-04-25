@@ -19,7 +19,7 @@ const PostTypeSection: React.FunctionComponent<IPostTypeSectionProps> = ({
 }) => {
   const t = useI18n()
   return (
-    <div className="flex flex-row gap-2">
+    <div className="flex flex-row gap-2 ">
       <Button
         variant={
           isExistsInListHelper(currentPostTypes, EReferralType.REFERRER)

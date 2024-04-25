@@ -145,7 +145,7 @@ const UserSearchPageTemplate: React.FunctionComponent<
 
       {!isRefererListLoading && !isFetching && list.length === 0 && (
         <div className="mt-8 rounded-lg border-2 p-4 text-center">
-          {t("referral.search_referrer.no_data")}
+          {t("user.search_user.no_data")}
         </div>
       )}
 
