@@ -1,6 +1,6 @@
 import React from "react"
 import { IPostTypeSectionProps } from "@/modules/post/components/bars/search"
-import { isTypeExitsInCurrentTypes } from "@/modules/post/utils/is-type-exits-in-current-types"
+import { isExistsInListHelper } from "@/utils/common/helpers/check/is-exists-list"
 import { useI18n } from "@/utils/services/internationalization/client"
 
 import { EReferralType } from "@/types/common/referral-type"
@@ -22,7 +22,7 @@ const Fields: React.FunctionComponent<IPostTypeSectionProps> = ({
     <div className="mt-2 grid grid-cols-3 gap-2">
       <Button
         variant={
-          isTypeExitsInCurrentTypes(currentPostTypes, EReferralType.REFERRER)
+          isExistsInListHelper(currentPostTypes, EReferralType.REFERRER)
             ? "default"
             : "secondary"
         }
@@ -33,7 +33,7 @@ const Fields: React.FunctionComponent<IPostTypeSectionProps> = ({
 
       <Button
         variant={
-          isTypeExitsInCurrentTypes(currentPostTypes, EReferralType.REFEREE)
+          isExistsInListHelper(currentPostTypes, EReferralType.REFEREE)
             ? "default"
             : "secondary"
         }
@@ -43,7 +43,7 @@ const Fields: React.FunctionComponent<IPostTypeSectionProps> = ({
       </Button>
       <Button
         variant={
-          isTypeExitsInCurrentTypes(currentPostTypes, EReferralType.HIRING)
+          isExistsInListHelper(currentPostTypes, EReferralType.HIRING)
             ? "default"
             : "secondary"
         }

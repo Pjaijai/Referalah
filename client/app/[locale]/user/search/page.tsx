@@ -1,4 +1,4 @@
-import RefererPageTemplate from "@/modules/referral/referer/template"
+import UserSearchPageTemplate from "@/modules/referral/search/template"
 import {
   getCityList,
   getCountryList,
@@ -10,20 +10,22 @@ import { getI18n } from "@/utils/services/internationalization/server"
 import { siteConfig } from "@/config/site"
 import CommonPageLayout from "@/components/layouts/common"
 
-export const metadata = siteConfig.page.referrer.metadata
+// TODO
+// export const metadata = siteConfig.page.referrer.metadata
 
 export const revalidate = 60 * 60 * 24
 
-export default async function RefererPage() {
+export default async function UserSearchPage() {
   const t = await getI18n()
   const countryList = await getCountryList()
   const provinceList = await getProvinceList()
   const cityList = await getCityList()
   const industryList = await getIndustryList()
 
+  // TODO title
   return (
     <CommonPageLayout title={t("page.referrer")}>
-      <RefererPageTemplate
+      <UserSearchPageTemplate
         cityList={cityList}
         provinceList={provinceList}
         industryList={industryList}

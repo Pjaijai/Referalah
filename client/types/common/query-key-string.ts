@@ -6,6 +6,7 @@ enum EQueryKeyString {
   USER_PROFILE = "user-profile",
   COUNT_USER = "count-user",
   SEARCH_POST = "search-post",
+  SEARCH_MEMBER = "search-member",
   SEARCH_REFERRER = "search-referrer",
   SEARCH_REFEREE = "search-referee",
   POST_DETAILS = "post-details",
