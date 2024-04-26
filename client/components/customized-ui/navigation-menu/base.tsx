@@ -42,11 +42,13 @@ export function BaseNavigationMenu() {
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="flex w-[400px] flex-col">
-              <Link href={`${siteConfig.page.signUp.href}`}>
-                <ListItem title={t("nav.become_member_title")}>
-                  {t("nav.become_member_description")}
-                </ListItem>
-              </Link>
+              {!isUserSignIn && (
+                <Link href={`${siteConfig.page.signUp.href}`}>
+                  <ListItem title={t("nav.become_member_title")}>
+                    {t("nav.become_member_description")}
+                  </ListItem>
+                </Link>
+              )}
 
               <Link href={siteConfig.page.searchMember.href}>
                 <ListItem title={t("general.member")}>
