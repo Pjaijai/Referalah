@@ -10,8 +10,7 @@ import { getI18n } from "@/utils/services/internationalization/server"
 import { siteConfig } from "@/config/site"
 import CommonPageLayout from "@/components/layouts/common"
 
-// TODO
-// export const metadata = siteConfig.page.referrer.metadata
+export const metadata = siteConfig.page.searchUser.metadata
 
 export const revalidate = 60 * 60 * 24
 
@@ -22,7 +21,6 @@ export default async function MemberSearchPage() {
   const cityList = await getCityList()
   const industryList = await getIndustryList()
 
-  // TODO title
   return (
     <CommonPageLayout title={t("page.search_member")}>
       <UserSearchPageTemplate
