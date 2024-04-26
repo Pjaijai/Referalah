@@ -1,8 +1,8 @@
 "use client"
 
 import React from "react"
-import UserSearchBar from "@/modules/referral/components/bars/search"
-import UserSearchDrawer from "@/modules/referral/components/drawers/search"
+import UserSearchBar from "@/modules/member/components/bars/search"
+import UserSearchDrawer from "@/modules/member/components/drawers/search"
 import {
   useCurrentLocale,
   useI18n,
@@ -19,15 +19,15 @@ import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import ReferralCard from "@/components/customized-ui/cards/referral"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 
-interface IUserSearchPageTemplateProps {
+interface IMemberSearchPageTemplateProps {
   countryList: ICountryResponse[]
   provinceList: IProvinceResponse[]
   cityList: ICityResponse[]
   industryList: IIndustryResponse[]
 }
 
-const UserSearchPageTemplate: React.FunctionComponent<
-  IUserSearchPageTemplateProps
+const MemberSearchPageTemplate: React.FunctionComponent<
+  IMemberSearchPageTemplateProps
 > = ({ cityList, countryList, industryList, provinceList }) => {
   const t = useI18n()
   const {
@@ -211,4 +211,4 @@ const UserSearchPageTemplate: React.FunctionComponent<
   )
 }
 
-export default UserSearchPageTemplate
+export default MemberSearchPageTemplate

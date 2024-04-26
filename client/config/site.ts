@@ -72,9 +72,9 @@ export const siteConfig = {
       },
     },
 
-    searchUser: {
+    searchMember: {
       name: "會員",
-      href: "/user/search",
+      href: "/member/search",
       metadata: {
         title: "會員 members",
       },

@@ -1,5 +1,5 @@
 import React from "react"
-import { IUserTypeSectionProps } from "@/modules/referral/components/bars/search"
+import { IUserTypeSectionProps } from "@/modules/member/components/bars/search"
 import { isExistsInListHelper } from "@/utils/common/helpers/check/is-exists-list"
 import { useI18n } from "@/utils/services/internationalization/client"
 

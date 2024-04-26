@@ -48,7 +48,7 @@ export function BaseNavigationMenu() {
                 </ListItem>
               </Link>
 
-              <Link href={siteConfig.page.searchUser.href}>
+              <Link href={siteConfig.page.searchMember.href}>
                 <ListItem title={t("general.member")}>
                   {t("nav.member.description")}
                 </ListItem>

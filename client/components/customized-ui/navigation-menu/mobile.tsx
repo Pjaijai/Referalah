@@ -34,7 +34,7 @@ export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
   const { isSignIn } = useUserStore((state) => state)
 
   const connectionLinks = [
-    { title: t("page.search_member"), url: siteConfig.page.searchUser.href },
+    { title: t("page.search_member"), url: siteConfig.page.searchMember.href },
     {
       title: t("nav.become_member_title"),
       url: `${siteConfig.page.signUp.href}`,

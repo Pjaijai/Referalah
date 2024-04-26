@@ -1,4 +1,4 @@
-import UserSearchPageTemplate from "@/modules/referral/search/template"
+import MemberSearchPageTemplate from "@/modules/member/search/template"
 import {
   getCityList,
   getCountryList,
@@ -10,7 +10,7 @@ import { getI18n } from "@/utils/services/internationalization/server"
 import { siteConfig } from "@/config/site"
 import CommonPageLayout from "@/components/layouts/common"
 
-export const metadata = siteConfig.page.searchUser.metadata
+export const metadata = siteConfig.page.searchMember.metadata
 
 export const revalidate = 60 * 60 * 24
 
@@ -23,7 +23,7 @@ export default async function MemberSearchPage() {
 
   return (
     <CommonPageLayout title={t("page.search_member")}>
-      <UserSearchPageTemplate
+      <MemberSearchPageTemplate
         cityList={cityList}
         provinceList={provinceList}
         industryList={industryList}
