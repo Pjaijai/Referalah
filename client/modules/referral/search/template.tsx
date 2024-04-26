@@ -63,14 +63,14 @@ const UserSearchPageTemplate: React.FunctionComponent<
   })
 
   const {
-    data: refererListData,
+    data: userListData,
     isLoading: isRefererListLoading,
     fetchNextPage,
     isFetching,
   } = result
   const locale = useCurrentLocale()
   const list =
-    refererListData !== undefined ? refererListData.pages.flatMap((d) => d) : []
+    userListData !== undefined ? userListData.pages.flatMap((d) => d) : []
 
   return (
     <div className="flex flex-col gap-4">
@@ -158,48 +158,49 @@ const UserSearchPageTemplate: React.FunctionComponent<
           dataLength={list ? list.length : 0} //This is important field to render the next data
           next={fetchNextPage}
           hasMore={
-            refererListData
-              ? refererListData &&
-                refererListData.pages &&
-                refererListData.pages[refererListData.pages.length - 1]
-                  .length !== 0
+            userListData
+              ? userListData &&
+                userListData.pages &&
+                userListData.pages[userListData.pages.length - 1].length !== 0
               : true
           }
         >
           <div className="xs:grid-cols-1 mt-8 grid w-full gap-6 overflow-hidden sm:grid-cols-2 lg:grid-cols-3">
-            {list.map((referer) => {
+            {list.map((user) => {
               return (
                 <ReferralCard
-                  jobTitle={referer.job_title}
-                  username={referer.username}
-                  photoUrl={referer.avatar_url}
-                  companyName={referer.company_name}
-                  description={referer.description}
-                  socialMediaUrl={referer.social_media_url}
-                  yearOfExperience={referer.year_of_experience}
-                  uuid={referer.uuid}
-                  key={referer.uuid}
+                  jobTitle={user.job_title}
+                  username={user.username}
+                  photoUrl={user.avatar_url}
+                  companyName={user.company_name}
+                  description={user.description}
+                  socialMediaUrl={user.social_media_url}
+                  yearOfExperience={user.year_of_experience}
+                  uuid={user.uuid}
+                  key={user.uuid}
                   receiverType={EReferralType.REFERRER}
                   province={
                     locale === "zh-hk"
-                      ? referer.province && referer.province.cantonese_name
-                      : referer.province && referer.province.english_name
+                      ? user.province && user.province.cantonese_name
+                      : user.province && user.province.english_name
                   }
                   country={
                     locale === "zh-hk"
-                      ? referer.country && referer.country.cantonese_name
-                      : referer.country && referer.country.english_name
+                      ? user.country && user.country.cantonese_name
+                      : user.country && user.country.english_name
                   }
                   city={
                     locale === "zh-hk"
-                      ? referer.city && referer.city.cantonese_name
-                      : referer.city && referer.city.english_name
+                      ? user.city && user.city.cantonese_name
+                      : user.city && user.city.english_name
                   }
                   industry={
                     locale === "zh-hk"
-                      ? referer.industry && referer.industry.cantonese_name
-                      : referer.industry && referer.industry.english_name
+                      ? user.industry && user.industry.cantonese_name
+                      : user.industry && user.industry.english_name
                   }
+                  isReferee={user.is_referee}
+                  isReferrer={user.is_referer}
                 />
               )
             })}

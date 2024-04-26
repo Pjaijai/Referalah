@@ -15,7 +15,7 @@ import CommonPageLayout from "@/components/layouts/common"
 
 export const revalidate = 60 * 60 * 24
 
-export default async function UserSearchPage() {
+export default async function MemberSearchPage() {
   const t = await getI18n()
   const countryList = await getCountryList()
   const provinceList = await getProvinceList()
