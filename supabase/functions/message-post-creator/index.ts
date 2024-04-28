@@ -4,6 +4,7 @@ import { initSupabaseClient } from "../_shared/client.ts"
 import { corsHeaders, ENV_IS_LOCAL } from "../_shared/cors.ts"
 import { EPostStatus } from "../_shared/types/enums/post/status.ts"
 import { initSupabaseServer } from "../_shared/server.ts"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")
 const WEB_BASE_URL = Deno.env.get("WEB_BASE_URL")

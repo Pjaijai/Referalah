@@ -4,53 +4,47 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [1.17.0](https://github.com/Pjaijai/Referalah/compare/v1.16.2...v1.17.0) (2024-04-28)
 
-
 ### Features
 
-* create message uuid col for history tbale ([a0259b8](https://github.com/Pjaijai/Referalah/commit/a0259b851dded4367d2dd2584b6b013fae0b1664))
+- create message uuid col for history tbale ([a0259b8](https://github.com/Pjaijai/Referalah/commit/a0259b851dded4367d2dd2584b6b013fae0b1664))
 
 ### [1.16.2](https://github.com/Pjaijai/Referalah/compare/v1.16.0...v1.16.2) (2024-04-23)
 
-
 ### Bug Fixes
 
-* fix post history card ([60e0229](https://github.com/Pjaijai/Referalah/commit/60e022965003b69f28bb28b9ee46cd78f6fe01f6))
-* fix post nav description ([33622b3](https://github.com/Pjaijai/Referalah/commit/33622b367ca4f16be38917cb2a14ecaa63d19ec2))
-* fix post referee title ([621f5db](https://github.com/Pjaijai/Referalah/commit/621f5dbc563c4b458c5d11df84797546ace5a23b))
-* fix typo ([17cc97b](https://github.com/Pjaijai/Referalah/commit/17cc97b3ee6dd64a4d7c987db5ea108f14feac5d))
-* fothix edge function get user null problem ([025eefb](https://github.com/Pjaijai/Referalah/commit/025eefb7015190b7f07dcc216635366e44abd32b))
+- fix post history card ([60e0229](https://github.com/Pjaijai/Referalah/commit/60e022965003b69f28bb28b9ee46cd78f6fe01f6))
+- fix post nav description ([33622b3](https://github.com/Pjaijai/Referalah/commit/33622b367ca4f16be38917cb2a14ecaa63d19ec2))
+- fix post referee title ([621f5db](https://github.com/Pjaijai/Referalah/commit/621f5dbc563c4b458c5d11df84797546ace5a23b))
+- fix typo ([17cc97b](https://github.com/Pjaijai/Referalah/commit/17cc97b3ee6dd64a4d7c987db5ea108f14feac5d))
+- fothix edge function get user null problem ([025eefb](https://github.com/Pjaijai/Referalah/commit/025eefb7015190b7f07dcc216635366e44abd32b))
 
 ### [1.16.1](https://github.com/Pjaijai/Referalah/compare/v1.16.0...v1.16.1) (2024-04-22)
 
 ## [1.16.0](https://github.com/Pjaijai/Referalah/compare/v1.15.0...v1.16.0) (2024-04-22)
 
-
 ### Features
 
-* revalidate location options one day ([ef2c0c2](https://github.com/Pjaijai/Referalah/commit/ef2c0c2300fcff75709da3c4c5689188645034c8))
-
+- revalidate location options one day ([ef2c0c2](https://github.com/Pjaijai/Referalah/commit/ef2c0c2300fcff75709da3c4c5689188645034c8))
 
 ### Bug Fixes
 
-* fix edit post title ([916fd27](https://github.com/Pjaijai/Referalah/commit/916fd275dc23affede09783619515b2272323616))
+- fix edit post title ([916fd27](https://github.com/Pjaijai/Referalah/commit/916fd275dc23affede09783619515b2272323616))
 
 ### [1.15.1](https://github.com/Pjaijai/Referalah/compare/v1.15.0...v1.15.1) (2024-04-22)
 
 ## [1.15.0](https://github.com/Pjaijai/Referalah/compare/v1.14.0...v1.15.0) (2024-04-22)
 
-
 ### Features
 
-* prefrech to edit post ([657105b](https://github.com/Pjaijai/Referalah/commit/657105b2cee3f048b1a3d4dbc98623d981f67d0f))
-
+- prefrech to edit post ([657105b](https://github.com/Pjaijai/Referalah/commit/657105b2cee3f048b1a3d4dbc98623d981f67d0f))
 
 ### Bug Fixes
 
-* add back location cache ([f56a089](https://github.com/Pjaijai/Referalah/commit/f56a0890efb1518553a4838657c2c74784469b28))
-* cache options for 60 seconds ([109ffe5](https://github.com/Pjaijai/Referalah/commit/109ffe5255494c5b18350a2fdc0b1da8083c9eb4))
-* fix inistial post search type ([#352](https://github.com/Pjaijai/Referalah/issues/352)) ([6103192](https://github.com/Pjaijai/Referalah/commit/6103192d373b6cab6ae16f0cd38bdfcbd9601aa7))
-* profile apis no store ([6ec2f84](https://github.com/Pjaijai/Referalah/commit/6ec2f8419ed158ef942fe00bf1eca210e74ecc08))
-* remove cache ([b395c0c](https://github.com/Pjaijai/Referalah/commit/b395c0cfbf27a46b6d22a756699b986999859b1a))
+- add back location cache ([f56a089](https://github.com/Pjaijai/Referalah/commit/f56a0890efb1518553a4838657c2c74784469b28))
+- cache options for 60 seconds ([109ffe5](https://github.com/Pjaijai/Referalah/commit/109ffe5255494c5b18350a2fdc0b1da8083c9eb4))
+- fix inistial post search type ([#352](https://github.com/Pjaijai/Referalah/issues/352)) ([6103192](https://github.com/Pjaijai/Referalah/commit/6103192d373b6cab6ae16f0cd38bdfcbd9601aa7))
+- profile apis no store ([6ec2f84](https://github.com/Pjaijai/Referalah/commit/6ec2f8419ed158ef942fe00bf1eca210e74ecc08))
+- remove cache ([b395c0c](https://github.com/Pjaijai/Referalah/commit/b395c0cfbf27a46b6d22a756699b986999859b1a))
 
 ## [1.14.0](https://github.com/Pjaijai/Referalah/compare/v1.13.0...v1.14.0) (2024-03-31)
 
@@ -60,7 +54,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* update clean storage api logic ([6f0e172](https://github.com/Pjaijai/Referalah/commit/6f0e172f22041d6db8056c7e3b442c91220360af))
+- update clean storage api logic ([6f0e172](https://github.com/Pjaijai/Referalah/commit/6f0e172f22041d6db8056c7e3b442c91220360af))
 
 ## [1.13.0](https://github.com/Pjaijai/Referalah/compare/v1.12.3...v1.13.0) (2024-03-29)
 
