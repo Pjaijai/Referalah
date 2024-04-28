@@ -48,8 +48,9 @@ serve(async (req: any) => {
       })
     }
 
-    const { data: usera, error: useree } = await server.auth.getUser(jwt)
-    const { user } = usera
+    const {
+      data: { user },
+    } = await server.auth.getUser(jwt)
 
     const { data: sender, error } = await server
       .from("user")

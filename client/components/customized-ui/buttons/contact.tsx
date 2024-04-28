@@ -1,6 +1,6 @@
 import React, { memo, useState } from "react"
-import ContactDialog from "@/modules/referral/components/dialog/contact"
-import UserSignInDialog from "@/modules/referral/components/dialog/userSignIn"
+import ContactDialog from "@/modules/member/components/dialog/contact"
+import UserSignInDialog from "@/modules/member/components/dialog/userSignIn"
 import { useI18n } from "@/utils/services/internationalization/client"
 
 import { EMessageType } from "@/types/common/message-type"

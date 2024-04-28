@@ -1,7 +1,7 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { isTypeExitsInCurrentTypes } from "@/modules/post/utils/is-type-exits-in-current-types"
 import { searchPostApi } from "@/utils/common/api"
+import { isExistsInListHelper } from "@/utils/common/helpers/check/is-exists-list"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { IPostFilterMeta } from "@/types/api/request/post/filter-meta"
@@ -176,13 +176,13 @@ const useSearchPost = (props: ISearchPostProps) => {
 
   const handlePostTypesChange = (type: EReferralType) => {
     if (
-      isTypeExitsInCurrentTypes(postTypes, type) === true &&
+      isExistsInListHelper(postTypes, type) === true &&
       postTypes.length > 1
     ) {
       const newTypes = postTypes.filter((v) => v !== type)
       setPostTypes(newTypes)
       createQueryString("types", newTypes.join(","))
-    } else if (isTypeExitsInCurrentTypes(postTypes, type) === false) {
+    } else if (isExistsInListHelper(postTypes, type) === false) {
       const newTypes = [...postTypes, type]
       setPostTypes(newTypes)
       createQueryString("types", newTypes.join(","))

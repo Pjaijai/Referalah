@@ -1,3 +1,4 @@
+import { isExistsInListHelper } from "@/utils/common/helpers/check/is-exists-list"
 import { supabase } from "@/utils/services/supabase/config"
 
 import { IResetPasswordRequest } from "@/types/api/request/auth/reset-password"
@@ -11,7 +12,7 @@ import { IMessageReferralRequest } from "@/types/api/request/message/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
 import { ISearchPostsRequest } from "@/types/api/request/post/search"
 import { IUpdatePostRequest } from "@/types/api/request/post/update"
-import { IFilterMeta } from "@/types/api/request/search/filter-meta"
+import { IUserFilterMeta } from "@/types/api/request/user/filter-meta"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { ICityResponse } from "@/types/api/response/city"
 import { IGetConversationListByUserUuidResponse } from "@/types/api/response/conversation-list"
@@ -27,7 +28,7 @@ import {
 import { IReferralResponse } from "@/types/api/response/referral"
 import { IUserResponse } from "@/types/api/response/user"
 import { EQueryKeyString } from "@/types/common/query-key-string"
-import { EReferralType } from "@/types/common/referral-type"
+import { EUserType } from "@/types/common/user-type"
 import { siteConfig } from "@/config/site"
 
 // User Profile
@@ -235,8 +236,7 @@ export const searchReferral = async ({
     EQueryKeyString,
     {
       sorting: string
-      filterMeta: IFilterMeta
-      type: EReferralType
+      filterMeta: IUserFilterMeta
     },
   ]
 }) => {
@@ -249,8 +249,8 @@ export const searchReferral = async ({
   const jobTitle = queryKey[1].filterMeta.jobTitle
   const maxYearOfExperience = queryKey[1].filterMeta.maxYearOfExperience
   const minYearOfExperience = queryKey[1].filterMeta.minYearOfExperience
-  const type = queryKey[1].type
-
+  const types = queryKey[1].filterMeta.types
+  console.log(123123, queryKey[1].filterMeta)
   const sort = queryKey[1].sorting.split(",")
   const order = sort[1] !== "dec"
 
@@ -305,12 +305,15 @@ export const searchReferral = async ({
     .order("id", { ascending: true })
     .range(from, to)
 
-  if (type === EReferralType.REFERRER) {
-    query = query.eq("is_referer", true)
-  }
+  const isReferrer = isExistsInListHelper(types, EUserType.REFERRER)
+  const isReferee = isExistsInListHelper(types, EUserType.REFEREE)
 
-  if (type === EReferralType.REFEREE) {
+  if (isReferrer && !isReferee) {
+    query = query.eq("is_referer", true)
+  } else if (isReferee && !isReferrer) {
     query = query.eq("is_referee", true)
+  } else if (isReferrer || isReferee) {
+    query = query.or("is_referer.eq.true,is_referee.eq.true")
   }
 
   if (countryUuid) {
