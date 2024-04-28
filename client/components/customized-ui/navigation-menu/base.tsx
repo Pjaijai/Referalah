@@ -18,7 +18,6 @@ import { Icons } from "@/components/icons"
 
 export function BaseNavigationMenu() {
   const t = useI18n()
-  const userUuid = useUserStore((state) => state.uuid)
   const isUserSignIn = useUserStore((state) => state.isSignIn)
 
   const components: { title: string; href: string; description: string }[] = [
@@ -43,21 +42,17 @@ export function BaseNavigationMenu() {
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="flex w-[400px] flex-col">
-              <Link href={`${siteConfig.page.profile.href}/${userUuid}`}>
-                <ListItem title={t("nav.become_referrer_or_referrer_title")}>
-                  {t("nav.become_referrer_or_referrer_description")}
-                </ListItem>
-              </Link>
+              {!isUserSignIn && (
+                <Link href={`${siteConfig.page.signUp.href}`}>
+                  <ListItem title={t("nav.become_member_title")}>
+                    {t("nav.become_member_description")}
+                  </ListItem>
+                </Link>
+              )}
 
-              <Link href={siteConfig.page.referrer.href}>
-                <ListItem title={t("general.referrer")}>
-                  {t("nav.referrer.description")}
-                </ListItem>
-              </Link>
-
-              <Link href={siteConfig.page.talent.href}>
-                <ListItem title={t("general.talent")}>
-                  {t("nav.referee.description")}
+              <Link href={siteConfig.page.searchMember.href}>
+                <ListItem title={t("general.member")}>
+                  {t("nav.member.description")}
                 </ListItem>
               </Link>
             </ul>

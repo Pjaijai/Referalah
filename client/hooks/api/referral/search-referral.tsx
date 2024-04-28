@@ -1,6 +1,7 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { searchReferral } from "@/utils/common/api"
+import { isExistsInListHelper } from "@/utils/common/helpers/check/is-exists-list"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { ICityResponse } from "@/types/api/response/city"
@@ -8,11 +9,10 @@ import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
 import { EQueryKeyString } from "@/types/common/query-key-string"
-import { EReferralType } from "@/types/common/referral-type"
+import { EUserType } from "@/types/common/user-type"
 import useReferralSortOptions from "@/hooks/common/sort/referral-sort-options"
 
 interface ISearchReferralProps {
-  type: EReferralType
   countryList: ICountryResponse[]
   provinceList: IProvinceResponse[]
   cityList: ICityResponse[]
@@ -20,13 +20,10 @@ interface ISearchReferralProps {
 }
 
 const useSearchReferral = (props: ISearchReferralProps) => {
-  const { type, countryList, provinceList, cityList, industryList } = props
+  const { countryList, provinceList, cityList, industryList } = props
   const { data: referralSortingOptions } = useReferralSortOptions()
 
-  const keyString =
-    type === EReferralType.REFEREE
-      ? EQueryKeyString.SEARCH_REFEREE
-      : EQueryKeyString.SEARCH_REFERRER
+  const keyString = EQueryKeyString.SEARCH_MEMBER
 
   const getUUid = useCallback(
     (meta: "country" | "industry" | "province" | "city", value?: string) => {
@@ -69,6 +66,24 @@ const useSearchReferral = (props: ISearchReferralProps) => {
     new URLSearchParams(searchParams.toString())
   )
 
+  const initialUserTypes = searchParams
+    .get("types")
+    ?.split(",")
+    .map((type) => {
+      if (Object.values(EUserType).includes(type as EUserType)) {
+        return type as EUserType
+      } else {
+        // Handle invalid type value
+        return undefined // or any other default value/error handling
+      }
+    })
+    .filter((type) => type !== undefined) as EUserType[]
+
+  const defaultUserTypes = [EUserType.REFEREE, EUserType.REFERRER]
+  const [userTypes, setUserTypes] = useState<EUserType[]>(
+    initialUserTypes || defaultUserTypes
+  )
+
   const createQueryString = useCallback(
     (name: string, value: string) => {
       params.set(name, value)
@@ -95,6 +110,21 @@ const useSearchReferral = (props: ISearchReferralProps) => {
   const handleJobTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setJobTitle(e.target.value)
     createQueryString("jobTitle", e.target.value)
+  }
+
+  const handleUserTypesChange = (type: EUserType) => {
+    if (
+      isExistsInListHelper(userTypes, type) === true &&
+      userTypes.length > 1
+    ) {
+      const newTypes = userTypes.filter((v) => v !== type)
+      setUserTypes(newTypes)
+      createQueryString("types", newTypes.join(","))
+    } else if (isExistsInListHelper(userTypes, type) === false) {
+      const newTypes = [...userTypes, type]
+      setUserTypes(newTypes)
+      createQueryString("types", newTypes.join(","))
+    }
   }
 
   const handleCountryChange = (value: string) => {
@@ -257,9 +287,10 @@ const useSearchReferral = (props: ISearchReferralProps) => {
       searchParams.get("minYearOfExperience")?.toString() || undefined,
     maxYearOfExperience:
       searchParams.get("maxYearOfExperience")?.toString() || undefined,
+    types: initialUserTypes || defaultUserTypes,
   }
   const result = useInfiniteQuery({
-    queryKey: [keyString, { sorting: filterMeta.sorting, filterMeta, type }],
+    queryKey: [keyString, { sorting: filterMeta.sorting, filterMeta }],
     queryFn: searchReferral,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
@@ -295,6 +326,8 @@ const useSearchReferral = (props: ISearchReferralProps) => {
     minYearOfExperience,
     sorting,
     handleReset,
+    handleUserTypesChange,
+    userTypes,
   }
 }
 

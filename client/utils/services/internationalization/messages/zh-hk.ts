@@ -3,7 +3,7 @@
 export default {
   index: {
     connect: "連結海外香港",
-    professionals: "人才",
+    professionals: "人材",
     subTitle: `祝大家一切順利！`,
     so_far: "我哋目前有",
     "members#zero": "個會員",
@@ -148,7 +148,7 @@ export default {
   "profile.form.avatar_description": "食到JPG，JPEG，PNG，最多1MB。",
   "general.referrer": "推薦人",
   "profile.form.is_referrer_description": "我會推薦人/請人",
-  "general.talent": "人才",
+  "general.talent": "人材",
   "profile.form.is_referee_description": "我的訴求就是上班",
   "profile.form.personal_description_label": "個人簡介",
   "profile.form.optional_company_label": "公司名(選填)",
@@ -185,9 +185,7 @@ export default {
   "referral.user_not_sing_in_dialog.sign_in": "登入",
   "general.link": "連結",
   "general.contact": "聯絡",
-  "referral.search_referee.no_data": "冇資料🥲不如成為受薦人？",
-
-  "referral.search_referrer.no_data": "冇資料🥲不如成為推薦人？",
+  "user.search_user.no_data": "搵唔到相關會員🥲",
   "general.today": "今日",
   "general.day#zero": "{count}日",
   "general.day#one": "{count}日",
@@ -209,12 +207,9 @@ export default {
   "search.loading": "Load緊...",
   "search.reach_final_result": "盡頭了！",
   "nav.create_post.description":
-    "無論你係搵人才定需要內部推薦機會，開個街招啦！",
+    "無論你係搵人材定需要內部推薦機會，開個街招啦！",
   "nav.search_post.description": "係到搵有乜街招。",
   "general.connection": "人脈",
-  "nav.become_referrer_or_referrer_description":
-    "去個人檔案剔翻該選項，同埋填翻相認資料就OK啦！",
-  "nav.referrer.description": "想搵人推薦你入去？係到搵下啦！",
   "nav.referee.description": "想搵人材？係到睇下啦！",
   "general.sorting": "排列",
   "search.year_of_experience_placeholder": "年資",
@@ -248,7 +243,8 @@ export default {
   "general.view": "查看",
   "general.chat": "對話",
 
-  "nav.become_referrer_or_referrer_title": "成為推薦人/受薦人",
+  "nav.become_member_title": "成為會員",
+  "nav.become_member_description": "立即加入，永遠唔會遲！",
   "general.please": "請",
 
   "page.email_verification": "電郵認證",
@@ -258,8 +254,6 @@ export default {
   "page.sign_in": "登入",
   "page.reset_password": "重置密碼",
   "page.forgot_password": "忘記密碼",
-  "page.referrer": "推薦人",
-  "page.talent": "人才",
   "page.create_post": "貼街招",
   "page.edit_post": "編輯街招",
   "page.post": "街招",
@@ -306,4 +300,9 @@ export default {
   "genera.max_storage_day#other": "文件會被存放{count}日",
   "general.reset": "重設",
   "general.expired": "已過期",
+  "user.type.referrer": "推薦人",
+  "user.type.referee": "人材",
+  "general.member": "會員",
+  "nav.member.description": "查看會員，立即連結！",
+  "page.search_member": "會員",
 } as const

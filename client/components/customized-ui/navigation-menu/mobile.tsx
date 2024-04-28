@@ -1,5 +1,6 @@
 "use client"
 
+import { useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { useI18n } from "@/utils/services/internationalization/client"
 
@@ -31,16 +32,25 @@ interface MobileNavigationMenuProps {
 
 export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
   const t = useI18n()
-  const { uuid: userUuid, isSignIn } = useUserStore((state) => state)
+  const { isSignIn } = useUserStore((state) => state)
 
-  const connectionLinks = [
-    { title: t("page.referrer"), url: siteConfig.page.referrer.href },
-    { title: t("page.talent"), url: siteConfig.page.talent.href },
-    {
-      title: t("nav.become_referrer_or_referrer_title"),
-      url: `${siteConfig.page.profile.href}/${userUuid}`,
-    },
-  ]
+  const connectionLinks = useMemo(() => {
+    const links = [
+      {
+        title: t("page.search_member"),
+        url: siteConfig.page.searchMember.href,
+      },
+    ]
+
+    if (!isSignIn) {
+      links.unshift({
+        title: t("nav.become_member_title"),
+        url: `${siteConfig.page.signUp.href}`,
+      })
+    }
+
+    return links
+  }, [isSignIn])
 
   const workLinks = [
     { title: t("page.post"), url: siteConfig.page.searchPost.href },

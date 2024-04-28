@@ -205,8 +205,7 @@ export default {
   "referral.user_not_sing_in_dialog.sign_in": "Sign in",
   "general.link": "Link",
   "general.contact": "Contact",
-  "referral.search_referee.no_data": "No Data🥲 Become the first referee!",
-  "referral.search_referrer.no_data": "No Data🥲 Become the first referrer!",
+  "user.search_user.no_data": "No user matches the current criteria🥲",
   "general.today": "Today",
 
   "general.day#zero": "{count}day",
@@ -232,9 +231,7 @@ export default {
     "Whether you're scouting for talent, seeking interview assistance, or in need of job referrals - share your post on the wall!",
   "nav.search_post.description": "Check Posts",
   "general.connection": "Connections",
-  "nav.become_referrer_or_referrer_description":
-    "Select the options in profile!",
-  "nav.referrer.description": "Looking for referrers? Check this!",
+  "nav.become_member_description": "Join Now!",
   "nav.referee.description": "Looking for talents? Check this!",
   "general.sorting": "Sort",
   "search.year_of_experience_placeholder": "Experience",
@@ -271,7 +268,7 @@ export default {
   "auth.form.sign_out.error": "Failed to sign out",
   "general.view": "View",
   "general.chat": "Chat",
-  "nav.become_referrer_or_referrer_title": "Become Referrer/Referee",
+  "nav.become_member_title": "Become Member",
   "general.please": "Please",
 
   "page.email_verification": "Email Verification",
@@ -281,8 +278,6 @@ export default {
   "page.sign_in": "Sign in",
   "page.reset_password": "Reset Password",
   "page.forgot_password": "Forgot Password",
-  "page.referrer": "Referrer",
-  "page.talent": "Talent",
   "page.create_post": "Create Post",
   "page.edit_post": "Edit Post",
   "page.post": "Post",
@@ -331,4 +326,10 @@ export default {
     "The document will be stored for {count} days",
   "general.reset": "Reset",
   "general.expired": "Expired",
+  "user.type.referrer": "Referrer",
+  "user.type.referee": "Talent",
+  "general.member": "Member",
+
+  "nav.member.description": "View members, link now!",
+  "page.search_member": "Members",
 } as const
