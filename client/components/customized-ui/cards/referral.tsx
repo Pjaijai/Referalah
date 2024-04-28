@@ -101,6 +101,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
             alt={username}
             url={photoUrl || undefined}
             size="large"
+            className="mt-2"
           />
         </Link>
         <Link href={`${siteConfig.page.profile.href}/${uuid}`}>
