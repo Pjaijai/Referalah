@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.17.1](https://github.com/Pjaijai/Referalah/compare/v1.17.0...v1.17.1) (2024-04-29)
+
+
+### Bug Fixes
+
+* remove member type checking in contact referral ([15b16dd](https://github.com/Pjaijai/Referalah/commit/15b16dd08dc7f8526f4cc17a4f08f960cb62bb56))
+
 ## [1.17.0](https://github.com/Pjaijai/Referalah/compare/v1.16.2...v1.17.0) (2024-04-28)
 
 ### Features
