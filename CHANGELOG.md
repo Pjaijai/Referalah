@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.17.1](https://github.com/Pjaijai/Referalah/compare/v1.17.0...v1.17.1) (2024-04-29)
+
+### Features
+
+- create message uuid col for history tbale ([a0259b8](https://github.com/Pjaijai/Referalah/commit/a0259b851dded4367d2dd2584b6b013fae0b1664))
+
+### [1.16.2](https://github.com/Pjaijai/Referalah/compare/v1.16.0...v1.16.2) (2024-04-23)
+
+### Bug Fixes
+
+- remove member type checking in contact referral ([15b16dd](https://github.com/Pjaijai/Referalah/commit/15b16dd08dc7f8526f4cc17a4f08f960cb62bb56))
+
 ## [1.17.0](https://github.com/Pjaijai/Referalah/compare/v1.16.2...v1.17.0) (2024-04-28)
 
 ### Features

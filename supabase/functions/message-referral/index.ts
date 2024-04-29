@@ -84,20 +84,6 @@ serve(async (req: any) => {
       })
     }
 
-    if (type === "referer" && receiver.is_referer === false) {
-      return new Response("Receiver is not referrer", {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 400,
-      })
-    }
-
-    if (type === "referee" && receiver.is_referee === false) {
-      return new Response("Receiver is not referee", {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 400,
-      })
-    }
-
     // prevent_duplicate_conversation to make sure one conversation for two user
     const { data: conversation } = await server.rpc("find_conversation", {
       user1_uuid: sender.uuid,
