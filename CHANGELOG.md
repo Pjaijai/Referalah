@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.18.0](https://github.com/Pjaijai/Referalah/compare/v1.17.1...v1.18.0) (2024-05-07)
+
+
+### Features
+
+* add links to contact request list ([bde718e](https://github.com/Pjaijai/Referalah/commit/bde718e23b073f13d0b64c1153be75915f35b311))
+
 ### [1.17.1](https://github.com/Pjaijai/Referalah/compare/v1.17.0...v1.17.1) (2024-04-29)
 
 ### Features

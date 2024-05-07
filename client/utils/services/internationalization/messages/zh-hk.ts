@@ -10,6 +10,8 @@ export default {
     "members#other": "個會員",
     join_now: "即刻加入！",
     check_latest_post: "查看最新街招",
+    requested: "回應咗街招",
+    contacted: "聯絡咗",
   },
   "auth.form.email_label": "電郵",
   "auth.form.username_label": "用戶名稱",

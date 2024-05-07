@@ -1,5 +1,9 @@
 import MainPageTemplate from "@/modules/main/template"
-import { getUserCount, searchPostApi } from "@/utils/common/api"
+import {
+  getUserCount,
+  listLatestContactRequest,
+  searchPostApi,
+} from "@/utils/common/api"
 
 import { EReferralType } from "@/types/common/referral-type"
 
@@ -23,5 +27,7 @@ export default async function IndexPage() {
     ],
   })
 
-  return <MainPageTemplate count={count} posts={posts} />
+  const list = await listLatestContactRequest()
+
+  return <MainPageTemplate count={count} posts={posts} contactList={list} />
 }
