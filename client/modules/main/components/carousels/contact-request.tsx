@@ -36,7 +36,7 @@ const ContactRequestCarousel: React.FunctionComponent<
                   <p className="shrink-0">@{data.senderUserName}</p>
                   <p className="shrink-0">{scopedT("requested")}</p>
                   <Link
-                    href={`${siteConfig.page.profile.href}/${data.postUuid}`}
+                    href={`${siteConfig.page.viewPost.href}/${data.postUuid}`}
                   >
                     <p
                       className="shrink-0  text-green-700
