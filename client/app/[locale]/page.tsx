@@ -8,9 +8,7 @@ import {
 import { EReferralType } from "@/types/common/referral-type"
 
 // cache for 1 hours
-// export const revalidate = 60 * 60
-
-export const revalidate = 0
+export const revalidate = 60 * 60
 
 export default async function IndexPage() {
   const count = await getUserCount()
