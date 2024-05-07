@@ -32,15 +32,15 @@ const ContactRequestCarousel: React.FunctionComponent<
           if (data.type === "post")
             return (
               <CarouselItem className="basis-1/2 md:basis-1/4">
-                <div className="flex shrink-0 flex-row justify-center   ">
+                <div className="flex shrink-0 flex-col justify-center    ">
                   <p className="shrink-0">@{data.senderUserName}</p>
                   <p className="shrink-0">{scopedT("requested")}</p>
                   <Link
                     href={`${siteConfig.page.profile.href}/${data.postUuid}`}
                   >
                     <p
-                      className="shrink-0 border-b border-green-700
- dark:border-yellow-300"
+                      className="shrink-0  text-green-700
+ dark:text-yellow-300"
                     >
                       {data.postJobTitle}
                     </p>
@@ -58,8 +58,8 @@ const ContactRequestCarousel: React.FunctionComponent<
                     href={`${siteConfig.page.profile.href}/${data.receiverUuid}`}
                   >
                     <p
-                      className="border-b border-green-700
- dark:border-yellow-300"
+                      className=" text-green-700
+ dark:text-yellow-300"
                     >
                       @{data.receiverUserName}
                     </p>
