@@ -15,6 +15,7 @@ import { IUpdatePostRequest } from "@/types/api/request/post/update"
 import { IUserFilterMeta } from "@/types/api/request/user/filter-meta"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { ICityResponse } from "@/types/api/response/city"
+import { TContactRequestListResponse } from "@/types/api/response/contact-request/contact-request-list"
 import { IGetConversationListByUserUuidResponse } from "@/types/api/response/conversation-list"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
@@ -250,7 +251,7 @@ export const searchReferral = async ({
   const maxYearOfExperience = queryKey[1].filterMeta.maxYearOfExperience
   const minYearOfExperience = queryKey[1].filterMeta.minYearOfExperience
   const types = queryKey[1].filterMeta.types
-  console.log(123123, queryKey[1].filterMeta)
+
   const sort = queryKey[1].sorting.split(",")
   const order = sort[1] !== "dec"
 
@@ -878,6 +879,20 @@ export const getUserCount = async () => {
 
     if (error) throw error
     return count
+  } catch (error) {
+    throw error
+  }
+}
+
+// contact Request history
+export const listLatestContactRequest = async () => {
+  try {
+    const { data, error } = await supabase.functions.invoke(
+      "list-latest-contact-request"
+    )
+
+    if (error) throw error
+    return data as TContactRequestListResponse[]
   } catch (error) {
     throw error
   }

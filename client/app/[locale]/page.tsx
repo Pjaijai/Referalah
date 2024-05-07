@@ -1,10 +1,16 @@
 import MainPageTemplate from "@/modules/main/template"
-import { getUserCount, searchPostApi } from "@/utils/common/api"
+import {
+  getUserCount,
+  listLatestContactRequest,
+  searchPostApi,
+} from "@/utils/common/api"
 
 import { EReferralType } from "@/types/common/referral-type"
 
 // cache for 1 hours
-export const revalidate = 60 * 60
+// export const revalidate = 60 * 60
+
+export const revalidate = 0
 
 export default async function IndexPage() {
   const count = await getUserCount()
@@ -23,5 +29,7 @@ export default async function IndexPage() {
     ],
   })
 
-  return <MainPageTemplate count={count} posts={posts} />
+  const list = await listLatestContactRequest()
+
+  return <MainPageTemplate count={count} posts={posts} contactList={list} />
 }

@@ -12,7 +12,10 @@ export default {
     "members#other": "members",
     join_now: "Join Now !",
     check_latest_post: "Latest Post",
+    requested: "sent request to post",
+    contacted: "contacted",
   },
+
   "auth.form.email_label": "Email",
   "auth.form.username_label": "Username",
   "auth.form.username_description": "Changeable after registration",
