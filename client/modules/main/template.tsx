@@ -94,10 +94,10 @@ const MainPageTemplate = ({
               </Link>
             )}
           </div>
-          <div className="mt-20">
+          <div className="mt-10 md:mt-20">
             <ContactRequestCarousel list={contactList} />
           </div>
-          <div className="mt-20 ">
+          <div className="mt-4 ">
             <PostCarousel list={posts} />
           </div>
         </motion.div>
