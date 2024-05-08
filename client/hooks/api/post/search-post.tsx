@@ -1,9 +1,10 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { searchPostApi } from "@/utils/common/api"
+import { isExistsInListHelper } from "@/utils/common/helpers/check/is-exists-list"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
-import { IFilterMeta } from "@/types/api/request/post/filter-meta"
+import { IPostFilterMeta } from "@/types/api/request/post/filter-meta"
 import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
@@ -21,8 +22,7 @@ const searchPost = ({
     EQueryKeyString,
     {
       sorting: string
-      filterMeta: IFilterMeta
-      type: EReferralType
+      filterMeta: IPostFilterMeta
     },
   ]
 }) => {
@@ -30,7 +30,7 @@ const searchPost = ({
 
   const queryKeyItem = queryKey[1]
 
-  const { type, filterMeta, sorting } = queryKeyItem
+  const { filterMeta, sorting } = queryKeyItem
 
   const countryUuid = filterMeta.countryUuid
   const provinceUuid = filterMeta.provinceUuid
@@ -41,6 +41,7 @@ const searchPost = ({
   const sortingType = sorting
   const maxYearOfExperience = filterMeta.maxYearOfExperience
   const minYearOfExperience = filterMeta.minYearOfExperience
+  const postTypes = filterMeta.types
 
   return searchPostApi({
     companyName: companyName,
@@ -51,15 +52,18 @@ const searchPost = ({
     jobTitle,
     provinceUuid,
     page: pageParam,
-    type,
+    types: postTypes,
     sortingType,
-    maxYearOfExperience: parseInt(maxYearOfExperience),
-    minYearOfExperience: parseInt(minYearOfExperience),
+    maxYearOfExperience: maxYearOfExperience
+      ? parseInt(maxYearOfExperience)
+      : 100,
+    minYearOfExperience: minYearOfExperience
+      ? parseInt(minYearOfExperience)
+      : 0,
   })
 }
 
 interface ISearchPostProps {
-  type: EReferralType
   countryList: ICountryResponse[]
   provinceList: IProvinceResponse[]
   cityList: ICityResponse[]
@@ -68,7 +72,6 @@ interface ISearchPostProps {
 
 const useSearchPost = (props: ISearchPostProps) => {
   const {
-    type,
     countryList: countryData,
     provinceList: provinceData,
     cityList: cityData,
@@ -77,10 +80,7 @@ const useSearchPost = (props: ISearchPostProps) => {
 
   const { data: postSortingOptions } = usePostSortOptions()
 
-  const keyString =
-    type === EReferralType.REFEREE
-      ? EQueryKeyString.SEARCH_REFEREE_POST
-      : EQueryKeyString.SEARCH_REFERRER_POST
+  const keyString = EQueryKeyString.SEARCH_POST
 
   const getUUid = useCallback(
     (meta: "country" | "industry" | "province" | "city", value?: string) => {
@@ -112,13 +112,36 @@ const useSearchPost = (props: ISearchPostProps) => {
   const [industryUuid, setIndustryUuid] = useState<undefined | string>()
   const [minYearOfExperience, setMinYearOfExperience] = useState<
     undefined | string
-  >(searchParams.get("minYearOfExperience")?.toString() || "0")
+  >(searchParams.get("minYearOfExperience")?.toString() || undefined)
   const [maxYearOfExperience, setMaxYearOfExperience] = useState<
     undefined | string
-  >(searchParams.get("maxYearOfExperience")?.toString() || "100")
+  >(searchParams.get("maxYearOfExperience")?.toString() || undefined)
   const [sorting, setSorting] = useState(
     searchParams.get("sorting")?.toString() || postSortingOptions[0].value
   )
+
+  const initialPostTypes = searchParams
+    .get("types")
+    ?.split(",")
+    .map((type) => {
+      if (Object.values(EReferralType).includes(type as EReferralType)) {
+        return type as EReferralType
+      } else {
+        // Handle invalid type value
+        return undefined // or any other default value/error handling
+      }
+    })
+    .filter((type) => type !== undefined) as EReferralType[]
+
+  const defaultPostTypes = [
+    EReferralType.HIRING,
+    EReferralType.REFEREE,
+    EReferralType.REFERRER,
+  ]
+  const [postTypes, setPostTypes] = useState<EReferralType[]>(
+    initialPostTypes || defaultPostTypes
+  )
+
   const [params, setParams] = useState(
     new URLSearchParams(searchParams.toString())
   )
@@ -126,6 +149,15 @@ const useSearchPost = (props: ISearchPostProps) => {
   const createQueryString = useCallback(
     (name: string, value: string) => {
       params.set(name, value)
+
+      return params.toString()
+    },
+    [params]
+  )
+
+  const removeQueryString = useCallback(
+    (name: string) => {
+      params.delete(name)
 
       return params.toString()
     },
@@ -142,34 +174,78 @@ const useSearchPost = (props: ISearchPostProps) => {
     createQueryString("jobTitle", e.target.value)
   }
 
+  const handlePostTypesChange = (type: EReferralType) => {
+    if (
+      isExistsInListHelper(postTypes, type) === true &&
+      postTypes.length > 1
+    ) {
+      const newTypes = postTypes.filter((v) => v !== type)
+      setPostTypes(newTypes)
+      createQueryString("types", newTypes.join(","))
+    } else if (isExistsInListHelper(postTypes, type) === false) {
+      const newTypes = [...postTypes, type]
+      setPostTypes(newTypes)
+      createQueryString("types", newTypes.join(","))
+    }
+  }
+
   const handleCountryChange = (value: string) => {
-    setCountryUuid(value)
-    createQueryString(
-      "country",
-      countryData?.find((item) => item.uuid === value)?.value ?? value
-    )
+    if (value === "all") {
+      setCountryUuid(undefined)
+      setProvinceUuid(undefined)
+      setCityUuid(undefined)
+      removeQueryString("country")
+      removeQueryString("province")
+      removeQueryString("city")
+    } else {
+      setCountryUuid(value)
+      setProvinceUuid(undefined)
+      setCityUuid(undefined)
+      createQueryString(
+        "country",
+        countryData?.find((item) => item.uuid === value)?.value ?? value
+      )
+    }
   }
   const handleProvinceChange = (value: string) => {
-    setProvinceUuid(value)
-    createQueryString(
-      "province",
-      provinceData?.find((item) => item.uuid === value)?.value ?? value
-    )
+    if (value === "all") {
+      setProvinceUuid(undefined)
+      setCityUuid(undefined)
+      removeQueryString("province")
+      removeQueryString("city")
+    } else {
+      setProvinceUuid(value)
+      setCityUuid(undefined)
+      createQueryString(
+        "province",
+        provinceData?.find((item) => item.uuid === value)?.value ?? value
+      )
+    }
   }
   const handleCityChange = (value: string) => {
-    setCityUuid(value)
-    createQueryString(
-      "city",
-      cityData?.find((item) => item.uuid === value)?.value ?? value
-    )
+    if (value === "all") {
+      setCityUuid(undefined)
+      removeQueryString("city")
+    } else {
+      setCityUuid(value)
+      createQueryString(
+        "city",
+        cityData?.find((item) => item.uuid === value)?.value ?? value
+      )
+    }
   }
 
   const handleIndustryChange = (value: string) => {
-    setIndustryUuid(value)
-    createQueryString(
-      "industry",
-      industryData?.find((item) => item.uuid === value)?.value ?? value
-    )
+    if (value === "all") {
+      setIndustryUuid(undefined)
+      removeQueryString("industry")
+    } else {
+      setIndustryUuid(value)
+      createQueryString(
+        "industry",
+        industryData?.find((item) => item.uuid === value)?.value ?? value
+      )
+    }
   }
 
   const handleSortingChange = (value: string) => {
@@ -220,14 +296,15 @@ const useSearchPost = (props: ISearchPostProps) => {
   const handleReset = () => {
     setCompanyName("")
     setJobTitle("")
-    setCountryUuid(undefined)
+    setCountryUuid("all")
     setProvinceUuid(undefined)
     setCityUuid(undefined)
     setIndustryUuid(undefined)
-    setMaxYearOfExperience("100")
-    setMinYearOfExperience("0")
+    setMaxYearOfExperience(undefined)
+    setMinYearOfExperience(undefined)
     setSorting(postSortingOptions[0].value)
     setParams(new URLSearchParams())
+    setPostTypes(defaultPostTypes)
     router.push(pathname)
   }
 
@@ -270,18 +347,16 @@ const useSearchPost = (props: ISearchPostProps) => {
       undefined,
     sorting:
       searchParams.get("sorting")?.toString() || postSortingOptions[0].value,
-    minYearOfExperience:
-      searchParams.get("minYearOfExperience")?.toString() || "0",
-    maxYearOfExperience:
-      searchParams.get("maxYearOfExperience")?.toString() || "100",
+    minYearOfExperience: searchParams.get("minYearOfExperience")?.toString(),
+    maxYearOfExperience: searchParams.get("maxYearOfExperience")?.toString(),
+    types: initialPostTypes || defaultPostTypes,
   }
 
   const result = useInfiniteQuery({
-    queryKey: [keyString, { sorting: filterMeta.sorting, filterMeta, type }],
+    queryKey: [keyString, { sorting: filterMeta.sorting, filterMeta }],
     queryFn: searchPost,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
-
     getNextPageParam: (lastPage, allPages) => {
       if (Array.isArray(lastPage)) {
         return allPages.length
@@ -313,6 +388,8 @@ const useSearchPost = (props: ISearchPostProps) => {
     maxYearOfExperience,
     minYearOfExperience,
     sorting,
+    handlePostTypesChange,
+    postTypes,
   }
 }
 

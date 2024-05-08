@@ -193,28 +193,34 @@ export interface Database {
       }
       message: {
         Row: {
-          body: string
+          body: string | null
           conversation_uuid: string
           created_at: string
+          document: Json | null
           id: number
+          is_document_expired: boolean
           sender_uuid: string
           status: Database["public"]["Enums"]["message_status"]
           uuid: string
         }
         Insert: {
-          body: string
+          body?: string | null
           conversation_uuid: string
           created_at?: string
+          document?: Json | null
           id?: number
+          is_document_expired?: boolean
           sender_uuid?: string
           status?: Database["public"]["Enums"]["message_status"]
           uuid?: string
         }
         Update: {
-          body?: string
+          body?: string | null
           conversation_uuid?: string
           created_at?: string
+          document?: Json | null
           id?: number
+          is_document_expired?: boolean
           sender_uuid?: string
           status?: Database["public"]["Enums"]["message_status"]
           uuid?: string

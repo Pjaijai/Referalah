@@ -22,6 +22,7 @@ interface IBaseSelectProps {
   onChange: (e: string) => void
   defaultValue?: string
   value?: string
+  isDisabled?: boolean
 }
 
 const BaseSelect: React.FunctionComponent<IBaseSelectProps> = ({
@@ -31,9 +32,15 @@ const BaseSelect: React.FunctionComponent<IBaseSelectProps> = ({
   onChange,
   defaultValue,
   value,
+  isDisabled,
 }) => {
   return (
-    <Select onValueChange={onChange} defaultValue={defaultValue} value={value}>
+    <Select
+      onValueChange={onChange}
+      defaultValue={defaultValue}
+      value={value}
+      disabled={isDisabled}
+    >
       <SelectTrigger className={cn("w-[180px]", triggerClassName)}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>

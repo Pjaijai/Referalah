@@ -1,3 +1,5 @@
+import { IMediaResponse } from "@/types/common/media"
+
 export interface IGetConversationListByUserUuidResponse {
   sender_uuid: {
     username: string
@@ -22,6 +24,8 @@ export interface IGetConversationListByUserUuidResponse {
     sender_uuid: string
     body: string
     created_at: string
+    document: IMediaResponse | null
+    is_document_expired: boolean
   } | null
   last_updated_at: string //datetime string withe time zone
 }

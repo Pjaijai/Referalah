@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import usePostTypeOptions from "@/modules/post/hooks/post-type-options"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -43,6 +44,7 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
   industryList,
 }) => {
   const t = useI18n()
+
   const createPostValidationSchema = z.object({
     url: z
       .string()
@@ -62,6 +64,12 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
       .min(10, {
         message: t("validation.text.minimum_length", { count: 10 }),
       }),
+    type: z.enum(
+      [EReferralType.REFEREE, EReferralType.REFERRER, EReferralType.HIRING],
+      {
+        required_error: t("validation.field_required"),
+      }
+    ),
 
     countryUuid: z.string().min(1, {
       message: t("validation.field_required"),
@@ -142,7 +150,13 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
   const countryOptions = useCountryOptions(countryList)
   const provinceOptions = useProvinceOptions(provinceList, countryWatch)
   const cityOptions = useCityOptions(cityList, provinceWatch)
+  const typeOptions = usePostTypeOptions()
   const { mutate: createPost, isLoading: isCreatePostLoading } = useCreatePost()
+
+  useEffect(() => {
+    form.setValue("provinceUuid", "")
+    form.setValue("cityUuid", "")
+  }, [countryWatch])
 
   useEffect(() => {
     form.setValue("cityUuid", "")
@@ -209,14 +223,14 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
           industryUuid: values.industryUuid,
           yearOfExperience: parseInt(values.yearOfExperience),
           createdBy: user.uuid!,
-          type: EReferralType.REFERRER,
+          type: values.type,
           companyName: values.companyName.trim(),
           jobTitle: values.jobTitle.trim(),
           description: values.description.trim(),
         },
         {
           onSuccess: (res) => {
-            router.push(`${siteConfig.page.referrerPost.href}/${res.uuid}`)
+            router.push(`${siteConfig.page.viewPost.href}/${res.uuid}`)
           },
           onError: () => {
             return toast({
@@ -242,6 +256,12 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4"
         >
+          <FormSelect
+            options={typeOptions}
+            control={form.control}
+            label={t("post.create.type_label")}
+            name="type"
+          />
           <FormTextInput
             control={form.control}
             label={t("post.create.related_link_title")}
@@ -281,7 +301,7 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
           />
           <FormSelect
             control={form.control}
-            label={t("general.province")}
+            label={t("general.region")}
             name="provinceUuid"
             options={provinceOptions as any}
           />
@@ -299,7 +319,7 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
             name="yearOfExperience"
           />
 
-          <Button type="submit" disabled={isCreatePostLoading}>
+          <Button type="submit" disabled={isCreatePostLoading || isSubmitting}>
             {isSubmitting ? t("general.wait") : t("form.general.submit")}
           </Button>
         </form>

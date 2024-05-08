@@ -1,5 +1,5 @@
+import { isExistsInListHelper } from "@/utils/common/helpers/check/is-exists-list"
 import { supabase } from "@/utils/services/supabase/config"
-import { FunctionsHttpError } from "@supabase/supabase-js"
 
 import { IResetPasswordRequest } from "@/types/api/request/auth/reset-password"
 import { ISignInEmailPasswordRequest } from "@/types/api/request/auth/sign-in-with-email-password"
@@ -10,11 +10,12 @@ import { IVerifyEmailOneTimePasswordRequest } from "@/types/api/request/auth/ver
 import { IMessagePostCreatorRequest } from "@/types/api/request/message/post-creator"
 import { IMessageReferralRequest } from "@/types/api/request/message/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
-import { IFilterMeta } from "@/types/api/request/post/filter-meta"
 import { ISearchPostsRequest } from "@/types/api/request/post/search"
 import { IUpdatePostRequest } from "@/types/api/request/post/update"
+import { IUserFilterMeta } from "@/types/api/request/user/filter-meta"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { ICityResponse } from "@/types/api/response/city"
+import { TContactRequestListResponse } from "@/types/api/response/contact-request/contact-request-list"
 import { IGetConversationListByUserUuidResponse } from "@/types/api/response/conversation-list"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
@@ -28,7 +29,7 @@ import {
 import { IReferralResponse } from "@/types/api/response/referral"
 import { IUserResponse } from "@/types/api/response/user"
 import { EQueryKeyString } from "@/types/common/query-key-string"
-import { EReferralType } from "@/types/common/referral-type"
+import { EUserType } from "@/types/common/user-type"
 import { siteConfig } from "@/config/site"
 
 // User Profile
@@ -236,8 +237,7 @@ export const searchReferral = async ({
     EQueryKeyString,
     {
       sorting: string
-      filterMeta: IFilterMeta
-      type: EReferralType
+      filterMeta: IUserFilterMeta
     },
   ]
 }) => {
@@ -250,7 +250,7 @@ export const searchReferral = async ({
   const jobTitle = queryKey[1].filterMeta.jobTitle
   const maxYearOfExperience = queryKey[1].filterMeta.maxYearOfExperience
   const minYearOfExperience = queryKey[1].filterMeta.minYearOfExperience
-  const type = queryKey[1].type
+  const types = queryKey[1].filterMeta.types
 
   const sort = queryKey[1].sorting.split(",")
   const order = sort[1] !== "dec"
@@ -306,12 +306,15 @@ export const searchReferral = async ({
     .order("id", { ascending: true })
     .range(from, to)
 
-  if (type === EReferralType.REFERRER) {
-    query = query.eq("is_referer", true)
-  }
+  const isReferrer = isExistsInListHelper(types, EUserType.REFERRER)
+  const isReferee = isExistsInListHelper(types, EUserType.REFEREE)
 
-  if (type === EReferralType.REFEREE) {
+  if (isReferrer && !isReferee) {
+    query = query.eq("is_referer", true)
+  } else if (isReferee && !isReferrer) {
     query = query.eq("is_referee", true)
+  } else if (isReferrer || isReferee) {
+    query = query.or("is_referer.eq.true,is_referee.eq.true")
   }
 
   if (countryUuid) {
@@ -406,7 +409,7 @@ export const searchPostApi = async ({
   page,
   provinceUuid,
   sortingType,
-  type,
+  types,
   maxYearOfExperience,
   minYearOfExperience,
 }: ISearchPostsRequest) => {
@@ -420,7 +423,8 @@ export const searchPostApi = async ({
     let query = supabase
       .from("post")
       .select<string, ISearchPostResponse>(
-        `   uuid,
+        `     uuid,
+              type,
               created_at,
               created_by,
               url,
@@ -450,7 +454,7 @@ export const searchPostApi = async ({
               )
             `
       )
-      .eq("type", type)
+      .in("type", types)
       .eq("status", "active")
       .lte("year_of_experience", 100)
       .gte("year_of_experience", 0)
@@ -499,7 +503,8 @@ export const getPostByUuid = async (uuid: string) => {
   const { data, error } = await supabase
     .from("post")
     .select<string, IGetPostResponse>(
-      `   uuid,
+      `       uuid,
+              type,
               status,
               created_at,
               created_by,
@@ -658,6 +663,7 @@ export const messageReferral = async (req: IMessageReferralRequest) => {
           type: req.type,
           body: req.body,
           to_uuid: req.toUuid,
+          document: req.document,
         },
       }
     )
@@ -680,6 +686,7 @@ export const messagePostCreator = async (req: IMessagePostCreatorRequest) => {
         body: {
           post_uuid: req.postUuid,
           body: req.body,
+          document: req.document,
         },
       }
     )
@@ -720,13 +727,15 @@ export const getConversationListByUserUuid = async ({
         created_at, 
         uuid,
         sender_uuid,
-        body
+        body,
+        document,
+        is_document_expired
       )
       `
       )
       .or(`sender_uuid.eq.${userUuid},receiver_uuid.eq.${userUuid}`)
       .range(from, to)
-      .returns<IGetConversationListByUserUuidResponse>()
+      .returns<IGetConversationListByUserUuidResponse[]>()
       .order("last_updated_at", { ascending: false })
 
     if (error) {
@@ -770,16 +779,34 @@ export const getMessageListByConversationUuid = async ({
 export const createMessage = async ({
   msgBody,
   conversationUuid,
+  fileName,
+  filePath,
+  fileSize,
+  internalFilePath,
 }: {
-  msgBody: string
+  msgBody?: string
   conversationUuid: string
+  fileName?: string
+  filePath?: string
+  fileSize?: number
+  internalFilePath?: string
 }) => {
   try {
+    let document = null
+    if (fileName && filePath && fileSize && internalFilePath) {
+      document = {
+        name: fileName,
+        path: filePath,
+        size: fileSize,
+        internalPath: internalFilePath,
+      }
+    }
     const { data, error } = await supabase
       .from("message")
       .insert({
         body: msgBody,
         conversation_uuid: conversationUuid,
+        document: document,
       })
       .select("created_at, uuid")
       .single()
@@ -855,4 +882,68 @@ export const getUserCount = async () => {
   } catch (error) {
     throw error
   }
+}
+
+// contact Request history
+export const listLatestContactRequest = async () => {
+  try {
+    const { data, error } = await supabase.functions.invoke(
+      "list-latest-contact-request"
+    )
+
+    if (error) throw error
+    return data as TContactRequestListResponse[]
+  } catch (error) {
+    throw error
+  }
+}
+
+// Storage
+export const uploadMedia = async ({
+  bucketName,
+  file,
+  path,
+  contentType,
+}: {
+  bucketName: string
+  file: File
+  path: string
+  contentType?: string
+}) => {
+  const { data, error } = await supabase.storage
+    .from(bucketName)
+    .upload(path, file, {
+      contentType: contentType,
+    })
+
+  if (error) {
+    throw error
+  }
+  return data
+}
+
+export const getMediaPublicUrl = async ({
+  bucketName,
+  path,
+}: {
+  bucketName: string
+  path: string
+}) => {
+  const { data } = supabase.storage.from(bucketName).getPublicUrl(path)
+
+  return data
+}
+
+export const downloadMedia = async ({
+  bucketName,
+  path,
+}: {
+  bucketName: string
+  path: string
+}) => {
+  const { data, error } = await supabase.storage.from(bucketName).download(path)
+
+  if (error) throw error
+
+  return data
 }

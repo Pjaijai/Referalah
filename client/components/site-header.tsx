@@ -12,7 +12,6 @@ import DonationButton from "@/components/customized-ui/buttons/donation"
 import LocaleDropDownMenu from "@/components/customized-ui/drop-down-menu/locale"
 import { BaseNavigationMenu } from "@/components/customized-ui/navigation-menu/base"
 import { MobileNavigationMenu } from "@/components/customized-ui/navigation-menu/mobile"
-import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 
@@ -45,15 +44,11 @@ export function SiteHeader() {
               <ThemeToggle />
             </div>
 
-            <Link
-              aria-label="referalah-project-github"
-              href={siteConfig.links.github}
-              target="_blank"
-              rel="noreferrer"
-              className="hidden md:block"
-            >
-              <Icons.github />
-            </Link>
+            {user.isSignIn && (
+              <Link href={siteConfig.page.chat.href}>
+                <MessageIcon className="block md:hidden" />
+              </Link>
+            )}
 
             {user.isSignIn ? (
               <Link href={`${siteConfig.page.profile.href}/${user.uuid}`}>

@@ -3,9 +3,11 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import PostCardInfoDisplay from "@/modules/post/components/info-display/card-info"
 import PostHeader from "@/modules/post/components/info-display/header"
+import usePostTypeTitle from "@/modules/post/hooks/post-type-title"
 import { useI18n } from "@/utils/services/internationalization/client"
 
 import { TPostStatusType } from "@/types/common/post-status"
+import { EReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
 import useViewport from "@/hooks/common/useViewport"
 import { Button } from "@/components/ui/button"
@@ -28,6 +30,7 @@ interface IReferralPostCardProps {
   createdAt: string | null
   status: TPostStatusType
   isViewingOwnProfile: boolean
+  type: EReferralType
 }
 
 const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
@@ -43,6 +46,7 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
   createdAt,
   status,
   isViewingOwnProfile,
+  type,
 }) => {
   const t = useI18n()
   const { isMobile } = useViewport()
@@ -53,13 +57,16 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
     router.push(`${siteConfig.page.editPost.href}/${uuid}`)
   }
 
+  const postTypeTitle = usePostTypeTitle(type)
+
   // NOTE: please use onClick with e.preventDefault() for any links inside this component to prevent validateDOMNesting warning
 
   return (
     <Card className="flex flex-col justify-between rounded shadow-md">
       <Link
-        href={`${siteConfig.page.referrerPost.href}/${uuid}`}
+        href={`${siteConfig.page.viewPost.href}/${uuid}`}
         onClick={(e) => e.stopPropagation()}
+        prefetch
       >
         <div className="flex flex-col items-start justify-start">
           <CardHeader className="w-full">
@@ -67,6 +74,7 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
             <div className="flex flex-row items-start justify-between gap-3 sm:gap-1">
               <div className="mb-2 flex basis-full items-center gap-3 sm:basis-2/3 md:basis-3/5">
                 <PostHeader
+                  typeTitle={postTypeTitle}
                   title={jobTitle}
                   subtitle={
                     companyName ? (
@@ -77,16 +85,6 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
                   status={status}
                 />
               </div>
-
-              {isViewingOwnProfile && (
-                <Button
-                  onClick={handleEditOnClick}
-                  size={isMobile ? "icon" : "sm"}
-                >
-                  <Icons.pencil className="m-0 h-4 w-4 sm:mr-2" />
-                  {!isMobile && t("general.edit")}
-                </Button>
-              )}
             </div>
 
             <div className="mb-5 flex flex-col justify-between sm:flex-row">

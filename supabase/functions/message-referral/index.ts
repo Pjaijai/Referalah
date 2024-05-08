@@ -15,10 +15,13 @@ serve(async (req: any) => {
 
     const client = initSupabaseClient(req)
     const server = initSupabaseServer()
+
+    const jwt = req.headers.get("Authorization")!.split(" ")[1]
     const {
       type,
       body: msgBody,
       to_uuid,
+      document,
     }: IMessageReferralRequest = await req.json()
 
     if (!msgBody) {
@@ -46,7 +49,7 @@ serve(async (req: any) => {
 
     const {
       data: { user },
-    } = await client.auth.getUser()
+    } = await client.auth.getUser(jwt)
 
     const { data: sender, error } = await server
       .from("user")
@@ -81,20 +84,6 @@ serve(async (req: any) => {
       })
     }
 
-    if (type === "referer" && receiver.is_referer === false) {
-      return new Response("Receiver is not referrer", {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 400,
-      })
-    }
-
-    if (type === "referee" && receiver.is_referee === false) {
-      return new Response("Receiver is not referee", {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 400,
-      })
-    }
-
     // prevent_duplicate_conversation to make sure one conversation for two user
     const { data: conversation } = await server.rpc("find_conversation", {
       user1_uuid: sender.uuid,
@@ -102,6 +91,7 @@ serve(async (req: any) => {
     })
 
     let conversationUuid
+    let messageUuid
 
     if (!conversation[0]) {
       const { data: insertConversationRes, error: insertConversationError } =
@@ -118,9 +108,12 @@ serve(async (req: any) => {
           sender_uuid: sender.uuid,
           conversation_uuid: insertConversationRes.uuid,
           body: msgBody,
+          document: document,
         })
         .select()
         .single()
+
+      messageUuid = insertMessageRes.uuid
 
       const { updateConversationRes, error: updateConversationError } =
         await server
@@ -146,6 +139,7 @@ serve(async (req: any) => {
           sender_uuid: sender.uuid,
           conversation_uuid: conversation[0].uuid,
           body: msgBody,
+          document: document,
         })
         .select()
         .single()
@@ -157,37 +151,48 @@ serve(async (req: any) => {
         .select()
         .single()
 
+      messageUuid = message.uuid
+
       console.log(
         `Existing conversation uuid:${data.uuid} for ${sender.uuid} and ${receiver.uuid}. Inserting message: uuid${message.uuid}`,
       )
     }
 
+    const { data: record } = await server
+      .from("referral_contact_history")
+      .insert({
+        sender_uuid: sender.uuid,
+        receiver_uuid: receiver.uuid,
+        type,
+        message_uuid: messageUuid,
+      })
+
     const subject = `${sender.username} sent you a message.`
     const emailBody = `
-      <html>
-      <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>New Message Notification</title>
-    </head>
-  
-  <body style="font-family: 'Arial', sans-serif; background-color: #f8f8f8; margin: 0; padding: 20px; text-align: center;">
-  
-      <p style="margin: 8px 0; font-size: 16px; color: #333;">Hi ${receiver.username}!</p>
-      <p style="margin: 8px 0; font-size: 16px; color: #333;">${sender.username} sent you a message.</p>
-      <p style="margin: 8px 0; font-size: 16px; color: #333;">${sender.username}'s profile: <a href="${WEB_BASE_URL}/en-ca/profile/${sender.uuid}" style="color: #007bff; text-decoration: none; font-weight: bold;">${WEB_BASE_URL}/en-ca/profile/${sender.uuid}</a></p>
-      <p style="margin: 8px 0; font-size: 16px; color: #333;">Please click the link below to continue the conversation:</p>
-      <a href="${WEB_BASE_URL}/en-ca/chat?conversation=${conversationUuid}" style="color: #007bff; text-decoration: none; font-weight: bold;">${WEB_BASE_URL}/en-ca/chat?conversation=${conversationUuid}</a>
-  
-      <div style="display: flex; justify-content: center; margin-top: 20px;">
-          <div style="background-color: #eee; padding: 16px; border-radius: 8px; max-width: 600px; width: 100%; word-wrap: break-word; white-space: pre-wrap;">
-              <p>${msgBody}</p>
-          </div>
-      </div>
-  
-  </body>
-      </html>
-      `
+        <html>
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>New Message Notification</title>
+      </head>
+
+    <body style="font-family: 'Arial', sans-serif; background-color: #f8f8f8; margin: 0; padding: 20px; text-align: center;">
+
+        <p style="margin: 8px 0; font-size: 16px; color: #333;">Hi ${receiver.username}!</p>
+        <p style="margin: 8px 0; font-size: 16px; color: #333;">${sender.username} sent you a message.</p>
+        <p style="margin: 8px 0; font-size: 16px; color: #333;">${sender.username}'s profile: <a href="${WEB_BASE_URL}/en-ca/profile/${sender.uuid}" style="color: #007bff; text-decoration: none; font-weight: bold;">${WEB_BASE_URL}/en-ca/profile/${sender.uuid}</a></p>
+        <p style="margin: 8px 0; font-size: 16px; color: #333;">Please click the link below to continue the conversation:</p>
+        <a href="${WEB_BASE_URL}/en-ca/chat?conversation=${conversationUuid}" style="color: #007bff; text-decoration: none; font-weight: bold;">${WEB_BASE_URL}/en-ca/chat?conversation=${conversationUuid}</a>
+
+        <div style="display: flex; justify-content: center; margin-top: 20px;">
+            <div style="background-color: #eee; padding: 16px; border-radius: 8px; max-width: 600px; width: 100%; word-wrap: break-word; white-space: pre-wrap;">
+                <p>${msgBody}</p>
+            </div>
+        </div>
+
+    </body>
+        </html>
+        `
 
     const sendEmailRes = await fetch("https://api.resend.com/emails", {
       method: "POST",

@@ -20,6 +20,7 @@ interface IConversationProps {
   uuid: string
   type: "sender" | "receiver"
   acceptRequest: boolean
+  documentName?: string
 }
 
 const ConversationCard: React.FunctionComponent<IConversationProps> = ({
@@ -31,6 +32,7 @@ const ConversationCard: React.FunctionComponent<IConversationProps> = ({
   uuid,
   type,
   acceptRequest,
+  documentName,
 }) => {
   const t = useI18n()
   const searchParams = useSearchParams()
@@ -38,7 +40,11 @@ const ConversationCard: React.FunctionComponent<IConversationProps> = ({
   const { mutate: update } = useUpdateConversation()
   const { data: formattedDate } = useCreatedAt({ createdAt: updatedAt })
 
-  const truncatedText = text ? text.slice(0, 25) : ""
+  const truncatedText = text
+    ? text.slice(0, 25)
+    : documentName
+    ? documentName.slice(0, 25)
+    : ""
   const queryClient = useQueryClient()
   const currentConversation = searchParams.get("conversation")
   const isCurrentConversation = currentConversation === uuid
@@ -101,11 +107,12 @@ const ConversationCard: React.FunctionComponent<IConversationProps> = ({
         </div>
 
         <div className="relative flex w-full  flex-row items-center justify-between">
-          {!acceptRequest ? (
+          {!acceptRequest && (
             <p className="w-5/6 text-xs text-orange-700 dark:text-blue-400">
               {t("chat.conversation_request")}
             </p>
-          ) : (
+          )}
+          {acceptRequest && (
             <p className="w-5/6 truncate text-muted-foreground">
               {truncatedText}
             </p>

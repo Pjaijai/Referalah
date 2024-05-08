@@ -3,47 +3,46 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import PostCardInfoDisplay from "@/modules/post/components/info-display/card-info"
 import PostHeader from "@/modules/post/components/info-display/header"
+import usePostTypeTitle from "@/modules/post/hooks/post-type-title"
+import { useI18n } from "@/utils/services/internationalization/client"
 
+import { EReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card"
+import { cn } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardFooter, CardHeader } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
-import CollapsibleTextWrapper from "@/components/customized-ui/tool/collapsible-text-wrapper"
 
 interface IReferralPostCardProps {
   uuid: string | null
   username: string | null
   photoUrl: string | null
-  description: string | null
   companyName: string | null
   jobTitle: string | null
-  yearOfExperience: number | null
+  yearOfExperience?: number | null
   country: string | null
   province: string | null
   city: string | null
-  industry: string | null
+  industry?: string | null
   url: string | null
   createdAt: string | null
   createdBy: string | null
+  className?: string
+  type: EReferralType
 }
 
 // NOTE: please use onClick with e.preventDefault() for any links inside this component to prevent validateDOMNesting warning
 
 const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
+  type,
   uuid,
   jobTitle,
   city,
   companyName,
   country,
-  description,
   industry,
   photoUrl,
   province,
@@ -52,18 +51,27 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   yearOfExperience,
   createdAt,
   createdBy,
+  className,
 }) => {
   const router = useRouter()
+  const t = useI18n()
 
   const handleAvatarOnClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
     router.push(`${siteConfig.page.profile.href}/${createdBy}`)
   }
 
+  const postTypeTitle = usePostTypeTitle(type)
+
   return (
-    <Card className="flex h-full flex-col justify-between rounded shadow-md ">
+    <Card
+      className={cn(
+        "flex h-full flex-col justify-between rounded shadow-md ",
+        className
+      )}
+    >
       <Link
-        href={`${siteConfig.page.referrerPost.href}/${uuid}`}
+        href={`${siteConfig.page.viewPost.href}/${uuid}`}
         onClick={(e) => e.stopPropagation()}
         className="flex h-full flex-col items-start justify-start"
       >
@@ -102,23 +110,14 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
             />
             <Separator />
           </CardHeader>
-
-          {/* desc */}
-          <CardContent>
-            {description && (
-              <CollapsibleTextWrapper
-                text={description}
-                expandButtonProps={{ className: "mt-2" }}
-              />
-            )}
-          </CardContent>
         </div>
 
         {/* created at */}
-        <CardFooter className="mt-auto w-full justify-end">
-          <CardDescription>
-            <CreatedAtDisplay applyTo="card" createdAt={createdAt} />
-          </CardDescription>
+        <CardFooter className="mt-2 flex w-full flex-row justify-between">
+          {postTypeTitle && (
+            <Badge className="flex justify-center">{postTypeTitle}</Badge>
+          )}
+          <CreatedAtDisplay applyTo="card" createdAt={createdAt} />
         </CardFooter>
       </Link>
     </Card>

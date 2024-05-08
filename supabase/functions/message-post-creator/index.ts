@@ -4,50 +4,53 @@ import { initSupabaseClient } from "../_shared/client.ts"
 import { corsHeaders, ENV_IS_LOCAL } from "../_shared/cors.ts"
 import { EPostStatus } from "../_shared/types/enums/post/status.ts"
 import { initSupabaseServer } from "../_shared/server.ts"
-import { IMessagePostCreatorRequest } from "../_shared/types/request/message-post-creator.ts"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")
 const WEB_BASE_URL = Deno.env.get("WEB_BASE_URL")
 
 serve(async (req: any) => {
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders })
-  }
-
-  const client = initSupabaseClient(req)
-  const server = initSupabaseServer()
-  const { post_uuid, body: msgBody }: IMessagePostCreatorRequest =
-    await req.json()
-
-  if (!client) {
-    return new Response("User not signed in", {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 400,
-    })
-  }
-
-  if (!msgBody) {
-    return new Response("Missing Message", {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 400,
-    })
-  }
-  if (!post_uuid) {
-    return new Response("Missing post uuid", {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 400,
-    })
-  }
-  if (msgBody.length > 4000) {
-    return new Response("Message too long", {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 400,
-    })
-  }
   try {
+    if (req.method === "OPTIONS") {
+      return new Response("ok", { headers: corsHeaders })
+    }
+
+    const client = initSupabaseClient(req)
+    const server = initSupabaseServer()
+
+    const jwt = req.headers.get("Authorization")!.split(" ")[1]
+
+    const { post_uuid, body: msgBody, document } = await req.json()
+
+    if (!client) {
+      return new Response("User not signed in", {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400,
+      })
+    }
+
+    if (!msgBody) {
+      return new Response("Missing Message", {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400,
+      })
+    }
+    if (!post_uuid) {
+      return new Response("Missing post uuid", {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400,
+      })
+    }
+    if (msgBody.length > 4000) {
+      return new Response("Message too long", {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400,
+      })
+    }
+
     const {
       data: { user },
-    } = await client.auth.getUser()
+    } = await server.auth.getUser(jwt)
 
     const { data: sender, error } = await server
       .from("user")
@@ -107,6 +110,7 @@ serve(async (req: any) => {
     })
 
     let conversationUuid
+    let messageUuid
 
     const newMsgBody = `
     Post Title/街招 :${post.job_title}
@@ -130,9 +134,12 @@ serve(async (req: any) => {
           sender_uuid: sender.uuid,
           conversation_uuid: insertConversationRes.uuid,
           body: newMsgBody,
+          document: document,
         })
         .select()
         .single()
+
+      messageUuid = insertMessageRes.uuid
 
       const { updateConversationRes, error: updateConversationError } =
         await server
@@ -157,6 +164,7 @@ serve(async (req: any) => {
           sender_uuid: sender.uuid,
           conversation_uuid: conversation[0].uuid,
           body: newMsgBody,
+          document: document,
         })
         .select()
         .single()
@@ -168,10 +176,21 @@ serve(async (req: any) => {
         .select()
         .single()
 
+      messageUuid = message.uuid
+
       console.log(
         `Existing conversation uuid:${data.uuid} for ${sender.uuid} and ${post.user.uuid}. Inserting message: uuid${message.uuid}`,
       )
     }
+
+    const { data: record, error: err } = await server
+      .from("post_contact_history")
+      .insert({
+        sender_uuid: sender.uuid,
+        post_uuid: post.uuid,
+        type: post.type,
+        message_uuid: messageUuid,
+      })
 
     const subject = `${sender.username} is interested in you post - ${post.job_title}`
     const body = `

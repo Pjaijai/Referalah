@@ -2,6 +2,130 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.18.0](https://github.com/Pjaijai/Referalah/compare/v1.17.1...v1.18.0) (2024-05-07)
+
+
+### Features
+
+* add links to contact request list ([bde718e](https://github.com/Pjaijai/Referalah/commit/bde718e23b073f13d0b64c1153be75915f35b311))
+
+### [1.17.1](https://github.com/Pjaijai/Referalah/compare/v1.17.0...v1.17.1) (2024-04-29)
+
+### Features
+
+- create message uuid col for history tbale ([a0259b8](https://github.com/Pjaijai/Referalah/commit/a0259b851dded4367d2dd2584b6b013fae0b1664))
+
+### [1.16.2](https://github.com/Pjaijai/Referalah/compare/v1.16.0...v1.16.2) (2024-04-23)
+
+### Bug Fixes
+
+- remove member type checking in contact referral ([15b16dd](https://github.com/Pjaijai/Referalah/commit/15b16dd08dc7f8526f4cc17a4f08f960cb62bb56))
+
+## [1.17.0](https://github.com/Pjaijai/Referalah/compare/v1.16.2...v1.17.0) (2024-04-28)
+
+### Features
+
+- create message uuid col for history tbale ([a0259b8](https://github.com/Pjaijai/Referalah/commit/a0259b851dded4367d2dd2584b6b013fae0b1664))
+
+### [1.16.2](https://github.com/Pjaijai/Referalah/compare/v1.16.0...v1.16.2) (2024-04-23)
+
+### Bug Fixes
+
+- fix post history card ([60e0229](https://github.com/Pjaijai/Referalah/commit/60e022965003b69f28bb28b9ee46cd78f6fe01f6))
+- fix post nav description ([33622b3](https://github.com/Pjaijai/Referalah/commit/33622b367ca4f16be38917cb2a14ecaa63d19ec2))
+- fix post referee title ([621f5db](https://github.com/Pjaijai/Referalah/commit/621f5dbc563c4b458c5d11df84797546ace5a23b))
+- fix typo ([17cc97b](https://github.com/Pjaijai/Referalah/commit/17cc97b3ee6dd64a4d7c987db5ea108f14feac5d))
+- fothix edge function get user null problem ([025eefb](https://github.com/Pjaijai/Referalah/commit/025eefb7015190b7f07dcc216635366e44abd32b))
+
+### [1.16.1](https://github.com/Pjaijai/Referalah/compare/v1.16.0...v1.16.1) (2024-04-22)
+
+## [1.16.0](https://github.com/Pjaijai/Referalah/compare/v1.15.0...v1.16.0) (2024-04-22)
+
+### Features
+
+- revalidate location options one day ([ef2c0c2](https://github.com/Pjaijai/Referalah/commit/ef2c0c2300fcff75709da3c4c5689188645034c8))
+
+### Bug Fixes
+
+- fix edit post title ([916fd27](https://github.com/Pjaijai/Referalah/commit/916fd275dc23affede09783619515b2272323616))
+
+### [1.15.1](https://github.com/Pjaijai/Referalah/compare/v1.15.0...v1.15.1) (2024-04-22)
+
+## [1.15.0](https://github.com/Pjaijai/Referalah/compare/v1.14.0...v1.15.0) (2024-04-22)
+
+### Features
+
+- prefrech to edit post ([657105b](https://github.com/Pjaijai/Referalah/commit/657105b2cee3f048b1a3d4dbc98623d981f67d0f))
+
+### Bug Fixes
+
+- add back location cache ([f56a089](https://github.com/Pjaijai/Referalah/commit/f56a0890efb1518553a4838657c2c74784469b28))
+- cache options for 60 seconds ([109ffe5](https://github.com/Pjaijai/Referalah/commit/109ffe5255494c5b18350a2fdc0b1da8083c9eb4))
+- fix inistial post search type ([#352](https://github.com/Pjaijai/Referalah/issues/352)) ([6103192](https://github.com/Pjaijai/Referalah/commit/6103192d373b6cab6ae16f0cd38bdfcbd9601aa7))
+- profile apis no store ([6ec2f84](https://github.com/Pjaijai/Referalah/commit/6ec2f8419ed158ef942fe00bf1eca210e74ecc08))
+- remove cache ([b395c0c](https://github.com/Pjaijai/Referalah/commit/b395c0cfbf27a46b6d22a756699b986999859b1a))
+
+## [1.14.0](https://github.com/Pjaijai/Referalah/compare/v1.13.0...v1.14.0) (2024-03-31)
+
+### Features
+
+- add fancy background ([#335](https://github.com/Pjaijai/Referalah/issues/335)) ([41a113f](https://github.com/Pjaijai/Referalah/commit/41a113fc1dd77d0d6205e0b1e48de3232f05fc14))
+
+### Features
+
+- update clean storage api logic ([6f0e172](https://github.com/Pjaijai/Referalah/commit/6f0e172f22041d6db8056c7e3b442c91220360af))
+
+## [1.13.0](https://github.com/Pjaijai/Referalah/compare/v1.12.3...v1.13.0) (2024-03-29)
+
+### Features
+
+- add fancy background ([#335](https://github.com/Pjaijai/Referalah/issues/335)) ([41a113f](https://github.com/Pjaijai/Referalah/commit/41a113fc1dd77d0d6205e0b1e48de3232f05fc14))
+
+### Bug Fixes
+
+- fix copy ([7fd3e79](https://github.com/Pjaijai/Referalah/commit/7fd3e7923d881eb7dbf7130f6d4899574beb7e33))
+- fix fancy background showing logic ([0cdc69b](https://github.com/Pjaijai/Referalah/commit/0cdc69b10188b005f3f4c759ed9152d5138cdd35))
+- fix infinite scroll infinite loading problem ([6d89fd5](https://github.com/Pjaijai/Referalah/commit/6d89fd5668967188d376d8080348714afc2e592e))
+- fix typo ([d890b8c](https://github.com/Pjaijai/Referalah/commit/d890b8c465b5afbe34c6dd97a1224e0a29061cc0))
+- fix ui ([#339](https://github.com/Pjaijai/Referalah/issues/339)) ([70b798c](https://github.com/Pjaijai/Referalah/commit/70b798c36920f39ebbc12dd8f465c346de50ddde))
+- fix word break ([10b3583](https://github.com/Pjaijai/Referalah/commit/10b35838dbcdd068b760c307fa234a15dfa1ecbc))
+- fix yoe in referral post card ([29d771d](https://github.com/Pjaijai/Referalah/commit/29d771d580cbb1341157bc2d3be2ba68dd0b46f8))
+- remove github in header ([d3ba81d](https://github.com/Pjaijai/Referalah/commit/d3ba81dc862c4812dfa9f42cf5f8c912b1177348))
+- replace reset icon with copy ([6b2feae](https://github.com/Pjaijai/Referalah/commit/6b2feae43c10453a50668f2aa4ccd70ab0f87607))
+
+### [1.12.3](https://github.com/Pjaijai/Referalah/compare/v1.12.2...v1.12.3) (2024-03-07)
+
+### Bug Fixes
+
+- fix toast not showing ([9beec7c](https://github.com/Pjaijai/Referalah/commit/9beec7c6d3ca1e313b80a14fd346de9d62ee66b1))
+
+### [1.12.2](https://github.com/Pjaijai/Referalah/compare/v1.12.1...v1.12.2) (2024-03-03)
+
+### Bug Fixes
+
+- fix carousel ([e2a83c3](https://github.com/Pjaijai/Referalah/commit/e2a83c3eda0f50ca94653fa37f3cddd5f138c6a5))
+
+### [1.12.1](https://github.com/Pjaijai/Referalah/compare/v1.12.0...v1.12.1) (2024-03-03)
+
+## [1.12.0](https://github.com/Pjaijai/Referalah/compare/v1.11.0...v1.12.0) (2024-03-02)
+
+### Features
+
+- post preview on main page ([#329](https://github.com/Pjaijai/Referalah/issues/329)) ([a919a54](https://github.com/Pjaijai/Referalah/commit/a919a54f6eb118ba1a5b9cf4557bdd5c6de2d28e))
+
+## [1.11.0](https://github.com/Pjaijai/Referalah/compare/v1.10.3...v1.11.0) (2024-03-01)
+
+### Features
+
+- combine providers ([18ec5e1](https://github.com/Pjaijai/Referalah/commit/18ec5e1c48f5a1a5a09113cb9e2520adcb105603))
+- post prefech cache ([4416df9](https://github.com/Pjaijai/Referalah/commit/4416df905cce84be947658b4be03d7ba94885854))
+
+### [1.10.1](https://github.com/Pjaijai/Referalah/compare/v1.10.0...v1.10.1) (2024-02-20)
+
+### Bug Fixes
+
+- fixtype ([38bfad3](https://github.com/Pjaijai/Referalah/commit/38bfad3d1a9e9910688ab3a577534d5b18106ec9))
+
 ### [1.10.2](https://github.com/Pjaijai/Referalah/compare/v1.10.1...v1.10.2) (2024-02-22)
 
 ### [1.10.1](https://github.com/Pjaijai/Referalah/compare/v1.10.0...v1.10.1) (2024-02-20)

@@ -20,7 +20,7 @@ const NavFooter = () => {
       className={cn(
         noShowFooter
           ? "hidden"
-          : "mt-12 flex flex-col items-center justify-center gap-2 border-t-2 p-2 md:flex-row "
+          : "z-10 mt-12 flex flex-col items-center justify-center gap-2 border-t-2 p-2 md:flex-row"
       )}
     >
       <div className="flex w-full flex-col items-center gap-3 text-sm text-muted-foreground md:w-fit">

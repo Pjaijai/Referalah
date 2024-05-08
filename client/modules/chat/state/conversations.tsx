@@ -21,6 +21,7 @@ export interface IConversation {
     createdByUuid: string
     body: string
     createdAt: string
+    isDocumentExpired: boolean
   } | null
 }
 

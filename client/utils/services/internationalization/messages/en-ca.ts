@@ -5,14 +5,17 @@ export default {
     connect: "Connect Global Hong Kong",
     professionals: "Professionals",
     subTitle: `Wishing you all the best!`,
-    so_far: "up to the present moment",
+    so_far: "We currently have",
     "members#zero": "No member",
     "members#one": "member",
     "members#two": "members",
     "members#other": "members",
     join_now: "Join Now !",
     check_latest_post: "Latest Post",
+    requested: "sent request to post",
+    contacted: "contacted",
   },
+
   "auth.form.email_label": "Email",
   "auth.form.username_label": "Username",
   "auth.form.username_description": "Changeable after registration",
@@ -139,13 +142,14 @@ export default {
   "post.create.content_label": "Description",
   "general.industry": "Industry",
   "general.country": "Country",
-  "general.province": "Province",
+  "general.region": "Region",
   "general.city": "City",
   "general.year_of_experience": "Year of Experience",
   "post.status_text": "Status",
   "general.edit": "Edit",
   "general.no_data": "No Data🥲",
   "general.search": "Search",
+  "general.filter": "Filter",
   "history.no_data": "No Data🥲",
   "validation.link.not_valid": "Invalid Link",
   "validation.field_required": "Required",
@@ -166,6 +170,8 @@ export default {
   "profile.form.is_referee_description": "I am ready to contribute",
   "profile.form.personal_description_label": "Description",
   "profile.form.optional_company_label": "Company(Optional)",
+  "profile.form.optional_region_label": "Region(Optional)",
+  "profile.form.optional_city_label": "City(Optional)",
   "profile.form.job_title_label": "Job Title",
   "profile.form.optional_personal_social_media_link_label":
     "Social media link(Optional)",
@@ -190,7 +196,11 @@ export default {
     "- Self-introduction\n- Which position are you applying for?\n- How to contact you？",
   "referral.form.cancel": "Not Today",
   "referral.form.submit": "Submit",
-  "referral.user_not_sing_in_dialog.title": "Not signed in.",
+
+  "referral.form.resume_optional_label": "Resume (Optional)",
+  "referral.form.resume_description_label":
+    "Only PDF files are accepted, with a maximum size limit of 2 MB. File will be removed after 7 days",
+  "referral.user_not_sing_in_dialog.title": "Please sign in",
   "referral.user_not_sing_in_dialog.description":
     "Please sign in to reach out to them",
 
@@ -198,8 +208,7 @@ export default {
   "referral.user_not_sing_in_dialog.sign_in": "Sign in",
   "general.link": "Link",
   "general.contact": "Contact",
-  "referral.search_referee.no_data": "No Data🥲 Become the first referee!",
-  "referral.search_referrer.no_data": "No Data🥲 Become the first referrer!",
+  "user.search_user.no_data": "No user matches the current criteria🥲",
   "general.today": "Today",
 
   "general.day#zero": "{count}day",
@@ -222,17 +231,14 @@ export default {
   "search.loading": "Loading...",
   "search.reach_final_result": "That's all",
   "nav.create_post.description":
-    "Is your company hiring and looking for Hong Kongers? Make a post and let people get in touch with you.",
-  "nav.referrer_post.description": "Check job referrals",
+    "Whether you're scouting for talent, seeking interview assistance, or in need of job referrals - share your post on the wall!",
+  "nav.search_post.description": "Check Posts",
   "general.connection": "Connections",
-  "nav.become_referrer_or_referrer_description":
-    "Select the options in profile!",
-  "nav.referrer.description": "Looking for referrers? Check here !",
+  "nav.become_member_description": "Join Now!",
   "nav.referee.description": "Looking for talents? Check this!",
   "general.sorting": "Sort",
-  "search.year_of_experience_label": "Years of Experience",
-  "search.maximum_year_of_experience_label": "Max",
-  "search.minimum_year_of_experience_label": "Min",
+  "search.year_of_experience_placeholder": "Experience",
+  "search.year_of_experience.to": "to",
   "auth.sign.error.cannot_sign_in": "Failed to Sign in",
   "chat.conversation_request": "This user has sent you a conversation request.",
 
@@ -254,13 +260,18 @@ export default {
   "validation.send_message.required": "Required",
   "pwa.what_is_pwa.title": "What is PWA?",
   "pwa.how_to_install.title": "How to install？",
+  "post.type.referer.title": "Job Referral",
+  "post.type.hiring.title": "Hiring",
+  "post.type.referee.title": "Need Help",
+  "post.search_post.no_data": "No Data🥲 Create the post now !",
+  "post.create.type_label": "Post Type",
   "post.create.related_link_description":
     "For example, links to job on LinkedIn, Indeed, and Glassdoor.",
   "post.create.related_link_title": "Link(Optional)",
   "auth.form.sign_out.error": "Failed to sign out",
   "general.view": "View",
   "general.chat": "Chat",
-  "nav.become_referrer_or_referrer_title": "Become Referrer/Referee",
+  "nav.become_member_title": "Become Member",
   "general.please": "Please",
 
   "page.email_verification": "Email Verification",
@@ -270,10 +281,8 @@ export default {
   "page.sign_in": "Sign in",
   "page.reset_password": "Reset Password",
   "page.forgot_password": "Forgot Password",
-  "page.referrer": "Referrer",
-  "page.talent": "Talent",
   "page.create_post": "Create Post",
-  "page.edit_post": "Create Post",
+  "page.edit_post": "Edit Post",
   "page.post": "Post",
   "page.post_history": "Post History",
   "page.chat": "Chat",
@@ -307,4 +316,26 @@ export default {
   "general.support_us.title": "Support Us",
   "general.support_us.description":
     "Our mission is to help overseas Hong Kongers find connections, jobs, and referral opportunities. Your support fuels this mission.",
+
+  "share.copy_link": "Copy Link",
+  "share.copied": "Copied",
+  "share.share_to": "Share to",
+
+  "genera.dropzone.single.drop_here_select_a_file":
+    "Drag a file here, or click to select a file",
+  "genera.dropzone.plural.drop_here_select_a_file":
+    "Drag files here, or click to select files",
+  "genera.dropzone.only_accept_pdf": "Only *.pdf will be accepted",
+  "genera.max_media_mb_size_count#other": "Maximum {count}mb",
+  "genera.max_storage_day#one": "The document will be stored for {count} day",
+  "genera.max_storage_day#other":
+    "The document will be stored for {count} days",
+  "general.reset": "Reset",
+  "general.expired": "Expired",
+  "user.type.referrer": "Referrer",
+  "user.type.referee": "Talent",
+  "general.member": "Member",
+
+  "nav.member.description": "View members, link now!",
+  "page.search_member": "Members",
 } as const

@@ -1,6 +1,7 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { searchReferral } from "@/utils/common/api"
+import { isExistsInListHelper } from "@/utils/common/helpers/check/is-exists-list"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { ICityResponse } from "@/types/api/response/city"
@@ -8,11 +9,10 @@ import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
 import { EQueryKeyString } from "@/types/common/query-key-string"
-import { EReferralType } from "@/types/common/referral-type"
+import { EUserType } from "@/types/common/user-type"
 import useReferralSortOptions from "@/hooks/common/sort/referral-sort-options"
 
 interface ISearchReferralProps {
-  type: EReferralType
   countryList: ICountryResponse[]
   provinceList: IProvinceResponse[]
   cityList: ICityResponse[]
@@ -20,13 +20,10 @@ interface ISearchReferralProps {
 }
 
 const useSearchReferral = (props: ISearchReferralProps) => {
-  const { type, countryList, provinceList, cityList, industryList } = props
+  const { countryList, provinceList, cityList, industryList } = props
   const { data: referralSortingOptions } = useReferralSortOptions()
 
-  const keyString =
-    type === EReferralType.REFEREE
-      ? EQueryKeyString.SEARCH_REFEREE
-      : EQueryKeyString.SEARCH_REFERRER
+  const keyString = EQueryKeyString.SEARCH_MEMBER
 
   const getUUid = useCallback(
     (meta: "country" | "industry" | "province" | "city", value?: string) => {
@@ -58,10 +55,10 @@ const useSearchReferral = (props: ISearchReferralProps) => {
   const [industryUuid, setIndustryUuid] = useState<undefined | string>()
   const [minYearOfExperience, setMinYearOfExperience] = useState<
     undefined | string
-  >(searchParams.get("minYearOfExperience")?.toString() || "0")
+  >(searchParams.get("minYearOfExperience")?.toString())
   const [maxYearOfExperience, setMaxYearOfExperience] = useState<
     undefined | string
-  >(searchParams.get("maxYearOfExperience")?.toString() || "100")
+  >(searchParams.get("maxYearOfExperience")?.toString())
   const [sorting, setSorting] = useState(
     searchParams.get("sorting")?.toString() || referralSortingOptions[0].value
   )
@@ -69,9 +66,36 @@ const useSearchReferral = (props: ISearchReferralProps) => {
     new URLSearchParams(searchParams.toString())
   )
 
+  const initialUserTypes = searchParams
+    .get("types")
+    ?.split(",")
+    .map((type) => {
+      if (Object.values(EUserType).includes(type as EUserType)) {
+        return type as EUserType
+      } else {
+        // Handle invalid type value
+        return undefined // or any other default value/error handling
+      }
+    })
+    .filter((type) => type !== undefined) as EUserType[]
+
+  const defaultUserTypes = [EUserType.REFEREE, EUserType.REFERRER]
+  const [userTypes, setUserTypes] = useState<EUserType[]>(
+    initialUserTypes || defaultUserTypes
+  )
+
   const createQueryString = useCallback(
     (name: string, value: string) => {
       params.set(name, value)
+
+      return params.toString()
+    },
+    [params]
+  )
+
+  const removeQueryString = useCallback(
+    (name: string) => {
+      params.delete(name)
 
       return params.toString()
     },
@@ -88,46 +112,88 @@ const useSearchReferral = (props: ISearchReferralProps) => {
     createQueryString("jobTitle", e.target.value)
   }
 
+  const handleUserTypesChange = (type: EUserType) => {
+    if (
+      isExistsInListHelper(userTypes, type) === true &&
+      userTypes.length > 1
+    ) {
+      const newTypes = userTypes.filter((v) => v !== type)
+      setUserTypes(newTypes)
+      createQueryString("types", newTypes.join(","))
+    } else if (isExistsInListHelper(userTypes, type) === false) {
+      const newTypes = [...userTypes, type]
+      setUserTypes(newTypes)
+      createQueryString("types", newTypes.join(","))
+    }
+  }
+
   const handleCountryChange = (value: string) => {
-    setCountryUuid(value)
-    createQueryString(
-      "country",
-      countryList.find((item) => item.uuid === value)?.value ?? value
-    )
+    if (value === "all") {
+      setCountryUuid(undefined)
+      setProvinceUuid(undefined)
+      setCityUuid(undefined)
+      removeQueryString("country")
+      removeQueryString("province")
+      removeQueryString("city")
+    } else {
+      setCountryUuid(value)
+      setProvinceUuid(undefined)
+      setCityUuid(undefined)
+      createQueryString(
+        "country",
+        countryList?.find((item) => item.uuid === value)?.value ?? value
+      )
+    }
   }
   const handleProvinceChange = (value: string) => {
-    setProvinceUuid(value)
-    createQueryString(
-      "province",
-      provinceList.find((item) => item.uuid === value)?.value ?? value
-    )
+    if (value === "all") {
+      setProvinceUuid(undefined)
+      setCityUuid(undefined)
+      removeQueryString("province")
+      removeQueryString("city")
+    } else {
+      setProvinceUuid(value)
+      setCityUuid(undefined)
+      createQueryString(
+        "province",
+        provinceList?.find((item) => item.uuid === value)?.value ?? value
+      )
+    }
   }
   const handleCityChange = (value: string) => {
-    setCityUuid(value)
-
-    createQueryString(
-      "city",
-      cityList.find((item) => item.uuid === value)?.value ?? value
-    )
+    if (value === "all") {
+      setCityUuid(undefined)
+      removeQueryString("city")
+    } else {
+      setCityUuid(value)
+      createQueryString(
+        "city",
+        cityList?.find((item) => item.uuid === value)?.value ?? value
+      )
+    }
   }
 
   const handleIndustryChange = (value: string) => {
-    setIndustryUuid(value)
-    createQueryString(
-      "industry",
-      industryList.find((item) => item.uuid === value)?.value ?? value
-    )
+    if (value === "all") {
+      setIndustryUuid(undefined)
+      removeQueryString("industry")
+    } else {
+      setIndustryUuid(value)
+      createQueryString(
+        "industry",
+        industryList?.find((item) => item.uuid === value)?.value ?? value
+      )
+    }
   }
-
   const handleReset = () => {
     setCompanyName("")
     setJobTitle("")
-    setCountryUuid(undefined)
+    setCountryUuid("all")
     setProvinceUuid(undefined)
     setCityUuid(undefined)
     setIndustryUuid(undefined)
-    setMaxYearOfExperience("100")
-    setMinYearOfExperience("0")
+    setMaxYearOfExperience(undefined)
+    setMinYearOfExperience(undefined)
     setSorting(referralSortingOptions[0].value)
     setParams(new URLSearchParams())
     router.push(pathname)
@@ -218,12 +284,13 @@ const useSearchReferral = (props: ISearchReferralProps) => {
       searchParams.get("sorting")?.toString() ||
       referralSortingOptions[0].value,
     minYearOfExperience:
-      searchParams.get("minYearOfExperience")?.toString() || "0",
+      searchParams.get("minYearOfExperience")?.toString() || undefined,
     maxYearOfExperience:
-      searchParams.get("maxYearOfExperience")?.toString() || "100",
+      searchParams.get("maxYearOfExperience")?.toString() || undefined,
+    types: initialUserTypes || defaultUserTypes,
   }
   const result = useInfiniteQuery({
-    queryKey: [keyString, { sorting: filterMeta.sorting, filterMeta, type }],
+    queryKey: [keyString, { sorting: filterMeta.sorting, filterMeta }],
     queryFn: searchReferral,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
@@ -259,6 +326,8 @@ const useSearchReferral = (props: ISearchReferralProps) => {
     minYearOfExperience,
     sorting,
     handleReset,
+    handleUserTypesChange,
+    userTypes,
   }
 }
 

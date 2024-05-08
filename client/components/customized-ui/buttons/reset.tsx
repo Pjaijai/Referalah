@@ -1,7 +1,9 @@
+"use client"
+
 import React from "react"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { Button } from "@/components/ui/button"
-import { Icons } from "@/components/icons"
 
 interface IResetButtonProps {
   onClick: React.MouseEventHandler<HTMLButtonElement>
@@ -9,9 +11,10 @@ interface IResetButtonProps {
 const ResetButton: React.FunctionComponent<IResetButtonProps> = ({
   onClick,
 }) => {
+  const t = useI18n()
   return (
-    <Button onClick={onClick} variant={"outline"}>
-      <Icons.rotateRight />
+    <Button onClick={onClick} variant={"outline"} className="shrink-0">
+      {t("general.reset")}
     </Button>
   )
 }

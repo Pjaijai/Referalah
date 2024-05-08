@@ -71,22 +71,12 @@ export const siteConfig = {
         description: "忘記密碼 Forgot Password",
       },
     },
-    referrer: {
-      name: "推薦人",
-      href: "/referer",
+
+    searchMember: {
+      name: "會員",
+      href: "/member/search",
       metadata: {
-        title: "推薦人 Referrers",
-        description:
-          "想搵人推薦你入去？係到搵下啦！ Meet someone to bring you closer to your dream company!",
-      },
-    },
-    talent: {
-      name: "受薦人",
-      href: "/referee",
-      metadata: {
-        title: "人才 Talent",
-        description:
-          "想搵人材？係到睇下有冇合適嘅人啦！ Recommend an amazing talent from Hong Kong to join your company!",
+        title: "會員 members",
       },
     },
     createPost: {
@@ -102,15 +92,22 @@ export const siteConfig = {
       name: "編輯街招",
       href: "/post/edit",
     },
-    referrerPost: {
+    searchPost: {
       name: "街招",
-      href: "/post/referer",
+      href: "/post/search",
       metadata: {
         title: "街招",
-        description:
-          "係到搵有乜工搵人推薦。 Look for job postings and get referred.",
+        description: "係到搵有乜街招。 A wall for posts.",
       },
     },
+    viewPost: {
+      name: "街招",
+      href: "/post/view",
+      metadata: {
+        title: "街招",
+      },
+    },
+
     postHistory: {
       name: "街招記錄",
       href: "/post/history",

@@ -6,6 +6,7 @@ import { useI18n } from "@/utils/services/internationalization/client"
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -38,6 +39,8 @@ interface IReferralCardProps {
   industry: string | null
   socialMediaUrl: string | null
   receiverType: EReferralType
+  isReferrer: boolean
+  isReferee: boolean
 }
 
 const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
@@ -54,6 +57,8 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
   uuid,
   yearOfExperience,
   receiverType,
+  isReferee,
+  isReferrer,
 }) => {
   const t = useI18n()
   const router = useRouter()
@@ -70,8 +75,15 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
     <Card className="flex flex-col justify-between rounded p-2 shadow-md">
       {/* avatar, username , title, company, desc, url */}
       <CardHeader className="relative flex flex-col items-center justify-center space-y-0 pb-0 text-center">
+        <div className="absolute left-3 top-1">
+          <div className="flex flex-row gap-2">
+            {isReferee && <Badge>{t("user.type.referee")}</Badge>}
+            {isReferrer && <Badge>{t("user.type.referrer")}</Badge>}
+          </div>
+        </div>
+
         {socialMediaUrl && (
-          <div className="absolute right-3 top-3">
+          <div className="absolute right-3 top-0">
             <TooltipWrapper
               tooltipTrigger={
                 <Button variant="link" size="icon" onClick={handleUrlClick}>
@@ -82,20 +94,23 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
             />
           </div>
         )}
+
         <Link href={`${siteConfig.page.profile.href}/${uuid}`}>
           <BaseAvatar
             fallBack={username ? username[0] : "?"}
             alt={username}
             url={photoUrl || undefined}
             size="large"
+            className="mt-2"
           />
         </Link>
         <Link href={`${siteConfig.page.profile.href}/${uuid}`}>
           <p className="pt-5 text-center text-xs">@{username}</p>
         </Link>
+
         <p className="text-center text-lg font-semibold">{jobTitle}</p>
         {companyName && <CompanyNameDisplay name={companyName} />}
-        <p className="line-clamp-4 whitespace-pre-wrap break-all pt-6 text-center text-sm">
+        <p className="line-clamp-4 whitespace-pre-wrap break-normal pt-6 text-center text-sm">
           {description}
         </p>
       </CardHeader>
