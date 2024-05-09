@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.20.0](https://github.com/Pjaijai/Referalah/compare/v1.19.0...v1.20.0) (2024-05-09)
+
+
+### Features
+
+* display the count ([c1bb81a](https://github.com/Pjaijai/Referalah/commit/c1bb81a459a0c26dd02e8a7a040415c85b10c1cd))
+* update user table access ([c0540aa](https://github.com/Pjaijai/Referalah/commit/c0540aa263b33bdd1fad2f50c2a959267248a53f))
+
+
+### Bug Fixes
+
+* fix ContactRequestCount count text ([311ab52](https://github.com/Pjaijai/Referalah/commit/311ab523179cb1ae28a6499b74d21c432d3b4d27))
+* fix user card count position ([7405e9a](https://github.com/Pjaijai/Referalah/commit/7405e9a951f496807ab48e794a81dc5bb8d70bb9))
+
 ## [1.19.0](https://github.com/Pjaijai/Referalah/compare/v1.18.0...v1.19.0) (2024-05-09)
 
 

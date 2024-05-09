@@ -307,7 +307,7 @@ export default {
   "general.member": "會員",
   "nav.member.description": "查看會員，立即連結！",
   "page.search_member": "會員",
-  "general.chat#zero": "{count} 個對話",
-  "general.chat#one": "{count} 個對話",
-  "general.chat#other": "{count} 個對話",
+  "general.chat#zero": "{count}個對話",
+  "general.chat#one": "{count}個對話",
+  "general.chat#other": "{count}個對話",
 } as const
