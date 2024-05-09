@@ -102,7 +102,7 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
               </div>
             </div>
 
-            <div className="flex w-full flex-row items-end justify-between">
+            <div className="flex w-full flex-col items-start justify-start gap-1 md:flex-row md:items-end md:justify-between">
               {/* location, industry, year of exp */}
               <PostCardInfoDisplay
                 city={city}
