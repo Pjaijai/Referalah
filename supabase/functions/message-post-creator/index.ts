@@ -71,7 +71,8 @@ serve(async (req: any) => {
               job_title,
               description,
               url,
-              uuid
+              uuid,
+              contact_request_count
       `,
       )
       .eq("uuid", post_uuid)
@@ -191,6 +192,12 @@ serve(async (req: any) => {
         type: post.type,
         message_uuid: messageUuid,
       })
+
+    const { data: updatePostCount } = await server
+      .from("post")
+      .update({ contact_request_count: post.contact_request_count + 1 })
+      .eq("uuid", post.uuid)
+      .single()
 
     const subject = `${sender.username} is interested in you post - ${post.job_title}`
     const body = `
