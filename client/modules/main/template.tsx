@@ -35,7 +35,7 @@ const MainPageTemplate = ({
 
   return (
     <div className="relative mt-2 flex h-screen w-full flex-row items-center justify-center md:h-auto">
-      <div className="relative z-30 mx-auto h-full w-full max-w-7xl overflow-hidden  p-4 md:h-[40rem]">
+      <div className="relative z-30 mx-auto h-fit w-full max-w-7xl overflow-hidden  p-4 ">
         <motion.div
           initial={{
             opacity: 0,
@@ -94,11 +94,12 @@ const MainPageTemplate = ({
               </Link>
             )}
           </div>
-          <div className="mt-20">
-            <ContactRequestCarousel list={contactList} />
-          </div>
           <div className="mt-20 ">
             <PostCarousel list={posts} />
+          </div>
+
+          <div className="mt-4 p-4 md:mt-32">
+            <ContactRequestCarousel list={contactList} />
           </div>
         </motion.div>
       </div>

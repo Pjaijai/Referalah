@@ -42,12 +42,6 @@ export function SiteHeader() {
               <ThemeToggle />
             </div>
 
-            {user.isSignIn && (
-              <Link href={siteConfig.page.chat.href}>
-                <MessageIcon className="block md:hidden" />
-              </Link>
-            )}
-
             {user.isSignIn ? (
               <Link href={`${siteConfig.page.profile.href}/${user.uuid}`}>
                 <div className="flex flex-row items-center gap-1">

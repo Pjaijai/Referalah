@@ -36,7 +36,7 @@ const ContactRequestCarousel: React.FunctionComponent<
                   <p className="shrink-0">@{data.senderUserName}</p>
                   <p className="shrink-0">{scopedT("requested")}</p>
                   <Link
-                    href={`${siteConfig.page.profile.href}/${data.postUuid}`}
+                    href={`${siteConfig.page.viewPost.href}/${data.postUuid}`}
                   >
                     <p
                       className="shrink-0  text-green-700
@@ -51,7 +51,7 @@ const ContactRequestCarousel: React.FunctionComponent<
           if (data.type === "member")
             return (
               <CarouselItem className="basis-1/2 md:basis-1/4">
-                <div className="flex w-fit  shrink-0 flex-col justify-center md:flex-row ">
+                <div className="flex w-fit  shrink-0 flex-col justify-center  ">
                   <p>@{data.senderUserName} </p>
                   <p>{scopedT("contacted")}</p>
                   <Link
