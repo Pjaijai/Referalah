@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import usePostTypeOptions from "@/modules/post/hooks/post-type-options"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { set, useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { ICityResponse } from "@/types/api/response/city"
@@ -249,6 +249,7 @@ const EditPostPageTemplate: React.FunctionComponent<
             router.push(`${siteConfig.page.viewPost.href}/${postUuid}`)
           },
           onError: () => {
+            setIsSubmitting(false)
             return toast({
               title: t("general.error.title"),
               description: t("general.error.description"),

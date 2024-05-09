@@ -17,7 +17,7 @@ import useGetMediaPublicUrl from "@/hooks/api/storage/get-media-url"
 import useUserStore from "@/hooks/state/user/store"
 import { Form } from "@/components/ui/form"
 import { useToast } from "@/components/ui/use-toast"
-import FormTextInput from "@/components/customized-ui/form/input"
+import FormTextArea from "@/components/customized-ui/form/text-area"
 import { Icons } from "@/components/icons"
 
 interface ISendMessageFormProps {
@@ -235,7 +235,7 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
             )}
             <div className="flex w-full flex-row">
               <div className="relative w-full">
-                <FormTextInput
+                <FormTextArea
                   control={form.control}
                   name="message"
                   placeholder={t("chat.form.message_placeholder")}
