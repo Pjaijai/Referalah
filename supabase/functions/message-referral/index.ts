@@ -59,7 +59,9 @@ serve(async (req: any) => {
 
     const { data: receiver } = await server
       .from("user")
-      .select("uuid, email,username, is_referer ,is_referee")
+      .select(
+        "uuid, email,username, is_referer ,is_referee,contact_request_count ",
+      )
       .eq("uuid", to_uuid)
       .single()
 
@@ -166,6 +168,12 @@ serve(async (req: any) => {
         type,
         message_uuid: messageUuid,
       })
+
+    const { data: updateReceiverCount } = await server
+      .from("user")
+      .update({ contact_request_count: receiver.contact_request_count + 1 })
+      .eq("uuid", to_uuid)
+      .single()
 
     const subject = `${sender.username} sent you a message.`
     const emailBody = `
