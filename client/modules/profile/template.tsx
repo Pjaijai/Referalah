@@ -21,16 +21,12 @@ import CommonPageLayout from "@/components/layouts/common"
 
 interface IProfileTemplateProps {
   userUuid?: string
-  countryList: ICountryResponse[]
-  provinceList: IProvinceResponse[]
-  cityList: ICityResponse[]
-  industryList: IIndustryResponse[]
 }
 
 const ProfileTemplate: React.FunctionComponent<IProfileTemplateProps> = (
   props
 ) => {
-  const { cityList, countryList, industryList, provinceList, userUuid } = props
+  const { userUuid } = props
   const t = useI18n()
   const locale = useCurrentLocale()
   const userStoreUuid = useUserStore((state) => state.uuid)
@@ -102,6 +98,7 @@ const ProfileTemplate: React.FunctionComponent<IProfileTemplateProps> = (
               ? profile.industry && profile.industry.cantonese_name
               : profile.industry && profile.industry.english_name
           }
+          requestCount={profile.contact_request_count}
         />
       </CommonPageLayout>
     )

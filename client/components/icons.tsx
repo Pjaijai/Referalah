@@ -10,6 +10,7 @@ import {
   ClipboardCheck,
   ClipboardX,
   Clock,
+  Coffee,
   Copy,
   CopyCheck,
   Dot,
@@ -85,6 +86,7 @@ export const Icons = {
   history: History,
   eye: Eye,
   eyeOff: EyeOff,
+  coffee: Coffee,
   smallArrowLeft: (props: LucideProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"

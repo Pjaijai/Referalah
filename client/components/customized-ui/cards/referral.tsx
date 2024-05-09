@@ -18,6 +18,7 @@ import {
 import { Separator } from "@/components/ui/separator"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import ContactButton from "@/components/customized-ui/buttons/contact"
+import ContactRequestCount from "@/components/customized-ui/icons/contact-request-count"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import IndustryDisplay from "@/components/customized-ui/info-display/industry"
 import LocationDisplay from "@/components/customized-ui/info-display/location"
@@ -41,6 +42,7 @@ interface IReferralCardProps {
   receiverType: EReferralType
   isReferrer: boolean
   isReferee: boolean
+  requestCount: number
 }
 
 const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
@@ -59,6 +61,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
   receiverType,
   isReferee,
   isReferrer,
+  requestCount,
 }) => {
   const t = useI18n()
   const router = useRouter()
@@ -75,10 +78,13 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
     <Card className="flex flex-col justify-between rounded p-2 shadow-md">
       {/* avatar, username , title, company, desc, url */}
       <CardHeader className="relative flex flex-col items-center justify-center space-y-0 pb-0 text-center">
-        <div className="absolute left-3 top-1">
-          <div className="flex flex-row gap-2">
-            {isReferee && <Badge>{t("user.type.referee")}</Badge>}
-            {isReferrer && <Badge>{t("user.type.referrer")}</Badge>}
+        <div className="absolute left-3 top-1 w-[95%]">
+          <div className="flex w-full flex-row items-center justify-between">
+            <div className="flex flex-row gap-2">
+              {isReferee && <Badge>{t("user.type.referee")}</Badge>}
+              {isReferrer && <Badge>{t("user.type.referrer")}</Badge>}
+            </div>
+            {requestCount > 0 && <ContactRequestCount count={requestCount} />}
           </div>
         </div>
 
