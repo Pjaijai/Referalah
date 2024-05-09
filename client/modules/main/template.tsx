@@ -94,7 +94,6 @@ const MainPageTemplate = ({
               </Link>
             )}
           </div>
-
           <div className="mt-20 ">
             <PostCarousel list={posts} />
           </div>
