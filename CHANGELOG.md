@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.19.0](https://github.com/Pjaijai/Referalah/compare/v1.18.0...v1.19.0) (2024-05-09)
+
+
+### Features
+
+* remove message icon in site header ([8093fcb](https://github.com/Pjaijai/Referalah/commit/8093fcb32b9feb8fe797979f5584bd5aaca2fc97))
+* replace FormTextInput with FormTextArea ([64b3b3d](https://github.com/Pjaijai/Referalah/commit/64b3b3d772a282731ad939bb1340684218965ccc))
+
+
+### Bug Fixes
+
+* fix main page cache ([6069abc](https://github.com/Pjaijai/Referalah/commit/6069abc7f750d0be40c68ef8220195e512cb7a47))
+* fix view post link in contact request carousel ([8bb4131](https://github.com/Pjaijai/Referalah/commit/8bb41313b4b51e8984ce14c629fbbcfc3e0a6c9f))
+
 ## [1.18.0](https://github.com/Pjaijai/Referalah/compare/v1.17.1...v1.18.0) (2024-05-07)
 
 
