@@ -13,7 +13,6 @@ const ContactRequestCount: React.FunctionComponent<
   return (
     <div className="space-x flex  flex-row items-center">
       <Icons.coffee />
-      <p>{count}</p>
       <p>{t("general.chat", { count: count })}</p>
     </div>
   )
