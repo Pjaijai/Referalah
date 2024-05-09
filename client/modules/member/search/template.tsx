@@ -169,6 +169,7 @@ const MemberSearchPageTemplate: React.FunctionComponent<
             {list.map((user) => {
               return (
                 <ReferralCard
+                  requestCount={user.contact_request_count}
                   jobTitle={user.job_title}
                   username={user.username}
                   photoUrl={user.avatar_url}

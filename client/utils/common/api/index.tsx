@@ -68,7 +68,8 @@ export const getUserProfile = async (userUuid: string) => {
           english_name
       ),
       is_referer,
-      is_referee
+      is_referee,
+      contact_request_count
       `
       )
       .eq("uuid", userUuid)
@@ -261,7 +262,7 @@ export const searchReferral = async ({
   let query = supabase
     .from("user")
     .select<string, IReferralResponse>(
-      `
+      `   
             uuid,
             username,
             avatar_url,
@@ -291,7 +292,9 @@ export const searchReferral = async ({
               english_name
             ),
             is_referer,
-            is_referee
+            is_referee,
+            contact_request_count
+
           `
     )
     .lte(
@@ -451,7 +454,8 @@ export const searchPostApi = async ({
               user (
                   username,
                   avatar_url
-              )
+              ),
+              contact_request_count
             `
       )
       .in("type", types)
@@ -538,7 +542,8 @@ export const getPostByUuid = async (uuid: string) => {
                   username,
                   avatar_url,
                   job_title
-              )
+              ),
+              contact_request_count
             `
     )
     .eq("uuid", uuid)

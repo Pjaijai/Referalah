@@ -33,4 +33,5 @@ export interface IUserResponse {
   social_media_url: string | null
   is_referer: boolean
   is_referee: boolean
+  contact_request_count: number
 }

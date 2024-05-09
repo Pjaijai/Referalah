@@ -24,6 +24,7 @@ import { Separator } from "@/components/ui/separator"
 import ContactButton from "@/components/customized-ui/buttons/contact"
 import ProfileCard from "@/components/customized-ui/cards/profile"
 import BaseClipboard from "@/components/customized-ui/clipboards/base"
+import ContactRequestCount from "@/components/customized-ui/icons/contact-request-count"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
 import IndustryDisplay from "@/components/customized-ui/info-display/industry"
@@ -60,29 +61,37 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
             <span>{t("post.back_to_post_page")}</span>
           </p>
         </Link>
-        <div className="block md:hidden">
-          <LinkShareDrawer />
-        </div>
 
-        <div className="hidden md:block">
-          <BaseClipboard
-            className="flex flex-row items-center justify-center space-x-1 border-b border-muted-foreground text-sm"
-            afterCopyContent={
-              <>
-                <p>{t("share.copy_link")}</p>{" "}
-                <Icons.copy height={20} width={20} />
-              </>
-            }
-            beforeCopyContent={
-              <>
-                <p>{t("share.copied")}</p>
-                <Icons.copyCheck height={20} width={20} />
-              </>
-            }
-            textValue={
-              typeof window !== "undefined" ? window.location.href : ""
-            }
-          />
+        <div className="flex flex-row items-end justify-center gap-4">
+          <div className="flex md:hidden">
+            <LinkShareDrawer />
+          </div>
+          <div className="hidden md:block">
+            <BaseClipboard
+              className="flex flex-row items-center justify-center space-x-1 border-b border-muted-foreground text-sm"
+              afterCopyContent={
+                <>
+                  <p>{t("share.copy_link")}</p>{" "}
+                  <Icons.copy height={20} width={20} />
+                </>
+              }
+              beforeCopyContent={
+                <>
+                  <p>{t("share.copied")}</p>
+                  <Icons.copyCheck height={20} width={20} />
+                </>
+              }
+              textValue={
+                typeof window !== "undefined" ? window.location.href : ""
+              }
+            />
+          </div>
+
+          {post &&
+            post.contact_request_count &&
+            post.contact_request_count > 0 && (
+              <ContactRequestCount count={post && post.contact_request_count} />
+            )}
         </div>
       </div>
 

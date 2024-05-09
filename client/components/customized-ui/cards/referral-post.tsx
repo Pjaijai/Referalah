@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation"
 import PostCardInfoDisplay from "@/modules/post/components/info-display/card-info"
 import PostHeader from "@/modules/post/components/info-display/header"
 import usePostTypeTitle from "@/modules/post/hooks/post-type-title"
-import { useI18n } from "@/utils/services/internationalization/client"
 
 import { EReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
@@ -13,8 +12,10 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardFooter, CardHeader } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
+import ContactRequestCount from "@/components/customized-ui/icons/contact-request-count"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
+import { Icons } from "@/components/icons"
 
 interface IReferralPostCardProps {
   uuid: string | null
@@ -32,6 +33,7 @@ interface IReferralPostCardProps {
   createdBy: string | null
   className?: string
   type: EReferralType
+  requestCount: number
 }
 
 // NOTE: please use onClick with e.preventDefault() for any links inside this component to prevent validateDOMNesting warning
@@ -52,9 +54,9 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   createdAt,
   createdBy,
   className,
+  requestCount,
 }) => {
   const router = useRouter()
-  const t = useI18n()
 
   const handleAvatarOnClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
@@ -100,14 +102,17 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
               </div>
             </div>
 
-            {/* location, industry, year of exp */}
-            <PostCardInfoDisplay
-              city={city}
-              province={province}
-              country={country}
-              industry={industry}
-              yearOfExperience={yearOfExperience}
-            />
+            <div className="flex w-full flex-row items-end justify-between">
+              {/* location, industry, year of exp */}
+              <PostCardInfoDisplay
+                city={city}
+                province={province}
+                country={country}
+                industry={industry}
+                yearOfExperience={yearOfExperience}
+              />
+              {requestCount > 0 && <ContactRequestCount count={requestCount} />}
+            </div>
             <Separator />
           </CardHeader>
         </div>

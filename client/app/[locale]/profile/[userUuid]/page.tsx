@@ -1,11 +1,5 @@
 import ProfileTemplate from "@/modules/profile/template"
-import {
-  getCityList,
-  getCountryList,
-  getIndustryList,
-  getProvinceList,
-  getUserProfile,
-} from "@/utils/common/api/index"
+import { getUserProfile } from "@/utils/common/api/index"
 
 export async function generateMetadata({
   params,
@@ -27,25 +21,10 @@ export async function generateMetadata({
   }
 }
 
-export const revalidate = 60 * 60 * 24
-
 const Page = async ({ params }: { params: { userUuid: string } }) => {
   const { userUuid } = params
 
-  const countryList = await getCountryList()
-  const provinceList = await getProvinceList()
-  const cityList = await getCityList()
-  const industryList = await getIndustryList()
-
-  return (
-    <ProfileTemplate
-      userUuid={userUuid}
-      countryList={countryList}
-      provinceList={provinceList}
-      cityList={cityList}
-      industryList={industryList}
-    />
-  )
+  return <ProfileTemplate userUuid={userUuid} />
 }
 
 export default Page

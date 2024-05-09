@@ -17,4 +17,5 @@ export interface IPost {
   industry_uuid: string | null
   url: string | null
   status: TPostStatusType
+  contact_request_count: number
 }

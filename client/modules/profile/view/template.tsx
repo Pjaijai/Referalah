@@ -15,6 +15,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from "@/components/ui/separator"
 import { useToast } from "@/components/ui/use-toast"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
+import ContactRequestCount from "@/components/customized-ui/icons/contact-request-count"
 import LocationDisplay from "@/components/customized-ui/info-display/location"
 import { Icons } from "@/components/icons"
 
@@ -33,6 +34,7 @@ export interface IViewProfileTemplateProps {
   isReferer: boolean
   isReferee: boolean
   slug: string
+  requestCount: number
 }
 const ViewProfileTemplate: React.FunctionComponent<
   IViewProfileTemplateProps
@@ -51,6 +53,7 @@ const ViewProfileTemplate: React.FunctionComponent<
   isReferer,
   isReferee,
   slug,
+  requestCount,
 }) => {
   const t = useI18n()
   const userUuid = useUserStore((state) => state.uuid)
@@ -117,6 +120,12 @@ const ViewProfileTemplate: React.FunctionComponent<
               className="text-lg"
             />
           </li>
+
+          {requestCount > 0 && (
+            <div className="flex flex-row justify-center">
+              <ContactRequestCount count={requestCount} />
+            </div>
+          )}
 
           <div className="mt-4 flex w-full items-center justify-center ">
             {socialMediaUrl && (

@@ -56,6 +56,7 @@ const PostCarousel: React.FunctionComponent<IPostCarouselProps> = ({
                 createdBy={data.created_by && data.created_by}
                 key={data.uuid}
                 createdAt={data.created_at && data.created_at.toString()}
+                requestCount={data.contact_request_count}
               />
             </CarouselItem>
           )
