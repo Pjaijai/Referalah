@@ -335,7 +335,7 @@ export default {
 
   "nav.member.description": "View members, link now!",
   "page.search_member": "Members",
-  "general.chat#zero": "{count} chats",
-  "general.chat#one": "{count} chat",
-  "general.chat#other": "{count} chats",
+  "general.chat#zero": "{count}chats",
+  "general.chat#one": "{count}chat",
+  "general.chat#other": "{count}chats",
 } as const

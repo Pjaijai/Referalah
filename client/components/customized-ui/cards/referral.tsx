@@ -84,7 +84,6 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
               {isReferee && <Badge>{t("user.type.referee")}</Badge>}
               {isReferrer && <Badge>{t("user.type.referrer")}</Badge>}
             </div>
-            {requestCount > 0 && <ContactRequestCount count={requestCount} />}
           </div>
         </div>
 
@@ -138,6 +137,12 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
             <YearsOfExperienceDisplay
               yearOfExperience={yearOfExperience}
               className="mb-1"
+            />
+          )}
+          {requestCount > 0 && (
+            <ContactRequestCount
+              className="justify-start"
+              count={requestCount}
             />
           )}
         </CardDescription>
