@@ -11,8 +11,8 @@ const ContactRequestCount: React.FunctionComponent<
 > = ({ count }) => {
   const t = useI18n()
   return (
-    <div className="space-x flex  flex-row items-center">
-      <Icons.coffee />
+    <div className="flex flex-row items-center justify-center ">
+      <Icons.coffee size={20} />
       <p>{t("general.chat", { count: count })}</p>
     </div>
   )
