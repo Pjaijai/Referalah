@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.20.1](https://github.com/Pjaijai/Referalah/compare/v1.20.0...v1.20.1) (2024-05-13)
+
+
+### Bug Fixes
+
+* fix list latest contact request post uuid ([59464cc](https://github.com/Pjaijai/Referalah/commit/59464cc424fadd3226e4db2e7091fac9c71d283f))
+* fix request count on post detail page ([2ad36d2](https://github.com/Pjaijai/Referalah/commit/2ad36d2f63edbc48e4aa7aa63e0c47f252666965))
+* remove fancy stuff ([#372](https://github.com/Pjaijai/Referalah/issues/372)) ([20b7fff](https://github.com/Pjaijai/Referalah/commit/20b7fffa19fc1a1b61c13da725ce5acd60dc6895))
+
 ## [1.20.0](https://github.com/Pjaijai/Referalah/compare/v1.19.0...v1.20.0) (2024-05-09)
 
 

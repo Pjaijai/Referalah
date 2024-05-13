@@ -63,9 +63,17 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
         </Link>
 
         <div className="flex flex-row items-end justify-center gap-4">
+          {post &&
+          post.contact_request_count &&
+          typeof post.contact_request_count === "number" &&
+          post.contact_request_count > 0 ? (
+            <ContactRequestCount count={post && post.contact_request_count} />
+          ) : null}
+
           <div className="flex md:hidden">
             <LinkShareDrawer />
           </div>
+
           <div className="hidden md:block">
             <BaseClipboard
               className="flex flex-row items-center justify-center space-x-1 border-b border-muted-foreground text-sm"
@@ -86,12 +94,6 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
               }
             />
           </div>
-
-          {post &&
-            post.contact_request_count &&
-            post.contact_request_count > 0 && (
-              <ContactRequestCount count={post && post.contact_request_count} />
-            )}
         </div>
       </div>
 
