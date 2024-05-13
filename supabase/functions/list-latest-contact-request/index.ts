@@ -29,7 +29,7 @@ serve(async () => {
       return {
         type: "post",
         createdAt: post.created_at,
-        postUuid: post.uuid,
+        postUuid: post.post_uuid.uuid,
         senderUserName: post.sender_uuid.username,
         postJobTitle: post.post_uuid.job_title,
       }
