@@ -15,8 +15,6 @@ import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import useUserStore from "@/hooks/state/user/store"
 import { buttonVariants } from "@/components/ui/button"
-import { BackgroundBeams } from "@/components/customized-ui/fancy/background-beams/base"
-import { Globe } from "@/components/customized-ui/fancy/globe/globe"
 
 const MainPageTemplate = ({
   count,
@@ -103,17 +101,6 @@ const MainPageTemplate = ({
           </div>
         </motion.div>
       </div>
-
-      {initialTheme.current.value !== theme && (
-        <div className="absolute top-0 h-full w-full">
-          <Globe />
-        </div>
-      )}
-      {initialTheme.current.value === theme && (
-        <div className="fixed top-0 z-0 h-full w-full">
-          <BackgroundBeams />
-        </div>
-      )}
     </div>
   )
 }
