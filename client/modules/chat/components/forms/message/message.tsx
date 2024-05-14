@@ -193,7 +193,7 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className={cn("relative mt-8 p-2", file && "mt-20")}
+        className={cn("relative mt-20 p-2", file && "mt-20")}
       >
         {type === "sender" && !isReceiverAccepted && (
           <div className="sticky bottom-0 rounded-lg border-2 p-2  text-center">
