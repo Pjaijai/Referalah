@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.20.2](https://github.com/Pjaijai/Referalah/compare/v1.20.1...v1.20.2) (2024-05-14)
+
+
+### Bug Fixes
+
+* fix message covered my text input form ([#374](https://github.com/Pjaijai/Referalah/issues/374)) ([8f0f679](https://github.com/Pjaijai/Referalah/commit/8f0f679fbee7012c32c9c32adcc83a649bba7215))
+
 ### [1.20.1](https://github.com/Pjaijai/Referalah/compare/v1.20.0...v1.20.1) (2024-05-13)
 
 
