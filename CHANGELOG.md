@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.20.3](https://github.com/Pjaijai/Referalah/compare/v1.20.2...v1.20.3) (2024-05-17)
+
+
+### Bug Fixes
+
+* fix post title and company limit to 100 ([d06ce79](https://github.com/Pjaijai/Referalah/commit/d06ce79fda5954e808609556d0b40df560792399))
+
 ### [1.20.2](https://github.com/Pjaijai/Referalah/compare/v1.20.1...v1.20.2) (2024-05-14)
 
 

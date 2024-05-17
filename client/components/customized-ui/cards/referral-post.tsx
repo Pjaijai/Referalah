@@ -68,7 +68,7 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   return (
     <Card
       className={cn(
-        "flex h-full flex-col justify-between rounded shadow-md ",
+        "flex h-fit shrink-0 flex-col justify-between rounded shadow-md ",
         className
       )}
     >

@@ -1,13 +1,12 @@
 "use client"
 
-import React, { useRef } from "react"
+import React from "react"
 import Link from "next/link"
 import ContactRequestCarousel from "@/modules/main/components/carousels/contact-request"
 import PostCarousel from "@/modules/main/components/carousels/post"
 import UserCount from "@/modules/main/components/user-count"
 import { useScopedI18n } from "@/utils/services/internationalization/client"
 import { motion } from "framer-motion"
-import { useTheme } from "next-themes"
 
 import { TContactRequestListResponse } from "@/types/api/response/contact-request/contact-request-list"
 import { ISearchPostResponse } from "@/types/api/response/referer-post"
@@ -26,8 +25,6 @@ const MainPageTemplate = ({
   contactList: TContactRequestListResponse[]
 }) => {
   const isUserSignIn = useUserStore((state) => state.isSignIn)
-  const { theme } = useTheme()
-  const initialTheme = useRef({ value: theme })
 
   const scopedT = useScopedI18n("index")
 
