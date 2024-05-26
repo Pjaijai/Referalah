@@ -1,9 +1,9 @@
 import { TPostStatusType } from "@/types/common/post-status"
-import { EReferralType } from "@/types/common/referral-type"
+import { EPostType } from "@/types/common/post-type"
 
 export interface IPost {
   id: number
-  type: EReferralType
+  type: EPostType
   created_at: string | null // date time string
   created_by: string | null
   uuid: string | null

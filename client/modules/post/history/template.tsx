@@ -8,7 +8,6 @@ import {
 } from "@/utils/services/internationalization/client"
 
 import useGetPostListByUserUuid from "@/hooks/api/post/get-post-list-by-user-uuid"
-import useUserStore from "@/hooks/state/user/store"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 
 interface IPostHistoryTemplateProps {
@@ -20,8 +19,6 @@ const PostHistoryTemplate: React.FunctionComponent<
   const t = useI18n()
   const locale = useCurrentLocale()
   const { data, isLoading } = useGetPostListByUserUuid(slug)
-  const userUuid = useUserStore((state) => state.uuid)
-  const isViewingOwnProfile = slug === userUuid
 
   return (
     <>
@@ -49,7 +46,6 @@ const PostHistoryTemplate: React.FunctionComponent<
               createdAt={data.created_at}
               uuid={data.uuid}
               url={data.url}
-              isViewingOwnProfile={isViewingOwnProfile}
               province={
                 locale === "zh-hk"
                   ? data.province && data.province.cantonese_name

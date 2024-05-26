@@ -263,6 +263,15 @@ export default {
   "post.type.referer.title": "Job Referral",
   "post.type.hiring.title": "Hiring",
   "post.type.referee.title": "Need Help",
+  "post.type.collaboration.title": "Collaboration",
+
+  "post.type.referer.description": "To refer talents to your company",
+  "post.type.hiring.description": "Direct hiring of talents",
+  "post.type.referee.description":
+    "Need help with specific openings, such as interview information, company background, and referrals",
+  "post.type.collaboration.description":
+    "Seeking partners for joint projects, competitions, or start-ups",
+
   "post.search_post.no_data": "No Data🥲 Create the post now !",
   "post.create.type_label": "Post Type",
   "post.create.related_link_description":

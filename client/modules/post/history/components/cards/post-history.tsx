@@ -7,10 +7,9 @@ import usePostTypeTitle from "@/modules/post/hooks/post-type-title"
 import { useI18n } from "@/utils/services/internationalization/client"
 
 import { TPostStatusType } from "@/types/common/post-status"
-import { EReferralType } from "@/types/common/referral-type"
+import { EPostType } from "@/types/common/post-type"
 import { siteConfig } from "@/config/site"
 import useViewport from "@/hooks/common/useViewport"
-import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardHeader } from "@/components/ui/card"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
@@ -29,8 +28,7 @@ interface IReferralPostCardProps {
   url: string | null
   createdAt: string | null
   status: TPostStatusType
-  isViewingOwnProfile: boolean
-  type: EReferralType
+  type: EPostType
 }
 
 const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
@@ -45,7 +43,6 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
   yearOfExperience,
   createdAt,
   status,
-  isViewingOwnProfile,
   type,
 }) => {
   const t = useI18n()

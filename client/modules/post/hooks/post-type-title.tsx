@@ -1,21 +1,24 @@
-import React, { useMemo } from "react"
+import { useMemo } from "react"
 import { useI18n } from "@/utils/services/internationalization/client"
 
-import { EReferralType } from "@/types/common/referral-type"
+import { EPostType } from "@/types/common/post-type"
 
-const usePostTypeTitle = (type?: EReferralType) => {
+const usePostTypeTitle = (type?: EPostType) => {
   const t = useI18n()
   return useMemo(() => {
     let typeTitle: string | null = null
     switch (type) {
-      case EReferralType.HIRING:
+      case EPostType.HIRING:
         typeTitle = t("post.type.hiring.title")
         break
-      case EReferralType.REFEREE:
+      case EPostType.REFEREE:
         typeTitle = t("post.type.referee.title")
         break
-      case EReferralType.REFERRER:
+      case EPostType.REFERRER:
         typeTitle = t("post.type.referer.title")
+        break
+      case EPostType.COLLABORATION:
+        typeTitle = t("post.type.collaboration.title")
         break
       default:
         break

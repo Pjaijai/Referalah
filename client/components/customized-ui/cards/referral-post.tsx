@@ -5,7 +5,7 @@ import PostCardInfoDisplay from "@/modules/post/components/info-display/card-inf
 import PostHeader from "@/modules/post/components/info-display/header"
 import usePostTypeTitle from "@/modules/post/hooks/post-type-title"
 
-import { EReferralType } from "@/types/common/referral-type"
+import { EPostType } from "@/types/common/post-type"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -32,7 +32,7 @@ interface IReferralPostCardProps {
   createdAt: string | null
   createdBy: string | null
   className?: string
-  type: EReferralType
+  type: EPostType
   requestCount: number
 }
 
