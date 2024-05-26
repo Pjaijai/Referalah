@@ -238,6 +238,12 @@ export default {
   "post.type.hiring.title": "請人",
   "post.type.referee.title": "搵幫手",
   "post.type.collaboration.title": "合作",
+
+  "post.type.referer.description": "推薦人才到你間公司",
+  "post.type.hiring.description": "直接招聘人才",
+  "post.type.referee.description": "需要協助，例如面試資料、公司背景同推薦機會",
+  "post.type.collaboration.description": "搵拍檔搞project，比賽或者創業等等",
+
   "post.search_post.no_data": "冇資料🥲不如貼張街招先？",
   "post.create.related_link_description":
     "例如份工個LinkedIn，Indeed，Glassdoor個連結",

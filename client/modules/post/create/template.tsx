@@ -266,6 +266,8 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
             control={form.control}
             label={t("post.create.type_label")}
             name="type"
+            triggerClassName="h-fit "
+            itemClassName="h-fit w-screen md:w-full"
           />
           <FormTextInput
             control={form.control}

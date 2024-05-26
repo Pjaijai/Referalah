@@ -1,5 +1,6 @@
 import React from "react"
 
+import { cn } from "@/lib/utils"
 import {
   FormControl,
   FormDescription,
@@ -22,6 +23,8 @@ interface IFormSelectProps extends IFormTextInputProps {
   options: { value: string; title: string }[]
   defaultValue?: string
   isDisabled?: boolean
+  triggerClassName?: string
+  itemClassName?: string
 }
 
 const FormSelect: React.FunctionComponent<IFormSelectProps> = ({
@@ -33,6 +36,8 @@ const FormSelect: React.FunctionComponent<IFormSelectProps> = ({
   options,
   defaultValue,
   isDisabled,
+  triggerClassName,
+  itemClassName,
 }) => {
   return (
     <FormField
@@ -48,7 +53,7 @@ const FormSelect: React.FunctionComponent<IFormSelectProps> = ({
             disabled={isDisabled}
           >
             <FormControl>
-              <SelectTrigger>
+              <SelectTrigger className={cn(triggerClassName)}>
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>
@@ -57,7 +62,11 @@ const FormSelect: React.FunctionComponent<IFormSelectProps> = ({
                 {options &&
                   options.length > 0 &&
                   options.map((option) => (
-                    <SelectItem value={option.value} key={option.value}>
+                    <SelectItem
+                      value={option.value}
+                      key={option.value}
+                      className={cn(itemClassName)}
+                    >
                       {option.title}
                     </SelectItem>
                   ))}
