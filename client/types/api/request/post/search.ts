@@ -1,8 +1,8 @@
-import { EReferralType } from "@/types/common/referral-type"
+import { EPostType } from "@/types/common/post-type"
 
 export interface ISearchPostsRequest {
   numberOfDataPerPage: number
-  types: EReferralType[]
+  types: EPostType[]
   companyName: string
   maxYearOfExperience: number
   minYearOfExperience: number

@@ -13,7 +13,7 @@ import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
-import { EReferralType } from "@/types/common/referral-type"
+import { EPostType } from "@/types/common/post-type"
 import { siteConfig } from "@/config/site"
 import useCreatePost from "@/hooks/api/post/create-post"
 import useCityOptions from "@/hooks/common/options/city-options"
@@ -65,7 +65,12 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
         message: t("validation.text.minimum_length", { count: 10 }),
       }),
     type: z.enum(
-      [EReferralType.REFEREE, EReferralType.REFERRER, EReferralType.HIRING],
+      [
+        EPostType.REFEREE,
+        EPostType.REFERRER,
+        EPostType.HIRING,
+        EPostType.COLLABORATION,
+      ],
       {
         required_error: t("validation.field_required"),
       }

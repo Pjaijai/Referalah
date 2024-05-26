@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import usePostTypeOptions from "@/modules/post/hooks/post-type-options"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { set, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { ICityResponse } from "@/types/api/response/city"
@@ -13,7 +13,7 @@ import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
 import { EPostStatus } from "@/types/common/post-status"
-import { EReferralType } from "@/types/common/referral-type"
+import { EPostType } from "@/types/common/post-type"
 import { siteConfig } from "@/config/site"
 import useGetPost from "@/hooks/api/post/get-post"
 import useUpdatePost from "@/hooks/api/post/update-post"
@@ -51,7 +51,7 @@ interface IForm {
   jobTitle: string
   url?: string
   postUuid: string
-  type: EReferralType
+  type: EPostType
 }
 
 const EditPostPageTemplate: React.FunctionComponent<
@@ -81,7 +81,12 @@ const EditPostPageTemplate: React.FunctionComponent<
       .optional()
       .or(z.literal("")),
     type: z.enum(
-      [EReferralType.REFEREE, EReferralType.REFERRER, EReferralType.HIRING],
+      [
+        EPostType.REFEREE,
+        EPostType.REFERRER,
+        EPostType.HIRING,
+        EPostType.COLLABORATION,
+      ],
       {
         required_error: t("validation.field_required"),
       }

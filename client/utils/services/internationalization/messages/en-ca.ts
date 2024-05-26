@@ -263,6 +263,7 @@ export default {
   "post.type.referer.title": "Job Referral",
   "post.type.hiring.title": "Hiring",
   "post.type.referee.title": "Need Help",
+  "post.type.collaboration.title": "Collaboration",
   "post.search_post.no_data": "No Data🥲 Create the post now !",
   "post.create.type_label": "Post Type",
   "post.create.related_link_description":

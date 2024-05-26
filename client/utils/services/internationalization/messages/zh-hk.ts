@@ -237,6 +237,7 @@ export default {
   "post.type.referer.title": "內部推薦",
   "post.type.hiring.title": "請人",
   "post.type.referee.title": "搵幫手",
+  "post.type.collaboration.title": "合作",
   "post.search_post.no_data": "冇資料🥲不如貼張街招先？",
   "post.create.related_link_description":
     "例如份工個LinkedIn，Indeed，Glassdoor個連結",
