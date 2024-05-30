@@ -54,7 +54,7 @@ serve(async (req: any) => {
 
     const { data: sender, error } = await server
       .from("user")
-      .select("uuid,username, email")
+      .select("uuid,username, email, status")
       .eq("uuid", user.id)
       .single()
 
@@ -67,7 +67,6 @@ serve(async (req: any) => {
                   uuid,
                   username
               ),
-              status,
               company_name,
               job_title,
               description,
