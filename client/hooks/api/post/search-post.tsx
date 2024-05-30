@@ -9,8 +9,8 @@ import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
+import { EPostType } from "@/types/common/post-type"
 import { EQueryKeyString } from "@/types/common/query-key-string"
-import { EReferralType } from "@/types/common/referral-type"
 import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
 
 const searchPost = ({
@@ -124,21 +124,22 @@ const useSearchPost = (props: ISearchPostProps) => {
     .get("types")
     ?.split(",")
     .map((type) => {
-      if (Object.values(EReferralType).includes(type as EReferralType)) {
-        return type as EReferralType
+      if (Object.values(EPostType).includes(type as EPostType)) {
+        return type as EPostType
       } else {
         // Handle invalid type value
         return undefined // or any other default value/error handling
       }
     })
-    .filter((type) => type !== undefined) as EReferralType[]
+    .filter((type) => type !== undefined) as EPostType[]
 
   const defaultPostTypes = [
-    EReferralType.HIRING,
-    EReferralType.REFEREE,
-    EReferralType.REFERRER,
+    EPostType.HIRING,
+    EPostType.REFEREE,
+    EPostType.REFERRER,
+    EPostType.COLLABORATION,
   ]
-  const [postTypes, setPostTypes] = useState<EReferralType[]>(
+  const [postTypes, setPostTypes] = useState<EPostType[]>(
     initialPostTypes || defaultPostTypes
   )
 
@@ -174,7 +175,7 @@ const useSearchPost = (props: ISearchPostProps) => {
     createQueryString("jobTitle", e.target.value)
   }
 
-  const handlePostTypesChange = (type: EReferralType) => {
+  const handlePostTypesChange = (type: EPostType) => {
     if (
       isExistsInListHelper(postTypes, type) === true &&
       postTypes.length > 1

@@ -5,7 +5,7 @@ import {
   searchPostApi,
 } from "@/utils/common/api"
 
-import { EReferralType } from "@/types/common/referral-type"
+import { EPostType } from "@/types/common/post-type"
 
 // cache for 1 hours
 export const revalidate = 60 * 60
@@ -21,9 +21,10 @@ export default async function IndexPage() {
     maxYearOfExperience: 100,
     minYearOfExperience: 0,
     types: [
-      EReferralType.REFERRER,
-      EReferralType.REFEREE,
-      EReferralType.HIRING,
+      EPostType.REFERRER,
+      EPostType.REFEREE,
+      EPostType.HIRING,
+      EPostType.COLLABORATION,
     ],
   })
 

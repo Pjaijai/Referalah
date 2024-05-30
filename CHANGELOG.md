@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.20.4](https://github.com/Pjaijai/Referalah/compare/v1.20.3...v1.20.4) (2024-05-30)
+
+
+### Bug Fixes
+
+* fix messsage post user banned problem ([d1b2350](https://github.com/Pjaijai/Referalah/commit/d1b23505143084e1a7de81cbee0b0f5d77634872))
+
 ### [1.20.3](https://github.com/Pjaijai/Referalah/compare/v1.20.2...v1.20.3) (2024-05-17)
 
 

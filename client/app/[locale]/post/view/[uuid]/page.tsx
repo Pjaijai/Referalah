@@ -3,7 +3,7 @@ import ReferralPostDetailsPageTemplate from "@/modules/post/view/template"
 import { getPostByUuid } from "@/utils/common/api"
 import { getI18n } from "@/utils/services/internationalization/server"
 
-import { EReferralType } from "@/types/common/referral-type"
+import { EPostType } from "@/types/common/post-type"
 import CommonPageLayout from "@/components/layouts/common"
 
 export async function generateMetadata({
@@ -22,14 +22,16 @@ export async function generateMetadata({
   // Define type title based on post type
   let typeTitle: string = ""
   switch (postType) {
-    case EReferralType.HIRING:
+    case EPostType.HIRING:
       typeTitle = t("post.type.hiring.title")
       break
-    case EReferralType.REFEREE:
+    case EPostType.REFEREE:
       typeTitle = t("post.type.referee.title")
       break
-    case EReferralType.REFERRER:
+    case EPostType.REFERRER:
       typeTitle = t("post.type.referer.title")
+    case EPostType.REFERRER:
+      typeTitle = t("post.type.collaboration.title")
       break
     default:
       break

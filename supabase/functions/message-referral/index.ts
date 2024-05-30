@@ -53,9 +53,16 @@ serve(async (req: any) => {
 
     const { data: sender, error } = await server
       .from("user")
-      .select("uuid,username")
+      .select("uuid,username, status")
       .eq("uuid", user.id)
       .single()
+
+    if (sender.status !== "active") {
+      return new Response("Not allowed to contact", {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 500,
+      })
+    }
 
     const { data: receiver } = await server
       .from("user")

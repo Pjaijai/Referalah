@@ -54,7 +54,7 @@ serve(async (req: any) => {
 
     const { data: sender, error } = await server
       .from("user")
-      .select("uuid,username, email")
+      .select("uuid,username, email, status")
       .eq("uuid", user.id)
       .single()
 
@@ -84,6 +84,14 @@ serve(async (req: any) => {
         status: 404,
       })
     }
+
+    if (sender.status !== "active") {
+      return new Response("Not allowed to contact", {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 500,
+      })
+    }
+
     if (!post) {
       return new Response("Post does not exits", {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
