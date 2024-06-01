@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.20.5](https://github.com/Pjaijai/Referalah/compare/v1.20.4...v1.20.5) (2024-06-01)
+
+
+### Bug Fixes
+
+* fix view post title tag ([d3e7d4f](https://github.com/Pjaijai/Referalah/commit/d3e7d4fa36ab0793550fd3d5cf86e42a4e039714))
+* hot fix post update count ([6bc994b](https://github.com/Pjaijai/Referalah/commit/6bc994bb7dc1fc3d20dff685fecea48231386d7d))
+
 ### [1.20.4](https://github.com/Pjaijai/Referalah/compare/v1.20.3...v1.20.4) (2024-05-30)
 
 
