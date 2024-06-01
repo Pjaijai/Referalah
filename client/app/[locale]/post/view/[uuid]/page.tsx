@@ -30,7 +30,8 @@ export async function generateMetadata({
       break
     case EPostType.REFERRER:
       typeTitle = t("post.type.referer.title")
-    case EPostType.REFERRER:
+      break
+    case EPostType.COLLABORATION:
       typeTitle = t("post.type.collaboration.title")
       break
     default:
