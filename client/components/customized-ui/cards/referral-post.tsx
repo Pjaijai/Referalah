@@ -15,7 +15,6 @@ import BaseAvatar from "@/components/customized-ui/avatars/base"
 import ContactRequestCount from "@/components/customized-ui/icons/contact-request-count"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
-import { Icons } from "@/components/icons"
 
 interface IReferralPostCardProps {
   uuid: string | null
@@ -110,8 +109,8 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
                 country={country}
                 industry={industry}
                 yearOfExperience={yearOfExperience}
+                requestCount={requestCount}
               />
-              {requestCount > 0 && <ContactRequestCount count={requestCount} />}
             </div>
             <Separator />
           </CardHeader>

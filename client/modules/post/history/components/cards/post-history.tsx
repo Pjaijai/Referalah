@@ -13,7 +13,6 @@ import useViewport from "@/hooks/common/useViewport"
 import { Card, CardDescription, CardHeader } from "@/components/ui/card"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
-import { Icons } from "@/components/icons"
 
 interface IReferralPostCardProps {
   uuid: string | null
@@ -29,6 +28,7 @@ interface IReferralPostCardProps {
   createdAt: string | null
   status: TPostStatusType
   type: EPostType
+  requestCount: number
 }
 
 const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
@@ -44,16 +44,8 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
   createdAt,
   status,
   type,
+  requestCount,
 }) => {
-  const t = useI18n()
-  const { isMobile } = useViewport()
-  const router = useRouter()
-
-  const handleEditOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    router.push(`${siteConfig.page.editPost.href}/${uuid}`)
-  }
-
   const postTypeTitle = usePostTypeTitle(type)
 
   // NOTE: please use onClick with e.preventDefault() for any links inside this component to prevent validateDOMNesting warning
@@ -92,6 +84,7 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
                 country={country}
                 industry={industry}
                 yearOfExperience={yearOfExperience}
+                requestCount={requestCount}
               />
               <CardDescription className="flex-end mt-5 flex items-end justify-end sm:mt-0">
                 <CreatedAtDisplay applyTo="card" createdAt={createdAt} />

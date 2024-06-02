@@ -46,6 +46,7 @@ const PostHistoryTemplate: React.FunctionComponent<
               createdAt={data.created_at}
               uuid={data.uuid}
               url={data.url}
+              requestCount={data.contact_request_count}
               province={
                 locale === "zh-hk"
                   ? data.province && data.province.cantonese_name
