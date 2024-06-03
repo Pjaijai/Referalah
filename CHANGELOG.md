@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.20.6](https://github.com/Pjaijai/Referalah/compare/v1.20.5...v1.20.6) (2024-06-03)
+
+
+### Bug Fixes
+
+* force need help post to have link ([be7fa9f](https://github.com/Pjaijai/Referalah/commit/be7fa9fa10cb4435d9d1807b7592c646176edac3))
+* not posting need help link in main page ([fd35751](https://github.com/Pjaijai/Referalah/commit/fd35751e59e60bdedc2cd79116aa0ac04c484c48))
+
 ### [1.20.5](https://github.com/Pjaijai/Referalah/compare/v1.20.4...v1.20.5) (2024-06-01)
 
 
