@@ -1,6 +1,7 @@
 import { CardDescription } from "@/components/ui/card"
 import IndustryDisplay from "@/components/customized-ui/info-display/industry"
 import LocationDisplay from "@/components/customized-ui/info-display/location"
+import RequestCountDisplay from "@/components/customized-ui/info-display/requestion-count"
 import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
 
 interface PostCardInfoDisplayProps {
@@ -9,6 +10,7 @@ interface PostCardInfoDisplayProps {
   country: string | null
   industry?: string | null
   yearOfExperience?: number | null
+  requestCount: number
 }
 
 const PostCardInfoDisplay = ({
@@ -17,6 +19,7 @@ const PostCardInfoDisplay = ({
   country,
   industry,
   yearOfExperience,
+  requestCount,
 }: PostCardInfoDisplayProps) => {
   return (
     <CardDescription className="text-overflow-ellipsis flex basis-full flex-wrap items-center justify-start gap-4 sm:basis-3/4">
@@ -37,6 +40,12 @@ const PostCardInfoDisplay = ({
       {typeof yearOfExperience === "number" && (
         <YearsOfExperienceDisplay
           yearOfExperience={yearOfExperience}
+          className="xs:max-w-full max-w-xs"
+        />
+      )}
+      {typeof requestCount === "number" && requestCount > 0 && (
+        <RequestCountDisplay
+          count={requestCount}
           className="xs:max-w-full max-w-xs"
         />
       )}

@@ -15,13 +15,13 @@ const ContactRequestCount: React.FunctionComponent<
   return (
     <div
       className={cn(
-        "flex shrink-0 flex-row items-center justify-center gap-2 ",
+        "gap flex shrink-0 flex-row items-center justify-center ",
         className
       )}
     >
-      <Icons.coffee size={20} />
+      <Icons.coffee size={18} />
 
-      <p>{t("general.chat", { count: count })}</p>
+      <p className="ml-1">{t("general.chat", { count: count })}</p>
     </div>
   )
 }

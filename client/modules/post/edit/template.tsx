@@ -69,90 +69,105 @@ const EditPostPageTemplate: React.FunctionComponent<
   }, [isLoading, post, router, userUuid])
 
   const t = useI18n()
-  const editPostValidationSchema = z.object({
-    url: z
-      .string()
-      .max(20000, {
-        message: t("validation.text.maximum_length", { count: 20000 }),
-      })
-      .url({
-        message: t("validation.link.not_valid"),
-      })
-      .optional()
-      .or(z.literal("")),
-    type: z.enum(
-      [
-        EPostType.REFEREE,
-        EPostType.REFERRER,
-        EPostType.HIRING,
-        EPostType.COLLABORATION,
-      ],
-      {
-        required_error: t("validation.field_required"),
-      }
-    ),
-    description: z
-      .string()
-      .max(3000, {
-        message: t("validation.text.maximum_length", { count: 3000 }),
-      })
-      .min(10, {
-        message: t("validation.text.minimum_length", { count: 10 }),
-      }),
-
-    countryUuid: z.string().min(1, {
-      message: t("validation.field_required"),
-    }),
-    provinceUuid: z.string().min(1, {
-      message: t("validation.field_required"),
-    }),
-    cityUuid: z.string().min(1, {
-      message: t("validation.field_required"),
-    }),
-    industryUuid: z.string().min(1, {
-      message: t("validation.field_required"),
-    }),
-    yearOfExperience: z
-      .string()
-      .min(1, {
-        message: t("validation.field_required"),
-      })
-      .refine(
-        (value) => {
-          if (value) {
-            const number = parseFloat(value)
-            if (!isNaN(number) && number >= 0 && number <= 100) {
-              return true
-            } else {
-              return false
-            }
-          }
-
-          return true
-          // Check if it's a valid number and falls within the range 1 to 100
-        },
+  const editPostValidationSchema = z
+    .object({
+      url: z
+        .string()
+        .max(20000, {
+          message: t("validation.text.maximum_length", { count: 20000 }),
+        })
+        .url({
+          message: t("validation.link.not_valid"),
+        })
+        .optional()
+        .or(z.literal("")),
+      type: z.enum(
+        [
+          EPostType.REFEREE,
+          EPostType.REFERRER,
+          EPostType.HIRING,
+          EPostType.COLLABORATION,
+        ],
         {
-          message: t("validation.year_of_experience.exceed_range"), // Specify the custom error message here
+          required_error: t("validation.field_required"),
         }
       ),
-    companyName: z
-      .string()
-      .min(1, {
+      description: z
+        .string()
+        .max(3000, {
+          message: t("validation.text.maximum_length", { count: 3000 }),
+        })
+        .min(10, {
+          message: t("validation.text.minimum_length", { count: 10 }),
+        }),
+
+      countryUuid: z.string().min(1, {
         message: t("validation.field_required"),
-      })
-      .max(30, {
-        message: t("validation.text.maximum_length", { count: 30 }),
       }),
-    jobTitle: z
-      .string()
-      .min(1, {
+      provinceUuid: z.string().min(1, {
         message: t("validation.field_required"),
-      })
-      .max(30, {
-        message: t("validation.text.maximum_length", { count: 30 }),
       }),
-    status: z.enum(["active", "inactive"]),
-  })
+      cityUuid: z.string().min(1, {
+        message: t("validation.field_required"),
+      }),
+      industryUuid: z.string().min(1, {
+        message: t("validation.field_required"),
+      }),
+      yearOfExperience: z
+        .string()
+        .min(1, {
+          message: t("validation.field_required"),
+        })
+        .refine(
+          (value) => {
+            if (value) {
+              const number = parseFloat(value)
+              if (!isNaN(number) && number >= 0 && number <= 100) {
+                return true
+              } else {
+                return false
+              }
+            }
+
+            return true
+            // Check if it's a valid number and falls within the range 1 to 100
+          },
+          {
+            message: t("validation.year_of_experience.exceed_range"), // Specify the custom error message here
+          }
+        ),
+      companyName: z
+        .string()
+        .min(1, {
+          message: t("validation.field_required"),
+        })
+        .max(30, {
+          message: t("validation.text.maximum_length", { count: 30 }),
+        }),
+      jobTitle: z
+        .string()
+        .min(1, {
+          message: t("validation.field_required"),
+        })
+        .max(30, {
+          message: t("validation.text.maximum_length", { count: 30 }),
+        }),
+      status: z.enum(["active", "inactive"]),
+    })
+    .refine(
+      (data) => {
+        // Ensure URL is required when type is REFERRER
+        if (data.type === EPostType.REFEREE) {
+          return data.url && data.url !== ""
+        }
+
+        return true
+      },
+      {
+        message: t("validation.url.referee.required"),
+        path: ["url"],
+      }
+    )
 
   const form = useForm<IForm>({
     resolver: zodResolver(editPostValidationSchema),

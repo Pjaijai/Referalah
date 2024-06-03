@@ -20,12 +20,7 @@ export default async function IndexPage() {
     jobTitle: "",
     maxYearOfExperience: 100,
     minYearOfExperience: 0,
-    types: [
-      EPostType.REFERRER,
-      EPostType.REFEREE,
-      EPostType.HIRING,
-      EPostType.COLLABORATION,
-    ],
+    types: [EPostType.REFERRER, EPostType.HIRING, EPostType.COLLABORATION],
   })
 
   const list = await listLatestContactRequest()

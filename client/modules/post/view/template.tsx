@@ -29,6 +29,7 @@ import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
 import IndustryDisplay from "@/components/customized-ui/info-display/industry"
 import LocationDisplay from "@/components/customized-ui/info-display/location"
+import RequestCountDisplay from "@/components/customized-ui/info-display/requestion-count"
 import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
 import { Icons } from "@/components/icons"
 import PageStatusLayout from "@/components/layouts/page-status"
@@ -63,13 +64,6 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
         </Link>
 
         <div className="flex flex-row items-end justify-center gap-4">
-          {post &&
-          post.contact_request_count &&
-          typeof post.contact_request_count === "number" &&
-          post.contact_request_count > 0 ? (
-            <ContactRequestCount count={post && post.contact_request_count} />
-          ) : null}
-
           <div className="flex md:hidden">
             <LinkShareDrawer />
           </div>
@@ -168,9 +162,17 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                 {post.year_of_experience !== null && (
                   <YearsOfExperienceDisplay
                     yearOfExperience={post.year_of_experience}
-                    className="xs:max-w-full  max-w-xs"
+                    className="xs:max-w-full mb-2  max-w-xs"
                   />
                 )}
+
+                {typeof post.contact_request_count === "number" &&
+                  post.contact_request_count > 0 && (
+                    <RequestCountDisplay
+                      count={post.contact_request_count}
+                      className="xs:max-w-full mb-2   max-w-xs"
+                    />
+                  )}
               </div>
             </div>
             {/* separator that is only shown on mobile */}
