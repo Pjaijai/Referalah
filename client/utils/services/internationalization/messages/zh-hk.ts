@@ -82,7 +82,8 @@ export default {
   "validation.text.minimum_length#zero": "最少{count}粒字",
   "validation.text.minimum_length#one": "最少{count}粒字",
   "validation.text.minimum_length#other": "最少{count}粒字",
-
+  "validation.url.referee.required":
+    "如果你需要幫手，請寫翻嗰個招聘廣告條link，謝謝！",
   "validation.text.maximum_length#zero": "最多{count}粒字",
   "validation.text.maximum_length#one": "最多{count}粒字",
   "validation.text.maximum_length#other": "最多{count}粒字",

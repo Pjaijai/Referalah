@@ -94,7 +94,8 @@ export default {
   "validation.text.minimum_length#zero": "At least {count} characters",
   "validation.text.minimum_length#one": "At least {count} character",
   "validation.text.minimum_length#other": "At least {count} characters",
-
+  "validation.url.referee.required":
+    "If you need help, please provide the job advertisement link. Thank you.",
   "validation.text.maximum_length#zero": "At most {count} characters",
   "validation.text.maximum_length#one": "At most {count} character",
   "validation.text.maximum_length#other": "At most {count} characters",
