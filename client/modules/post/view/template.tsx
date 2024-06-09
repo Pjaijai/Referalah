@@ -2,6 +2,7 @@
 
 import React from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import LinkShareDrawer from "@/modules/post/components/drawers/link-share"
 import PostHeader from "@/modules/post/components/info-display/header"
 import PostStatusDisplay from "@/modules/post/components/info-display/status"
@@ -16,15 +17,15 @@ import { EPostStatus } from "@/types/common/post-status"
 import { EReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
 import { PostNotFoundError } from "@/lib/exceptions"
+import { cn } from "@/lib/utils"
 import useGetPost from "@/hooks/api/post/get-post"
 import useUserStore from "@/hooks/state/user/store"
 import { Badge } from "@/components/ui/badge"
-import { buttonVariants } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import ContactButton from "@/components/customized-ui/buttons/contact"
 import ProfileCard from "@/components/customized-ui/cards/profile"
 import BaseClipboard from "@/components/customized-ui/clipboards/base"
-import ContactRequestCount from "@/components/customized-ui/icons/contact-request-count"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
 import IndustryDisplay from "@/components/customized-ui/info-display/industry"
@@ -41,6 +42,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   ReferralPostDetailsPageProps
 > = ({ postUuid }) => {
   const t = useI18n()
+  const router = useRouter()
   const { data: post, isLoading, isSuccess } = useGetPost(postUuid)
   const userUuid = useUserStore((state) => state.uuid)
   const isViewingOwnProfile = post?.created_by === userUuid
@@ -49,6 +51,9 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
 
   const postTyeTitle = usePostTypeTitle(post?.type)
 
+  const handleBackToPostClick = () => {
+    router.back()
+  }
   return (
     <PageStatusLayout
       error={new PostNotFoundError()}
@@ -56,12 +61,18 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
       isSuccess={isSuccess}
     >
       <div className="flex flex-row items-center justify-between">
-        <Link href={siteConfig.page.searchPost.href}>
+        <Button
+          onClick={handleBackToPostClick}
+          className={cn(
+            buttonVariants({ variant: "secondary" }),
+            "bg-transparent"
+          )}
+        >
           <p className="gap my-4 flex flex-row items-center text-sm text-muted-foreground">
             <Icons.smallArrowLeft className="text-sm" />{" "}
             <span>{t("post.back_to_post_page")}</span>
           </p>
-        </Link>
+        </Button>
 
         <div className="flex flex-row items-end justify-center gap-4">
           <div className="flex md:hidden">
