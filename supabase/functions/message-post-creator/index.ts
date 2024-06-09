@@ -226,7 +226,7 @@ serve(async (req: any) => {
 <p style="margin: 8px 0; font-size: 16px; color: #333;">Company: ${post.company_name}</p>
 <p style="margin: 8px 0; font-size: 16px; color: #333;">${sender.username}'s profile: <a href="${WEB_BASE_URL}/en-ca/profile/${sender.uuid}" style="color: #007bff; text-decoration: none; font-weight: bold;">${WEB_BASE_URL}/profile/en-ca/${sender.uuid}</a></p>
 <p style="margin: 8px 0; font-size: 16px; color: #333;">Please click the link below to continue the conversation:</p>
-<a href="${WEB_BASE_URL}en-ca/chat?conversation=${conversationUuid}" style="color: #007bff; text-decoration: none; font-weight: bold;">${WEB_BASE_URL}/en-ca/chat?conversation=${conversationUuid}</a>
+<a href="${WEB_BASE_URL}/en-ca/chat?conversation=${conversationUuid}" style="color: #007bff; text-decoration: none; font-weight: bold;">${WEB_BASE_URL}/en-ca/chat?conversation=${conversationUuid}</a>
 
 <div style="display: flex; justify-content: center; margin-top: 20px;">
     <div style="background-color: #eee; padding: 16px; border-radius: 8px; max-width: 600px; width: 100%; word-wrap: break-word; white-space: pre-wrap;">
