@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.20.7](https://github.com/Pjaijai/Referalah/compare/v1.20.6...v1.20.7) (2024-06-09)
+
+
+### Bug Fixes
+
+* fix back post reset problem ([b71609a](https://github.com/Pjaijai/Referalah/commit/b71609adb7f69b3d4992a7610bb19f23c468291f))
+* fix conversation bug ([3a41cb4](https://github.com/Pjaijai/Referalah/commit/3a41cb418470867dd0e3570025cfb3fbcf12311e))
+
 ### [1.20.6](https://github.com/Pjaijai/Referalah/compare/v1.20.5...v1.20.6) (2024-06-03)
 
 
