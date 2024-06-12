@@ -29,7 +29,7 @@ const MainPageTemplate = ({
   const scopedT = useScopedI18n("index")
 
   return (
-    <div className="relative mt-2 flex h-screen w-full flex-row items-center justify-center md:h-auto">
+    <div className="relative mt-2 flex w-full flex-row items-center justify-center md:h-auto">
       <div className="relative z-30 mx-auto h-fit w-full max-w-7xl overflow-hidden  p-4 ">
         <motion.div
           initial={{
