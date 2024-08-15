@@ -6,6 +6,7 @@ import {
 } from "@/utils/common/api"
 
 import { EPostType } from "@/types/common/post-type"
+import CommonPageLayout from "@/components/layouts/common"
 
 // cache for 1 hours
 export const revalidate = 60 * 60
@@ -25,5 +26,9 @@ export default async function IndexPage() {
 
   const list = await listLatestContactRequest()
 
-  return <MainPageTemplate count={count} posts={posts} contactList={list} />
+  return (
+    <CommonPageLayout>
+      <MainPageTemplate count={count} posts={posts} contactList={list} />
+    </CommonPageLayout>
+  )
 }
