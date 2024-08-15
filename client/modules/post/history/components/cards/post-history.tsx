@@ -43,7 +43,7 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
   type,
   requestCount,
 }) => {
-  const postTypeTitle = usePostTypeTitle(type)
+  const { title: postTypeTitle } = usePostTypeTitle(type)
 
   // NOTE: please use onClick with e.preventDefault() for any links inside this component to prevent validateDOMNesting warning
 

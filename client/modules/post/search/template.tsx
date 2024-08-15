@@ -162,7 +162,7 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
               : true
           }
         >
-          <div className="mt-8 grid w-full grid-cols-1 gap-4 overflow-hidden lg:grid-cols-2">
+          <div className="mx-auto mt-8 grid w-full max-w-sm grid-cols-1 gap-4 md:max-w-none md:grid-cols-2 lg:grid-cols-3">
             {list.map((data) => {
               return (
                 <ReferralPostCard

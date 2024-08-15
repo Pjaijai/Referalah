@@ -5,27 +5,41 @@ import { EPostType } from "@/types/common/post-type"
 
 const usePostTypeTitle = (type?: EPostType) => {
   const t = useI18n()
+
   return useMemo(() => {
-    let typeTitle: string | null = null
-    switch (type) {
-      case EPostType.HIRING:
-        typeTitle = t("post.type.hiring.title")
-        break
-      case EPostType.REFEREE:
-        typeTitle = t("post.type.referee.title")
-        break
-      case EPostType.REFERRER:
-        typeTitle = t("post.type.referer.title")
-        break
-      case EPostType.COLLABORATION:
-        typeTitle = t("post.type.collaboration.title")
-        break
-      default:
-        break
+    if (!type || !Object.values(EPostType).includes(type)) {
+      return {
+        title: "???unknown???",
+        textColor: "text-gray-600",
+        bgColor: "bg-gray-100",
+      }
     }
 
-    return typeTitle
-  }, [type])
+    const postTypeConfig = {
+      [EPostType.HIRING]: {
+        title: t("post.type.hiring.title"),
+        textColor: "text-teal-600",
+        bgColor: "bg-teal-100",
+      },
+      [EPostType.REFEREE]: {
+        title: t("post.type.referee.title"),
+        textColor: "text-yellow-600",
+        bgColor: "bg-yellow-100",
+      },
+      [EPostType.REFERRER]: {
+        title: t("post.type.referer.title"),
+        textColor: "text-indigo-600",
+        bgColor: "bg-indigo-100",
+      },
+      [EPostType.COLLABORATION]: {
+        title: t("post.type.collaboration.title"),
+        textColor: "text-blue-600",
+        bgColor: "bg-blue-100",
+      },
+    }
+
+    return postTypeConfig[type]
+  }, [type, t])
 }
 
 export default usePostTypeTitle
