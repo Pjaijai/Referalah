@@ -259,7 +259,7 @@ export default {
   "pwa.how_to_install.title": "How to install？",
   "post.type.referer.title": "Job Referral",
   "post.type.hiring.title": "Hiring",
-  "post.type.referee.title": "Need Help",
+  "post.type.referee.title": "iWanted",
   "post.type.collaboration.title": "Collaboration",
 
   "post.type.referer.description": "To refer talents to your company",
