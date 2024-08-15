@@ -15,7 +15,7 @@ const IndustryDisplay: React.FunctionComponent<
       <div>
         <Icons.industry width="18" height="18" />
       </div>
-      <span className="ml-1">{industry}</span>
+      <span className="ml-3">{industry}</span>
     </div>
   )
 }
