@@ -141,16 +141,16 @@ const EditPostPageTemplate: React.FunctionComponent<
         .min(1, {
           message: t("validation.field_required"),
         })
-        .max(30, {
-          message: t("validation.text.maximum_length", { count: 30 }),
+        .max(100, {
+          message: t("validation.text.maximum_length", { count: 100 }),
         }),
       jobTitle: z
         .string()
         .min(1, {
           message: t("validation.field_required"),
         })
-        .max(30, {
-          message: t("validation.text.maximum_length", { count: 30 }),
+        .max(100, {
+          message: t("validation.text.maximum_length", { count: 100 }),
         }),
       status: z.enum(["active", "inactive"]),
     })
