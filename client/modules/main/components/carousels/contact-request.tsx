@@ -1,75 +1,62 @@
 import React from "react"
-import Link from "next/link"
 import { useScopedI18n } from "@/utils/services/internationalization/client"
-import Autoplay from "embla-carousel-autoplay"
 
-import { TContactRequestListResponse } from "@/types/api/response/contact-request/contact-request-list"
-import { siteConfig } from "@/config/site"
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel"
+  IMemberContact,
+  IPostContact,
+  TContactRequestListResponse,
+} from "@/types/api/response/contact-request/contact-request-list"
+import useCreatedAt from "@/hooks/common/created-at"
+import Marquee from "@/components/magicui/marquee"
 
+const PostRow = (props: IPostContact) => {
+  const { data: formattedCreatedAt } = useCreatedAt({
+    createdAt: props.createdAt,
+  })
+  const scopedT = useScopedI18n("index")
+  return (
+    <div className="flex flex-row gap-1">
+      <p>{formattedCreatedAt}</p>
+      <p>@{props.senderUserName}</p>
+      <p className="shrink-0">{scopedT("requested")}</p>
+      <p className="truncate font-medium text-indigo-600">
+        {props.postJobTitle}
+      </p>
+    </div>
+  )
+}
+
+const MemberRow = (props: IMemberContact) => {
+  const { data: formattedCreatedAt } = useCreatedAt({
+    createdAt: props.createdAt,
+  })
+  const scopedT = useScopedI18n("index")
+  return (
+    <div className="flex flex-row gap-1 ">
+      <p>{formattedCreatedAt}</p>
+      <p>@{props.senderUserName} </p>
+      <p>{scopedT("contacted")}</p>
+      <p className="font-medium text-indigo-600">@{props.receiverUserName}</p>
+    </div>
+  )
+}
 interface IContactRequestCarouselProps {
   list: TContactRequestListResponse[]
 }
 const ContactRequestCarousel: React.FunctionComponent<
   IContactRequestCarouselProps
 > = ({ list }) => {
-  const scopedT = useScopedI18n("index")
-
   return (
-    <Carousel
-      plugins={[
-        Autoplay({
-          delay: 2000,
-        }),
-      ]}
-    >
-      <CarouselContent>
+    <div className="relative flex h-32  w-full flex-row items-center justify-center overflow-hidden  ">
+      <Marquee vertical className="text-xs [--duration:10s]">
         {list.map((data) => {
-          if (data.type === "post")
-            return (
-              <CarouselItem className="basis-1/2 md:basis-1/4">
-                <div className="flex shrink-0 flex-col justify-center    ">
-                  <p className="shrink-0">@{data.senderUserName}</p>
-                  <p className="shrink-0">{scopedT("requested")}</p>
-                  <Link
-                    href={`${siteConfig.page.viewPost.href}/${data.postUuid}`}
-                  >
-                    <p
-                      className="shrink-0  text-green-700
- dark:text-yellow-300"
-                    >
-                      {data.postJobTitle}
-                    </p>
-                  </Link>
-                </div>
-              </CarouselItem>
-            )
-          if (data.type === "member")
-            return (
-              <CarouselItem className="basis-1/2 md:basis-1/4">
-                <div className="flex w-fit  shrink-0 flex-col justify-center  ">
-                  <p>@{data.senderUserName} </p>
-                  <p>{scopedT("contacted")}</p>
-                  <Link
-                    href={`${siteConfig.page.profile.href}/${data.receiverUuid}`}
-                  >
-                    <p
-                      className=" text-green-700
- dark:text-yellow-300"
-                    >
-                      @{data.receiverUserName}
-                    </p>
-                  </Link>
-                </div>
-              </CarouselItem>
-            )
+          if (data.type === "post") return <PostRow {...data} />
+          if (data.type === "member") return <MemberRow {...data} />
         })}
-      </CarouselContent>
-    </Carousel>
+      </Marquee>
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-white dark:from-background"></div>
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-white dark:from-background"></div>
+    </div>
   )
 }
 
