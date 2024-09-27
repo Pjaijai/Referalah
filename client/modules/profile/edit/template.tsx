@@ -379,12 +379,12 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   }
 
   return (
-    <div className="relative flex h-full w-full flex-col rounded-lg border border-muted p-6 ">
+    <div className="relative flex h-full w-full flex-col rounded-lg border border-muted bg-white p-6 shadow-lg">
       <button
         onClick={() => {
           router.back()
         }}
-        className="absolute right-4 flex w-fit items-center justify-center rounded-full border bg-slate-50 p-3 dark:bg-black"
+        className="absolute right-4 flex w-fit items-center justify-center rounded-full border  p-3 dark:bg-black"
       >
         <Icons.undo size={15} />
       </button>
@@ -421,7 +421,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           />
 
           <div className="mt-4   flex w-full flex-col items-center justify-center gap-4 sm:flex-row">
-            <div className="w-full">
+            <div className="w-full bg-white">
               <FormCheckBox
                 control={form.control}
                 label={t("general.referrer")}
@@ -430,7 +430,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
               />
             </div>
 
-            <div className="w-full">
+            <div className="w-full bg-white">
               <FormCheckBox
                 control={form.control}
                 label={t("general.talent")}

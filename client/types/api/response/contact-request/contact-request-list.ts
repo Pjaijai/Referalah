@@ -1,6 +1,6 @@
 export type TContactRequestListResponse = IPostContact | IMemberContact
 
-interface IPostContact {
+export interface IPostContact {
   type: "post"
   createdAt: string
   postUuid: string
@@ -8,7 +8,7 @@ interface IPostContact {
   postJobTitle: string
 }
 
-interface IMemberContact {
+export interface IMemberContact {
   type: "member"
   createdAt: string
   receiverUserName: string

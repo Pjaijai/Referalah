@@ -241,7 +241,7 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
                   placeholder={t("chat.form.message_placeholder")}
                 />
 
-                <div className="absolute right-2 top-1/2  -translate-y-1/2 hover:bg-transparent">
+                <div className="absolute bottom-5 right-2  -translate-y-1/2 hover:bg-transparent">
                   <div className="flex flex-row items-center space-x-1">
                     {(isLoading || isUploading) && (
                       <Icons.loader className="animate-spin" />

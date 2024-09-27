@@ -1,15 +1,12 @@
 import React from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import PostCardInfoDisplay from "@/modules/post/components/info-display/card-info"
 import PostHeader from "@/modules/post/components/info-display/header"
 import usePostTypeTitle from "@/modules/post/hooks/post-type-title"
-import { useI18n } from "@/utils/services/internationalization/client"
 
 import { TPostStatusType } from "@/types/common/post-status"
 import { EPostType } from "@/types/common/post-type"
 import { siteConfig } from "@/config/site"
-import useViewport from "@/hooks/common/useViewport"
 import { Card, CardDescription, CardHeader } from "@/components/ui/card"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
@@ -46,7 +43,7 @@ const PostHistoryCard: React.FunctionComponent<IReferralPostCardProps> = ({
   type,
   requestCount,
 }) => {
-  const postTypeTitle = usePostTypeTitle(type)
+  const { title: postTypeTitle } = usePostTypeTitle(type)
 
   // NOTE: please use onClick with e.preventDefault() for any links inside this component to prevent validateDOMNesting warning
 

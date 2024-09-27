@@ -1,15 +1,15 @@
 import React from "react"
-import { isExistsInListHelper } from "@/utils/common/helpers/check/is-exists-list"
 import { useI18n } from "@/utils/services/internationalization/client"
 
 import { EUserType } from "@/types/common/user-type"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import SearchBar, {
   ISearchSearchBarProps,
 } from "@/components/customized-ui/bars/search"
 
 export interface IUserTypeSectionProps {
-  currentUserTypes: EUserType[]
+  currentUserTypes: EUserType
   onUserTypesChange: (v: EUserType) => void
 }
 
@@ -21,22 +21,33 @@ const UserTypeSection: React.FunctionComponent<IUserTypeSectionProps> = ({
   return (
     <div className="flex flex-row gap-2">
       <Button
-        variant={
-          isExistsInListHelper(currentUserTypes, EUserType.REFERRER)
-            ? "default"
-            : "secondary"
-        }
+        variant={"base"}
+        className={cn(
+          "text-xl",
+          currentUserTypes === EUserType.ALL && "text-indigo-600"
+        )}
+        onClick={() => onUserTypesChange(EUserType.ALL)}
+      >
+        {t("general.all")}
+      </Button>
+
+      <Button
+        variant={"base"}
+        className={cn(
+          "text-xl",
+          currentUserTypes === EUserType.REFERRER && "text-indigo-600"
+        )}
         onClick={() => onUserTypesChange(EUserType.REFERRER)}
       >
         {t("user.type.referrer")}
       </Button>
 
       <Button
-        variant={
-          isExistsInListHelper(currentUserTypes, EUserType.REFEREE)
-            ? "default"
-            : "secondary"
-        }
+        variant={"base"}
+        className={cn(
+          "text-xl",
+          currentUserTypes === EUserType.REFEREE && "text-indigo-600"
+        )}
         onClick={() => onUserTypesChange(EUserType.REFEREE)}
       >
         {t("user.type.referee")}

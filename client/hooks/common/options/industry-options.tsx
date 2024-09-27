@@ -3,6 +3,7 @@ import { useMemo } from "react"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { ISelectOption } from "@/components/customized-ui/selects/base"
 
+// TODO remove it and replace ISelectOption using label
 const useIndustryOptions = (
   industryList: IIndustryResponse[],
   showAllOption?: boolean

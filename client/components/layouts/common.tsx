@@ -8,7 +8,7 @@ const CommonPageLayout: React.FunctionComponent<
 > = ({ title, children }) => {
   return (
     <div className="container mt-4 h-full w-full">
-      {title && <h1 className="text-center text-2xl font-bold">{title}</h1>}
+      {title && <h1 className="mb-2 text-left text-3xl font-bold">{title}</h1>}
 
       <>{children}</>
     </div>

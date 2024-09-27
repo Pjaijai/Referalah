@@ -11,6 +11,9 @@ interface ITextInputProps {
   id?: string
   value?: string
   disabled?: boolean
+  className?: string
+  inputClassName?: string
+  frontIcon?: React.ReactNode
 }
 
 const TextInput: React.FunctionComponent<ITextInputProps> = ({
@@ -20,23 +23,29 @@ const TextInput: React.FunctionComponent<ITextInputProps> = ({
   onChange,
   value,
   disabled,
+  className,
+  inputClassName,
+  frontIcon,
 }) => {
   return (
-    <div className="w-ful flex flex-col gap-2">
+    <div className={cn("flex w-full flex-col gap-2", className)}>
       {label && (
         <Label htmlFor={id} className={cn(disabled && "text-muted-foreground")}>
           {label}
         </Label>
       )}
-
-      <Input
-        type="text"
-        id={id}
-        value={value}
-        placeholder={placeholder}
-        onChange={onChange}
-        disabled={disabled}
-      />
+      <div className="relative flex items-center">
+        {frontIcon && <span className="absolute left-3">{frontIcon}</span>}
+        <Input
+          type="text"
+          id={id}
+          value={value}
+          placeholder={placeholder}
+          onChange={onChange}
+          disabled={disabled}
+          className={cn(frontIcon && "pl-10", inputClassName)}
+        />
+      </div>
     </div>
   )
 }

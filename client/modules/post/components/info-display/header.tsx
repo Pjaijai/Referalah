@@ -16,6 +16,7 @@ interface IPostHeaderProps {
   status?: TPostStatusType
   typeTitle?: string | null
 }
+// TODO : remove it
 const PostHeader: React.FunctionComponent<
   PropsWithChildren<IPostHeaderProps>
 > = ({ title, subtitle, url, className, status, typeTitle }) => {

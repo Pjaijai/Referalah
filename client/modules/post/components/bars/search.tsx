@@ -1,63 +1,74 @@
 import React from "react"
-import { isExistsInListHelper } from "@/utils/common/helpers/check/is-exists-list"
 import { useI18n } from "@/utils/services/internationalization/client"
 
 import { EPostType } from "@/types/common/post-type"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import SearchBar, {
   ISearchSearchBarProps,
 } from "@/components/customized-ui/bars/search"
 
 export interface IPostTypeSectionProps {
-  currentPostTypes: EPostType[]
+  currentPostType: EPostType
   onPostTypesChange: (v: EPostType) => void
 }
 
 const PostTypeSection: React.FunctionComponent<IPostTypeSectionProps> = ({
-  currentPostTypes,
+  currentPostType,
   onPostTypesChange,
 }) => {
   const t = useI18n()
   return (
-    <div className="flex flex-row gap-2 ">
+    <div className="flex flex-row">
       <Button
-        variant={
-          isExistsInListHelper(currentPostTypes, EPostType.REFERRER)
-            ? "default"
-            : "secondary"
-        }
+        variant={"base"}
+        className={cn(
+          "text-xl",
+          currentPostType === EPostType.ALL && "text-indigo-600"
+        )}
+        onClick={() => onPostTypesChange(EPostType.ALL)}
+      >
+        {t("general.all")}
+      </Button>
+
+      <Button
+        variant={"base"}
+        className={cn(
+          "text-xl",
+          currentPostType === EPostType.REFERRER && "text-indigo-600"
+        )}
         onClick={() => onPostTypesChange(EPostType.REFERRER)}
       >
         {t("post.type.referer.title")}
       </Button>
 
       <Button
-        variant={
-          isExistsInListHelper(currentPostTypes, EPostType.REFEREE)
-            ? "default"
-            : "secondary"
-        }
+        variant={"base"}
+        className={cn(
+          "text-xl",
+          currentPostType === EPostType.REFEREE && "text-indigo-600"
+        )}
         onClick={() => onPostTypesChange(EPostType.REFEREE)}
       >
         {t("post.type.referee.title")}
       </Button>
       <Button
-        variant={
-          isExistsInListHelper(currentPostTypes, EPostType.HIRING)
-            ? "default"
-            : "secondary"
-        }
+        variant={"base"}
         onClick={() => onPostTypesChange(EPostType.HIRING)}
+        className={cn(
+          "text-xl",
+          currentPostType === EPostType.HIRING && "text-indigo-600"
+        )}
       >
         {t("post.type.hiring.title")}
       </Button>
 
       <Button
-        variant={
-          isExistsInListHelper(currentPostTypes, EPostType.COLLABORATION)
-            ? "default"
-            : "secondary"
-        }
+        className={cn(
+          "text-xl",
+          currentPostType === EPostType.COLLABORATION && "text-indigo-600"
+        )}
+        variant={"base"}
         onClick={() => onPostTypesChange(EPostType.COLLABORATION)}
       >
         {t("post.type.collaboration.title")}
@@ -71,14 +82,14 @@ interface IPostSearchBarProps
     IPostTypeSectionProps {}
 
 const PostSearchBar: React.FunctionComponent<IPostSearchBarProps> = ({
-  currentPostTypes,
+  currentPostType,
   onPostTypesChange,
   ...props
 }) => {
   return (
     <SearchBar
       bottomLeftSection={PostTypeSection({
-        currentPostTypes,
+        currentPostType,
         onPostTypesChange,
       })}
       {...props}

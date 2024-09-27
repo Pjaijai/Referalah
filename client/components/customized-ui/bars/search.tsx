@@ -1,4 +1,6 @@
-import React, { ChangeEvent, KeyboardEventHandler } from "react"
+import React, { ChangeEvent } from "react"
+import IndustryCombobox from "@/modules/post/components/comboboxes/industry"
+import LocationCombobox from "@/modules/post/components/comboboxes/location"
 import { useI18n } from "@/utils/services/internationalization/client"
 
 import { ICityResponse } from "@/types/api/response/city"
@@ -7,183 +9,146 @@ import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
 import { EMessageType } from "@/types/common/message-type"
 import { cn } from "@/lib/utils"
-import useCityOptions from "@/hooks/common/options/city-options"
-import useCountryOptions from "@/hooks/common/options/country-options"
-import useIndustryOptions from "@/hooks/common/options/industry-options"
-import useProvinceOptions from "@/hooks/common/options/province-options"
 import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
 import useReferralSortOptions from "@/hooks/common/sort/referral-sort-options"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import ResetButton from "@/components/customized-ui/buttons/reset"
+import ClearAllButton from "@/components/customized-ui/buttons/clear-all"
+import TextInput from "@/components/customized-ui/inputs/text"
 import BaseSelect from "@/components/customized-ui/selects/base"
+import YearOfExperienceSlider from "@/components/customized-ui/sliders/year-of-experience"
+import { Icons } from "@/components/icons"
 
 export interface ISearchSearchBarProps {
-  countryUuid?: string
-  provinceUuid?: string
-  onCountryChange: (value: string) => void
-  onProvinceChange: (value: string) => void
-  onCityChange: (value: string) => void
-  onIndustryChange: (value: string) => void
+  onKeyWordsChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onIndustryChange: (value: string[]) => void
   onSortingChange: (value: string) => void
-  onMinYearOfExperienceChange: (e: ChangeEvent<HTMLInputElement>) => void
-  onMaxYearOfExperienceChange: (e: ChangeEvent<HTMLInputElement>) => void
-  onSubmitChange: () => void
-  currentCountryUuid?: string
-  currentProvinceUuid?: string
-  currentCityUuid?: string
-  currentIndustryUuid?: string
-  currentMinYearOfExperience?: string
-  currentMaxYearOfExperience?: string
   currentSorting: string
   type: EMessageType
   countryList: ICountryResponse[]
   provinceList: IProvinceResponse[]
   cityList: ICityResponse[]
   industryList: IIndustryResponse[]
-  handleCompanyChange: (e: ChangeEvent<HTMLInputElement>) => void
-  handleKeyPressSubmitChange: KeyboardEventHandler
-  companyName: string
-  handleJobTitleChange: (e: ChangeEvent<HTMLInputElement>) => void
-  jobTitle: string
+  onLocationChange: (value: string[]) => void
+  locations: Set<string>
+  industries: Set<string>
+  keywords: string
   handleReset: () => void
-  handleSubmit: () => void
   bottomLeftSection?: React.ReactNode
+  experience: number
+  onExperienceChange: (value: number) => void
 }
 
 const SearchBar: React.FunctionComponent<ISearchSearchBarProps> = ({
-  provinceUuid,
-  countryUuid,
-  onCityChange,
-  onCountryChange,
-  onProvinceChange,
   onIndustryChange,
   onSortingChange,
-  onMinYearOfExperienceChange,
-  onMaxYearOfExperienceChange,
-  currentCountryUuid,
-  currentProvinceUuid,
-  currentCityUuid,
-  currentIndustryUuid,
-  currentMinYearOfExperience,
-  currentMaxYearOfExperience,
+  locations,
+  onLocationChange,
   currentSorting,
   type,
   cityList,
   countryList,
   industryList,
   provinceList,
-  companyName,
-  handleCompanyChange,
-  handleJobTitleChange,
-  handleKeyPressSubmitChange,
-  jobTitle,
   handleReset,
-  handleSubmit,
   bottomLeftSection,
+  onKeyWordsChange,
+  keywords,
+  industries,
+  onExperienceChange,
+  experience,
 }) => {
   const t = useI18n()
-  const industryOptions = useIndustryOptions(industryList, true)
-  const countryOptions = useCountryOptions(countryList, true)
-  const provinceOptions = useProvinceOptions(provinceList, countryUuid, true)
-  const cityOptions = useCityOptions(cityList, provinceUuid, true)
   const { data: postSortingOptions } = usePostSortOptions()
   const { data: referralSortingOptions } = useReferralSortOptions()
 
   return (
     <div className="mt-2">
-      <div className="grid grid-cols-4 gap-2">
-        <Input
-          onChange={handleCompanyChange}
-          onKeyDown={handleKeyPressSubmitChange}
-          value={companyName}
-          placeholder={t("general.company_name")}
-        />
-        <Input
-          onChange={handleJobTitleChange}
-          onKeyDown={handleKeyPressSubmitChange}
-          value={jobTitle}
-          placeholder={t("general.job_title")}
-        />
-
-        <BaseSelect
-          options={
-            type === "referral" ? referralSortingOptions : postSortingOptions
-          }
-          onChange={onSortingChange}
-          defaultValue={
-            type === "referral"
-              ? referralSortingOptions[0].value
-              : postSortingOptions[0].value
-          }
-          value={currentSorting}
-          placeholder={t("general.sorting")}
-          triggerClassName="w-full"
-        />
-
-        <div className="flex flex-row items-center justify-center gap-1">
-          <Input
-            type="number"
-            onChange={onMinYearOfExperienceChange}
-            value={currentMinYearOfExperience}
-            placeholder={t("search.year_of_experience_placeholder")}
+      <div className="flex flex-col justify-center gap-8">
+        <div className="grid grid-cols-3 gap-2">
+          <TextInput
+            onChange={onKeyWordsChange}
+            value={keywords}
+            frontIcon={<Icons.search size={18} className="text-slate-400" />}
+            inputClassName="bg-slate-100"
+            placeholder={t("search.keywords.placeholder")}
           />
-          <p>{t("search.year_of_experience.to")}</p>
-          <Input
-            type="number"
-            onChange={onMaxYearOfExperienceChange}
-            value={currentMaxYearOfExperience}
-            placeholder={t("search.year_of_experience_placeholder")}
-          />
+          <div className="flex flex-row items-center justify-between">
+            <label className="basis-1/4 text-center text-sm">
+              {t("general.industry")}
+            </label>
+            <div className="basis-3/4">
+              <IndustryCombobox
+                industries={industries}
+                industryList={industryList}
+                onIndustryChange={onIndustryChange}
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-row items-center justify-between">
+            <label className="basis-1/4 text-center text-sm">
+              {t("general.location")}
+            </label>
+            <div className="basis-3/4">
+              <LocationCombobox
+                cityList={cityList}
+                countryList={countryList}
+                provinceList={provinceList}
+                locations={locations}
+                onLocationChange={onLocationChange}
+              />
+            </div>
+          </div>
         </div>
 
-        <BaseSelect
-          options={countryOptions}
-          onChange={onCountryChange}
-          value={currentCountryUuid}
-          placeholder={t("general.country")}
-          triggerClassName="w-full"
-        />
+        <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-5 items-center gap-4">
+            <label className="col-span-1 text-left text-sm text-slate-500">
+              {t("general.sorting")}
+            </label>
+            <div className="col-span-3 col-start-2">
+              <BaseSelect
+                options={
+                  type === "referral"
+                    ? referralSortingOptions
+                    : postSortingOptions
+                }
+                onChange={onSortingChange}
+                defaultValue={
+                  type === "referral"
+                    ? referralSortingOptions[0].value
+                    : postSortingOptions[0].value
+                }
+                value={currentSorting}
+                placeholder={t("general.sorting")}
+                triggerClassName="w-full"
+              />
+            </div>
+          </div>
 
-        <BaseSelect
-          options={provinceOptions}
-          onChange={onProvinceChange}
-          value={currentProvinceUuid}
-          placeholder={t("general.region")}
-          triggerClassName="w-full"
-          isDisabled={!!!currentCountryUuid}
-        />
+          <div className="flex flex-row items-center justify-between">
+            <label className="basis-1/4 text-center text-sm">
+              {t("general.year_of_experience")}
+            </label>
+            <div className="basis-3/4">
+              <YearOfExperienceSlider
+                value={[experience]}
+                onChange={onExperienceChange}
+              />
+            </div>
+          </div>
 
-        <BaseSelect
-          options={cityOptions}
-          onChange={onCityChange}
-          value={currentCityUuid}
-          placeholder={t("general.city")}
-          triggerClassName="w-full"
-          isDisabled={!!!currentProvinceUuid}
-        />
-
-        <BaseSelect
-          options={industryOptions}
-          onChange={onIndustryChange}
-          value={currentIndustryUuid}
-          placeholder={t("general.industry")}
-          triggerClassName="w-full"
-        />
+          <div className="flex justify-end">
+            <ClearAllButton onClick={handleReset} />
+          </div>
+        </div>
       </div>
       <div
         className={cn(
-          "mt-4 flex w-full flex-row ",
+          "mt-4 flex w-full flex-row",
           bottomLeftSection ? "justify-between" : "justify-end"
         )}
       >
         {bottomLeftSection}
-        <div className="justify-row flex flex-row gap-2">
-          <ResetButton onClick={handleReset} />
-          <Button onClick={handleSubmit} className="whitespace-nowrap">
-            {t("general.search")}
-          </Button>
-        </div>
       </div>
     </div>
   )

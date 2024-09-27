@@ -60,18 +60,16 @@ export default async function RootLayout({
       <head />
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-screen bg-slate-50 font-openSans antialiased",
           fontSans.variable
         )}
       >
         <GoogleAnalytics />
 
         <Provider locale={locale}>
-          <div className="flex min-h-screen flex-col">
+          <div className="flex min-h-screen flex-col ">
             <SiteHeader />
-            <div className="flex-1 overflow-y-auto overflow-x-hidden ">
-              {children}
-            </div>
+            <div className="flex-1 overflow-hidden">{children}</div>
             <NavFooter />
           </div>
           <Analytics />

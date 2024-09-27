@@ -18,7 +18,7 @@ import {
 import { Separator } from "@/components/ui/separator"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import ContactButton from "@/components/customized-ui/buttons/contact"
-import ContactRequestCount from "@/components/customized-ui/icons/contact-request-count"
+import ContactRequestCountIcon from "@/components/customized-ui/icons/contact-request-count"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import IndustryDisplay from "@/components/customized-ui/info-display/industry"
 import LocationDisplay from "@/components/customized-ui/info-display/location"
@@ -140,7 +140,7 @@ const ReferralCard: React.FunctionComponent<IReferralCardProps> = ({
             />
           )}
           {requestCount > 0 && (
-            <ContactRequestCount
+            <ContactRequestCountIcon
               className="justify-start"
               count={requestCount}
             />

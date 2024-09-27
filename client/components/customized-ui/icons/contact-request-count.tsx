@@ -1,29 +1,32 @@
 import React from "react"
-import { useI18n } from "@/utils/services/internationalization/client"
 
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 
-interface IContactRequestCountProps {
+interface IContactRequestCountIconProps {
   count: number
   className?: string
+  status?: "active" | "inactive"
 }
-const ContactRequestCount: React.FunctionComponent<
-  IContactRequestCountProps
-> = ({ count, className }) => {
-  const t = useI18n()
+const ContactRequestCountIcon: React.FunctionComponent<
+  IContactRequestCountIconProps
+> = ({ count, className, status = "inactive" }) => {
+  const isActive = status == "active"
   return (
     <div
       className={cn(
-        "gap flex shrink-0 flex-row items-center justify-center ",
+        "relative text-indigo-600",
+        !isActive && "opacity-30",
         className
       )}
     >
       <Icons.coffee size={18} />
 
-      <p className="ml-1">{t("general.chat", { count: count })}</p>
+      <p className="absolute right-0 top-0 -translate-y-1/2 translate-x-1/2 rounded-full bg-indigo-600 px-1 text-[10px] text-white">
+        {count || "-"}
+      </p>
     </div>
   )
 }
 
-export default ContactRequestCount
+export default ContactRequestCountIcon

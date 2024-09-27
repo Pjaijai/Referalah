@@ -49,7 +49,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   const isOpen = post?.status === EPostStatus.ACTIVE
   const locale = useCurrentLocale()
 
-  const postTyeTitle = usePostTypeTitle(post?.type)
+  const { title: postTyeTitle } = usePostTypeTitle(post?.type)
 
   const handleBackToPostClick = () => {
     router.back()
