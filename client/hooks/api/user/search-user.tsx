@@ -1,10 +1,4 @@
-import {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useReducer,
-  useState,
-} from "react"
+import { ChangeEvent, useCallback, useEffect, useReducer } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { searchUser } from "@/utils/common/api"
 import { useInfiniteQuery } from "@tanstack/react-query"
@@ -169,7 +163,12 @@ const useSearchUser = (props: ISearchUserProps) => {
 
   useEffect(() => {
     dispatch({ type: "SET_DEBOUNCED_KEYWORDS", payload: debouncedKeywords })
-    createQueryString("keywords", debouncedKeywords.trim())
+
+    if (debouncedKeywords.trim()) {
+      createQueryString("keywords", debouncedKeywords.trim())
+    } else {
+      removeQueryString("keywords")
+    }
   }, [debouncedKeywords])
 
   const createQueryString = useCallback(
