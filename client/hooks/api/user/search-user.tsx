@@ -11,9 +11,7 @@ import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { IUserFilterMeta } from "@/types/api/request/user/filter-meta"
 import { ICityResponse } from "@/types/api/response/city"
-import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
-import { IProvinceResponse } from "@/types/api/response/province"
 import { EQueryKeyString } from "@/types/common/query-key-string"
 import { EUserType } from "@/types/common/user-type"
 import useDebounce from "@/hooks/common/debounce"
@@ -284,7 +282,6 @@ const useSearchUser = (props: ISearchUserProps) => {
     queryFn: search,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
-    keepPreviousData: true,
     staleTime: 1000 * 60 * 10,
     getNextPageParam: (lastPage, allPages) => {
       if (Array.isArray(lastPage)) {
