@@ -37,9 +37,11 @@ export function SiteHeader() {
           <nav className="flex items-center gap-2">
             <LocaleDropDownMenu />
 
+            {/* TODO: Theme toggle */}
+            {/* 
             <div className="hidden md:block">
               <ThemeToggle />
-            </div>
+            </div> */}
 
             {user.isSignIn ? (
               <Link href={`${siteConfig.page.profile.href}/${user.uuid}`}>
