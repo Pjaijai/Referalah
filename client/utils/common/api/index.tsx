@@ -236,12 +236,13 @@ export const searchUser = async ({
   sortingType,
   type,
   locations,
+  keywords,
 }: ISearchMemberRequest) => {
   const sort = sortingType.split(",")
   const sortedBy = sort[0]
   const order = sort[1] !== "dec"
-  const from = page + page * numberOfDataPerPage
-  const to = from + numberOfDataPerPage
+  const from = page * numberOfDataPerPage
+  const to = from + numberOfDataPerPage - 1
 
   let query = supabase
     .from("user")
@@ -278,16 +279,25 @@ export const searchUser = async ({
             is_referer,
             is_referee,
             contact_request_count
-
           `
     )
     .gte("year_of_experience", experience)
-    .order("year_of_experience", { ascending: order })
-    .order("id", { ascending: true })
-    .range(from, to)
+
+  if (keywords && keywords.trim() !== "") {
+    const searchTerms = keywords.trim().split(/\s+/)
+    searchTerms.forEach((term) => {
+      query = query.or(
+        `username.ilike.%${term}%,company_name.ilike.%${term}%,job_title.ilike.%${term}%,description.ilike.%${term}%`
+      )
+    })
+  }
 
   if (type !== EUserType.ALL && Object.values(EUserType).includes(type)) {
-    query = query.eq("type", type)
+    if (type === EUserType.REFERRER) {
+      query = query.eq("is_referer", true)
+    } else {
+      query = query.eq("is_referee", true)
+    }
   }
 
   if (industries !== undefined) {
@@ -298,6 +308,14 @@ export const searchUser = async ({
     query = query.in("city_uuid", locations)
   }
 
+  if (sortedBy === "yearOfExperience") {
+    query = query.order("year_of_experience", { ascending: order })
+  } else {
+    query = query.order("id", { ascending: true })
+  }
+
+  query = query.range(from, to)
+
   const { data, error } = await query
 
   if (error) throw error
@@ -305,7 +323,6 @@ export const searchUser = async ({
 
   return data
 }
-
 // Post
 export const createPost = async (req: ICreatePostRequest) => {
   try {
@@ -359,6 +376,7 @@ export const updatePost = async (req: IUpdatePostRequest) => {
     throw error
   }
 }
+
 export const searchPost = async ({
   numberOfDataPerPage,
   page,
@@ -367,53 +385,61 @@ export const searchPost = async ({
   sortingType,
   type,
   locations,
+  keywords,
 }: ISearchPostRequest) => {
   try {
     const sort = sortingType.split(",")
     const sortedBy = sort[0]
     const order = sort[1] !== "dec"
-    const from = page + page * numberOfDataPerPage
-    const to = from + numberOfDataPerPage
+    const from = page * numberOfDataPerPage
+    const to = from + numberOfDataPerPage - 1
 
     let query = supabase
       .from("post")
       .select<string, ISearchPostResponse>(
-        `     uuid,
-              type,
-              created_at,
-              created_by,
-              url,
+        `
+          uuid,
+          type,
+          created_at,
+          created_by,
+          url,
+          company_name,
+          job_title,
+          year_of_experience,
+          country(
+              cantonese_name,
+              english_name
+          ),
+          province(
+              cantonese_name,
+              english_name
+          ),
+          city(
+              cantonese_name,
+              english_name
+          ),
+          industry(
+              cantonese_name,
+              english_name
+          ),
+          user!inner (
               description,
-              company_name,
-              job_title,
-              year_of_experience,
-              country(
-                  cantonese_name,
-                  english_name
-              ),
-              province(
-                  cantonese_name,
-                  english_name
-              ),
-              city(
-                  cantonese_name,
-                  english_name
-              ),
-              industry(
-                  cantonese_name,
-                  english_name
-              ),
-              user (
-                  username,
-                  avatar_url
-              ),
-              contact_request_count
-            `
+              avatar_url
+          ),
+          contact_request_count
+        `
       )
-
       .eq("status", "active")
       .gte("year_of_experience", experience)
-      .range(from, to)
+
+    if (keywords && keywords.trim() !== "") {
+      const searchTerms = keywords.trim().split(/\s+/)
+      searchTerms.forEach((term) => {
+        query = query.or(
+          `company_name.ilike.%${term}%,job_title.ilike.%${term}%,description.ilike.%${term}%`
+        )
+      })
+    }
 
     if (sortedBy === "createdAt") {
       query = query.order("created_at", { ascending: order })
@@ -431,7 +457,9 @@ export const searchPost = async ({
       query = query.in("city_uuid", locations)
     }
 
-    const { data, error, count } = await query.order("id", { ascending: true })
+    const { data, error, count } = await query
+      .order("id", { ascending: true })
+      .range(from, to)
 
     if (error) throw error
     if (data === null) return []
@@ -441,6 +469,7 @@ export const searchPost = async ({
     throw error
   }
 }
+
 export const getPostByUuid = async (uuid: string) => {
   const { data, error } = await supabase
     .from("post")
