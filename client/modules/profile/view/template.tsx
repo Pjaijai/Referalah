@@ -15,7 +15,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from "@/components/ui/separator"
 import { useToast } from "@/components/ui/use-toast"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
-import ContactRequestCount from "@/components/customized-ui/icons/contact-request-count"
+import ContactRequestCountIcon from "@/components/customized-ui/icons/contact-request-count"
 import LocationDisplay from "@/components/customized-ui/info-display/location"
 import { Icons } from "@/components/icons"
 
@@ -123,7 +123,7 @@ const ViewProfileTemplate: React.FunctionComponent<
 
           {requestCount > 0 && (
             <div className="flex flex-row justify-center">
-              <ContactRequestCount count={requestCount} />
+              <ContactRequestCountIcon count={requestCount} />
             </div>
           )}
 
