@@ -421,7 +421,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           />
 
           <div className="mt-4   flex w-full flex-col items-center justify-center gap-4 sm:flex-row">
-            <div className="w-full">
+            <div className="w-full bg-white">
               <FormCheckBox
                 control={form.control}
                 label={t("general.referrer")}
@@ -430,7 +430,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
               />
             </div>
 
-            <div className="w-full">
+            <div className="w-full bg-white">
               <FormCheckBox
                 control={form.control}
                 label={t("general.talent")}
