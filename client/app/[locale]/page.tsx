@@ -2,7 +2,7 @@ import MainPageTemplate from "@/modules/main/template"
 import {
   getUserCount,
   listLatestContactRequest,
-  searchPostApi,
+  searchPost,
 } from "@/utils/common/api"
 
 import { EPostType } from "@/types/common/post-type"
@@ -13,15 +13,13 @@ export const revalidate = 60 * 60
 
 export default async function IndexPage() {
   const count = await getUserCount()
-  const posts = await searchPostApi({
+  const posts = await searchPost({
+    keywords: "",
     numberOfDataPerPage: 8,
+    experience: 0,
     page: 0,
+    type: EPostType.ALL,
     sortingType: "createdAt,dec",
-    companyName: "",
-    jobTitle: "",
-    maxYearOfExperience: 100,
-    minYearOfExperience: 0,
-    types: [EPostType.REFERRER, EPostType.HIRING, EPostType.COLLABORATION],
   })
 
   const list = await listLatestContactRequest()

@@ -1,17 +1,23 @@
-"use client"
-
-import { ChangeEvent, useCallback, useEffect, useReducer } from "react"
+import {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useReducer,
+  useState,
+} from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { searchPost } from "@/utils/common/api"
+import { searchUser } from "@/utils/common/api"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
-import { IPostFilterMeta } from "@/types/api/request/post/filter-meta"
+import { IUserFilterMeta } from "@/types/api/request/user/filter-meta"
 import { ICityResponse } from "@/types/api/response/city"
+import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
-import { EPostType } from "@/types/common/post-type"
+import { IProvinceResponse } from "@/types/api/response/province"
 import { EQueryKeyString } from "@/types/common/query-key-string"
+import { EUserType } from "@/types/common/user-type"
 import useDebounce from "@/hooks/common/debounce"
-import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
+import useReferralSortOptions from "@/hooks/common/sort/referral-sort-options"
 
 const mapCityToUuid = (cities: string[], cityData: ICityResponse[]) => {
   return cities
@@ -43,7 +49,7 @@ const search = ({
     EQueryKeyString,
     {
       sorting: string
-      filterMeta: IPostFilterMeta
+      filterMeta: IUserFilterMeta
     },
   ]
 }) => {
@@ -54,22 +60,22 @@ const search = ({
   const sortingType = sorting
   const locations = filterMeta.locations
   const experience = Number(filterMeta.experience)
-  const postType = filterMeta.type
+  const userType = filterMeta.type
   const keywords = filterMeta.keywords
 
-  return searchPost({
+  return searchUser({
     keywords,
     numberOfDataPerPage: NUMBER_OF_DATE_PER_FETCH,
     experience,
     industries,
     locations,
     page: pageParam,
-    type: postType,
+    type: userType,
     sortingType,
   })
 }
 
-interface ISearchPostProps {
+interface ISearchUserProps {
   cityList: ICityResponse[]
   industryList: IIndustryResponse[]
 }
@@ -81,7 +87,7 @@ interface State {
   industries: Set<string>
   experience: number
   sorting: string
-  postType: EPostType
+  userType: EUserType
   params: URLSearchParams
 }
 
@@ -92,7 +98,7 @@ type Action =
   | { type: "SET_INDUSTRIES"; payload: Set<string> }
   | { type: "SET_EXPERIENCE"; payload: number }
   | { type: "SET_SORTING"; payload: string }
-  | { type: "SET_POST_TYPE"; payload: EPostType }
+  | { type: "SET_USER_TYPE"; payload: EUserType }
   | { type: "SET_PARAMS"; payload: URLSearchParams }
   | { type: "RESET"; payload: State }
 
@@ -110,8 +116,8 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, experience: action.payload }
     case "SET_SORTING":
       return { ...state, sorting: action.payload }
-    case "SET_POST_TYPE":
-      return { ...state, postType: action.payload }
+    case "SET_USER_TYPE":
+      return { ...state, userType: action.payload }
     case "SET_PARAMS":
       return { ...state, params: action.payload }
     case "RESET":
@@ -121,17 +127,16 @@ const reducer = (state: State, action: Action): State => {
   }
 }
 
-const useSearchPost = (props: ISearchPostProps) => {
+const useSearchUser = (props: ISearchUserProps) => {
   const { cityList: cityData, industryList: industryData } = props
+  const { data: referralSortingOptions } = useReferralSortOptions()
 
-  const { data: postSortingOptions } = usePostSortOptions()
-
-  const keyString = EQueryKeyString.SEARCH_POST
+  const keyString = EQueryKeyString.SEARCH_USER
 
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const initialPostTypes = searchParams.get("types") as EPostType
+  const initialUserTypes = searchParams.get("types") as EUserType
 
   const initialState: State = {
     keywords: searchParams.get("keywords")?.toString() || "",
@@ -154,8 +159,9 @@ const useSearchPost = (props: ISearchPostProps) => {
     ),
     experience: Number(searchParams.get("experience")?.toString()) || 0,
     sorting:
-      searchParams.get("sorting")?.toString() || postSortingOptions[0].value,
-    postType: initialPostTypes || EPostType.ALL,
+      searchParams.get("sorting")?.toString() ||
+      referralSortingOptions[0].value,
+    userType: initialUserTypes || EUserType.ALL,
     params: new URLSearchParams(searchParams.toString()),
   }
 
@@ -197,9 +203,9 @@ const useSearchPost = (props: ISearchPostProps) => {
     dispatch({ type: "SET_KEYWORDS", payload: words })
   }
 
-  const handlePostTypesChange = (type: EPostType) => {
-    dispatch({ type: "SET_POST_TYPE", payload: type })
-    if (type === EPostType.ALL) {
+  const handleUserTypeChange = (type: EUserType) => {
+    dispatch({ type: "SET_USER_TYPE", payload: type })
+    if (type === EUserType.ALL) {
       removeQueryString("types")
     } else {
       createQueryString("types", type)
@@ -251,9 +257,9 @@ const useSearchPost = (props: ISearchPostProps) => {
   const handleReset = () => {
     const resetState = {
       ...initialState,
-      sorting: postSortingOptions[0].value,
+      sorting: referralSortingOptions[0].value,
       params: new URLSearchParams(),
-      postType: EPostType.ALL,
+      userType: EUserType.ALL,
       locations: new Set(cityData.map((data) => data.uuid)),
       industries: new Set(industryData.map((data) => data.uuid)),
       keywords: "",
@@ -264,13 +270,13 @@ const useSearchPost = (props: ISearchPostProps) => {
     router.push(pathname)
   }
 
-  const filterMeta: IPostFilterMeta = {
+  const filterMeta: IUserFilterMeta = {
     keywords: state.debouncedKeywords,
     locations: Array.from(state.locations),
     industries: Array.from(state.industries),
     sorting: state.sorting,
     experience: state.experience,
-    type: state.postType,
+    type: state.userType,
   }
 
   const result = useInfiniteQuery({
@@ -298,8 +304,8 @@ const useSearchPost = (props: ISearchPostProps) => {
     keywords: state.keywords,
     debouncedKeywords: state.debouncedKeywords,
     sorting: state.sorting,
-    handlePostTypesChange,
-    postType: state.postType,
+    handleUserTypeChange,
+    userType: state.userType,
     handleLocationChange,
     locations: state.locations,
     industries: state.industries,
@@ -308,4 +314,4 @@ const useSearchPost = (props: ISearchPostProps) => {
   }
 }
 
-export default useSearchPost
+export default useSearchUser
