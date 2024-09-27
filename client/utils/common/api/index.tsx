@@ -556,7 +556,6 @@ export const getCountryList = async () => {
     const { data: countryData, error: countryError } = await supabase
       .from("country")
       .select<"*", ICountryResponse>("*")
-    console.log(1231255, countryData)
     if (countryError) {
       throw countryError
     }
