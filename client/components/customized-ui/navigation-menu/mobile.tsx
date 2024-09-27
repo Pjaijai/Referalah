@@ -141,9 +141,11 @@ export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
               )}
             </Accordion>
           </div>
-          <SheetFooter>
+
+          {/* TODO: Theme toggle */}
+          {/* <SheetFooter>
             <ThemeToggleMobile />
-          </SheetFooter>
+          </SheetFooter> */}
         </SheetContent>
       </Sheet>
     </div>
