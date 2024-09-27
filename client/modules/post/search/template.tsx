@@ -2,7 +2,6 @@
 
 import React from "react"
 import PostSearchBar from "@/modules/post/components/bars/search"
-import PostSearchDrawer from "@/modules/post/components/drawers/search"
 import {
   useCurrentLocale,
   useI18n,
@@ -14,9 +13,14 @@ import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
 import { EMessageType } from "@/types/common/message-type"
 import useSearchPost from "@/hooks/api/post/search-post"
+import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import ReferralPostCard from "@/components/customized-ui/cards/referral-post"
+import TextInput from "@/components/customized-ui/inputs/text"
+import BaseSelect from "@/components/customized-ui/selects/base"
+import FilterSheet from "@/components/customized-ui/sheets/filter"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
+import { Icons } from "@/components/icons"
 
 interface IPostSearchPageProps {
   countryList: ICountryResponse[]
@@ -35,32 +39,20 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
 
   const {
     result,
-    postTypes,
+    postType,
     handlePostTypesChange,
-    handleCountryChange,
-    handleProvinceChange,
-    handleCityChange,
     handleSortingChange,
     handleIndustryChange,
-    handleMaxYearOfExperienceChange,
-    handleMinYearOfExperienceChange,
-    handleJobTitleChange,
     handleReset,
-    handleSubmitChange,
-    handleKeyPressSubmitChange,
-    companyName,
-    jobTitle,
-    provinceUuid,
-    cityUuid,
-    countryUuid,
-    industryUuid,
-    maxYearOfExperience,
-    minYearOfExperience,
     sorting,
-    handleCompanyChange,
+    keywords,
+    handleKeywordsChange,
+    handleLocationChange,
+    locations,
+    industries,
+    experience,
+    handleExperienceChange,
   } = useSearchPost({
-    countryList,
-    provinceList,
     cityList,
     industryList,
   })
@@ -69,75 +61,70 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
   const { data, fetchNextPage, isLoading, isFetching } = result
 
   const list = data !== undefined ? data.pages.flatMap((d) => d) : []
+  const { data: postSortingOptions } = usePostSortOptions()
 
   return (
-    <div className="flex flex-col gap-4">
-      <PostSearchDrawer
-        currentPostTypes={postTypes}
-        onPostTypesChange={handlePostTypesChange}
-        provinceUuid={provinceUuid}
-        countryUuid={countryUuid}
-        onCityChange={handleCityChange}
-        onCountryChange={handleCountryChange}
-        onProvinceChange={handleProvinceChange}
-        onIndustryChange={handleIndustryChange}
-        onSortingChange={handleSortingChange}
-        onMinYearOfExperienceChange={handleMinYearOfExperienceChange}
-        onMaxYearOfExperienceChange={handleMaxYearOfExperienceChange}
-        onSubmitChange={handleSubmitChange}
-        currentSorting={sorting}
-        currentCityUuid={cityUuid}
-        currentCountryUuid={countryUuid}
-        currentIndustryUuid={industryUuid}
-        currentProvinceUuid={provinceUuid}
-        currentMaxYearOfExperience={maxYearOfExperience}
-        currentMinYearOfExperience={minYearOfExperience}
-        type={EMessageType.POST}
-        cityList={cityList}
-        countryList={countryList}
-        industryList={industryList}
-        provinceList={provinceList}
-        handleCompanyChange={handleCompanyChange}
-        handleKeyPressSubmitChange={handleKeyPressSubmitChange}
-        companyName={companyName}
-        handleJobTitleChange={handleJobTitleChange}
-        handleReset={handleReset}
-        jobTitle={jobTitle}
-        handleSubmit={handleSubmitChange}
-      />
+    <div className=" flex flex-col gap-4">
+      <div className=" flex flex-row gap-4 md:hidden">
+        <TextInput
+          onChange={handleKeywordsChange}
+          value={keywords}
+          frontIcon={<Icons.search size={18} className="text-slate-400" />}
+          inputClassName="bg-slate-100"
+          placeholder={t("search.keywords.placeholder")}
+        />
+        <FilterSheet
+          onIndustryChange={handleIndustryChange}
+          cityList={cityList}
+          countryList={countryList}
+          industryList={industryList}
+          provinceList={provinceList}
+          handleReset={handleReset}
+          onLocationChange={handleLocationChange}
+          locations={locations}
+          industries={industries}
+          onExperienceChange={handleExperienceChange}
+          experience={experience}
+        />
+      </div>
+
+      <div className="flex w-full justify-end md:hidden">
+        <div className="flex w-3/4 flex-row items-center justify-end">
+          <label className="mr-2 w-2/5 text-end text-sm text-slate-500">
+            {t("general.sorting")}
+          </label>
+
+          <BaseSelect
+            options={postSortingOptions}
+            onChange={handleSortingChange}
+            defaultValue={postSortingOptions[0].value}
+            value={sorting}
+            placeholder={t("general.sorting")}
+            triggerClassName="w-3/5"
+          />
+        </div>
+      </div>
+
       <div className="hidden md:block">
         <PostSearchBar
-          currentPostTypes={postTypes}
+          keywords={keywords}
+          onKeyWordsChange={handleKeywordsChange}
+          currentPostType={postType}
           onPostTypesChange={handlePostTypesChange}
-          provinceUuid={provinceUuid}
-          countryUuid={countryUuid}
-          onCityChange={handleCityChange}
-          onCountryChange={handleCountryChange}
-          onProvinceChange={handleProvinceChange}
           onIndustryChange={handleIndustryChange}
           onSortingChange={handleSortingChange}
-          onMinYearOfExperienceChange={handleMinYearOfExperienceChange}
-          onMaxYearOfExperienceChange={handleMaxYearOfExperienceChange}
-          onSubmitChange={handleSubmitChange}
           currentSorting={sorting}
-          currentCityUuid={cityUuid}
-          currentCountryUuid={countryUuid}
-          currentIndustryUuid={industryUuid}
-          currentProvinceUuid={provinceUuid}
-          currentMaxYearOfExperience={maxYearOfExperience}
-          currentMinYearOfExperience={minYearOfExperience}
           type={EMessageType.POST}
           cityList={cityList}
           countryList={countryList}
           industryList={industryList}
           provinceList={provinceList}
-          handleCompanyChange={handleCompanyChange}
-          handleKeyPressSubmitChange={handleKeyPressSubmitChange}
-          companyName={companyName}
-          handleJobTitleChange={handleJobTitleChange}
           handleReset={handleReset}
-          jobTitle={jobTitle}
-          handleSubmit={handleSubmitChange}
+          onLocationChange={handleLocationChange}
+          locations={locations}
+          industries={industries}
+          onExperienceChange={handleExperienceChange}
+          experience={experience}
         />
       </div>
       {!isLoading && !isFetching && list.length === 0 && (

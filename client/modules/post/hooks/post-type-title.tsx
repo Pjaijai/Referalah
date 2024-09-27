@@ -3,19 +3,31 @@ import { useI18n } from "@/utils/services/internationalization/client"
 
 import { EPostType } from "@/types/common/post-type"
 
+type PostTypeConfig = {
+  [key in Exclude<EPostType, EPostType.ALL>]: {
+    title: string
+    textColor: string
+    bgColor: string
+  }
+}
+
 const usePostTypeTitle = (type?: EPostType) => {
   const t = useI18n()
 
   return useMemo(() => {
-    if (!type || !Object.values(EPostType).includes(type)) {
+    if (
+      !type ||
+      type === EPostType.ALL ||
+      !Object.values(EPostType).includes(type)
+    ) {
       return {
-        title: "???unknown???",
+        title: "??unknown??",
         textColor: "text-gray-600",
         bgColor: "bg-gray-100",
       }
     }
 
-    const postTypeConfig = {
+    const postTypeConfig: PostTypeConfig = {
       [EPostType.HIRING]: {
         title: t("post.type.hiring.title"),
         textColor: "text-teal-600",
