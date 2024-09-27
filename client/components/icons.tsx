@@ -35,6 +35,7 @@ import {
   Pencil,
   PersonStanding,
   RotateCcw,
+  Search,
   Send,
   SendHorizontal,
   Share2,
@@ -87,6 +88,7 @@ export const Icons = {
   eye: Eye,
   eyeOff: EyeOff,
   coffee: Coffee,
+  search: Search,
   smallArrowLeft: (props: LucideProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"

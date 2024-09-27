@@ -1,7 +1,6 @@
 import React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import usePostTypeTitle from "@/modules/post/hooks/post-type-title"
 
 import { EPostType } from "@/types/common/post-type"
 import { siteConfig } from "@/config/site"
@@ -10,12 +9,12 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import PostTypeBadge from "@/components/customized-ui/badges/post-type"
-import ContactRequestCount from "@/components/customized-ui/icons/contact-request-count"
+import ContactRequestCountIcon from "@/components/customized-ui/icons/contact-request-count"
+import LinkIcon from "@/components/customized-ui/icons/link"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
 import IndustryDisplay from "@/components/customized-ui/info-display/industry"
 import LocationDisplay from "@/components/customized-ui/info-display/location"
 import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
-import { Icons } from "@/components/icons"
 
 interface IReferralPostCardProps {
   uuid: string | null
@@ -61,12 +60,6 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
     router.push(`${siteConfig.page.profile.href}/${createdBy}`)
   }
 
-  const { title: postTypeTitle } = usePostTypeTitle(type)
-  const handleUrlClick = (e: any) => {
-    e.preventDefault()
-    if (url) window.open(url, "_blank")
-  }
-
   return (
     <Card
       className={cn(
@@ -95,20 +88,13 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
           <div className="mt-4 flex w-full justify-between">
             <PostTypeBadge type={type} />
             <div className="flex flex-row items-center justify-center gap-4">
-              <ContactRequestCount
+              <ContactRequestCountIcon
                 count={requestCount}
                 className={cn("h-4 w-4 align-middle")}
                 status={requestCount > 0 ? "active" : "inactive"}
               />
 
-              <div onClick={handleUrlClick}>
-                <Icons.link
-                  className={cn(
-                    "h-4 w-4 align-middle text-indigo-600",
-                    url && "opacity-30"
-                  )}
-                />
-              </div>
+              <LinkIcon openInNewTab status={url ? "active" : "inactive"} />
             </div>
           </div>
 

@@ -3,13 +3,13 @@ import React from "react"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 
-interface IContactRequestCountProps {
+interface IContactRequestCountIconProps {
   count: number
   className?: string
   status?: "active" | "inactive"
 }
-const ContactRequestCount: React.FunctionComponent<
-  IContactRequestCountProps
+const ContactRequestCountIcon: React.FunctionComponent<
+  IContactRequestCountIconProps
 > = ({ count, className, status = "inactive" }) => {
   const isActive = status == "active"
   return (
@@ -29,4 +29,4 @@ const ContactRequestCount: React.FunctionComponent<
   )
 }
 
-export default ContactRequestCount
+export default ContactRequestCountIcon
