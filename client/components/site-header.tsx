@@ -12,7 +12,8 @@ import LocaleDropDownMenu from "@/components/customized-ui/drop-down-menu/locale
 import { BaseNavigationMenu } from "@/components/customized-ui/navigation-menu/base"
 import { MobileNavigationMenu } from "@/components/customized-ui/navigation-menu/mobile"
 import { MainNav } from "@/components/main-nav"
-import { ThemeToggle } from "@/components/theme-toggle"
+
+// import { ThemeToggle } from "@/components/theme-toggle"
 
 export function SiteHeader() {
   const t = useI18n()

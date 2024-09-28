@@ -29,8 +29,8 @@ const MainPageTemplate = ({
   const scopedT = useScopedI18n("index")
 
   return (
-    <div className="relative mt-72 flex h-screen w-full flex-row items-center justify-center md:mt-16 md:h-auto ">
-      <div className="relative z-30 mx-auto h-fit w-full max-w-7xl overflow-hidden  p-4 ">
+    <div className="relative mt-20 flex w-full flex-row items-center justify-center md:mt-16 md:h-screen ">
+      <div className="relative z-30 h-fit w-full overflow-hidden md:mx-auto md:max-w-7xl  md:p-4 ">
         <motion.div
           initial={{
             opacity: 0,
@@ -99,7 +99,7 @@ const MainPageTemplate = ({
             <PostCarousel list={posts} />
           </div>
 
-          <div className="mt-12 p-4">
+          <div className="mt-12 ">
             <ContactRequestCarousel list={contactList} />
           </div>
         </motion.div>

@@ -55,8 +55,8 @@ const PostCarousel: React.FunctionComponent<IPostCarouselProps> = ({
           )
         })}
       </Marquee>
-      <div className="pointer-events-none absolute inset-y-0 left-0  w-2/12 bg-gradient-to-r from-white dark:from-background md:w-1/5"></div>
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-2/12 bg-gradient-to-l from-white dark:from-background md:w-1/5"></div>
+      <div className="pointer-events-none inset-y-0 left-0 hidden w-2/12 bg-gradient-to-r  from-white dark:from-background md:absolute md:block md:w-1/5"></div>
+      <div className="pointer-events-none inset-y-0 right-0 hidden w-2/12 bg-gradient-to-l from-white dark:from-background md:absolute md:block md:w-1/5"></div>
     </div>
   )
 }

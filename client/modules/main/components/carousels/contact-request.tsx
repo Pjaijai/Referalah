@@ -47,7 +47,7 @@ const ContactRequestCarousel: React.FunctionComponent<
   IContactRequestCarouselProps
 > = ({ list }) => {
   return (
-    <div className="relative flex h-32  w-full flex-row items-center justify-center overflow-hidden bg-slate-50 ">
+    <div className="relative flex h-32 w-full flex-row items-center justify-center overflow-hidden  bg-slate-50 ">
       <Marquee vertical className="text-xs [--duration:60s]">
         {list.map((data) => {
           if (data.type === "post") return <PostRow {...data} />
