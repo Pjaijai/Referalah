@@ -116,15 +116,6 @@ export const siteConfig = {
       name: "對話",
       href: "/chat",
     },
-    about: {
-      name: "關於本平台",
-      href: "/about",
-      metadata: {
-        title: "關於本平台 About Us",
-        description:
-          "海外搵工好多時都需要人脈，有人推薦先有面試，而外地愈嚟愈多港人，但缺乏相關文化同平台。呢個平台喺俾大家搵翻同聲同氣嘅，無論你係藍領白領，都希望大家互相幫忙。 Finding a job overseas often required connections. People often need referrals to secure an interview. With more Hongkongers moving abroad, they need a platform to shine and stand out. That's where this platform comes in, to connect Hongkongers on the same wavelength, regardless of job nature.",
-      },
-    },
     privacyPolicy: {
       name: "privatePolicy",
       href: "/privacy-policy",

@@ -267,7 +267,6 @@ export default {
   "page.post": "街招",
   "page.post_history": "街招記錄",
   "page.chat": "對話",
-  "page.about": "關於本平台",
   "page.privacy_policy": "隱私政策",
   "page.terms_and_condition": "條款及細則",
   "page.contributors": "貢獻者名單",

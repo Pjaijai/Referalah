@@ -292,7 +292,6 @@ export default {
   "page.post": "Post",
   "page.post_history": "Post History",
   "page.chat": "Chat",
-  "page.about": "About us",
   "page.privacy_policy": "Privacy Policy",
   "page.terms_and_condition": "Terms and Conditions",
   "page.contributors": "Contributor List",
