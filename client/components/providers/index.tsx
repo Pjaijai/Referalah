@@ -20,7 +20,7 @@ const Provider: React.FunctionComponent<IProviderProps> = ({
   return (
     // <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
 
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+    <ThemeProvider attribute="class" defaultTheme="light">
       <APIProvider>
         <I18nProviderClient locale={locale}>
           <AuthProvider>
