@@ -29,7 +29,7 @@ const MainPageTemplate = ({
   const scopedT = useScopedI18n("index")
 
   return (
-    <div className="relative mt-20 flex w-full flex-row items-center justify-center md:mt-16 md:h-screen ">
+    <div className="relative mt-20 flex w-full flex-row items-center justify-center md:mt-16 ">
       <div className="relative z-30 h-fit w-full overflow-hidden md:mx-auto md:max-w-7xl  md:p-4 ">
         <motion.div
           initial={{
@@ -92,6 +92,7 @@ const MainPageTemplate = ({
               </Link>
             )}
           </div>
+
           <div className="flex flex-row justify-center">
             <UserCount numberOfMembers={count} />
           </div>

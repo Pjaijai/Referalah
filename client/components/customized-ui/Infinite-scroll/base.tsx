@@ -3,6 +3,7 @@ import { useI18n } from "@/utils/services/internationalization/client"
 import InfiniteScroll from "react-infinite-scroll-component"
 
 import { Badge } from "@/components/ui/badge"
+import LoadingBalloonSpinner from "@/components/customized-ui/spinner/ball"
 
 interface IBaseInfiniteScrollProps {
   dataLength: number
@@ -34,13 +35,7 @@ const BaseInfiniteScroll: React.FunctionComponent<IBaseInfiniteScrollProps> = ({
       inverse={inverse}
       scrollableTarget={scrollableTarget}
       loader={
-        endMessage || (
-          <div className="mt-4 flex justify-center">
-            <Badge variant={"outline"} className="flex justify-center">
-              {t("search.loading")}
-            </Badge>
-          </div>
-        )
+        endMessage || <LoadingBalloonSpinner isRandom maxRandomBalls={10} />
       }
       endMessage={
         endMessage || (
