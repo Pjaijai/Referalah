@@ -35,7 +35,11 @@ const BaseInfiniteScroll: React.FunctionComponent<IBaseInfiniteScrollProps> = ({
       inverse={inverse}
       scrollableTarget={scrollableTarget}
       loader={
-        endMessage || <LoadingBalloonSpinner isRandom maxRandomBalls={10} />
+        endMessage || (
+          <div className="mt-8">
+            <LoadingBalloonSpinner isRandom maxRandomBalls={8} />
+          </div>
+        )
       }
       endMessage={
         endMessage || (
