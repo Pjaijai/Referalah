@@ -27,7 +27,6 @@ const PostHistoryTemplate: React.FunctionComponent<
   const { data, isLoading } = useListPostsByUserUuid(slug, sortValue)
 
   const handleSortValueChange = (value: string) => {
-    console.log(2323, value)
     setSortValue(value)
   }
 
