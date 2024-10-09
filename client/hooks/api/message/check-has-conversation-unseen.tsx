@@ -9,6 +9,7 @@ const useCheckHasConversationUnseen = (userUuid: string | null) => {
     queryFn: () => checkHasConversationUnseen(),
     enabled: !!userUuid,
     refetchOnWindowFocus: false,
+    cacheTime: 1000 * 60 * 15,
   })
 }
 

@@ -1,7 +1,9 @@
 import React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import PostStatusDisplay from "@/modules/post/components/info-display/status"
 
+import { TPostStatusType } from "@/types/common/post-status"
 import { EPostType } from "@/types/common/post-type"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
@@ -16,7 +18,7 @@ import IndustryDisplay from "@/components/customized-ui/info-display/industry"
 import LocationDisplay from "@/components/customized-ui/info-display/location"
 import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
 
-interface IReferralPostCardProps {
+interface IPostCardProps {
   uuid: string | null
   username: string | null
   photoUrl: string | null
@@ -33,9 +35,10 @@ interface IReferralPostCardProps {
   className?: string
   type: EPostType
   requestCount: number
+  status?: TPostStatusType
 }
 
-const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
+const PostCard: React.FunctionComponent<IPostCardProps> = ({
   type,
   uuid,
   jobTitle,
@@ -52,6 +55,7 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   createdBy,
   className,
   requestCount,
+  status,
 }) => {
   const router = useRouter()
 
@@ -86,7 +90,11 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
 
         <CardContent className="flex w-full flex-col">
           <div className="mt-4 flex w-full justify-between">
-            <PostTypeBadge type={type} />
+            <div className="flex flex-row gap-2">
+              {status && <PostStatusDisplay postStatus={status} />}
+              <PostTypeBadge type={type} />
+            </div>
+
             <div className="flex flex-row items-center justify-center gap-4">
               <ContactRequestCountIcon
                 count={requestCount}
@@ -144,4 +152,4 @@ const ReferralPostCard: React.FunctionComponent<IReferralPostCardProps> = ({
   )
 }
 
-export default ReferralPostCard
+export default PostCard
