@@ -228,7 +228,6 @@ export default {
   "chat.here": "呢度",
   "chat.no_message": "暫時冇任何訊息",
   "chat.app_installation": "免安裝下載Referalah",
-  "post.back_to_post_page": "返回街招",
   "general.confirm": "確認",
   "validation.send_message.required": "一定要寫啲嘢",
   "pwa.what_is_pwa.title": "咩係PWA？",

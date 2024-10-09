@@ -252,7 +252,6 @@ export default {
   "chat.to_check_installation_guide": "睇下點下載，又可以收到手機即時通知！",
   "chat.no_message": "No message",
   "chat.app_installation": "Get the App",
-  "post.back_to_post_page": "Back to Post",
   "general.confirm": "Confirm",
   "validation.send_message.required": "Required",
   "pwa.what_is_pwa.title": "What is PWA?",
