@@ -1,17 +1,20 @@
 "use client"
 
 import React, { useState } from "react"
+import { useRouter } from "next/navigation"
 import {
   useCurrentLocale,
   useI18n,
 } from "@/utils/services/internationalization/client"
 
-import useGetPostListByUserUuid from "@/hooks/api/post/list-posts-by-user-uuid"
+import { cn } from "@/lib/utils"
 import useListPostsByUserUuid from "@/hooks/api/post/list-posts-by-user-uuid"
 import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
+import { Button, buttonVariants } from "@/components/ui/button"
 import PostCard from "@/components/customized-ui/cards/post"
 import BaseSelect from "@/components/customized-ui/selects/base"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
+import { Icons } from "@/components/icons"
 
 interface IPostHistoryTemplateProps {
   slug: string
@@ -21,6 +24,7 @@ const PostHistoryTemplate: React.FunctionComponent<
 > = ({ slug }) => {
   const t = useI18n()
   const locale = useCurrentLocale()
+  const router = useRouter()
   const { data: postSortingOptions } = usePostSortOptions()
   const [sortValue, setSortValue] = useState(postSortingOptions[0].value)
 
@@ -30,9 +34,26 @@ const PostHistoryTemplate: React.FunctionComponent<
     setSortValue(value)
   }
 
+  const handleBackToPostClick = () => {
+    router.back()
+  }
+
   return (
     <div>
-      <div className="flex w-full flex-row items-center justify-end">
+      <div className="flex w-full flex-row items-center justify-between">
+        <Button
+          onClick={handleBackToPostClick}
+          className={cn(
+            buttonVariants({ variant: "secondary" }),
+            "bg-transparent"
+          )}
+        >
+          <p className="gap my-4 flex flex-row items-center text-sm text-muted-foreground">
+            <Icons.smallArrowLeft className="text-sm" />{" "}
+            <span>{t("general.back")}</span>
+          </p>
+        </Button>
+
         <div className="flex w-full flex-row items-center md:w-1/3">
           <label className="mr-2 w-2/5 text-end text-sm text-slate-500">
             {t("general.sorting")}
