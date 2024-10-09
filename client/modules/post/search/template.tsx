@@ -15,7 +15,7 @@ import { EMessageType } from "@/types/common/message-type"
 import useSearchPost from "@/hooks/api/post/search-post"
 import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
-import ReferralPostCard from "@/components/customized-ui/cards/referral-post"
+import PostCard from "@/components/customized-ui/cards/post"
 import TextInput from "@/components/customized-ui/inputs/text"
 import BaseSelect from "@/components/customized-ui/selects/base"
 import FilterSheet from "@/components/customized-ui/sheets/filter"
@@ -152,7 +152,7 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
           <div className="mx-auto mt-8 grid w-full max-w-sm grid-cols-1 gap-4 md:max-w-none md:grid-cols-2 lg:grid-cols-3">
             {list.map((data) => {
               return (
-                <ReferralPostCard
+                <PostCard
                   type={data.type}
                   jobTitle={data.job_title}
                   username={data.user && data.user.username}

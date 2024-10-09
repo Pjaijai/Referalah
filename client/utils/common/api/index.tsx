@@ -522,9 +522,16 @@ export const getPostByUuid = async (uuid: string) => {
   return data
 }
 
-export const getPostListByUserUuid = async (userUuid: string) => {
+export const ListPostByUserUuid = async (
+  userUuid: string,
+  sortValue: string
+) => {
+  const sort = sortValue.split(",")
+  const sortedBy = sort[0]
+  const order = sort[1] !== "dec"
+
   try {
-    const { data, error } = await supabase
+    let query = supabase
       .from("post")
       .select<string, IListPostResponse>(
         `
@@ -553,6 +560,15 @@ export const getPostListByUserUuid = async (userUuid: string) => {
       )
       .eq("created_by", userUuid)
 
+    if (sortedBy === "createdAt") {
+      query = query.order("created_at", { ascending: order })
+    }
+
+    if (sortedBy === "year_of_experience") {
+      query = query.order("year_of_experience", { ascending: order })
+    }
+
+    const { data, error } = await query
     if (error) throw error
 
     return data

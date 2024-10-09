@@ -2,7 +2,7 @@ import React from "react"
 import { useCurrentLocale } from "@/utils/services/internationalization/client"
 
 import { ISearchPostResponse } from "@/types/api/response/referer-post"
-import ReferralPostCard from "@/components/customized-ui/cards/referral-post"
+import PostCard from "@/components/customized-ui/cards/post"
 import Marquee from "@/components/magicui/marquee"
 
 interface IPostCarouselProps {
@@ -17,7 +17,7 @@ const PostCarousel: React.FunctionComponent<IPostCarouselProps> = ({
       <Marquee pauseOnHover className="[--duration:60s]">
         {list.map((data) => {
           return (
-            <ReferralPostCard
+            <PostCard
               className="w-96"
               type={data.type}
               yearOfExperience={data.year_of_experience}
