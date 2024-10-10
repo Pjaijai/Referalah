@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 import { formatDate } from "@/utils/common/helpers/format/date"
-import compareDateDifferenceHelper from "@/utils/common/helpers/time/compareDateDifference"
+import compareDateDifferenceHelper from "@/utils/common/helpers/time/compare-date-difference"
 
 const useCreatedAt = ({ createdAt }: { createdAt: string | null }) => {
   const formattedCreatedAt = useMemo(() => {
