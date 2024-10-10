@@ -57,7 +57,7 @@ const DocumentCard: React.FunctionComponent<IDocumentCardProp> = ({
           rel="noopener noreferrer nofollow"
         >
           <div className="flex flex-row gap-2">
-            <Icons.file />
+            <Icons.file data-testid="file-icon" />
             <p className="break-all">{documentName}</p>
           </div>
           <p className="text-end text-xs">
