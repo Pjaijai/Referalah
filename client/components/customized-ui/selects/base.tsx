@@ -10,7 +10,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-// TODO make it label
 export interface ISelectOption {
   value: string
   label: string

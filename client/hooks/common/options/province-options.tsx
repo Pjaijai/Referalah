@@ -3,7 +3,6 @@ import { useMemo } from "react"
 import { IProvinceResponse } from "@/types/api/response/province"
 import { ISelectOption } from "@/components/customized-ui/selects/base"
 
-// TODO use label
 const useProvinceOptions = (
   provinceList: IProvinceResponse[],
   countryUuid?: string,
