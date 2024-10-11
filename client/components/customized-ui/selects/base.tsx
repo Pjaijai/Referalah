@@ -13,7 +13,7 @@ import {
 // TODO make it label
 export interface ISelectOption {
   value: string
-  title: string
+  label: string
 }
 
 interface IBaseSelectProps {
@@ -50,7 +50,7 @@ const BaseSelect: React.FunctionComponent<IBaseSelectProps> = ({
           {options &&
             options.map((option) => (
               <SelectItem value={option.value} key={option.value}>
-                {option.title}
+                {option.label}
               </SelectItem>
             ))}
         </ScrollArea>
