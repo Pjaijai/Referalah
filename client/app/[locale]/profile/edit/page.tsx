@@ -8,7 +8,7 @@ import {
 } from "@/utils/common/api"
 
 import CommonPageLayout from "@/components/layouts/common"
-import AuthenticatedPageWrapper from "@/components/wrappers/authenticated"
+import AuthenticatedPageWrapper from "@/components/wrappers/authenticated/authenticated"
 
 export const revalidate = 60 * 60 * 24
 

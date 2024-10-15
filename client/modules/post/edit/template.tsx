@@ -196,8 +196,8 @@ const EditPostPageTemplate: React.FunctionComponent<
 
   const user = useUserStore((state) => state)
   const statusOptions: ISelectOption[] = [
-    { title: t("post.status.open"), value: EPostStatus.ACTIVE },
-    { title: t("post.status.close"), value: EPostStatus.INACTIVE },
+    { label: t("post.status.open"), value: EPostStatus.ACTIVE },
+    { label: t("post.status.close"), value: EPostStatus.INACTIVE },
   ]
 
   const industryOptions = useIndustryOptions(industryList)

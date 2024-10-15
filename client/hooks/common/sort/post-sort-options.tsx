@@ -5,19 +5,19 @@ const usePostSortOptions = () => {
   const postSortingOptions = [
     {
       value: "createdAt,dec",
-      title: t("search.sorting.created_at_dec"),
+      label: t("search.sorting.created_at_dec"),
     },
     {
       value: "createdAt,asc",
-      title: t("search.sorting.created_at_asc"),
+      label: t("search.sorting.created_at_asc"),
     },
     {
       value: "year_of_experience,asc",
-      title: t("search.sorting.year_of_experience_asc"),
+      label: t("search.sorting.year_of_experience_asc"),
     },
     {
       value: "year_of_experience,dec",
-      title: t("search.sorting.year_of_experience_dec"),
+      label: t("search.sorting.year_of_experience_dec"),
     },
   ]
   return {

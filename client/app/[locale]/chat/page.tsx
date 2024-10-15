@@ -1,7 +1,7 @@
 import React from "react"
 import ChatPageTemplate from "@/modules/chat/template"
 
-import AuthenticatedPageWrapper from "@/components/wrappers/authenticated"
+import AuthenticatedPageWrapper from "@/components/wrappers/authenticated/authenticated"
 
 const ChatPage = () => {
   return (

@@ -33,6 +33,7 @@ const ConversationHeader: React.FunctionComponent<IConversationHeaderProps> = ({
         <Icons.chevronLeft
           className="block hover:cursor-pointer md:hidden"
           onClick={handleBackClick}
+          data-testid="chevron-left"
         />
         <div className="hover:cursor-pointer" onClick={handleAvatarClick}>
           <BaseAvatar

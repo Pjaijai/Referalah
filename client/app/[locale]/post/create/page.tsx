@@ -9,7 +9,7 @@ import { getI18n } from "@/utils/services/internationalization/server"
 
 import { siteConfig } from "@/config/site"
 import CommonPageLayout from "@/components/layouts/common"
-import AuthenticatedPageWrapper from "@/components/wrappers/authenticated"
+import AuthenticatedPageWrapper from "@/components/wrappers/authenticated/authenticated"
 
 export const metadata = siteConfig.page.createPost.metadata
 

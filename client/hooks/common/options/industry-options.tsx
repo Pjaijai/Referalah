@@ -11,11 +11,11 @@ const useIndustryOptions = (
   return useMemo<ISelectOption[]>(() => {
     const options = industryList.map((industry) => ({
       value: industry.uuid,
-      title: `${industry.english_name} | ${industry.cantonese_name}`,
+      label: `${industry.english_name} | ${industry.cantonese_name}`,
     }))
 
     if (options.length > 0 && showAllOption) {
-      options.unshift({ value: "all", title: "All | 全部" })
+      options.unshift({ value: "all", label: "All | 全部" })
     }
 
     return options
