@@ -10,7 +10,7 @@ export const metadata = siteConfig.page.signUp.metadata
 const SignUpPage = async () => {
   const t = await getI18n()
   return (
-    <CommonPageLayout title={t("page.sign_up")}>
+    <CommonPageLayout title={t("page.sign_up")} titlePosition="middle">
       <SignUpPageTemplate />
     </CommonPageLayout>
   )
