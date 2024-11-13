@@ -83,7 +83,7 @@ const ViewProfileTemplate: React.FunctionComponent<
   }
   return (
     <>
-      <div className="relative flex h-full flex-col items-center justify-between rounded-lg border border-muted p-6 pb-12">
+      <div className="relative mt-4 flex h-full flex-col items-center justify-between rounded-lg border border-muted bg-white p-6 pb-12 md:mt-12">
         {isViewingOwnProfile && (
           <button
             onClick={() => {

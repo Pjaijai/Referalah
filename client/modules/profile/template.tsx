@@ -1,18 +1,13 @@
 "use client"
 
-import React, { useMemo, useState } from "react"
+import React, { useMemo } from "react"
 import Link from "next/link"
-import EditProfileTemplate from "@/modules/profile/edit/template"
 import ViewProfileTemplate from "@/modules/profile/view/template"
 import {
   useCurrentLocale,
   useI18n,
 } from "@/utils/services/internationalization/client"
 
-import { ICityResponse } from "@/types/api/response/city"
-import { ICountryResponse } from "@/types/api/response/country"
-import { IIndustryResponse } from "@/types/api/response/industry"
-import { IProvinceResponse } from "@/types/api/response/province"
 import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
 import useUserStore from "@/hooks/state/user/store"
@@ -66,7 +61,7 @@ const ProfileTemplate: React.FunctionComponent<IProfileTemplateProps> = (
     )
   if (!isLoading && profile)
     return (
-      <CommonPageLayout>
+      <CommonPageLayout title={t("page.profile")} titlePosition="middle">
         <ViewProfileTemplate
           photoUrl={profile.avatar_url || undefined}
           username={profile.username}

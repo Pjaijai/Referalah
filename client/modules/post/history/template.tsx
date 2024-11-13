@@ -34,26 +34,9 @@ const PostHistoryTemplate: React.FunctionComponent<
     setSortValue(value)
   }
 
-  const handleBackToPostClick = () => {
-    router.back()
-  }
-
   return (
     <div>
-      <div className="flex w-full flex-row items-center justify-between">
-        <Button
-          onClick={handleBackToPostClick}
-          className={cn(
-            buttonVariants({ variant: "secondary" }),
-            "bg-transparent"
-          )}
-        >
-          <p className="gap my-4 flex flex-row items-center text-sm text-muted-foreground">
-            <Icons.smallArrowLeft className="text-sm" />{" "}
-            <span>{t("general.back")}</span>
-          </p>
-        </Button>
-
+      <div className="flex w-full flex-row items-center justify-end">
         <div className="flex w-full flex-row items-center md:w-1/3">
           <label className="mr-2 w-2/5 text-end text-sm text-slate-500">
             {t("general.sorting")}

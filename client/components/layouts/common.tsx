@@ -1,40 +1,74 @@
 "use client"
 
 import React, { PropsWithChildren } from "react"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { cn } from "@/lib/utils"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { Icons } from "@/components/icons"
 
 interface CommonPageLayout {
   title?: string
+  titlePosition?: "left" | "middle" | "right"
 }
+
 const CommonPageLayout: React.FunctionComponent<
   PropsWithChildren<CommonPageLayout>
-> = ({ title, children }) => {
+> = ({ title, children, titlePosition = "left" }) => {
   const pathname = usePathname()
+  const router = useRouter()
+  const t = useI18n()
+
   const isMainPage = () => {
     const localePrefixes = ["/zh-hk", "/ca-en"]
-
     const pathWithoutLocale = localePrefixes.reduce(
       (path, prefix) => path.replace(prefix, ""),
       pathname
     )
-
     return pathWithoutLocale === "/" || pathWithoutLocale === ""
+  }
+
+  const handleBackToPostClick = () => {
+    router.back()
   }
 
   return (
     <div
       className={cn(
-        "mt-4 h-full w-full ",
+        "mt-4 h-full w-full",
         isMainPage() ? "md:container" : "container"
       )}
     >
-      {title && <h1 className="mb-2 text-left text-3xl font-bold">{title}</h1>}
+      <div className="flex items-center">
+        <Button
+          onClick={handleBackToPostClick}
+          className={cn(
+            buttonVariants({ variant: "secondary" }),
+            "bg-transparent p-0 md:hidden",
+            isMainPage() && "hidden"
+          )}
+        >
+          <Icons.chevronLeft className="h-6 w-6" />
+        </Button>
 
-      <>{children}</>
+        {/* Title Container */}
+        <div
+          className={cn(
+            "grow",
+            titlePosition === "left"
+              ? "ml-2 text-left md:ml-0"
+              : titlePosition === "middle"
+              ? "text-center"
+              : "text-right"
+          )}
+        >
+          {title && <h1 className="mb-2 text-3xl font-bold">{title}</h1>}
+        </div>
+      </div>
+
+      {children}
     </div>
   )
 }
-
 export default CommonPageLayout

@@ -17,11 +17,10 @@ import { EPostStatus } from "@/types/common/post-status"
 import { EReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
 import { PostNotFoundError } from "@/lib/exceptions"
-import { cn } from "@/lib/utils"
 import useGetPost from "@/hooks/api/post/get-post"
 import useUserStore from "@/hooks/state/user/store"
 import { Badge } from "@/components/ui/badge"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import ContactButton from "@/components/customized-ui/buttons/contact"
 import ProfileCard from "@/components/customized-ui/cards/profile"
@@ -51,29 +50,13 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
 
   const { title: postTyeTitle } = usePostTypeTitle(post?.type)
 
-  const handleBackToPostClick = () => {
-    router.back()
-  }
   return (
     <PageStatusLayout
       error={new PostNotFoundError()}
       isLoading={isLoading}
       isSuccess={isSuccess}
     >
-      <div className="flex flex-row items-center justify-between">
-        <Button
-          onClick={handleBackToPostClick}
-          className={cn(
-            buttonVariants({ variant: "secondary" }),
-            "bg-transparent"
-          )}
-        >
-          <p className="gap my-4 flex flex-row items-center text-sm text-muted-foreground">
-            <Icons.smallArrowLeft className="text-sm" />{" "}
-            <span>{t("general.back")}</span>
-          </p>
-        </Button>
-
+      <div className="flex flex-row items-center justify-end">
         <div className="flex flex-row items-end justify-center gap-4">
           <div className="flex md:hidden">
             <LinkShareDrawer />
