@@ -102,28 +102,27 @@ const MemberSearchPageTemplate: React.FunctionComponent<
           />
         </div>
       </div>
-      <div className="hidden md:block">
-        <UserSearchBar
-          keywords={keywords}
-          onKeyWordsChange={handleKeywordsChange}
-          currentUserTypes={userType}
-          onUserTypesChange={handleUserTypeChange}
-          onIndustryChange={handleIndustryChange}
-          onSortingChange={handleSortingChange}
-          currentSorting={sorting}
-          type={EMessageType.REFERRAL}
-          cityList={cityList}
-          countryList={countryList}
-          industryList={industryList}
-          provinceList={provinceList}
-          handleReset={handleReset}
-          onLocationChange={handleLocationChange}
-          locations={locations}
-          industries={industries}
-          onExperienceChange={handleExperienceChange}
-          experience={experience}
-        />
-      </div>
+
+      <UserSearchBar
+        keywords={keywords}
+        onKeyWordsChange={handleKeywordsChange}
+        currentUserTypes={userType}
+        onUserTypesChange={handleUserTypeChange}
+        onIndustryChange={handleIndustryChange}
+        onSortingChange={handleSortingChange}
+        currentSorting={sorting}
+        type={EMessageType.REFERRAL}
+        cityList={cityList}
+        countryList={countryList}
+        industryList={industryList}
+        provinceList={provinceList}
+        handleReset={handleReset}
+        onLocationChange={handleLocationChange}
+        locations={locations}
+        industries={industries}
+        onExperienceChange={handleExperienceChange}
+        experience={experience}
+      />
 
       {!isLoading && !isFetching && list.length === 0 && (
         <div className="mt-8 rounded-lg border-2 p-4 text-center">
@@ -147,7 +146,7 @@ const MemberSearchPageTemplate: React.FunctionComponent<
               : true
           }
         >
-          <div className="xs:grid-cols-1 mt-8 grid w-full gap-6 overflow-hidden sm:grid-cols-2 lg:grid-cols-3">
+          <div className="xs:grid-cols-1 grid w-full gap-6 overflow-hidden sm:grid-cols-2 md:mt-8 lg:grid-cols-3">
             {list.map((user) => {
               return (
                 <ReferralCard
