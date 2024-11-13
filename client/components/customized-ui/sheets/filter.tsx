@@ -71,7 +71,7 @@ const FilterSheet: React.FunctionComponent<IFilterSheet> = ({
               onChange={onExperienceChange}
             />
           </div>
-          <p className="mt-8 text-sm font-medium">{t("general.location")}</p>
+          <p className="mt-8 text-sm font-medium">{t("general.region")}</p>
           <LocationSelect
             containerClassName="mt-2"
             countryList={countryList}

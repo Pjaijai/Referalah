@@ -23,7 +23,7 @@ const PostTypeSection: React.FunctionComponent<IPostTypeSectionProps> = ({
       <Button
         variant={"base"}
         className={cn(
-          "text-xl",
+          "text-sm md:text-xl",
           currentPostType === EPostType.ALL && "text-indigo-600"
         )}
         onClick={() => onPostTypesChange(EPostType.ALL)}
@@ -34,7 +34,7 @@ const PostTypeSection: React.FunctionComponent<IPostTypeSectionProps> = ({
       <Button
         variant={"base"}
         className={cn(
-          "text-xl",
+          "text-sm md:text-xl",
           currentPostType === EPostType.REFERRER && "text-indigo-600"
         )}
         onClick={() => onPostTypesChange(EPostType.REFERRER)}
@@ -45,7 +45,7 @@ const PostTypeSection: React.FunctionComponent<IPostTypeSectionProps> = ({
       <Button
         variant={"base"}
         className={cn(
-          "text-xl",
+          "text-sm md:text-xl",
           currentPostType === EPostType.REFEREE && "text-indigo-600"
         )}
         onClick={() => onPostTypesChange(EPostType.REFEREE)}
@@ -56,7 +56,7 @@ const PostTypeSection: React.FunctionComponent<IPostTypeSectionProps> = ({
         variant={"base"}
         onClick={() => onPostTypesChange(EPostType.HIRING)}
         className={cn(
-          "text-xl",
+          "text-sm md:text-xl",
           currentPostType === EPostType.HIRING && "text-indigo-600"
         )}
       >
@@ -65,7 +65,7 @@ const PostTypeSection: React.FunctionComponent<IPostTypeSectionProps> = ({
 
       <Button
         className={cn(
-          "text-xl",
+          "text-sm md:text-xl",
           currentPostType === EPostType.COLLABORATION && "text-indigo-600"
         )}
         variant={"base"}
