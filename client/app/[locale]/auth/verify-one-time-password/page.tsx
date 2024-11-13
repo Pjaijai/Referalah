@@ -10,7 +10,10 @@ export const metadata = siteConfig.page.verifyOneTimePassword.metadata
 const VerifyOneTimePassword = async () => {
   const t = await getI18n()
   return (
-    <CommonPageLayout title={t("page.verify_one_time_password")}>
+    <CommonPageLayout
+      title={t("page.verify_one_time_password")}
+      titlePosition="middle"
+    >
       <VerifyEmailOneTimePasswordPageTemplate />
     </CommonPageLayout>
   )
