@@ -7,7 +7,10 @@ import CommonPageLayout from "@/components/layouts/common"
 const EmailVerificationPage = async () => {
   const t = await getI18n()
   return (
-    <CommonPageLayout title={t("page.email_verification")}>
+    <CommonPageLayout
+      title={t("page.email_verification")}
+      titlePosition="middle"
+    >
       <EmailVerificationPageTemplate />
     </CommonPageLayout>
   )
