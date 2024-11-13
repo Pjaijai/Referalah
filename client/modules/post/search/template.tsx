@@ -105,28 +105,27 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
         </div>
       </div>
 
-      <div className="hidden md:block">
-        <PostSearchBar
-          keywords={keywords}
-          onKeyWordsChange={handleKeywordsChange}
-          currentPostType={postType}
-          onPostTypesChange={handlePostTypesChange}
-          onIndustryChange={handleIndustryChange}
-          onSortingChange={handleSortingChange}
-          currentSorting={sorting}
-          type={EMessageType.POST}
-          cityList={cityList}
-          countryList={countryList}
-          industryList={industryList}
-          provinceList={provinceList}
-          handleReset={handleReset}
-          onLocationChange={handleLocationChange}
-          locations={locations}
-          industries={industries}
-          onExperienceChange={handleExperienceChange}
-          experience={experience}
-        />
-      </div>
+      <PostSearchBar
+        keywords={keywords}
+        onKeyWordsChange={handleKeywordsChange}
+        currentPostType={postType}
+        onPostTypesChange={handlePostTypesChange}
+        onIndustryChange={handleIndustryChange}
+        onSortingChange={handleSortingChange}
+        currentSorting={sorting}
+        type={EMessageType.POST}
+        cityList={cityList}
+        countryList={countryList}
+        industryList={industryList}
+        provinceList={provinceList}
+        handleReset={handleReset}
+        onLocationChange={handleLocationChange}
+        locations={locations}
+        industries={industries}
+        onExperienceChange={handleExperienceChange}
+        experience={experience}
+      />
+
       {!isLoading && !isFetching && list.length === 0 && (
         <div className="mt-8 rounded-lg border-2 p-4 text-center">
           {t("post.search_post.no_data")}
@@ -149,7 +148,7 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
               : true
           }
         >
-          <div className="mx-auto mt-8 grid w-full max-w-sm grid-cols-1 gap-4 md:max-w-none md:grid-cols-2 lg:grid-cols-3">
+          <div className="mx-auto grid w-full max-w-sm grid-cols-1 gap-4 md:mt-8 md:max-w-none md:grid-cols-2 lg:grid-cols-3">
             {list.map((data) => {
               return (
                 <PostCard

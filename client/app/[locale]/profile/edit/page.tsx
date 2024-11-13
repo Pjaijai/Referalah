@@ -6,6 +6,7 @@ import {
   getIndustryList,
   getProvinceList,
 } from "@/utils/common/api"
+import { getI18n } from "@/utils/services/internationalization/server"
 
 import CommonPageLayout from "@/components/layouts/common"
 import AuthenticatedPageWrapper from "@/components/wrappers/authenticated/authenticated"
@@ -17,10 +18,10 @@ const EditProfilePage = async () => {
   const provinceList = await getProvinceList()
   const cityList = await getCityList()
   const industryList = await getIndustryList()
-
+  const t = await getI18n()
   return (
     <AuthenticatedPageWrapper>
-      <CommonPageLayout>
+      <CommonPageLayout title={t("page.edit_profile")} titlePosition="middle">
         <EditProfileTemplate
           cityList={cityList}
           countryList={countryList}

@@ -1,14 +1,16 @@
 import React from "react"
 
+import { cn } from "@/lib/utils"
 import { FormControl, FormDescription, FormLabel } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
 interface IInputFormFieldProps {
-  label: string
+  label?: string
   placeholder?: string
   description?: string
   onChange: (e: any) => void
   accept: string
+  className?: string
 }
 
 const FormFileUpload: React.FunctionComponent<IInputFormFieldProps> = ({
@@ -17,10 +19,12 @@ const FormFileUpload: React.FunctionComponent<IInputFormFieldProps> = ({
   description,
   onChange,
   accept,
+  className,
 }) => {
   return (
-    <div className="w-full flex-col">
-      <FormLabel>{label}</FormLabel>
+    <div className={cn("w-full flex-col", className)}>
+      {label && <FormLabel>{label}</FormLabel>}
+
       <FormControl>
         <Input
           placeholder={placeholder}

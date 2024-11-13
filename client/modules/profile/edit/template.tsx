@@ -3,6 +3,10 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { StaticImport } from "next/dist/shared/lib/get-img-props"
 import { useRouter } from "next/navigation"
+import SocialLinksFieldArray from "@/modules/profile/components/form/social-links-field-array"
+import BasicInfoSection from "@/modules/profile/components/sections/basic-info/basic-info"
+import PersonalLinksSection from "@/modules/profile/components/sections/personal-links/personal-links"
+import WorkExperienceSection from "@/modules/profile/components/sections/work-experience/work-experience"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { supabase } from "@/utils/services/supabase/config"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -20,22 +24,12 @@ import { EQueryKeyString } from "@/types/common/query-key-string"
 import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
 import useUpdateUserProfile from "@/hooks/api/user/update-user-profile"
-import useCityOptions from "@/hooks/common/options/city-options"
 import useCountryOptions from "@/hooks/common/options/country-options"
-import useIndustryOptions from "@/hooks/common/options/industry-options"
 import useProvinceOptions from "@/hooks/common/options/province-options"
 import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { useToast } from "@/components/ui/use-toast"
-import BaseAvatar from "@/components/customized-ui/avatars/base"
-import FormCheckBox from "@/components/customized-ui/form/check-box"
-import FormFileUpload from "@/components/customized-ui/form/file"
-import FormTextInput from "@/components/customized-ui/form/input"
-import FormNumberInput from "@/components/customized-ui/form/number"
-import FormSelect from "@/components/customized-ui/form/select"
-import FormTextArea from "@/components/customized-ui/form/text-area"
-import { Icons } from "@/components/icons"
 
 interface IEdiProfileTemplate {
   countryList: ICountryResponse[]
@@ -57,6 +51,10 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   const { data: profile, isLoading: isProfileLoading } =
     useGetUserprofile(userUuid)
 
+  const linkSchema = z.object({
+    url: z.string().url("Invalid URL"),
+    type: z.enum(["linkedin", "instagram", "x", "github", "other"]),
+  })
   const formSchema = z
     .object({
       photoUrl: z.any().optional(),
@@ -108,6 +106,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       industryUuid: z.string().min(1, {
         message: t("validation.field_required"),
       }),
+      // links: z.array(linkSchema),
       yearOfExperience: z
         .string()
         .optional()
@@ -229,10 +228,8 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   const provinceWatch = watch("provinceUuid")
   const yearOfExperienceWatch = watch("yearOfExperience")
 
-  const industryOptions = useIndustryOptions(industryList)
   const countryOptions = useCountryOptions(countryList)
   const provinceOptions = useProvinceOptions(provinceList, countryWatch)
-  const cityOptions = useCityOptions(cityList, provinceWatch)
 
   useEffect(() => {
     if (profile && countryWatch !== profile.country?.uuid) {
@@ -378,135 +375,52 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     }
   }
 
+  if (!profile) return
   return (
-    <div className="relative flex h-full w-full flex-col rounded-lg border border-muted bg-white p-6 shadow-lg">
-      <button
-        onClick={() => {
-          router.back()
-        }}
-        className="absolute right-4 flex w-fit items-center justify-center rounded-full border  p-3 dark:bg-black"
-      >
-        <Icons.undo size={15} />
-      </button>
+    <div className="relative mt-4  flex h-full w-full flex-col md:mt-12 ">
+      {/* <SocialLinksFieldArray control={control} name="links" /> */}
+
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4"
+          className="flex flex-col gap-12"
         >
-          <div className="flex justify-center">
-            {!base64Image && (
-              <BaseAvatar
-                url={profile?.avatar_url || undefined}
-                alt={profile?.username || null}
-                fallBack={(profile?.username && profile?.username[0]) || null}
-                size="large"
-              />
-            )}
+          <BasicInfoSection
+            base64Image={base64Image}
+            form={form}
+            onProfileImageChange={handleProfileImageChange}
+            profile={profile}
+            cityList={cityList}
+            provinceList={provinceList}
+            countryList={countryList}
+            countryWatchValue={countryWatch}
+            provinceWatchValue={provinceWatch}
+          />
 
-            {base64Image && (
-              <BaseAvatar
-                url={base64Image.toString()}
-                alt={profile?.username || null}
-                fallBack={(profile?.username && profile?.username[0]) || null}
-                size="large"
-              />
-            )}
+          <WorkExperienceSection form={form} industryList={industryList} />
+
+          <PersonalLinksSection form={form} />
+
+          <div className="mt-12 flex flex-col items-center justify-center gap-8">
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full max-w-md"
+            >
+              {isSubmitting ? t("general.wait") : t("form.general.submit")}
+            </Button>
+
+            <Button
+              variant="link"
+              type="button"
+              onClick={() => {
+                router.back()
+              }}
+              className="hidden md:block"
+            >
+              {t("general.back")}
+            </Button>
           </div>
-
-          <FormFileUpload
-            label={t("profile.form.avatar_label")}
-            accept=".jpg, .jpeg, .png"
-            onChange={handleProfileImageChange}
-            description={t("profile.form.avatar_description")}
-          />
-
-          <div className="mt-4   flex w-full flex-col items-center justify-center gap-4 sm:flex-row">
-            <div className="w-full bg-white">
-              <FormCheckBox
-                control={form.control}
-                label={t("general.referrer")}
-                name="isReferer"
-                description={t("profile.form.is_referrer_description")}
-              />
-            </div>
-
-            <div className="w-full bg-white">
-              <FormCheckBox
-                control={form.control}
-                label={t("general.talent")}
-                name="isReferee"
-                description={t("profile.form.is_referee_description")}
-              />
-            </div>
-          </div>
-
-          <FormTextInput
-            control={form.control}
-            label={t("auth.form.username_label")}
-            name="username"
-          />
-
-          <FormTextArea
-            control={form.control}
-            label={t("profile.form.personal_description_label")}
-            name="description"
-          />
-
-          <FormTextInput
-            control={form.control}
-            label={t("profile.form.optional_company_label")}
-            name="company"
-          />
-
-          <FormTextInput
-            control={form.control}
-            label={t("profile.form.job_title_label")}
-            name="jobTitle"
-          />
-
-          <FormNumberInput
-            control={form.control}
-            label={t("general.year_of_experience")}
-            name="yearOfExperience"
-          />
-
-          <FormSelect
-            options={industryOptions}
-            control={form.control}
-            label={t("general.industry")}
-            name="industryUuid"
-          />
-          <FormSelect
-            options={countryOptions}
-            control={form.control}
-            label={t("general.country")}
-            name="countryUuid"
-          />
-          <FormSelect
-            control={form.control}
-            label={t("profile.form.optional_region_label")}
-            name="provinceUuid"
-            options={provinceOptions}
-          />
-
-          <FormSelect
-            control={form.control}
-            label={t("profile.form.optional_city_label")}
-            name="cityUuid"
-            options={cityOptions}
-          />
-          <FormTextInput
-            control={form.control}
-            label={t("profile.form.optional_personal_social_media_link_label")}
-            name="socialMediaUrl"
-            description={t(
-              "profile.form.personal_social_media_link_description"
-            )}
-          />
-
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? t("general.wait") : t("form.general.submit")}
-          </Button>
         </form>
       </Form>
     </div>

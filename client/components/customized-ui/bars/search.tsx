@@ -61,8 +61,8 @@ const SearchBar: React.FunctionComponent<ISearchSearchBarProps> = ({
   const { data: referralSortingOptions } = useReferralSortOptions()
 
   return (
-    <div className="mt-2">
-      <div className="flex flex-col justify-center gap-8">
+    <div className="md:mt-2 ">
+      <div className="hidden flex-col justify-center gap-8 md:flex ">
         <div className="grid grid-cols-3 gap-2">
           <TextInput
             onChange={onKeyWordsChange}
@@ -86,7 +86,7 @@ const SearchBar: React.FunctionComponent<ISearchSearchBarProps> = ({
 
           <div className="flex flex-row items-center justify-between">
             <label className="basis-1/4 text-center text-sm">
-              {t("general.location")}
+              {t("general.region")}
             </label>
             <div className="basis-3/4">
               <LocationCombobox
@@ -144,8 +144,10 @@ const SearchBar: React.FunctionComponent<ISearchSearchBarProps> = ({
       </div>
       <div
         className={cn(
-          "mt-4 flex w-full flex-row",
-          bottomLeftSection ? "justify-between" : "justify-end"
+          "flex w-full flex-row md:mt-4",
+          bottomLeftSection
+            ? "justify-center md:justify-between "
+            : "justify-end"
         )}
       >
         {bottomLeftSection}

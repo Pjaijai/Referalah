@@ -23,7 +23,7 @@ const UserTypeSection: React.FunctionComponent<IUserTypeSectionProps> = ({
       <Button
         variant={"base"}
         className={cn(
-          "text-xl",
+          "text-sm md:text-xl",
           currentUserTypes === EUserType.ALL && "text-indigo-600"
         )}
         onClick={() => onUserTypesChange(EUserType.ALL)}
@@ -34,7 +34,7 @@ const UserTypeSection: React.FunctionComponent<IUserTypeSectionProps> = ({
       <Button
         variant={"base"}
         className={cn(
-          "text-xl",
+          "text-sm md:text-xl",
           currentUserTypes === EUserType.REFERRER && "text-indigo-600"
         )}
         onClick={() => onUserTypesChange(EUserType.REFERRER)}
@@ -45,7 +45,7 @@ const UserTypeSection: React.FunctionComponent<IUserTypeSectionProps> = ({
       <Button
         variant={"base"}
         className={cn(
-          "text-xl",
+          "text-sm md:text-xl",
           currentUserTypes === EUserType.REFEREE && "text-indigo-600"
         )}
         onClick={() => onUserTypesChange(EUserType.REFEREE)}
