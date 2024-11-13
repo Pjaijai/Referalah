@@ -124,7 +124,7 @@ export default {
   "general.job_title": "職位/工作名稱",
   "post.create.content_label": "內容",
   "general.industry": "行業",
-  "general.location": "地區",
+  "general.location": "所在地",
   "general.country": "國家",
   "general.region": "地區",
   "general.city": "城市",
@@ -140,6 +140,9 @@ export default {
   "validation.year_of_experience.exceed_range":
     "必須喺0到100之間，如果唔夠用請聯絡我🙇🏻‍♂️",
   "post.edit_post": "編輯街招",
+  "profile.section.basic_info": "基本資料",
+  "profile.section.work_experience": "工作經驗",
+  "profile.section.personal_link": "個人連結",
   "profile.is_referrer.required": "如果想成為推薦人，請填一填",
   "profile.is_referrer_or_referee.required":
     "如果想成為推薦人/受薦人，請填一填",
@@ -154,8 +157,8 @@ export default {
   "profile.form.is_referee_description": "我的訴求就是上班",
   "profile.form.personal_description_label": "個人簡介",
   "profile.form.optional_company_label": "公司名(選填)",
-  "profile.form.optional_region_label": "地區(選填)",
-  "profile.form.optional_city_label": "城市(選填)",
+  "profile.form.optional_region_label": "地區",
+  "profile.form.optional_city_label": "城市",
   "profile.form.job_title_label": "職位/工作名稱",
   "profile.form.optional_personal_social_media_link_label": "個人連結(選填)",
   "profile.form.personal_social_media_link_description":
@@ -249,13 +252,13 @@ export default {
   "auth.form.sign_out.error": "登出出事！",
   "general.view": "查看",
   "general.chat": "對話",
-
+  "general.user_role": "用戶角色",
   "nav.become_member_title": "成為會員",
   "nav.become_member_description": "立即加入，永遠唔會遲！",
   "general.please": "請",
-
   "page.email_verification": "電郵認證",
   "page.profile": "用戶檔案",
+  "page.edit_profile": "編輯用戶檔案",
   "page.sign_up": "註冊",
   "page.sign_up_confirmation": "註冊成功 !",
   "page.sign_in": "登入",
