@@ -292,14 +292,15 @@ export const searchUser = async ({
     })
   }
 
-  if (type !== EUserType.ALL && Object.values(EUserType).includes(type)) {
+  if (type !== EUserType.ALL) {
     if (type === EUserType.REFERRER) {
       query = query.eq("is_referer", true)
-    } else {
+    } else if (type === EUserType.REFEREE) {
       query = query.eq("is_referee", true)
     }
+  } else {
+    query = query.or("is_referer.eq.true,is_referee.eq.true")
   }
-
   if (industries !== undefined) {
     query = query.in("industry_uuid", industries)
   }
