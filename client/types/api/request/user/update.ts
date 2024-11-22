@@ -1,3 +1,5 @@
+import { ISocialLinksData } from "@/types/common/social-links-data"
+
 export interface IUpdateUserProfileRequest {
   avatarUrl?: string
   username: string
@@ -13,4 +15,5 @@ export interface IUpdateUserProfileRequest {
   isReferer: boolean
   isReferee: boolean
   userUuid: string
+  links: ISocialLinksData[]
 }

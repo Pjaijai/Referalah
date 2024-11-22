@@ -16,6 +16,8 @@ interface ICheckBoxProps {
   name: string
   label: string
   description?: string
+  checkBoxClassName?: string
+  labelClassName?: string
 }
 
 const FormCheckBox: React.FunctionComponent<ICheckBoxProps> = ({
@@ -23,6 +25,8 @@ const FormCheckBox: React.FunctionComponent<ICheckBoxProps> = ({
   name,
   label,
   description,
+  checkBoxClassName,
+  labelClassName,
 }) => {
   return (
     <FormField
@@ -31,10 +35,14 @@ const FormCheckBox: React.FunctionComponent<ICheckBoxProps> = ({
       render={({ field }) => (
         <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
           <FormControl>
-            <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+            <Checkbox
+              checked={field.value}
+              onCheckedChange={field.onChange}
+              className={checkBoxClassName}
+            />
           </FormControl>
           <div className="space-y-1 leading-none">
-            <FormLabel>{label}</FormLabel>
+            <FormLabel className={labelClassName}>{label}</FormLabel>
             {description && <FormDescription>{description}</FormDescription>}
           </div>
           <FormMessage />

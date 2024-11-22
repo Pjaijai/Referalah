@@ -145,9 +145,7 @@ const SearchBar: React.FunctionComponent<ISearchSearchBarProps> = ({
       <div
         className={cn(
           "flex w-full flex-row md:mt-4",
-          bottomLeftSection
-            ? "justify-center md:justify-between "
-            : "justify-end"
+          bottomLeftSection ? "justify-between " : "justify-end"
         )}
       >
         {bottomLeftSection}

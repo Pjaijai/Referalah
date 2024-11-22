@@ -4,13 +4,16 @@ import { useI18n } from "@/utils/services/internationalization/client"
 
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
+import { ISocialLinksData } from "@/types/common/social-links-data"
 import { siteConfig } from "@/config/site"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
+import RefereeBadge from "@/components/customized-ui/badges/referee/referee"
+import ReferrerBadge from "@/components/customized-ui/badges/referrer/referrer"
 import ContactButton from "@/components/customized-ui/buttons/contact"
 import ContactRequestCountIcon from "@/components/customized-ui/icons/contact-request-count"
-import { Icons } from "@/components/icons"
+import SocialIconWithTooltip from "@/components/customized-ui/icons/social-icon-with-tooltip"
 
 interface IMemberCardProps {
   uuid: string | null
@@ -29,6 +32,7 @@ interface IMemberCardProps {
   isReferrer: boolean
   isReferee: boolean
   requestCount: number
+  links: ISocialLinksData[]
 }
 
 const MemberCard: React.FunctionComponent<IMemberCardProps> = ({
@@ -48,6 +52,7 @@ const MemberCard: React.FunctionComponent<IMemberCardProps> = ({
   isReferee,
   isReferrer,
   requestCount,
+  links,
 }) => {
   const t = useI18n()
   const router = useRouter()
@@ -74,8 +79,7 @@ const MemberCard: React.FunctionComponent<IMemberCardProps> = ({
   ].filter(Boolean)
 
   return (
-    <Card className="flex h-96 w-[448px] flex-col  bg-white">
-      {/* avatar, username , title, company, desc, url */}
+    <Card className="m-w-[448px] flex h-96 flex-col  bg-white">
       <CardHeader className=" flex flex-row  items-center justify-between ">
         <div className="flex flex-row items-center justify-center gap-2">
           <BaseAvatar
@@ -88,17 +92,9 @@ const MemberCard: React.FunctionComponent<IMemberCardProps> = ({
           </p>
         </div>
 
-        <div className="flex flex-row gap-2">
-          {isReferee && (
-            <div className="py flex items-center justify-center rounded-lg bg-teal-400 px-3 text-white">
-              {t("user.type.referee")}
-            </div>
-          )}
-          {isReferrer && (
-            <div className="py  flex items-center justify-center rounded-lg bg-orange-400 px-3 text-white">
-              {t("user.type.referrer")}
-            </div>
-          )}
+        <div className="flex flex-col-reverse gap-2 md:flex-row">
+          {isReferee && <RefereeBadge />}
+          {isReferrer && <ReferrerBadge />}
         </div>
       </CardHeader>
 
@@ -113,7 +109,7 @@ const MemberCard: React.FunctionComponent<IMemberCardProps> = ({
                 </React.Fragment>
               ))}
             </div>
-            <div className="mt-2 flex flex-row items-center justify-start text-xs font-medium">
+            <div className="mt-2 flex flex-wrap items-center justify-start text-xs font-medium">
               {info.map((i, index) => (
                 <React.Fragment key={index}>
                   {index > 0 && <span className="mx-2">•</span>}
@@ -130,12 +126,19 @@ const MemberCard: React.FunctionComponent<IMemberCardProps> = ({
             size="medium"
           />
         </div>
-        <p className="mt-8 line-clamp-2 h-12 w-[400px] overflow-hidden text-ellipsis break-words  text-sm font-normal leading-6">
+        <p className="mt-4 line-clamp-2 h-12 w-[400px] overflow-hidden text-ellipsis break-words text-sm  font-normal leading-6 md:mt-8">
           {description}
         </p>
 
-        <div className="flex h-16 flex-row items-center justify-start ">
-          <Icons.link />
+        <div className="m-3 flex w-full flex-row gap-3 ">
+          {links.map((s, index) => (
+            <SocialIconWithTooltip
+              type={s.type}
+              url={s.url}
+              name={s.name}
+              key={index}
+            />
+          ))}
         </div>
         {/* quick actions  */}
         <div className="flex w-full flex-row items-center justify-end  gap-2 p-2">

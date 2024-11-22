@@ -148,42 +148,42 @@ const MemberSearchPageTemplate: React.FunctionComponent<
         >
           <div className="mx-auto grid w-full max-w-sm grid-cols-1 gap-4 md:mt-8 md:max-w-none md:grid-cols-2 lg:grid-cols-3">
             {list.map((user) => (
-              <div className="flex justify-center" key={user.uuid}>
-                <MemberCard
-                  requestCount={user.contact_request_count}
-                  jobTitle={user.job_title}
-                  username={user.username}
-                  photoUrl={user.avatar_url}
-                  companyName={user.company_name}
-                  description={user.description}
-                  socialMediaUrl={user.social_media_url}
-                  yearOfExperience={user.year_of_experience}
-                  uuid={user.uuid}
-                  receiverType={EReferralType.REFERRER}
-                  province={
-                    locale === "zh-hk"
-                      ? user.province && user.province.cantonese_name
-                      : user.province && user.province.english_name
-                  }
-                  country={
-                    locale === "zh-hk"
-                      ? user.country && user.country.cantonese_name
-                      : user.country && user.country.english_name
-                  }
-                  city={
-                    locale === "zh-hk"
-                      ? user.city && user.city.cantonese_name
-                      : user.city && user.city.english_name
-                  }
-                  industry={
-                    locale === "zh-hk"
-                      ? user.industry && user.industry.cantonese_name
-                      : user.industry && user.industry.english_name
-                  }
-                  isReferee={user.is_referee}
-                  isReferrer={user.is_referer}
-                />
-              </div>
+              <MemberCard
+                key={user.uuid}
+                requestCount={user.contact_request_count}
+                jobTitle={user.job_title}
+                username={user.username}
+                photoUrl={user.avatar_url}
+                companyName={user.company_name}
+                description={user.description}
+                socialMediaUrl={user.social_media_url}
+                yearOfExperience={user.year_of_experience}
+                uuid={user.uuid}
+                receiverType={EReferralType.REFERRER}
+                province={
+                  locale === "zh-hk"
+                    ? user.province && user.province.cantonese_name
+                    : user.province && user.province.english_name
+                }
+                country={
+                  locale === "zh-hk"
+                    ? user.country && user.country.cantonese_name
+                    : user.country && user.country.english_name
+                }
+                city={
+                  locale === "zh-hk"
+                    ? user.city && user.city.cantonese_name
+                    : user.city && user.city.english_name
+                }
+                industry={
+                  locale === "zh-hk"
+                    ? user.industry && user.industry.cantonese_name
+                    : user.industry && user.industry.english_name
+                }
+                isReferee={user.is_referee}
+                isReferrer={user.is_referer}
+                links={user.links}
+              />
             ))}
           </div>
         </BaseInfiniteScroll>

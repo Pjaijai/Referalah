@@ -7,7 +7,7 @@ interface IBaseAvatar {
   url?: string
   alt: string | null
   fallBack: string | null
-  size?: "large" | "medium"
+  size?: "large" | "medium" | "veryLarge"
   className?: string
 }
 const BaseAvatar: React.FunctionComponent<IBaseAvatar> = ({
@@ -23,6 +23,7 @@ const BaseAvatar: React.FunctionComponent<IBaseAvatar> = ({
         size === "large" && "h-24 w-24 text-2xl",
 
         size === "medium" && "h-12 w-12 text-2xl",
+        size === "veryLarge" && "h-44 w-44 text-3xl",
         className
       )}
     >

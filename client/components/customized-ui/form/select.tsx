@@ -18,9 +18,10 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { IFormTextInputProps } from "@/components/customized-ui/form/input"
+import { ISelectOption } from "@/components/customized-ui/selects/base"
 
 interface IFormSelectProps extends IFormTextInputProps {
-  options: { value: string; label: string }[]
+  options: ISelectOption[]
   defaultValue?: string
   isDisabled?: boolean
   triggerClassName?: string

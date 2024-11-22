@@ -8,6 +8,7 @@ import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IProvinceResponse } from "@/types/api/response/province"
 import { IUserResponse } from "@/types/api/response/user"
+import { cn } from "@/lib/utils"
 import useCityOptions from "@/hooks/common/options/city-options"
 import useCountryOptions from "@/hooks/common/options/country-options"
 import useProvinceOptions from "@/hooks/common/options/province-options"
@@ -28,6 +29,8 @@ interface IBasicInfoSectionProps {
   cityList: ICityResponse[]
   provinceWatchValue: any
   countryWatchValue: any
+  isReferrerChecked: boolean
+  isRefereeChecked: boolean
 }
 const BasicInfoSection: React.FunctionComponent<IBasicInfoSectionProps> = ({
   base64Image,
@@ -39,6 +42,8 @@ const BasicInfoSection: React.FunctionComponent<IBasicInfoSectionProps> = ({
   provinceWatchValue,
   countryWatchValue,
   cityList,
+  isReferrerChecked,
+  isRefereeChecked,
 }) => {
   const t = useI18n()
 
@@ -88,21 +93,35 @@ const BasicInfoSection: React.FunctionComponent<IBasicInfoSectionProps> = ({
 
           <div className="flex flex-col gap-2">
             <label>{t("general.user_role")}</label>
-            <div className="w-full bg-white">
+            <div
+              className={cn(
+                "w-full",
+                isReferrerChecked ? " bg-orange-50" : " bg-white"
+              )}
+            >
               <FormCheckBox
                 control={form.control}
                 label={t("general.referrer")}
                 name="isReferer"
                 description={t("profile.form.is_referrer_description")}
+                checkBoxClassName="data-[state=checked]:bg-orange-500"
+                labelClassName="text-orange-500"
               />
             </div>
 
-            <div className="w-full bg-white">
+            <div
+              className={cn(
+                "w-full",
+                isRefereeChecked ? " bg-teal-50" : " bg-white"
+              )}
+            >
               <FormCheckBox
                 control={form.control}
                 label={t("general.talent")}
                 name="isReferee"
                 description={t("profile.form.is_referee_description")}
+                checkBoxClassName="data-[state=checked]:bg-teal-500"
+                labelClassName="text-teal-500"
               />
             </div>
           </div>

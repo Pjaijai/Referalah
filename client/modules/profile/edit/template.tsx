@@ -3,9 +3,8 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { StaticImport } from "next/dist/shared/lib/get-img-props"
 import { useRouter } from "next/navigation"
-import SocialLinksFieldArray from "@/modules/profile/components/form/social-links-field-array"
 import BasicInfoSection from "@/modules/profile/components/sections/basic-info/basic-info"
-import PersonalLinksSection from "@/modules/profile/components/sections/personal-links/personal-links"
+import SocialLinksSection from "@/modules/profile/components/sections/social-links/social-links"
 import WorkExperienceSection from "@/modules/profile/components/sections/work-experience/work-experience"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { supabase } from "@/utils/services/supabase/config"
@@ -21,6 +20,7 @@ import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
 import { EQueryKeyString } from "@/types/common/query-key-string"
+import { ESocialLink, socialLinkValues } from "@/types/common/social-links"
 import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
 import useUpdateUserProfile from "@/hooks/api/user/update-user-profile"
@@ -52,9 +52,27 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     useGetUserprofile(userUuid)
 
   const linkSchema = z.object({
-    url: z.string().url("Invalid URL"),
-    type: z.enum(["linkedin", "instagram", "x", "github", "other"]),
+    url: z
+      .string()
+      .url("Invalid URL")
+      .trim()
+      .max(20000, {
+        message: t("validation.text.maximum_length", { count: 20000 }),
+      })
+      .url({
+        message: t("validation.link.not_valid"),
+      }),
+
+    type: z.enum(socialLinkValues),
+    name: z
+      .string()
+      .max(100)
+      .trim()
+      .transform((val) => (val === "" ? null : val))
+      .nullable()
+      .optional(),
   })
+
   const formSchema = z
     .object({
       photoUrl: z.any().optional(),
@@ -106,7 +124,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       industryUuid: z.string().min(1, {
         message: t("validation.field_required"),
       }),
-      // links: z.array(linkSchema),
+      links: z.array(linkSchema).max(5),
       yearOfExperience: z
         .string()
         .optional()
@@ -182,13 +200,22 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         isReferer: profile?.is_referer || false,
         isReferee: profile?.is_referee || false,
         industryUuid: profile?.industry?.uuid || undefined,
+        links: profile?.links || [],
       }
 
       return res
     }, [profile, isProfileLoading]),
   })
 
-  const { watch, setValue, reset } = form
+  const {
+    watch,
+    setValue,
+    reset,
+    control,
+    formState: { errors },
+  } = form
+  const linkw = watch("links")
+  console.log(999, errors, linkw)
 
   useEffect(() => {
     if (profile) {
@@ -227,6 +254,9 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   const countryWatch = watch("countryUuid")
   const provinceWatch = watch("provinceUuid")
   const yearOfExperienceWatch = watch("yearOfExperience")
+
+  const isReferrerWatch = watch("isReferer")
+  const isRefereeWatch = watch("isReferee")
 
   const countryOptions = useCountryOptions(countryList)
   const provinceOptions = useProvinceOptions(provinceList, countryWatch)
@@ -309,6 +339,14 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         photoUrl = imageUrl.publicUrl
       }
 
+      const mappedLinks = values.links.map((data) => {
+        const trimmedName = data.name ? data.name.trim() : null
+        return {
+          ...data,
+          name: data.type === ESocialLink.CUSTOM ? trimmedName || null : null,
+        }
+      })
+
       const updateUserRequest: IUpdateUserProfileRequest = {
         avatarUrl: photoUrl,
         username: values.username.trim(),
@@ -322,7 +360,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         provinceUuid: values?.provinceUuid?.length ? values.provinceUuid : null,
         cityUuid: values?.cityUuid?.length ? values.cityUuid : null,
         industryUuid: values.industryUuid,
-        socialMediaUrl: values.socialMediaUrl?.trim(),
+        links: mappedLinks,
         isReferer: values.isReferer,
         isReferee: values.isReferee,
         userUuid: user.uuid!,
@@ -378,8 +416,6 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   if (!profile) return
   return (
     <div className="relative mt-4  flex h-full w-full flex-col md:mt-12 ">
-      {/* <SocialLinksFieldArray control={control} name="links" /> */}
-
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -395,11 +431,13 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             countryList={countryList}
             countryWatchValue={countryWatch}
             provinceWatchValue={provinceWatch}
+            isReferrerChecked={isReferrerWatch}
+            isRefereeChecked={isRefereeWatch}
           />
 
           <WorkExperienceSection form={form} industryList={industryList} />
 
-          <PersonalLinksSection form={form} />
+          <SocialLinksSection control={control} name={"links"} />
 
           <div className="mt-12 flex flex-col items-center justify-center gap-8">
             <Button
