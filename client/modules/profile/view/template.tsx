@@ -1,22 +1,22 @@
 "use client"
 
 import React from "react"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
-import InfoCard from "@/modules/profile/components/cards/Info"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { supabase } from "@/utils/services/supabase/config"
 
+import { EMessageType } from "@/types/common/message-type"
+import { EReferralType } from "@/types/common/referral-type"
+import { ISocialLinksData } from "@/types/common/social-links-data"
 import { siteConfig } from "@/config/site"
-import { cn } from "@/lib/utils"
 import useUserStore from "@/hooks/state/user/store"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Separator } from "@/components/ui/separator"
+import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
-import ContactRequestCountIcon from "@/components/customized-ui/icons/contact-request-count"
-import LocationDisplay from "@/components/customized-ui/info-display/location"
+import RefereeBadge from "@/components/customized-ui/badges/referee/referee"
+import ReferrerBadge from "@/components/customized-ui/badges/referrer/referrer"
+import ContactButton from "@/components/customized-ui/buttons/contact"
+import SocialIconWithTooltip from "@/components/customized-ui/icons/social-icon-with-tooltip"
 import { Icons } from "@/components/icons"
 
 export interface IViewProfileTemplateProps {
@@ -30,11 +30,12 @@ export interface IViewProfileTemplateProps {
   province: string | null
   industry: string | null
   city: string | null
-  socialMediaUrl: string | null
+  socialLinks: ISocialLinksData[]
   isReferer: boolean
   isReferee: boolean
   slug: string
   requestCount: number
+  postCount: number
 }
 const ViewProfileTemplate: React.FunctionComponent<
   IViewProfileTemplateProps
@@ -48,12 +49,13 @@ const ViewProfileTemplate: React.FunctionComponent<
   country,
   province,
   city,
-  socialMediaUrl,
+  socialLinks,
   industry,
   isReferer,
   isReferee,
   slug,
   requestCount,
+  postCount,
 }) => {
   const t = useI18n()
   const userUuid = useUserStore((state) => state.uuid)
@@ -81,148 +83,294 @@ const ViewProfileTemplate: React.FunctionComponent<
       })
     }
   }
+
+  const professionalInfo = [jobTitle, company ? ` @ ${company}` : null].filter(
+    Boolean
+  )
+
+  const location = [city, province, country].filter(Boolean)
+
+  {
+    /* {isViewingOwnProfile && (
+          <div className="mt-2 flex w-full items-center justify-center ">
+            <Button
+              className="mt-4 flex w-full max-w-lg cursor-pointer justify-center gap-4  text-destructive hover:text-destructive dark:border-2 dark:border-destructive dark:font-semibold md:w-1/2"
+              onClick={handleSignOut}
+              variant={"outline"}
+            >
+              <Icons.logOut size={18} />
+              {t("general.sign_out")}
+            </Button>
+          </div>
+        )} */
+  }
+
   return (
     <>
-      <div className="relative mt-4 flex h-full flex-col items-center justify-between rounded-lg border border-muted bg-white p-6 pb-12 md:mt-12">
-        {isViewingOwnProfile && (
-          <button
-            onClick={() => {
-              router.push(siteConfig.page.editProfile.href)
-            }}
-            className="absolute right-4 flex w-fit items-center justify-center rounded-full border bg-slate-50 p-3 dark:bg-black"
-          >
-            <Icons.pencil size={15} />
-          </button>
-        )}
-        <div className="flex w-full flex-col gap-y-2">
-          <div className="flex justify-center">
-            <BaseAvatar
-              url={photoUrl}
-              alt={username}
-              fallBack={username && username[0]}
-              size="large"
-            />
-          </div>
+      <div>
+        <div className="relative">
+          <div className="h-28  bg-slate-100" />
 
-          <h5 className="text-center text-3xl font-semibold ">{username}</h5>
-
-          <div className="flex flex-row justify-center gap-2 text-center text-xl">
-            {jobTitle && <h5>{jobTitle}</h5>}
-            {company && <h5>@</h5>}
-            {company && <h5>{company}</h5>}
-          </div>
-
-          <li className="flex w-full flex-wrap justify-center gap-2">
-            <LocationDisplay
-              city={city}
-              province={province}
-              country={country}
-              className="text-lg"
-            />
-          </li>
-
-          {requestCount > 0 && (
-            <div className="flex flex-row justify-center">
-              <ContactRequestCountIcon count={requestCount} />
-            </div>
-          )}
-
-          <div className="mt-4 flex w-full items-center justify-center ">
-            {socialMediaUrl && (
-              <Link
-                rel="noopener noreferrer nofollow"
-                target="_blank"
-                href={socialMediaUrl}
-                className={
-                  "flex w-fit items-center justify-center rounded-full border p-3"
-                }
+          <div className="absolute right-6 top-4 md:hidden">
+            {isViewingOwnProfile && (
+              <button
+                onClick={() => {
+                  router.push(siteConfig.page.editProfile.href)
+                }}
+                className="flex flex-row items-center justify-center gap-2 rounded-md bg-white p-3 text-slate-500 shadow-md"
               >
-                <Icons.link size={18} />
-              </Link>
+                <Icons.pencil size={15} />
+                <span>{t("profile.view.edit_profile")}</span>
+              </button>
             )}
           </div>
 
-          <div className="mt-2 flex w-full items-center justify-center">
-            <Link
-              className={cn(
-                buttonVariants({ variant: "outline" }),
-                "w-full max-w-lg"
-              )}
-              href={`${siteConfig.page.postHistory.href}/${slug}`}
-            >
-              {t("page.post_history")}
-            </Link>
+          <div className="relative px-4 pt-4 md:px-12">
+            {/* Added padding-top */}
+            <div className="absolute -top-24 left-4 md:-top-12 md:left-12">
+              {/* Positioned avatar */}
+              <BaseAvatar
+                url={photoUrl}
+                alt={username}
+                fallBack={username && username[0]}
+                size="veryLarge"
+              />
+            </div>
+
+            {/* Desktop */}
+            <div className="hidden flex-row md:flex ">
+              <div className="w-48" /> {/* Spacer for avatar */}
+              <div className="ml-4 flex w-full flex-col ">
+                <div className="flex flex-row items-center justify-between">
+                  <div className="flex flex-col">
+                    <div className="flex flex-row">
+                      <div className="flex flex-wrap items-center justify-start text-2xl font-semibold">
+                        {professionalInfo.map((i, index) => (
+                          <React.Fragment key={index}>
+                            <span />
+                            <span>{i}</span>
+                          </React.Fragment>
+                        ))}
+                      </div>
+
+                      <div className="ml-4 flex flex-row gap-2">
+                        {isReferer && <ReferrerBadge />}
+                        {isReferee && <RefereeBadge />}
+                      </div>
+                    </div>
+
+                    <h5 className="text-lg font-semibold text-slate-400">
+                      {username}
+                    </h5>
+                  </div>
+
+                  {isViewingOwnProfile && (
+                    <button
+                      onClick={() => {
+                        router.push(siteConfig.page.editProfile.href)
+                      }}
+                      className="flex flex-row items-center justify-center gap-2 rounded-md bg-white p-3 text-slate-500 shadow-md"
+                    >
+                      <Icons.pencil size={15} />
+                      <span>{t("profile.view.edit_profile")}</span>
+                    </button>
+                  )}
+                </div>
+
+                <div className="mt-4 flex flex-row items-end gap-4">
+                  {industry && (
+                    <div className="flex flex-row items-center gap-2">
+                      <Icons.industry className="text-indigo-600" /> {industry}
+                    </div>
+                  )}
+
+                  {typeof yearOfExperience === "number" && (
+                    <div className="flex flex-row items-center gap-2">
+                      <Icons.yearsOfExperience className="text-indigo-600" />
+                      {t("general.year_of_experience_count", {
+                        count: yearOfExperience,
+                      })}
+                    </div>
+                  )}
+                  {location.length > 0 && (
+                    <div className="flex flex-row items-center gap-2">
+                      <Icons.location className="text-indigo-600" />
+
+                      <div className="flex flex-row">
+                        {location.map((lo, index) => (
+                          <React.Fragment key={index}>
+                            {index > 0 && <>,</>}
+                            <span className="ml-1">{lo}</span>
+                          </React.Fragment>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile */}
+            <div className="flex w-full flex-row  md:hidden">
+              <div className="flex flex-col">
+                <div className="flex-row\ flex">
+                  <div className="w-44" />
+                  <div className="flex w-full flex-row justify-end gap-2 px-4">
+                    {isReferer && <ReferrerBadge />}
+                    {isReferee && <RefereeBadge />}
+                  </div>
+                </div>
+
+                <div className="mt-12 flex flex-wrap items-center justify-start text-2xl font-semibold">
+                  {professionalInfo.map((i, index) => (
+                    <React.Fragment key={index}>
+                      <span />
+                      <span>{i}</span>
+                    </React.Fragment>
+                  ))}
+                </div>
+                <h5 className="text-lg font-semibold text-slate-400">
+                  {username}
+                </h5>
+
+                <div className="mt-4 flex flex-col items-start gap-4">
+                  {industry && (
+                    <div className="flex flex-row items-center gap-2">
+                      <Icons.industry className="text-indigo-600" /> {industry}
+                    </div>
+                  )}
+
+                  {typeof yearOfExperience === "number" && (
+                    <div className="flex flex-row items-center gap-2">
+                      <Icons.yearsOfExperience className="text-indigo-600" />
+                      {t("general.year_of_experience_count", {
+                        count: yearOfExperience,
+                      })}
+                    </div>
+                  )}
+                  {location.length > 0 && (
+                    <div className="flex flex-row items-center gap-2">
+                      <Icons.location className="text-indigo-600" />
+
+                      <div className="flex flex-row">
+                        {location.map((lo, index) => (
+                          <React.Fragment key={index}>
+                            {index > 0 && <>,</>}
+                            <span className="ml-1">{lo}</span>
+                          </React.Fragment>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
 
-          <Separator className="mt-8" />
+        <div className="flex flex-col-reverse justify-between p-4 md:flex-row md:gap-10 md:p-12">
+          {/* introduction */}
 
-          <h2 className="mt-8 text-center text-xl">{t("general.user_type")}</h2>
+          <div className="mt-8 w-full md:mt-0 md:w-1/2">
+            <h1 className="text-xl font-semibold text-slate-500">
+              {t("profile.view.introduction")}
+            </h1>
 
-          <div className="mt-2 flex w-full justify-center gap-2">
-            <InfoCard>
-              <Checkbox checked={isReferer} />
-              <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                {t("general.referrer")}
-              </label>
-              <p className="text-center text-sm text-muted-foreground">
-                {t("profile.form.is_referrer_description")}
-              </p>
-            </InfoCard>
-
-            <InfoCard>
-              <Checkbox checked={isReferee} />
-              <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                {t("general.talent")}
-              </label>
-              <p className="text-center text-sm text-muted-foreground">
-                {t("profile.form.is_referee_description")}
-              </p>
-            </InfoCard>
-          </div>
-
-          <h2 className="mt-8 text-center text-xl">
-            {t("general.work_experience")}
-          </h2>
-          <div className="mt-2 flex  w-full justify-center  gap-2">
-            <InfoCard>
-              <Icons.briefcase />
-              <p className="text-center">{industry}</p>
-            </InfoCard>
-
-            {typeof yearOfExperience === "number" && yearOfExperience >= 0 && (
-              <InfoCard>
-                <Icons.calendarDays />
-                <p className="text-center">
-                  {t("general.year", {
-                    count: yearOfExperience,
-                  })}
-                </p>
-              </InfoCard>
-            )}
-          </div>
-
-          <h2 className="mt-8 text-center text-xl">
-            {t("general.personal_profile")}
-          </h2>
-          <div className="container mt-8 text-center">
-            <div className="inline-block whitespace-pre-wrap break-normal text-left text-slate-900 dark:text-slate-50 ">
+            <p className="border-1 mt-4 min-h-max overflow-hidden break-words rounded-lg bg-white p-8">
               {description}
+            </p>
+          </div>
+
+          <div className="w-full md:w-1/2  ">
+            {/* Community */}
+
+            <div>
+              <h1 className="mt-8 text-xl font-semibold text-slate-500 md:mt-0">
+                {t("profile.view.community")}
+              </h1>
+
+              <div className="border-1 mt-4 flex flex-row items-center justify-around rounded-lg bg-white p-8">
+                <div className="flex flex-col gap-2  md:flex-row ">
+                  <div className="w-fit rounded-xl bg-indigo-50 p-4">
+                    <Icons.coffee className="text-indigo-600" size={40} />
+                  </div>
+
+                  <div className="h-18 flex flex-col justify-between">
+                    <div className="flex grow items-center justify-center">
+                      <p className="text-3xl font-semibold">{requestCount}</p>
+                    </div>
+                    <p className="text-center text-xs text-indigo-400">
+                      Coffee Chat
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col  gap-2  md:flex-row ">
+                  <div className="w-fit rounded-xl bg-amber-50 p-4">
+                    <Icons.clipboard className="text-amber-600" size={40} />
+                  </div>
+
+                  <div className="h-18 flex flex-col justify-between">
+                    <div className="flex grow items-center justify-center">
+                      <p className="text-3xl font-semibold">{postCount}</p>
+                    </div>
+                    <p className="text-center text-xs text-amber-400">
+                      {t("general.post")}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Social */}
+
+            <div className="mt-12">
+              <h1 className="text-xl font-semibold text-slate-500">
+                {t("profile.section.social_links")}
+              </h1>
+              <div className="mt-8 flex flex-row justify-center gap-8 md:justify-start">
+                {socialLinks.map((s, index) => (
+                  <SocialIconWithTooltip
+                    type={s.type}
+                    url={s.url}
+                    name={s.name}
+                    key={index}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
-      {isViewingOwnProfile && (
-        <div className="mt-2 flex w-full items-center justify-center ">
-          <Button
-            className="mt-4 flex w-full max-w-lg cursor-pointer justify-center gap-4  text-destructive hover:text-destructive dark:border-2 dark:border-destructive dark:font-semibold md:w-1/2"
-            onClick={handleSignOut}
-            variant={"outline"}
-          >
-            <Icons.logOut size={18} />
-            {t("general.sign_out")}
-          </Button>
+      <div className="mt-20 md:mt-0" />
+      <div className="fixed bottom-0 h-20 w-screen bg-white px-4 py-2">
+        <div className="flex  h-full items-center justify-center gap-2 md:justify-end">
+          {typeof postCount === "number" && postCount > 0 && (
+            <Button
+              size={"lg"}
+              variant={"outline"}
+              className="w-52 gap-2 border-slate-600 text-base font-medium text-slate-600"
+              onClick={() => {
+                router.push(`${siteConfig.page.postHistory.href}/${userUuid}`)
+              }}
+            >
+              <Icons.clipboard size={16} />
+              <p className="shrink-0">{t("general.post_history")}</p>
+            </Button>
+          )}
+
+          {(isReferee || isReferer) && (
+            <ContactButton
+              username={username || "?"}
+              toUuid={slug}
+              messageType={EMessageType.REFERRAL}
+              receiverType={EReferralType.REFEREE}
+              buttonClassName="w-52 gap-2 h-11 bg-indigo-600 text-base font-medium text-white"
+              showIcon
+            />
+          )}
         </div>
-      )}
+      </div>
     </>
   )
 }

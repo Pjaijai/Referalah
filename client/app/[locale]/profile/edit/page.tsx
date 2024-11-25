@@ -21,7 +21,7 @@ const EditProfilePage = async () => {
   const t = await getI18n()
   return (
     <AuthenticatedPageWrapper>
-      <CommonPageLayout title={t("page.edit_profile")} titlePosition="middle">
+      <CommonPageLayout title={t("page.edit_profile")}>
         <EditProfileTemplate
           cityList={cityList}
           countryList={countryList}

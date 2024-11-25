@@ -20,6 +20,7 @@ const buttonVariants = cva(
         link: "underline-offset-4 underline text-primary",
         base: "",
         theme: "bg-indigo-600 text-white",
+        themeSecondary: "text-indigo-600",
       },
       size: {
         default: "h-10 py-2 px-4",

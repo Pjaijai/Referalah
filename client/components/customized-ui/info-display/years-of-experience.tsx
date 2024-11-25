@@ -4,6 +4,7 @@ import { useI18n } from "@/utils/services/internationalization/client"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 
+// TODO: Remove
 interface IYearsOfExperienceDisplayProps {
   yearOfExperience: number
   className?: string

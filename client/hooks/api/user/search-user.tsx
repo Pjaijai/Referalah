@@ -45,7 +45,7 @@ const search = ({
     },
   ]
 }) => {
-  const NUMBER_OF_DATE_PER_FETCH = 5
+  const NUMBER_OF_DATE_PER_FETCH = 6
   const queryKeyItem = queryKey[1]
   const { filterMeta, sorting } = queryKeyItem
   const industries = filterMeta.industries

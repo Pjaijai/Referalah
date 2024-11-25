@@ -12,7 +12,16 @@ import { Icons } from "@/components/icons"
 const NavFooter = () => {
   const t = useI18n()
   const pathname = usePathname()
-  const noShowFooter = pathname.includes(siteConfig.page.chat.href)
+
+  const hideFooterPageList = [
+    siteConfig.page.chat.href,
+    siteConfig.page.profile.href,
+    siteConfig.page.editProfile.href,
+  ]
+
+  const noShowFooter = hideFooterPageList.some((path) =>
+    pathname.includes(path)
+  )
   return (
     <footer
       className={cn(

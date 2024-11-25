@@ -86,6 +86,13 @@ serve(async (req: any) => {
       })
     }
 
+    if (!receiver.is_referee && !receiver.is_referee) {
+      return new Response("Not allowed to contact this user", {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 500,
+      })
+    }
+
     if (sender.uuid === receiver.uuid) {
       return new Response("Same user", {
         headers: { ...corsHeaders, "Content-Type": "application/json" },

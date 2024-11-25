@@ -1,3 +1,5 @@
+import { ISocialLinksData } from "@/types/common/social-links-data"
+
 export interface IUserResponse {
   uuid: string
   email: string
@@ -29,9 +31,10 @@ export interface IUserResponse {
     cantonese_name: string
     english_name: string
   } | null
-  // resume_url: string | null
   social_media_url: string | null
   is_referer: boolean
   is_referee: boolean
   contact_request_count: number
+  links: ISocialLinksData[]
+  post_count: { count: number }[]
 }

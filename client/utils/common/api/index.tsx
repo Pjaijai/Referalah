@@ -68,7 +68,9 @@ export const getUserProfile = async (userUuid: string) => {
       ),
       is_referer,
       is_referee,
-      contact_request_count
+      contact_request_count,
+      links,
+      post_count:post(count)
       `
       )
       .eq("uuid", userUuid)
@@ -216,7 +218,7 @@ export const updateUserProfile = async (req: IUpdateUserProfileRequest) => {
       province_uuid: req.provinceUuid,
       city_uuid: req.cityUuid,
       industry_uuid: req.industryUuid,
-      social_media_url: req.socialMediaUrl,
+      links: req.links,
       is_referer: req.isReferer,
       is_referee: req.isReferee,
     })
@@ -278,7 +280,8 @@ export const searchUser = async ({
             ),
             is_referer,
             is_referee,
-            contact_request_count
+            contact_request_count,
+            links
           `
     )
     .gte("year_of_experience", experience)
@@ -292,14 +295,15 @@ export const searchUser = async ({
     })
   }
 
-  if (type !== EUserType.ALL && Object.values(EUserType).includes(type)) {
+  if (type !== EUserType.ALL) {
     if (type === EUserType.REFERRER) {
       query = query.eq("is_referer", true)
-    } else {
+    } else if (type === EUserType.REFEREE) {
       query = query.eq("is_referee", true)
     }
+  } else {
+    query = query.or("is_referer.eq.true,is_referee.eq.true")
   }
-
   if (industries !== undefined) {
     query = query.in("industry_uuid", industries)
   }

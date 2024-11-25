@@ -35,7 +35,8 @@
     "supabase/functions/ contact-through-post/index.ts",
     "supabase/functions/sendEmail/index.ts",
     "supabase/functions/_shared/cors.ts",
-    "supabase/functions/_shared/client.ts"
+    "supabase/functions/_shared/client.ts",
+    "components/customized-ui/badges/referrer"
   ],
   "exclude": ["node_modules"]
 }

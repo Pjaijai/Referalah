@@ -12,7 +12,6 @@ import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
 import useUserStore from "@/hooks/state/user/store"
 import { Icons } from "@/components/icons"
-import CommonPageLayout from "@/components/layouts/common"
 
 interface IProfileTemplateProps {
   userUuid?: string
@@ -61,41 +60,40 @@ const ProfileTemplate: React.FunctionComponent<IProfileTemplateProps> = (
     )
   if (!isLoading && profile)
     return (
-      <CommonPageLayout title={t("page.profile")} titlePosition="middle">
-        <ViewProfileTemplate
-          photoUrl={profile.avatar_url || undefined}
-          username={profile.username}
-          description={profile.description}
-          company={profile.company_name}
-          jobTitle={profile.job_title}
-          yearOfExperience={profile.year_of_experience}
-          socialMediaUrl={profile.social_media_url}
-          isReferee={profile.is_referee}
-          isReferer={profile.is_referer}
-          slug={userUuid}
-          province={
-            locale === "zh-hk"
-              ? profile.province && profile.province.cantonese_name
-              : profile.province && profile.province.english_name
-          }
-          country={
-            locale === "zh-hk"
-              ? profile.country && profile.country.cantonese_name
-              : profile.country && profile.country.english_name
-          }
-          city={
-            locale === "zh-hk"
-              ? profile.city && profile.city.cantonese_name
-              : profile.city && profile.city.english_name
-          }
-          industry={
-            locale === "zh-hk"
-              ? profile.industry && profile.industry.cantonese_name
-              : profile.industry && profile.industry.english_name
-          }
-          requestCount={profile.contact_request_count}
-        />
-      </CommonPageLayout>
+      <ViewProfileTemplate
+        photoUrl={profile.avatar_url || undefined}
+        username={profile.username}
+        description={profile.description}
+        company={profile.company_name}
+        jobTitle={profile.job_title}
+        yearOfExperience={profile.year_of_experience}
+        socialLinks={profile.links}
+        isReferee={profile.is_referee}
+        isReferer={profile.is_referer}
+        slug={userUuid}
+        province={
+          locale === "zh-hk"
+            ? profile.province && profile.province.cantonese_name
+            : profile.province && profile.province.english_name
+        }
+        country={
+          locale === "zh-hk"
+            ? profile.country && profile.country.cantonese_name
+            : profile.country && profile.country.english_name
+        }
+        city={
+          locale === "zh-hk"
+            ? profile.city && profile.city.cantonese_name
+            : profile.city && profile.city.english_name
+        }
+        industry={
+          locale === "zh-hk"
+            ? profile.industry && profile.industry.cantonese_name
+            : profile.industry && profile.industry.english_name
+        }
+        requestCount={profile.contact_request_count}
+        postCount={profile.post_count[0].count}
+      />
     )
 
   return <></>

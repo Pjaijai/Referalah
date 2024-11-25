@@ -2,6 +2,7 @@
 
 import React from "react"
 import UserSearchBar from "@/modules/member/components/bars/search"
+import MemberCard from "@/modules/member/components/cards/member/member"
 import {
   useCurrentLocale,
   useI18n,
@@ -16,7 +17,6 @@ import { EReferralType } from "@/types/common/referral-type"
 import useSearchUser from "@/hooks/api/user/search-user"
 import useReferralSortOptions from "@/hooks/common/sort/referral-sort-options"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
-import ReferralCard from "@/components/customized-ui/cards/referral"
 import TextInput from "@/components/customized-ui/inputs/text"
 import BaseSelect from "@/components/customized-ui/selects/base"
 import FilterSheet from "@/components/customized-ui/sheets/filter"
@@ -136,7 +136,7 @@ const MemberSearchPageTemplate: React.FunctionComponent<
 
       {!isLoading && list.length > 0 && (
         <BaseInfiniteScroll
-          dataLength={list ? list.length : 0} //This is important field to render the next data
+          dataLength={list ? list.length : 0}
           next={fetchNextPage}
           hasMore={
             data
@@ -146,46 +146,45 @@ const MemberSearchPageTemplate: React.FunctionComponent<
               : true
           }
         >
-          <div className="xs:grid-cols-1 grid w-full gap-6 overflow-hidden sm:grid-cols-2 md:mt-8 lg:grid-cols-3">
-            {list.map((user) => {
-              return (
-                <ReferralCard
-                  requestCount={user.contact_request_count}
-                  jobTitle={user.job_title}
-                  username={user.username}
-                  photoUrl={user.avatar_url}
-                  companyName={user.company_name}
-                  description={user.description}
-                  socialMediaUrl={user.social_media_url}
-                  yearOfExperience={user.year_of_experience}
-                  uuid={user.uuid}
-                  key={user.uuid}
-                  receiverType={EReferralType.REFERRER}
-                  province={
-                    locale === "zh-hk"
-                      ? user.province && user.province.cantonese_name
-                      : user.province && user.province.english_name
-                  }
-                  country={
-                    locale === "zh-hk"
-                      ? user.country && user.country.cantonese_name
-                      : user.country && user.country.english_name
-                  }
-                  city={
-                    locale === "zh-hk"
-                      ? user.city && user.city.cantonese_name
-                      : user.city && user.city.english_name
-                  }
-                  industry={
-                    locale === "zh-hk"
-                      ? user.industry && user.industry.cantonese_name
-                      : user.industry && user.industry.english_name
-                  }
-                  isReferee={user.is_referee}
-                  isReferrer={user.is_referer}
-                />
-              )
-            })}
+          <div className="mx-auto grid w-full max-w-sm grid-cols-1 gap-4 md:mt-8 md:max-w-none md:grid-cols-2 lg:grid-cols-3">
+            {list.map((user) => (
+              <MemberCard
+                key={user.uuid}
+                requestCount={user.contact_request_count}
+                jobTitle={user.job_title}
+                username={user.username}
+                photoUrl={user.avatar_url}
+                companyName={user.company_name}
+                description={user.description}
+                socialMediaUrl={user.social_media_url}
+                yearOfExperience={user.year_of_experience}
+                uuid={user.uuid}
+                receiverType={EReferralType.REFERRER}
+                province={
+                  locale === "zh-hk"
+                    ? user.province && user.province.cantonese_name
+                    : user.province && user.province.english_name
+                }
+                country={
+                  locale === "zh-hk"
+                    ? user.country && user.country.cantonese_name
+                    : user.country && user.country.english_name
+                }
+                city={
+                  locale === "zh-hk"
+                    ? user.city && user.city.cantonese_name
+                    : user.city && user.city.english_name
+                }
+                industry={
+                  locale === "zh-hk"
+                    ? user.industry && user.industry.cantonese_name
+                    : user.industry && user.industry.english_name
+                }
+                isReferee={user.is_referee}
+                isReferrer={user.is_referer}
+                links={user.links}
+              />
+            ))}
           </div>
         </BaseInfiniteScroll>
       )}
