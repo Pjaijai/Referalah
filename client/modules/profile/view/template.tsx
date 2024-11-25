@@ -140,7 +140,7 @@ const ViewProfileTemplate: React.FunctionComponent<
             {/* Desktop */}
             <div className="hidden flex-row md:flex ">
               <div className="w-48" /> {/* Spacer for avatar */}
-              <div className="ml-4 flex w-full flex-col ">
+              <div className="ml-12 flex w-full flex-col ">
                 <div className="flex flex-row items-center justify-between">
                   <div className="flex flex-col">
                     <div className="flex flex-row">
@@ -221,7 +221,7 @@ const ViewProfileTemplate: React.FunctionComponent<
                   </div>
                 </div>
 
-                <div className="mt-12 flex flex-wrap items-center justify-start text-2xl font-semibold">
+                <div className="mt-16 flex flex-wrap items-center justify-start text-2xl font-semibold">
                   {professionalInfo.map((i, index) => (
                     <React.Fragment key={index}>
                       <span />
