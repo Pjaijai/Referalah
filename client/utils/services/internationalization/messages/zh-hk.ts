@@ -69,6 +69,8 @@ export default {
 
   "form.general.password_description": "密碼必須為8至20字元之間",
   "form.general.submit": "提交",
+
+  "form.general.save": "Save低",
   "form.auth.new_password_label": "新密碼",
   "auth.reset_password.error.invalid_url_title": "過期認證連結！",
   "auth.reset_password.error.invalid_url_description": "請重新發送認證連結🙏🏻",
@@ -142,7 +144,7 @@ export default {
   "post.edit_post": "編輯街招",
   "profile.section.basic_info": "基本資料",
   "profile.section.work_experience": "工作經驗",
-  "profile.section.personal_link": "個人連結",
+  "profile.section.social_links": "社交平台",
   "profile.is_referrer.required": "如果想成為推薦人，請填一填",
   "profile.is_referrer_or_referee.required":
     "如果想成為推薦人/受薦人，請填一填",
@@ -155,14 +157,14 @@ export default {
   "profile.form.is_referrer_description": "我會推薦人/請人",
   "general.talent": "人材",
   "profile.form.is_referee_description": "我的訴求就是上班",
-  "profile.form.personal_description_label": "個人簡介",
+  "profile.form.personal_description_label": "自我介紹",
   "profile.form.optional_company_label": "公司名(選填)",
   "profile.form.optional_region_label": "地區",
   "profile.form.optional_city_label": "城市",
   "profile.form.job_title_label": "職位/工作名稱",
-  "profile.form.optional_personal_social_media_link_label": "個人連結(選填)",
-  "profile.form.personal_social_media_link_description":
-    "可以放你LinkedIn/個人網站/Portfolio。",
+
+  "profile.form.platform_label": "平台",
+  "profile.form.optional_custom_name_label": "自訂名稱（選填）",
 
   "general.year_of_experience_count#zero": "{count}年經驗",
   "general.year_of_experience_count#one": "{count}年經驗",
@@ -317,6 +319,7 @@ export default {
   "general.chat#zero": "{count}個對話",
   "general.chat#one": "{count}個對話",
   "general.chat#other": "{count}個對話",
+  "general.custom": "自訂",
   "general.all": "全部",
   "filter.combobox.industry.triggerTitle#zero": "{count}個行業",
   "filter.combobox.industry.triggerTitle#one": "{count}個行業",
@@ -324,4 +327,9 @@ export default {
   "filter.combobox.location.triggerTitle#zero": "{count}個地區",
   "filter.combobox.location.triggerTitle#one": "{count}個地區",
   "filter.combobox.location.triggerTitle#other": "{count}個地區",
+
+  "profile.view.introduction": "自我介紹",
+  "profile.view.community": "Community",
+  "profile.view.edit_profile": "編輯用戶檔案",
+  "general.add_more": "整多個",
 } as const

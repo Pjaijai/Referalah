@@ -54,7 +54,6 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   const linkSchema = z.object({
     url: z
       .string()
-      .url("Invalid URL")
       .trim()
       .max(20000, {
         message: t("validation.text.maximum_length", { count: 20000 }),
@@ -66,7 +65,9 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     type: z.enum(socialLinkValues),
     name: z
       .string()
-      .max(100)
+      .max(100, {
+        message: t("validation.text.maximum_length", { count: 100 }),
+      })
       .trim()
       .transform((val) => (val === "" ? null : val))
       .nullable()
@@ -204,18 +205,10 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       }
 
       return res
-    }, [profile, isProfileLoading]),
+    }, [profile]),
   })
 
-  const {
-    watch,
-    setValue,
-    reset,
-    control,
-    formState: { errors },
-  } = form
-  const linkw = watch("links")
-  console.log(999, errors, linkw)
+  const { watch, setValue, reset, control } = form
 
   useEffect(() => {
     if (profile) {
@@ -249,7 +242,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         industryUuid: industry?.uuid || undefined,
       })
     }
-  }, [profile, isProfileLoading])
+  }, [profile, isProfileLoading, reset])
 
   const countryWatch = watch("countryUuid")
   const provinceWatch = watch("provinceUuid")
@@ -266,13 +259,13 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       setValue("provinceUuid", "")
       setValue("cityUuid", "")
     }
-  }, [countryOptions, countryWatch])
+  }, [countryOptions, countryWatch, setValue])
 
   useEffect(() => {
     if (profile && provinceWatch !== profile.province?.uuid) {
       setValue("cityUuid", "")
     }
-  }, [provinceOptions, provinceWatch])
+  }, [provinceOptions, provinceWatch, setValue])
 
   useEffect(() => {
     // Convert yearOfExperienceWatch to a number
@@ -298,7 +291,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       // Set a default value or handle it as needed
       form.setValue("yearOfExperience", "0")
     }
-  }, [yearOfExperienceWatch])
+  }, [yearOfExperienceWatch, form])
 
   const onSubmit = async (values: z.infer<typeof formSchema>, e: any) => {
     e.preventDefault()
@@ -415,7 +408,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
 
   if (!profile) return
   return (
-    <div className="relative mt-4  flex h-full w-full flex-col md:mt-12 ">
+    <div className="relative mt-4  flex h-full w-full flex-col py-4 md:mt-12">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -439,24 +432,15 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
 
           <SocialLinksSection control={control} name={"links"} />
 
-          <div className="mt-12 flex flex-col items-center justify-center gap-8">
+          <div className="flex  items-center justify-center md:justify-end ">
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full max-w-md"
+              className="h-11 w-full gap-2 md:max-w-sm"
+              size={"lg"}
+              variant={"theme"}
             >
-              {isSubmitting ? t("general.wait") : t("form.general.submit")}
-            </Button>
-
-            <Button
-              variant="link"
-              type="button"
-              onClick={() => {
-                router.back()
-              }}
-              className="hidden md:block"
-            >
-              {t("general.back")}
+              {isSubmitting ? t("general.wait") : t("form.general.save")}
             </Button>
           </div>
         </form>

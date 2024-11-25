@@ -77,6 +77,7 @@ export default {
     "Password must be between 8 and 20 characters",
 
   "form.general.submit": "Submit",
+  "form.general.save": "Save",
   "form.auth.new_password_label": "New password",
 
   "auth.reset_password.error.invalid_url_title": "Expired verification link!",
@@ -156,7 +157,7 @@ export default {
   "post.edit_post": "Edit Post",
   "profile.section.basic_info": "Personal Information",
   "profile.section.work_experience": "Work Experience",
-  "profile.section.personal_link": "Personal Links",
+  "profile.section.social_links": "Social Links",
   "profile.is_referrer.required": "If you are referrer, please fill this field",
   "profile.is_referrer_or_referee.required":
     "If you are referrer/referee, please fill this field",
@@ -175,10 +176,9 @@ export default {
   "profile.form.optional_region_label": "Region",
   "profile.form.optional_city_label": "City",
   "profile.form.job_title_label": "Job Title",
-  "profile.form.optional_personal_social_media_link_label":
-    "Social media link(Optional)",
-  "profile.form.personal_social_media_link_description":
-    "You may put your LinkedIn/Website/Portfolio",
+
+  "profile.form.platform_label": "Platform",
+  "profile.form.optional_custom_name_label": "Custom Name(Optional)",
 
   "general.year_of_experience_count#zero": "{count} years of experience",
   "general.year_of_experience_count#one": "{count} years of experience",
@@ -347,6 +347,7 @@ export default {
   "general.chat#zero": "{count} chats",
   "general.chat#one": "{count} chat",
   "general.chat#other": "{count} chats",
+  "general.custom": "Custom",
   "general.all": "All",
   "filter.combobox.industry.triggerTitle#zero": "{count} industries",
   "filter.combobox.industry.triggerTitle#one": "{count} industry",
@@ -354,4 +355,9 @@ export default {
   "filter.combobox.location.triggerTitle#zero": "{count} locations",
   "filter.combobox.location.triggerTitle#one": "{count} locations",
   "filter.combobox.location.triggerTitle#other": "{count} locations",
+
+  "profile.view.introduction": "Introduction",
+  "profile.view.community": "Community",
+  "profile.view.edit_profile": "Edit Profile",
+  "general.add_more": "Add More",
 } as const

@@ -36,4 +36,5 @@ export interface IUserResponse {
   is_referee: boolean
   contact_request_count: number
   links: ISocialLinksData[]
+  post_count: { count: number }[]
 }

@@ -1,8 +1,10 @@
 import React from "react"
 import BaseSection from "@/modules/profile/components/sections/base/base"
+import { useI18n } from "@/utils/services/internationalization/client"
 import { Control, useFieldArray, useFormContext } from "react-hook-form"
 
 import { ESocialLink, TSocialLink } from "@/types/common/social-links"
+import { cn } from "@/lib/utils"
 import { useGetSocialLinkOptions } from "@/hooks/common/get-social-links-options"
 import { Button } from "@/components/ui/button"
 import {
@@ -23,7 +25,6 @@ interface SocialLinksSectionProps {
 
 const detectLinkType = (url: string): TSocialLink => {
   const lowercaseUrl = url.toLowerCase()
-
   if (lowercaseUrl.includes("linkedin.com")) return ESocialLink.LINKEDIN
   if (lowercaseUrl.includes("instagram.com")) return ESocialLink.INSTAGRAM
   if (lowercaseUrl.includes("threads.net")) return ESocialLink.THREADS
@@ -46,9 +47,10 @@ const SocialLinksSection: React.FC<SocialLinksSectionProps> = ({
   })
   const { setValue } = useFormContext()
   const options = useGetSocialLinkOptions()
+  const t = useI18n()
 
   return (
-    <BaseSection title="Social Links">
+    <BaseSection title={t("profile.section.social_links")}>
       <div className="mt-4 flex flex-col gap-8">
         {fields.map((field, index) => (
           <div
@@ -57,7 +59,7 @@ const SocialLinksSection: React.FC<SocialLinksSectionProps> = ({
           >
             <div className="flex flex-row items-start justify-start gap-6">
               <span className="font-medium text-slate-500">
-                Links #{index + 1}
+                Link #{index + 1}
               </span>
               <button type="button" onClick={() => remove(index)}>
                 <Icons.trashBin size={20} className="text-indigo-400" />
@@ -70,14 +72,11 @@ const SocialLinksSection: React.FC<SocialLinksSectionProps> = ({
                 name={`${name}.${index}.type`}
                 render={({ field }) => (
                   <FormItem className="basis-1/2">
-                    <FormLabel>Platform</FormLabel>
+                    <FormLabel>{t("profile.form.platform_label")}</FormLabel>
                     <FormControl>
                       <BaseSelect
                         options={options}
-                        // onChange={field.onChange}
-                        // value={field.value}
                         triggerClassName="w-full"
-                        // onBlur={}
                         {...field}
                       />
                     </FormControl>
@@ -90,9 +89,11 @@ const SocialLinksSection: React.FC<SocialLinksSectionProps> = ({
                 control={control}
                 render={({ field: nameField }) => (
                   <FormItem className="basis-1/2">
-                    <FormLabel>Custom Name</FormLabel>
+                    <FormLabel>
+                      {t("profile.form.optional_custom_name_label")}
+                    </FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter custom name" {...nameField} />
+                      <Input {...nameField} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -107,7 +108,6 @@ const SocialLinksSection: React.FC<SocialLinksSectionProps> = ({
                   <FormLabel>Link</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter URL"
                       {...field}
                       onBlur={(e) => {
                         field.onBlur()
@@ -131,8 +131,12 @@ const SocialLinksSection: React.FC<SocialLinksSectionProps> = ({
             append({ url: "", type: ESocialLink.CUSTOM, name: "" })
           }
           variant="outline"
+          className={cn(
+            " border-indigo-600 text-indigo-600 hover:border-indigo-600 hover:text-indigo-600",
+            fields.length > 0 ? "mt-8" : "mt-0"
+          )}
         >
-          Add Link
+          + {t("general.add_more")}
         </Button>
       )}
     </BaseSection>

@@ -92,6 +92,7 @@ const ProfileTemplate: React.FunctionComponent<IProfileTemplateProps> = (
             : profile.industry && profile.industry.english_name
         }
         requestCount={profile.contact_request_count}
+        postCount={profile.post_count[0].count}
       />
     )
 

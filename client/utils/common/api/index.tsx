@@ -69,7 +69,8 @@ export const getUserProfile = async (userUuid: string) => {
       is_referer,
       is_referee,
       contact_request_count,
-      links
+      links,
+      post_count:post(count)
       `
       )
       .eq("uuid", userUuid)

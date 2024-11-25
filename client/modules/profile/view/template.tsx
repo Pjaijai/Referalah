@@ -1,30 +1,16 @@
 "use client"
 
 import React from "react"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
-import InfoCard from "@/modules/profile/components/cards/Info"
-import {
-  useCurrentLocale,
-  useI18n,
-} from "@/utils/services/internationalization/client"
+import { useI18n } from "@/utils/services/internationalization/client"
 import { supabase } from "@/utils/services/supabase/config"
 
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
 import { ISocialLinksData } from "@/types/common/social-links-data"
 import { siteConfig } from "@/config/site"
-import { cn } from "@/lib/utils"
 import useUserStore from "@/hooks/state/user/store"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Separator } from "@/components/ui/separator"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import RefereeBadge from "@/components/customized-ui/badges/referee/referee"
@@ -49,6 +35,7 @@ export interface IViewProfileTemplateProps {
   isReferee: boolean
   slug: string
   requestCount: number
+  postCount: number
 }
 const ViewProfileTemplate: React.FunctionComponent<
   IViewProfileTemplateProps
@@ -68,9 +55,9 @@ const ViewProfileTemplate: React.FunctionComponent<
   isReferee,
   slug,
   requestCount,
+  postCount,
 }) => {
   const t = useI18n()
-  const locale = useCurrentLocale()
   const userUuid = useUserStore((state) => state.uuid)
   const isViewingOwnProfile = slug === userUuid
   const userState = useUserStore((state) => state)
@@ -133,7 +120,7 @@ const ViewProfileTemplate: React.FunctionComponent<
                 className="flex flex-row items-center justify-center gap-2 rounded-md bg-white p-3 text-slate-500 shadow-md"
               >
                 <Icons.pencil size={15} />
-                <span>Edit Profile</span>
+                <span>{t("profile.view.edit_profile")}</span>
               </button>
             )}
           </div>
@@ -185,7 +172,7 @@ const ViewProfileTemplate: React.FunctionComponent<
                       className="flex flex-row items-center justify-center gap-2 rounded-md bg-white p-3 text-slate-500 shadow-md"
                     >
                       <Icons.pencil size={15} />
-                      <span>Edit Profile</span>
+                      <span>{t("profile.view.edit_profile")}</span>
                     </button>
                   )}
                 </div>
@@ -224,7 +211,7 @@ const ViewProfileTemplate: React.FunctionComponent<
             </div>
 
             {/* Mobile */}
-            <div className="flex w-full flex-row md:hidden ">
+            <div className="flex w-full flex-row  md:hidden">
               <div className="flex flex-col">
                 <div className="flex-row\ flex">
                   <div className="w-44" />
@@ -284,9 +271,9 @@ const ViewProfileTemplate: React.FunctionComponent<
         <div className="flex flex-col-reverse justify-between p-4 md:flex-row md:gap-10 md:p-12">
           {/* introduction */}
 
-          <div className="w-full md:w-1/2 ">
+          <div className="mt-8 w-full md:mt-0 md:w-1/2">
             <h1 className="text-xl font-semibold text-slate-500">
-              Introduction
+              {t("profile.view.introduction")}
             </h1>
 
             <p className="border-1 mt-4 min-h-max overflow-hidden break-words rounded-lg bg-white p-8">
@@ -298,8 +285,8 @@ const ViewProfileTemplate: React.FunctionComponent<
             {/* Community */}
 
             <div>
-              <h1 className="text-xl font-semibold text-slate-500">
-                Community
+              <h1 className="mt-8 text-xl font-semibold text-slate-500 md:mt-0">
+                {t("profile.view.community")}
               </h1>
 
               <div className="border-1 mt-4 flex flex-row items-center justify-around rounded-lg bg-white p-8">
@@ -325,10 +312,10 @@ const ViewProfileTemplate: React.FunctionComponent<
 
                   <div className="h-18 flex flex-col justify-between">
                     <div className="flex grow items-center justify-center">
-                      <p className="text-3xl font-semibold">{requestCount}</p>
+                      <p className="text-3xl font-semibold">{postCount}</p>
                     </div>
                     <p className="text-center text-xs text-amber-400">
-                      Posting
+                      {t("general.post")}
                     </p>
                   </div>
                 </div>
@@ -338,8 +325,10 @@ const ViewProfileTemplate: React.FunctionComponent<
             {/* Social */}
 
             <div className="mt-12">
-              <h1 className="text-xl font-semibold text-slate-500">Socials</h1>
-              <div className="mt-8 flex flex-row gap-8">
+              <h1 className="text-xl font-semibold text-slate-500">
+                {t("profile.section.social_links")}
+              </h1>
+              <div className="mt-8 flex flex-row justify-center gap-8 md:justify-start">
                 {socialLinks.map((s, index) => (
                   <SocialIconWithTooltip
                     type={s.type}
@@ -355,15 +344,20 @@ const ViewProfileTemplate: React.FunctionComponent<
       </div>
       <div className="mt-20 md:mt-0" />
       <div className="fixed bottom-0 h-20 w-screen bg-white px-4 py-2">
-        <div className="flex  h-full items-center justify-end gap-2">
-          <Button
-            size={"lg"}
-            variant={"outline"}
-            className="w-52 gap-2 border-slate-600 text-base font-medium text-slate-600"
-          >
-            <Icons.clipboard size={16} />
-            <p className="shrink-0">Chcing Posting</p>
-          </Button>
+        <div className="flex  h-full items-center justify-center gap-2 md:justify-end">
+          {typeof postCount === "number" && postCount > 0 && (
+            <Button
+              size={"lg"}
+              variant={"outline"}
+              className="w-52 gap-2 border-slate-600 text-base font-medium text-slate-600"
+              onClick={() => {
+                router.push(`${siteConfig.page.postHistory.href}/${userUuid}`)
+              }}
+            >
+              <Icons.clipboard size={16} />
+              <p className="shrink-0">{t("general.post_history")}</p>
+            </Button>
+          )}
 
           {(isReferee || isReferer) && (
             <ContactButton
