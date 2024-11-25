@@ -61,10 +61,6 @@ const MemberCard: React.FunctionComponent<IMemberCardProps> = ({
     router.push(`${siteConfig.page.profile.href}/${uuid}`)
   }
 
-  const handleUrlClick = () => {
-    if (socialMediaUrl) window.open(socialMediaUrl, "_blank")
-  }
-
   const location = city || province || country
 
   const info = [
@@ -126,11 +122,11 @@ const MemberCard: React.FunctionComponent<IMemberCardProps> = ({
             size="medium"
           />
         </div>
-        <p className="mt-4 line-clamp-2 h-12 w-[400px] overflow-hidden text-ellipsis break-words text-sm  font-normal leading-6 md:mt-8">
+        <p className="mt-4 line-clamp-2 h-12 w-[350px] overflow-hidden text-ellipsis break-all text-sm  font-normal leading-6 md:mt-8">
           {description}
         </p>
 
-        <div className="m-3 flex w-full flex-row gap-3 ">
+        <div className="m-3 flex h-12 w-full flex-row gap-3">
           {links.map((s, index) => (
             <SocialIconWithTooltip
               type={s.type}
@@ -141,10 +137,10 @@ const MemberCard: React.FunctionComponent<IMemberCardProps> = ({
           ))}
         </div>
         {/* quick actions  */}
-        <div className="flex w-full flex-row items-center justify-end  gap-2 p-2">
+        <div className="mb-0 flex w-full flex-row items-center  justify-end gap-2 p-2">
           <Button
             variant="themeSecondary"
-            className=" h-12 w-32 border-2 border-muted px-5 py-3 text-sm"
+            className=" h-14 w-32 border-2 border-muted px-5 py-3 text-sm"
             onClick={handleProfileClick}
           >
             {t("general.check_user_profile")}

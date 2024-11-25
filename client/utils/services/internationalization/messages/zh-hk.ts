@@ -164,7 +164,7 @@ export default {
   "profile.form.job_title_label": "職位/工作名稱",
 
   "profile.form.platform_label": "平台",
-  "profile.form.optional_custom_name_label": "自訂名稱（選填）",
+  "profile.form.optional_custom_name_label": "自訂名稱",
 
   "general.year_of_experience_count#zero": "{count}年經驗",
   "general.year_of_experience_count#one": "{count}年經驗",

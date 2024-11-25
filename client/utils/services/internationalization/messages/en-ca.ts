@@ -178,7 +178,7 @@ export default {
   "profile.form.job_title_label": "Job Title",
 
   "profile.form.platform_label": "Platform",
-  "profile.form.optional_custom_name_label": "Custom Name(Optional)",
+  "profile.form.optional_custom_name_label": "Custom Name",
 
   "general.year_of_experience_count#zero": "{count} years of experience",
   "general.year_of_experience_count#one": "{count} years of experience",

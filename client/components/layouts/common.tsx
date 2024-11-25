@@ -21,7 +21,7 @@ const CommonPageLayout: React.FunctionComponent<
   const t = useI18n()
 
   const isMainPage = () => {
-    const localePrefixes = ["/zh-hk", "/ca-en"]
+    const localePrefixes = ["/zh-hk", "/en-ca"]
     const pathWithoutLocale = localePrefixes.reduce(
       (path, prefix) => path.replace(prefix, ""),
       pathname

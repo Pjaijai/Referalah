@@ -146,7 +146,7 @@ const MemberSearchPageTemplate: React.FunctionComponent<
               : true
           }
         >
-          <div className="mx-auto grid w-full max-w-sm grid-cols-1 gap-4 md:mt-8 md:max-w-none md:grid-cols-2 lg:grid-cols-3">
+          <div className="mx-auto grid w-full max-w-sm grid-cols-1 gap-4  md:mt-8 md:max-w-none md:grid-cols-2 lg:grid-cols-3">
             {list.map((user) => (
               <MemberCard
                 key={user.uuid}
