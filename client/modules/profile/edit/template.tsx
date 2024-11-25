@@ -320,6 +320,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           .upload(`${user.uuid}/avatar_image/${uuid}_${image.name}`, image)
 
         if (error) {
+          setIsSubmitting(false)
           return toast({
             title: t("profile.avatar_create_failed"),
             description: t("general.error.description"),
