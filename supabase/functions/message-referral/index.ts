@@ -86,7 +86,7 @@ serve(async (req: any) => {
       })
     }
 
-    if (!receiver.is_referee && !receiver.is_referee) {
+    if (!receiver.is_referee && !receiver.is_referer) {
       return new Response("Not allowed to contact this user", {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 500,
