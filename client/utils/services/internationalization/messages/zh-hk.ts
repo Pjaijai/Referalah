@@ -20,7 +20,7 @@ export default {
   "auth.sign_up.click_to_agree_text": "點擊「註冊」按鈕即表示你同意",
   "auth.sign_up.privacy_policy": "私隱政策",
   "auth.sign_up.and": "及",
-  "auth.sign_up.terms_and_conditions": "服務條款。",
+  "auth.sign_up.terms_and_conditions": "服務條款",
   "auth.sign_up.redirect_to_sign_up": "已有帳號？係",
   "auth.form.sign_up.redirect_to_sign_up.redirect_to_sign_up": "呢度登入",
   "auth.sign_up.error.new_password_same_as_old_pass_word_title":

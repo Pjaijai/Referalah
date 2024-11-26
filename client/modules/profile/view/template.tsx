@@ -9,6 +9,7 @@ import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
 import { ISocialLinksData } from "@/types/common/social-links-data"
 import { siteConfig } from "@/config/site"
+import { cn } from "@/lib/utils"
 import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
@@ -89,6 +90,9 @@ const ViewProfileTemplate: React.FunctionComponent<
   )
 
   const location = [city, province, country].filter(Boolean)
+
+  const showContactButton = typeof postCount === "number" && postCount > 0
+  const showPostHistoryButton = isReferee || isReferer
 
   {
     /* {isViewingOwnProfile && (
@@ -344,8 +348,13 @@ const ViewProfileTemplate: React.FunctionComponent<
       </div>
       <div className="mt-20 md:mt-0" />
       <div className="fixed bottom-0 h-20 w-screen bg-white px-4 py-2">
-        <div className="flex  h-full items-center justify-center gap-2 md:justify-end">
-          {typeof postCount === "number" && postCount > 0 && (
+        <div
+          className={cn(
+            "flex  h-full items-center justify-center gap-2 md:justify-end",
+            (!showPostHistoryButton || !showContactButton) && "justify-end"
+          )}
+        >
+          {showPostHistoryButton && (
             <Button
               size={"lg"}
               variant={"outline"}
@@ -359,7 +368,7 @@ const ViewProfileTemplate: React.FunctionComponent<
             </Button>
           )}
 
-          {(isReferee || isReferer) && (
+          {showContactButton && (
             <ContactButton
               username={username || "?"}
               toUuid={slug}
