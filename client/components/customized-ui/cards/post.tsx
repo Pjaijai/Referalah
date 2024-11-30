@@ -75,8 +75,8 @@ const PostCard: React.FunctionComponent<IPostCardProps> = ({
         href={`${siteConfig.page.viewPost.href}/${uuid}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex min-h-fit w-full shrink-0 flex-col items-start justify-start">
-          <CardHeader className="w-full">
+        <div className="flex max-h-96 flex-col items-start justify-start">
+          <CardHeader className="h-36 w-full">
             <div className="flex w-full flex-col items-start justify-between rounded-lg bg-slate-50 p-4">
               <h2 className="line-clamp-2 w-full text-xl font-semibold">
                 {jobTitle}
