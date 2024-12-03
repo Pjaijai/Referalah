@@ -189,7 +189,7 @@ serve(async (req: any) => {
       .eq("uuid", to_uuid)
       .single()
 
-    const subject = `${sender.username} sent you a message.`
+    const subject = `${sender.username} sent you a message | Referalah`
     const emailBody = `
         <html>
         <head>
