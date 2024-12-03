@@ -10,8 +10,8 @@ const UserCount: React.FunctionComponent<IUserCountProps> = ({
   const scopedT = useScopedI18n("index")
 
   return (
-    <div className="mt-4 flex flex-row items-end gap-1 ">
-      <p className="text-xs font-semibold">{scopedT("so_far")}</p>
+    <div className="mt-4 flex flex-row items-end gap-1">
+      <p className=" font-semibold">{scopedT("so_far")}</p>
       <p className=" text-2xl font-black leading-none text-indigo-600 ">
         {numberOfMembers || "0"}
       </p>
