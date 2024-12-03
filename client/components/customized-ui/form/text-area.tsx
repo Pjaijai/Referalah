@@ -32,14 +32,18 @@ const FormTextArea: React.FunctionComponent<IFormTextArea> = ({
   const adjustHeight = () => {
     const textarea = textareaRef.current
     if (textarea) {
-      textarea.style.height = "auto"
-      textarea.style.height = `${textarea.scrollHeight}px`
+      if (textarea.value.trim() === "") {
+        textarea.style.height = `${minRows * 24}px` // Assuming 24px line height
+      } else {
+        textarea.style.height = "auto"
+        textarea.style.height = `${textarea.scrollHeight}px`
+      }
     }
   }
 
   useEffect(() => {
     adjustHeight()
-  }, [])
+  }, [textareaRef.current?.value])
 
   return (
     <FormField
@@ -66,7 +70,6 @@ const FormTextArea: React.FunctionComponent<IFormTextArea> = ({
               rows={minRows}
               onChange={(e) => {
                 field.onChange(e)
-                adjustHeight()
               }}
               style={{ resize: "none" }}
             />
