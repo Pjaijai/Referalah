@@ -3,6 +3,7 @@
 export default {
   index: {
     connect: "連結海外香港",
+    hong_kong: "香港",
     professionals: "人材",
     subTitle: `祝大家一切順利！`,
     so_far: "會員人數:",

@@ -427,6 +427,7 @@ export const searchPost = async ({
               english_name
           ),
           user!inner (
+              username,
               description,
               avatar_url
           ),

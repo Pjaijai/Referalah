@@ -11,8 +11,8 @@ const UserCount: React.FunctionComponent<IUserCountProps> = ({
 
   return (
     <div className="mt-4 flex flex-row items-end gap-1">
-      <p className=" font-semibold">{scopedT("so_far")}</p>
-      <p className=" text-2xl font-black leading-none text-indigo-600 ">
+      <p className="text-xs font-medium">{scopedT("so_far")}</p>
+      <p className="text-[18px] font-black leading-none text-indigo-600 md:text-base ">
         {numberOfMembers || "0"}
       </p>
     </div>

@@ -29,7 +29,7 @@ const BaseCombobox: React.FunctionComponent<
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
+          variant="base"
           role="combobox"
           aria-expanded={open}
           className="w-full justify-between bg-white"

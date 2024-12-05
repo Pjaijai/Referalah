@@ -16,7 +16,7 @@ const PostTypeBadge: React.FunctionComponent<IPostTypeBadgeProps> = ({
   return (
     <Badge
       className={cn(
-        "w-fit rounded-xl px-2 py-1 text-sm font-medium  ",
+        "w-fit rounded-md px-2 py-1 text-sm font-medium  ",
         bgColor,
         textColor,
         `hover:${bgColor}`

@@ -44,9 +44,12 @@ const MainPageTemplate = ({
             duration: 1,
           }}
         >
-          <div className="flex flex-col items-center justify-center text-5xl font-black text-black dark:text-white md:flex-row md:text-4xl">
+          <div className="flex flex-col items-center justify-center text-4xl font-black text-black dark:text-white md:flex-row">
             <h2 className="flex shrink-0 flex-row text-center">
               {scopedT("connect")}
+            </h2>
+            <h2 className="flex shrink-0 flex-row text-center  md:ml-3">
+              {scopedT("hong_kong")}
             </h2>
 
             <h2 className=" text-indigo-600 md:ml-3">
@@ -54,16 +57,16 @@ const MainPageTemplate = ({
             </h2>
           </div>
           <div className="text-inter mt-6 flex flex-row justify-center  text-base text-foreground md:text-start md:text-lg">
-            <div className="flex flex-col items-center justify-center">
-              <p className="text-xl font-extralight italic">
+            <div className="flex flex-col items-center justify-center text-slate-500">
+              <p className="text-xl font-light italic ">
                 &quot;{scopedT("subTitle")}&quot;
               </p>
 
-              <p className="text-base font-extralight">Referalah</p>
+              <p className="text-[14px]">Referalah</p>
             </div>
           </div>
 
-          <div className="mt-8 flex w-full flex-row justify-center">
+          <div className="mt-16 flex w-full flex-row justify-center">
             {isUserSignIn ? (
               <Link
                 href={siteConfig.page.searchPost.href}
@@ -72,7 +75,7 @@ const MainPageTemplate = ({
                     variant: "default",
                     size: "lg",
                   }),
-                  "rounded-md bg-indigo-600  p-4 text-xl font-bold hover:bg-indigo-600 md:p-4 md:text-base"
+                  "rounded-md bg-indigo-600  p-4 text-xl font-bold hover:bg-indigo-600 md:p-4 "
                 )}
               >
                 {scopedT("check_latest_post")}
@@ -85,7 +88,7 @@ const MainPageTemplate = ({
                     variant: "default",
                     size: "lg",
                   }),
-                  "rounded-md bg-indigo-600  p-4 text-xl font-bold hover:bg-indigo-600 md:p-4 md:text-base"
+                  "rounded-md bg-indigo-600  p-4 text-xl font-bold hover:bg-indigo-600 md:p-4 "
                 )}
               >
                 {scopedT("join_now")}

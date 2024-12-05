@@ -52,7 +52,7 @@ const ContactRequestCountIcon: React.FunctionComponent<
         className
       )}
     >
-      <Icons.coffee size={size === "small" ? 18 : 34} />
+      <Icons.coffee size={size === "small" ? 20 : 34} />
 
       <p
         className={cn(

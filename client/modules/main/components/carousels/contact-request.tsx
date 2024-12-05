@@ -17,7 +17,7 @@ const PostRow = (props: IPostContact) => {
   return (
     <div className="flex flex-row gap-1">
       <p>{formattedCreatedAt}</p>
-      <p>@{props.senderUserName}</p>
+      <p className="ml-3">@{props.senderUserName}</p>
       <p className="shrink-0">{scopedT("requested")}</p>
       <p className="truncate font-medium text-indigo-600">
         {props.postJobTitle}
@@ -34,7 +34,7 @@ const MemberRow = (props: IMemberContact) => {
   return (
     <div className="flex flex-row gap-1 ">
       <p>{formattedCreatedAt}</p>
-      <p>@{props.senderUserName} </p>
+      <p className="ml-3">@{props.senderUserName} </p>
       <p>{scopedT("contacted")}</p>
       <p className="font-medium text-indigo-600">@{props.receiverUserName}</p>
     </div>

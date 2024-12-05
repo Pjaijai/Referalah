@@ -67,7 +67,7 @@ const PostCard: React.FunctionComponent<IPostCardProps> = ({
   return (
     <Card
       className={cn(
-        "flex  max-w-sm shrink-0 flex-col justify-between rounded border-none shadow-lg",
+        "flex  max-w-sm shrink-0 flex-col rounded-[8px] border-none shadow-xl",
         className
       )}
     >
@@ -75,21 +75,17 @@ const PostCard: React.FunctionComponent<IPostCardProps> = ({
         href={`${siteConfig.page.viewPost.href}/${uuid}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex max-h-96 flex-col items-start justify-start">
-          <CardHeader className="h-36 w-full">
-            <div className="flex w-full flex-col items-start justify-between rounded-lg bg-slate-50 p-4">
-              <h2 className="line-clamp-2 w-full text-xl font-semibold">
-                {jobTitle}
-              </h2>
-              <p className="w-full truncate text-sm font-medium">
-                {companyName}
-              </p>
-            </div>
-          </CardHeader>
-        </div>
+        <CardHeader className="flex h-36 w-full flex-col items-start justify-start pb-0">
+          <div className=" flex h-full w-full flex-col items-start justify-between rounded-lg bg-slate-50 p-2">
+            <h2 className="line-clamp-2 w-full text-xl font-semibold">
+              {jobTitle}
+            </h2>
+            <p className="w-full truncate text-sm font-medium">{companyName}</p>
+          </div>
+        </CardHeader>
 
-        <CardContent className="flex w-full flex-col">
-          <div className="mt-4 flex w-full justify-between">
+        <CardContent className="mt-[10px] flex w-full flex-col">
+          <div className="flex w-full justify-between">
             <div className="flex flex-row gap-2">
               {status && <PostStatusDisplay postStatus={status} />}
               <PostTypeBadge type={type} />
@@ -98,17 +94,21 @@ const PostCard: React.FunctionComponent<IPostCardProps> = ({
             <div className="flex flex-row items-center justify-center gap-4">
               <ContactRequestCountIcon
                 count={requestCount}
-                className={cn("h-4 w-4 align-middle")}
+                className={cn("h-5 w-5 align-middle")}
                 status={requestCount > 0 ? "active" : "inactive"}
               />
 
-              <LinkIcon openInNewTab status={url ? "active" : "inactive"} />
+              <LinkIcon
+                openInNewTab
+                status={url ? "active" : "inactive"}
+                className={cn("h-5 w-5 ")}
+              />
             </div>
           </div>
 
-          <div className="mt-8 flex flex-row items-end">
+          <div className="mt-5 flex flex-row items-end">
             {/* location, industry, year of exp */}
-            <div className="flex w-full flex-col items-start justify-start gap-2 text-sm font-normal">
+            <div className="flex w-full flex-col items-start justify-start gap-2 text-sm font-normal text-slate-700">
               {(city || province || country) && (
                 <LocationDisplay
                   city={city}
@@ -131,8 +131,8 @@ const PostCard: React.FunctionComponent<IPostCardProps> = ({
         </CardContent>
 
         {/* created at */}
-        <CardFooter className="mt-2 flex w-full flex-row  items-center justify-between">
-          <div className="mt-2 flex w-full flex-row justify-between">
+        <CardFooter className="flex w-full flex-row  items-center justify-between">
+          <div className="flex w-full flex-row justify-between">
             <div className="flex flex-row items-center justify-center gap-4">
               <div onClick={handleAvatarOnClick}>
                 <BaseAvatar
