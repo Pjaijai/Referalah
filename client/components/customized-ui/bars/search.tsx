@@ -120,7 +120,7 @@ const SearchBar: React.FunctionComponent<ISearchSearchBarProps> = ({
                 }
                 value={currentSorting}
                 placeholder={t("general.sorting")}
-                triggerClassName="w-full"
+                triggerClassName="w-full border-0"
               />
             </div>
           </div>

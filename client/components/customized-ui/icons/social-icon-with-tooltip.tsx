@@ -25,21 +25,39 @@ const SocialIconWithTooltip: React.FC<SocialIconProps> = ({
   const getIcon = () => {
     switch (type) {
       case ESocialLink.LINKEDIN:
-        return <Icons.linkedin />
+        return (
+          <Icons.linkedinFilled
+            width={22}
+            height={22}
+            className="fill-indigo-600"
+          />
+        )
       case ESocialLink.INSTAGRAM:
         return <Icons.instagram />
       case ESocialLink.THREADS:
-        return <Icons.threads />
+        return <Icons.threads width={18} height={18} />
       case ESocialLink.GITHUB:
-        return <Icons.github />
+        return (
+          <Icons.githubFilled
+            width={22}
+            height={22}
+            className="fill-indigo-600"
+          />
+        )
       case ESocialLink.GITLAB:
         return <Icons.gitlab />
       case ESocialLink.TWITCH:
         return <Icons.twitch />
       case ESocialLink.YOUTUBE:
         return <Icons.youtube />
-      default:
+      case ESocialLink.TELEGRAM:
+        return (
+          <Icons.telegram width={22} height={22} className="fill-indigo-600" />
+        )
+      case ESocialLink.CUSTOM:
         return <Icons.link />
+      default:
+        return <Icons.pencil />
     }
   }
 

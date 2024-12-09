@@ -48,7 +48,7 @@ const PostHistoryTemplate: React.FunctionComponent<
             // defaultValue={sortValue[0].value}
             value={sortValue}
             placeholder={t("general.sorting")}
-            triggerClassName="w-3/5"
+            triggerClassName="w-3/5 border-0"
           />
         </div>
       </div>

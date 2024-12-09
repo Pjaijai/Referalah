@@ -33,7 +33,8 @@ const detectLinkType = (url: string): TSocialLink => {
   if (lowercaseUrl.includes("twitch.tv")) return ESocialLink.TWITCH
   if (lowercaseUrl.includes("youtube.com") || lowercaseUrl.includes("youtu.be"))
     return ESocialLink.YOUTUBE
-
+  if (lowercaseUrl.includes("t.me") || lowercaseUrl.includes("telegram.me"))
+    return ESocialLink.TELEGRAM
   return ESocialLink.CUSTOM
 }
 

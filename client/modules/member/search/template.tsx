@@ -98,7 +98,7 @@ const MemberSearchPageTemplate: React.FunctionComponent<
             defaultValue={sortingOptions[0].value}
             value={sorting}
             placeholder={t("general.sorting")}
-            triggerClassName="w-3/5"
+            triggerClassName="w-3/5 border-0"
           />
         </div>
       </div>

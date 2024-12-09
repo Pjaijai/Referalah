@@ -15,26 +15,31 @@ const getIconForSocialLink = (
 ): React.ReactNode => {
   switch (link) {
     case ESocialLink.LINKEDIN:
-      return <Icons.linkedin size={size} />
+      return <Icons.linkedinFilled width={16} height={16} />
     case ESocialLink.INSTAGRAM:
       return <Icons.instagram size={size} />
     case ESocialLink.THREADS:
       return <Icons.threads width={18} height={18} />
     case ESocialLink.GITHUB:
-      return <Icons.github size={size} />
+      return <Icons.githubFilled width={18} height={18} />
     case ESocialLink.GITLAB:
       return <Icons.gitlab size={size} />
     case ESocialLink.TWITCH:
       return <Icons.twitch size={size} />
     case ESocialLink.YOUTUBE:
       return <Icons.youtube size={size} />
+    case ESocialLink.TELEGRAM:
+      return <Icons.telegram width={18} height={18} />
     case ESocialLink.CUSTOM:
+      return <Icons.pencil size={size} />
+    default:
       return <Icons.pencil size={size} />
   }
 }
 
 export const useGetSocialLinkOptions = (): SocialLinkOption[] => {
   const t = useI18n()
+
   const getDisplayNameForSocialLink = (link: ESocialLink): string => {
     switch (link) {
       case ESocialLink.LINKEDIN:
@@ -51,6 +56,8 @@ export const useGetSocialLinkOptions = (): SocialLinkOption[] => {
         return "Twitch"
       case ESocialLink.YOUTUBE:
         return "YouTube"
+      case ESocialLink.TELEGRAM:
+        return "Telegram"
       case ESocialLink.CUSTOM:
         return t("general.custom")
     }

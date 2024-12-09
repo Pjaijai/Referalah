@@ -8,6 +8,7 @@ export const socialLinkValues = [
   "twitch",
   "youtube",
   "custom",
+  "telegram",
 ] as const
 
 // Create a type from the values
@@ -22,5 +23,6 @@ export enum ESocialLink {
   GITLAB = "gitlab",
   TWITCH = "twitch",
   YOUTUBE = "youtube",
+  TELEGRAM = "telegram",
   CUSTOM = "custom",
 }

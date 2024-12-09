@@ -205,7 +205,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       }
 
       return res
-    }, [profile]),
+    }, [profile, profile?.links]),
   })
 
   const { watch, setValue, reset, control } = form
@@ -240,6 +240,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         isReferer: is_referer || false,
         isReferee: is_referee || false,
         industryUuid: industry?.uuid || undefined,
+        links: profile?.links || [],
       })
     }
   }, [profile, isProfileLoading, reset])
@@ -407,7 +408,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     }
   }
 
-  if (!profile) return
+  if (!profile) return null
   return (
     <div className="relative mt-4  flex h-full w-full flex-col py-4 md:mt-12">
       <Form {...form}>
