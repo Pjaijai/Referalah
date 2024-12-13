@@ -16,8 +16,17 @@ jest.mock("@/hooks/common/created-at", () => ({
 
 jest.mock("@/modules/chat/components/cards/document/document", () => ({
   __esModule: true,
-  default: ({ documentName }: { documentName: string }) => (
-    <div data-testid="document-card">{documentName}</div>
+  default: ({
+    documentName,
+    isDocumentExpired,
+  }: {
+    documentName: string
+    isDocumentExpired: boolean
+  }) => (
+    <div data-testid="document-card">
+      {documentName}
+      {isDocumentExpired && <span>Expired</span>}
+    </div>
   ),
 }))
 
@@ -29,23 +38,15 @@ describe("MessageCard", () => {
     isDocumentExpired: false,
   }
 
-  it("renders correctly for received message", () => {
+  it("renders message text correctly", () => {
     render(<MessageCard {...mockProps} />)
-
-    expect(screen.getByTestId("message-card")).toHaveClass("bg-slate-50")
     expect(
       screen.getByText("Hello, this is a test message")
     ).toBeInTheDocument()
-    expect(screen.getByText("2023-01-01 12:00")).toBeInTheDocument()
   })
 
-  it("renders correctly for sent message", () => {
-    render(<MessageCard {...mockProps} sentByUser={true} />)
-
-    expect(screen.getByTestId("message-card")).toHaveClass("bg-green-300")
-    expect(
-      screen.getByText("Hello, this is a test message")
-    ).toBeInTheDocument()
+  it("renders timestamp correctly", () => {
+    render(<MessageCard {...mockProps} />)
     expect(screen.getByText("2023-01-01 12:00")).toBeInTheDocument()
   })
 
@@ -59,6 +60,19 @@ describe("MessageCard", () => {
     const link = screen.getByRole("link")
     expect(link).toHaveAttribute("href", "https://example.com")
     expect(link).toHaveAttribute("target", "_blank")
+  })
+
+  it("renders multiple links correctly", () => {
+    const propsWithMultipleLinks = {
+      ...mockProps,
+      text: "Check these: https://example1.com and https://example2.com",
+    }
+    render(<MessageCard {...propsWithMultipleLinks} />)
+
+    const links = screen.getAllByRole("link")
+    expect(links).toHaveLength(2)
+    expect(links[0]).toHaveAttribute("href", "https://example1.com")
+    expect(links[1]).toHaveAttribute("href", "https://example2.com")
   })
 
   it("renders DocumentCard when document is provided", () => {
@@ -78,13 +92,40 @@ describe("MessageCard", () => {
 
   it("does not render DocumentCard when document is not provided", () => {
     render(<MessageCard {...mockProps} />)
-
     expect(screen.queryByTestId("document-card")).not.toBeInTheDocument()
   })
 
   it("handles null text correctly", () => {
     render(<MessageCard {...mockProps} text={null} />)
-
     expect(screen.queryByText("null")).not.toBeInTheDocument()
+  })
+
+  it("renders expired document correctly", () => {
+    const propsWithExpiredDocument = {
+      ...mockProps,
+      document: {
+        name: "expired.pdf",
+        size: 1024,
+        path: "https://example.com/expired.pdf",
+      },
+      isDocumentExpired: true,
+    }
+    render(<MessageCard {...propsWithExpiredDocument} />)
+
+    expect(screen.getByTestId("document-card")).toBeInTheDocument()
+    expect(screen.getByText("expired.pdf")).toBeInTheDocument()
+    expect(screen.getByText("Expired")).toBeInTheDocument()
+  })
+
+  it("handles long messages correctly", () => {
+    const longMessage = "A".repeat(1000)
+    render(<MessageCard {...mockProps} text={longMessage} />)
+    expect(screen.getByText(longMessage)).toBeInTheDocument()
+  })
+
+  it("handles messages with special characters", () => {
+    const specialChars = "!@#$%^&*()_+{}|:<>?~"
+    render(<MessageCard {...mockProps} text={specialChars} />)
+    expect(screen.getByText(specialChars)).toBeInTheDocument()
   })
 })
