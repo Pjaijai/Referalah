@@ -11,8 +11,10 @@ CREATE TABLE "public"."email_notification_log" (
     "created_at" timestamp with time zone DEFAULT now()
 );
 
--- Step 3: Create a policy for message_notification_queue (if needed)
-CREATE POLICY IF NOT EXISTS "Enable insert for authenticated users only"
+-- Step 3: Create a policy for message_notification_queue
+DROP POLICY IF EXISTS "Enable insert for authenticated users only" ON "public"."message_notification_queue";
+
+CREATE POLICY "Enable insert for authenticated users only"
 ON "public"."message_notification_queue"
 AS PERMISSIVE
 FOR INSERT
