@@ -91,8 +91,8 @@ const ViewProfileTemplate: React.FunctionComponent<
 
   const location = [city, province, country].filter(Boolean)
 
-  const showContactButton = typeof postCount === "number" && postCount > 0
-  const showPostHistoryButton = isReferee || isReferer
+  const showContactButton = isReferee || isReferer
+  const showPostHistoryButton = typeof postCount === "number" && postCount > 0
 
   return (
     <>
