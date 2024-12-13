@@ -167,6 +167,12 @@ export default {
   "profile.form.platform_label": "平台",
   "profile.form.optional_custom_name_label": "自訂名稱",
 
+  "profile.form.post_contact_follow_up_label": "接收跟進街招下文電郵(不建議熄)",
+  "profile.form.coffee_chat_request_follow_up_label":
+    "接收跟進Coffee Chat下文電郵(不建議熄)",
+  "profile.form.unseen_message_label": "如果有新訊息就通知我",
+  "profile.form.official_broadcast_message_label": "接收官方消息",
+
   "general.year_of_experience_count#zero": "{count}年經驗",
   "general.year_of_experience_count#one": "{count}年經驗",
   "general.year_of_experience_count#other": "{count}年經驗",

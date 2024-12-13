@@ -65,6 +65,9 @@ module.exports = {
         body: ["open sans", ...fontFamily.sans],
         inter: ["inter", ...fontFamily.sans],
       },
+      fontSize: {
+        xxs: "14px",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: 0 },

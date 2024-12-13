@@ -167,6 +167,44 @@ export type Database = {
         }
         Relationships: []
       }
+      email_notification_log: {
+        Row: {
+          body: string
+          email: string
+          id: string
+          sent_at: string | null
+          title: string
+          type: string
+          user_uuid: string
+        }
+        Insert: {
+          body: string
+          email: string
+          id?: string
+          sent_at?: string | null
+          title: string
+          type: string
+          user_uuid: string
+        }
+        Update: {
+          body?: string
+          email?: string
+          id?: string
+          sent_at?: string | null
+          title?: string
+          type?: string
+          user_uuid?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_notification_log_user_uuid_fkey"
+            columns: ["user_uuid"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["uuid"]
+          },
+        ]
+      }
       industry: {
         Row: {
           cantonese_name: string
@@ -229,6 +267,45 @@ export type Database = {
           {
             foreignKeyName: "message_sender_uuid_fkey"
             columns: ["sender_uuid"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["uuid"]
+          },
+        ]
+      }
+      message_notification_queue: {
+        Row: {
+          created_at: string
+          id: number
+          message_uuid: string
+          status: string
+          user_uuid: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          message_uuid: string
+          status?: string
+          user_uuid: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          message_uuid?: string
+          status?: string
+          user_uuid?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_message_notification_queue_message_uuid_fkey"
+            columns: ["message_uuid"]
+            isOneToOne: false
+            referencedRelation: "message"
+            referencedColumns: ["uuid"]
+          },
+          {
+            foreignKeyName: "public_message_notification_queue_user_uuid_fkey"
+            columns: ["user_uuid"]
             isOneToOne: false
             referencedRelation: "user"
             referencedColumns: ["uuid"]
@@ -480,6 +557,8 @@ export type Database = {
           is_referee: boolean | null
           is_referer: boolean | null
           job_title: string | null
+          links: Json
+          notification_permissions: Json
           province_uuid: string | null
           resume_url: string | null
           role: string | null
@@ -503,6 +582,8 @@ export type Database = {
           is_referee?: boolean | null
           is_referer?: boolean | null
           job_title?: string | null
+          links?: Json
+          notification_permissions?: Json
           province_uuid?: string | null
           resume_url?: string | null
           role?: string | null
@@ -526,6 +607,8 @@ export type Database = {
           is_referee?: boolean | null
           is_referer?: boolean | null
           job_title?: string | null
+          links?: Json
+          notification_permissions?: Json
           province_uuid?: string | null
           resume_url?: string | null
           role?: string | null
@@ -583,6 +666,12 @@ export type Database = {
         Returns: {
           has_unseen: boolean
         }[]
+      }
+      check_user_status: {
+        Args: {
+          status_value: string
+        }
+        Returns: boolean
       }
       find_conversation: {
         Args: {

@@ -2,7 +2,6 @@
 
 import React, { PropsWithChildren } from "react"
 import { usePathname, useRouter } from "next/navigation"
-import { useI18n } from "@/utils/services/internationalization/client"
 
 import { cn } from "@/lib/utils"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -18,7 +17,6 @@ const CommonPageLayout: React.FunctionComponent<
 > = ({ title, children, titlePosition = "left" }) => {
   const pathname = usePathname()
   const router = useRouter()
-  const t = useI18n()
 
   const isMainPage = () => {
     const localePrefixes = ["/zh-hk", "/en-ca"]

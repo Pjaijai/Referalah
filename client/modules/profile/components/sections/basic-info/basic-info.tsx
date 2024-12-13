@@ -58,7 +58,9 @@ const BasicInfoSection: React.FunctionComponent<IBasicInfoSectionProps> = ({
         <div className="flex max-w-lg basis-1/2 flex-col justify-between gap-8">
           <div className="flex flex-row items-center justify-center gap-4">
             <div className="flex flex-col gap-4">
-              <label>{t("profile.form.avatar_label")}</label>
+              <label className="w-fit whitespace-nowrap text-xxs font-medium text-slate-500">
+                {t("profile.form.avatar_label")}
+              </label>
               {!base64Image && (
                 <BaseAvatar
                   url={profile?.avatar_url || undefined}
@@ -87,12 +89,16 @@ const BasicInfoSection: React.FunctionComponent<IBasicInfoSectionProps> = ({
           </div>
 
           <div className="flex flex-col gap-2">
-            <label>{t("auth.form.username_label")}</label>
+            <label className="text-xxs font-medium text-slate-500">
+              {t("auth.form.username_label")}
+            </label>
             <FormTextInput control={form.control} name="username" />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label>{t("general.user_role")}</label>
+            <label className="text-xxs font-medium text-slate-500">
+              {t("general.user_role")}
+            </label>
             <div
               className={cn(
                 "w-full",
@@ -129,11 +135,13 @@ const BasicInfoSection: React.FunctionComponent<IBasicInfoSectionProps> = ({
 
         {/* right */}
         <div className="mt-6 flex max-w-lg basis-1/2 flex-col md:mt-0">
-          <label>{t("general.location")}</label>
+          <label className="text-xxs font-medium text-slate-500">
+            {t("general.location")}
+          </label>
 
           <div className="flex flex-col p-2">
             <div className="grid grid-cols-4 items-center gap-4 ">
-              <label className="col-span-1 justify-self-start">
+              <label className="col-span-1 justify-self-start text-xxs font-medium text-slate-500">
                 {t("general.country")}
               </label>
               <div className="col-span-3 ">
@@ -146,7 +154,7 @@ const BasicInfoSection: React.FunctionComponent<IBasicInfoSectionProps> = ({
             </div>
 
             <div className="grid grid-cols-4 items-center gap-4 ">
-              <label className="col-span-1 justify-self-start">
+              <label className="col-span-1 justify-self-start text-xxs font-medium text-slate-500">
                 {t("profile.form.optional_region_label")}
               </label>
               <div className="col-span-3 ">
@@ -159,7 +167,7 @@ const BasicInfoSection: React.FunctionComponent<IBasicInfoSectionProps> = ({
             </div>
 
             <div className="grid grid-cols-4 items-center gap-4 ">
-              <label className="col-span-1 justify-self-start">
+              <label className="col-span-1 justify-self-start text-xxs font-medium text-slate-500">
                 {t("profile.form.optional_city_label")}
               </label>
 
@@ -173,7 +181,7 @@ const BasicInfoSection: React.FunctionComponent<IBasicInfoSectionProps> = ({
             </div>
 
             <div className="mt-8 flex flex-col">
-              <label className="col-span-1 justify-self-start">
+              <label className="col-span-1 justify-self-start text-xxs font-medium text-slate-500">
                 {t("profile.form.personal_description_label")}
               </label>
               <FormTextArea

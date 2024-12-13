@@ -73,7 +73,9 @@ const SocialLinksSection: React.FC<SocialLinksSectionProps> = ({
                 name={`${name}.${index}.type`}
                 render={({ field }) => (
                   <FormItem className="basis-1/2">
-                    <FormLabel>{t("profile.form.platform_label")}</FormLabel>
+                    <FormLabel className="text-xxs font-medium text-slate-500">
+                      {t("profile.form.platform_label")}
+                    </FormLabel>
                     <FormControl>
                       <BaseSelect
                         options={options}
@@ -90,7 +92,7 @@ const SocialLinksSection: React.FC<SocialLinksSectionProps> = ({
                 control={control}
                 render={({ field: nameField }) => (
                   <FormItem className="basis-1/2">
-                    <FormLabel>
+                    <FormLabel className="text-xxs font-medium text-slate-500">
                       {t("profile.form.optional_custom_name_label")}
                     </FormLabel>
                     <FormControl>
@@ -106,7 +108,9 @@ const SocialLinksSection: React.FC<SocialLinksSectionProps> = ({
               name={`${name}.${index}.url`}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Link</FormLabel>
+                  <FormLabel className="text-xxs font-medium text-slate-500">
+                    Link
+                  </FormLabel>
                   <FormControl>
                     <Input
                       {...field}

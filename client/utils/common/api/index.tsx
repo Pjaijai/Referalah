@@ -38,40 +38,41 @@ export const getUserProfile = async (userUuid: string) => {
       .from("user")
       .select<string, IUserResponse>(
         `
+                uuid,
+                username,
+                avatar_url,
+                description,
+                company_name,
+                job_title,
+                year_of_experience,
+              social_media_url,
+            country(
+              uuid,
+              cantonese_name,
+              english_name
+          ),
+          province(
             uuid,
-            username,
-            avatar_url,
-            description,
-            company_name,
-            job_title,
-            year_of_experience,
-          social_media_url,
-        country(
-          uuid,
-          cantonese_name,
-          english_name
-      ),
-      province(
-        uuid,
-          cantonese_name,
-          english_name
-      ),
-      city(
-        uuid,
-          cantonese_name,
-          english_name
-      ),
-      industry(
-        uuid,
-          cantonese_name,
-          english_name
-      ),
-      is_referer,
-      is_referee,
-      contact_request_count,
-      links,
-      post_count:post(count)
-      `
+              cantonese_name,
+              english_name
+          ),
+          city(
+            uuid,
+              cantonese_name,
+              english_name
+          ),
+          industry(
+            uuid,
+              cantonese_name,
+              english_name
+          ),
+          is_referer,
+          is_referee,
+          contact_request_count,
+          links,
+          post_count:post(count),
+          notification_permissions
+          `
       )
       .eq("uuid", userUuid)
       .single()
@@ -221,6 +222,7 @@ export const updateUserProfile = async (req: IUpdateUserProfileRequest) => {
       links: req.links,
       is_referer: req.isReferer,
       is_referee: req.isReferee,
+      notification_permissions: req.notificationPermissions,
     })
     .eq("uuid", req.userUuid)
 

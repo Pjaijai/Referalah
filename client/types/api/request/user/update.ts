@@ -1,4 +1,4 @@
-import { ISocialLinksData } from "@/types/common/social-links-data"
+import { Json } from "@/database.types"
 
 export interface IUpdateUserProfileRequest {
   avatarUrl?: string
@@ -15,5 +15,6 @@ export interface IUpdateUserProfileRequest {
   isReferer: boolean
   isReferee: boolean
   userUuid: string
-  links: ISocialLinksData[]
+  links: Json //ISocialLinksData[]
+  notificationPermissions: string[]
 }

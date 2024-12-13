@@ -181,6 +181,14 @@ export default {
   "profile.form.platform_label": "Platform",
   "profile.form.optional_custom_name_label": "Custom Name",
 
+  "profile.form.post_contact_follow_up_label":
+    "Send me a follow-up email after I contact the post creator(Not recommended to turn off)",
+  "profile.form.coffee_chat_request_follow_up_label":
+    "Send me a follow-up email after I send a coffee chat request(Not recommended to turn off)",
+  "profile.form.unseen_message_label": "Notify me of new messages",
+  "profile.form.official_broad_message_label":
+    "Receive official broadcast emails",
+
   "general.year_of_experience_count#zero": "{count} years of experience",
   "general.year_of_experience_count#one": "{count} years of experience",
   "general.year_of_experience_count#other": "{count} years of experience",
@@ -350,6 +358,7 @@ export default {
   "general.chat#other": "{count} chats",
   "general.custom": "Custom",
   "general.all": "All",
+  "general.other": "Other",
   "filter.combobox.industry.triggerTitle#zero": "{count} industries",
   "filter.combobox.industry.triggerTitle#one": "{count} industry",
   "filter.combobox.industry.triggerTitle#other": "{count} industries",
