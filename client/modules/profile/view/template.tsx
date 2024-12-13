@@ -136,9 +136,9 @@ const ViewProfileTemplate: React.FunctionComponent<
             </div>
 
             {/* Desktop */}
-            <div className="hidden flex-row md:flex ">
+            <div className="hidden h-24 flex-row   md:flex ">
               <div className="w-48" /> {/* Spacer for avatar */}
-              <div className="ml-12 flex w-full flex-col ">
+              <div className="ml-12 flex w-full flex-col">
                 <div className="flex flex-row items-center justify-between">
                   <div className="flex flex-col">
                     <div className="flex flex-row">
