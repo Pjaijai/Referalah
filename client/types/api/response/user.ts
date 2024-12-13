@@ -37,4 +37,5 @@ export interface IUserResponse {
   contact_request_count: number
   links: ISocialLinksData[]
   post_count: { count: number }[]
+  notification_permissions: string[]
 }

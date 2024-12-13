@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from "react"
 import { StaticImport } from "next/dist/shared/lib/get-img-props"
 import { useRouter } from "next/navigation"
 import BasicInfoSection from "@/modules/profile/components/sections/basic-info/basic-info"
+import NotificationPermissionSection from "@/modules/profile/components/sections/notification-permission/notification-permission"
 import SocialLinksSection from "@/modules/profile/components/sections/social-links/social-links"
 import WorkExperienceSection from "@/modules/profile/components/sections/work-experience/work-experience"
 import { useI18n } from "@/utils/services/internationalization/client"
@@ -126,6 +127,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         message: t("validation.field_required"),
       }),
       links: z.array(linkSchema).max(5),
+      notificationPermissions: z.array(z.string()),
       yearOfExperience: z
         .string()
         .optional()
@@ -202,6 +204,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         isReferee: profile?.is_referee || false,
         industryUuid: profile?.industry?.uuid || undefined,
         links: profile?.links || [],
+        notificationPermissions: profile?.notification_permissions || [],
       }
 
       return res
@@ -241,6 +244,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         isReferee: is_referee || false,
         industryUuid: industry?.uuid || undefined,
         links: profile?.links || [],
+        notificationPermissions: profile?.notification_permissions || [],
       })
     }
   }, [profile, isProfileLoading, reset])
@@ -359,6 +363,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         isReferer: values.isReferer,
         isReferee: values.isReferee,
         userUuid: user.uuid!,
+        notificationPermissions: values.notificationPermissions,
       }
 
       updateProfile(updateUserRequest, {
@@ -434,6 +439,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
 
           <SocialLinksSection control={control} name={"links"} />
 
+          <NotificationPermissionSection />
           <div className="flex  items-center justify-center md:justify-end ">
             <Button
               type="submit"

@@ -23,7 +23,9 @@ const WorkExperienceSection: React.FunctionComponent<
       <div className="mt-8 flex flex-col items-center justify-between gap-6 md:flex-row md:gap-0">
         <div className="flex w-full max-w-lg flex-col gap-6 md:gap-12">
           <div className="flex flex-col gap-2">
-            <label>{t("general.industry")}</label>
+            <label className="text-xxs font-medium text-slate-500">
+              {t("general.industry")}
+            </label>
             <FormSelect
               options={industryOptions}
               control={form.control}
@@ -32,18 +34,24 @@ const WorkExperienceSection: React.FunctionComponent<
           </div>
 
           <div className="flex flex-col gap-2">
-            <label>{t("general.year_of_experience")}</label>
+            <label className="text-xxs font-medium text-slate-500">
+              {t("general.year_of_experience")}
+            </label>
             <FormNumberInput control={form.control} name="yearOfExperience" />
           </div>
         </div>
         <div className="flex w-full max-w-lg  flex-col  gap-6 md:gap-12">
           <div className="flex flex-col gap-2">
-            <label>{t("profile.form.optional_company_label")}</label>
+            <label className="text-xxs font-medium text-slate-500">
+              {t("profile.form.optional_company_label")}
+            </label>
             <FormTextInput control={form.control} name="company" />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label>{t("profile.form.job_title_label")}</label>
+            <label className="text-xxs font-medium text-slate-500">
+              {t("profile.form.job_title_label")}
+            </label>
             <FormTextInput control={form.control} name="jobTitle" />
           </div>
         </div>
