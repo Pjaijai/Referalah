@@ -146,6 +146,7 @@ export default {
   "profile.section.basic_info": "基本資料",
   "profile.section.work_experience": "工作經驗",
   "profile.section.social_links": "社交平台",
+  "profile.section.notification_config": "通知設定",
   "profile.is_referrer.required": "如果想成為推薦人，請填一填",
   "profile.is_referrer_or_referee.required":
     "如果想成為推薦人/受薦人，請填一填",
@@ -171,7 +172,7 @@ export default {
   "profile.form.coffee_chat_request_follow_up_label":
     "接收跟進Coffee Chat下文電郵(不建議熄)",
   "profile.form.unseen_message_label": "如果有新訊息就通知我",
-  "profile.form.official_broadcast_message_label": "接收官方消息",
+  "profile.form.official_broadcast_message_label": "接收官方消息(電郵)",
 
   "general.year_of_experience_count#zero": "{count}年經驗",
   "general.year_of_experience_count#one": "{count}年經驗",
@@ -328,6 +329,7 @@ export default {
   "general.chat#other": "{count}個對話",
   "general.custom": "自訂",
   "general.all": "全部",
+  "general.other": "其他",
   "filter.combobox.industry.triggerTitle#zero": "{count}個行業",
   "filter.combobox.industry.triggerTitle#one": "{count}個行業",
   "filter.combobox.industry.triggerTitle#other": "{count}個行業",

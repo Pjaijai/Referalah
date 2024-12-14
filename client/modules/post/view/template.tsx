@@ -2,7 +2,6 @@
 
 import React from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import LinkShareDrawer from "@/modules/post/components/drawers/link-share"
 import PostHeader from "@/modules/post/components/info-display/header"
 import PostStatusDisplay from "@/modules/post/components/info-display/status"

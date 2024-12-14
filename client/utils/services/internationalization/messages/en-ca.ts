@@ -159,6 +159,7 @@ export default {
   "profile.section.basic_info": "Personal Information",
   "profile.section.work_experience": "Work Experience",
   "profile.section.social_links": "Social Links",
+  "profile.section.notification_config": "Notification Config",
   "profile.is_referrer.required": "If you are referrer, please fill this field",
   "profile.is_referrer_or_referee.required":
     "If you are referrer/referee, please fill this field",
@@ -186,7 +187,7 @@ export default {
   "profile.form.coffee_chat_request_follow_up_label":
     "Send me a follow-up email after I send a coffee chat request(Not recommended to turn off)",
   "profile.form.unseen_message_label": "Notify me of new messages",
-  "profile.form.official_broad_message_label":
+  "profile.form.official_broadcast_message_label":
     "Receive official broadcast emails",
 
   "general.year_of_experience_count#zero": "{count} years of experience",

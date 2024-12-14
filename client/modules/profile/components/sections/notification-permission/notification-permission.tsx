@@ -32,7 +32,7 @@ const NotificationPermissionSection: React.FunctionComponent<
   }
 
   return (
-    <BaseSection title={"Notification config"}>
+    <BaseSection title={t("profile.section.notification_config")}>
       <div className="mt-8 flex flex-col justify-between gap-20 md:flex-wrap md:items-start ">
         <div>
           <h5 className="font-xxs text-slate-500">{t("general.post")}</h5>
@@ -106,7 +106,7 @@ const NotificationPermissionSection: React.FunctionComponent<
                 }
               />
               <p className="font-medium text-slate-800">
-                {t("profile.form.official_broad_message_label")}
+                {t("profile.form.official_broadcast_message_label")}
               </p>
             </div>
           </div>
