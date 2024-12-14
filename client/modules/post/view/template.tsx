@@ -41,7 +41,6 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   ReferralPostDetailsPageProps
 > = ({ postUuid }) => {
   const t = useI18n()
-  const router = useRouter()
   const { data: post, isLoading, isSuccess } = useGetPost(postUuid)
   const userUuid = useUserStore((state) => state.uuid)
   const isViewingOwnProfile = post?.created_by === userUuid
