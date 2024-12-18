@@ -51,6 +51,7 @@ const FilterSheet: React.FunctionComponent<IFilterSheet> = ({
         side={"left"}
         showCloseBtn={false}
         className="overflow-x-auto"
+        onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <div className="flex flex-col">
           <p className="text-sm font-medium">{t("general.industry")}</p>
