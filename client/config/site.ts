@@ -1,11 +1,11 @@
 export type SiteConfig = typeof siteConfig
 
 const METADATA_DEFAULT_DESCRIPTION =
-  "海外港人搵Referral平台。 A job referral platform for overseas Hongkongers. Connect, refer and get referred to support the Hong Kong community across the globe."
+  "海外港人平台。An overseas Hongkongers platform to build their connections and local community."
 
 export const siteConfig = {
   name: "Referalah",
-  description: "海外港人搵Referral平台。",
+  description: "海外港人平台。",
   page: {
     main: {
       name: "main",

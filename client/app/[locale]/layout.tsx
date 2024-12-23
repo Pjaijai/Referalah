@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   ],
   manifest: "../manifest.json",
   title: {
-    default: `${siteConfig.name} | 海外港人搵Referral平台`,
+    default: `${siteConfig.name} | 海外港人平台`,
     template: `%s - ${siteConfig.name}`,
   },
   description: siteConfig.description,
