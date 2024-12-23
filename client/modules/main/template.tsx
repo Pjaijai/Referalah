@@ -1,5 +1,3 @@
-"use client"
-
 import React from "react"
 import Link from "next/link"
 import ContactRequestCarousel from "@/modules/main/components/carousels/contact-request"
