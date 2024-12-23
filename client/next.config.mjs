@@ -15,8 +15,8 @@ export default pwaWrapper({
   reactStrictMode: true,
   experimental: {
     appDir: true,
+    severActions: true,
   },
-  experimental: { severActions: true },
   images: {
     domains: ["localhost"], // Add the domain where your images are hosted
   },

@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 import { useScopedI18n } from "@/utils/services/internationalization/client"
 

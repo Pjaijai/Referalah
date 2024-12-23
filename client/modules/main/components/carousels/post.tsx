@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 import { useCurrentLocale } from "@/utils/services/internationalization/client"
 
