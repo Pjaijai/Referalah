@@ -3,7 +3,7 @@
 name: Update staging database types
 on:
   push:
-    branches: [development]
+    branches: [staging]
     paths:
       - "*.sql"
 
