@@ -1,16 +1,12 @@
 import { EPostType } from "@/types/common/post-type"
 
-export interface ISearchPostsRequest {
+export interface ISearchPostRequest {
+  keywords: string
   numberOfDataPerPage: number
-  types: EPostType[]
-  companyName: string
-  maxYearOfExperience: number
-  minYearOfExperience: number
-  jobTitle: string
+  type: EPostType
   sortingType: string
   page: number
-  countryUuid?: string
-  provinceUuid?: string
-  cityUuid?: string
-  industryUuid?: string
+  experience: Number
+  industries?: string[]
+  locations?: string[]
 }

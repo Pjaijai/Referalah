@@ -1,3 +1,5 @@
+import { Json } from "@/database.types"
+
 export interface IUpdateUserProfileRequest {
   avatarUrl?: string
   username: string
@@ -13,4 +15,6 @@ export interface IUpdateUserProfileRequest {
   isReferer: boolean
   isReferee: boolean
   userUuid: string
+  links: Json //ISocialLinksData[]
+  notificationPermissions: string[]
 }

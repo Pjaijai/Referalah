@@ -5,11 +5,11 @@ const useReferralSortOptions = () => {
   const referralSortingOptions = [
     {
       value: "year_of_experience,ace",
-      title: t("search.sorting.year_of_experience_asc"),
+      label: t("search.sorting.year_of_experience_asc"),
     },
     {
       value: "year_of_experience,dec",
-      title: t("search.sorting.year_of_experience_dec"),
+      label: t("search.sorting.year_of_experience_dec"),
     },
   ]
   return {

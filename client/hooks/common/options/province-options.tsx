@@ -13,11 +13,11 @@ const useProvinceOptions = (
       .filter((province) => province.country_uuid === countryUuid)
       .map((province) => ({
         value: province.uuid,
-        title: `${province.english_name} | ${province.cantonese_name}`,
+        label: `${province.english_name} | ${province.cantonese_name}`,
       }))
 
     if (options.length > 0 && showAllOption) {
-      options.unshift({ value: "all", title: "All | 全部" })
+      options.unshift({ value: "all", label: "All | 全部" })
     }
 
     return options

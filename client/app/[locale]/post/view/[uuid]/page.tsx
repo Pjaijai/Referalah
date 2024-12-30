@@ -21,6 +21,7 @@ export async function generateMetadata({
 
   // Define type title based on post type
   let typeTitle: string = ""
+
   switch (postType) {
     case EPostType.HIRING:
       typeTitle = t("post.type.hiring.title")
@@ -30,8 +31,6 @@ export async function generateMetadata({
       break
     case EPostType.REFERRER:
       typeTitle = t("post.type.referer.title")
-    case EPostType.REFERRER:
-      typeTitle = t("post.type.collaboration.title")
       break
     case EPostType.COLLABORATION:
       typeTitle = t("post.type.collaboration.title")

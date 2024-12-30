@@ -4,6 +4,7 @@ import { formatLocation } from "@/utils/common/helpers/format/location"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 
+// TODO: Remove
 interface ILocationDisplayProps {
   city: string | null
   province: string | null

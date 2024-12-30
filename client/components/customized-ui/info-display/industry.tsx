@@ -3,6 +3,7 @@ import React, { PropsWithChildren } from "react"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 
+// TODO: Remove
 interface IIndustryDisplayProps {
   industry: string | null
   className?: string
@@ -15,7 +16,7 @@ const IndustryDisplay: React.FunctionComponent<
       <div>
         <Icons.industry width="18" height="18" />
       </div>
-      <span className="ml-1">{industry}</span>
+      <span className="ml-3">{industry}</span>
     </div>
   )
 }

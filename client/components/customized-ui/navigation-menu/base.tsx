@@ -37,7 +37,7 @@ export function BaseNavigationMenu() {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="flex flex-row items-center gap-2 text-sm md:text-lg">
+          <NavigationMenuTrigger className="flex flex-row items-center gap-2  bg-slate-50 text-sm md:text-lg">
             <Icons.personStanding /> {t("general.connection")}
           </NavigationMenuTrigger>
           <NavigationMenuContent>
@@ -59,7 +59,7 @@ export function BaseNavigationMenu() {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="flex items-center gap-2 text-sm md:text-lg">
+          <NavigationMenuTrigger className="flex items-center gap-2 bg-slate-50 text-sm md:text-lg">
             <Icons.briefcase /> {t("general.post")}
           </NavigationMenuTrigger>
           <NavigationMenuContent>
@@ -80,7 +80,7 @@ export function BaseNavigationMenu() {
             <Link href={siteConfig.page.chat.href}>
               <div
                 className={
-                  "flex h-10 w-max items-center justify-center gap-2 rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none   md:text-lg"
+                  "flex h-10 w-max items-center justify-center gap-2 rounded-md  bg-slate-50 px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground   focus:outline-none md:text-lg"
                 }
               >
                 <MessageIcon variant="outlined" />

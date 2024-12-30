@@ -12,77 +12,78 @@ import { Icons } from "@/components/icons"
 const NavFooter = () => {
   const t = useI18n()
   const pathname = usePathname()
-  const noShowFooter = pathname.includes(siteConfig.page.chat.href)
+
+  const hideFooterPageList = [
+    siteConfig.page.chat.href,
+    siteConfig.page.profile.href,
+    siteConfig.page.editProfile.href,
+  ]
+
+  const noShowFooter = hideFooterPageList.some((path) =>
+    pathname.includes(path)
+  )
   return (
     <footer
       className={cn(
         noShowFooter
           ? "hidden"
-          : "z-10 mt-12 flex flex-col items-center justify-center gap-2 border-t-2 p-2 md:flex-row"
+          : "z-10 mt-12 flex flex-col items-center justify-between gap-2 border-t-2 bg-black px-4 py-2 text-white md:flex-row md:bg-slate-50 md:text-muted-foreground"
       )}
     >
-      <div className="flex w-full flex-col items-center gap-3 text-sm text-muted-foreground md:w-fit">
-        <div className="flex w-full flex-row  justify-around gap-3 ">
-          <a aria-label="author-email" href="mailto:r1r69.referalah@gmail.com">
-            <Icons.mail />
-          </a>
+      <div className="flex flex-row-reverse  gap-[60px] ">
+        <a aria-label="author-email" href="mailto:r1r69.referalah@gmail.com">
+          <Icons.mail />
+        </a>
 
-          <Link
-            aria-label="referalah-project-github"
-            className="text-sm text-muted-foreground"
-            href={siteConfig.links.instagram}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Icons.instagram />
-          </Link>
+        <Link
+          aria-label="referalah-project-github"
+          className="text-sm "
+          href={siteConfig.links.instagram}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Icons.instagram />
+        </Link>
 
-          <Link
-            aria-label="referalah-project-github"
-            className="text-sm text-muted-foreground"
-            href={siteConfig.links.github}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Icons.github />
-          </Link>
-        </div>
+        <Link
+          aria-label="referalah-project-github"
+          className="text-sm "
+          href={siteConfig.links.github}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Icons.github />
+        </Link>
+      </div>
 
-        <div className="flex flex-wrap justify-around gap-3">
-          <Link
-            className="p-2 text-center text-sm text-muted-foreground "
-            href={siteConfig.page.contributors.href}
-          >
-            {t("page.contributors")}
-          </Link>
+      <div className="grid grid-cols-2 gap-3 md:flex md:flex-row md:justify-around">
+        <Link
+          className="p-2 text-center text-sm  "
+          href={siteConfig.page.contributors.href}
+        >
+          {t("page.contributors")}
+        </Link>
 
-          <Link
-            className="p-2 text-center text-sm text-muted-foreground "
-            href={siteConfig.page.installation.href}
-          >
-            {t("page.installation")}
-          </Link>
+        <Link
+          className="p-2 text-center text-sm  "
+          href={siteConfig.page.installation.href}
+        >
+          {t("page.installation")}
+        </Link>
 
-          <Link
-            className="p-2 text-center text-sm text-muted-foreground "
-            href={siteConfig.page.about.href}
-          >
-            {t("page.about")}
-          </Link>
-          <Link
-            className="p-2 text-center text-sm text-muted-foreground"
-            href={siteConfig.page.privacyPolicy.href}
-          >
-            {t("auth.sign_up.privacy_policy")}
-          </Link>
+        <Link
+          className="p-2 text-center text-sm "
+          href={siteConfig.page.privacyPolicy.href}
+        >
+          {t("auth.sign_up.privacy_policy")}
+        </Link>
 
-          <Link
-            className="p-2 text-center text-sm text-muted-foreground "
-            href={siteConfig.page.termsAndConditions.href}
-          >
-            {t("auth.sign_up.terms_and_conditions")}
-          </Link>
-        </div>
+        <Link
+          className="p-2 text-center text-sm "
+          href={siteConfig.page.termsAndConditions.href}
+        >
+          {t("auth.sign_up.terms_and_conditions")}
+        </Link>
       </div>
     </footer>
   )

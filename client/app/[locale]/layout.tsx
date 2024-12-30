@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   ],
   manifest: "../manifest.json",
   title: {
-    default: `${siteConfig.name} | 海外港人搵Referral平台`,
+    default: `${siteConfig.name} | 海外港人平台`,
     template: `%s - ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -53,21 +53,23 @@ export default async function RootLayout({
 }: RootLayoutProps) {
   return (
     <html lang={locale} suppressHydrationWarning>
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+      />
       <head />
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-screen bg-slate-50 font-openSans antialiased",
           fontSans.variable
         )}
       >
         <GoogleAnalytics />
 
         <Provider locale={locale}>
-          <div className="flex min-h-screen flex-col">
+          <div className="flex min-h-screen flex-col ">
             <SiteHeader />
-            <div className="flex-1 overflow-y-auto overflow-x-hidden ">
-              {children}
-            </div>
+            <div className="flex-1 overflow-hidden">{children}</div>
             <NavFooter />
           </div>
           <Analytics />

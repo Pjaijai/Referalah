@@ -13,6 +13,7 @@ interface PostCardInfoDisplayProps {
   requestCount: number
 }
 
+// TODO remove this
 const PostCardInfoDisplay = ({
   city,
   province,
@@ -22,7 +23,7 @@ const PostCardInfoDisplay = ({
   requestCount,
 }: PostCardInfoDisplayProps) => {
   return (
-    <CardDescription className="text-overflow-ellipsis flex basis-full flex-wrap items-center justify-start gap-4 sm:basis-3/4">
+    <CardDescription className="text-overflow-ellipsis flex basis-full flex-col items-center justify-start gap-4 sm:basis-3/4">
       {(city || province || country) && (
         <LocationDisplay
           city={city}

@@ -18,9 +18,10 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { IFormTextInputProps } from "@/components/customized-ui/form/input"
+import { ISelectOption } from "@/components/customized-ui/selects/base"
 
 interface IFormSelectProps extends IFormTextInputProps {
-  options: { value: string; title: string }[]
+  options: ISelectOption[]
   defaultValue?: string
   isDisabled?: boolean
   triggerClassName?: string
@@ -67,7 +68,7 @@ const FormSelect: React.FunctionComponent<IFormSelectProps> = ({
                       key={option.value}
                       className={cn(itemClassName)}
                     >
-                      {option.title}
+                      {option.label}
                     </SelectItem>
                   ))}
               </ScrollArea>

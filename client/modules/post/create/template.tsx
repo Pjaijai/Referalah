@@ -271,11 +271,11 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
   }
 
   return (
-    <div className=" flex h-full w-full flex-col p-4">
+    <div className=" flex h-full w-full flex-col">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4"
+          className="flex flex-col gap-4 rounded-lg bg-white p-4 shadow-lg"
         >
           <FormSelect
             options={typeOptions}

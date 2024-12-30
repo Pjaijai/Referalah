@@ -1,4 +1,3 @@
-import { isExistsInListHelper } from "@/utils/common/helpers/check/is-exists-list"
 import { supabase } from "@/utils/services/supabase/config"
 
 import { IResetPasswordRequest } from "@/types/api/request/auth/reset-password"
@@ -10,9 +9,9 @@ import { IVerifyEmailOneTimePasswordRequest } from "@/types/api/request/auth/ver
 import { IMessagePostCreatorRequest } from "@/types/api/request/message/post-creator"
 import { IMessageReferralRequest } from "@/types/api/request/message/referral"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
-import { ISearchPostsRequest } from "@/types/api/request/post/search"
+import { ISearchPostRequest } from "@/types/api/request/post/search"
 import { IUpdatePostRequest } from "@/types/api/request/post/update"
-import { IUserFilterMeta } from "@/types/api/request/user/filter-meta"
+import { ISearchMemberRequest } from "@/types/api/request/user/search"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { ICityResponse } from "@/types/api/response/city"
 import { TContactRequestListResponse } from "@/types/api/response/contact-request/contact-request-list"
@@ -28,7 +27,7 @@ import {
 } from "@/types/api/response/referer-post"
 import { IReferralResponse } from "@/types/api/response/referral"
 import { IUserResponse } from "@/types/api/response/user"
-import { EQueryKeyString } from "@/types/common/query-key-string"
+import { EPostType } from "@/types/common/post-type"
 import { EUserType } from "@/types/common/user-type"
 import { siteConfig } from "@/config/site"
 
@@ -39,38 +38,41 @@ export const getUserProfile = async (userUuid: string) => {
       .from("user")
       .select<string, IUserResponse>(
         `
+                uuid,
+                username,
+                avatar_url,
+                description,
+                company_name,
+                job_title,
+                year_of_experience,
+              social_media_url,
+            country(
+              uuid,
+              cantonese_name,
+              english_name
+          ),
+          province(
             uuid,
-            username,
-            avatar_url,
-            description,
-            company_name,
-            job_title,
-            year_of_experience,
-          social_media_url,
-        country(
-          uuid,
-          cantonese_name,
-          english_name
-      ),
-      province(
-        uuid,
-          cantonese_name,
-          english_name
-      ),
-      city(
-        uuid,
-          cantonese_name,
-          english_name
-      ),
-      industry(
-        uuid,
-          cantonese_name,
-          english_name
-      ),
-      is_referer,
-      is_referee,
-      contact_request_count
-      `
+              cantonese_name,
+              english_name
+          ),
+          city(
+            uuid,
+              cantonese_name,
+              english_name
+          ),
+          industry(
+            uuid,
+              cantonese_name,
+              english_name
+          ),
+          is_referer,
+          is_referee,
+          contact_request_count,
+          links,
+          post_count:post(count),
+          notification_permissions
+          `
       )
       .eq("uuid", userUuid)
       .single()
@@ -217,9 +219,10 @@ export const updateUserProfile = async (req: IUpdateUserProfileRequest) => {
       province_uuid: req.provinceUuid,
       city_uuid: req.cityUuid,
       industry_uuid: req.industryUuid,
-      social_media_url: req.socialMediaUrl,
+      links: req.links,
       is_referer: req.isReferer,
       is_referee: req.isReferee,
+      notification_permissions: req.notificationPermissions,
     })
     .eq("uuid", req.userUuid)
 
@@ -229,35 +232,21 @@ export const updateUserProfile = async (req: IUpdateUserProfileRequest) => {
 
   return data
 }
-export const searchReferral = async ({
-  pageParam = 0,
-  queryKey,
-}: {
-  pageParam?: number
-  queryKey: [
-    EQueryKeyString,
-    {
-      sorting: string
-      filterMeta: IUserFilterMeta
-    },
-  ]
-}) => {
-  const NUMBER_OF_DATE_PER_FETCH = 5
-  const countryUuid = queryKey[1].filterMeta.countryUuid
-  const provinceUuid = queryKey[1].filterMeta.provinceUuid
-  const cityUuid = queryKey[1].filterMeta.cityUuid
-  const industryUuid = queryKey[1].filterMeta.industryUuid
-  const companyName = queryKey[1].filterMeta.companyName
-  const jobTitle = queryKey[1].filterMeta.jobTitle
-  const maxYearOfExperience = queryKey[1].filterMeta.maxYearOfExperience
-  const minYearOfExperience = queryKey[1].filterMeta.minYearOfExperience
-  const types = queryKey[1].filterMeta.types
-
-  const sort = queryKey[1].sorting.split(",")
+export const searchUser = async ({
+  numberOfDataPerPage,
+  page,
+  industries,
+  experience,
+  sortingType,
+  type,
+  locations,
+  keywords,
+}: ISearchMemberRequest) => {
+  const sort = sortingType.split(",")
+  const sortedBy = sort[0]
   const order = sort[1] !== "dec"
-
-  const from = pageParam + pageParam * NUMBER_OF_DATE_PER_FETCH
-  const to = from + NUMBER_OF_DATE_PER_FETCH
+  const from = page * numberOfDataPerPage
+  const to = from + numberOfDataPerPage - 1
 
   let query = supabase
     .from("user")
@@ -293,53 +282,45 @@ export const searchReferral = async ({
             ),
             is_referer,
             is_referee,
-            contact_request_count
-
+            contact_request_count,
+            links
           `
     )
-    .lte(
-      "year_of_experience",
-      maxYearOfExperience ? parseInt(maxYearOfExperience) : 100
-    )
-    .gte(
-      "year_of_experience",
-      minYearOfExperience ? parseInt(minYearOfExperience) : 0
-    )
-    .order("year_of_experience", { ascending: order })
-    .order("id", { ascending: true })
-    .range(from, to)
+    .gte("year_of_experience", experience)
 
-  const isReferrer = isExistsInListHelper(types, EUserType.REFERRER)
-  const isReferee = isExistsInListHelper(types, EUserType.REFEREE)
+  if (keywords && keywords.trim() !== "") {
+    const searchTerms = keywords.trim().split(/\s+/)
+    searchTerms.forEach((term) => {
+      query = query.or(
+        `username.ilike.%${term}%,company_name.ilike.%${term}%,job_title.ilike.%${term}%,description.ilike.%${term}%`
+      )
+    })
+  }
 
-  if (isReferrer && !isReferee) {
-    query = query.eq("is_referer", true)
-  } else if (isReferee && !isReferrer) {
-    query = query.eq("is_referee", true)
-  } else if (isReferrer || isReferee) {
+  if (type !== EUserType.ALL) {
+    if (type === EUserType.REFERRER) {
+      query = query.eq("is_referer", true)
+    } else if (type === EUserType.REFEREE) {
+      query = query.eq("is_referee", true)
+    }
+  } else {
     query = query.or("is_referer.eq.true,is_referee.eq.true")
   }
-
-  if (countryUuid) {
-    query = query.eq("country_uuid", countryUuid)
-  }
-  if (provinceUuid) {
-    query = query.eq("province_uuid", provinceUuid)
-  }
-  if (cityUuid) {
-    query = query.eq("city_uuid", cityUuid)
-  }
-  if (industryUuid) {
-    query = query.eq("industry_uuid", industryUuid)
+  if (industries !== undefined) {
+    query = query.in("industry_uuid", industries)
   }
 
-  if (companyName.length > 0) {
-    query = query.ilike("company_name", `%${companyName}%`)
+  if (locations !== undefined) {
+    query = query.in("city_uuid", locations)
   }
 
-  if (jobTitle.length > 0) {
-    query = query.ilike("job_title", `%${jobTitle}%`)
+  if (sortedBy === "yearOfExperience") {
+    query = query.order("year_of_experience", { ascending: order })
+  } else {
+    query = query.order("id", { ascending: true })
   }
+
+  query = query.range(from, to)
 
   const { data, error } = await query
 
@@ -348,7 +329,6 @@ export const searchReferral = async ({
 
   return data
 }
-
 // Post
 export const createPost = async (req: ICreatePostRequest) => {
   try {
@@ -402,98 +382,91 @@ export const updatePost = async (req: IUpdatePostRequest) => {
     throw error
   }
 }
-export const searchPostApi = async ({
-  cityUuid,
-  companyName,
-  industryUuid,
-  jobTitle,
+
+export const searchPost = async ({
   numberOfDataPerPage,
-  countryUuid,
   page,
-  provinceUuid,
+  industries,
+  experience,
   sortingType,
-  types,
-  maxYearOfExperience,
-  minYearOfExperience,
-}: ISearchPostsRequest) => {
+  type,
+  locations,
+  keywords,
+}: ISearchPostRequest) => {
   try {
     const sort = sortingType.split(",")
     const sortedBy = sort[0]
     const order = sort[1] !== "dec"
-    const from = page + page * numberOfDataPerPage
-    const to = from + numberOfDataPerPage
+    const from = page * numberOfDataPerPage
+    const to = from + numberOfDataPerPage - 1
 
     let query = supabase
       .from("post")
       .select<string, ISearchPostResponse>(
-        `     uuid,
-              type,
-              created_at,
-              created_by,
-              url,
+        `
+          uuid,
+          type,
+          created_at,
+          created_by,
+          url,
+          company_name,
+          job_title,
+          year_of_experience,
+          country(
+              cantonese_name,
+              english_name
+          ),
+          province(
+              cantonese_name,
+              english_name
+          ),
+          city(
+              cantonese_name,
+              english_name
+          ),
+          industry(
+              cantonese_name,
+              english_name
+          ),
+          user!inner (
+              username,
               description,
-              company_name,
-              job_title,
-              year_of_experience,
-              country(
-                  cantonese_name,
-                  english_name
-              ),
-              province(
-                  cantonese_name,
-                  english_name
-              ),
-              city(
-                  cantonese_name,
-                  english_name
-              ),
-              industry(
-                  cantonese_name,
-                  english_name
-              ),
-              user (
-                  username,
-                  avatar_url
-              ),
-              contact_request_count
-            `
+              avatar_url
+          ),
+          contact_request_count
+        `
       )
-      .in("type", types)
       .eq("status", "active")
-      .lte("year_of_experience", 100)
-      .gte("year_of_experience", 0)
-      .lte("year_of_experience", maxYearOfExperience)
-      .gte("year_of_experience", minYearOfExperience)
-      .range(from, to)
+      .gte("year_of_experience", experience)
+
+    if (keywords && keywords.trim() !== "") {
+      const searchTerms = keywords.trim().split(/\s+/)
+      searchTerms.forEach((term) => {
+        query = query.or(
+          `company_name.ilike.%${term}%,job_title.ilike.%${term}%,description.ilike.%${term}%`
+        )
+      })
+    }
 
     if (sortedBy === "createdAt") {
       query = query.order("created_at", { ascending: order })
     }
 
-    if (sortedBy === "year_of_experience") {
-      query = query.order("year_of_experience", { ascending: order })
-    }
-    if (countryUuid !== undefined) {
-      query = query.eq("country_uuid", countryUuid)
-    }
-    if (provinceUuid !== undefined) {
-      query = query.eq("province_uuid", provinceUuid)
-    }
-    if (cityUuid !== undefined) {
-      query = query.eq("city_uuid", cityUuid)
-    }
-    if (industryUuid !== undefined) {
-      query = query.eq("industry_uuid", industryUuid)
+    if (type !== EPostType.ALL && Object.values(EPostType).includes(type)) {
+      query = query.eq("type", type)
     }
 
-    if (companyName.length > 0) {
-      query = query.ilike("company_name", `%${companyName}%`)
+    if (industries !== undefined) {
+      query = query.in("industry_uuid", industries)
     }
 
-    if (jobTitle.length > 0) {
-      query = query.ilike("job_title", `%${jobTitle}%`)
+    if (locations !== undefined) {
+      query = query.in("city_uuid", locations)
     }
-    const { data, error } = await query.order("id", { ascending: true })
+
+    const { data, error, count } = await query
+      .order("id", { ascending: true })
+      .range(from, to)
 
     if (error) throw error
     if (data === null) return []
@@ -503,6 +476,7 @@ export const searchPostApi = async ({
     throw error
   }
 }
+
 export const getPostByUuid = async (uuid: string) => {
   const { data, error } = await supabase
     .from("post")
@@ -555,9 +529,16 @@ export const getPostByUuid = async (uuid: string) => {
   return data
 }
 
-export const getPostListByUserUuid = async (userUuid: string) => {
+export const ListPostByUserUuid = async (
+  userUuid: string,
+  sortValue: string
+) => {
+  const sort = sortValue.split(",")
+  const sortedBy = sort[0]
+  const order = sort[1] !== "dec"
+
   try {
-    const { data, error } = await supabase
+    let query = supabase
       .from("post")
       .select<string, IListPostResponse>(
         `
@@ -586,6 +567,15 @@ export const getPostListByUserUuid = async (userUuid: string) => {
       )
       .eq("created_by", userUuid)
 
+    if (sortedBy === "createdAt") {
+      query = query.order("created_at", { ascending: order })
+    }
+
+    if (sortedBy === "year_of_experience") {
+      query = query.order("year_of_experience", { ascending: order })
+    }
+
+    const { data, error } = await query
     if (error) throw error
 
     return data
@@ -618,7 +608,6 @@ export const getCountryList = async () => {
     const { data: countryData, error: countryError } = await supabase
       .from("country")
       .select<"*", ICountryResponse>("*")
-
     if (countryError) {
       throw countryError
     }

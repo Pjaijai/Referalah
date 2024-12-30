@@ -10,7 +10,10 @@ export const metadata = siteConfig.page.signUpConfirmation.metadata
 const SignUpConfirmationPage = async () => {
   const t = await getI18n()
   return (
-    <CommonPageLayout title={t("page.sign_up_confirmation")}>
+    <CommonPageLayout
+      title={t("page.sign_up_confirmation")}
+      titlePosition="middle"
+    >
       <SignUpConfirmationPageTemplate />
     </CommonPageLayout>
   )

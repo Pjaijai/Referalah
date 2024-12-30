@@ -1,29 +1,41 @@
+import { Suspense } from "react"
 import MainPageTemplate from "@/modules/main/template"
 import {
   getUserCount,
   listLatestContactRequest,
-  searchPostApi,
+  searchPost,
 } from "@/utils/common/api"
 
 import { EPostType } from "@/types/common/post-type"
+import CommonPageLayout from "@/components/layouts/common"
 
-// cache for 1 hours
+import Loading from "./loading"
+
 export const revalidate = 60 * 60
 
 export default async function IndexPage() {
-  const count = await getUserCount()
-  const posts = await searchPostApi({
-    numberOfDataPerPage: 8,
-    page: 0,
-    sortingType: "createdAt,dec",
-    companyName: "",
-    jobTitle: "",
-    maxYearOfExperience: 100,
-    minYearOfExperience: 0,
-    types: [EPostType.REFERRER, EPostType.HIRING, EPostType.COLLABORATION],
-  })
+  return (
+    <CommonPageLayout>
+      <Suspense fallback={<Loading />}>
+        <MainPageContent />
+      </Suspense>
+    </CommonPageLayout>
+  )
+}
 
-  const list = await listLatestContactRequest()
+async function MainPageContent() {
+  const [count, posts, list] = await Promise.all([
+    getUserCount(),
+    searchPost({
+      keywords: "",
+      numberOfDataPerPage: 8,
+      experience: 0,
+      page: 0,
+      type: EPostType.ALL,
+      sortingType: "createdAt,dec",
+    }),
+    listLatestContactRequest(),
+  ])
 
   return <MainPageTemplate count={count} posts={posts} contactList={list} />
 }

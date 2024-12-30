@@ -10,7 +10,7 @@ export const metadata = siteConfig.page.forgetPassword.metadata
 const ForgotPasswordPage = async () => {
   const t = await getI18n()
   return (
-    <CommonPageLayout title={t("page.forgot_password")}>
+    <CommonPageLayout title={t("page.forgot_password")} titlePosition="middle">
       <ForgotPasswordPageTemplate />
     </CommonPageLayout>
   )

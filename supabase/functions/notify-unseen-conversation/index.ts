@@ -6,14 +6,30 @@ import { sendEmail } from "../_shared/modules/notification/email/send-email.ts"
 import Bottleneck from "npm:bottleneck@2.19.5"
 
 const WEB_BASE_URL = Deno.env.get("WEB_BASE_URL")
-
 interface IUnSeenConversation {
   email: string
   username: string
   unseenList: { username: string; body: string }[]
 }
 
-serve(async (req: any) => {
+interface Notification {
+  user_uuid: string
+  message_uuid: string
+}
+
+interface User {
+  email: string
+  username: string
+  notification_permissions: string[]
+}
+
+interface EmailResult {
+  success: boolean
+  to: string
+  time: string
+}
+
+serve(async (req: Request) => {
   try {
     console.log(
       "Notify user unseen conversation at :",
@@ -21,9 +37,9 @@ serve(async (req: any) => {
     )
     const server = initSupabaseServer()
 
-    const { key } = await req.json()
+    const { key }: { key: string } = await req.json()
 
-    const { data, error } = await server
+    const { data, error }: { data: any; error: any } = await server
       .from("config")
       .select("*")
       .eq("name", "cron_key")
@@ -35,167 +51,146 @@ serve(async (req: any) => {
         status: 400,
       })
 
-    const { data: users } = await server.from("user").select("*")
-    const limiter = new Bottleneck({
+    const { data: notifications }: { data: Notification[] } = await server
+      .from("message_notification_queue")
+      .select("user_uuid, message_uuid")
+      .eq("status", "pending")
+
+    const userNotifications: Record<string, string[]> = notifications.reduce(
+      (acc: Record<string, string[]>, notification: Notification) => {
+        if (!acc[notification.user_uuid]) {
+          acc[notification.user_uuid] = []
+        }
+        acc[notification.user_uuid].push(notification.message_uuid)
+        return acc
+      },
+      {},
+    )
+
+    const limiter: Bottleneck = new Bottleneck({
       minTime: 180,
       maxConcurrent: 1,
     })
 
-    const list: (IUnSeenConversation | undefined)[] = await Promise.all(
-      users.map(async (user) => {
-        const { data: conversations, error } = await server
-          .from("conversation")
-          .select(
-            `
-              sender_uuid(uuid,username, email),
-              receiver_uuid(uuid,username, email),
-              last_message_uuid(
-                  sender_uuid,
-                  body,
-                  document
-              ),
-              is_sender_seen,
-              is_receiver_seen
-            `,
-          )
-          .or(`sender_uuid.eq.${user.uuid},receiver_uuid.eq.${user.uuid}`)
-          .order("last_updated_at", { ascending: false })
+    const result: EmailResult[] = await Promise.all(
+      Object.entries(userNotifications).map(
+        async ([userUuid, messageUuids]: [string, string[]]) => {
+          const { data: user }: { data: User } = await server
+            .from("user")
+            .select("email, username, notification_permissions")
+            .eq("uuid", userUuid)
+            .single()
 
-        const unseenConversationList: { username: string; body: string }[] = []
+          const count: number = messageUuids.length
 
-        for (let index = 0; index < conversations.length; index++) {
-          const conversation = conversations[index]
-
+          // Early return if user doesn't have permission for unseen_message notifications
           if (
-            conversation.sender_uuid.uuid === user.uuid &&
-            conversation.is_sender_seen === false &&
-            conversation.last_message_uuid.sender_uuid !== user.uuid &&
-            index < 5
+            !user.notification_permissions ||
+            !user.notification_permissions.includes("unseen_message")
           ) {
-            if (conversation.last_message_uuid.body) {
-              unseenConversationList.push({
-                username: conversation.receiver_uuid.username,
-                body: conversation.last_message_uuid.body,
-              })
-            } else {
-              unseenConversationList.push({
-                username: conversation.receiver_uuid.username,
-                body: conversation.last_message_uuid.document.name,
-              })
+            await server
+              .from("message_notification_queue")
+              .update({ status: "no_permission" })
+              .in("message_uuid", messageUuids)
+
+            return {
+              success: false,
+              to: user.email,
+              time: new Date().toISOString(),
+              status: "no_permission",
             }
-          } else if (
-            conversation.receiver_uuid.uuid === user.uuid &&
-            conversation.is_receiver_seen === false &&
-            conversation.last_message_uuid.sender_uuid !== user.uuid &&
-            index < 5
-          ) {
-            if (conversation.last_message_uuid.body) {
-              unseenConversationList.push({
-                username: conversation.sender_uuid.username,
-                body: conversation.last_message_uuid.body,
-              })
-            } else {
-              unseenConversationList.push({
-                username: conversation.sender_uuid.username,
-                body: conversation.last_message_uuid.document.name,
-              })
-            }
-          } else {
-            break
           }
-        }
 
-        if (unseenConversationList.length === 0) return undefined
-        return {
-          email: user.email,
-          username: user.username,
-          unseenList: unseenConversationList,
-        }
-      }),
-    )
+          const subject: string = `You ${
+            count === 1 ? "have" : "have"
+          } ${count} message${
+            count === 1 ? "" : "s"
+          } today | 你今日有${count}個訊息 | Referalah`
 
-    const filteredList = list.filter((l): l is IUnSeenConversation => !!l)
+          const body: string = `
+            <html>
+            <body style="font-family: Arial, sans-serif; background-color: #f8fafc; color: #000; margin: 0; padding: 20px;">
+                <p style="text-align: left; color: #4f46e5; font-size: 18px; margin-top: 20px;">Hi ${
+                  user.username
+                },</p>
+    
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <p style="line-height: 1.6;">You have ${count} message${
+            count === 1 ? "" : "s"
+          } today on Referalah!</p>
+                    <p style="line-height: 1.6;">你今日喺 Referalah 收到${count}個訊息！</p>
+                </div>
+    
+                <p style="text-align: center; line-height: 1.6;">If you want to stop receiving this kind of email, please go to your profile page and adjust your settings.</p>
+                <p style="text-align: center; line-height: 1.6;">如果你想停止接收呢類電郵，可以去個人檔案設定。</p>
+    
+                <p style="text-align: left; line-height: 1.6; margin-top: 20px;">Cheers,<br>Paul@Referalah</p>
+            </body>
+            </html>
+          `
 
-    const result = await Promise.all(
-      filteredList.map(async (data) => {
-        const count = data?.unseenList.length
-
-        const subject = `You ${
-          count === 1 ? "has" : "have"
-        } ${count} unread message${
-          count === 1 ? "" : "s"
-        } | 你有${count}個未讀訊息 - Referalah`
-
-        const body = `
-        <html>
-        <body>
-        <div style="text-align: center; max-width: 400px; margin: 0 auto; padding: 20px; background-color: #f4f4f4; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-        <p style="margin-bottom: 8px; font-size: 18px; color: #333;">Hi ${
-          data?.username
-        }!</p>
-        <p style="margin-bottom: 8px; font-size: 16px; color: #555;">You ${
-          count === 1 ? "has" : "have"
-        } ${count} unread message${
-          count === 1 ? "" : "s"
-        } | 你有${count}個未讀訊息</p>
-        <p style="margin-bottom: 8px; font-size: 16px; color: #555;">Please click the link below to continue the conversation:</p>
-        <a href="${WEB_BASE_URL}/en-ca/chat" style="display: inline-block; text-decoration: none; color: #007bff; font-weight: bold; font-size: 16px;">${WEB_BASE_URL}/en-ca/chat</a>
-    </div>
-
-          ${data?.unseenList
-            .map(
-              (con) => `
-              <div style="width: 100%; display: flex; justify-content: center; margin-top: 2rem;">
-      <div style="width: 90%; max-width: 600px;">
-        <div style="width: 100%; background: #f0f0f0; padding: 16px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-        <p style="text-align: right; font-size: 14px; font-style: italic; margin-bottom: 8px; color: #555; margin-top: 0; padding-top: 0;">
-        <span style="font-weight: bold; color: #007bff;">@${con.username}</span>
-      </p>
-        <p style="margin-top: 8px; font-size: 16px; line-height: 1.5; color: #333;">${con.body}</p>
-      </div>
-    </div>
-    </div>
-
-          `,
+          try {
+            const res: { ok?: boolean } = await limiter.schedule(() =>
+              sendEmail({
+                subject,
+                body: body,
+                to: ENV_IS_LOCAL ? Deno.env.get("RESEND_TO_EMAIL") : user.email,
+              }),
             )
-            .join("")}
 
-        </body>
-      </html>
-        `
-        let emailResult: {
-          success?: boolean
-          to: string
-          time: string
-        } = {
-          success: false,
-          to: "",
-          time: "",
-        }
+            if (!res?.ok) {
+              await server
+                .from("message_notification_queue")
+                .update({ status: "failed" })
+                .in("message_uuid", messageUuids)
 
-        await limiter
-          .schedule(() =>
-            sendEmail({
-              subject,
+              return {
+                success: false,
+                to: user.email,
+                time: new Date().toISOString(),
+              }
+            }
+
+            // Log successful notification
+            await server.from("email_notification_log").insert({
+              user_uuid: userUuid,
+              email: user.email,
+              type: "unseen_message",
+              title: subject,
               body: body,
-              to: ENV_IS_LOCAL ? Deno.env.get("RESEND_TO_EMAIL") : data.email,
-            }),
-          )
-          .then((res) => {
-            emailResult = {
-              success: res?.ok,
-              to: data?.email,
+            })
+
+            // Remove successfully sent notifications from the queue
+            await server
+              .from("message_notification_queue")
+              .delete()
+              .in("message_uuid", messageUuids)
+
+            return {
+              success: true,
+              to: user.email,
               time: new Date().toISOString(),
             }
-          })
+          } catch (error) {
+            console.error(`Error sending email to ${user.email}:`, error)
 
-        return emailResult
-      }),
+            await server
+              .from("message_notification_queue")
+              .update({ status: "failed" })
+              .in("message_uuid", messageUuids)
+
+            return {
+              success: false,
+              to: user.email,
+              time: new Date().toISOString(),
+            }
+          }
+        },
+      ),
     )
 
-    // const filteredResp = resp.filter((r) => r)
     return new Response(JSON.stringify(result), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" }, // Be sure to add CORS headers here too
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     })
   } catch (error: any) {

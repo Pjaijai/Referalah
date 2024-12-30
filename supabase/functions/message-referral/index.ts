@@ -86,6 +86,13 @@ serve(async (req: any) => {
       })
     }
 
+    if (!receiver.is_referee && !receiver.is_referer) {
+      return new Response("Not allowed to contact this user", {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 500,
+      })
+    }
+
     if (sender.uuid === receiver.uuid) {
       return new Response("Same user", {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -182,7 +189,7 @@ serve(async (req: any) => {
       .eq("uuid", to_uuid)
       .single()
 
-    const subject = `${sender.username} sent you a message.`
+    const subject = `${sender.username} sent you a message | Referalah`
     const emailBody = `
         <html>
         <head>

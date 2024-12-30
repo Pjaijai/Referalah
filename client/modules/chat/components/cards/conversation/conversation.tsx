@@ -119,7 +119,10 @@ const ConversationCard: React.FunctionComponent<IConversationProps> = ({
           )}
 
           {!isSeen && (
-            <Icons.bigDot className="absolute right-0 text-green-700  dark:text-yellow-300" />
+            <Icons.bigDot
+              className="absolute right-0 text-green-700  dark:text-yellow-300"
+              data-testid="unread-big-dot"
+            />
           )}
         </div>
       </div>

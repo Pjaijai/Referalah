@@ -9,11 +9,11 @@ import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import LocaleDropDownMenu from "@/components/customized-ui/drop-down-menu/locale"
-import MessageIcon from "@/components/customized-ui/icons/message"
 import { BaseNavigationMenu } from "@/components/customized-ui/navigation-menu/base"
 import { MobileNavigationMenu } from "@/components/customized-ui/navigation-menu/mobile"
 import { MainNav } from "@/components/main-nav"
-import { ThemeToggle } from "@/components/theme-toggle"
+
+// import { ThemeToggle } from "@/components/theme-toggle"
 
 export function SiteHeader() {
   const t = useI18n()
@@ -21,16 +21,16 @@ export function SiteHeader() {
   const router = useRouter()
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background">
+    <header className=" top-0 z-40 w-full border-b">
       <div className="flex h-16 items-center justify-between space-x-4 p-2 sm:space-x-0  md:p-4">
-        <div className="flex items-center">
+        <div className="flex items-center ">
           <MobileNavigationMenu className="mr-1 md:hidden" />
 
           <div className="flex-1">
             <MainNav />
           </div>
         </div>
-        <div className="hidden w-full flex-1 shrink-0 justify-center md:flex">
+        <div className="hidden w-full flex-1 shrink-0 justify-center  md:flex">
           <BaseNavigationMenu />
         </div>
 
@@ -38,9 +38,11 @@ export function SiteHeader() {
           <nav className="flex items-center gap-2">
             <LocaleDropDownMenu />
 
+            {/* TODO: Theme toggle */}
+            {/* 
             <div className="hidden md:block">
               <ThemeToggle />
-            </div>
+            </div> */}
 
             {user.isSignIn ? (
               <Link href={`${siteConfig.page.profile.href}/${user.uuid}`}>

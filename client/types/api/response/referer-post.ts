@@ -82,7 +82,7 @@ export interface IListPostResponse extends IPost {
     english_name: string
   } | null
   user: {
-    username: string | null
+    username: string
     avatar_url: string | null
-  } | null
+  }
 }

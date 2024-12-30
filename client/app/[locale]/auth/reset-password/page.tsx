@@ -10,7 +10,7 @@ export const metadata = siteConfig.page.resetPassword.metadata
 const ResetPasswordPage = async () => {
   const t = await getI18n()
   return (
-    <CommonPageLayout title={t("page.reset_password")}>
+    <CommonPageLayout title={t("page.reset_password")} titlePosition="middle">
       <ResetPasswordPageTemplate />
     </CommonPageLayout>
   )

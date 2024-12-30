@@ -38,6 +38,7 @@ const MessageList: React.FunctionComponent<IMessageListProps> = ({
   }, [list])
 
   useEffect(() => {
+    if (!conversationUuid) return
     const channel = supabase
       .channel(`message-${conversationUuid}`)
       .on(
@@ -59,7 +60,7 @@ const MessageList: React.FunctionComponent<IMessageListProps> = ({
     return () => {
       supabase.removeChannel(channel)
     }
-  }, [])
+  }, [conversationUuid])
 
   return (
     <div

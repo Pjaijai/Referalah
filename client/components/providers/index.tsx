@@ -18,7 +18,9 @@ const Provider: React.FunctionComponent<IProviderProps> = ({
   locale,
 }) => {
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+    // <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+
+    <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light">
       <APIProvider>
         <I18nProviderClient locale={locale}>
           <AuthProvider>

@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useEffect, useRef } from "react"
+import { UseFormReturn } from "react-hook-form"
 
 import {
   FormControl,
@@ -11,14 +12,39 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { IFormTextInputProps } from "@/components/customized-ui/form/input"
 
-interface IFormTextArea extends IFormTextInputProps {}
+interface IFormTextArea extends Omit<IFormTextInputProps, "control"> {
+  inputClassName?: string
+  minRows?: number
+  control: UseFormReturn<any>["control"]
+}
+
 const FormTextArea: React.FunctionComponent<IFormTextArea> = ({
   control,
   name,
   label,
   placeholder,
   description,
+  inputClassName,
+  minRows = 3,
 }) => {
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null)
+
+  const adjustHeight = () => {
+    const textarea = textareaRef.current
+    if (textarea) {
+      if (textarea.value.trim() === "") {
+        textarea.style.height = `${minRows * 24}px` // Assuming 24px line height
+      } else {
+        textarea.style.height = "auto"
+        textarea.style.height = `${textarea.scrollHeight}px`
+      }
+    }
+  }
+
+  useEffect(() => {
+    adjustHeight()
+  }, [textareaRef.current?.value])
+
   return (
     <FormField
       control={control}
@@ -27,7 +53,26 @@ const FormTextArea: React.FunctionComponent<IFormTextArea> = ({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Textarea placeholder={placeholder} {...field} />
+            <Textarea
+              placeholder={placeholder}
+              className={`${inputClassName} overflow-hidden`}
+              {...field}
+              ref={(e) => {
+                textareaRef.current = e
+                if (typeof field.ref === "function") {
+                  field.ref(e)
+                } else if (field.ref && "current" in field.ref) {
+                  ;(
+                    field.ref as React.MutableRefObject<HTMLTextAreaElement | null>
+                  ).current = e
+                }
+              }}
+              rows={minRows}
+              onChange={(e) => {
+                field.onChange(e)
+              }}
+              style={{ resize: "none" }}
+            />
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />

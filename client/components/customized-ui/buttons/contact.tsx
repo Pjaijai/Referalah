@@ -5,6 +5,7 @@ import { useI18n } from "@/utils/services/internationalization/client"
 
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
+import { cn } from "@/lib/utils"
 import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
@@ -15,6 +16,8 @@ interface IContactButtonProps {
   messageType: EMessageType
   postUuid?: string | null
   receiverType?: EReferralType
+  buttonClassName?: string
+  showIcon?: boolean
 }
 const ContactButton: React.FunctionComponent<IContactButtonProps> = ({
   username,
@@ -22,6 +25,8 @@ const ContactButton: React.FunctionComponent<IContactButtonProps> = ({
   messageType,
   postUuid,
   receiverType,
+  buttonClassName,
+  showIcon = false,
 }) => {
   const t = useI18n()
   const [isContactFormOpen, setIsContactFormOpen] = useState(false)
@@ -39,11 +44,12 @@ const ContactButton: React.FunctionComponent<IContactButtonProps> = ({
   return (
     <>
       <Button
-        className="flex w-full flex-row gap-1"
+        variant={"theme"}
+        className={cn("flex w-full flex-row gap-1", buttonClassName)}
         onClick={handleContactClick}
       >
-        <Icons.mail className="mr-1 h-4 w-4" />
-        <p> {t("general.contact")}</p>
+        {showIcon && <Icons.coffee size={16} />}
+        <p>Coffee Chat</p>
       </Button>
 
       <ContactDialog

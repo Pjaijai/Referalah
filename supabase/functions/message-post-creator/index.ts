@@ -207,7 +207,7 @@ serve(async (req: any) => {
       .eq("uuid", post.uuid)
       .single()
 
-    const subject = `${sender.username} is interested in you post - ${post.job_title}`
+    const subject = `${sender.username} is interested in you post - ${post.job_title} | Referalah`
     const body = `
             <html>
            

@@ -1,6 +1,5 @@
 import React, { useMemo } from "react"
 import DocumentCard from "@/modules/chat/components/cards/document/document"
-import compareDateDifferenceHelper from "@/utils/common/helpers/time/compareDateDifference"
 
 import { cn } from "@/lib/utils"
 import useCreatedAt from "@/hooks/common/created-at"
@@ -51,7 +50,7 @@ const MessageCard: React.FunctionComponent<IMessageCardProps> = ({
             " flex flex-col rounded-l-2xl p-3",
             sentByUser
               ? "bg-green-300 dark:bg-[#164E63] "
-              : " bg-slate-50 shadow-sm dark:bg-slate-600"
+              : " bg-white  shadow-sm dark:bg-slate-600"
           )}
           data-testid="message-card"
         >
@@ -75,7 +74,7 @@ const MessageCard: React.FunctionComponent<IMessageCardProps> = ({
             "flex items-end justify-end rounded-r-2xl text-end text-xs  text-slate-700 dark:text-slate-400",
             sentByUser
               ? "bg-green-300  dark:bg-[#164E63]"
-              : " bg-slate-50 shadow-sm dark:bg-slate-600"
+              : " bg-white shadow-sm dark:bg-slate-600"
           )}
         >
           <p className="mb-1 mr-2">{formattedDate}</p>

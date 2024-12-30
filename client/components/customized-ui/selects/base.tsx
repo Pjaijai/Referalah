@@ -12,7 +12,7 @@ import {
 
 export interface ISelectOption {
   value: string
-  title: string
+  label: string | React.ReactNode
 }
 
 interface IBaseSelectProps {
@@ -23,6 +23,7 @@ interface IBaseSelectProps {
   defaultValue?: string
   value?: string
   isDisabled?: boolean
+  itemClassName?: string
 }
 
 const BaseSelect: React.FunctionComponent<IBaseSelectProps> = ({
@@ -33,6 +34,8 @@ const BaseSelect: React.FunctionComponent<IBaseSelectProps> = ({
   defaultValue,
   value,
   isDisabled,
+  itemClassName,
+  ...props
 }) => {
   return (
     <Select
@@ -40,6 +43,7 @@ const BaseSelect: React.FunctionComponent<IBaseSelectProps> = ({
       defaultValue={defaultValue}
       value={value}
       disabled={isDisabled}
+      {...props}
     >
       <SelectTrigger className={cn("w-[180px]", triggerClassName)}>
         <SelectValue placeholder={placeholder} />
@@ -48,8 +52,12 @@ const BaseSelect: React.FunctionComponent<IBaseSelectProps> = ({
         <ScrollArea>
           {options &&
             options.map((option) => (
-              <SelectItem value={option.value} key={option.value}>
-                {option.title}
+              <SelectItem
+                value={option.value}
+                key={option.value}
+                className={itemClassName}
+              >
+                {option.label}
               </SelectItem>
             ))}
         </ScrollArea>

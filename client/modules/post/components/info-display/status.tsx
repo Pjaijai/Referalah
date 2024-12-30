@@ -9,6 +9,7 @@ interface PostStatusDisplayProps {
   className?: string
 }
 
+// TODO remove this to be badge
 const PostStatusDisplay = ({
   postStatus,
   className,

@@ -141,16 +141,16 @@ const EditPostPageTemplate: React.FunctionComponent<
         .min(1, {
           message: t("validation.field_required"),
         })
-        .max(30, {
-          message: t("validation.text.maximum_length", { count: 30 }),
+        .max(100, {
+          message: t("validation.text.maximum_length", { count: 100 }),
         }),
       jobTitle: z
         .string()
         .min(1, {
           message: t("validation.field_required"),
         })
-        .max(30, {
-          message: t("validation.text.maximum_length", { count: 30 }),
+        .max(100, {
+          message: t("validation.text.maximum_length", { count: 100 }),
         }),
       status: z.enum(["active", "inactive"]),
     })
@@ -196,8 +196,8 @@ const EditPostPageTemplate: React.FunctionComponent<
 
   const user = useUserStore((state) => state)
   const statusOptions: ISelectOption[] = [
-    { title: t("post.status.open"), value: EPostStatus.ACTIVE },
-    { title: t("post.status.close"), value: EPostStatus.INACTIVE },
+    { label: t("post.status.open"), value: EPostStatus.ACTIVE },
+    { label: t("post.status.close"), value: EPostStatus.INACTIVE },
   ]
 
   const industryOptions = useIndustryOptions(industryList)
