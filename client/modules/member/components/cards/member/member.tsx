@@ -75,7 +75,7 @@ const MemberCard: React.FunctionComponent<IMemberCardProps> = ({
   ].filter(Boolean)
 
   return (
-    <Card className="m-w-[448px] flex h-96 flex-col  border-none bg-white shadow-xl">
+    <Card className="flex h-96 max-w-[448px] flex-col  border-none bg-white shadow-xl">
       <CardHeader className=" flex flex-row  items-center justify-between ">
         <div className="flex flex-row items-center justify-center gap-2">
           <BaseAvatar
@@ -122,11 +122,11 @@ const MemberCard: React.FunctionComponent<IMemberCardProps> = ({
             size="medium"
           />
         </div>
-        <p className="mt-4 line-clamp-2 h-12 w-[350px] overflow-hidden text-ellipsis break-all text-sm  font-normal leading-6 md:mt-8">
+        <p className=" mt-4 line-clamp-2 h-12 max-w-[350px] overflow-hidden text-ellipsis break-all  text-sm font-normal leading-6 md:mt-8">
           {description}
         </p>
 
-        <div className="m-3 flex h-12 w-full flex-row gap-3">
+        <div className="m-3 flex h-12 w-full flex-row gap-1 md:gap-3">
           {links.map((s, index) => (
             <SocialIconWithTooltip
               type={s.type}
