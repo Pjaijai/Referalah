@@ -2,94 +2,84 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [1.20.7](https://github.com/Pjaijai/Referalah/compare/v1.20.6...v1.20.7) (2024-06-09)
+### [1.21.1](https://github.com/Pjaijai/Referalah/compare/v1.5.0...v1.20.8) (2024-12-31)
 
+### [1.20.7](https://github.com/Pjaijai/Referalah/compare/v1.20.6...v1.20.7) (2024-06-09)
 
 ### Bug Fixes
 
-* fix back post reset problem ([b71609a](https://github.com/Pjaijai/Referalah/commit/b71609adb7f69b3d4992a7610bb19f23c468291f))
-* fix conversation bug ([3a41cb4](https://github.com/Pjaijai/Referalah/commit/3a41cb418470867dd0e3570025cfb3fbcf12311e))
+- fix back post reset problem ([b71609a](https://github.com/Pjaijai/Referalah/commit/b71609adb7f69b3d4992a7610bb19f23c468291f))
+- fix conversation bug ([3a41cb4](https://github.com/Pjaijai/Referalah/commit/3a41cb418470867dd0e3570025cfb3fbcf12311e))
 
 ### [1.20.6](https://github.com/Pjaijai/Referalah/compare/v1.20.5...v1.20.6) (2024-06-03)
 
-
 ### Bug Fixes
 
-* force need help post to have link ([be7fa9f](https://github.com/Pjaijai/Referalah/commit/be7fa9fa10cb4435d9d1807b7592c646176edac3))
-* not posting need help link in main page ([fd35751](https://github.com/Pjaijai/Referalah/commit/fd35751e59e60bdedc2cd79116aa0ac04c484c48))
+- force need help post to have link ([be7fa9f](https://github.com/Pjaijai/Referalah/commit/be7fa9fa10cb4435d9d1807b7592c646176edac3))
+- not posting need help link in main page ([fd35751](https://github.com/Pjaijai/Referalah/commit/fd35751e59e60bdedc2cd79116aa0ac04c484c48))
 
 ### [1.20.5](https://github.com/Pjaijai/Referalah/compare/v1.20.4...v1.20.5) (2024-06-01)
 
-
 ### Bug Fixes
 
-* fix view post title tag ([d3e7d4f](https://github.com/Pjaijai/Referalah/commit/d3e7d4fa36ab0793550fd3d5cf86e42a4e039714))
-* hot fix post update count ([6bc994b](https://github.com/Pjaijai/Referalah/commit/6bc994bb7dc1fc3d20dff685fecea48231386d7d))
+- fix view post title tag ([d3e7d4f](https://github.com/Pjaijai/Referalah/commit/d3e7d4fa36ab0793550fd3d5cf86e42a4e039714))
+- hot fix post update count ([6bc994b](https://github.com/Pjaijai/Referalah/commit/6bc994bb7dc1fc3d20dff685fecea48231386d7d))
 
 ### [1.20.4](https://github.com/Pjaijai/Referalah/compare/v1.20.3...v1.20.4) (2024-05-30)
 
-
 ### Bug Fixes
 
-* fix messsage post user banned problem ([d1b2350](https://github.com/Pjaijai/Referalah/commit/d1b23505143084e1a7de81cbee0b0f5d77634872))
+- fix messsage post user banned problem ([d1b2350](https://github.com/Pjaijai/Referalah/commit/d1b23505143084e1a7de81cbee0b0f5d77634872))
 
 ### [1.20.3](https://github.com/Pjaijai/Referalah/compare/v1.20.2...v1.20.3) (2024-05-17)
 
-
 ### Bug Fixes
 
-* fix post title and company limit to 100 ([d06ce79](https://github.com/Pjaijai/Referalah/commit/d06ce79fda5954e808609556d0b40df560792399))
+- fix post title and company limit to 100 ([d06ce79](https://github.com/Pjaijai/Referalah/commit/d06ce79fda5954e808609556d0b40df560792399))
 
 ### [1.20.2](https://github.com/Pjaijai/Referalah/compare/v1.20.1...v1.20.2) (2024-05-14)
 
-
 ### Bug Fixes
 
-* fix message covered my text input form ([#374](https://github.com/Pjaijai/Referalah/issues/374)) ([8f0f679](https://github.com/Pjaijai/Referalah/commit/8f0f679fbee7012c32c9c32adcc83a649bba7215))
+- fix message covered my text input form ([#374](https://github.com/Pjaijai/Referalah/issues/374)) ([8f0f679](https://github.com/Pjaijai/Referalah/commit/8f0f679fbee7012c32c9c32adcc83a649bba7215))
 
 ### [1.20.1](https://github.com/Pjaijai/Referalah/compare/v1.20.0...v1.20.1) (2024-05-13)
 
-
 ### Bug Fixes
 
-* fix list latest contact request post uuid ([59464cc](https://github.com/Pjaijai/Referalah/commit/59464cc424fadd3226e4db2e7091fac9c71d283f))
-* fix request count on post detail page ([2ad36d2](https://github.com/Pjaijai/Referalah/commit/2ad36d2f63edbc48e4aa7aa63e0c47f252666965))
-* remove fancy stuff ([#372](https://github.com/Pjaijai/Referalah/issues/372)) ([20b7fff](https://github.com/Pjaijai/Referalah/commit/20b7fffa19fc1a1b61c13da725ce5acd60dc6895))
+- fix list latest contact request post uuid ([59464cc](https://github.com/Pjaijai/Referalah/commit/59464cc424fadd3226e4db2e7091fac9c71d283f))
+- fix request count on post detail page ([2ad36d2](https://github.com/Pjaijai/Referalah/commit/2ad36d2f63edbc48e4aa7aa63e0c47f252666965))
+- remove fancy stuff ([#372](https://github.com/Pjaijai/Referalah/issues/372)) ([20b7fff](https://github.com/Pjaijai/Referalah/commit/20b7fffa19fc1a1b61c13da725ce5acd60dc6895))
 
 ## [1.20.0](https://github.com/Pjaijai/Referalah/compare/v1.19.0...v1.20.0) (2024-05-09)
 
-
 ### Features
 
-* display the count ([c1bb81a](https://github.com/Pjaijai/Referalah/commit/c1bb81a459a0c26dd02e8a7a040415c85b10c1cd))
-* update user table access ([c0540aa](https://github.com/Pjaijai/Referalah/commit/c0540aa263b33bdd1fad2f50c2a959267248a53f))
-
+- display the count ([c1bb81a](https://github.com/Pjaijai/Referalah/commit/c1bb81a459a0c26dd02e8a7a040415c85b10c1cd))
+- update user table access ([c0540aa](https://github.com/Pjaijai/Referalah/commit/c0540aa263b33bdd1fad2f50c2a959267248a53f))
 
 ### Bug Fixes
 
-* fix ContactRequestCount count text ([311ab52](https://github.com/Pjaijai/Referalah/commit/311ab523179cb1ae28a6499b74d21c432d3b4d27))
-* fix user card count position ([7405e9a](https://github.com/Pjaijai/Referalah/commit/7405e9a951f496807ab48e794a81dc5bb8d70bb9))
+- fix ContactRequestCount count text ([311ab52](https://github.com/Pjaijai/Referalah/commit/311ab523179cb1ae28a6499b74d21c432d3b4d27))
+- fix user card count position ([7405e9a](https://github.com/Pjaijai/Referalah/commit/7405e9a951f496807ab48e794a81dc5bb8d70bb9))
 
 ## [1.19.0](https://github.com/Pjaijai/Referalah/compare/v1.18.0...v1.19.0) (2024-05-09)
 
-
 ### Features
 
-* remove message icon in site header ([8093fcb](https://github.com/Pjaijai/Referalah/commit/8093fcb32b9feb8fe797979f5584bd5aaca2fc97))
-* replace FormTextInput with FormTextArea ([64b3b3d](https://github.com/Pjaijai/Referalah/commit/64b3b3d772a282731ad939bb1340684218965ccc))
-
+- remove message icon in site header ([8093fcb](https://github.com/Pjaijai/Referalah/commit/8093fcb32b9feb8fe797979f5584bd5aaca2fc97))
+- replace FormTextInput with FormTextArea ([64b3b3d](https://github.com/Pjaijai/Referalah/commit/64b3b3d772a282731ad939bb1340684218965ccc))
 
 ### Bug Fixes
 
-* fix main page cache ([6069abc](https://github.com/Pjaijai/Referalah/commit/6069abc7f750d0be40c68ef8220195e512cb7a47))
-* fix view post link in contact request carousel ([8bb4131](https://github.com/Pjaijai/Referalah/commit/8bb41313b4b51e8984ce14c629fbbcfc3e0a6c9f))
+- fix main page cache ([6069abc](https://github.com/Pjaijai/Referalah/commit/6069abc7f750d0be40c68ef8220195e512cb7a47))
+- fix view post link in contact request carousel ([8bb4131](https://github.com/Pjaijai/Referalah/commit/8bb41313b4b51e8984ce14c629fbbcfc3e0a6c9f))
 
 ## [1.18.0](https://github.com/Pjaijai/Referalah/compare/v1.17.1...v1.18.0) (2024-05-07)
 
-
 ### Features
 
-* add links to contact request list ([bde718e](https://github.com/Pjaijai/Referalah/commit/bde718e23b073f13d0b64c1153be75915f35b311))
+- add links to contact request list ([bde718e](https://github.com/Pjaijai/Referalah/commit/bde718e23b073f13d0b64c1153be75915f35b311))
 
 ### [1.17.1](https://github.com/Pjaijai/Referalah/compare/v1.17.0...v1.17.1) (2024-04-29)
 

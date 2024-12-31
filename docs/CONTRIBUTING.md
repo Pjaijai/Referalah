@@ -28,7 +28,7 @@
 
 ### Creating branch
 
-Naming your branch with category. For example `feature/i-go-to-school-by-bus`. Please create new branch based on `development` branch and created PR point to `development`.
+Naming your branch with category. For example `feature/i-go-to-school-by-bus`. Please create new branch based on `staging` branch and created PR point to `staging`.
 
 | Category Word |                               Meaning                                |
 | ------------- | :------------------------------------------------------------------: |
