@@ -348,13 +348,13 @@ const ViewProfileTemplate: React.FunctionComponent<
             (!showPostHistoryButton || !showContactButton) && "justify-end"
           )}
         >
-          {showPostHistoryButton && (
+          {slug && showPostHistoryButton && (
             <Button
               size={"lg"}
               variant={"outline"}
               className="w-52 gap-2 border-slate-600 text-base font-medium text-slate-600"
               onClick={() => {
-                router.push(`${siteConfig.page.postHistory.href}/${userUuid}`)
+                router.push(`${siteConfig.page.postHistory.href}/${slug}`)
               }}
             >
               <Icons.clipboard size={16} />
