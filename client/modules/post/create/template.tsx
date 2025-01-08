@@ -243,7 +243,6 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
           cityUuid: values.cityUuid,
           industryUuid: values.industryUuid,
           yearOfExperience: parseInt(values.yearOfExperience),
-          createdBy: user.uuid!,
           type: values.type,
           companyName: values.companyName.trim(),
           jobTitle: values.jobTitle.trim(),
@@ -259,6 +258,9 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
               description: t("general.error.description"),
               variant: "destructive",
             })
+          },
+          onSettled: () => {
+            setIsSubmitting(false)
           },
         }
       )

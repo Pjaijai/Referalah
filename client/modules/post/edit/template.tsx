@@ -258,8 +258,6 @@ const EditPostPageTemplate: React.FunctionComponent<
           cityUuid: values.cityUuid,
           industryUuid: values.industryUuid,
           yearOfExperience: parseInt(values.yearOfExperience),
-          createdBy: user.uuid!,
-          type: values.type,
           companyName: values.companyName.trim(),
           jobTitle: values.jobTitle.trim(),
           description: values.description.trim(),

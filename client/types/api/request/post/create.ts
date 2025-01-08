@@ -5,7 +5,6 @@ export interface ICreatePostRequest {
   industryUuid: string
   cityUuid: string
   yearOfExperience: number
-  createdBy: string
   type: string
   companyName: string
   jobTitle: string
