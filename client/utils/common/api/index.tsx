@@ -45,7 +45,6 @@ export const getUserProfile = async (userUuid: string) => {
                 company_name,
                 job_title,
                 year_of_experience,
-              social_media_url,
             country(
               uuid,
               cantonese_name,
@@ -259,7 +258,6 @@ export const searchUser = async ({
             company_name,
             job_title,
             year_of_experience,
-            social_media_url,
             country(
               uuid,
               cantonese_name,
@@ -341,7 +339,6 @@ export const createPost = async (req: ICreatePostRequest) => {
         city_uuid: req.cityUuid,
         industry_uuid: req.industryUuid,
         year_of_experience: req.yearOfExperience,
-        created_by: req.createdBy,
         type: req.type,
         company_name: req.companyName.trim(),
         job_title: req.jobTitle.trim(),
@@ -368,8 +365,6 @@ export const updatePost = async (req: IUpdatePostRequest) => {
         city_uuid: req.cityUuid,
         industry_uuid: req.industryUuid,
         year_of_experience: req.yearOfExperience,
-        created_by: req.createdBy,
-        type: req.type,
         company_name: req.companyName.trim(),
         job_title: req.jobTitle.trim(),
         description: req.description.trim(),
