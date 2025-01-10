@@ -14,6 +14,7 @@ import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
 import { EPostStatus } from "@/types/common/post-status"
 import { EPostType } from "@/types/common/post-type"
+import { EUserStatus } from "@/types/common/user-status"
 import { siteConfig } from "@/config/site"
 import useGetPost from "@/hooks/api/post/get-post"
 import useUpdatePost from "@/hooks/api/post/update-post"
@@ -245,6 +246,14 @@ const EditPostPageTemplate: React.FunctionComponent<
 
   const onSubmit = async (values: IForm, e: any) => {
     e.preventDefault()
+
+    if (user.status !== EUserStatus.ACTIVE) {
+      return toast({
+        title: t("general.action_restricted_please_contact_admin"),
+        variant: "destructive",
+      })
+    }
+
     try {
       setIsSubmitting(true)
 

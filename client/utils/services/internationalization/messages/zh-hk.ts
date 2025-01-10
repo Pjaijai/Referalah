@@ -341,4 +341,6 @@ export default {
   "profile.view.community": "Community",
   "profile.view.edit_profile": "編輯用戶檔案",
   "general.add_more": "整多個",
+  "general.action_restricted_please_contact_admin":
+    "行動被限制，請聯絡管理員。",
 } as const

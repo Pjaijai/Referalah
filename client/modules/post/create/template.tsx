@@ -14,6 +14,7 @@ import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
 import { EPostType } from "@/types/common/post-type"
+import { EUserStatus } from "@/types/common/user-status"
 import { siteConfig } from "@/config/site"
 import useCreatePost from "@/hooks/api/post/create-post"
 import useCityOptions from "@/hooks/common/options/city-options"
@@ -218,6 +219,14 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
     e: any
   ) => {
     e.preventDefault()
+
+    if (user.status !== EUserStatus.ACTIVE) {
+      return toast({
+        title: t("general.action_restricted_please_contact_admin"),
+        variant: "destructive",
+      })
+    }
+
     try {
       if (!user.isSignIn)
         return toast({
