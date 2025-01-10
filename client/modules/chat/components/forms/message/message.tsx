@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { EQueryKeyString } from "@/types/common/query-key-string"
+import { EUserStatus } from "@/types/common/user-status"
 import { cn } from "@/lib/utils"
 import useCreateMessage from "@/hooks/api/message/create-message"
 import useUpdateConversation from "@/hooks/api/message/update-conversation"
@@ -35,7 +36,7 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
   const [file, setFile] = useState<File>()
   const [isFileUploadDrawerOpen, setIsFileUploadDrawerOpen] = useState(false)
   const queryClient = useQueryClient()
-  const userUuid = useUserStore((state) => state.uuid)
+  const user = useUserStore((state) => state)
   const { toast } = useToast()
   const { mutate: create, isLoading } = useCreateMessage()
   const { mutate: update } = useUpdateConversation()
@@ -73,6 +74,13 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
     fileSize?: number
     internalFilePath?: string
   }) => {
+    if (user.status !== EUserStatus.ACTIVE) {
+      return toast({
+        title: t("general.action_restricted_please_contact_admin"),
+        variant: "destructive",
+      })
+    }
+
     create(
       {
         conversationUuid,
@@ -95,7 +103,10 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
               {
                 onSuccess: () => {
                   queryClient.invalidateQueries({
-                    queryKey: [EQueryKeyString.CONVERSATION_LIST, { userUuid }],
+                    queryKey: [
+                      EQueryKeyString.CONVERSATION_LIST,
+                      { userUuid: user.uuid },
+                    ],
                   })
                 },
               }
@@ -110,7 +121,10 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
               {
                 onSuccess: () => {
                   queryClient.invalidateQueries({
-                    queryKey: [EQueryKeyString.CONVERSATION_LIST, { userUuid }],
+                    queryKey: [
+                      EQueryKeyString.CONVERSATION_LIST,
+                      { userUuid: user.uuid },
+                    ],
                   })
                 },
               }
@@ -129,7 +143,7 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
   const onSubmit = async (values: z.infer<typeof sendMessageInFormSchema>) => {
     if (!conversationUuid) return
     if (file) {
-      const filePath = `${userUuid}/${new Date().toISOString()}/${file.name}`
+      const filePath = `${user.uuid}/${new Date().toISOString()}/${file.name}`
       upload(
         {
           file: file,

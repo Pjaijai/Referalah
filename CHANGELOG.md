@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.23.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.23.0) (2025-01-10)
+
+
+### Features
+
+* better meta data ([#398](https://github.com/Pjaijai/Referalah/issues/398)) ([62aa6de](https://github.com/Pjaijai/Referalah/commit/62aa6debe73296fdbef6f5bad7962e34c9c5f8ce))
+
+
+### Bug Fixes
+
+* fix clicking history button in profile page to user own history page ([#397](https://github.com/Pjaijai/Referalah/issues/397)) ([cafc939](https://github.com/Pjaijai/Referalah/commit/cafc9395c3f1c60a082f90b0f843adeba1b4cd6c))
+* fix input and text area text size ([#399](https://github.com/Pjaijai/Referalah/issues/399)) ([4e4a362](https://github.com/Pjaijai/Referalah/commit/4e4a36234a834f27a2be77e44f604b012b883836))
+
 ## [1.22.0](https://github.com/Pjaijai/Referalah/compare/v1.20.8...v1.22.0) (2025-01-10)
 
 
