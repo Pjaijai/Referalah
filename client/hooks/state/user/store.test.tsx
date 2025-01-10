@@ -1,5 +1,6 @@
 import { act, renderHook } from "@testing-library/react"
 
+import { EUserStatus } from "@/types/common/user-status"
 import useUserStore from "@/hooks/state/user/store"
 
 /**
@@ -34,6 +35,7 @@ describe("useUserStore", () => {
         username: "testuser",
         uuid: "123456",
         photoUrl: "https://example.com/photo.jpg",
+        status: EUserStatus.ACTIVE,
       })
     })
 
@@ -52,6 +54,7 @@ describe("useUserStore", () => {
         username: "testuser",
         uuid: "123456",
         photoUrl: "https://example.com/photo.jpg",
+        status: EUserStatus.ACTIVE,
       })
     })
 

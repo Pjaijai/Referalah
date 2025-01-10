@@ -4,6 +4,7 @@ import React, { FunctionComponent, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { supabase } from "@/utils/services/supabase/config"
 
+import { EUserStatus } from "@/types/common/user-status"
 import useUserStore from "@/hooks/state/user/store"
 import { useToast } from "@/components/ui/use-toast"
 
@@ -56,7 +57,7 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({ children }) => {
       try {
         const { data, error } = await supabase
           .from("user")
-          .select("uuid, username, avatar_url")
+          .select("uuid, username, avatar_url, status")
           .eq("uuid", userUuid)
           .single()
 
@@ -68,6 +69,7 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({ children }) => {
           uuid: data.uuid,
           username: data.username,
           photoUrl: data.avatar_url,
+          status: data.status as EUserStatus | null,
         })
       } catch (error) {
         toast({

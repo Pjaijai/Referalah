@@ -371,4 +371,6 @@ export default {
   "profile.view.community": "Community",
   "profile.view.edit_profile": "Edit Profile",
   "general.add_more": "Add More",
+  "general.action_restricted_please_contact_admin":
+    "Action restricted. Please contact the administrator.",
 } as const
