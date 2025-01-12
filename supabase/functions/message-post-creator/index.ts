@@ -58,26 +58,6 @@ serve(async (req: any) => {
       .eq("uuid", user.id)
       .single()
 
-    const { data: post, error: postError } = await server
-      .from("post")
-      .select(
-        `   type,
-              user(
-                email,
-                  uuid,
-                  username
-              ),
-              company_name,
-              job_title,
-              description,
-              url,
-              uuid,
-              contact_request_count
-      `,
-      )
-      .eq("uuid", post_uuid)
-      .single()
-
     if (!sender) {
       return new Response("Sender does not exits", {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -91,6 +71,26 @@ serve(async (req: any) => {
         status: 500,
       })
     }
+
+    const { data: post, error: postError } = await server
+      .from("post")
+      .select(
+        `   type,
+            user(
+              email,
+                uuid,
+                username
+            ),
+            company_name,
+            job_title,
+            description,
+            url,
+            uuid,
+            contact_request_count
+    `,
+      )
+      .eq("uuid", post_uuid)
+      .single()
 
     if (!post) {
       return new Response("Post does not exits", {
@@ -167,7 +167,7 @@ serve(async (req: any) => {
         })
 
       conversationUuid = conversation[0].uuid
-      const { data: message } = await server
+      const { data: message, error: msgEreror } = await client
         .from("message")
         .insert({
           sender_uuid: sender.uuid,
