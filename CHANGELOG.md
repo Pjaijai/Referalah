@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.23.1](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.23.1) (2025-01-12)
+
+
+### Bug Fixes
+
+* fix logic ([#404](https://github.com/Pjaijai/Referalah/issues/404)) ([f449de1](https://github.com/Pjaijai/Referalah/commit/f449de19401830a5475345ddaeb74460fe30ef60))
+
 ## [1.23.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.23.0) (2025-01-10)
 
 
