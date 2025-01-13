@@ -29,9 +29,9 @@ const Slider = React.forwardRef<
       </SliderPrimitive.Track>
 
       <SliderPrimitive.Thumb className="relative block h-5 w-5 rounded-full  bg-background shadow-md ring-offset-background transition-colors focus-visible:outline-none  disabled:pointer-events-none disabled:opacity-50">
-        {typeof props.value === "number" && props.value > 0 && (
+        {Array.isArray(props.value) && props.value.length > 0 && (
           <div className="absolute bottom-full left-1/2 mb-2 -translate-x-1/2 text-center text-sm text-indigo-600">
-            {props.value || 1}
+            {props.value[0]}
           </div>
         )}
       </SliderPrimitive.Thumb>
