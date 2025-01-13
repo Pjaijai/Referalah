@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.23.2](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.23.2) (2025-01-13)
+
+
+### Bug Fixes
+
+* fix logic ([#404](https://github.com/Pjaijai/Referalah/issues/404)) ([a70b780](https://github.com/Pjaijai/Referalah/commit/a70b78024e8f73c292d232721309377053b3681e))
+* fix message insert ([#406](https://github.com/Pjaijai/Referalah/issues/406)) ([5d48a68](https://github.com/Pjaijai/Referalah/commit/5d48a682b8b2ad117362872722d11010f77a0243))
+* fix not sliding thumb not showing ([#407](https://github.com/Pjaijai/Referalah/issues/407)) ([5c70140](https://github.com/Pjaijai/Referalah/commit/5c701406064b35a6a2f8f6c19daf384ab2f61d4b))
+
 ### [1.23.1](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.23.1) (2025-01-12)
 
 
