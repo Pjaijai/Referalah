@@ -11,6 +11,7 @@ import { z } from "zod"
 import { IMediaRequest } from "@/types/common/media"
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
+import { EUserStatus } from "@/types/common/user-status"
 import { siteConfig } from "@/config/site"
 import useMessagePostCreator from "@/hooks/api/message/post-creator"
 import useMessageReferral from "@/hooks/api/message/referral"
@@ -80,6 +81,7 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
   const router = useRouter()
   const { mutate: messageReferral } = useMessageReferral()
   const { mutate: messagePostCreator } = useMessagePostCreator()
+  const user = useUserStore((state) => state)
 
   const { toast } = useToast()
   const {
@@ -93,8 +95,13 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
     router.push(siteConfig.page.chat.href + "?" + param.toString())
   }
   const onSubmit = async (values: z.infer<typeof formSchema>, e: any) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+    if (user.status !== EUserStatus.ACTIVE) {
+      return toast({
+        title: t("general.action_restricted_please_contact_admin"),
+        variant: "destructive",
+      })
+    }
+
     setIsLoading(true)
 
     try {
