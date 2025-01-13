@@ -118,7 +118,7 @@ serve(async (req: any) => {
           .single()
       conversationUuid = insertConversationRes.uuid
 
-      const { data: insertMessageRes, error: insertMessageError } = await server
+      const { data: insertMessageRes, error: insertMessageError } = await client
         .from("message")
         .insert({
           sender_uuid: sender.uuid,
@@ -149,7 +149,7 @@ serve(async (req: any) => {
 
       conversationUuid = conversation[0].uuid
 
-      const { data: message } = await server
+      const { data: message } = await client
         .from("message")
         .insert({
           sender_uuid: sender.uuid,
