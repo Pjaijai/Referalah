@@ -1,5 +1,7 @@
 import { Json } from "@/database.types"
 
+import { TLocale } from "@/types/common/locale"
+
 export interface IUpdateUserProfileRequest {
   avatarUrl?: string
   username: string
@@ -17,4 +19,5 @@ export interface IUpdateUserProfileRequest {
   userUuid: string
   links: Json //ISocialLinksData[]
   notificationPermissions: string[]
+  locale?: TLocale
 }

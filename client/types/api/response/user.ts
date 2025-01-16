@@ -1,3 +1,4 @@
+import { TLocale } from "@/types/common/locale"
 import { ISocialLinksData } from "@/types/common/social-links-data"
 
 export interface IUserResponse {
@@ -38,4 +39,5 @@ export interface IUserResponse {
   links: ISocialLinksData[]
   post_count: { count: number }[]
   notification_permissions: string[]
+  locale: TLocale | null
 }

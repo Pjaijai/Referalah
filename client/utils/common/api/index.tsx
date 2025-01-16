@@ -70,7 +70,8 @@ export const getUserProfile = async (userUuid: string) => {
           contact_request_count,
           links,
           post_count:post(count),
-          notification_permissions
+          notification_permissions,
+          locale
           `
       )
       .eq("uuid", userUuid)
@@ -222,6 +223,7 @@ export const updateUserProfile = async (req: IUpdateUserProfileRequest) => {
       is_referer: req.isReferer,
       is_referee: req.isReferee,
       notification_permissions: req.notificationPermissions,
+      locale: req.locale,
     })
     .eq("uuid", req.userUuid)
 
