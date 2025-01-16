@@ -79,20 +79,20 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
+    icon: "/Referalah-512.png",
+    shortcut: "/Referalah-512.png",
+    apple: "/Referalah-512.png",
   },
   manifest: "/manifest.json",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
+    // { media: "(prefers-color-scheme: dark)", color: "black" },
   ],
   alternates: {
     canonical: process.env.NEXT_PUBLIC_WEB_URL,
     languages: {
-      "en-US": "/en-US",
-      "zh-HK": "/zh-HK",
+      "en-CA": "/en-ca",
+      "zh-HK": "/zh-hk",
     },
   },
   viewport: {
