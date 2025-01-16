@@ -8,15 +8,15 @@ export const siteConfig = {
   description: "海外港人平台。",
   page: {
     main: {
-      name: "main",
       href: "/",
     },
     profile: {
-      name: "Profile",
       href: "/profile",
     },
+    setting: {
+      href: "/setting",
+    },
     editProfile: {
-      name: "Profile",
       href: "/profile/edit",
     },
     signUp: {
@@ -28,7 +28,6 @@ export const siteConfig = {
       },
     },
     signUpConfirmation: {
-      name: "註冊成功",
       href: "/auth/sign-up-confirmation",
       metadata: {
         title: "註冊成功! Registration success!",
@@ -43,28 +42,24 @@ export const siteConfig = {
       },
     },
     emailVerification: {
-      name: "電郵認證",
       href: "/auth/email-verification",
       metadata: {
         title: "電郵認證 Email Verification",
       },
     },
     verifyOneTimePassword: {
-      name: "驗證一次性密碼",
       href: "/auth/verify-one-time-password",
       metadata: {
         title: "驗證一次性密碼 One Time Password Verification",
       },
     },
     resetPassword: {
-      name: "重置密碼",
       href: "/auth/reset-password",
       metadata: {
         title: "重置密碼 Reset Password",
       },
     },
     forgetPassword: {
-      name: "忘記密碼",
       href: "/auth/forgot-password",
       metadata: {
         title: "忘記密碼 Forgot Password",
@@ -73,14 +68,12 @@ export const siteConfig = {
     },
 
     searchMember: {
-      name: "會員",
       href: "/member/search",
       metadata: {
         title: "會員 members",
       },
     },
     createPost: {
-      name: "貼街招",
       href: "/post/create",
       metadata: {
         title: "貼街招 Stick a job posting",
@@ -89,11 +82,9 @@ export const siteConfig = {
       },
     },
     editPost: {
-      name: "編輯街招",
       href: "/post/edit",
     },
     searchPost: {
-      name: "街招",
       href: "/post/search",
       metadata: {
         title: "街招",
@@ -101,7 +92,6 @@ export const siteConfig = {
       },
     },
     viewPost: {
-      name: "街招",
       href: "/post/view",
       metadata: {
         title: "街招",
@@ -109,15 +99,12 @@ export const siteConfig = {
     },
 
     postHistory: {
-      name: "街招記錄",
       href: "/post/history",
     },
     chat: {
-      name: "對話",
       href: "/chat",
     },
     privacyPolicy: {
-      name: "privatePolicy",
       href: "/privacy-policy",
       metadata: {
         title: "隱私政策 Privacy Policy",
@@ -126,7 +113,6 @@ export const siteConfig = {
       },
     },
     termsAndConditions: {
-      name: "termsAndConditions",
       href: "/terms-and-conditions",
       metadata: {
         title: "條款及細則 Terms and Conditions",
@@ -135,7 +121,6 @@ export const siteConfig = {
       },
     },
     contributors: {
-      name: "貢獻者名單",
       href: "/contributors",
       metadata: {
         title: "貢獻者名單 Contributor List",
