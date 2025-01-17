@@ -253,6 +253,7 @@ const SendMessageForm: React.FunctionComponent<ISendMessageFormProps> = ({
                   control={form.control}
                   name="message"
                   placeholder={t("chat.form.message_placeholder")}
+                  inputClassName="overflow-hidden"
                 />
 
                 <div className="absolute bottom-5 right-2  -translate-y-1/2 hover:bg-transparent">
