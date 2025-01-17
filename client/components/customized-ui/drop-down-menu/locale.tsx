@@ -6,6 +6,8 @@ import {
   useCurrentLocale,
 } from "@/utils/services/internationalization/client"
 
+import { ELocale } from "@/types/common/locale"
+import useLocaleList from "@/hooks/common/locale-list"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,15 +19,13 @@ const LocaleDropDownMenu = () => {
   const locale = useCurrentLocale()
 
   const changeLocale = useChangeLocale({ preserveSearchParams: true })
-  const options = [
-    { value: "zh-hk", location: "香港", icon: "🇭🇰", lang: "廣東話" },
-    { value: "en-ca", location: "Canada", icon: "🇨🇦", lang: "English" },
-  ] as const
-  const currentLocale = options.find((opt) => opt.value === locale)
+
+  const locales = useLocaleList()
+  const currentLocale = locales.find((opt) => opt.value === locale)
 
   const handleLocalChange = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    value: "zh-hk" | "en-ca"
+    value: ELocale
   ) => {
     changeLocale(value)
   }
@@ -37,7 +37,7 @@ const LocaleDropDownMenu = () => {
         <p>({currentLocale?.lang})</p>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {options.map((opt) => {
+        {locales.map((opt) => {
           return (
             <DropdownMenuItem>
               <button

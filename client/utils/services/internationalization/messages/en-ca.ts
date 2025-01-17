@@ -160,11 +160,14 @@ export default {
   "profile.section.work_experience": "Work Experience",
   "profile.section.social_links": "Social Links",
   "profile.section.notification_config": "Notification Config",
+  "profile.section.setting": "Preference Setting",
   "profile.is_referrer.required": "If you are referrer, please fill this field",
   "profile.is_referrer_or_referee.required":
     "If you are referrer/referee, please fill this field",
   "profile.avatar_create_failed": "Failed to upload icon",
   "profile.edit.success": "Profile successfully updated!",
+  "profile.language_change_label": "Do you want to change the language to",
+  "profile.language_change_action_label": "Sure!",
   "general.back": "Back",
   "profile.form.avatar_label": "Your Profile Icon",
   "profile.form.avatar_description":
@@ -189,7 +192,7 @@ export default {
   "profile.form.unseen_message_label": "Notify me of new messages",
   "profile.form.official_broadcast_message_label":
     "Receive official broadcast emails",
-
+  "profile.form.language_label": "Language",
   "general.year_of_experience_count#zero": "{count} years of experience",
   "general.year_of_experience_count#one": "{count} years of experience",
   "general.year_of_experience_count#other": "{count} years of experience",

@@ -2,12 +2,17 @@
 
 import React, { useEffect, useMemo, useState } from "react"
 import { StaticImport } from "next/dist/shared/lib/get-img-props"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import BasicInfoSection from "@/modules/profile/components/sections/basic-info/basic-info"
 import NotificationPermissionSection from "@/modules/profile/components/sections/notification-permission/notification-permission"
+import SettingSection from "@/modules/profile/components/sections/settings/settings"
 import SocialLinksSection from "@/modules/profile/components/sections/social-links/social-links"
 import WorkExperienceSection from "@/modules/profile/components/sections/work-experience/work-experience"
-import { useI18n } from "@/utils/services/internationalization/client"
+import {
+  useChangeLocale,
+  useCurrentLocale,
+  useI18n,
+} from "@/utils/services/internationalization/client"
 import { supabase } from "@/utils/services/supabase/config"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
@@ -20,16 +25,20 @@ import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
+import { TLocale, localValues } from "@/types/common/locale"
 import { EQueryKeyString } from "@/types/common/query-key-string"
 import { ESocialLink, socialLinkValues } from "@/types/common/social-links"
 import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
 import useUpdateUserProfile from "@/hooks/api/user/update-user-profile"
+import useLocaleList from "@/hooks/common/locale-list"
 import useCountryOptions from "@/hooks/common/options/country-options"
 import useProvinceOptions from "@/hooks/common/options/province-options"
+import { useToastStore } from "@/hooks/state/toast/toast"
 import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
+import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
 
 interface IEdiProfileTemplate {
@@ -47,11 +56,15 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
 }) => {
   const userUuid = useUserStore((state) => state.uuid)
   const t = useI18n()
+  const changeLocale = useChangeLocale()
+  const pathname = usePathname()
+  const locales = useLocaleList()
+  const { addToast } = useToastStore()
   const queryClient = useQueryClient()
   const router = useRouter()
   const { data: profile, isLoading: isProfileLoading } =
     useGetUserprofile(userUuid)
-
+  const currentLocale = useCurrentLocale()
   const linkSchema = z.object({
     url: z
       .string()
@@ -126,6 +139,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       industryUuid: z.string().min(1, {
         message: t("validation.field_required"),
       }),
+      locale: z.enum(localValues).optional(),
       links: z.array(linkSchema).max(5),
       notificationPermissions: z.array(z.string()),
       yearOfExperience: z
@@ -189,26 +203,6 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: useMemo(() => {
-      const res = {
-        username: profile?.username || undefined,
-        description: profile?.description || undefined,
-        company: profile?.company_name || undefined,
-        jobTitle: profile?.job_title || undefined,
-        yearOfExperience: profile?.year_of_experience?.toString() || "0",
-        countryUuid: profile?.country?.uuid || undefined,
-        provinceUuid: profile?.province?.uuid || undefined,
-        cityUuid: profile?.city?.uuid || undefined,
-        socialMediaUrl: profile?.social_media_url || undefined,
-        isReferer: profile?.is_referer || false,
-        isReferee: profile?.is_referee || false,
-        industryUuid: profile?.industry?.uuid || undefined,
-        links: profile?.links || [],
-        notificationPermissions: profile?.notification_permissions || [],
-      }
-
-      return res
-    }, [profile, profile?.links]),
   })
 
   const { watch, setValue, reset, control } = form
@@ -244,6 +238,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         isReferee: is_referee || false,
         industryUuid: industry?.uuid || undefined,
         links: profile?.links || [],
+        locale: profile?.locale || undefined,
         notificationPermissions: profile?.notification_permissions || [],
       })
     }
@@ -364,6 +359,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         isReferee: values.isReferee,
         userUuid: user.uuid!,
         notificationPermissions: values.notificationPermissions,
+        locale: values.locale,
       }
 
       updateProfile(updateUserRequest, {
@@ -375,6 +371,10 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           queryClient.invalidateQueries({
             queryKey: [EQueryKeyString.USER_PROFILE, { userUuid: user.uuid }],
           })
+
+          if (values.locale && values.locale !== currentLocale) {
+            addToast({ type: "changeLocale", value: values.locale })
+          }
 
           router.push(`${siteConfig.page.profile.href}/${userUuid}`)
         },
@@ -440,6 +440,9 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           <SocialLinksSection control={control} name={"links"} />
 
           <NotificationPermissionSection />
+
+          <SettingSection />
+
           <div className="flex  items-center justify-center md:justify-end ">
             <Button
               type="submit"
