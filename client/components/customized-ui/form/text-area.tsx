@@ -55,7 +55,7 @@ const FormTextArea: React.FunctionComponent<IFormTextArea> = ({
           <FormControl>
             <Textarea
               placeholder={placeholder}
-              className={`${inputClassName} overflow-hidden`}
+              className={`${inputClassName} `}
               {...field}
               ref={(e) => {
                 textareaRef.current = e
