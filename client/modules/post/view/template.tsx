@@ -18,9 +18,9 @@ import { siteConfig } from "@/config/site"
 import { PostNotFoundError } from "@/lib/exceptions"
 import useGetPost from "@/hooks/api/post/get-post"
 import useUserStore from "@/hooks/state/user/store"
-import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import PostTypeBadge from "@/components/customized-ui/badges/post-type"
 import ContactButton from "@/components/customized-ui/buttons/contact"
 import ProfileCard from "@/components/customized-ui/cards/profile"
 import BaseClipboard from "@/components/customized-ui/clipboards/base"
@@ -45,8 +45,6 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   const isViewingOwnProfile = post?.created_by === userUuid
   const isOpen = post?.status === EPostStatus.ACTIVE
   const locale = useCurrentLocale()
-
-  const { title: postTyeTitle } = usePostTypeTitle(post?.type)
 
   return (
     <PageStatusLayout
@@ -94,7 +92,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                     className="flex-end"
                   />
 
-                  {postTyeTitle && <Badge>{postTyeTitle}</Badge>}
+                  <PostTypeBadge type={post.type} />
                 </div>
 
                 <CreatedAtDisplay
