@@ -121,7 +121,10 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
         .max(100, {
           message: t("validation.text.maximum_length", { count: 100 }),
         })
-        .trim(),
+        .trim()
+        .refine((val) => val.trim().length > 0, {
+          message: t("validation.field_required"), // Custom error for whitespace-only
+        }),
       jobTitle: z
         .string()
         .min(1, {
@@ -130,7 +133,10 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
         .max(100, {
           message: t("validation.text.maximum_length", { count: 100 }),
         })
-        .trim(),
+        .trim()
+        .refine((val) => val.trim().length > 0, {
+          message: t("validation.field_required"), // Custom error for whitespace-only
+        }),
     })
     .refine(
       (data) => {
