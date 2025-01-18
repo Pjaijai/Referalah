@@ -120,7 +120,8 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
         })
         .max(100, {
           message: t("validation.text.maximum_length", { count: 100 }),
-        }),
+        })
+        .trim(),
       jobTitle: z
         .string()
         .min(1, {
@@ -128,7 +129,8 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
         })
         .max(100, {
           message: t("validation.text.maximum_length", { count: 100 }),
-        }),
+        })
+        .trim(),
     })
     .refine(
       (data) => {

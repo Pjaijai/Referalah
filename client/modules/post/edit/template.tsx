@@ -144,7 +144,8 @@ const EditPostPageTemplate: React.FunctionComponent<
         })
         .max(100, {
           message: t("validation.text.maximum_length", { count: 100 }),
-        }),
+        })
+        .trim(),
       jobTitle: z
         .string()
         .min(1, {
@@ -152,7 +153,8 @@ const EditPostPageTemplate: React.FunctionComponent<
         })
         .max(100, {
           message: t("validation.text.maximum_length", { count: 100 }),
-        }),
+        })
+        .trim(),
       status: z.enum(["active", "inactive"]),
     })
     .refine(
