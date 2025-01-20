@@ -54,7 +54,6 @@ const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
             <div className="relative">
               <Input
                 onFocus={onFocus}
-                disabled
                 placeholder={placeholder}
                 type={type || "text"}
                 {...field}

@@ -169,41 +169,33 @@ export type Database = {
       }
       email_notification_log: {
         Row: {
-          body: string
-          email: string
-          id: string
-          sent_at: string | null
-          title: string
+          body: string | null
+          created_at: string | null
+          email: string | null
+          id: number
+          title: string | null
           type: string
           user_uuid: string
         }
         Insert: {
-          body: string
-          email: string
-          id?: string
-          sent_at?: string | null
-          title: string
+          body?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: number
+          title?: string | null
           type: string
           user_uuid: string
         }
         Update: {
-          body?: string
-          email?: string
-          id?: string
-          sent_at?: string | null
-          title?: string
+          body?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: number
+          title?: string | null
           type?: string
           user_uuid?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "email_notification_log_user_uuid_fkey"
-            columns: ["user_uuid"]
-            isOneToOne: false
-            referencedRelation: "user"
-            referencedColumns: ["uuid"]
-          },
-        ]
+        Relationships: []
       }
       industry: {
         Row: {
@@ -319,7 +311,7 @@ export type Database = {
           contact_request_count: number
           country_uuid: string | null
           created_at: string | null
-          created_by: string | null
+          created_by: string
           description: string | null
           id: number
           industry_uuid: string | null
@@ -337,7 +329,7 @@ export type Database = {
           contact_request_count?: number
           country_uuid?: string | null
           created_at?: string | null
-          created_by?: string | null
+          created_by?: string
           description?: string | null
           id?: number
           industry_uuid?: string | null
@@ -355,7 +347,7 @@ export type Database = {
           contact_request_count?: number
           country_uuid?: string | null
           created_at?: string | null
-          created_by?: string | null
+          created_by?: string
           description?: string | null
           id?: number
           industry_uuid?: string | null
@@ -560,9 +552,7 @@ export type Database = {
           links: Json
           notification_permissions: Json
           province_uuid: string | null
-          resume_url: string | null
           role: string | null
-          social_media_url: string | null
           status: string | null
           username: string
           uuid: string
@@ -585,9 +575,7 @@ export type Database = {
           links?: Json
           notification_permissions?: Json
           province_uuid?: string | null
-          resume_url?: string | null
           role?: string | null
-          social_media_url?: string | null
           status?: string | null
           username: string
           uuid?: string
@@ -610,9 +598,7 @@ export type Database = {
           links?: Json
           notification_permissions?: Json
           province_uuid?: string | null
-          resume_url?: string | null
           role?: string | null
-          social_media_url?: string | null
           status?: string | null
           username?: string
           uuid?: string
@@ -775,6 +761,7 @@ export type Database = {
           owner_id: string | null
           path_tokens: string[] | null
           updated_at: string | null
+          user_metadata: Json | null
           version: string | null
         }
         Insert: {
@@ -788,6 +775,7 @@ export type Database = {
           owner_id?: string | null
           path_tokens?: string[] | null
           updated_at?: string | null
+          user_metadata?: Json | null
           version?: string | null
         }
         Update: {
@@ -801,6 +789,7 @@ export type Database = {
           owner_id?: string | null
           path_tokens?: string[] | null
           updated_at?: string | null
+          user_metadata?: Json | null
           version?: string | null
         }
         Relationships: [
@@ -822,6 +811,7 @@ export type Database = {
           key: string
           owner_id: string | null
           upload_signature: string
+          user_metadata: Json | null
           version: string
         }
         Insert: {
@@ -832,6 +822,7 @@ export type Database = {
           key: string
           owner_id?: string | null
           upload_signature: string
+          user_metadata?: Json | null
           version: string
         }
         Update: {
@@ -842,6 +833,7 @@ export type Database = {
           key?: string
           owner_id?: string | null
           upload_signature?: string
+          user_metadata?: Json | null
           version?: string
         }
         Relationships: [
@@ -977,6 +969,10 @@ export type Database = {
           metadata: Json
           updated_at: string
         }[]
+      }
+      operation: {
+        Args: Record<PropertyKey, never>
+        Returns: string
       }
       search: {
         Args: {
