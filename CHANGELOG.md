@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.23.4](https://github.com/Pjaijai/Referalah/compare/v1.23.3...v1.23.4) (2025-01-20)
+
+
+### Bug Fixes
+
+* fix input disabeld ([214b97a](https://github.com/Pjaijai/Referalah/commit/214b97ab696111f56a70b38bb3d396d5f5c4e307))
+* fix post update funcitonm ([656f60a](https://github.com/Pjaijai/Referalah/commit/656f60a70528ca7cd10d8b84f43c4bfb4517ff92))
+
 ### [1.23.3](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.23.3) (2025-01-17)
 
 
