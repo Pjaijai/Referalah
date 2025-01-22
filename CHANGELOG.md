@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.24.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.24.0) (2025-01-22)
+
+
+### Features
+
+* block user to update post when it is closed ([#417](https://github.com/Pjaijai/Referalah/issues/417)) ([0e7f800](https://github.com/Pjaijai/Referalah/commit/0e7f800e384262e6ebb419d0e25c0fa05ab398e1))
+
 ### [1.23.4](https://github.com/Pjaijai/Referalah/compare/v1.23.3...v1.23.4) (2025-01-20)
 
 
