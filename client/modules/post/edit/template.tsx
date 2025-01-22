@@ -313,6 +313,7 @@ const EditPostPageTemplate: React.FunctionComponent<
             label={t("post.status_text")}
             name="status"
             options={statusOptions}
+            isDisabled={post?.status === EPostStatus.INACTIVE}
           />
 
           <FormSelect
@@ -381,7 +382,12 @@ const EditPostPageTemplate: React.FunctionComponent<
             name="yearOfExperience"
           />
 
-          <Button type="submit" disabled={isUpdatingPostLoading}>
+          <Button
+            type="submit"
+            disabled={
+              isUpdatingPostLoading || post?.status === EPostStatus.INACTIVE
+            }
+          >
             {isSubmitting ? t("general.wait") : t("form.general.submit")}
           </Button>
         </form>
