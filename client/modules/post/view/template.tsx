@@ -5,7 +5,6 @@ import Link from "next/link"
 import LinkShareDrawer from "@/modules/post/components/drawers/link-share"
 import PostHeader from "@/modules/post/components/info-display/header"
 import PostStatusDisplay from "@/modules/post/components/info-display/status"
-import usePostTypeTitle from "@/modules/post/hooks/post-type-title"
 import {
   useCurrentLocale,
   useI18n,
@@ -169,7 +168,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
             <Separator className="md:hidden" />
 
             <div className="flex min-w-[200px] flex-col gap-4 md:basis-1/4">
-              {isViewingOwnProfile && (
+              {isViewingOwnProfile && post.status === EPostStatus.ACTIVE && (
                 <Link
                   className={buttonVariants({ variant: "default" })}
                   href={`${siteConfig.page.editPost.href}/${postUuid}`}
