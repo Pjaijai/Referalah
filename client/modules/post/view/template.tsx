@@ -54,7 +54,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
     >
       <div className="flex flex-row items-center justify-end">
         <div className="flex flex-row items-end justify-center gap-4">
-          <div className="just flex flex-row items-center gap-1 rounded-2xl border-2 border-muted-foreground px-2 text-sm text-muted-foreground">
+          <div className="just flex flex-row items-center gap-1 rounded-2xl border border-muted-foreground px-2 text-sm text-muted-foreground">
             {viewCount || "???"}
             <Icons.eye />
           </div>
