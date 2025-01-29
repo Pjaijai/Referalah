@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.25.0](https://github.com/Pjaijai/Referalah/compare/v1.24.0...v1.25.0) (2025-01-29)
+
+
+### Features
+
+* add view count to post ([#419](https://github.com/Pjaijai/Referalah/issues/419)) ([6fff3ad](https://github.com/Pjaijai/Referalah/commit/6fff3ad6cc5031d428c18611dbc6692f0ec664db))
+
 ## [1.24.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.24.0) (2025-01-22)
 
 
