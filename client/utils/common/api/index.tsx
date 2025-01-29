@@ -1,4 +1,13 @@
+import { fireStore, firebase } from "@/utils/services/firebase/config"
 import { supabase } from "@/utils/services/supabase/config"
+import {
+  doc,
+  getDoc,
+  getFirestore,
+  increment,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore"
 
 import { IResetPasswordRequest } from "@/types/api/request/auth/reset-password"
 import { ISignInEmailPasswordRequest } from "@/types/api/request/auth/sign-in-with-email-password"
@@ -576,6 +585,46 @@ export const ListPostByUserUuid = async (
     return data
   } catch (error) {
     throw error
+  }
+}
+
+export const incrementPostViewCountByUuid = async (postUuid: string) => {
+  const postRef = doc(fireStore, "postViewCount", postUuid)
+
+  try {
+    const docSnap = await getDoc(postRef)
+
+    if (!docSnap.exists()) {
+      // Document doesn't exist, create it with initial view count of 1
+      await setDoc(postRef, { viewCount: 1 })
+      return { viewCount: 1 }
+    } else {
+      // Document exists, increment the view count
+      const updateResult = await updateDoc(postRef, {
+        viewCount: increment(1),
+      })
+
+      return updateResult
+    }
+  } catch (error) {
+    throw error
+  }
+}
+
+export const getPostViewCountByUuid = async (
+  postUuid: string
+): Promise<number | undefined> => {
+  const postRef = doc(fireStore, "postViewCount", postUuid)
+
+  try {
+    const docSnap = await getDoc(postRef)
+    if (docSnap.exists()) {
+      return docSnap.data().viewCount || 0
+    } else {
+      return 0
+    }
+  } catch (error) {
+    return undefined
   }
 }
 
