@@ -59,6 +59,7 @@
     "dayjs": "^1.11.9",
     "embla-carousel-autoplay": "^8.0.0",
     "embla-carousel-react": "^8.0.0",
+    "firebase": "11.2.0",
     "framer-motion": "11.0.15",
     "jest-environment-jsdom": "29.7.0",
     "jest-runner-groups": "2.2.0",
