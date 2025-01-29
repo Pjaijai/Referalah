@@ -34,10 +34,11 @@ import PageStatusLayout from "@/components/layouts/page-status"
 
 interface ReferralPostDetailsPageProps {
   postUuid: string | null
+  viewCount: number | undefined
 }
 const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   ReferralPostDetailsPageProps
-> = ({ postUuid }) => {
+> = ({ postUuid, viewCount }) => {
   const t = useI18n()
   const { data: post, isLoading, isSuccess } = useGetPost(postUuid)
   const userUuid = useUserStore((state) => state.uuid)
@@ -53,10 +54,13 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
     >
       <div className="flex flex-row items-center justify-end">
         <div className="flex flex-row items-end justify-center gap-4">
+          <div className="just flex flex-row items-center gap-1 rounded-2xl border border-muted-foreground px-2 text-sm text-muted-foreground">
+            {viewCount || "???"}
+            <Icons.eye />
+          </div>
           <div className="flex md:hidden">
             <LinkShareDrawer />
           </div>
-
           <div className="hidden md:block">
             <BaseClipboard
               className="flex flex-row items-center justify-center space-x-1 border-b border-muted-foreground text-sm"

@@ -1,6 +1,10 @@
 import React from "react"
 import ReferralPostDetailsPageTemplate from "@/modules/post/view/template"
-import { getPostByUuid } from "@/utils/common/api"
+import {
+  getPostByUuid,
+  getPostViewCountByUuid,
+  incrementPostViewCountByUuid,
+} from "@/utils/common/api"
 import { getI18n } from "@/utils/services/internationalization/server"
 
 import { EPostType } from "@/types/common/post-type"
@@ -44,12 +48,20 @@ export async function generateMetadata({
   }
 }
 
-export const fetchCache = "default-cache"
+const RefererPostDetailsPage = async ({
+  params,
+}: {
+  params: { uuid: string }
+}) => {
+  await incrementPostViewCountByUuid(params.uuid)
+  const viewCount = await getPostViewCountByUuid(params.uuid)
 
-const RefererPostDetailsPage = ({ params }: { params: { uuid: string } }) => {
   return (
     <CommonPageLayout>
-      <ReferralPostDetailsPageTemplate postUuid={params.uuid} />
+      <ReferralPostDetailsPageTemplate
+        postUuid={params.uuid}
+        viewCount={viewCount}
+      />
     </CommonPageLayout>
   )
 }
