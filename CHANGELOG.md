@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.25.1](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.25.1) (2025-01-31)
+
+
+### Bug Fixes
+
+* fix label ([#423](https://github.com/Pjaijai/Referalah/issues/423)) ([f23baed](https://github.com/Pjaijai/Referalah/commit/f23baed5c54aced587b24503b00fb82ef1f918f0))
+* fix scroll cannot fix ([#422](https://github.com/Pjaijai/Referalah/issues/422)) ([eba4ee7](https://github.com/Pjaijai/Referalah/commit/eba4ee7888ca4ef3cd32779fbf7334a6e0fbeafd))
+
 ## [1.25.0](https://github.com/Pjaijai/Referalah/compare/v1.24.0...v1.25.0) (2025-01-29)
 
 

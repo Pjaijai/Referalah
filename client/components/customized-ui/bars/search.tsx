@@ -86,7 +86,7 @@ const SearchBar: React.FunctionComponent<ISearchSearchBarProps> = ({
 
           <div className="flex flex-row items-center justify-between">
             <label className="basis-1/4 text-center text-sm">
-              {t("general.region")}
+              {t("general.city")}
             </label>
             <div className="basis-3/4">
               <LocationCombobox
