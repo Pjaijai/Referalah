@@ -1,23 +1,25 @@
-/** @type {import('next').NextConfig} */
-
 import withPWA from "next-pwa"
 
 const prod = process.env.NODE_ENV === "production"
 
-const pwaWrapper = withPWA({
+const pwaConfig = {
   dest: "public",
-  // default disable pwa in dev mode
   disable: !prod,
   register: true,
   skipWaiting: true,
-})
-export default pwaWrapper({
+}
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   reactStrictMode: true,
   experimental: {
     appDir: true,
-    severActions: true,
+    serverActions: true,
+    scrollRestoration: true,
   },
   images: {
-    domains: ["localhost"], // Add the domain where your images are hosted
+    domains: ["localhost"],
   },
-})
+}
+
+export default withPWA(pwaConfig)(nextConfig)
