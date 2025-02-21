@@ -82,6 +82,7 @@ const MessageList: React.FunctionComponent<IMessageListProps> = ({
                 data.pages[data.pages.length - 1].length !== 0
               : true
           }
+          loader={<></>}
           endMessage={<></>}
         >
           <div className="flex h-full flex-col-reverse gap-2 overflow-y-auto overflow-x-hidden  p-4">
