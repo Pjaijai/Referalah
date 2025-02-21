@@ -1,20 +1,16 @@
 "use client"
 
 import React, { useState } from "react"
-import { useRouter } from "next/navigation"
 import {
   useCurrentLocale,
   useI18n,
 } from "@/utils/services/internationalization/client"
 
-import { cn } from "@/lib/utils"
 import useListPostsByUserUuid from "@/hooks/api/post/list-posts-by-user-uuid"
 import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
-import { Button, buttonVariants } from "@/components/ui/button"
 import PostCard from "@/components/customized-ui/cards/post"
 import BaseSelect from "@/components/customized-ui/selects/base"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
-import { Icons } from "@/components/icons"
 
 interface IPostHistoryTemplateProps {
   slug: string
@@ -24,7 +20,7 @@ const PostHistoryTemplate: React.FunctionComponent<
 > = ({ slug }) => {
   const t = useI18n()
   const locale = useCurrentLocale()
-  const router = useRouter()
+
   const { data: postSortingOptions } = usePostSortOptions()
   const [sortValue, setSortValue] = useState(postSortingOptions[0].value)
 
