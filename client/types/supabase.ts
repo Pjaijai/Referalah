@@ -304,6 +304,41 @@ export type Database = {
           },
         ]
       }
+      notification: {
+        Row: {
+          created_at: string
+          data: Json
+          id: number
+          is_seen: boolean
+          type: string
+          user_uuid: string
+        }
+        Insert: {
+          created_at?: string
+          data: Json
+          id?: number
+          is_seen?: boolean
+          type: string
+          user_uuid: string
+        }
+        Update: {
+          created_at?: string
+          data?: Json
+          id?: number
+          is_seen?: boolean
+          type?: string
+          user_uuid?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notification_user_uuid_fkey"
+            columns: ["user_uuid"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["uuid"]
+          },
+        ]
+      }
       post: {
         Row: {
           city_uuid: string | null

@@ -12,6 +12,7 @@ enum EQueryKeyString {
   CONVERSATION_LIST = "conversation-list",
   MESSAGE_LIST = "message-list",
   HAS_CONVERSATION_UNSEEN = "has-conversation-unseen",
+  SEARCH_NOTIFICATION = "search-notification",
 }
 
 export { EQueryKeyString }
