@@ -10,7 +10,7 @@ export default async function NotificationPage() {
   const t = await getI18n()
 
   return (
-    <CommonPageLayout title={"Notification"}>
+    <CommonPageLayout title={t("page.notifications")}>
       <NotificationTemplate />
     </CommonPageLayout>
   )
