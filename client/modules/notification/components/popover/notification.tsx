@@ -1,6 +1,7 @@
 import React from "react"
 import NotificationCard from "@/modules/notification/components/cards/notification/notification"
 import useNotification from "@/modules/notification/hooks/notification"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import {
   Popover,
@@ -12,6 +13,7 @@ import BellIconWithDot from "@/components/customized-ui/icons/bell-with-dot"
 import { Icons } from "@/components/icons"
 
 const NotificationPopover = () => {
+  const t = useI18n()
   const {
     list,
     isLoading,
@@ -27,16 +29,22 @@ const NotificationPopover = () => {
         <BellIconWithDot
           className="hidden  md:block"
           showDot={hasUnseenMessages}
-          iconClassName="fill-black"
         />
       </PopoverTrigger>
       <PopoverContent className="flex h-96 flex-col p-0">
         <div id="notificationScrollDiv" className="h-full overflow-auto">
-          {isLoading ? (
+          {!isLoading && list.length === 0 && (
+            <p className="flex h-full items-center justify-center text-sm font-semibold text-slate-500 ">
+              {t("notifications.no_notifications")}
+            </p>
+          )}
+          {isLoading && (
             <div className="flex h-screen items-center justify-center ">
               <Icons.loader className="animate-spin text-2xl" />
             </div>
-          ) : (
+          )}
+
+          {!isLoading && list.length > 0 && (
             <BaseInfiniteScroll
               dataLength={list.length}
               next={() => delayedFetchNextPage()}
@@ -53,7 +61,7 @@ const NotificationPopover = () => {
                   isSeen={data.is_seen}
                   conversationUuid={data.data.conversation_uuid}
                   messageId={data.id}
-                  addUnseenMessage={handleAddUnseenNotification}
+                  addUnseenNotification={handleAddUnseenNotification}
                 />
               ))}
             </BaseInfiniteScroll>

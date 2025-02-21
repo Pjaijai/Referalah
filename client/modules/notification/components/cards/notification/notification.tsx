@@ -12,7 +12,7 @@ interface IMessageCardProps {
   isSeen: boolean
   conversationUuid: string
   messageId: number
-  addUnseenMessage: (messageId: number, conversationUuid: string) => void
+  addUnseenNotification: (messageId: number, conversationUuid: string) => void
 }
 
 const NotificationCard: React.FC<IMessageCardProps> = ({
@@ -21,7 +21,7 @@ const NotificationCard: React.FC<IMessageCardProps> = ({
   isSeen,
   conversationUuid,
   messageId,
-  addUnseenMessage,
+  addUnseenNotification,
 }) => {
   const { data: date } = useCreatedAt({ createdAt })
   const [tempIsSeen, setTempIsSeen] = useState(isSeen)
@@ -32,7 +32,7 @@ const NotificationCard: React.FC<IMessageCardProps> = ({
     router.push(`${siteConfig.page.chat.href}?conversation=${conversationUuid}`)
     if (isSeen) return
     setTempIsSeen(true)
-    addUnseenMessage(messageId, conversationUuid)
+    addUnseenNotification(messageId, conversationUuid)
   }
 
   const handleMouseEnter = () => {
@@ -44,7 +44,7 @@ const NotificationCard: React.FC<IMessageCardProps> = ({
   const handleMouseLeave = () => {
     if (isSeen) return
     setIsHovered(false)
-    addUnseenMessage(messageId, conversationUuid)
+    addUnseenNotification(messageId, conversationUuid)
   }
 
   return (

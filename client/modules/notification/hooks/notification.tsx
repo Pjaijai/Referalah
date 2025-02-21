@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
-import { siteConfig } from "@/config/site"
 import useBulkUpdateNotificationsSeen from "@/hooks/api/notification/bulk-update-notifications-seen"
 import useSearchNotificationByUserUuid from "@/hooks/api/notification/search-notification-by-user-uuid"
 import useUserStore from "@/hooks/state/user/store"
@@ -45,7 +44,7 @@ const useNotification = (numberOfDataPerPage?: number) => {
         }
       )
       setSeenNotificationIds(new Set())
-    }, 2000)
+    }, 1000)
 
     return () => clearTimeout(timer)
   }, [seenNotificationIds, markAsSeen, userUuid])
@@ -57,9 +56,6 @@ const useNotification = (numberOfDataPerPage?: number) => {
         newSet.add(notificationUuid)
         return newSet
       })
-      router.push(
-        `${siteConfig.page.chat.href}?conversation=${conversationUuid}`
-      )
     },
     [router]
   )

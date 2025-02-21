@@ -63,9 +63,10 @@ export function SiteHeader() {
                 router.push("notification")
               }}
               className="block  md:hidden"
-              iconClassName="fill-black"
+              iconClassName="cursor-pointer"
             />
             <NotificationPopover />
+
             {user.isSignIn ? (
               <Link href={`${siteConfig.page.profile.href}/${user.uuid}`}>
                 <div className="flex flex-row items-center gap-1">
