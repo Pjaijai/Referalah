@@ -13,13 +13,15 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
-import MessageIcon from "@/components/customized-ui/icons/message"
+import MessageIcon from "@/components/customized-ui/icons/message-with-dot"
 import { Icons } from "@/components/icons"
 
 export function BaseNavigationMenu() {
   const t = useI18n()
   const isUserSignIn = useUserStore((state) => state.isSignIn)
-
+  const hasConversationUnseen = useUserStore(
+    (state) => state.hasConversationUnseen
+  )
   const components: { title: string; href: string; description: string }[] = [
     {
       title: t("page.create_post"),
@@ -83,7 +85,10 @@ export function BaseNavigationMenu() {
                   "flex h-10 w-max items-center justify-center gap-2 rounded-md  bg-slate-50 px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground   focus:outline-none md:text-lg"
                 }
               >
-                <MessageIcon variant="outlined" />
+                <MessageIcon
+                  variant="outlined"
+                  showDot={hasConversationUnseen}
+                />
                 {t("page.chat")}
               </div>
             </Link>
