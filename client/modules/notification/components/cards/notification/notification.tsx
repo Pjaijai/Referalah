@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { useRouter } from "next/navigation"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
@@ -27,7 +28,7 @@ const NotificationCard: React.FC<IMessageCardProps> = ({
   const [tempIsSeen, setTempIsSeen] = useState(isSeen)
   const [isHovered, setIsHovered] = useState(false)
   const router = useRouter()
-
+  const t = useI18n()
   const handleClick = () => {
     router.push(`${siteConfig.page.chat.href}?conversation=${conversationUuid}`)
     if (isSeen) return
@@ -58,7 +59,11 @@ const NotificationCard: React.FC<IMessageCardProps> = ({
     >
       {/* Icon Section */}
       <div className="mr-3 shrink-0">
-        <MessageIconWithDot showDot={!tempIsSeen} variant="outlined" />
+        <MessageIconWithDot
+          showDot={!tempIsSeen}
+          variant="outlined"
+          className={cn(tempIsSeen ? "text-slate-500" : "text-black")}
+        />
       </div>
 
       {/* Content Section */}
@@ -68,7 +73,7 @@ const NotificationCard: React.FC<IMessageCardProps> = ({
           tempIsSeen ? "text-slate-500" : "text-black"
         )}
       >
-        You have a new message from {senderUsername}
+        {senderUsername} {t("notifications.new_message")}
       </div>
 
       {/* Date Section */}

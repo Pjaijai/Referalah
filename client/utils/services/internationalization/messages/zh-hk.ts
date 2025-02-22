@@ -345,4 +345,5 @@ export default {
   "general.action_restricted_please_contact_admin":
     "行動被限制，請聯絡管理員。",
   "notifications.no_notifications": "尚未有通知！",
+  "notifications.new_message": "send咗個訊息俾你！",
 } as const

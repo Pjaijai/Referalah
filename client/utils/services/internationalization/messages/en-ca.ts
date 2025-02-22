@@ -375,4 +375,5 @@ export default {
   "general.action_restricted_please_contact_admin":
     "Action restricted. Please contact the administrator.",
   "notifications.no_notifications": "No Notifications!",
+  "notifications.new_message": "sent you a message!",
 } as const
