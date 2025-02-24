@@ -4,8 +4,6 @@ import { initSupabaseServer } from "../_shared/server.ts"
 import { sendEmail } from "../_shared/modules/notification/email/send-email.ts"
 import Bottleneck from "npm:bottleneck@2.19.5"
 
-const WEB_BASE_URL = Deno.env.get("WEB_BASE_URL")
-
 interface Notification {
   id: number
   user_uuid: string
@@ -31,10 +29,7 @@ interface EmailResult {
 
 serve(async (req: Request) => {
   try {
-    console.log(
-      "Checking notifications within last 12 hours at:",
-      new Date().toISOString(),
-    )
+    console.log("Checking notifications at:", new Date().toISOString())
     const server = initSupabaseServer()
 
     const { key }: { key: string } = await req.json()
@@ -55,12 +50,12 @@ serve(async (req: Request) => {
     const currentTime = new Date()
     const currentTimeISO = currentTime.toISOString()
 
-    // Calculate the time 12 hours ago based on the defined current time
+    // Calculate the time 24 hours ago based on the defined current time
     const twelveHoursAgo = new Date(
-      currentTime.getTime() - 12 * 60 * 60 * 1000,
+      currentTime.getTime() - 24 * 60 * 60 * 1000,
     ).toISOString()
 
-    // Fetch unseen notifications created within the last 12 hours, but not after current time
+    // Fetch unseen notifications created within the last 24 hours, but not after current time
     const {
       data: notifications,
       error: notificationError,
@@ -68,7 +63,7 @@ serve(async (req: Request) => {
       .from("notification")
       .select("*")
       .eq("is_seen", false)
-      .gte("created_at", twelveHoursAgo) // Greater than or equal to 12 hours ago
+      .gte("created_at", twelveHoursAgo) // Greater than or equal to 24 hours ago
       .lt("created_at", currentTimeISO) // Less than current time
 
     if (notificationError) {
@@ -156,10 +151,9 @@ serve(async (req: Request) => {
               time: new Date().toISOString(),
             }
           }
-
-          const subject: string = `You have ${count} unseen message${
+          const subject: string = `Today you have ${count} notification${
             count === 1 ? "" : "s"
-          } | 你有${count}個未讀訊息 | Referalah`
+          } waiting for you | 今天有${count}條未讀通知等緊你`
 
           const body: string = `
             <html>
@@ -169,10 +163,10 @@ serve(async (req: Request) => {
                 },</p>
     
                 <div style="text-align: center; margin-bottom: 20px;">
-                    <p style="line-height: 1.6;">You have ${count} unseen message${
+                    <p style="line-height: 1.6;">Today you have ${count} notification${
             count === 1 ? "" : "s"
           } on Referalah!</p>
-                    <p style="line-height: 1.6;">你喺 Referalah 有${count}個未讀訊息！</p>
+                    <p style="line-height: 1.6;">今日你喺 Referalah 有${count}條未讀通知等緊你!</p>
                 </div>
     
                 <p style="text-align: center; line-height: 1.6;">If you want to stop receiving this kind of email, please go to your profile page and adjust your settings.</p>
