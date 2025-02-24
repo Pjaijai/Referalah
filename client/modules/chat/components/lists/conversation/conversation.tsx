@@ -95,6 +95,7 @@ const ConversationList = () => {
                 data.pages[data.pages.length - 1].length !== 0
               : true
           }
+          loader={<></>}
           endMessage={<></>}
         >
           {list.map((data) => {

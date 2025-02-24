@@ -1,13 +1,6 @@
-import { fireStore, firebase } from "@/utils/services/firebase/config"
+import { fireStore } from "@/utils/services/firebase/config"
 import { supabase } from "@/utils/services/supabase/config"
-import {
-  doc,
-  getDoc,
-  getFirestore,
-  increment,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore"
+import { doc, getDoc, increment, setDoc, updateDoc } from "firebase/firestore"
 
 import { IResetPasswordRequest } from "@/types/api/request/auth/reset-password"
 import { ISignInEmailPasswordRequest } from "@/types/api/request/auth/sign-in-with-email-password"
@@ -17,6 +10,7 @@ import { IUpdatePasswordRequest } from "@/types/api/request/auth/update-password
 import { IVerifyEmailOneTimePasswordRequest } from "@/types/api/request/auth/verify-email-one-time-password"
 import { IMessagePostCreatorRequest } from "@/types/api/request/message/post-creator"
 import { IMessageReferralRequest } from "@/types/api/request/message/referral"
+import { BulkUpdateSeenRequest } from "@/types/api/request/notification/bulk-update-seen"
 import { ICreatePostRequest } from "@/types/api/request/post/create"
 import { ISearchPostRequest } from "@/types/api/request/post/search"
 import { IUpdatePostRequest } from "@/types/api/request/post/update"
@@ -28,6 +22,7 @@ import { IGetConversationListByUserUuidResponse } from "@/types/api/response/con
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IMessageReferralResponse } from "@/types/api/response/message/referral"
+import { ISearchNotificationResponse } from "@/types/api/response/notificaiton/search-notifications"
 import { IProvinceResponse } from "@/types/api/response/province"
 import {
   IGetPostResponse,
@@ -101,6 +96,7 @@ export const signUpWithEmailPassword = async (
   const url = new URL(
     `${process.env.NEXT_PUBLIC_WEB_URL}${siteConfig.page.signUpConfirmation.href}`
   )
+  console.log(123123, url)
   const { email, password } = req
   try {
     const { data, error } = await supabase.auth.signUp({
@@ -984,4 +980,55 @@ export const downloadMedia = async ({
   if (error) throw error
 
   return data
+}
+
+// notification
+
+export const searchNotificationByUserUuid = async ({
+  numberOfDataPerPage,
+  page,
+  userUuid,
+}: any) => {
+  try {
+    const from = page * numberOfDataPerPage
+    const to = from + numberOfDataPerPage - 1
+
+    let query = supabase
+      .from("notification")
+      .select<string, ISearchNotificationResponse>(
+        `
+         *
+        `
+      )
+      .eq("user_uuid", userUuid)
+
+    const { data, error, count } = await query
+      .order("created_at", { ascending: false })
+      .range(from, to)
+
+    if (error) throw error
+    if (data === null) return []
+
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const bulkUpdateNotificationsSeen = async ({
+  messageIds,
+  userUuid,
+}: BulkUpdateSeenRequest) => {
+  try {
+    const { data, error } = await supabase
+      .from("notification")
+      .update({ is_seen: true })
+      .eq("user_uuid", userUuid)
+      .in("id", messageIds)
+      .select()
+    if (error) throw error
+    return data
+  } catch (error: any) {
+    throw error
+  }
 }

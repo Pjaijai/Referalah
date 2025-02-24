@@ -310,6 +310,7 @@ export default {
   "page.terms_and_condition": "Terms and Conditions",
   "page.contributors": "Contributor List",
   "page.installation": "Get the App",
+  "page.notifications": "Notifications",
   "general.dark_mode": "Dark Mode",
   "general.light_mode": "Light Mode",
 
@@ -373,4 +374,6 @@ export default {
   "general.add_more": "Add More",
   "general.action_restricted_please_contact_admin":
     "Action restricted. Please contact the administrator.",
+  "notifications.no_notifications": "No Notifications!",
+  "notifications.new_message": "sent you a message!",
 } as const

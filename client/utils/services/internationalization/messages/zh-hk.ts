@@ -283,6 +283,7 @@ export default {
   "page.terms_and_condition": "條款及細則",
   "page.contributors": "貢獻者名單",
   "page.installation": "安裝Referalah",
+  "page.notifications": "即時通知",
   "general.dark_mode": "夜間模式",
   "general.light_mode": "日間模式",
 
@@ -343,4 +344,6 @@ export default {
   "general.add_more": "整多個",
   "general.action_restricted_please_contact_admin":
     "行動被限制，請聯絡管理員。",
+  "notifications.no_notifications": "尚未有通知！",
+  "notifications.new_message": "send咗個訊息俾你！",
 } as const

@@ -14,6 +14,7 @@ interface IBaseInfiniteScrollProps {
   inverse?: boolean
   scrollableTarget?: string
   className?: string
+  loader?: string | React.ReactNode
 }
 const BaseInfiniteScroll: React.FunctionComponent<IBaseInfiniteScrollProps> = ({
   dataLength,
@@ -24,6 +25,7 @@ const BaseInfiniteScroll: React.FunctionComponent<IBaseInfiniteScrollProps> = ({
   inverse,
   scrollableTarget,
   className,
+  loader,
 }) => {
   const t = useI18n()
   return (
@@ -35,7 +37,7 @@ const BaseInfiniteScroll: React.FunctionComponent<IBaseInfiniteScrollProps> = ({
       inverse={inverse}
       scrollableTarget={scrollableTarget}
       loader={
-        endMessage || (
+        loader || (
           <div className="mt-8">
             <LoadingBalloonSpinner isRandom maxRandomBalls={8} />
           </div>

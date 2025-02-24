@@ -22,7 +22,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import MessageIcon from "@/components/customized-ui/icons/message"
+import MessageIcon from "@/components/customized-ui/icons/message-with-dot"
+import MessageIconWithDot from "@/components/customized-ui/icons/message-with-dot"
 import { Icons } from "@/components/icons"
 import { ThemeToggleMobile } from "@/components/theme-toggle-mobile"
 
@@ -33,7 +34,9 @@ interface MobileNavigationMenuProps {
 export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
   const t = useI18n()
   const { isSignIn } = useUserStore((state) => state)
-
+  const hasConversationUnseen = useUserStore(
+    (state) => state.hasConversationUnseen
+  )
   const connectionLinks = useMemo(() => {
     const links = [
       {
@@ -134,7 +137,7 @@ export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
                     onClick={() => handleLinkOnClick(siteConfig.page.chat.href)}
                     className="flex items-center gap-2 py-4 font-bold hover:cursor-pointer"
                   >
-                    <MessageIcon />
+                    <MessageIconWithDot showDot={hasConversationUnseen} />
                     {t("page.chat")}
                   </div>
                 </SheetClose>
