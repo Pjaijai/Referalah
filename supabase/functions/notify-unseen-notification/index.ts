@@ -1,4 +1,3 @@
-// local api url ip address is : 172.17.0.1
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
 import { corsHeaders, ENV_IS_LOCAL } from "../_shared/cors.ts"
 import { initSupabaseServer } from "../_shared/server.ts"
