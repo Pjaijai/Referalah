@@ -109,9 +109,17 @@ export const siteConfig = {
     },
     createJobJourney: {
       href: "/job-journey/create",
+      metadata: {
+        title: "建立職途誌",
+        description: "建立職途誌 Create Job Journey",
+      },
     },
     searchJobJourney: {
       href: "/job-journey/search",
+      metadata: {
+        title: "職途誌 Job Journey",
+        description: "職途誌 Job Journey",
+      },
     },
     viewJobJourney: {
       href: "/job-journey/view",
