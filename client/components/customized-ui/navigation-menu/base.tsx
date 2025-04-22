@@ -94,6 +94,19 @@ export function BaseNavigationMenu() {
             </Link>
           </NavigationMenuItem>
         )}
+
+        <NavigationMenuItem>
+          <Link href={siteConfig.page.searchJobJourney.href}>
+            <div
+              className={
+                "flex h-10 w-max items-center justify-center gap-2 rounded-md  bg-slate-50 px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground   focus:outline-none md:text-lg"
+              }
+            >
+              <Icons.book />
+              {t("page.job_journey")}
+            </div>
+          </Link>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   )

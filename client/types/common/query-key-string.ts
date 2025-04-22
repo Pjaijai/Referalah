@@ -1,6 +1,7 @@
 enum EQueryKeyString {
   INDUSTRY_LIST = "industry-list",
   CITY_LIST = "city-list",
+  LOCATION_LIST = "location-list",
   COUNTRY_LIST = "country-list",
   PROVINCE_LIST = "province-list",
   USER_PROFILE = "user-profile",
@@ -13,6 +14,7 @@ enum EQueryKeyString {
   MESSAGE_LIST = "message-list",
   HAS_CONVERSATION_UNSEEN = "has-conversation-unseen",
   SEARCH_NOTIFICATION = "search-notification",
+  SEARCH_JOB_JOURNEY = "search-job-journey",
 }
 
 export { EQueryKeyString }

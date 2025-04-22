@@ -1,0 +1,17 @@
+export enum EApplicationSource {
+  REFERRAL = "referral",
+  COMPANY_WEBSITE = "company_website",
+  RECRUITER = "recruiter",
+  CAREER_FAIR = "career_fair",
+  SOCIAL_MEDIA = "social_media",
+  NETWORKING_EVENT = "networking_event",
+  UNIVERSITY_PORTAL = "university_portal",
+  STAFFING_AGENCY = "staffing_agency",
+  WALK_IN = "walk_in",
+  LINKEDIN = "linkedin",
+  INDEED = "indeed",
+  GLASSDOOR = "glassdoor",
+  REFERALAH = "referalah",
+  OTHER_JOB_PLATFORM = "other_job_platform",
+  OTHER = "other",
+}

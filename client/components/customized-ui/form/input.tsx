@@ -22,6 +22,7 @@ export interface IFormTextInputProps {
   type?: HTMLInputTypeAttribute
   onFocus?: React.FocusEventHandler<HTMLInputElement>
   onBlur?: React.FocusEventHandler<HTMLInputElement>
+  isRequired?: boolean
 }
 
 const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
@@ -35,6 +36,7 @@ const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
   leftLabel,
   onFocus,
   onBlur,
+  isRequired,
 }) => {
   return (
     <FormField
@@ -44,7 +46,12 @@ const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
         <FormItem>
           {(label || leftLabel) && (
             <div className="flex w-full flex-row items-center justify-between">
-              {label ? <FormLabel>{label}</FormLabel> : null}
+              {label ? (
+                <FormLabel>
+                  {label}
+                  {isRequired && <span className="text-rose-600">*</span>}
+                </FormLabel>
+              ) : null}
 
               {leftLabel}
             </div>

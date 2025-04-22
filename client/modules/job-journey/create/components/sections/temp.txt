@@ -1,0 +1,65 @@
+CREATE TABLE job_journey (
+    id SERIAL PRIMARY KEY,
+    uuid UUID DEFAULT gen_random_uuid() UNIQUE,
+    company_id INTEGER NOT NULL,
+    job_title VARCHAR(255) NOT NULL,
+    source VARCHAR(50) CHECK (source IN (
+        'referral', 'company_website', 'recruiter', 'career_fair', 'social_media',
+        'networking_event', 'university_portal', 'staffing_agency', 'walk_in',
+        'linkedin', 'indeed', 'glassdoor', 'referalah', 'other_job_platform', 'other'
+    )),
+    industry_uuid UUID,
+    location_uuid UUID,
+    job_type VARCHAR(50) CHECK (job_type IN (
+        'internship', 'co_op', 'full_time', 'contract', 'part_time',
+        'temporary', 'seasonal', 'apprenticeship', 'volunteer', 'other'
+    )),
+    job_level VARCHAR(50) CHECK (job_level IN (
+        'entry_level', 'junior', 'mid_level', 'senior', 'management_level',
+        'executive_level', 'associate', 'lead', 'principal', 'director',
+        'vice_president', 'c_level', 'trainee', 'other'
+    )),
+    application_submitted_date DATE NOT NULL,
+    visibility VARCHAR(20) CHECK (visibility IN ('private', 'public')) DEFAULT 'private',
+    content TEXT,
+    status VARCHAR(20) DEFAULT 'active',
+    created_by UUID NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT NULL,
+    FOREIGN KEY (company_id) REFERENCES company(id) ON DELETE RESTRICT,
+    FOREIGN KEY (created_by) REFERENCES users(uuid) ON DELETE RESTRICT
+);
+
+-- Create job_journey_step table
+CREATE TABLE job_journey_step (
+    id SERIAL PRIMARY KEY,
+    uuid UUID DEFAULT gen_random_uuid(),
+    job_journey_uuid UUID NOT NULL,
+    step_date DATE NOT NULL,
+    step_type VARCHAR(50) CHECK (step_type IN (
+        'interview', 'take_home_challenge', 'offer', 'rejected', 'withdrawn'
+    )),
+    interview_type VARCHAR(50) CHECK (interview_type IN (
+        'hr_screening', 'technical', 'regular', 'behavioral', 'informal',
+        'cultural_fit', 'group_interview'
+    )),
+    interview_location VARCHAR(50) CHECK (interview_location IN (
+        'on_site', 'virtual', 'phone_call', 'other'
+    )),
+    remarks TEXT,
+    position INTEGER NOT NULL CHECK (position > 0),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT NULL,
+    FOREIGN KEY (job_journey_uuid) REFERENCES job_journey(uuid) ON DELETE CASCADE
+);
+
+CREATE TABLE location (
+    id SERIAL PRIMARY KEY,
+    uuid UUID DEFAULT gen_random_uuid() UNIQUE,
+    value VARCHAR,
+    english_name VARCHAR,
+    cantonese_name VARCHAR,
+    level INTEGER NOT NULL CHECK (level >= 1),
+    parent_uuid UUID REFERENCES location(uuid),
+    country_uuid UUID REFERENCES location(uuid)
+);

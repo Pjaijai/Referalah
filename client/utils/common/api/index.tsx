@@ -2,6 +2,12 @@ import { fireStore } from "@/utils/services/firebase/config"
 import { supabase } from "@/utils/services/supabase/config"
 import { doc, getDoc, increment, setDoc, updateDoc } from "firebase/firestore"
 
+import { TCompany, TCompanyData } from "@/types/api/company"
+import {
+  TCreateJobJourneyRequest,
+  TJobJourney,
+  TJobJourneyWithSteps,
+} from "@/types/api/job-journey"
 import { IResetPasswordRequest } from "@/types/api/request/auth/reset-password"
 import { ISignInEmailPasswordRequest } from "@/types/api/request/auth/sign-in-with-email-password"
 import { ISignInWithOneTimePassWordRequest } from "@/types/api/request/auth/sign-in-with-one-time-password"
@@ -21,6 +27,7 @@ import { TContactRequestListResponse } from "@/types/api/response/contact-reques
 import { IGetConversationListByUserUuidResponse } from "@/types/api/response/conversation-list"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
+import { TLocationData } from "@/types/api/response/location"
 import { IMessageReferralResponse } from "@/types/api/response/message/referral"
 import { ISearchNotificationResponse } from "@/types/api/response/notificaiton/search-notifications"
 import { IProvinceResponse } from "@/types/api/response/province"
@@ -31,6 +38,8 @@ import {
 } from "@/types/api/response/referer-post"
 import { IReferralResponse } from "@/types/api/response/referral"
 import { IUserResponse } from "@/types/api/response/user"
+import { EJobLevel } from "@/types/common/enums/job-level"
+import { EJobType } from "@/types/common/enums/job-type"
 import { EPostType } from "@/types/common/post-type"
 import { EUserType } from "@/types/common/user-type"
 import { siteConfig } from "@/config/site"
@@ -96,7 +105,7 @@ export const signUpWithEmailPassword = async (
   const url = new URL(
     `${process.env.NEXT_PUBLIC_WEB_URL}${siteConfig.page.signUpConfirmation.href}`
   )
-  console.log(123123, url)
+
   const { email, password } = req
   try {
     const { data, error } = await supabase.auth.signUp({
@@ -642,6 +651,24 @@ export const getIndustryList = async () => {
   }
 }
 
+// location
+export const getLocationList = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("location")
+      .select<"*", TLocationData>("*")
+
+    if (error) {
+      throw error
+    }
+    if (data === null) return []
+
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
 // Country
 export const getCountryList = async () => {
   try {
@@ -1029,6 +1056,301 @@ export const bulkUpdateNotificationsSeen = async ({
     if (error) throw error
     return data
   } catch (error: any) {
+    throw error
+  }
+}
+
+//  Job Journey
+export const createJobJourney = async (
+  request: TCreateJobJourneyRequest
+): Promise<any> => {
+  const mappedData = {
+    title: request.title,
+    position_title: request.positionTitle,
+    company: request.company,
+    industry: request.industry,
+    location: request.location,
+    job_type: request.jobType,
+    job_level: request.jobLevel,
+    application_date: request.applicationDate,
+    source: request.source,
+    description: request.description,
+    steps: request.steps.map((step) => ({
+      type: step.type,
+      date: step.date,
+      remarks: step.remarks,
+      position: step.position,
+      interview_type: step.interviewType,
+      interview_location: step.interviewLocation,
+    })),
+    new_company: request.newCompany,
+  }
+
+  try {
+    const { data, error } = await supabase.functions.invoke(
+      "create-job-journey",
+      {
+        body: {
+          ...mappedData,
+        },
+      }
+    )
+
+    if (error) throw error
+    if (!data) throw new Error("No data returned after creation")
+
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+// Get Job Journey by UUID with Joined Steps
+export const getJobJourneyByUuidWithSteps = async (
+  uuid: string
+): Promise<TJobJourneyWithSteps> => {
+  try {
+    const { data, error } = await supabase
+      .from("job_journey")
+      .select<string, TJobJourneyWithSteps>(
+        `
+        id,
+        uuid,
+        company_id,
+        company:company_id (
+          id,
+          name,
+          logo_url
+        ),
+        company_name,
+        position_title,
+        title,
+        description,
+        source,
+        industry_uuid,
+        location_uuid,
+        job_type,
+        job_level,
+        application_submitted_date,
+        visibility,
+        status,
+        created_by,
+        created_at,
+        updated_at,
+        last_step_status,
+        last_step_status_updated_at,
+        job_journey_step (
+          id,
+          uuid,
+          job_journey_uuid,
+          step_date,
+          step_type,
+          interview_type,
+          interview_location,
+          remarks,
+          position,
+          created_at,
+          updated_at
+        ),
+        industry:industry_uuid (
+          uuid,
+          english_name,
+          cantonese_name
+        ),
+        location:location_uuid (
+          uuid,
+          english_name,
+          cantonese_name
+        ),
+        user:created_by (
+          uuid,
+          username
+        )
+      `
+      )
+      .eq("uuid", uuid)
+      .single()
+
+    if (error) throw error
+    if (!data) throw new Error("Job journey not found")
+
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+// Search Job Journeys with Filtering, Sorting, and Pagination
+export const searchJobJourney = async ({
+  keywords,
+  numberOfItemsPerPage,
+  locations,
+  jobLevel,
+  jobType,
+  page,
+  sortingType,
+  industry,
+}: {
+  keywords: string
+  numberOfItemsPerPage: number
+  locations: string[]
+  jobLevel: EJobLevel | "all"
+  jobType: EJobType | "all"
+  industry: string
+  page: number
+  sortingType: string
+}): Promise<TJobJourney[]> => {
+  try {
+    const from = page * numberOfItemsPerPage
+    const to = from + numberOfItemsPerPage - 1
+
+    let query = supabase.from("job_journey").select<string, TJobJourney>(
+      `
+        id,
+        uuid,
+        company_id,
+        company:company_id (
+          id,
+          name,
+          logo_url
+        ),
+        company_name,
+        position_title,
+        title,
+        source,
+        industry_uuid,
+        location_uuid,
+        location:location_uuid (
+          uuid
+        ),
+        job_type,
+        job_level,
+        application_submitted_date,
+        visibility,
+        status,
+        created_by,
+        user:created_by (
+          uuid,
+          username
+        ),
+        created_at,
+        updated_at,
+        last_step_status,
+        last_step_status_updated_at,
+        description
+        `
+    )
+
+    // Apply job level filter
+    if (jobLevel !== "all") {
+      query = query.eq("job_level", jobLevel)
+    }
+
+    // Apply job type filter
+    if (jobType !== "all") {
+      query = query.eq("job_type", jobType)
+    }
+
+    // Apply industry filter
+    if (industry !== "all") {
+      query = query.eq("industry_uuid", industry)
+    }
+
+    // Apply location filter
+    if (locations.length > 0) {
+      query = query.in("location_uuid", locations)
+    }
+
+    // Apply sorting
+    const [sortedBy, order] = sortingType.split(",")
+
+    if (sortedBy === "createdAt") {
+      query = query.order("created_at", { ascending: order === "asc" })
+    }
+
+    if (sortedBy === "applicationDate") {
+      query = query.order("application_submitted_date", {
+        ascending: order === "asc",
+      })
+    }
+    if (sortedBy === "lastUpdatedDate") {
+      query = query.order("last_step_status_updated_at", {
+        ascending: order === "asc",
+      })
+    }
+    // Apply keyword search
+    if (keywords && keywords.trim() !== "") {
+      const trimmedKeywords = keywords.trim() // Remove leading/trailing spaces
+      const searchTerms = trimmedKeywords
+        .split(/\s+/)
+        .filter((term) => term !== "") // Split by whitespace and remove empty terms
+      const keywordFilters: string[] = []
+
+      // Build filters for job_journey fields
+      for (const term of searchTerms) {
+        const encodedTerm = `%${term}%`
+        keywordFilters.push(
+          `company_name.ilike.${encodedTerm}`,
+          `position_title.ilike.${encodedTerm}`,
+          `title.ilike.${encodedTerm}`,
+          `description.ilike.${encodedTerm}`
+        )
+      }
+
+      // Apply or filter for job_journey fields
+      if (keywordFilters.length > 0) {
+        query = query.or(keywordFilters.join(","))
+      }
+
+      // Separately handle company.name due to foreign table
+      for (const term of searchTerms) {
+        const encodedTerm = `%${term}%`
+        query = query.ilike("company.name", encodedTerm) // Search in company.name
+      }
+    }
+
+    // Execute query with pagination
+    const { data, error } = await query.range(from, to)
+
+    if (error) {
+      throw new Error(`Failed to fetch job journeys: ${error.message}`)
+    }
+
+    return data ?? []
+  } catch (error) {
+    throw error
+  }
+}
+// company
+
+export const searchCompanyByName = async ({
+  searchTerm,
+}: {
+  searchTerm: string | null
+}): Promise<TCompany[]> => {
+  try {
+    // Validate input
+    if (!searchTerm || typeof searchTerm !== "string") {
+      throw new Error("Invalid search term: Must be a non-empty string")
+    }
+
+    // Query the company table with a case-insensitive search
+    const { data, error } = await supabase
+      .from("company")
+      .select<string, TCompanyData>("*")
+      .ilike("name", `%${searchTerm}%`) // Case-insensitive search on the name field
+      .limit(5)
+
+    if (error) throw error
+    if (!data) return []
+
+    return data.map((company) => ({
+      id: company.id,
+      name: company.name,
+      logoUrl: company.logo_url,
+      createdAt: company.created_at,
+    })) satisfies TCompany[]
+  } catch (error) {
     throw error
   }
 }
