@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "en_US",
+    locale: "en_ca",
     url: process.env.NEXT_PUBLIC_WEB_URL,
     siteName: siteConfig.name,
     title: `${siteConfig.name} | 海外港人平台`,
@@ -91,8 +91,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: process.env.NEXT_PUBLIC_WEB_URL,
     languages: {
-      "en-US": "/en-US",
-      "zh-HK": "/zh-HK",
+      "en-CA": "/en-ca",
+      "zh-HK": "/zh-hk",
     },
   },
   viewport: {
