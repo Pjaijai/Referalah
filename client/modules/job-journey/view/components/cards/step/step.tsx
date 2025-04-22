@@ -1,4 +1,6 @@
 import React from "react"
+import getStepTypeIcon from "@/modules/job-journey/helpers/get-step-type-icon"
+import getStepTypeStyle from "@/modules/job-journey/helpers/get-step-type-style"
 import formatVagueDateHelper from "@/utils/common/helpers/format/vague-date"
 import { useCurrentLocale } from "@/utils/services/internationalization/client"
 
@@ -10,8 +12,6 @@ import useInterviewLocationOptions from "@/hooks/common/options/Interview-locati
 import useInterviewTypeOptions from "@/hooks/common/options/Interview-type-options"
 import useStepTypeOptions from "@/hooks/common/options/step-type-options"
 import { Separator } from "@/components/ui/separator"
-import getStepTypeIcon from "@/app/[locale]/job-journey/utils/get-step-type-icon"
-import getStepTypeStyle from "@/app/[locale]/job-journey/utils/get-step-type-style"
 
 type StepCardProps = {
   position: number

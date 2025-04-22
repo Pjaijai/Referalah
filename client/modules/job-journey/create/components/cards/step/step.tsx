@@ -1,4 +1,4 @@
-import React, { use, useEffect } from "react"
+import React, { useEffect } from "react"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { useFormContext } from "react-hook-form"
 

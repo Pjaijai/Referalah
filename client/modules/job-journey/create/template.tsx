@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect } from "react"
+import React from "react"
 import { useRouter } from "next/navigation"
 import StepIndicator from "@/modules/job-journey/component/step-indicator/step-indicator"
 import BasicInfoSection from "@/modules/job-journey/create/components/sections/basic-info"
