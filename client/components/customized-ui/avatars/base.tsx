@@ -6,9 +6,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 interface IBaseAvatar {
   url?: string
   alt: string | null
-  fallBack: string | null
+  fallBack: string | React.ReactNode | null
   size?: "large" | "medium" | "veryLarge"
   className?: string
+  fallbackClassName?: string
 }
 const BaseAvatar: React.FunctionComponent<IBaseAvatar> = ({
   alt,
@@ -16,6 +17,7 @@ const BaseAvatar: React.FunctionComponent<IBaseAvatar> = ({
   url,
   size,
   className,
+  fallbackClassName,
 }) => {
   return (
     <Avatar
@@ -28,7 +30,9 @@ const BaseAvatar: React.FunctionComponent<IBaseAvatar> = ({
       )}
     >
       <AvatarImage src={url ? url : ""} alt={alt ? alt : ""} />
-      <AvatarFallback>{fallBack}</AvatarFallback>
+      <AvatarFallback className={cn(fallbackClassName)}>
+        {fallBack}
+      </AvatarFallback>
     </Avatar>
   )
 }
