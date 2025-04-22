@@ -31,10 +31,8 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
   const t = useI18n()
   const {
     control,
-    register,
     watch,
     setValue, // Add setValue to reset fields
-    formState: { errors },
   } = useFormContext()
 
   const typeOptions = useStepTypeOptions()
@@ -165,6 +163,7 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
             name={`steps.${index}.remarks`}
             label={t("job_journey.general.remarks")}
             control={control}
+            placeholder={t("job_journey.form.step_remarks_placeholder")}
           />
         </div>
       </div>

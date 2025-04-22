@@ -371,6 +371,10 @@ export default {
       "submit.success": "職途誌創立成功！",
       "date.description": "會顯示大概嘅日期",
       all_job_level: "所有職級",
+      position_title_placeholder: "工程師/侍應/肉類切割員",
+      title_placeholder: "一句總括整個過程",
+      description_placeholder: "可以在喺到分享一啲建議，點樣準備同回顧思考",
+      step_remarks_placeholder: "有冇咩感想或者諗法？",
     },
     section: {
       basic_info: "基本資料",
@@ -434,7 +438,6 @@ export default {
     interview_location: {
       on_site: "現場",
       virtual: "遙距",
-      phone_call: "打電話",
       other: "其他",
     },
     step_type: {

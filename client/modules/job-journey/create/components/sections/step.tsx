@@ -63,6 +63,7 @@ const StepSection: React.FC = () => {
             label={t("job_journey.general.title")}
             control={control}
             isRequired
+            placeholder={t("job_journey.form.title_placeholder")}
           />
         </SubSection>
 
@@ -73,6 +74,7 @@ const StepSection: React.FC = () => {
             control={control}
             inputClassName="mt-5 text-slate-500"
             isRequired
+            placeholder={t("job_journey.form.description_placeholder")}
           />
         </SubSection>
 

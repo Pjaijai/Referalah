@@ -313,7 +313,7 @@ export default {
   "page.installation": "Get the App",
   "page.notifications": "Notifications",
   "page.create_job_journey": "Create Job Journey",
-  "page.job_journey": "Journey",
+  "page.job_journey": "Job Journey",
   "general.dark_mode": "Dark Mode",
   "general.light_mode": "Light Mode",
 
@@ -403,8 +403,12 @@ export default {
     form: {
       "submit.success": "Create Journey Success !",
       "date.description": "Date shown as approximate month period",
-
       all_job_level: "All Levels",
+      position_title_placeholder: "Butcher/Product Designer/Plumber",
+      title_placeholder: "One line to sum it all up",
+      description_placeholder:
+        "This could include tips, preparation advice, and personal thoughts",
+      step_remarks_placeholder: " Any takeaways or feelings? ",
     },
     section: {
       basic_info: "Basic Information",
@@ -466,7 +470,6 @@ export default {
     interview_location: {
       on_site: "On Site",
       virtual: "Virtual",
-      phone_call: "Phone Call",
       other: "Other",
     },
     step_type: {

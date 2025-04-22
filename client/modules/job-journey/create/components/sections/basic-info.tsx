@@ -44,6 +44,7 @@ const BasicInfoSection: React.FunctionComponent<IBasicInfoSectionProps> = ({
                 control={control}
                 name="positionTitle"
                 label={t("general.job_title")}
+                placeholder={t("job_journey.form.position_title_placeholder")}
                 isRequired
               />
             </div>
