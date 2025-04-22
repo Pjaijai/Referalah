@@ -1,0 +1,15 @@
+export enum EJobLevel {
+  TRAINEE = "trainee",
+  ENTRY_LEVEL = "entry_level",
+  JUNIOR = "junior",
+  MID_LEVEL = "mid_level",
+  SENIOR = "senior",
+  MANAGEMENT_LEVEL = "management_level",
+  EXECUTIVE_LEVEL = "executive_level",
+  LEAD = "lead",
+  PRINCIPAL = "principal",
+  DIRECTOR = "director",
+  VICE_PRESIDENT = "vice_president",
+  C_LEVEL = "c_level",
+  OTHER = "other",
+}
