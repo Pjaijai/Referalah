@@ -107,7 +107,15 @@ export const siteConfig = {
         title: "街招",
       },
     },
-
+    createJobJourney: {
+      href: "/job-journey/create",
+    },
+    searchJobJourney: {
+      href: "/job-journey/search",
+    },
+    viewJobJourney: {
+      href: "/job-journey/view",
+    },
     postHistory: {
       name: "街招記錄",
       href: "/post/history",
