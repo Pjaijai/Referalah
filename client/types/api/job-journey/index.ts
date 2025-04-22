@@ -6,7 +6,6 @@ import { EInterviewType } from "@/types/common/enums/interview-type"
 import { EJobLevel } from "@/types/common/enums/job-level"
 import { EJobType } from "@/types/common/enums/job-type"
 import { EStepType } from "@/types/common/enums/step-type"
-import { EPostType } from "@/types/common/post-type"
 
 export interface IJobJourneyFilterMeta
   extends Pick<IFilterMeta, "keywords" | "sorting"> {
