@@ -74,6 +74,7 @@ const StepSection: React.FC = () => {
             control={control}
             inputClassName="mt-5 text-slate-500"
             isRequired
+            minRows={6}
             placeholder={t("job_journey.form.description_placeholder")}
           />
         </SubSection>

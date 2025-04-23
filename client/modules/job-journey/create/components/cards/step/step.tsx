@@ -104,14 +104,14 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
             />
           )}
         </div>
-        <div className="mt-5 flex flex-row items-start justify-between space-x-16">
+        <div className="mt-5 flex flex-col items-start justify-between space-y-4 md:flex-row  md:space-x-16 md:space-y-0 ">
           <FormSelect
             name={`steps.${index}.type`}
             label={t("job_journey.general.step_type")}
             options={filteredTypeOptions}
             control={control}
             labelClassName="text-slate-500"
-            containerClassName="basis-full"
+            containerClassName="basis-full w-full"
             isRequired
           />
           <div className="flex w-full flex-row">
@@ -120,7 +120,7 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
                 name={`steps.${index}.date`}
                 label={t("general.date")}
                 control={control}
-                labelClassName="text-slate-500 mt-1"
+                labelClassName="text-slate-500"
                 containerClassName="basis-full content-start"
                 disabledDates={(date) => date < minDate}
                 description={t("job_journey.form.date.description")}
@@ -133,14 +133,14 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
         </div>
 
         {stepType === "interview" && (
-          <div className="mt-5 flex flex-row items-start justify-between space-x-16">
+          <div className="mt-5 flex flex-col items-start justify-between space-y-4 md:flex-row  md:space-x-16 md:space-y-0">
             <FormSelect
               name={`steps.${index}.interviewType`}
               label={t("job_journey.general.interview_type")}
               options={interviewTypeOptions}
               control={control}
               labelClassName="text-slate-500"
-              containerClassName="basis-full"
+              containerClassName="basis-full w-full"
               isRequired
             />
             <div className="flex w-full flex-row">
@@ -151,7 +151,7 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
                   options={interviewLocationsOptions}
                   control={control}
                   labelClassName="text-slate-500"
-                  containerClassName="basis-full"
+                  containerClassName="basis-full w-full"
                   isRequired
                 />
               </div>
