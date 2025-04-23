@@ -391,6 +391,7 @@ export default {
   "general.updated_on": "Updated on",
   "general.all_locations": "All Locations",
   "general.all_industries": "All Industries",
+  "general.all_companies": "All Companies",
   job_journey: {
     sorting: {
       last_updated_date_dec: "Last Update - Latest",

@@ -33,7 +33,7 @@ const search = ({
   const { filterMeta, sorting } = queryKeyItem
   const locations = filterMeta.locations
   const jobLevel = filterMeta.jobLevel
-  const jobType = filterMeta.jobType
+  const companyId = filterMeta.companyId
   const industry = filterMeta.industry
   const keywords = filterMeta.keywords
 
@@ -42,7 +42,7 @@ const search = ({
     numberOfItemsPerPage: NUMBER_OF_ITEMS_PER_FETCH,
     locations,
     jobLevel,
-    jobType,
+    companyId,
     industry,
     page: pageParam,
     sortingType: sorting,
@@ -60,7 +60,10 @@ interface State {
   locations: string[]
   location: string
   jobLevel: EJobLevel | "all"
-  jobType: EJobType | "all"
+  company: {
+    name: string
+    id: number
+  } | null
   industry: string
   sorting: string
   params: URLSearchParams
@@ -72,7 +75,7 @@ type Action =
   | { type: "SET_LOCATION"; payload: string }
   | { type: "SET_LOCATIONS"; payload: string[] }
   | { type: "SET_JOB_LEVEL"; payload: EJobLevel | "all" }
-  | { type: "SET_JOB_TYPE"; payload: EJobType | "all" }
+  | { type: "SET_COMPANY"; payload: { name: string; id: number } | null }
   | { type: "SET_INDUSTRY"; payload: string }
   | { type: "SET_SORTING"; payload: string }
   | { type: "SET_PARAMS"; payload: URLSearchParams }
@@ -90,8 +93,8 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, locations: action.payload }
     case "SET_JOB_LEVEL":
       return { ...state, jobLevel: action.payload }
-    case "SET_JOB_TYPE":
-      return { ...state, jobType: action.payload }
+    case "SET_COMPANY":
+      return { ...state, company: action.payload }
     case "SET_INDUSTRY":
       return { ...state, industry: action.payload }
     case "SET_SORTING":
@@ -127,7 +130,13 @@ const useSearchJourney = (props: ISearchJourneyProps) => {
     ),
     location: searchParams?.get("location") || "all",
     jobLevel: initialJobLevel || "all",
-    jobType: initialJobType || "all",
+    company:
+      searchParams?.get("companyName") && searchParams?.get("companyId")
+        ? {
+            name: searchParams.get("companyName")!,
+            id: Number(searchParams.get("companyId")),
+          }
+        : null,
     industry:
       (searchParams.get("industries") &&
         industryData.find(
@@ -140,7 +149,7 @@ const useSearchJourney = (props: ISearchJourneyProps) => {
   }
 
   const [state, dispatch] = useReducer(reducer, initialState)
-  console.log(111111, state.locations)
+
   const debouncedKeywords = useDebounce(state.keywords, 1000)
 
   useEffect(() => {
@@ -152,6 +161,20 @@ const useSearchJourney = (props: ISearchJourneyProps) => {
       removeQueryString("keywords")
     }
   }, [debouncedKeywords])
+
+  const createQueryStrings = useCallback(
+    (entries: { name: string; value: string }[]) => {
+      const newParams = new URLSearchParams(state.params.toString())
+
+      entries.forEach(({ name, value }) => {
+        newParams.set(name, value)
+      })
+
+      dispatch({ type: "SET_PARAMS", payload: newParams })
+      return newParams.toString()
+    },
+    [state.params]
+  )
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -167,6 +190,18 @@ const useSearchJourney = (props: ISearchJourneyProps) => {
     (name: string) => {
       const newParams = new URLSearchParams(state.params.toString())
       newParams.delete(name)
+      dispatch({ type: "SET_PARAMS", payload: newParams })
+      return newParams.toString()
+    },
+    [state.params]
+  )
+
+  const removeQueryStrings = useCallback(
+    (names: string[]) => {
+      const newParams = new URLSearchParams(state.params.toString())
+
+      names.forEach((name) => newParams.delete(name))
+
       dispatch({ type: "SET_PARAMS", payload: newParams })
       return newParams.toString()
     },
@@ -191,12 +226,29 @@ const useSearchJourney = (props: ISearchJourneyProps) => {
     }
   }
 
-  const handleJobTypeChange = (type: EJobType | "all") => {
-    dispatch({ type: "SET_JOB_TYPE", payload: type })
-    if (type === "all") {
-      removeQueryString("jobType")
+  const handleCompanyChange = (
+    name: string | null,
+    id: number | null,
+    reset: boolean
+  ) => {
+    if (reset) {
+      dispatch({
+        type: "SET_COMPANY",
+        payload: null,
+      })
+      removeQueryStrings(["companyName", "companyId"])
     } else {
-      createQueryString("jobType", type)
+      dispatch({
+        type: "SET_COMPANY",
+        payload: {
+          id: id!,
+          name: name!,
+        },
+      })
+      createQueryStrings([
+        { name: "companyName", value: name! },
+        { name: "companyId", value: id!.toString() },
+      ])
     }
   }
 
@@ -248,6 +300,7 @@ const useSearchJourney = (props: ISearchJourneyProps) => {
       industries: null,
       keywords: "",
       debouncedKeywords: "",
+      company: null,
     }
     dispatch({ type: "RESET", payload: resetState })
     router.push(pathname)
@@ -256,7 +309,7 @@ const useSearchJourney = (props: ISearchJourneyProps) => {
   const filterMeta: IJobJourneyFilterMeta = {
     keywords: state.debouncedKeywords,
     jobLevel: state.jobLevel,
-    jobType: state.jobType,
+    companyId: state.company?.id,
     industry: state.industry,
     sorting: state.sorting,
     locations: state.locations,
@@ -285,10 +338,10 @@ const useSearchJourney = (props: ISearchJourneyProps) => {
     handleReset,
     keywords: state.keywords,
     sorting: state.sorting,
-    handleJobTypeChange,
+    handleCompanyChange,
     handleJobLevelChange,
     jobLevel: state.jobLevel,
-    jobType: state.jobType,
+    company: state.company,
     handleLocationChange,
     location: state.location,
     industry: state.industry,

@@ -2,45 +2,51 @@
 
 import React, { useState } from "react"
 import { useI18n } from "@/utils/services/internationalization/client"
+import { useFormContext } from "react-hook-form"
 
 import { cn } from "@/lib/utils"
 import useSearchCompanyByName from "@/hooks/api/company/search-company-by-name"
 import useDebounce from "@/hooks/common/debounce"
+import { FormMessage } from "@/components/ui/form"
 import BaseCombobox from "@/components/customized-ui/comboboxes/base"
 import TextInput from "@/components/customized-ui/inputs/text"
 import LoadingBalloonSpinner from "@/components/customized-ui/spinner/ball"
 
 interface CompanyComboboxProps {
-  onSelect: (name: string | null, id: number | null, reset: boolean) => void
   inputClassName?: string
   optionsContainerClassName?: string
   isRequired?: boolean
-  company: {
-    name: string
-    id: number
-  } | null
-  className?: string
 }
 
-const CompanyCombobox: React.FC<CompanyComboboxProps> = ({
+const FormCompanyCombobox: React.FC<CompanyComboboxProps> = ({
   optionsContainerClassName,
   inputClassName,
-  company,
-  onSelect,
+
   isRequired,
-  className,
 }) => {
   const t = useI18n()
+  const {
+    watch,
+    formState: { errors },
+    setValue,
+  } = useFormContext()
 
   const [searchTerm, setSearchTerm] = useState("")
   const [isOpen, setIsOpen] = useState(false)
   const debouncedSearchTerm = useDebounce(searchTerm, 500)
+  const companyWatch = watch("company")
+  const newCompanyWatch = watch("newCompany")
 
   const { data: options, isFetching } = useSearchCompanyByName({
     searchTerm: debouncedSearchTerm,
   })
 
-  const triggerTitle = company ? company.name : t("general.all_companies")
+  const triggerTitle =
+    companyWatch?.name ??
+    (newCompanyWatch
+      ? `${t("filter.combobox.company.create")} "${newCompanyWatch}" `
+      : null) ??
+    t("general.please_select")
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value.trim())
@@ -53,27 +59,39 @@ const CompanyCombobox: React.FC<CompanyComboboxProps> = ({
   const handleOptionSelect = (companyId: number) => {
     const companyName = options!.find((option) => option.id === companyId)!.name
 
-    onSelect(companyName, companyId, false)
+    // Update the form value for company
+    setValue(
+      "company",
+      { id: companyId, name: companyName },
+      { shouldValidate: true }
+    )
+
+    setValue("newCompany", null)
 
     setIsOpen(false)
   }
 
-  const handleResetClick = () => {
-    onSelect(null, null, true)
+  const handleOptionCreate = () => {
+    setValue("company", null)
+    setValue("newCompany", searchTerm)
 
     setIsOpen(false)
   }
+
+  // Always show TextInput and options when the popover is open
   const showOptions = isOpen
-
+  const createOptionText = `${t(
+    "filter.combobox.company.create"
+  )} "${searchTerm}"`
   return (
-    <div className={cn(" flex flex-col", className)}>
+    <div className="flex flex-col gap-2">
       <BaseCombobox
         triggerTitle={triggerTitle}
         popoverClassName="overflow-hidden max-h-[400px]"
         open={isOpen}
         onOpenChange={handleOpenChange}
         isRequired={isRequired}
-        className="gap-0"
+        label={t("general.company_name")}
       >
         {showOptions && (
           <>
@@ -90,14 +108,7 @@ const CompanyCombobox: React.FC<CompanyComboboxProps> = ({
               )}
             >
               {/* No input*/}
-              {
-                <div
-                  onClick={handleResetClick}
-                  className="flex flex-row items-center rounded-lg p-2 text-slate-600 hover:bg-slate-100"
-                >
-                  {t("general.all_companies")}
-                </div>
-              }
+
               {isFetching && (
                 <div className="p-2 text-center text-gray-500">
                   <LoadingBalloonSpinner maxRandomBalls={3} />
@@ -117,12 +128,24 @@ const CompanyCombobox: React.FC<CompanyComboboxProps> = ({
                     {option.name}
                   </div>
                 ))}
+
+              {/* No data */}
+              {!isFetching && options && options.length === 0 && (
+                <>
+                  <div onClick={handleOptionCreate}>{createOptionText}</div>
+                </>
+              )}
             </div>
           </>
         )}
       </BaseCombobox>
+
+      {/* Display error for company field */}
+      {errors.company && (
+        <FormMessage>{errors.company.message?.toString()}</FormMessage>
+      )}
     </div>
   )
 }
 
-export default CompanyCombobox
+export default FormCompanyCombobox

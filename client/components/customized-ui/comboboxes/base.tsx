@@ -25,6 +25,7 @@ interface IBaseComboboxProps {
   onOpenChange?: (open: boolean) => void
   isRequired?: boolean
   label?: string
+  className?: string
 }
 
 const BaseCombobox: React.FC<React.PropsWithChildren<IBaseComboboxProps>> = ({
@@ -35,10 +36,11 @@ const BaseCombobox: React.FC<React.PropsWithChildren<IBaseComboboxProps>> = ({
   onOpenChange,
   isRequired,
   label,
+  className,
 }) => {
   const t = useI18n()
   return (
-    <div className="flex flex-col gap-3">
+    <div className={cn("flex flex-col gap-3", className)}>
       <div className="flex w-full flex-row items-center justify-between">
         {label ? (
           <FormLabel>

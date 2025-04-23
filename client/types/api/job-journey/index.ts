@@ -10,9 +10,9 @@ import { EStepType } from "@/types/common/enums/step-type"
 export interface IJobJourneyFilterMeta
   extends Pick<IFilterMeta, "keywords" | "sorting"> {
   jobLevel: EJobLevel | "all"
-  jobType: EJobType | "all"
   industry: string
   locations: string[]
+  companyId?: number
 }
 
 export type TStep = {

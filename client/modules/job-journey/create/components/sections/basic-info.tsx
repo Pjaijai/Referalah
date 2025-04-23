@@ -9,8 +9,8 @@ import useJobLevelOptions from "@/hooks/common/options/Job-level-options"
 import useJobTypeOptions from "@/hooks/common/options/Job-type-options"
 import useApplicationSourceOptions from "@/hooks/common/options/application-source-options"
 import useIndustryOptions from "@/hooks/common/options/industry-options"
-import CompanyCombobox from "@/components/customized-ui/comboboxes/company"
 import LocationCombobox from "@/components/customized-ui/comboboxes/location"
+import FormCompanyCombobox from "@/components/customized-ui/form/company"
 import FormDatePicker from "@/components/customized-ui/form/date-picker"
 import FormTextInput from "@/components/customized-ui/form/input"
 import FormSelect from "@/components/customized-ui/form/select"
@@ -57,7 +57,7 @@ const BasicInfoSection: React.FunctionComponent<IBasicInfoSectionProps> = ({
                 isRequired
                 options={industryOptions}
               />
-              <CompanyCombobox isRequired />
+              <FormCompanyCombobox isRequired />
             </div>
             {/* Job Type and Job Level (side by side) */}
             <div className="grid grid-cols-1 gap-x-10 gap-y-6 md:grid-cols-2 md:gap-y-10">

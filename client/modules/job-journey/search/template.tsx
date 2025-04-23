@@ -37,9 +37,9 @@ const SearchJobJourneyPageTemplate: React.FunctionComponent<
     handleKeywordsChange,
     handleLocationChange,
     handleJobLevelChange,
-    handleJobTypeChange,
+    handleCompanyChange,
     jobLevel,
-    jobType,
+    company,
     industry,
     location,
   } = useSearchJourney({
@@ -65,9 +65,7 @@ const SearchJobJourneyPageTemplate: React.FunctionComponent<
 
         <FilterSheet
           onJobLevelChange={handleJobLevelChange}
-          onJobTypeChange={handleJobTypeChange}
           currentJobLevel={jobLevel}
-          currentJobType={jobType}
           locationData={locationList}
           onIndustryChange={handleIndustryChange}
           industryData={industryList}
@@ -77,13 +75,15 @@ const SearchJobJourneyPageTemplate: React.FunctionComponent<
           currentLocation={location}
           onLocationChange={handleLocationChange}
           onReset={handleReset}
+          onCompanyChange={handleCompanyChange}
+          currentCompany={company}
         />
       </div>
       <JobJourneySearchBar
         onJobLevelChange={handleJobLevelChange}
-        onJobTypeChange={handleJobTypeChange}
+        onCompanyChange={handleCompanyChange}
         currentJobLevel={jobLevel}
-        currentJobType={jobType}
+        currentCompany={company}
         keywords={keywords}
         locationData={locationList}
         onIndustryChange={handleIndustryChange}

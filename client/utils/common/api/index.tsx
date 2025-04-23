@@ -1186,7 +1186,7 @@ export const searchJobJourney = async ({
   numberOfItemsPerPage,
   locations,
   jobLevel,
-  jobType,
+  companyId,
   page,
   sortingType,
   industry,
@@ -1195,7 +1195,7 @@ export const searchJobJourney = async ({
   numberOfItemsPerPage: number
   locations: string[]
   jobLevel: EJobLevel | "all"
-  jobType: EJobType | "all"
+  companyId?: number
   industry: string
   page: number
   sortingType: string
@@ -1247,8 +1247,8 @@ export const searchJobJourney = async ({
     }
 
     // Apply job type filter
-    if (jobType !== "all") {
-      query = query.eq("job_type", jobType)
+    if (companyId) {
+      query = query.eq("company_id", companyId)
     }
 
     // Apply industry filter

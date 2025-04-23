@@ -358,6 +358,7 @@ export default {
   "general.updated_on": "更新",
   "general.all_locations": "所有地方",
   "general.all_industries": "所有行業",
+  "general.all_companies": "所有公司",
   job_journey: {
     sorting: {
       last_updated_date_dec: "更新 - 最新",
