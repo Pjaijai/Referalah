@@ -84,7 +84,7 @@ const FormCompanyCombobox: React.FC<CompanyComboboxProps> = ({
     "filter.combobox.company.create"
   )} "${searchTerm}"`
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col space-x-2">
       <BaseCombobox
         triggerTitle={triggerTitle}
         popoverClassName="overflow-hidden max-h-[400px]"

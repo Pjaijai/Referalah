@@ -40,7 +40,7 @@ const BaseCombobox: React.FC<React.PropsWithChildren<IBaseComboboxProps>> = ({
 }) => {
   const t = useI18n()
   return (
-    <div className={cn("flex flex-col gap-3", className)}>
+    <div className={cn("flex flex-col", className)}>
       <div className="flex w-full flex-row items-center justify-between">
         {label ? (
           <FormLabel>
@@ -51,7 +51,7 @@ const BaseCombobox: React.FC<React.PropsWithChildren<IBaseComboboxProps>> = ({
       </div>
 
       <Popover open={open} onOpenChange={onOpenChange}>
-        <PopoverTrigger asChild>
+        <PopoverTrigger asChild className={cn(label && "mt-2")}>
           <Button
             variant="base"
             role="combobox"
