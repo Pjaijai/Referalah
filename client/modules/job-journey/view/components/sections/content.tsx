@@ -89,15 +89,16 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
           </p>
         </div>
       </div>
-      <div className="mt-[30px] grid grid-cols-3 gap-y-2">
+
+      <div className="mt-[30px] flex flex-col  gap-y-2 md:grid md:grid-cols-5">
         {infoList.map((data) => (
-          <div className="grid max-w-xs grid-cols-2  text-xs">
-            <div className="flex flex-row items-center justify-start gap-[10px]">
+          <div className="grid max-w-xs grid-cols-3  gap-1 text-xs">
+            <div className="flex flex-row items-center justify-start gap-[10px] md:col-span-1">
               <span>{data.icon}</span>
               <span>{data.title}:</span>
             </div>
 
-            <span className="flex flex-row items-center justify-start">
+            <span className="flex flex-row items-center justify-start md:col-span-2">
               {data.content}
             </span>
           </div>
