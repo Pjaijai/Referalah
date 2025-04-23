@@ -19,7 +19,7 @@ const useSearchNotificationByUserUuid = (
     },
     {
       enabled: !!userUuid,
-      refetchOnWindowFocus: true,
+      refetchOnWindowFocus: false,
       getNextPageParam: (lastPage, allPages) => {
         if (Array.isArray(lastPage) && lastPage.length > 0) {
           return allPages.length
