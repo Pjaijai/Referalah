@@ -46,9 +46,9 @@ const StepSection: React.FC = () => {
     }
 
     append({
-      type: null,
+      type: "",
       date: newStepDate,
-      remarks: null,
+      remarks: "",
       interviewLocation: null,
       interviewType: null,
     })

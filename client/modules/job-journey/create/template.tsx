@@ -186,6 +186,38 @@ const CreateJobJourneyPageTemplate: React.FC<
         })
       }
     })
+    .superRefine((data, ctx) => {
+      // Validate step date order
+
+      const steps = data.steps
+
+      for (let i = 1; i < steps.length; i++) {
+        const prevStep = steps[i - 1]
+        const currentStep = steps[i]
+        if (currentStep.date < prevStep.date) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: t("job_journey.form.date_error_message"),
+            path: ["steps", i, "date"],
+          })
+        }
+      }
+    })
+    .superRefine((data, ctx) => {
+      // Validate step1 date against applicationDate
+      const steps = data.steps
+
+      if (data.steps && data.steps.length > 0) {
+        const step1 = steps[0]
+        if (step1 && step1.date < data.applicationDate) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Step 1 date cannot be earlier than application date",
+            path: ["steps", 0, "date"],
+          })
+        }
+      }
+    })
 
   type JobJourneyFormData = z.infer<typeof formSchema>
 
@@ -202,17 +234,22 @@ const CreateJobJourneyPageTemplate: React.FC<
         applicationDate: new Date(),
         source: "",
         description: "",
-        steps: [],
+        steps: [{ type: "", date: new Date(), remarks: "" }],
         newCompany: null,
         positionTitle: "",
       },
     })
 
-    const { handleSubmit, trigger } = form
+    const {
+      handleSubmit,
+      trigger,
+      formState: { errors },
+    } = form
 
     const {
       mutate: create,
       isLoading: isCreateLoading,
+
       isSuccess,
     } = useCreateJobJourney()
 

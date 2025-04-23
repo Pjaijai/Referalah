@@ -32,6 +32,7 @@ interface FormDatePickerProps {
   labelClassName?: string
   isRequired?: boolean
   descriptionClassName?: string
+  errorMsg?: string
 }
 
 const FormDatePicker: React.FC<FormDatePickerProps> = ({
@@ -45,6 +46,7 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
   isRequired,
   description,
   descriptionClassName,
+  errorMsg,
 }) => {
   const locate = useCurrentLocale()
 
@@ -98,7 +100,7 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
             </FormDescription>
           )}
 
-          <FormMessage />
+          <FormMessage message={errorMsg} />
         </FormItem>
       )}
     />

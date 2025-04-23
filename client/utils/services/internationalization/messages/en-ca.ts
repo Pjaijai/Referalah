@@ -409,7 +409,8 @@ export default {
       title_placeholder: "One line to sum it all up",
       description_placeholder:
         "This could include tips, preparation advice, and personal thoughts",
-      step_remarks_placeholder: " Any takeaways or feelings? ",
+      step_remarks_placeholder: "Any takeaways or feelings? ",
+      date_error_message: "Cannot be earlier than last one (｡ŏ_ŏ)",
     },
     section: {
       basic_info: "Basic Information",

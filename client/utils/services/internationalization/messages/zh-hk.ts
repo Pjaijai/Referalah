@@ -376,6 +376,7 @@ export default {
       title_placeholder: "一句總括整個過程",
       description_placeholder: "可以在喺到分享一啲建議，點樣準備同回顧思考",
       step_remarks_placeholder: "有冇咩感想或者諗法？",
+      date_error_message: "日期前過上一個(時光機?)",
     },
     section: {
       basic_info: "基本資料",

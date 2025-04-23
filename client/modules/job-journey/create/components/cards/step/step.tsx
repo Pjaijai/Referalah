@@ -32,7 +32,8 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
   const {
     control,
     watch,
-    setValue, // Add setValue to reset fields
+    setValue,
+    formState: { errors },
   } = useFormContext()
 
   const typeOptions = useStepTypeOptions()
@@ -66,10 +67,8 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
   const minDate = getMinDate()
 
   useEffect(() => {
-    if (isFirstStep) {
+    if (isFirstStep && !stepsWatch[0]?.date) {
       setValue(`steps.${index}.date`, applicationDateWatch)
-      setValue(`steps.${index}.remarks`, null)
-      setValue(`steps.${index}.stepType`, null)
     }
   }, [])
 
@@ -78,8 +77,9 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
       setValue(`steps.${index}.interviewType`, null)
       setValue(`steps.${index}.interviewLocation`, null)
     }
-  }, [stepType, setValue, index])
+  }, [stepType])
 
+  const StepError = errors?.steps as any
   return (
     <div
       className={cn(
@@ -126,6 +126,7 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
                 description={t("job_journey.form.date.description")}
                 descriptionClassName="text-indigo-400 text-xs"
                 isRequired
+                errorMsg={StepError?.index?.message ?? undefined}
               />
             </div>
           </div>
