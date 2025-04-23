@@ -420,7 +420,7 @@ export default {
       step: "Step",
       step_type: "Type",
       interview_type: "Interview Type",
-      interview_location: "interview Location",
+      interview_location: "Interview Location",
       description: "Description",
       title: "Title",
       remarks: "Remarks",
