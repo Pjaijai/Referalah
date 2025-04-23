@@ -391,6 +391,7 @@ export default {
   "general.updated_on": "Updated on",
   "general.all_locations": "All Locations",
   "general.all_industries": "All Industries",
+  "general.all_companies": "All Companies",
   job_journey: {
     sorting: {
       last_updated_date_dec: "Last Update - Latest",
@@ -404,7 +405,7 @@ export default {
       "submit.success": "Create Journey Success !",
       "date.description": "Date shown as approximate month period",
       all_job_level: "All Levels",
-      position_title_placeholder: "Butcher/Product Designer/Plumber",
+      position_title_placeholder: "Butcher/Plumber etc..",
       title_placeholder: "One line to sum it all up",
       description_placeholder:
         "This could include tips, preparation advice, and personal thoughts",

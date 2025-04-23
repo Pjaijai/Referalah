@@ -16,18 +16,26 @@ import useJobJourneySortOptions from "@/hooks/common/sort/job-journey-sort-optio
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import ClearAllButton from "@/components/customized-ui/buttons/clear-all"
+import CompanyCombobox from "@/components/customized-ui/comboboxes/company"
 import BaseSelect from "@/components/customized-ui/selects/base"
 import { Icons } from "@/components/icons"
 
 type TFilterSheetProps = {
   onJobLevelChange: (v: EJobLevel | "all") => void
-  onJobTypeChange: (v: EJobType | "all") => void
+  onCompanyChange: (
+    name: string | null,
+    id: number | null,
+    reset: boolean
+  ) => void
   onIndustryChange: (v: string) => void
   onSortingChange: (v: string) => void
   onLocationChange: (v: string) => void
   currentSorting: string
-  currentJobType: EJobType | "all"
-  currentJobLevel: EJobLevel | "all"
+  currentCompany: {
+    name: string
+    id: number
+  } | null
+  currentJobLevel: string
   currentLocation: string
   locationData: TLocationData[]
   currentIndustry: string
@@ -36,11 +44,9 @@ type TFilterSheetProps = {
 }
 const FilterSheet: React.FunctionComponent<TFilterSheetProps> = ({
   onJobLevelChange,
-  onJobTypeChange,
-
+  onCompanyChange,
   locationData,
-  currentJobLevel,
-  currentJobType,
+  currentCompany,
   currentIndustry,
   onIndustryChange,
   industryData,
@@ -49,6 +55,7 @@ const FilterSheet: React.FunctionComponent<TFilterSheetProps> = ({
   onLocationChange,
   currentLocation,
   onReset,
+  currentJobLevel,
 }) => {
   const t = useI18n()
 
@@ -95,12 +102,10 @@ const FilterSheet: React.FunctionComponent<TFilterSheetProps> = ({
             allOptionLabel={t("general.all_industries")}
           />
 
-          <BaseSelect
-            options={jobTypeOptions}
-            onChange={onJobTypeChange}
-            value={currentJobType}
-            showAllOption
-            triggerClassName="w-full col-span-1"
+          <CompanyCombobox
+            company={currentCompany}
+            onSelect={onCompanyChange}
+            className="col-span-1 w-full"
           />
 
           <BaseSelect

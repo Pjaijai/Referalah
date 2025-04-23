@@ -59,7 +59,7 @@ const useLocationLabel = ({ location, locationList }: LocationLabelProps) => {
     const parts: string[] = []
 
     // Add emoji (if exists) directly before the location name
-    const locationPart = emoji ? `${emoji}${locationName}` : locationName
+    const locationPart = emoji ? `${emoji} ${locationName}` : locationName
     parts.push(locationPart)
 
     // Add parent name (if exists)

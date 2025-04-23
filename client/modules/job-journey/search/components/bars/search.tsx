@@ -16,6 +16,7 @@ import useIndustryOptions from "@/hooks/common/options/industry-options"
 import useLocationOptionsList from "@/hooks/common/options/location-options-list"
 import useJobJourneySortOptions from "@/hooks/common/sort/job-journey-sort-options"
 import ClearAllButton from "@/components/customized-ui/buttons/clear-all"
+import CompanyCombobox from "@/components/customized-ui/comboboxes/company"
 import TextInput from "@/components/customized-ui/inputs/text"
 import BaseSelect from "@/components/customized-ui/selects/base"
 import { Icons } from "@/components/icons"
@@ -23,12 +24,19 @@ import { Icons } from "@/components/icons"
 type TJobJourneySearchBarProps = {
   onKeywordsChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   onJobLevelChange: (v: EJobLevel | "all") => void
-  onJobTypeChange: (v: EJobType | "all") => void
+  onCompanyChange: (
+    name: string | null,
+    id: number | null,
+    reset: boolean
+  ) => void
   onIndustryChange: (v: string) => void
   onSortingChange: (v: string) => void
   onLocationChange: (v: string) => void
   currentSorting: string
-  currentJobType: EJobType | "all"
+  currentCompany: {
+    name: string
+    id: number
+  } | null
   currentJobLevel: EJobLevel | "all"
   currentLocation: string
   locationData: TLocationData[]
@@ -40,11 +48,11 @@ type TJobJourneySearchBarProps = {
 const JobJourneySearchBar = ({
   onKeywordsChange,
   onJobLevelChange,
-  onJobTypeChange,
+  onCompanyChange,
   keywords,
   locationData,
   currentJobLevel,
-  currentJobType,
+  currentCompany,
   currentIndustry,
   onIndustryChange,
   industryData,
@@ -58,7 +66,7 @@ const JobJourneySearchBar = ({
   const locale = useCurrentLocale()
   const locationOptions = useLocationOptionsList(locationData, false, locale)
   const jobLevelOptions = useJobLevelOptions()
-  const jobTypeOptions = useJobTypeOptions()
+
   const industryOptions = useIndustryOptions(industryData)
   const sortingOptions = useJobJourneySortOptions()
   const currentLocationUuid =
@@ -95,12 +103,10 @@ const JobJourneySearchBar = ({
         allOptionLabel={t("general.all_industries")}
       />
 
-      <BaseSelect
-        options={jobTypeOptions}
-        onChange={onJobTypeChange}
-        value={currentJobType}
-        showAllOption
-        triggerClassName="w-full col-span-1"
+      <CompanyCombobox
+        company={currentCompany}
+        onSelect={onCompanyChange}
+        className="col-span-1 w-full"
       />
 
       <BaseSelect

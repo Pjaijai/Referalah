@@ -78,7 +78,7 @@ const StepIndicator: React.FC = () => {
   }
 
   return (
-    <div className="flex items-start justify-center space-x-12 bg-white px-10 pt-10">
+    <div className="hidden items-start justify-center space-x-12 bg-white px-10 pt-10 md:flex">
       {Array.from({ length: totalSteps }, (_, index) => {
         const stepNumber = index + 1
         const isCurrentStep = currentStep === stepNumber
