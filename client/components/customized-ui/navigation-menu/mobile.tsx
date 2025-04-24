@@ -17,15 +17,12 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import MessageIcon from "@/components/customized-ui/icons/message-with-dot"
 import MessageIconWithDot from "@/components/customized-ui/icons/message-with-dot"
 import { Icons } from "@/components/icons"
-import { ThemeToggleMobile } from "@/components/theme-toggle-mobile"
 
 interface MobileNavigationMenuProps {
   className?: string
@@ -55,9 +52,20 @@ export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
     return links
   }, [isSignIn])
 
-  const workLinks = [
+  const pageLinks = [
     { title: t("page.post"), url: siteConfig.page.searchPost.href },
     { title: t("page.create_post"), url: siteConfig.page.createPost.href },
+  ]
+
+  const JourneyLinks = [
+    {
+      title: t("page.job_journey"),
+      url: siteConfig.page.searchJobJourney.href,
+    },
+    {
+      title: t("page.create_job_journey"),
+      url: siteConfig.page.createJobJourney.href,
+    },
   ]
 
   const router = useRouter()
@@ -109,7 +117,7 @@ export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
                   </div>
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="work">
+              <AccordionItem value="post">
                 <AccordionTrigger>
                   <div className="flex items-center gap-2">
                     <Icons.work />
@@ -118,7 +126,30 @@ export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
                 </AccordionTrigger>
                 <AccordionContent>
                   <div className="flex flex-col gap-3 pl-7">
-                    {workLinks.map((link) => (
+                    {pageLinks.map((link) => (
+                      <SheetClose asChild key={link.title}>
+                        <div
+                          onClick={() => handleLinkOnClick(link.url)}
+                          className="hover:cursor-pointer"
+                        >
+                          {link.title}
+                        </div>
+                      </SheetClose>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="jobJourney">
+                <AccordionTrigger>
+                  <div className="flex items-center gap-2">
+                    <Icons.book className="fill-black text-white" />
+                    {t("page.job_journey")}
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="flex flex-col gap-3 pl-7">
+                    {JourneyLinks.map((link) => (
                       <SheetClose asChild key={link.title}>
                         <div
                           onClick={() => handleLinkOnClick(link.url)}
