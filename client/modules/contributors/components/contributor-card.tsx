@@ -3,6 +3,7 @@ import Link from "next/link"
 import ContributionAreaBadge from "@/modules/contributors/components/contribution-area-badge"
 import { IContributor } from "@/modules/contributors/types/contributor"
 
+import { Badge } from "@/components/ui/badge"
 import { Card, CardTitle } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
 
@@ -12,6 +13,7 @@ const ContributorCard: React.FunctionComponent<IContributorCard> = ({
   contributedArea,
   links,
   name,
+  isActive,
 }) => {
   return (
     <Card className="flex flex-col gap-2 border p-4">
@@ -46,6 +48,7 @@ const ContributorCard: React.FunctionComponent<IContributorCard> = ({
         {contributedArea.map((data) => (
           <ContributionAreaBadge area={data} key={data} />
         ))}
+        {isActive && <Badge variant={"purple"}>Active !</Badge>}
       </div>
     </Card>
   )

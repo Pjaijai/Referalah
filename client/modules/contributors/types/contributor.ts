@@ -9,4 +9,5 @@ export interface IContributor {
     website?: string
   }
   contributedArea: ContributedArea[]
+  isActive?: boolean
 }
