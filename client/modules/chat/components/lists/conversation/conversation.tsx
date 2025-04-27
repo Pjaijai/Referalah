@@ -15,7 +15,7 @@ import { Icons } from "@/components/icons"
 const ConversationList = () => {
   const t = useI18n()
   const userUuid = useUserStore((state) => state.uuid)
-  const { data, error, isLoading, fetchNextPage, refetch } =
+  const { data, isLoading, fetchNextPage } =
     useGetConversationListByUserUuid(userUuid)
   const setConversations = useConversationStore(
     (state) => state.setConversations

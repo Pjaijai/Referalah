@@ -15,7 +15,6 @@ interface IUserState {
   isSignIn: boolean
   uuid: null | string
   photoUrl: string | null
-  hasConversationUnseen: boolean
   status: EUserStatus | null
   fireRecords: TFiresRecord[]
   setUser: ({
@@ -29,7 +28,6 @@ interface IUserState {
     status: EUserStatus | null
   }) => void
   reSetUser: () => void
-  setConversationSeen: (hasUnseen: boolean) => void
   setFires: (firesRecord: TFiresRecord[]) => void
   addFire: (firesRecord: TFiresRecord) => void
 }
@@ -38,7 +36,6 @@ const useUserStore = create<IUserState>((set) => ({
   isSignIn: false,
   uuid: null,
   photoUrl: null,
-  hasConversationUnseen: false,
   fireRecords: [],
   status: null,
 
@@ -59,13 +56,6 @@ const useUserStore = create<IUserState>((set) => ({
       uuid,
       photoUrl,
       status,
-      hasConversationUnseen: false,
-    })),
-
-  setConversationSeen: (hasUnseen) =>
-    set((state) => ({
-      ...state,
-      hasConversationUnseen: hasUnseen,
     })),
   setFires: (firesRecord: TFiresRecord[]) => {
     set((state) => ({
