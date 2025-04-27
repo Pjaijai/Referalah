@@ -12,7 +12,6 @@ enum EQueryKeyString {
   LIST_POSTS = "list-posts",
   CONVERSATION_LIST = "conversation-list",
   MESSAGE_LIST = "message-list",
-  HAS_CONVERSATION_UNSEEN = "has-conversation-unseen",
   SEARCH_NOTIFICATION = "search-notification",
   SEARCH_JOB_JOURNEY = "search-job-journey",
   USER_FIRES = "user-fire",

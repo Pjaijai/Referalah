@@ -947,12 +947,6 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      check_has_conversation_unseen: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          has_unseen: boolean
-        }[]
-      }
       check_user_status: {
         Args: {
           status_value: string

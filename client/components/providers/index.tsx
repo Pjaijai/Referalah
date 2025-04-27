@@ -6,7 +6,6 @@ import { ThemeProvider } from "next-themes"
 
 import APIProvider from "@/components/providers/api"
 import AuthProvider from "@/components/providers/auth"
-import ChatProvider from "@/components/providers/chat"
 import ToastProvider from "@/components/providers/toast"
 
 interface IProviderProps {
@@ -24,9 +23,7 @@ const Provider: React.FunctionComponent<IProviderProps> = ({
       <APIProvider>
         <I18nProviderClient locale={locale}>
           <AuthProvider>
-            <ChatProvider>
-              <ToastProvider>{children}</ToastProvider>
-            </ChatProvider>
+            <ToastProvider>{children}</ToastProvider>
           </AuthProvider>
         </I18nProviderClient>
       </APIProvider>

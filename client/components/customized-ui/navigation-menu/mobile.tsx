@@ -44,9 +44,8 @@ interface NavSection {
 export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
   const t = useI18n()
   const router = useRouter()
-  const { isSignIn, hasConversationUnseen } = useUserStore((state) => ({
+  const { isSignIn } = useUserStore((state) => ({
     isSignIn: state.isSignIn,
-    hasConversationUnseen: state.hasConversationUnseen,
   }))
 
   const navSections: NavSection[] = useMemo(
@@ -164,7 +163,7 @@ export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
                   onClick={() => handleLinkClick(siteConfig.page.chat.href)}
                   className="flex items-center gap-2 py-4 font-bold hover:cursor-pointer"
                 >
-                  <MessageIconWithDot showDot={hasConversationUnseen} />
+                  <Icons.chat />
                   {t("page.chat")}
                 </div>
               </SheetClose>
