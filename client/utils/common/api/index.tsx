@@ -3,6 +3,7 @@ import { supabase } from "@/utils/services/supabase/config"
 import { doc, getDoc, increment, setDoc, updateDoc } from "firebase/firestore"
 
 import { TCompany, TCompanyData } from "@/types/api/company"
+import { TCreateFireRequest, TFireData } from "@/types/api/fire"
 import {
   TCreateJobJourneyRequest,
   TJobJourney,
@@ -1165,7 +1166,8 @@ export const getJobJourneyByUuidWithSteps = async (
         user:created_by (
           uuid,
           username
-        )
+        ),
+        fire_count
       `
       )
       .eq("uuid", uuid)
@@ -1237,7 +1239,8 @@ export const searchJobJourney = async ({
         updated_at,
         last_step_status,
         last_step_status_updated_at,
-        description
+        description,
+        fire_count
         `
     )
 
@@ -1350,6 +1353,49 @@ export const searchCompanyByName = async ({
       logoUrl: company.logo_url,
       createdAt: company.created_at,
     })) satisfies TCompany[]
+  } catch (error) {
+    throw error
+  }
+}
+
+// fire
+export const createFire = async ({
+  type,
+  refUuid,
+}: TCreateFireRequest): Promise<TFireData> => {
+  try {
+    const { data, error } = await supabase
+      .from("fire")
+      .insert([{ type, ref_uuid: refUuid }])
+      .select<string, TFireData>("*")
+      .single()
+
+    if (error) {
+      throw error
+    }
+
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const getFiresByUserUuid = async ({
+  uuid,
+}: {
+  uuid: string
+}): Promise<TFireData[]> => {
+  try {
+    const { data, error } = await supabase
+      .from("fire")
+      .select<string, TFireData>("*")
+      .eq("created_by", uuid)
+
+    if (error) {
+      throw error
+    }
+
+    return data
   } catch (error) {
     throw error
   }
