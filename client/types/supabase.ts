@@ -218,6 +218,38 @@ export type Database = {
         }
         Relationships: []
       }
+      fire: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: number
+          ref_uuid: string
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string
+          id?: number
+          ref_uuid: string
+          type: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: number
+          ref_uuid?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_fire_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["uuid"]
+          },
+        ]
+      }
       industry: {
         Row: {
           cantonese_name: string

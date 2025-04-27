@@ -18,6 +18,8 @@ import { cn } from "@/lib/utils"
 import useJobLevelOptions from "@/hooks/common/options/Job-level-options"
 import useJobTypeOptions from "@/hooks/common/options/Job-type-options"
 import useStepTypeOptions from "@/hooks/common/options/step-type-options"
+import useUserStore from "@/hooks/state/user/store"
+import FireIcon from "@/components/customized-ui/icons/fire"
 // Import the zh-hk locale
 import { Icons } from "@/components/icons"
 
@@ -31,7 +33,7 @@ export type TJobJourneyCardProps = {
   jobType: EJobType
   jobLevel: EJobLevel
   location: Pick<TLocationData, "english_name" | "cantonese_name" | "uuid">
-  flameCount: number
+  fireCount: number
   description: string | null
   title: string
   uuid: string
@@ -48,7 +50,7 @@ const JobJourneyCard: React.FC<TJobJourneyCardProps> = ({
   jobType,
   jobLevel,
   location,
-  flameCount,
+  fireCount,
   title,
   description,
   uuid,
@@ -61,12 +63,16 @@ const JobJourneyCard: React.FC<TJobJourneyCardProps> = ({
   const stepTypeOptions = useStepTypeOptions()
   const jobTypeOptions = useJobTypeOptions()
   const jobLevelOptions = useJobLevelOptions()
+  const fireRecords = useUserStore((state) => state.fireRecords)
+  const fireRecord = fireRecords.find((f) => f.uuid === uuid)
+  const isFire = !!fireRecord
   const handleClick = () => {
     router.push(`/job-journey/view/${uuid}`)
   }
 
   const locationLabel = useLocationLabel({ location, locationList })
-
+  const fire =
+    fireRecord && fireRecord.isOptimistic === true ? fireCount + 1 : fireCount
   return (
     <div
       className="max-h-96 max-w-2xl cursor-pointer rounded-lg border border-gray-100 bg-white p-[30px] shadow-md transition-shadow duration-200 hover:shadow-lg"
@@ -143,13 +149,16 @@ const JobJourneyCard: React.FC<TJobJourneyCardProps> = ({
           </span>
         </div>
 
-        <div className="flex items-center gap-2 text-xs text-gray-400">
-          <span className="flex items-center gap-1">
-            <span className="text-lg">
-              <Icons.flame className="scale-x-[-1] invert-0" />
-            </span>
-            {flameCount}
-          </span>
+        <div className="flex items-center gap-2" onClick={handleClick}>
+          <FireIcon isFire={isFire} />
+          <p
+            className={cn(
+              "font-normal",
+              isFire ? "text-indigo-700" : "text-slate-700"
+            )}
+          >
+            {fire}
+          </p>
         </div>
       </div>
     </div>
