@@ -126,7 +126,7 @@ const SearchJobJourneyPageTemplate: React.FunctionComponent<
                   }
                   description={data.description}
                   title={data.title}
-                  flameCount={123}
+                  fireCount={data.fire_count}
                   jobLevel={data.job_level}
                   stepStatus={data.last_step_status}
                   stepUpdatedDate={data.last_step_status_updated_at}

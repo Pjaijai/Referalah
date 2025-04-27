@@ -72,6 +72,7 @@ export type TJobJourney = {
   }
   location: Pick<TLocationData, "english_name" | "cantonese_name" | "uuid">
   industry: Pick<IIndustryResponse, "english_name" | "cantonese_name" | "uuid">
+  fire_count: number
 }
 
 // Type for Job Journey Step
@@ -87,6 +88,7 @@ export type TJobJourneyStep = {
   position: number
   created_at: string // ISO timestamp
   updated_at: string | null
+  fire_count: number
 }
 
 // Type for Job Journey with Steps
