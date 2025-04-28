@@ -80,6 +80,7 @@ interface State {
   locations: Set<string>
   industries: Set<string>
   experience: number
+  debouncedExperience: number
   sorting: string
   postType: EPostType
   params: URLSearchParams
@@ -91,6 +92,7 @@ type Action =
   | { type: "SET_LOCATIONS"; payload: Set<string> }
   | { type: "SET_INDUSTRIES"; payload: Set<string> }
   | { type: "SET_EXPERIENCE"; payload: number }
+  | { type: "SET_DEBOUNCED_EXPERIENCE"; payload: number }
   | { type: "SET_SORTING"; payload: string }
   | { type: "SET_POST_TYPE"; payload: EPostType }
   | { type: "SET_PARAMS"; payload: URLSearchParams }
@@ -108,6 +110,8 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, industries: action.payload }
     case "SET_EXPERIENCE":
       return { ...state, experience: action.payload }
+    case "SET_DEBOUNCED_EXPERIENCE":
+      return { ...state, debouncedExperience: action.payload }
     case "SET_SORTING":
       return { ...state, sorting: action.payload }
     case "SET_POST_TYPE":
@@ -123,7 +127,6 @@ const reducer = (state: State, action: Action): State => {
 
 const useSearchPost = (props: ISearchPostProps) => {
   const { cityList: cityData, industryList: industryData } = props
-
   const { data: postSortingOptions } = usePostSortOptions()
 
   const keyString = EQueryKeyString.SEARCH_POST
@@ -153,6 +156,8 @@ const useSearchPost = (props: ISearchPostProps) => {
         : industryData.map((data) => data.uuid)
     ),
     experience: Number(searchParams.get("experience")?.toString()) || 0,
+    debouncedExperience:
+      Number(searchParams.get("experience")?.toString()) || 0,
     sorting:
       searchParams.get("sorting")?.toString() || postSortingOptions[0].value,
     postType: initialPostTypes || EPostType.ALL,
@@ -162,11 +167,25 @@ const useSearchPost = (props: ISearchPostProps) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const debouncedKeywords = useDebounce(state.keywords, 1000)
+  const debouncedExperience = useDebounce(state.experience, 1000)
 
   useEffect(() => {
     dispatch({ type: "SET_DEBOUNCED_KEYWORDS", payload: debouncedKeywords })
-    createQueryString("keywords", debouncedKeywords.trim())
+    if (debouncedKeywords.trim()) {
+      createQueryString("keywords", debouncedKeywords.trim())
+    } else {
+      removeQueryString("keywords")
+    }
   }, [debouncedKeywords])
+
+  useEffect(() => {
+    dispatch({ type: "SET_DEBOUNCED_EXPERIENCE", payload: debouncedExperience })
+    if (debouncedExperience > 0) {
+      createQueryString("experience", String(debouncedExperience))
+    } else {
+      removeQueryString("experience")
+    }
+  }, [debouncedExperience])
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -240,7 +259,6 @@ const useSearchPost = (props: ISearchPostProps) => {
 
   const handleExperienceChange = (value: number) => {
     dispatch({ type: "SET_EXPERIENCE", payload: value })
-    createQueryString("experience", String(value))
   }
 
   const handleSortingChange = (value: string) => {
@@ -259,6 +277,7 @@ const useSearchPost = (props: ISearchPostProps) => {
       keywords: "",
       debouncedKeywords: "",
       experience: 0,
+      debouncedExperience: 0,
     }
     dispatch({ type: "RESET", payload: resetState })
     router.push(pathname)
@@ -269,7 +288,7 @@ const useSearchPost = (props: ISearchPostProps) => {
     locations: Array.from(state.locations),
     industries: Array.from(state.industries),
     sorting: state.sorting,
-    experience: state.experience,
+    experience: state.debouncedExperience,
     type: state.postType,
   }
 
@@ -280,7 +299,7 @@ const useSearchPost = (props: ISearchPostProps) => {
     refetchOnMount: false,
     staleTime: 1000 * 60 * 100,
     getNextPageParam: (lastPage, allPages) => {
-      if (Array.isArray(lastPage)) {
+      if (Array.isArray(lastPage) && lastPage.length > 0) {
         return allPages.length
       } else {
         return null
@@ -304,6 +323,7 @@ const useSearchPost = (props: ISearchPostProps) => {
     industries: state.industries,
     handleExperienceChange,
     experience: state.experience,
+    debouncedExperience: state.debouncedExperience,
   }
 }
 
