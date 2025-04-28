@@ -21,6 +21,7 @@ import useJobLevelOptions from "@/hooks/common/options/Job-level-options"
 import useJobTypeOptions from "@/hooks/common/options/Job-type-options"
 import useApplicationSourceOptions from "@/hooks/common/options/application-source-options"
 import useUserStore from "@/hooks/state/user/store"
+import { useToast } from "@/components/ui/use-toast"
 import FireIcon from "@/components/customized-ui/icons/fire"
 import { Icons } from "@/components/icons"
 
@@ -43,6 +44,7 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
   const [fireCount, setFireCount] = useState(jobJourney.fire_count)
   const isGlobalFire = !!fireRecord
   const isAlreadyFired = isGlobalFire || isFire
+  const { toast } = useToast()
 
   const locationLabel = useLocationLabel({
     location: jobJourney.location,
@@ -70,6 +72,11 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
         onError: () => {
           setIsFire(false)
           setFireCount((prev) => prev - 1)
+          return toast({
+            title: t("general.error.title"),
+            description: t("general.error.description"),
+            variant: "destructive",
+          })
         },
         onSuccess: () => {
           addFire({
