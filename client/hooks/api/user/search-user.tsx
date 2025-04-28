@@ -66,7 +66,6 @@ const search = ({
     sortingType,
   })
 }
-
 interface ISearchUserProps {
   cityList: ICityResponse[]
   industryList: IIndustryResponse[]
@@ -78,6 +77,7 @@ interface State {
   locations: Set<string>
   industries: Set<string>
   experience: number
+  debouncedExperience: number
   sorting: string
   userType: EUserType
   params: URLSearchParams
@@ -89,6 +89,7 @@ type Action =
   | { type: "SET_LOCATIONS"; payload: Set<string> }
   | { type: "SET_INDUSTRIES"; payload: Set<string> }
   | { type: "SET_EXPERIENCE"; payload: number }
+  | { type: "SET_DEBOUNCED_EXPERIENCE"; payload: number }
   | { type: "SET_SORTING"; payload: string }
   | { type: "SET_USER_TYPE"; payload: EUserType }
   | { type: "SET_PARAMS"; payload: URLSearchParams }
@@ -106,6 +107,8 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, industries: action.payload }
     case "SET_EXPERIENCE":
       return { ...state, experience: action.payload }
+    case "SET_DEBOUNCED_EXPERIENCE":
+      return { ...state, debouncedExperience: action.payload }
     case "SET_SORTING":
       return { ...state, sorting: action.payload }
     case "SET_USER_TYPE":
@@ -150,6 +153,8 @@ const useSearchUser = (props: ISearchUserProps) => {
         : industryData.map((data) => data.uuid)
     ),
     experience: Number(searchParams.get("experience")?.toString()) || 0,
+    debouncedExperience:
+      Number(searchParams.get("experience")?.toString()) || 0,
     sorting:
       searchParams.get("sorting")?.toString() ||
       referralSortingOptions[0].value,
@@ -160,6 +165,7 @@ const useSearchUser = (props: ISearchUserProps) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const debouncedKeywords = useDebounce(state.keywords, 1000)
+  const debouncedExperience = useDebounce(state.experience, 1000)
 
   useEffect(() => {
     dispatch({ type: "SET_DEBOUNCED_KEYWORDS", payload: debouncedKeywords })
@@ -170,6 +176,16 @@ const useSearchUser = (props: ISearchUserProps) => {
       removeQueryString("keywords")
     }
   }, [debouncedKeywords])
+
+  useEffect(() => {
+    dispatch({ type: "SET_DEBOUNCED_EXPERIENCE", payload: debouncedExperience })
+
+    if (debouncedExperience > 0) {
+      createQueryString("experience", String(debouncedExperience))
+    } else {
+      removeQueryString("experience")
+    }
+  }, [debouncedExperience])
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -243,7 +259,6 @@ const useSearchUser = (props: ISearchUserProps) => {
 
   const handleExperienceChange = (value: number) => {
     dispatch({ type: "SET_EXPERIENCE", payload: value })
-    createQueryString("experience", String(value))
   }
 
   const handleSortingChange = (value: string) => {
@@ -262,6 +277,7 @@ const useSearchUser = (props: ISearchUserProps) => {
       keywords: "",
       debouncedKeywords: "",
       experience: 0,
+      debouncedExperience: 0,
     }
     dispatch({ type: "RESET", payload: resetState })
     router.push(pathname)
@@ -272,7 +288,7 @@ const useSearchUser = (props: ISearchUserProps) => {
     locations: Array.from(state.locations),
     industries: Array.from(state.industries),
     sorting: state.sorting,
-    experience: state.experience,
+    experience: state.debouncedExperience,
     type: state.userType,
   }
 
@@ -283,7 +299,7 @@ const useSearchUser = (props: ISearchUserProps) => {
     refetchOnMount: false,
     staleTime: 1000 * 60 * 100,
     getNextPageParam: (lastPage, allPages) => {
-      if (Array.isArray(lastPage)) {
+      if (Array.isArray(lastPage) && lastPage.length > 0) {
         return allPages.length
       } else {
         return null
@@ -307,6 +323,7 @@ const useSearchUser = (props: ISearchUserProps) => {
     industries: state.industries,
     handleExperienceChange,
     experience: state.experience,
+    debouncedExperience: state.debouncedExperience,
   }
 }
 
