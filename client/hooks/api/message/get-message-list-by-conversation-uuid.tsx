@@ -25,7 +25,7 @@ const useGetMessageListByConversationUuid = (
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, allPages) => {
-      if (Array.isArray(lastPage)) {
+      if (Array.isArray(lastPage) && lastPage.length > 0) {
         return allPages.length
       } else {
         return null
