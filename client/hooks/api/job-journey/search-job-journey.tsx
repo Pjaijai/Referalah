@@ -119,7 +119,6 @@ const useSearchJourney = (props: ISearchJourneyProps) => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const initialJobLevel = searchParams.get("jobLevel") as EJobLevel
-  const initialJobType = searchParams.get("jobType") as EJobType
 
   const initialState: State = {
     keywords: searchParams.get("keywords")?.toString() || "",
