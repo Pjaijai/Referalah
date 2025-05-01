@@ -2,6 +2,7 @@ import { useMemo } from "react"
 import { useCurrentLocale } from "@/utils/services/internationalization/client"
 
 import { TLocationData } from "@/types/api/response/location"
+import { ELocale } from "@/types/common/enums/locale"
 
 interface LocationLabelProps {
   location: Pick<TLocationData, "english_name" | "cantonese_name" | "uuid">
@@ -14,7 +15,7 @@ const useLocationLabel = ({ location, locationList }: LocationLabelProps) => {
     // Step 1: Find the full location data in locationList
     const fullLocation = locationList.find((loc) => loc.uuid === location.uuid)
     const locationName =
-      locale === "zh-hk"
+      locale === ELocale.ZH_HK
         ? fullLocation?.cantonese_name ?? location.cantonese_name
         : fullLocation?.english_name ?? location.english_name
 
@@ -30,7 +31,7 @@ const useLocationLabel = ({ location, locationList }: LocationLabelProps) => {
           (loc) => loc.uuid === fullLocation.parent_uuid
         )
         parentName =
-          locale === "zh-hk"
+          locale === ELocale.ZH_HK
             ? parent?.cantonese_name ?? ""
             : parent?.english_name ?? ""
       }
@@ -41,7 +42,7 @@ const useLocationLabel = ({ location, locationList }: LocationLabelProps) => {
           (loc) => loc.uuid === fullLocation.country_uuid
         )
         countryName =
-          locale === "zh-hk"
+          locale === ELocale.ZH_HK
             ? country?.cantonese_name ?? ""
             : country?.english_name ?? ""
         if (!emoji && country?.meta_data?.emoji) {

@@ -10,6 +10,7 @@ import {
   useI18n,
 } from "@/utils/services/internationalization/client"
 
+import { ELocale } from "@/types/common/enums/locale"
 import { EMessageType } from "@/types/common/message-type"
 import { EPostStatus } from "@/types/common/post-status"
 import { EReferralType } from "@/types/common/referral-type"
@@ -125,17 +126,17 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                 {(post.city || post.province || post.country) && (
                   <LocationDisplay
                     province={
-                      locale === "zh-hk"
+                      locale === ELocale.ZH_HK
                         ? post.province && post.province.cantonese_name
                         : post.province && post.province.english_name
                     }
                     country={
-                      locale === "zh-hk"
+                      locale === ELocale.ZH_HK
                         ? post.country && post.country.cantonese_name
                         : post.country && post.country.english_name
                     }
                     city={
-                      locale === "zh-hk"
+                      locale === ELocale.ZH_HK
                         ? post.city && post.city.cantonese_name
                         : post.city && post.city.english_name
                     }
@@ -145,7 +146,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                 {post.industry && (
                   <IndustryDisplay
                     industry={
-                      locale === "zh-hk"
+                      locale === ELocale.ZH_HK
                         ? post.industry && post.industry.cantonese_name
                         : post.industry && post.industry.english_name
                     }

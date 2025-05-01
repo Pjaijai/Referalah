@@ -4,6 +4,7 @@ import React from "react"
 import { useCurrentLocale } from "@/utils/services/internationalization/client"
 
 import { ISearchPostResponse } from "@/types/api/response/referer-post"
+import { ELocale } from "@/types/common/enums/locale"
 import PostCard from "@/components/customized-ui/cards/post"
 import Marquee from "@/components/magicui/marquee"
 
@@ -27,22 +28,22 @@ const PostCarousel: React.FunctionComponent<IPostCarouselProps> = ({
               username={data.user && data.user.username}
               photoUrl={data.user && data.user.avatar_url}
               industry={
-                locale === "zh-hk"
+                locale === ELocale.ZH_HK
                   ? data.industry && data.industry.cantonese_name
                   : data.industry && data.industry.english_name
               }
               province={
-                locale === "zh-hk"
+                locale === ELocale.ZH_HK
                   ? data.province && data.province.cantonese_name
                   : data.province && data.province.english_name
               }
               country={
-                locale === "zh-hk"
+                locale === ELocale.ZH_HK
                   ? data.country && data.country.cantonese_name
                   : data.country && data.country.english_name
               }
               city={
-                locale === "zh-hk"
+                locale === ELocale.ZH_HK
                   ? data.city && data.city.cantonese_name
                   : data.city && data.city.english_name
               }

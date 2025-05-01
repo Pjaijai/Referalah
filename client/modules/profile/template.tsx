@@ -8,6 +8,7 @@ import {
   useI18n,
 } from "@/utils/services/internationalization/client"
 
+import { ELocale } from "@/types/common/enums/locale"
 import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
 import useUserStore from "@/hooks/state/user/store"
@@ -72,22 +73,22 @@ const ProfileTemplate: React.FunctionComponent<IProfileTemplateProps> = (
         isReferer={profile.is_referer}
         slug={userUuid}
         province={
-          locale === "zh-hk"
+          locale === ELocale.ZH_HK
             ? profile.province && profile.province.cantonese_name
             : profile.province && profile.province.english_name
         }
         country={
-          locale === "zh-hk"
+          locale === ELocale.ZH_HK
             ? profile.country && profile.country.cantonese_name
             : profile.country && profile.country.english_name
         }
         city={
-          locale === "zh-hk"
+          locale === ELocale.ZH_HK
             ? profile.city && profile.city.cantonese_name
             : profile.city && profile.city.english_name
         }
         industry={
-          locale === "zh-hk"
+          locale === ELocale.ZH_HK
             ? profile.industry && profile.industry.cantonese_name
             : profile.industry && profile.industry.english_name
         }
