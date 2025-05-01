@@ -1,7 +1,9 @@
 // client/app/[locale]/sitemap.ts
-
+// changeFrequency and priority seems like not working
 import { MetadataRoute } from "next"
 import { supabase } from "@/utils/services/supabase/config"
+
+import { ELocale } from "@/types/common/enums/locale"
 
 export const revalidate = 60 * 60 * 24 // Regenerate every 24 hours
 
@@ -42,67 +44,47 @@ export async function getAllUuids(): Promise<UuidResult> {
     return { postUuids: [], jobJourneyUuids: [] }
   }
 }
-
-export default async function sitemap({
-  params,
-}: {
-  params?: { locale: string }
-}): Promise<MetadataRoute.Sitemap> {
-  // Fallback to a default locale if params or params.locale is undefined
-  const locale = params?.locale || "en-ca"
-  // Validate locale to ensure it's either en-ca or zh-hk
-  const validLocales = ["en-ca", "zh-hk"]
-  if (!validLocales.includes(locale)) {
-    console.warn(`Invalid locale: ${locale}. Using default: en-ca`)
-    return [] // Return empty sitemap for invalid locales to avoid errors
-  }
-
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_WEB_URL || "https://www.referalah.com"
   const currentDate = new Date().toISOString()
-  const sitemapEntries = []
-
-  sitemapEntries.push(
-    {
-      url: `${baseUrl}${locale}`,
-      lastModified: currentDate,
-      changeFrequency: "daily",
-      priority: 1.0,
-    },
-    {
-      url: `${baseUrl}${locale}/member/search`,
-      lastModified: currentDate,
-      changeFrequency: "daily",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}${locale}/post/search`,
-      lastModified: currentDate,
-      changeFrequency: "daily",
-      priority: 0.9,
-    }
-  )
-
-  // Dynamic routes from post and job_journey
   const { postUuids, jobJourneyUuids } = await getAllUuids()
 
-  // Post URLs (/[locale]/post/view/[uuid])
-  for (const { uuid } of postUuids) {
-    sitemapEntries.push({
-      url: `${baseUrl}${locale}/post/view/${uuid}`,
-      lastModified: new Date(currentDate),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    })
-  }
+  const sitemapEntries = []
 
-  // Job Journey URLs (/[locale]/job-journey/view/[uuid])
-  for (const { uuid } of jobJourneyUuids) {
-    sitemapEntries.push({
-      url: `${baseUrl}${locale}/job-journey/view/${uuid}`,
-      lastModified: new Date(currentDate),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    })
+  const validLocales = Object.values(ELocale)
+
+  for (const locale of validLocales) {
+    // Static routes
+    sitemapEntries.push(
+      {
+        url: `${baseUrl}${locale}`,
+        lastModified: currentDate,
+      },
+      {
+        url: `${baseUrl}${locale}/member/search`,
+        lastModified: currentDate,
+      },
+      {
+        url: `${baseUrl}${locale}/post/search`,
+        lastModified: currentDate,
+      }
+    )
+
+    // Dynamic post routes
+    for (const { uuid } of postUuids) {
+      sitemapEntries.push({
+        url: `${baseUrl}${locale}/post/view/${uuid}`,
+        lastModified: currentDate,
+      })
+    }
+
+    // Dynamic job journey routes
+    for (const { uuid } of jobJourneyUuids) {
+      sitemapEntries.push({
+        url: `${baseUrl}${locale}/job-journey/view/${uuid}`,
+        lastModified: currentDate,
+      })
+    }
   }
 
   return sitemapEntries
