@@ -11,7 +11,7 @@ import CommonPageLayout from "@/components/layouts/common"
 
 import Loading from "./loading"
 
-export const revalidate = 60 * 60
+export const revalidate = 60 * 60 * 24
 
 export default async function IndexPage() {
   return (
