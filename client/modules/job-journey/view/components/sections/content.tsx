@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
 import CompanyAvatar from "@/modules/job-journey/component/avatar/company"
 import useLocationLabel from "@/modules/job-journey/hooks/location-label"
 import StepsTimeline from "@/modules/job-journey/view/components/time-line/time-line"
@@ -72,7 +71,7 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
         onError: () => {
           setIsFire(false)
           setFireCount((prev) => prev - 1)
-          return toast({
+          toast({
             title: t("general.error.title"),
             description: t("general.error.description"),
             variant: "destructive",
@@ -89,7 +88,11 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
     )
   }
 
-  const router = useRouter()
+  const companyName = jobJourney.company
+    ? jobJourney.company.name
+    : jobJourney.company_name
+  const jobTitle = jobJourney.position_title
+
   const infoList = [
     {
       title: t("general.application_submit_data"),
@@ -99,6 +102,7 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
           className="text-slate-700"
           width={20}
           height={20}
+          aria-label={t("general.application_submit_data")}
         />
       ),
     },
@@ -107,14 +111,24 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
       content: jobTypeOptions.find((o) => o.value === jobJourney.job_type)
         ?.label,
       icon: (
-        <Icons.briefcase className="text-slate-700" width={20} height={20} />
+        <Icons.briefcase
+          className="text-slate-700"
+          width={20}
+          height={20}
+          aria-label={t("general.job_type")}
+        />
       ),
     },
     {
       title: t("general.location"),
       content: locationLabel,
       icon: (
-        <Icons.location className="text-slate-700" width={20} height={20} />
+        <Icons.location
+          className="text-slate-700"
+          width={20}
+          height={20}
+          aria-label={t("general.location")}
+        />
       ),
     },
     {
@@ -122,32 +136,39 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
       content: jobLevelOptions.find((o) => o.value === jobJourney.job_level)
         ?.label,
       icon: (
-        <Icons.barChart className="text-slate-700" width={20} height={20} />
+        <Icons.barChart
+          className="text-slate-700"
+          width={20}
+          height={20}
+          aria-label={t("general.job_level")}
+        />
       ),
     },
     {
       title: t("general.job_source"),
       content: sourceOptions.find((o) => o.value === jobJourney.source)?.label,
-      icon: <Icons.bell className="text-slate-700" width={20} height={20} />,
+      icon: (
+        <Icons.bell
+          className="text-slate-700"
+          width={20}
+          height={20}
+          aria-label={t("general.job_source")}
+        />
+      ),
     },
   ]
-  const companyName = jobJourney.company
-    ? jobJourney.company.name
-    : jobJourney.company_name
 
   return (
-    <div className="w-full">
-      <div className="flex flex-row items-center gap-7">
-        <CompanyAvatar />
+    <article className="w-full">
+      <header className="flex flex-row items-center gap-7">
+        <CompanyAvatar aria-label={`${companyName} logo`} />
         <div className="flex flex-col">
           <p className="text-base font-normal text-slate-700">{companyName}</p>
-          <p className="text-xl font-semibold text-slate-800">
-            {jobJourney.position_title}
-          </p>
+          <p className="text-xl font-semibold text-slate-800">{jobTitle}</p>
         </div>
-      </div>
+      </header>
 
-      <div className="mt-[30px] flex flex-col gap-y-2 md:grid md:grid-cols-3">
+      <section className="mt-[30px] flex flex-col gap-y-2 md:grid md:grid-cols-3">
         {infoList.map((data) => (
           <div className="flex flex-row gap-1 text-xs" key={data.title}>
             <div className="flex flex-row items-center justify-start gap-[10px] md:col-span-1">
@@ -159,17 +180,23 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
             </span>
           </div>
         ))}
-      </div>
-      <div className="mt-5 min-h-[100px] whitespace-pre-wrap break-words text-sm font-normal text-slate-700">
+      </section>
+
+      <section className="mt-5 min-h-[100px] whitespace-pre-wrap break-words text-sm font-normal text-slate-700">
         {jobJourney.description}
-      </div>
-      <div className="mt-3 flex justify-end gap-[10px]">
+      </section>
+
+      <section className="mt-3 flex justify-end gap-[10px]">
         <div
           className={cn(
-            "flex  flex-row items-center justify-center gap-[10px]",
+            "flex flex-row items-center justify-center gap-[10px]",
             !isAlreadyFired && "cursor-pointer"
           )}
           onClick={handleClick}
+          role="button"
+          aria-label={isAlreadyFired ? "Already liked" : "Like this job"}
+          tabIndex={0}
+          onKeyDown={(e) => e.key === "Enter" && handleClick()}
         >
           <FireIcon isFire={isAlreadyFired} />
           <p
@@ -181,28 +208,25 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
             {fireCount}
           </p>
         </div>
-      </div>
+      </section>
 
-      <div className="mt-[10px] rounded-md bg-slate-100">
+      <section className="mt-[10px] rounded-md bg-slate-100">
         <StepsTimeline steps={jobJourney.job_journey_step} />
-      </div>
+      </section>
 
-      <div className="mt-[10px] text-xs font-normal text-slate-400">
+      <footer className="mt-[10px] text-xs font-normal text-slate-400">
         <p>
           Shared by{" "}
-          <span
-            className="cursor-pointer"
-            onClick={() =>
-              router.push(
-                `${siteConfig.page.profile.href}/${jobJourney.created_by}`
-              )
-            }
+          <a
+            href={`${siteConfig.page.profile.href}/${jobJourney.created_by}`}
+            className="cursor-pointer hover:underline"
+            aria-label={`View profile of ${jobJourney.user.username}`}
           >
             @{jobJourney.user.username}
-          </span>
+          </a>
         </p>
-      </div>
-    </div>
+      </footer>
+    </article>
   )
 }
 

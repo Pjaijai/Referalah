@@ -6,6 +6,7 @@ import {
   useI18n,
 } from "@/utils/services/internationalization/client"
 
+import { ELocale } from "@/types/common/enums/locale"
 import useListPostsByUserUuid from "@/hooks/api/post/list-posts-by-user-uuid"
 import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
 import PostCard from "@/components/customized-ui/cards/post"
@@ -77,22 +78,22 @@ const PostHistoryTemplate: React.FunctionComponent<
                 username={data.user.username}
                 requestCount={data.contact_request_count}
                 province={
-                  locale === "zh-hk"
+                  locale === ELocale.ZH_HK
                     ? data.province && data.province.cantonese_name
                     : data.province && data.province.english_name
                 }
                 country={
-                  locale === "zh-hk"
+                  locale === ELocale.ZH_HK
                     ? data.country && data.country.cantonese_name
                     : data.country && data.country.english_name
                 }
                 city={
-                  locale === "zh-hk"
+                  locale === ELocale.ZH_HK
                     ? data.city && data.city.cantonese_name
                     : data.city && data.city.english_name
                 }
                 industry={
-                  locale === "zh-hk"
+                  locale === ELocale.ZH_HK
                     ? data.industry && data.industry.cantonese_name
                     : data.industry && data.industry.english_name
                 }

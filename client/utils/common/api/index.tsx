@@ -1291,12 +1291,6 @@ export const searchJobJourney = async ({
       if (keywordFilters.length > 0) {
         query = query.or(keywordFilters.join(","))
       }
-
-      // Separately handle company.name due to foreign table
-      for (const term of searchTerms) {
-        const encodedTerm = `%${term}%`
-        query = query.ilike("company.name", encodedTerm) // Search in company.name
-      }
     }
 
     // Execute query with pagination
