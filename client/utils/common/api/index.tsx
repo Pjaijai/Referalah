@@ -1107,8 +1107,7 @@ export const getJobJourneyByUuidWithSteps = async (
         company_id,
         company:company_id (
           id,
-          name,
-          logo_url
+          name
         ),
         company_name,
         position_title,
@@ -1200,8 +1199,7 @@ export const searchJobJourney = async ({
         company_id,
         company:company_id (
           id,
-          name,
-          logo_url
+          name
         ),
         company_name,
         position_title,
