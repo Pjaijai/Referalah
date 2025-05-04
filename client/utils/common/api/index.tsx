@@ -1107,8 +1107,7 @@ export const getJobJourneyByUuidWithSteps = async (
         company_id,
         company:company_id (
           id,
-          name,
-          logo_url
+          name
         ),
         company_name,
         position_title,
@@ -1200,8 +1199,7 @@ export const searchJobJourney = async ({
         company_id,
         company:company_id (
           id,
-          name,
-          logo_url
+          name
         ),
         company_name,
         position_title,
@@ -1296,6 +1294,7 @@ export const searchJobJourney = async ({
     // Execute query with pagination
     const { data, error } = await query.range(from, to)
 
+    console.log(999, data, error)
     if (error) {
       throw new Error(`Failed to fetch job journeys: ${error.message}`)
     }
