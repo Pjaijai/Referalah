@@ -1294,7 +1294,6 @@ export const searchJobJourney = async ({
     // Execute query with pagination
     const { data, error } = await query.range(from, to)
 
-    console.log(999, data, error)
     if (error) {
       throw new Error(`Failed to fetch job journeys: ${error.message}`)
     }
