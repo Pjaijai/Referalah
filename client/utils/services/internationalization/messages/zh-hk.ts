@@ -197,7 +197,6 @@ export default {
   "referral.user_not_sing_in_dialog.title": "未登入",
   "referral.user_not_sing_in_dialog.description": "要登入咗先可以聯絡對方。",
   "referral.user_not_sing_in_dialog.cancel": "下次先",
-  "referral.user_not_sing_in_dialog.sign_in": "登入",
   "general.link": "連結",
   "general.contact": "聯絡",
   "user.search_user.no_data": "搵唔到相關會員🥲",
@@ -359,6 +358,8 @@ export default {
   "general.all_locations": "所有地方",
   "general.all_industries": "所有行業",
   "general.all_companies": "所有公司",
+  "general.please_sign_in": "請登入",
+  "general.sign_in_for_member_actions": "登入後可做你想做嘅事 ヽ(●´∀`●)ﾉ !!!",
   job_journey: {
     sorting: {
       last_updated_date_dec: "更新 - 最新",

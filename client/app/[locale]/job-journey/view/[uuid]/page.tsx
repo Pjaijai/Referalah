@@ -24,7 +24,7 @@ export async function generateMetadata({
   const t = await getI18n()
   const jobJourney = await getJobJourneyByUuidWithSteps(params.uuid)
   return {
-    title: `${jobJourney.position_title} | ${
+    title: `${jobJourney.title} | ${jobJourney.position_title} | ${
       jobJourney.company?.name || jobJourney.company_name
     } | ${t("page.job_journey")}`,
   }

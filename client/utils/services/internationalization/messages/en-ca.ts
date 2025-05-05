@@ -218,7 +218,6 @@ export default {
     "Please sign in to reach out to them",
 
   "referral.user_not_sing_in_dialog.cancel": "Next time",
-  "referral.user_not_sing_in_dialog.sign_in": "Sign in",
   "general.link": "Link",
   "general.contact": "Contact",
   "user.search_user.no_data": "No user matches the current criteria🥲",
@@ -392,6 +391,9 @@ export default {
   "general.all_locations": "All Locations",
   "general.all_industries": "All Industries",
   "general.all_companies": "All Companies",
+  "general.please_sign_in": "Please Sign in",
+  "general.sign_in_for_member_actions":
+    "Sign in to unlock actions ヽ(●´∀`●)ﾉ !!!",
   job_journey: {
     sorting: {
       last_updated_date_dec: "Last Update - Latest",

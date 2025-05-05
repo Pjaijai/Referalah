@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Link from "next/link"
 import CompanyAvatar from "@/modules/job-journey/component/avatar/company"
 import useLocationLabel from "@/modules/job-journey/hooks/location-label"
 import StepsTimeline from "@/modules/job-journey/view/components/time-line/time-line"
@@ -20,6 +21,7 @@ import useJobLevelOptions from "@/hooks/common/options/Job-level-options"
 import useJobTypeOptions from "@/hooks/common/options/Job-type-options"
 import useApplicationSourceOptions from "@/hooks/common/options/application-source-options"
 import useUserStore from "@/hooks/state/user/store"
+import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
 import FireIcon from "@/components/customized-ui/icons/fire"
 import { Icons } from "@/components/icons"
@@ -43,6 +45,7 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
   const [fireCount, setFireCount] = useState(jobJourney.fire_count)
   const isGlobalFire = !!fireRecord
   const isAlreadyFired = isGlobalFire || isFire
+  const isSignIn = useUserStore((state) => state.isSignIn)
   const { toast } = useToast()
 
   const locationLabel = useLocationLabel({
@@ -57,6 +60,18 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
   }, [isFire, isGlobalFire, fireRecord])
 
   const handleClick = () => {
+    if (!isSignIn)
+      return toast({
+        title: t("general.please_sign_in"),
+        description: t("general.sign_in_for_member_actions"),
+        action: (
+          <ToastAction altText={t("general.sign_in")}>
+            <Link href={siteConfig.page.signIn.href}>
+              {t("general.sign_in")}
+            </Link>
+          </ToastAction>
+        ),
+      })
     if (isAlreadyFired) return
 
     setIsFire(true)
@@ -185,6 +200,7 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
         ))}
       </section>
 
+      <h1 className="mt-5 text-lg font-semibold">{jobJourney.title}</h1>
       <section className="mt-5 min-h-[100px] whitespace-pre-wrap break-words text-sm font-normal text-slate-700">
         {jobJourney.description}
       </section>
