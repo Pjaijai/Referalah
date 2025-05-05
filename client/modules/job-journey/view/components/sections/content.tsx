@@ -96,7 +96,10 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
   const infoList = [
     {
       title: t("general.application_submit_data"),
-      content: formatVagueDateHelper(jobJourney.created_at, locale),
+      content: formatVagueDateHelper(
+        jobJourney.application_submitted_date,
+        locale
+      ),
       icon: (
         <Icons.calendarCheck
           className="text-slate-700"

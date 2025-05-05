@@ -106,7 +106,7 @@ export default function StepCard({
             </div>
           </div>
           <Separator className="mt-[10px]" />
-          <p className=" mt-[10px] text-sm font-normal text-slate-700">
+          <p className="mt-[10px] whitespace-pre-line break-words text-sm font-normal text-slate-700">
             {remarks}
           </p>
         </div>
