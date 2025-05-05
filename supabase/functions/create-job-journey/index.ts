@@ -536,9 +536,9 @@ serve(async (req: Request) => {
       .from("job_journey")
       .insert({
         company_id: input.company,
-        position_title: input.position_title,
-        title: input.title,
-        description: input.description,
+        position_title: input.position_title.trim(),
+        title: input.title.trim(),
+        description: input.description.trim(),
         source: input.source,
         industry_uuid: input.industry,
         location_uuid: input.location,
@@ -550,7 +550,7 @@ serve(async (req: Request) => {
         created_by: user.uuid,
         last_step_status: lastStepStatus,
         last_step_status_updated_at: lastStepStatusUpdatedAt,
-        company_name: input.new_company,
+        company_name: input.new_company?.trim(),
       })
       .select("uuid")
       .single()
@@ -577,7 +577,7 @@ serve(async (req: Request) => {
         job_journey_uuid: jobJourneyUuid,
         step_date: step.date,
         step_type: step.type,
-        remarks: step.remarks,
+        remarks: step.remarks?.trim(),
         position: step.position,
         created_by: user.uuid,
         interview_type: step.interview_type,
