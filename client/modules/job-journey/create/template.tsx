@@ -249,13 +249,11 @@ const CreateJobJourneyPageTemplate: React.FC<
     const {
       mutate: create,
       isLoading: isCreateLoading,
-
+      isError,
       isSuccess,
     } = useCreateJobJourney()
 
-    const onSubmit = (data: JobJourneyFormData, e: any) => {
-      // This line is do prevent data lost after submit
-      e.preventDefault()
+    const onSubmit = (data: JobJourneyFormData) => {
       const applicationDate = data.applicationDate
       const steps = data.steps || []
 
@@ -289,13 +287,6 @@ const CreateJobJourneyPageTemplate: React.FC<
           router.push(
             `${siteConfig.page.viewJobJourney.href}/${data.data.job_journey_uuid}`
           )
-        },
-        onError: () => {
-          toast({
-            title: t("general.error.title"),
-            description: t("general.error.description"),
-            variant: "destructive",
-          })
         },
       })
     }
@@ -339,39 +330,55 @@ const CreateJobJourneyPageTemplate: React.FC<
           {currentStep === 2 && <StepSection />}
           <div
             className={cn(
-              " flex justify-between gap-4 bg-white px-10 pb-10 pt-6",
+              " flex flex-col justify-between gap-4 bg-white px-10 pb-10 pt-6",
               currentStep === 2 && "bg-transparent"
             )}
           >
+            {isError && (
+              <div className="w-fll t text-center text-destructive ">
+                {t("general.error.title")}
+                {t("general.error.description")}
+              </div>
+            )}
+
             <div className={"flex w-full flex-row justify-end"}>
-              {currentStep !== 1 && (
+              <div className="flex flex-row justify-end">
+                {currentStep !== 1 && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    onClick={prevStep}
+                    disabled={currentStep === 1}
+                    size="sm"
+                  >
+                    {t("general.back")}
+                  </Button>
+                )}
+
                 <Button
                   type="button"
-                  variant="ghost"
-                  onClick={prevStep}
-                  disabled={currentStep === 1}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    if (isLastStep) {
+                      handleSubmit(onSubmit)()
+                    } else {
+                      handleNextStep()
+                    }
+                  }}
+                  variant={isLastStep ? "theme" : "themeSecondary"}
                   size="sm"
+                  className={cn(
+                    !isLastStep && " border-indigo-600 hover:bg-indigo-50"
+                  )}
+                  disabled={isCreateLoading || isSuccess}
                 >
-                  {t("general.back")}
+                  {isLastStep
+                    ? t("form.general.submit")
+                    : isCreateLoading || isSuccess
+                    ? t("general.wait")
+                    : t("form.general.next")}
                 </Button>
-              )}
-
-              <Button
-                type={isLastStep ? "submit" : "button"}
-                onClick={isLastStep ? undefined : handleNextStep}
-                variant={isLastStep ? "theme" : "themeSecondary"}
-                size="sm"
-                className={cn(
-                  !isLastStep && "border border-indigo-600 hover:bg-indigo-50"
-                )}
-                disabled={isCreateLoading || isSuccess}
-              >
-                {isLastStep
-                  ? t("form.general.submit")
-                  : isCreateLoading || isSuccess
-                  ? t("general.wait")
-                  : t("form.general.next")}
-              </Button>
+              </div>
             </div>
           </div>
         </form>

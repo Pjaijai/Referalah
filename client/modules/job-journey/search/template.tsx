@@ -130,7 +130,7 @@ const SearchJobJourneyPageTemplate: React.FunctionComponent<
                   jobLevel={data.job_level}
                   stepStatus={data.last_step_status}
                   stepUpdatedDate={data.last_step_status_updated_at}
-                  jobTitle={"Cloud Engineer in Enterprise team"}
+                  jobTitle={data.position_title}
                   jobType={data.job_type}
                   username={data.user.username}
                   uuid={data.uuid}
