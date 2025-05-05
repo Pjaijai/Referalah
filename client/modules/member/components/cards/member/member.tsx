@@ -44,7 +44,6 @@ const MemberCard: React.FunctionComponent<IMemberCardProps> = ({
   industry,
   photoUrl,
   province,
-  socialMediaUrl,
   username,
   uuid,
   yearOfExperience,
