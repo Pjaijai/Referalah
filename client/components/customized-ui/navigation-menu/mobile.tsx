@@ -84,7 +84,7 @@ export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
       {
         id: "jobJourney",
         title: t("page.job_journey"),
-        icon: Icons.star,
+        icon: Icons.scroll,
         links: [
           {
             title: t("page.job_journey"),
@@ -143,7 +143,7 @@ export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
                     <section.icon
                       className={
                         section.id === "jobJourney"
-                          ? "fill-black text-white"
+                          ? "fill-black text-black"
                           : ""
                       }
                     />
