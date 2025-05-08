@@ -481,6 +481,7 @@ export default {
       offer: "Offer",
       rejected: "Rejected",
       withdrawn: "Withdrawn",
+      submit_application: "Submit Application",
     },
 
     application_source: {
