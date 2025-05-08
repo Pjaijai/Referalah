@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site"
 import CommonPageLayout from "@/components/layouts/common"
 
 export const metadata = siteConfig.page.searchJobJourney.metadata
-export const revalidate = 60 * 60 * 24
+export const revalidate = 0
 
 const SearchJobJourneyPage = async () => {
   const locationList = await getLocationList()
