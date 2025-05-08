@@ -1,6 +1,6 @@
 import { EStepType } from "@/types/common/enums/step-type"
 
-const getStepTypeStyle = (type: EStepType): string => {
+const getStepTypeStyle = (type: EStepType | "apply"): string => {
   switch (type) {
     case EStepType.INTERVIEW:
     case EStepType.TAKE_HOME_CHALLENGE:

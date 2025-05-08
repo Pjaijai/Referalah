@@ -2,7 +2,10 @@ import React from "react"
 import getStepTypeIcon from "@/modules/job-journey/helpers/get-step-type-icon"
 import getStepTypeStyle from "@/modules/job-journey/helpers/get-step-type-style"
 import formatVagueDateHelper from "@/utils/common/helpers/format/vague-date"
-import { useCurrentLocale } from "@/utils/services/internationalization/client"
+import {
+  useCurrentLocale,
+  useI18n,
+} from "@/utils/services/internationalization/client"
 
 import { EInterviewLocation } from "@/types/common/enums/interview-location"
 import { EInterviewType } from "@/types/common/enums/interview-type"
@@ -16,7 +19,7 @@ import { Separator } from "@/components/ui/separator"
 type StepCardProps = {
   position: number
   date: string
-  stepType: EStepType
+  stepType: EStepType | "apply"
   remarks: string | null
   interviewLocation: EInterviewLocation | null
   interviewType: EInterviewType | null
@@ -32,6 +35,7 @@ export default function StepCard({
   remarks,
   isHighlighted,
 }: StepCardProps) {
+  const t = useI18n()
   const interviewTypeOptions = useInterviewTypeOptions()
   const interviewLocationOptions = useInterviewLocationOptions()
   const stepTypeOptions = useStepTypeOptions()
@@ -50,7 +54,7 @@ export default function StepCard({
       {/* Number Badge - Anchor for the line */}
       <div
         className={cn(
-          "z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full  bg-slate-100 text-xs ",
+          "z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs  ",
           isHighlighted && !rejected
             ? getStepTypeStyle(stepType)
             : "border border-slate-200"
@@ -79,7 +83,7 @@ export default function StepCard({
             <div className="flex flex-row gap-[10px]">
               <div
                 className={cn(
-                  "rounded-sm bg-slate-100 p-1 ",
+                  "rounded-sm bg-slate-100 p-1 text-slate-400",
                   isHighlighted && getStepTypeStyle(stepType)
                 )}
               >
@@ -91,7 +95,9 @@ export default function StepCard({
                   "bg-transparent text-base font-bold"
                 )}
               >
-                {stepTypeOptions.find((o) => o.value === stepType)?.label}
+                {stepType === "apply"
+                  ? t("job_journey.step_type.submit_application")
+                  : stepTypeOptions.find((o) => o.value === stepType)?.label}
               </p>
             </div>
             <div className="flex flex-row gap-[10px]">
@@ -105,10 +111,14 @@ export default function StepCard({
               ))}
             </div>
           </div>
-          <Separator className="mt-[10px]" />
-          <p className="mt-[10px] whitespace-pre-line break-words text-sm font-normal text-slate-700">
-            {remarks}
-          </p>
+          {remarks && (
+            <>
+              <Separator className="mt-[10px]" />
+              <p className="mt-[10px] whitespace-pre-line break-words text-sm font-normal text-slate-700">
+                {remarks}
+              </p>
+            </>
+          )}
         </div>
       </div>
     </div>

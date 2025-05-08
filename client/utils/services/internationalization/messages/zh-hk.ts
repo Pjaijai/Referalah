@@ -449,6 +449,7 @@ export default {
       offer: "掂！",
       rejected: "衰咗",
       withdrawn: "撤回申請",
+      submit_application: "提交申請",
     },
     application_source: {
       referral: "內部引薦",

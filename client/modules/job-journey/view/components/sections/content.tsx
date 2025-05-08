@@ -11,9 +11,10 @@ import {
   useI18n,
 } from "@/utils/services/internationalization/client"
 
-import { TJobJourneyWithSteps } from "@/types/api/job-journey"
+import { TJobJourneyStep, TJobJourneyWithSteps } from "@/types/api/job-journey"
 import { TLocationData } from "@/types/api/response/location"
 import { EFireType } from "@/types/common/enums/fire-type"
+import { EStepType } from "@/types/common/enums/step-type"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { useCreateFire } from "@/hooks/api/fire/create-fire"
@@ -188,7 +189,7 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
 
       <section className="mt-[30px] flex flex-col gap-y-2 md:grid md:grid-cols-3">
         {infoList.map((data) => (
-          <div className="flex flex-row gap-1 text-xs" key={data.title}>
+          <div className="flex flex-row gap-1 text-sm" key={data.title}>
             <div className="flex flex-row items-center justify-start gap-[10px] md:col-span-1">
               <span>{data.icon}</span>
               <span>{data.title}:</span>
@@ -230,7 +231,10 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
       </section>
 
       <section className="mt-[10px] rounded-md bg-slate-100">
-        <StepsTimeline steps={jobJourney.job_journey_step} />
+        <StepsTimeline
+          steps={jobJourney.job_journey_step}
+          applicationDate={jobJourney.application_submitted_date}
+        />
       </section>
 
       <footer className="mt-[10px] text-xs font-normal text-slate-400">

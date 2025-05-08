@@ -97,7 +97,7 @@ export function BaseNavigationMenu() {
                 "flex h-10 w-max items-center justify-center gap-2 rounded-md  bg-slate-50 px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground   focus:outline-none md:text-lg"
               }
             >
-              <Icons.star />
+              <Icons.scroll />
               {t("page.job_journey")}
             </div>
           </Link>

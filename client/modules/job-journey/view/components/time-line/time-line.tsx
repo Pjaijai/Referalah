@@ -5,10 +5,13 @@ import { TJobJourneyStep } from "@/types/api/job-journey"
 
 type StepsTimelineProps = {
   steps: TJobJourneyStep[]
+  applicationDate: string
 }
 
-export default function StepsTimeline({ steps }: StepsTimelineProps) {
-  // Sort steps by position in descending order (largest position first)
+export default function StepsTimeline({
+  steps,
+  applicationDate,
+}: StepsTimelineProps) {
   const sortedSteps = [...steps].sort((a, b) => b.position - a.position)
 
   return (
@@ -17,7 +20,7 @@ export default function StepsTimeline({ steps }: StepsTimelineProps) {
         {sortedSteps.map((step, index) => (
           <div key={step.id} className="relative">
             <StepCard
-              position={step.position}
+              position={step.position + 1}
               date={step.step_date}
               stepType={step.step_type}
               interviewLocation={step.interview_location}
@@ -32,8 +35,22 @@ export default function StepsTimeline({ steps }: StepsTimelineProps) {
                 style={{ height: "calc(100% + 2rem)" }}
               />
             )}
+            <div
+              className="absolute left-[14px] top-4 w-[1.5px] border-l-[1.5px] border-dashed border-gray-300"
+              style={{ height: "calc(100% + 2rem)" }}
+            />
           </div>
         ))}
+
+        <StepCard
+          position={1}
+          date={applicationDate}
+          stepType={"apply"}
+          interviewLocation={null}
+          interviewType={null}
+          remarks={""}
+          isHighlighted={false}
+        />
       </div>
     </div>
   )
