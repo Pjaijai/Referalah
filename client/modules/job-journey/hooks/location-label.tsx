@@ -24,7 +24,7 @@ const useLocationLabel = ({ location, locationList }: LocationLabelProps) => {
     let countryName = ""
     let emoji = fullLocation?.meta_data?.emoji ?? null
 
-    if (fullLocation) {
+    if (fullLocation && fullLocation.level !== 1) {
       // Find parent
       if (fullLocation.parent_uuid) {
         const parent = locationList.find(
