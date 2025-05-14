@@ -126,7 +126,7 @@ const JobJourneySearchBar = ({
       <div className="flex w-fit ">
         <ClearAllButton onClick={onReset} />
       </div>
-      <div className="min-w-[150px] flex-1">
+      <div className="w-fit flex-1">
         <BaseSelect
           options={sortingOptions}
           onChange={onSortingChange}
