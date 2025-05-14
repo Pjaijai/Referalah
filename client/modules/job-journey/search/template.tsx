@@ -54,7 +54,7 @@ const SearchJobJourneyPageTemplate: React.FunctionComponent<
 
   return (
     <div>
-      <div className=" flex flex-row gap-4 md:hidden">
+      <div className=" flex flex-row gap-4  md:hidden">
         <TextInput
           onChange={handleKeywordsChange}
           value={keywords}
@@ -102,7 +102,7 @@ const SearchJobJourneyPageTemplate: React.FunctionComponent<
         </Button>
       </div>
       {!isLoading && !isFetching && list.length === 0 && (
-        <div className="mt-8 rounded-lg border-2 p-4 text-center">
+        <div className="mt-8 rounded-lg p-4 text-center">
           {t("general.result_not_found")}
         </div>
       )}
@@ -115,7 +115,7 @@ const SearchJobJourneyPageTemplate: React.FunctionComponent<
           next={fetchNextPage}
           hasMore={hasNextPage!}
         >
-          <div className="mx-auto mt-10 grid w-full max-w-sm grid-cols-1 gap-11 md:mt-4 md:max-w-none md:grid-cols-2">
+          <div className="mx-auto mt-10 grid w-full max-w-sm grid-cols-1 gap-[30px] md:mt-4 md:max-w-none md:grid-cols-2">
             {list.map((data) => {
               return (
                 <JobJourneyCard

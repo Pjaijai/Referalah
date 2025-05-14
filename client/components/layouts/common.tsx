@@ -35,7 +35,7 @@ const CommonPageLayout: React.FunctionComponent<
   return (
     <div
       className={cn(
-        "mt-4 h-full w-full",
+        "mt-4 h-full w-full ",
         isMainPage() ? "md:container" : "container",
         className
       )}
@@ -63,7 +63,9 @@ const CommonPageLayout: React.FunctionComponent<
               : "text-right"
           )}
         >
-          {title && <h1 className="mb-2 text-3xl font-bold">{title}</h1>}
+          {title && (
+            <h1 className="mb-2 text-3xl font-bold md:mt-[14px]">{title}</h1>
+          )}
         </div>
       </div>
 

@@ -136,7 +136,7 @@ const JobJourneyCard: React.FC<TJobJourneyCardProps> = ({
       </div>
 
       {/* Job Details and Engagement Metrics */}
-      <div className="flex items-center justify-between">
+      <div className="mt-10 flex items-center justify-between">
         <div className="flex items-center gap-[10px] text-xs text-slate-700 md:text-sm">
           <span className="shrink-0 rounded-md bg-gray-100 px-3 py-1">
             {jobTypeOptions.find((o) => o.value === jobType)?.label}
