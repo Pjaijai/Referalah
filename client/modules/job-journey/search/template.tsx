@@ -96,7 +96,7 @@ const SearchJobJourneyPageTemplate: React.FunctionComponent<
         onReset={handleReset}
         onKeywordsChange={handleKeywordsChange}
       />
-      <div className="mt-8 flex justify-end">
+      <div className="mt-8  flex justify-end">
         <Button variant={"theme"} size={"lg"} onClick={handleCreateClick}>
           + {t("page.create_job_journey")}
         </Button>
@@ -115,7 +115,7 @@ const SearchJobJourneyPageTemplate: React.FunctionComponent<
           next={fetchNextPage}
           hasMore={hasNextPage!}
         >
-          <div className="mx-auto mt-10 grid w-full max-w-sm grid-cols-1 gap-[30px] md:mt-4 md:max-w-none md:grid-cols-2">
+          <div className="mx-auto mt-10 grid w-full max-w-sm grid-cols-1 gap-[30px] md:mt-8 md:max-w-none md:grid-cols-2">
             {list.map((data) => {
               return (
                 <JobJourneyCard
