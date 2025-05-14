@@ -311,8 +311,8 @@ export default {
   "page.contributors": "Contributor List",
   "page.installation": "Get the App",
   "page.notifications": "Notifications",
-  "page.create_job_journey": "Create Job Journey",
-  "page.job_journey": "Job Journey",
+  "page.create_job_journey": "Create Journey",
+  "page.job_journey": "Journey",
   "general.dark_mode": "Dark Mode",
   "general.light_mode": "Light Mode",
 
