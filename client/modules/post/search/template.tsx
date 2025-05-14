@@ -71,7 +71,7 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
           onChange={handleKeywordsChange}
           value={keywords}
           frontIcon={<Icons.search size={18} className="text-slate-400" />}
-          inputClassName="bg-slate-100"
+          inputClassName="bg-slate-100 placeholder:text-slate-400"
           placeholder={t("search.keywords.placeholder")}
         />
         <FilterSheet
@@ -106,7 +106,7 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
         </div>
       </div>
 
-      <div className="mt-4">
+      <div>
         <PostSearchBar
           keywords={keywords}
           onKeyWordsChange={handleKeywordsChange}

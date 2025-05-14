@@ -14,7 +14,7 @@ const ViewJobJourneyPageTemplate: React.FC<ViewJobJourneyPageTemplateProps> = ({
   locationList,
 }) => {
   return (
-    <div className="flex w-full flex-row">
+    <div className="mt-[26px] flex w-full flex-row">
       <ContentSection jobJourney={jobJourney} locationList={locationList} />
     </div>
   )

@@ -6,7 +6,7 @@ const getStepTypeStyle = (type: EStepType | "apply"): string => {
     case EStepType.TAKE_HOME_CHALLENGE:
       return "text-indigo-600 bg-indigo-50"
     case EStepType.OFFER:
-      return "text-emerald-600 bg-emerald-50"
+      return "text-emerald-700 bg-emerald-50"
     case EStepType.REJECTED:
     case EStepType.WITHDRAWN:
     default:

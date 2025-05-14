@@ -73,8 +73,9 @@ const JobJourneySearchBar = ({
     locationData.find((i) => i.value === currentLocation)?.uuid || "all"
 
   return (
-    <div className="hidden grid-cols-8 flex-col justify-center gap-5 md:grid">
-      <div className="col-span-2">
+    // <div className="hidden grid-cols-8 flex-col justify-center gap-5 md:grid">
+    <div className="hidden flex-row flex-wrap justify-center gap-5 md:flex">
+      <div className="min-w-[200px] flex-[10_1_0%]">
         <TextInput
           onChange={onKeywordsChange}
           value={keywords}
@@ -83,52 +84,57 @@ const JobJourneySearchBar = ({
           placeholder={t("search.keywords.placeholder")}
         />
       </div>
-      <BaseSelect
-        options={locationOptions}
-        onChange={onLocationChange}
-        value={currentLocationUuid}
-        placeholder={t("general.location")}
-        triggerClassName="w-full col-span-1"
-        showAllOption
-        allOptionLabel={t("general.all_locations")}
-      />
-
-      <BaseSelect
-        options={industryOptions}
-        onChange={onIndustryChange}
-        value={currentIndustry}
-        showAllOption
-        placeholder={t("general.industry")}
-        triggerClassName="w-full col-span-1"
-        allOptionLabel={t("general.all_industries")}
-      />
-
-      <CompanyCombobox
-        company={currentCompany}
-        onSelect={onCompanyChange}
-        className="col-span-1 w-full"
-      />
-
-      <BaseSelect
-        options={jobLevelOptions}
-        onChange={onJobLevelChange}
-        value={currentJobLevel}
-        showAllOption
-        triggerClassName="w-full col-span-1"
-        allOptionLabel={t("job_journey.form.all_job_level")}
-      />
-
-      <div className="flex justify-center">
+      <div className="min-w-[150px] flex-1">
+        <BaseSelect
+          options={locationOptions}
+          onChange={onLocationChange}
+          value={currentLocationUuid}
+          placeholder={t("general.location")}
+          triggerClassName="w-full"
+          showAllOption
+          allOptionLabel={t("general.all_locations")}
+        />
+      </div>
+      <div className="min-w-[150px] flex-1">
+        <BaseSelect
+          options={industryOptions}
+          onChange={onIndustryChange}
+          value={currentIndustry}
+          showAllOption
+          placeholder={t("general.industry")}
+          triggerClassName="w-full"
+          allOptionLabel={t("general.all_industries")}
+        />
+      </div>
+      <div className="min-w-[150px] flex-1">
+        <CompanyCombobox
+          company={currentCompany}
+          onSelect={onCompanyChange}
+          className="w-full"
+        />
+      </div>
+      <div className="min-w-[150px] flex-1">
+        <BaseSelect
+          options={jobLevelOptions}
+          onChange={onJobLevelChange}
+          value={currentJobLevel}
+          showAllOption
+          triggerClassName="w-full"
+          allOptionLabel={t("job_journey.form.all_job_level")}
+        />
+      </div>
+      <div className="flex w-fit ">
         <ClearAllButton onClick={onReset} />
       </div>
-
-      <BaseSelect
-        options={sortingOptions}
-        onChange={onSortingChange}
-        defaultValue={sortingOptions[0].value}
-        value={currentSorting}
-        placeholder={t("general.sorting")}
-      />
+      <div className="min-w-[150px] flex-1">
+        <BaseSelect
+          options={sortingOptions}
+          onChange={onSortingChange}
+          defaultValue={sortingOptions[0].value}
+          value={currentSorting}
+          placeholder={t("general.sorting")}
+        />
+      </div>
     </div>
   )
 }

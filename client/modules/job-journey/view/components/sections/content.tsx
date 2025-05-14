@@ -201,7 +201,7 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
         ))}
       </section>
 
-      <h1 className="mt-5 text-lg font-semibold">{jobJourney.title}</h1>
+      <h1 className="mt-10 text-lg font-semibold">{jobJourney.title}</h1>
       <section className="mt-5 min-h-[100px] whitespace-pre-wrap break-words text-sm font-normal text-slate-700">
         {jobJourney.description}
       </section>
