@@ -1,5 +1,6 @@
 import * as React from "react"
 import Link from "next/link"
+import { getFeatureFlag } from "@/utils/services/firebase/config"
 import { useI18n } from "@/utils/services/internationalization/client"
 
 import { siteConfig } from "@/config/site"
@@ -13,13 +14,23 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
-import MessageIcon from "@/components/customized-ui/icons/message-with-dot"
 import { Icons } from "@/components/icons"
 
 export function BaseNavigationMenu() {
   const t = useI18n()
   const isUserSignIn = useUserStore((state) => state.isSignIn)
+  const [showJobJourney, setShowJobJourney] = React.useState(false)
+  React.useEffect(() => {
+    const checkFeatureFlag = async () => {
+      const isJobJourneyEnabled = await getFeatureFlag("is_job_journey_enabled")
 
+      if (isJobJourneyEnabled) {
+        setShowJobJourney(isJobJourneyEnabled)
+      }
+    }
+
+    checkFeatureFlag()
+  }, [])
   const components: { title: string; href: string; description: string }[] = [
     {
       title: t("page.create_post"),
@@ -90,18 +101,20 @@ export function BaseNavigationMenu() {
           </NavigationMenuItem>
         )}
 
-        <NavigationMenuItem>
-          <Link href={siteConfig.page.searchJobJourney.href}>
-            <div
-              className={
-                "flex h-10 w-max items-center justify-center gap-2 rounded-md  bg-slate-50 px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground   focus:outline-none md:text-lg"
-              }
-            >
-              <Icons.scroll />
-              {t("page.job_journey")}
-            </div>
-          </Link>
-        </NavigationMenuItem>
+        {showJobJourney && (
+          <NavigationMenuItem>
+            <Link href={siteConfig.page.searchJobJourney.href}>
+              <div
+                className={
+                  "flex h-10 w-max items-center justify-center gap-2 rounded-md  bg-slate-50 px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground   focus:outline-none md:text-lg"
+                }
+              >
+                <Icons.scroll />
+                {t("page.job_journey")}
+              </div>
+            </Link>
+          </NavigationMenuItem>
+        )}
       </NavigationMenuList>
     </NavigationMenu>
   )

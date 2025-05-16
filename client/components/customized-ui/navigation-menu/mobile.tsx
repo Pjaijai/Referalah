@@ -1,7 +1,8 @@
 "use client"
 
-import { useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
+import { getFeatureFlag } from "@/utils/services/firebase/config"
 import { useI18n } from "@/utils/services/internationalization/client"
 
 import { siteConfig } from "@/config/site"
@@ -47,9 +48,21 @@ export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
   const { isSignIn } = useUserStore((state) => ({
     isSignIn: state.isSignIn,
   }))
+  const [showJobJourney, setShowJobJourney] = useState(false)
+  useEffect(() => {
+    const checkFeatureFlag = async () => {
+      const isJobJourneyEnabled = await getFeatureFlag("is_job_journey_enabled")
 
-  const navSections: NavSection[] = useMemo(
-    () => [
+      if (isJobJourneyEnabled) {
+        setShowJobJourney(isJobJourneyEnabled)
+      }
+    }
+
+    checkFeatureFlag()
+  })
+
+  const navSections: NavSection[] = useMemo(() => {
+    const list = [
       {
         id: "connection",
         title: t("general.connection"),
@@ -81,10 +94,13 @@ export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
           },
         ],
       },
-      {
+    ]
+
+    if (showJobJourney) {
+      list.push({
         id: "jobJourney",
         title: t("page.job_journey"),
-        icon: Icons.scroll,
+        icon: Icons.scroll as any,
         links: [
           {
             title: t("page.job_journey"),
@@ -96,10 +112,11 @@ export function MobileNavigationMenu({ className }: MobileNavigationMenuProps) {
             requiresAuth: true,
           },
         ],
-      },
-    ],
-    [isSignIn, t]
-  )
+      })
+    }
+
+    return list
+  }, [isSignIn, t, showJobJourney])
 
   const handleLinkClick = (url: string) => {
     router.push(url)
