@@ -12,6 +12,7 @@ import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
+import { ELocale } from "@/types/common/enums/locale"
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
 import useSearchUser from "@/hooks/api/user/search-user"
@@ -161,22 +162,22 @@ const MemberSearchPageTemplate: React.FunctionComponent<
                 uuid={user.uuid}
                 receiverType={EReferralType.REFERRER}
                 province={
-                  locale === "zh-hk"
+                  locale === ELocale.ZH_HK
                     ? user.province && user.province.cantonese_name
                     : user.province && user.province.english_name
                 }
                 country={
-                  locale === "zh-hk"
+                  locale === ELocale.ZH_HK
                     ? user.country && user.country.cantonese_name
                     : user.country && user.country.english_name
                 }
                 city={
-                  locale === "zh-hk"
+                  locale === ELocale.ZH_HK
                     ? user.city && user.city.cantonese_name
                     : user.city && user.city.english_name
                 }
                 industry={
-                  locale === "zh-hk"
+                  locale === ELocale.ZH_HK
                     ? user.industry && user.industry.cantonese_name
                     : user.industry && user.industry.english_name
                 }

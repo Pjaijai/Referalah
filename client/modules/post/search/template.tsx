@@ -11,6 +11,7 @@ import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { IProvinceResponse } from "@/types/api/response/province"
+import { ELocale } from "@/types/common/enums/locale"
 import { EMessageType } from "@/types/common/message-type"
 import useSearchPost from "@/hooks/api/post/search-post"
 import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
@@ -70,7 +71,7 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
           onChange={handleKeywordsChange}
           value={keywords}
           frontIcon={<Icons.search size={18} className="text-slate-400" />}
-          inputClassName="bg-slate-100"
+          inputClassName="bg-slate-100 placeholder:text-slate-400"
           placeholder={t("search.keywords.placeholder")}
         />
         <FilterSheet
@@ -105,7 +106,7 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
         </div>
       </div>
 
-      <div className="mt-4">
+      <div>
         <PostSearchBar
           keywords={keywords}
           onKeyWordsChange={handleKeywordsChange}
@@ -158,22 +159,22 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
                   username={data.user && data.user.username}
                   photoUrl={data.user && data.user.avatar_url}
                   province={
-                    locale === "zh-hk"
+                    locale === ELocale.ZH_HK
                       ? data.province && data.province.cantonese_name
                       : data.province && data.province.english_name
                   }
                   country={
-                    locale === "zh-hk"
+                    locale === ELocale.ZH_HK
                       ? data.country && data.country.cantonese_name
                       : data.country && data.country.english_name
                   }
                   city={
-                    locale === "zh-hk"
+                    locale === ELocale.ZH_HK
                       ? data.city && data.city.cantonese_name
                       : data.city && data.city.english_name
                   }
                   industry={
-                    locale === "zh-hk"
+                    locale === ELocale.ZH_HK
                       ? data.industry && data.industry.cantonese_name
                       : data.industry && data.industry.english_name
                   }

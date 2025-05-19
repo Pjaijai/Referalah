@@ -24,7 +24,6 @@ describe("useUserStore", () => {
     expect(result.current.isSignIn).toBe(false)
     expect(result.current.uuid).toBeNull()
     expect(result.current.photoUrl).toBeNull()
-    expect(result.current.hasConversationUnseen).toBe(false)
   })
 
   it("should set user information correctly", () => {
@@ -43,7 +42,6 @@ describe("useUserStore", () => {
     expect(result.current.isSignIn).toBe(true)
     expect(result.current.uuid).toBe("123456")
     expect(result.current.photoUrl).toBe("https://example.com/photo.jpg")
-    expect(result.current.hasConversationUnseen).toBe(false)
   })
 
   it("should reset user information correctly", () => {
@@ -66,21 +64,5 @@ describe("useUserStore", () => {
     expect(result.current.isSignIn).toBe(false)
     expect(result.current.uuid).toBeNull()
     expect(result.current.photoUrl).toBeNull()
-  })
-
-  it("should set conversation seen status correctly", () => {
-    const { result } = renderHook(() => useUserStore())
-
-    act(() => {
-      result.current.setConversationSeen(true)
-    })
-
-    expect(result.current.hasConversationUnseen).toBe(true)
-
-    act(() => {
-      result.current.setConversationSeen(false)
-    })
-
-    expect(result.current.hasConversationUnseen).toBe(false)
   })
 })

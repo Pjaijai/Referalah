@@ -5,22 +5,21 @@ import { initSupabaseServer } from "../_shared/server.ts"
 import { sendEmail } from "../_shared/modules/notification/email/send-email.ts"
 import Bottleneck from "npm:bottleneck@2.19.5"
 
-const WEB_BASE_URL = Deno.env.get("WEB_BASE_URL")
-interface IUnSeenConversation {
-  email: string
-  username: string
-  unseenList: { username: string; body: string }[]
-}
-
 interface Notification {
+  id: number
   user_uuid: string
-  message_uuid: string
+  type: string
+  data: any
+  is_seen: boolean
+  created_at: string
+  email_notified_at: string | null
 }
 
 interface User {
   email: string
   username: string
   notification_permissions: string[]
+  uuid: string // Ensure User interface includes uuid
 }
 
 interface EmailResult {
@@ -31,10 +30,7 @@ interface EmailResult {
 
 serve(async (req: Request) => {
   try {
-    console.log(
-      "Notify user unseen conversation at :",
-      new Date().toISOString(),
-    )
+    console.log("Checking notifications at:", new Date().toISOString())
     const server = initSupabaseServer()
 
     const { key }: { key: string } = await req.json()
@@ -51,21 +47,77 @@ serve(async (req: Request) => {
         status: 400,
       })
 
-    const { data: notifications }: { data: Notification[] } = await server
-      .from("message_notification_queue")
-      .select("user_uuid, message_uuid")
-      .eq("status", "pending")
+    // Define the current time at the beginning of the function
+    const currentTime = new Date()
+    const currentTimeISO = currentTime.toISOString()
 
-    const userNotifications: Record<string, string[]> = notifications.reduce(
-      (acc: Record<string, string[]>, notification: Notification) => {
-        if (!acc[notification.user_uuid]) {
-          acc[notification.user_uuid] = []
-        }
-        acc[notification.user_uuid].push(notification.message_uuid)
-        return acc
-      },
-      {},
-    )
+    // Calculate the time 24 hours ago based on the defined current time
+    const twelveHoursAgo = new Date(
+      currentTime.getTime() - 24 * 60 * 60 * 1000,
+    ).toISOString()
+
+    // Fetch unseen notifications created within the last 24 hours, but not after current time
+    const {
+      data: notifications,
+      error: notificationError,
+    }: { data: Notification[]; error: any } = await server
+      .from("notification")
+      .select("*")
+      .eq("is_seen", false)
+      .gte("created_at", twelveHoursAgo) // Greater than or equal to 24 hours ago
+      .lt("created_at", currentTimeISO) // Less than current time
+
+    if (notificationError) {
+      console.error("Error fetching notifications:", notificationError)
+      return new Response(
+        JSON.stringify({ error: "Failed to fetch notifications" }),
+        {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 500,
+        },
+      )
+    }
+
+    // Group notifications by user_uuid
+    const userNotifications: Record<string, Notification[]> =
+      notifications.reduce(
+        (acc: Record<string, Notification[]>, notification: Notification) => {
+          if (!acc[notification.user_uuid]) {
+            acc[notification.user_uuid] = []
+          }
+          acc[notification.user_uuid].push(notification)
+          return acc
+        },
+        {},
+      )
+
+    // Fetch all unique user UUIDs
+    const userUUIDs = Object.keys(userNotifications)
+
+    // Fetch all user data in one go
+    const {
+      data: users,
+      error: usersError,
+    }: { data: User[] | null; error: any } = await server
+      .from("user")
+      .select("email, username, notification_permissions, uuid")
+      .in("uuid", userUUIDs)
+
+    if (usersError) {
+      console.error("Error fetching users:", usersError)
+      return new Response(JSON.stringify({ error: "Failed to fetch users" }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 500,
+      })
+    }
+
+    // Create a map of user UUID to user data
+    const userMap: Map<string, User> = new Map()
+    if (users) {
+      users.forEach((user) => {
+        userMap.set(user.uuid, user)
+      })
+    }
 
     const limiter: Bottleneck = new Bottleneck({
       minTime: 180,
@@ -74,38 +126,35 @@ serve(async (req: Request) => {
 
     const result: EmailResult[] = await Promise.all(
       Object.entries(userNotifications).map(
-        async ([userUuid, messageUuids]: [string, string[]]) => {
-          const { data: user }: { data: User } = await server
-            .from("user")
-            .select("email, username, notification_permissions")
-            .eq("uuid", userUuid)
-            .single()
+        async ([userUuid, notifications]: [string, Notification[]]) => {
+          // Retrieve user data from the map
+          const user = userMap.get(userUuid)
 
-          const count: number = messageUuids.length
+          if (!user) {
+            console.error(`User not found for UUID: ${userUuid}`)
+            return {
+              success: false,
+              to: "unknown",
+              time: new Date().toISOString(),
+            }
+          }
+
+          const count: number = notifications.length
 
           // Early return if user doesn't have permission for unseen_message notifications
           if (
             !user.notification_permissions ||
             !user.notification_permissions.includes("unseen_message")
           ) {
-            await server
-              .from("message_notification_queue")
-              .update({ status: "no_permission" })
-              .in("message_uuid", messageUuids)
-
             return {
               success: false,
               to: user.email,
               time: new Date().toISOString(),
-              status: "no_permission",
             }
           }
-
-          const subject: string = `You ${
-            count === 1 ? "have" : "have"
-          } ${count} message${
+          const subject: string = `Today you have ${count} notification${
             count === 1 ? "" : "s"
-          } today | 你今日有${count}個訊息 | Referalah`
+          } waiting for you | 今天有${count}條未讀通知等緊你`
 
           const body: string = `
             <html>
@@ -115,10 +164,10 @@ serve(async (req: Request) => {
                 },</p>
     
                 <div style="text-align: center; margin-bottom: 20px;">
-                    <p style="line-height: 1.6;">You have ${count} message${
+                    <p style="line-height: 1.6;">Today you have ${count} notification${
             count === 1 ? "" : "s"
-          } today on Referalah!</p>
-                    <p style="line-height: 1.6;">你今日喺 Referalah 收到${count}個訊息！</p>
+          } on Referalah!</p>
+                    <p style="line-height: 1.6;">今日你喺 Referalah 有${count}條未讀通知等緊你!</p>
                 </div>
     
                 <p style="text-align: center; line-height: 1.6;">If you want to stop receiving this kind of email, please go to your profile page and adjust your settings.</p>
@@ -133,17 +182,12 @@ serve(async (req: Request) => {
             const res: { ok?: boolean } = await limiter.schedule(() =>
               sendEmail({
                 subject,
-                body: body,
+                body,
                 to: ENV_IS_LOCAL ? Deno.env.get("RESEND_TO_EMAIL") : user.email,
               }),
             )
 
             if (!res?.ok) {
-              await server
-                .from("message_notification_queue")
-                .update({ status: "failed" })
-                .in("message_uuid", messageUuids)
-
               return {
                 success: false,
                 to: user.email,
@@ -157,14 +201,8 @@ serve(async (req: Request) => {
               email: user.email,
               type: "unseen_message",
               title: subject,
-              body: body,
+              body,
             })
-
-            // Remove successfully sent notifications from the queue
-            await server
-              .from("message_notification_queue")
-              .delete()
-              .in("message_uuid", messageUuids)
 
             return {
               success: true,
@@ -173,11 +211,6 @@ serve(async (req: Request) => {
             }
           } catch (error) {
             console.error(`Error sending email to ${user.email}:`, error)
-
-            await server
-              .from("message_notification_queue")
-              .update({ status: "failed" })
-              .in("message_uuid", messageUuids)
 
             return {
               success: false,
@@ -194,7 +227,8 @@ serve(async (req: Request) => {
       status: 200,
     })
   } catch (error: any) {
-    return new Response(JSON.stringify({ error }), {
+    console.error("Global error:", error)
+    return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 400,
     })

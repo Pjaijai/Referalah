@@ -11,6 +11,7 @@ const ContributorsPageTemplate = () => {
             links={contributor.links}
             name={contributor.name}
             key={contributor.name}
+            isActive={contributor.isActive}
           />
         ))}
       </div>

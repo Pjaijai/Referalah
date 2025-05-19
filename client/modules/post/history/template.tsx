@@ -1,20 +1,17 @@
 "use client"
 
 import React, { useState } from "react"
-import { useRouter } from "next/navigation"
 import {
   useCurrentLocale,
   useI18n,
 } from "@/utils/services/internationalization/client"
 
-import { cn } from "@/lib/utils"
+import { ELocale } from "@/types/common/enums/locale"
 import useListPostsByUserUuid from "@/hooks/api/post/list-posts-by-user-uuid"
 import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
-import { Button, buttonVariants } from "@/components/ui/button"
 import PostCard from "@/components/customized-ui/cards/post"
 import BaseSelect from "@/components/customized-ui/selects/base"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
-import { Icons } from "@/components/icons"
 
 interface IPostHistoryTemplateProps {
   slug: string
@@ -24,7 +21,7 @@ const PostHistoryTemplate: React.FunctionComponent<
 > = ({ slug }) => {
   const t = useI18n()
   const locale = useCurrentLocale()
-  const router = useRouter()
+
   const { data: postSortingOptions } = usePostSortOptions()
   const [sortValue, setSortValue] = useState(postSortingOptions[0].value)
 
@@ -81,22 +78,22 @@ const PostHistoryTemplate: React.FunctionComponent<
                 username={data.user.username}
                 requestCount={data.contact_request_count}
                 province={
-                  locale === "zh-hk"
+                  locale === ELocale.ZH_HK
                     ? data.province && data.province.cantonese_name
                     : data.province && data.province.english_name
                 }
                 country={
-                  locale === "zh-hk"
+                  locale === ELocale.ZH_HK
                     ? data.country && data.country.cantonese_name
                     : data.country && data.country.english_name
                 }
                 city={
-                  locale === "zh-hk"
+                  locale === ELocale.ZH_HK
                     ? data.city && data.city.cantonese_name
                     : data.city && data.city.english_name
                 }
                 industry={
-                  locale === "zh-hk"
+                  locale === ELocale.ZH_HK
                     ? data.industry && data.industry.cantonese_name
                     : data.industry && data.industry.english_name
                 }

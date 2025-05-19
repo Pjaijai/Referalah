@@ -10,11 +10,12 @@ import { Icons } from "@/components/icons"
 interface CommonPageLayout {
   title?: string
   titlePosition?: "left" | "middle" | "right"
+  className?: string
 }
 
 const CommonPageLayout: React.FunctionComponent<
   PropsWithChildren<CommonPageLayout>
-> = ({ title, children, titlePosition = "left" }) => {
+> = ({ title, children, titlePosition = "left", className }) => {
   const pathname = usePathname()
   const router = useRouter()
 
@@ -34,8 +35,9 @@ const CommonPageLayout: React.FunctionComponent<
   return (
     <div
       className={cn(
-        "mt-4 h-full w-full",
-        isMainPage() ? "md:container" : "container"
+        "mt-4 h-full w-full ",
+        isMainPage() ? "md:container" : "container",
+        className
       )}
     >
       <div className="flex items-center">
@@ -61,7 +63,9 @@ const CommonPageLayout: React.FunctionComponent<
               : "text-right"
           )}
         >
-          {title && <h1 className="mb-2 text-3xl font-bold">{title}</h1>}
+          {title && (
+            <h1 className="mb-2 text-3xl font-bold md:mt-[14px]">{title}</h1>
+          )}
         </div>
       </div>
 

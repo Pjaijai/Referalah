@@ -61,14 +61,14 @@ const SearchBar: React.FunctionComponent<ISearchSearchBarProps> = ({
   const { data: referralSortingOptions } = useReferralSortOptions()
 
   return (
-    <div className="md:mt-2 ">
+    <div className=" mt-10">
       <div className="hidden flex-col justify-center gap-8 md:flex ">
         <div className="grid grid-cols-3 gap-2">
           <TextInput
             onChange={onKeyWordsChange}
             value={keywords}
             frontIcon={<Icons.search size={18} className="text-slate-400" />}
-            inputClassName="bg-slate-100"
+            inputClassName="bg-slate-100 placeholder:text-slate-400"
             placeholder={t("search.keywords.placeholder")}
           />
           <div className="flex flex-row items-center justify-between">

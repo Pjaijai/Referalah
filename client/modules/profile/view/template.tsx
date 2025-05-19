@@ -274,7 +274,7 @@ const ViewProfileTemplate: React.FunctionComponent<
               {t("profile.view.introduction")}
             </h1>
 
-            <p className="border-1 mt-4 min-h-max overflow-hidden break-words rounded-lg bg-white p-8">
+            <p className="border-1 mt-4 min-h-max overflow-hidden whitespace-pre-line break-words rounded-lg bg-white p-8">
               {description}
             </p>
           </div>

@@ -13,6 +13,20 @@ import useGetMessageListByConversationUuid from "@/hooks/api/message/get-message
 import useUserStore from "@/hooks/state/user/store"
 
 // Mock the hooks and components
+jest.mock("firebase/remote-config", () => ({
+  getRemoteConfig: jest.fn(() => ({
+    settings: {
+      minimumFetchIntervalMillis: 3600000,
+    },
+  })),
+  fetchAndActivate: jest.fn(() => Promise.resolve(true)),
+  getValue: jest.fn(() => ({
+    asBoolean: jest.fn(() => false),
+    asString: jest.fn(() => ""),
+    asNumber: jest.fn(() => 0),
+  })),
+}))
+
 jest.mock("@/hooks/api/message/get-message-list-by-conversation-uuid")
 jest.mock("@/hooks/state/user/store")
 jest.mock("@/utils/services/supabase/config", () => ({
@@ -21,6 +35,7 @@ jest.mock("@/utils/services/supabase/config", () => ({
       on: jest.fn().mockReturnThis(),
       subscribe: jest.fn(),
     })),
+    getRemoteConfig: jest.fn(),
     removeChannel: jest.fn(),
   },
 }))

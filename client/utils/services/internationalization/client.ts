@@ -3,6 +3,8 @@
 // doc : https://next-international.vercel.app/docs
 import { createI18nClient } from "next-international/client"
 
+import { ELocale } from "@/types/common/enums/locale"
+
 export const {
   useI18n,
   useScopedI18n,
@@ -10,6 +12,6 @@ export const {
   useChangeLocale,
   useCurrentLocale,
 } = createI18nClient({
-  "en-ca": () => import("./messages/en-ca"),
-  "zh-hk": () => import("./messages/zh-hk"),
+  [ELocale.EN_CA]: () => import("./messages/en-ca"),
+  [ELocale.ZH_HK]: () => import("./messages/zh-hk"),
 })

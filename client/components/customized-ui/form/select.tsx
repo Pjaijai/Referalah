@@ -1,4 +1,5 @@
 import React from "react"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { cn } from "@/lib/utils"
 import {
@@ -26,6 +27,9 @@ interface IFormSelectProps extends IFormTextInputProps {
   isDisabled?: boolean
   triggerClassName?: string
   itemClassName?: string
+  labelClassName?: string
+  containerClassName?: string
+  isRequired?: boolean
 }
 
 const FormSelect: React.FunctionComponent<IFormSelectProps> = ({
@@ -39,14 +43,25 @@ const FormSelect: React.FunctionComponent<IFormSelectProps> = ({
   isDisabled,
   triggerClassName,
   itemClassName,
+  labelClassName,
+  containerClassName,
+  isRequired,
 }) => {
+  const t = useI18n()
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem>
-          <FormLabel>{label}</FormLabel>
+        <FormItem className={cn(containerClassName)}>
+          <div className="flex w-full flex-row items-center justify-between">
+            {label ? (
+              <FormLabel className={labelClassName}>
+                {label}
+                {isRequired && <span className="text-rose-600">*</span>}
+              </FormLabel>
+            ) : null}
+          </div>
           <Select
             onValueChange={field.onChange}
             defaultValue={defaultValue}
@@ -55,7 +70,11 @@ const FormSelect: React.FunctionComponent<IFormSelectProps> = ({
           >
             <FormControl>
               <SelectTrigger className={cn(triggerClassName)}>
-                <SelectValue placeholder={placeholder} />
+                {field.value ? (
+                  <SelectValue />
+                ) : (
+                  placeholder ?? t("general.please_select")
+                )}
               </SelectTrigger>
             </FormControl>
             <SelectContent className="max-h-[300px]">

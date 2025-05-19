@@ -61,6 +61,27 @@ export type Database = {
         }
         Relationships: []
       }
+      company: {
+        Row: {
+          created_at: string
+          id: number
+          logo_url: string | null
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          logo_url?: string | null
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          logo_url?: string | null
+          name?: string
+        }
+        Relationships: []
+      }
       config: {
         Row: {
           id: number
@@ -197,6 +218,38 @@ export type Database = {
         }
         Relationships: []
       }
+      fire: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: number
+          ref_uuid: string
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string
+          id?: number
+          ref_uuid: string
+          type: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: number
+          ref_uuid?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_fire_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["uuid"]
+          },
+        ]
+      }
       industry: {
         Row: {
           cantonese_name: string
@@ -220,6 +273,218 @@ export type Database = {
           value?: string
         }
         Relationships: []
+      }
+      job_journey: {
+        Row: {
+          application_submitted_date: string
+          company_id: number | null
+          company_name: string | null
+          created_at: string
+          created_by: string
+          description: string
+          fire_count: number
+          id: number
+          industry_uuid: string
+          job_level: string
+          job_type: string
+          last_step_status: string | null
+          last_step_status_updated_at: string | null
+          location_uuid: string
+          position_title: string
+          source: string
+          status: string
+          title: string
+          updated_at: string | null
+          uuid: string | null
+          visibility: string
+        }
+        Insert: {
+          application_submitted_date: string
+          company_id?: number | null
+          company_name?: string | null
+          created_at?: string
+          created_by: string
+          description: string
+          fire_count?: number
+          id?: number
+          industry_uuid: string
+          job_level: string
+          job_type: string
+          last_step_status?: string | null
+          last_step_status_updated_at?: string | null
+          location_uuid: string
+          position_title: string
+          source: string
+          status?: string
+          title: string
+          updated_at?: string | null
+          uuid?: string | null
+          visibility?: string
+        }
+        Update: {
+          application_submitted_date?: string
+          company_id?: number | null
+          company_name?: string | null
+          created_at?: string
+          created_by?: string
+          description?: string
+          fire_count?: number
+          id?: number
+          industry_uuid?: string
+          job_level?: string
+          job_type?: string
+          last_step_status?: string | null
+          last_step_status_updated_at?: string | null
+          location_uuid?: string
+          position_title?: string
+          source?: string
+          status?: string
+          title?: string
+          updated_at?: string | null
+          uuid?: string | null
+          visibility?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_journey_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "company"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_journey_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["uuid"]
+          },
+          {
+            foreignKeyName: "public_job_journey_industry_uuid_fkey"
+            columns: ["industry_uuid"]
+            isOneToOne: false
+            referencedRelation: "industry"
+            referencedColumns: ["uuid"]
+          },
+          {
+            foreignKeyName: "public_job_journey_location_uuid_fkey"
+            columns: ["location_uuid"]
+            isOneToOne: false
+            referencedRelation: "location"
+            referencedColumns: ["uuid"]
+          },
+        ]
+      }
+      job_journey_step: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: number
+          interview_location: string | null
+          interview_type: string | null
+          job_journey_uuid: string
+          position: number
+          remarks: string | null
+          step_date: string
+          step_type: string
+          updated_at: string | null
+          uuid: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: number
+          interview_location?: string | null
+          interview_type?: string | null
+          job_journey_uuid: string
+          position: number
+          remarks?: string | null
+          step_date: string
+          step_type: string
+          updated_at?: string | null
+          uuid?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: number
+          interview_location?: string | null
+          interview_type?: string | null
+          job_journey_uuid?: string
+          position?: number
+          remarks?: string | null
+          step_date?: string
+          step_type?: string
+          updated_at?: string | null
+          uuid?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_journey_step_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["uuid"]
+          },
+          {
+            foreignKeyName: "job_journey_step_job_journey_uuid_fkey"
+            columns: ["job_journey_uuid"]
+            isOneToOne: false
+            referencedRelation: "job_journey"
+            referencedColumns: ["uuid"]
+          },
+        ]
+      }
+      location: {
+        Row: {
+          cantonese_name: string
+          country_uuid: string | null
+          english_name: string
+          id: number
+          level: number
+          meta_data: Json
+          parent_uuid: string | null
+          uuid: string
+          value: string
+        }
+        Insert: {
+          cantonese_name: string
+          country_uuid?: string | null
+          english_name: string
+          id?: number
+          level: number
+          meta_data?: Json
+          parent_uuid?: string | null
+          uuid?: string
+          value: string
+        }
+        Update: {
+          cantonese_name?: string
+          country_uuid?: string | null
+          english_name?: string
+          id?: number
+          level?: number
+          meta_data?: Json
+          parent_uuid?: string | null
+          uuid?: string
+          value?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "location_country_uuid_fkey"
+            columns: ["country_uuid"]
+            isOneToOne: false
+            referencedRelation: "location"
+            referencedColumns: ["uuid"]
+          },
+          {
+            foreignKeyName: "location_parent_uuid_fkey"
+            columns: ["parent_uuid"]
+            isOneToOne: false
+            referencedRelation: "location"
+            referencedColumns: ["uuid"]
+          },
+        ]
       }
       message: {
         Row: {
@@ -297,6 +562,41 @@ export type Database = {
           },
           {
             foreignKeyName: "public_message_notification_queue_user_uuid_fkey"
+            columns: ["user_uuid"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["uuid"]
+          },
+        ]
+      }
+      notification: {
+        Row: {
+          created_at: string
+          data: Json
+          id: number
+          is_seen: boolean
+          type: string
+          user_uuid: string
+        }
+        Insert: {
+          created_at?: string
+          data: Json
+          id?: number
+          is_seen?: boolean
+          type: string
+          user_uuid: string
+        }
+        Update: {
+          created_at?: string
+          data?: Json
+          id?: number
+          is_seen?: boolean
+          type?: string
+          user_uuid?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notification_user_uuid_fkey"
             columns: ["user_uuid"]
             isOneToOne: false
             referencedRelation: "user"
@@ -647,12 +947,6 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      check_has_conversation_unseen: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          has_unseen: boolean
-        }[]
-      }
       check_user_status: {
         Args: {
           status_value: string

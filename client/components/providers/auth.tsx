@@ -2,10 +2,13 @@
 
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { getFiresByUserUuid } from "@/utils/common/api"
 import { supabase } from "@/utils/services/supabase/config"
 
+import { EFireType } from "@/types/common/enums/fire-type"
 import { EUserStatus } from "@/types/common/user-status"
-import useUserStore from "@/hooks/state/user/store"
+import useGetFiresByUserUuid from "@/hooks/api/fire/get-fires-by-user-uuid"
+import useUserStore, { TFiresRecord } from "@/hooks/state/user/store"
 import { useToast } from "@/components/ui/use-toast"
 
 interface IAuthProviderProps {
@@ -14,10 +17,13 @@ interface IAuthProviderProps {
 const AuthProvider: FunctionComponent<IAuthProviderProps> = ({ children }) => {
   const setUserState = useUserStore((state) => state.setUser)
   const reSetUserState = useUserStore((state) => state.reSetUser)
+  const setFires = useUserStore((state) => state.setFires)
   const [userUuid, setUserUuid] = useState<string | null>(null)
   const [accessToken, setAccessToken] = useState<string | null>(null)
   const router = useRouter()
   const { toast } = useToast()
+
+  const { data: fires } = useGetFiresByUserUuid(userUuid)
 
   useEffect(() => {
     const {
@@ -46,6 +52,17 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({ children }) => {
       authListener?.unsubscribe()
     }
   }, [accessToken, supabase, router])
+
+  useEffect(() => {
+    if (fires) {
+      const firesRecords: TFiresRecord[] = fires.map((f) => ({
+        type: EFireType.JOB_JOURNEY,
+        uuid: f.ref_uuid,
+      }))
+
+      setFires(firesRecords)
+    }
+  }, [fires])
 
   useEffect(() => {
     const fetchData = async () => {

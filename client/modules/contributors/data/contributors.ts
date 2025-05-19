@@ -2,12 +2,22 @@ import { IContributor } from "@/modules/contributors/types/contributor"
 
 const contributors: IContributor[] = [
   {
-    name: "Paul Wong (aka R1R69)",
+    name: "Paul Wong",
     links: {
       github: "https://github.com/Pjaijai",
       linkedin: "https://www.linkedin.com/in/paulwong169/",
     },
     contributedArea: ["software_development", "uiux_design"],
+    isActive: true,
+  },
+  {
+    name: "Helen Wong",
+    links: {
+      linkedin: "https://www.linkedin.com/in/uxhelenwong/",
+      website: "helenux.squarespace.com",
+    },
+    contributedArea: ["uiux_design"],
+    isActive: true,
   },
   {
     name: "Sonia Yeung",
@@ -151,14 +161,7 @@ const contributors: IContributor[] = [
     },
     contributedArea: ["uiux_design"],
   },
-  {
-    name: "Helen Wong",
-    links: {
-      linkedin: "https://www.linkedin.com/in/uxhelenwong/",
-      website: "helenux.squarespace.com",
-    },
-    contributedArea: ["uiux_design"],
-  },
+
   {
     name: "Selina Lam",
     links: {
