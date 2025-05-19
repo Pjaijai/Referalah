@@ -294,6 +294,10 @@ const CreateJobJourneyPageTemplate: React.FC<
     const { nextStep, prevStep, isLastStep, currentStep } =
       useJobJourneyFormContext()
 
+    const handleBackStep = () => {
+      prevStep()
+      window.scrollTo({ top: 0, behavior: "instant" })
+    }
     const handleNextStep = async () => {
       let isValid = false
 
@@ -315,6 +319,7 @@ const CreateJobJourneyPageTemplate: React.FC<
 
       if (isValid) {
         nextStep()
+        window.scrollTo({ top: 0, behavior: "instant" })
       }
     }
 
@@ -347,7 +352,7 @@ const CreateJobJourneyPageTemplate: React.FC<
                   <Button
                     type="button"
                     variant="ghost"
-                    onClick={prevStep}
+                    onClick={handleBackStep}
                     disabled={currentStep === 1}
                     size="sm"
                   >
