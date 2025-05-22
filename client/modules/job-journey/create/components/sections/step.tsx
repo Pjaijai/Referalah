@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useEffect } from "react"
 import StepCard from "@/modules/job-journey/create/components/cards/step/step"
 import SubSection from "@/modules/job-journey/create/components/sections/sub-section"
 import { useI18n } from "@/utils/services/internationalization/client"
@@ -12,7 +12,7 @@ import FormTextArea from "@/components/customized-ui/form/text-area"
 
 const StepSection: React.FC = () => {
   const t = useI18n()
-  const { control, watch } = useFormContext()
+  const { control, watch, setValue } = useFormContext()
   const stepsWatch = watch("steps")
   const applicationDateWatch = watch("applicationDate")
 
@@ -53,6 +53,11 @@ const StepSection: React.FC = () => {
       interviewType: null,
     })
   }
+  useEffect(() => {
+    if (applicationDateWatch && !stepsWatch[0].date) {
+      setValue("steps.0.date", applicationDateWatch)
+    }
+  }, [])
 
   return (
     <>
@@ -86,7 +91,6 @@ const StepSection: React.FC = () => {
             position={1}
             showRemoveButton={false}
             className="py-0"
-            isFirstStep={true}
           />
         </SubSection>
       </div>

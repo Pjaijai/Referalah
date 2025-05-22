@@ -17,7 +17,6 @@ interface IStepCardProps {
   onRemoveStep: (index: number) => void
   showRemoveButton?: boolean
   className?: string
-  isFirstStep?: boolean
 }
 
 const StepCard: React.FunctionComponent<IStepCardProps> = ({
@@ -26,7 +25,6 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
   onRemoveStep,
   className,
   showRemoveButton = true,
-  isFirstStep,
 }) => {
   const t = useI18n()
   const {
@@ -65,12 +63,6 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
   }
 
   const minDate = getMinDate()
-
-  useEffect(() => {
-    if (isFirstStep && !stepsWatch[0]?.date) {
-      setValue(`steps.${index}.date`, applicationDateWatch)
-    }
-  }, [])
 
   useEffect(() => {
     if (stepType !== "interview") {

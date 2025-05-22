@@ -234,7 +234,7 @@ const CreateJobJourneyPageTemplate: React.FC<
         applicationDate: new Date(),
         source: "",
         description: "",
-        steps: [{ type: "", date: new Date(), remarks: "" }],
+        steps: [{ type: "", date: undefined, remarks: "" }],
         newCompany: null,
         positionTitle: "",
       },
