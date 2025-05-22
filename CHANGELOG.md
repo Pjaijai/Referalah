@@ -2,116 +2,108 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [1.26.1](https://github.com/Pjaijai/Referalah/compare/v1.26.0...v1.26.1) (2025-05-19)
+### [1.26.1](https://github.com/Pjaijai/Referalah/compare/v1.26.0...v1.26.1) (2025-05-22)
+
+
+### Bug Fixes
+
+* fix unit test ([2b530ea](https://github.com/Pjaijai/Referalah/commit/2b530eaf7314cfd0f791aa3210df6752a62f0946))
 
 ## [1.26.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.26.0) (2025-05-19)
 
-
 ### Features
 
-* add ff ([#439](https://github.com/Pjaijai/Referalah/issues/439)) ([d3567dc](https://github.com/Pjaijai/Referalah/commit/d3567dc86023c989788db306cb876620beabc512))
-* add journy to mobile nav ([681280e](https://github.com/Pjaijai/Referalah/commit/681280efc40e744f09576e60bf9be90032452357))
-* add ui error handling for fire ([#430](https://github.com/Pjaijai/Referalah/issues/430)) ([f8883b9](https://github.com/Pjaijai/Referalah/commit/f8883b982519fb8c8f5d950d2168474c50c6adbd))
-* change icon and consolidate mobile nav ([420cd7b](https://github.com/Pjaijai/Referalah/commit/420cd7bd291d883721a32922a2bcbfe77f426a87))
-* remove chat unseen checking ([#428](https://github.com/Pjaijai/Referalah/issues/428)) ([865b8c6](https://github.com/Pjaijai/Referalah/commit/865b8c6887af67b2dd185e43dbaacaad8874caa7))
-* update company table ([#433](https://github.com/Pjaijai/Referalah/issues/433)) ([5eee588](https://github.com/Pjaijai/Referalah/commit/5eee5888f50efe95cfb2123abc9182298eac5f58))
-* **update contributor list:**  update contributor list ([eb1a8db](https://github.com/Pjaijai/Referalah/commit/eb1a8db07ddc323bb3791d45af83d35a2239dd0a))
-* update copy ([d79428b](https://github.com/Pjaijai/Referalah/commit/d79428bed492677bf11fd628122585fefa49f5f0))
-* update notification refech ([0df62c3](https://github.com/Pjaijai/Referalah/commit/0df62c3e3c108959e0ecbd401cd351f1c5558e93))
-* update step date validation ([a776262](https://github.com/Pjaijai/Referalah/commit/a7762624d28c6316cdabd01649d1e782f920b110))
-
+- add ff ([#439](https://github.com/Pjaijai/Referalah/issues/439)) ([d3567dc](https://github.com/Pjaijai/Referalah/commit/d3567dc86023c989788db306cb876620beabc512))
+- add journy to mobile nav ([681280e](https://github.com/Pjaijai/Referalah/commit/681280efc40e744f09576e60bf9be90032452357))
+- add ui error handling for fire ([#430](https://github.com/Pjaijai/Referalah/issues/430)) ([f8883b9](https://github.com/Pjaijai/Referalah/commit/f8883b982519fb8c8f5d950d2168474c50c6adbd))
+- change icon and consolidate mobile nav ([420cd7b](https://github.com/Pjaijai/Referalah/commit/420cd7bd291d883721a32922a2bcbfe77f426a87))
+- remove chat unseen checking ([#428](https://github.com/Pjaijai/Referalah/issues/428)) ([865b8c6](https://github.com/Pjaijai/Referalah/commit/865b8c6887af67b2dd185e43dbaacaad8874caa7))
+- update company table ([#433](https://github.com/Pjaijai/Referalah/issues/433)) ([5eee588](https://github.com/Pjaijai/Referalah/commit/5eee5888f50efe95cfb2123abc9182298eac5f58))
+- **update contributor list:** update contributor list ([eb1a8db](https://github.com/Pjaijai/Referalah/commit/eb1a8db07ddc323bb3791d45af83d35a2239dd0a))
+- update copy ([d79428b](https://github.com/Pjaijai/Referalah/commit/d79428bed492677bf11fd628122585fefa49f5f0))
+- update notification refech ([0df62c3](https://github.com/Pjaijai/Referalah/commit/0df62c3e3c108959e0ecbd401cd351f1c5558e93))
+- update step date validation ([a776262](https://github.com/Pjaijai/Referalah/commit/a7762624d28c6316cdabd01649d1e782f920b110))
 
 ### Bug Fixes
 
-* fix copy ([7e45f59](https://github.com/Pjaijai/Referalah/commit/7e45f59902a36f4a02badccee6340a0fa8ed4d28))
-* fix function text trim ([24a230c](https://github.com/Pjaijai/Referalah/commit/24a230c1a1755e61a3a58b31043301fa56635f18))
-* fix onsubmit and fix title card ([#435](https://github.com/Pjaijai/Referalah/issues/435)) ([4dccace](https://github.com/Pjaijai/Referalah/commit/4dccace6ff09a7f2c9d314653f750612187fe514))
-* fix view job journey ([07dbaa6](https://github.com/Pjaijai/Referalah/commit/07dbaa6200b03e741defe43525f8ca3d89c9f2b6))
-* fox title ([a8fdd24](https://github.com/Pjaijai/Referalah/commit/a8fdd24226ff47d9da518e91e4924dca8eb49364))
-* step change scroll to top ([c1fbb00](https://github.com/Pjaijai/Referalah/commit/c1fbb004836e68308fe78b5564c1898b51ae06d9))
-* temp remove cache in search job journey page ([6b01b4b](https://github.com/Pjaijai/Referalah/commit/6b01b4bcd55a5e59e8db5607a59d1bdcd30572d9))
+- fix copy ([7e45f59](https://github.com/Pjaijai/Referalah/commit/7e45f59902a36f4a02badccee6340a0fa8ed4d28))
+- fix function text trim ([24a230c](https://github.com/Pjaijai/Referalah/commit/24a230c1a1755e61a3a58b31043301fa56635f18))
+- fix onsubmit and fix title card ([#435](https://github.com/Pjaijai/Referalah/issues/435)) ([4dccace](https://github.com/Pjaijai/Referalah/commit/4dccace6ff09a7f2c9d314653f750612187fe514))
+- fix view job journey ([07dbaa6](https://github.com/Pjaijai/Referalah/commit/07dbaa6200b03e741defe43525f8ca3d89c9f2b6))
+- fox title ([a8fdd24](https://github.com/Pjaijai/Referalah/commit/a8fdd24226ff47d9da518e91e4924dca8eb49364))
+- step change scroll to top ([c1fbb00](https://github.com/Pjaijai/Referalah/commit/c1fbb004836e68308fe78b5564c1898b51ae06d9))
+- temp remove cache in search job journey page ([6b01b4b](https://github.com/Pjaijai/Referalah/commit/6b01b4bcd55a5e59e8db5607a59d1bdcd30572d9))
 
 ### [1.25.1](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.25.1) (2025-01-31)
 
-
 ### Bug Fixes
 
-* fix label ([#423](https://github.com/Pjaijai/Referalah/issues/423)) ([f23baed](https://github.com/Pjaijai/Referalah/commit/f23baed5c54aced587b24503b00fb82ef1f918f0))
-* fix scroll cannot fix ([#422](https://github.com/Pjaijai/Referalah/issues/422)) ([eba4ee7](https://github.com/Pjaijai/Referalah/commit/eba4ee7888ca4ef3cd32779fbf7334a6e0fbeafd))
+- fix label ([#423](https://github.com/Pjaijai/Referalah/issues/423)) ([f23baed](https://github.com/Pjaijai/Referalah/commit/f23baed5c54aced587b24503b00fb82ef1f918f0))
+- fix scroll cannot fix ([#422](https://github.com/Pjaijai/Referalah/issues/422)) ([eba4ee7](https://github.com/Pjaijai/Referalah/commit/eba4ee7888ca4ef3cd32779fbf7334a6e0fbeafd))
 
 ## [1.25.0](https://github.com/Pjaijai/Referalah/compare/v1.24.0...v1.25.0) (2025-01-29)
 
-
 ### Features
 
-* add view count to post ([#419](https://github.com/Pjaijai/Referalah/issues/419)) ([6fff3ad](https://github.com/Pjaijai/Referalah/commit/6fff3ad6cc5031d428c18611dbc6692f0ec664db))
+- add view count to post ([#419](https://github.com/Pjaijai/Referalah/issues/419)) ([6fff3ad](https://github.com/Pjaijai/Referalah/commit/6fff3ad6cc5031d428c18611dbc6692f0ec664db))
 
 ## [1.24.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.24.0) (2025-01-22)
 
-
 ### Features
 
-* block user to update post when it is closed ([#417](https://github.com/Pjaijai/Referalah/issues/417)) ([0e7f800](https://github.com/Pjaijai/Referalah/commit/0e7f800e384262e6ebb419d0e25c0fa05ab398e1))
+- block user to update post when it is closed ([#417](https://github.com/Pjaijai/Referalah/issues/417)) ([0e7f800](https://github.com/Pjaijai/Referalah/commit/0e7f800e384262e6ebb419d0e25c0fa05ab398e1))
 
 ### [1.23.4](https://github.com/Pjaijai/Referalah/compare/v1.23.3...v1.23.4) (2025-01-20)
 
-
 ### Bug Fixes
 
-* fix input disabeld ([214b97a](https://github.com/Pjaijai/Referalah/commit/214b97ab696111f56a70b38bb3d396d5f5c4e307))
-* fix post update funcitonm ([656f60a](https://github.com/Pjaijai/Referalah/commit/656f60a70528ca7cd10d8b84f43c4bfb4517ff92))
+- fix input disabeld ([214b97a](https://github.com/Pjaijai/Referalah/commit/214b97ab696111f56a70b38bb3d396d5f5c4e307))
+- fix post update funcitonm ([656f60a](https://github.com/Pjaijai/Referalah/commit/656f60a70528ca7cd10d8b84f43c4bfb4517ff92))
 
 ### [1.23.3](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.23.3) (2025-01-17)
 
-
 ### Bug Fixes
 
-* fix not sliding thumb not showing ([#407](https://github.com/Pjaijai/Referalah/issues/407)) ([03beb4d](https://github.com/Pjaijai/Referalah/commit/03beb4dde7aebd95c2efa29a8cc830b2d4625b6c))
-* fix post type tag ([#412](https://github.com/Pjaijai/Referalah/issues/412)) ([8d757f1](https://github.com/Pjaijai/Referalah/commit/8d757f1f91bab912b5a6a7f6da6f5d9b2781d0dc))
-* fix text area tyyle ([#411](https://github.com/Pjaijai/Referalah/issues/411)) ([c1c38cb](https://github.com/Pjaijai/Referalah/commit/c1c38cbd4ccf907ada27d0318282d36cff0ddcbc))
-* mahe usrecreatedAt support display years ([#410](https://github.com/Pjaijai/Referalah/issues/410)) ([fc73d98](https://github.com/Pjaijai/Referalah/commit/fc73d989f3df1a14a0bc9d7bbea99120a7588048))
+- fix not sliding thumb not showing ([#407](https://github.com/Pjaijai/Referalah/issues/407)) ([03beb4d](https://github.com/Pjaijai/Referalah/commit/03beb4dde7aebd95c2efa29a8cc830b2d4625b6c))
+- fix post type tag ([#412](https://github.com/Pjaijai/Referalah/issues/412)) ([8d757f1](https://github.com/Pjaijai/Referalah/commit/8d757f1f91bab912b5a6a7f6da6f5d9b2781d0dc))
+- fix text area tyyle ([#411](https://github.com/Pjaijai/Referalah/issues/411)) ([c1c38cb](https://github.com/Pjaijai/Referalah/commit/c1c38cbd4ccf907ada27d0318282d36cff0ddcbc))
+- mahe usrecreatedAt support display years ([#410](https://github.com/Pjaijai/Referalah/issues/410)) ([fc73d98](https://github.com/Pjaijai/Referalah/commit/fc73d989f3df1a14a0bc9d7bbea99120a7588048))
 
 ### [1.23.2](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.23.2) (2025-01-13)
 
-
 ### Bug Fixes
 
-* fix logic ([#404](https://github.com/Pjaijai/Referalah/issues/404)) ([a70b780](https://github.com/Pjaijai/Referalah/commit/a70b78024e8f73c292d232721309377053b3681e))
-* fix message insert ([#406](https://github.com/Pjaijai/Referalah/issues/406)) ([5d48a68](https://github.com/Pjaijai/Referalah/commit/5d48a682b8b2ad117362872722d11010f77a0243))
-* fix not sliding thumb not showing ([#407](https://github.com/Pjaijai/Referalah/issues/407)) ([5c70140](https://github.com/Pjaijai/Referalah/commit/5c701406064b35a6a2f8f6c19daf384ab2f61d4b))
+- fix logic ([#404](https://github.com/Pjaijai/Referalah/issues/404)) ([a70b780](https://github.com/Pjaijai/Referalah/commit/a70b78024e8f73c292d232721309377053b3681e))
+- fix message insert ([#406](https://github.com/Pjaijai/Referalah/issues/406)) ([5d48a68](https://github.com/Pjaijai/Referalah/commit/5d48a682b8b2ad117362872722d11010f77a0243))
+- fix not sliding thumb not showing ([#407](https://github.com/Pjaijai/Referalah/issues/407)) ([5c70140](https://github.com/Pjaijai/Referalah/commit/5c701406064b35a6a2f8f6c19daf384ab2f61d4b))
 
 ### [1.23.1](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.23.1) (2025-01-12)
 
-
 ### Bug Fixes
 
-* fix logic ([#404](https://github.com/Pjaijai/Referalah/issues/404)) ([f449de1](https://github.com/Pjaijai/Referalah/commit/f449de19401830a5475345ddaeb74460fe30ef60))
+- fix logic ([#404](https://github.com/Pjaijai/Referalah/issues/404)) ([f449de1](https://github.com/Pjaijai/Referalah/commit/f449de19401830a5475345ddaeb74460fe30ef60))
 
 ## [1.23.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.23.0) (2025-01-10)
 
-
 ### Features
 
-* better meta data ([#398](https://github.com/Pjaijai/Referalah/issues/398)) ([62aa6de](https://github.com/Pjaijai/Referalah/commit/62aa6debe73296fdbef6f5bad7962e34c9c5f8ce))
-
+- better meta data ([#398](https://github.com/Pjaijai/Referalah/issues/398)) ([62aa6de](https://github.com/Pjaijai/Referalah/commit/62aa6debe73296fdbef6f5bad7962e34c9c5f8ce))
 
 ### Bug Fixes
 
-* fix clicking history button in profile page to user own history page ([#397](https://github.com/Pjaijai/Referalah/issues/397)) ([cafc939](https://github.com/Pjaijai/Referalah/commit/cafc9395c3f1c60a082f90b0f843adeba1b4cd6c))
-* fix input and text area text size ([#399](https://github.com/Pjaijai/Referalah/issues/399)) ([4e4a362](https://github.com/Pjaijai/Referalah/commit/4e4a36234a834f27a2be77e44f604b012b883836))
+- fix clicking history button in profile page to user own history page ([#397](https://github.com/Pjaijai/Referalah/issues/397)) ([cafc939](https://github.com/Pjaijai/Referalah/commit/cafc9395c3f1c60a082f90b0f843adeba1b4cd6c))
+- fix input and text area text size ([#399](https://github.com/Pjaijai/Referalah/issues/399)) ([4e4a362](https://github.com/Pjaijai/Referalah/commit/4e4a36234a834f27a2be77e44f604b012b883836))
 
 ## [1.22.0](https://github.com/Pjaijai/Referalah/compare/v1.20.8...v1.22.0) (2025-01-10)
 
-
 ### Features
 
-* better meta data ([#398](https://github.com/Pjaijai/Referalah/issues/398)) ([ddc42ae](https://github.com/Pjaijai/Referalah/commit/ddc42ae488cb14a86eb522f33507e9909dbdb73f))
-
+- better meta data ([#398](https://github.com/Pjaijai/Referalah/issues/398)) ([ddc42ae](https://github.com/Pjaijai/Referalah/commit/ddc42ae488cb14a86eb522f33507e9909dbdb73f))
 
 ### Bug Fixes
 
-* fix clicking history button in profile page to user own history page ([#397](https://github.com/Pjaijai/Referalah/issues/397)) ([655666d](https://github.com/Pjaijai/Referalah/commit/655666ddce269e746285225cf0e271f07374726d))
-* fix input and text area text size ([#399](https://github.com/Pjaijai/Referalah/issues/399)) ([281a22d](https://github.com/Pjaijai/Referalah/commit/281a22d6d3228106aefb7750e7af5fe395468792))
+- fix clicking history button in profile page to user own history page ([#397](https://github.com/Pjaijai/Referalah/issues/397)) ([655666d](https://github.com/Pjaijai/Referalah/commit/655666ddce269e746285225cf0e271f07374726d))
+- fix input and text area text size ([#399](https://github.com/Pjaijai/Referalah/issues/399)) ([281a22d](https://github.com/Pjaijai/Referalah/commit/281a22d6d3228106aefb7750e7af5fe395468792))
 
 ### [1.21.1](https://github.com/Pjaijai/Referalah/compare/v1.5.0...v1.20.8) (2024-12-31)
 
