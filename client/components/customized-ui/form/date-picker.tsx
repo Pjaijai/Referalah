@@ -50,7 +50,7 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
   errorMsg,
 }) => {
   const locate = useCurrentLocale()
-
+  const today = new Date()
   return (
     <FormField
       control={control}
@@ -91,6 +91,7 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
                 selected={field.value}
                 onSelect={field.onChange}
                 disabled={disabledDates}
+                defaultMonth={field.value ? new Date(field.value) : today}
                 initialFocus
               />
             </PopoverContent>
