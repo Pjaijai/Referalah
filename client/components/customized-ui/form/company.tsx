@@ -85,7 +85,6 @@ const FormCompanyCombobox: React.FC<CompanyComboboxProps> = ({
     "filter.combobox.company.create"
   )} "${searchTerm}"`
 
-  console.log(1232, options)
   return (
     <div className="flex flex-col space-x-2">
       <BaseCombobox
@@ -125,7 +124,7 @@ const FormCompanyCombobox: React.FC<CompanyComboboxProps> = ({
                 options.map((option) => (
                   <div
                     key={option.id}
-                    className="flex flex-row items-center gap-2 rounded-lg p-2 text-slate-400 hover:bg-slate-100"
+                    className="flex flex-row items-center gap-2 rounded-lg p-2 text-slate-600 hover:bg-slate-100"
                     onClick={() => handleOptionSelect(option.id)}
                   >
                     <CompanyAvatar
@@ -134,7 +133,7 @@ const FormCompanyCombobox: React.FC<CompanyComboboxProps> = ({
                       className="h-6 w-6"
                       iconClassName="h-4 w-4"
                     />
-                    <div>{option.name}</div>
+                    <div className="text-slate-500">{option.name}</div>
                   </div>
                 ))}
 

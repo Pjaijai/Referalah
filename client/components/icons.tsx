@@ -118,7 +118,34 @@ export const Icons = {
   eyeOff: EyeOff,
   coffee: Coffee,
   search: Search,
-
+  circleCheckBig: ({
+    width = 24,
+    height = 24,
+    className,
+  }: {
+    width?: number
+    height?: number
+    className?: string
+  }) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={cn(
+        "lucide lucide-circle-check-big-icon lucide-circle-check-big",
+        className
+      )}
+    >
+      <path d="M21.801 10A10 10 0 1 1 17 3.335" />
+      <path d="m9 11 3 3L22 4" />
+    </svg>
+  ),
   scroll: Scroll,
   trashBin: Trash2,
   buildings: Building2Icon,

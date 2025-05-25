@@ -8,7 +8,7 @@ const getStepTypeIcon = (type: EStepType | "apply"): React.ReactNode => {
     case EStepType.TAKE_HOME_CHALLENGE:
       return <Icons.pencil width={16} height={16} />
     case EStepType.OFFER:
-      return <Icons.thumbsUp width={16} height={16} />
+      return <Icons.circleCheckBig width={16} height={16} />
     case EStepType.REJECTED:
       return <Icons.cross width={16} height={16} />
     case EStepType.WITHDRAWN:

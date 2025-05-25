@@ -121,7 +121,7 @@ const CompanyCombobox: React.FC<CompanyComboboxProps> = ({
                       className="h-6 w-6"
                       iconClassName="h-4 w-4"
                     />
-                    <div>{option.name}</div>
+                    <div className="text-slate-500">{option.name}</div>
                   </div>
                 ))}
             </div>
