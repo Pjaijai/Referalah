@@ -10,6 +10,7 @@ type TCompanyAvatarProps = {
   url?: string
   alt: string | null
   className?: string
+  iconClassName?: string
 }
 const CompanyAvatar = (props: TCompanyAvatarProps) => {
   return (
@@ -17,7 +18,7 @@ const CompanyAvatar = (props: TCompanyAvatarProps) => {
       <BaseAvatar
         url={props.url}
         alt={props.alt}
-        fallBack={<Icons.buildings />}
+        fallBack={<Icons.buildings className={props.iconClassName} />}
         size="medium"
         className={cn("h-[100px] w-[100px]", props.className)}
       />

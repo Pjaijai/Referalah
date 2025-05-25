@@ -125,13 +125,14 @@ const FormCompanyCombobox: React.FC<CompanyComboboxProps> = ({
                 options.map((option) => (
                   <div
                     key={option.id}
-                    className="flex flex-row items-center gap-2 rounded-lg p-2 text-slate-600 hover:bg-slate-100"
+                    className="flex flex-row items-center gap-2 rounded-lg p-2 text-slate-400 hover:bg-slate-100"
                     onClick={() => handleOptionSelect(option.id)}
                   >
                     <CompanyAvatar
                       url={option.meta_data?.logo_url ?? undefined}
                       alt={`${option.name} logo`}
-                      className="h-8 w-8"
+                      className="h-6 w-6"
+                      iconClassName="h-4 w-4"
                     />
                     <div>{option.name}</div>
                   </div>

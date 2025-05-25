@@ -96,7 +96,7 @@ const JobJourneyCard: React.FC<TJobJourneyCardProps> = ({
 
       {/* Company and Job Title */}
       <div className="mb-4 flex flex-row items-center gap-5">
-        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-lg text-gray-400">
+        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-lg text-slate-400">
           <CompanyAvatar
             aria-label={`${companyName} logo`}
             url={logoUrl}

@@ -181,11 +181,14 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
   return (
     <article className="w-full">
       <header className="flex flex-row items-center gap-7">
-        <CompanyAvatar
-          aria-label={`${companyName} logo`}
-          url={jobJourney.company?.meta_data?.logo_url ?? undefined}
-          alt={`${companyName} logo`}
-        />
+        <span className="text-slate-400">
+          <CompanyAvatar
+            aria-label={`${companyName} logo`}
+            url={jobJourney.company?.meta_data?.logo_url ?? undefined}
+            alt={`${companyName} logo`}
+          />
+        </span>
+
         <div className="flex flex-col">
           <p className="text-base font-normal text-slate-700">{companyName}</p>
           <p className="text-xl font-semibold text-slate-800">{jobTitle}</p>
