@@ -114,7 +114,7 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
                 control={control}
                 labelClassName="text-slate-500"
                 containerClassName="basis-full content-start"
-                disabledDates={(date) => date < minDate}
+                disabledDates={(date) => date < minDate || date > new Date()}
                 description={t("job_journey.form.date.description")}
                 descriptionClassName="text-indigo-400 text-xs"
                 isRequired

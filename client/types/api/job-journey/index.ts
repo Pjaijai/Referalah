@@ -1,3 +1,4 @@
+import { TCompanyMetaData } from "@/types/api/company"
 import { IFilterMeta } from "@/types/api/request/search/filter-meta"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { TLocationData } from "@/types/api/response/location"
@@ -64,7 +65,7 @@ export type TJobJourney = {
   company: {
     id: number
     name: string
-    logo_url: string
+    meta_data: TCompanyMetaData
   } | null
   user: {
     username: string

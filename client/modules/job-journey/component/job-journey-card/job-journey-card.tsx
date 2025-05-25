@@ -2,6 +2,7 @@ import React from "react"
 
 import "dayjs/locale/zh-hk"
 import { useRouter } from "next/navigation"
+import CompanyAvatar from "@/modules/job-journey/component/avatar/company"
 import getStepTypeStyle from "@/modules/job-journey/helpers/get-step-type-style"
 import useLocationLabel from "@/modules/job-journey/hooks/location-label"
 import formatVagueDateHelper from "@/utils/common/helpers/format/vague-date"
@@ -38,6 +39,7 @@ export type TJobJourneyCardProps = {
   title: string
   uuid: string
   locationList: TLocationData[]
+  logoUrl?: string
 }
 
 const JobJourneyCard: React.FC<TJobJourneyCardProps> = ({
@@ -55,6 +57,7 @@ const JobJourneyCard: React.FC<TJobJourneyCardProps> = ({
   description,
   uuid,
   locationList,
+  logoUrl,
 }) => {
   const locale = useCurrentLocale()
   const router = useRouter()
@@ -94,7 +97,12 @@ const JobJourneyCard: React.FC<TJobJourneyCardProps> = ({
       {/* Company and Job Title */}
       <div className="mb-4 flex flex-row items-center gap-5">
         <span className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-lg text-gray-400">
-          <Icons.buildings />
+          <CompanyAvatar
+            aria-label={`${companyName} logo`}
+            url={logoUrl}
+            alt={`${companyName} logo`}
+            className="h-14 w-14"
+          />
         </span>
 
         <div className="flex max-w-[calc(100%-5rem)] flex-col">

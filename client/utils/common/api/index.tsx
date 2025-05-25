@@ -2,7 +2,7 @@ import { fireStore } from "@/utils/services/firebase/config"
 import { supabase } from "@/utils/services/supabase/config"
 import { doc, getDoc, increment, setDoc, updateDoc } from "firebase/firestore"
 
-import { TCompany, TCompanyData } from "@/types/api/company"
+import { TCompanyData } from "@/types/api/company"
 import { TCreateFireRequest, TFireData } from "@/types/api/fire"
 import {
   TCreateJobJourneyRequest,
@@ -1107,7 +1107,8 @@ export const getJobJourneyByUuidWithSteps = async (
         company_id,
         company:company_id (
           id,
-          name
+          name,
+          meta_data
         ),
         company_name,
         position_title,
@@ -1199,7 +1200,8 @@ export const searchJobJourney = async ({
         company_id,
         company:company_id (
           id,
-          name
+          name,
+          meta_data
         ),
         company_name,
         position_title,
@@ -1309,7 +1311,7 @@ export const searchCompanyByName = async ({
   searchTerm,
 }: {
   searchTerm: string | null
-}): Promise<TCompany[]> => {
+}): Promise<TCompanyData[]> => {
   try {
     // Validate input
     if (!searchTerm || typeof searchTerm !== "string") {
@@ -1326,12 +1328,7 @@ export const searchCompanyByName = async ({
     if (error) throw error
     if (!data) return []
 
-    return data.map((company) => ({
-      id: company.id,
-      name: company.name,
-      logoUrl: company.logo_url,
-      createdAt: company.created_at,
-    })) satisfies TCompany[]
+    return data
   } catch (error) {
     throw error
   }

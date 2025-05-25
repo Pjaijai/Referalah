@@ -136,6 +136,7 @@ const SearchJobJourneyPageTemplate: React.FunctionComponent<
                   uuid={data.uuid}
                   location={data.location}
                   locationList={locationList}
+                  logoUrl={data.company?.meta_data?.logo_url ?? undefined}
                 />
               )
             })}
