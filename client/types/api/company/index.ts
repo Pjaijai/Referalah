@@ -1,14 +1,11 @@
 export type TCompanyData = {
   id: number
   name: string
-  logo_url: string | null
-  created_at?: string
+  meta_data: TCompanyMetaData
 }
 export type TCompanyResponse = TCompanyData
 
-export type TCompany = {
-  id: number
-  name: string
-  logoUrl: string | null
-  createdAt?: string
+export type TCompanyMetaData = {
+  domain: string | null
+  logo_url: string | null
 }

@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
+import CompanyAvatar from "@/modules/job-journey/component/avatar/company"
 import { useI18n } from "@/utils/services/internationalization/client"
 
 import { cn } from "@/lib/utils"
@@ -111,10 +112,15 @@ const CompanyCombobox: React.FC<CompanyComboboxProps> = ({
                 options.map((option) => (
                   <div
                     key={option.id}
-                    className="flex flex-row items-center rounded-lg p-2 text-slate-600 hover:bg-slate-100"
+                    className="flex flex-row items-center gap-2 rounded-lg p-2 text-slate-600 hover:bg-slate-100"
                     onClick={() => handleOptionSelect(option.id)}
                   >
-                    {option.name}
+                    <CompanyAvatar
+                      url={option.meta_data?.logo_url ?? undefined}
+                      alt={`${option.name} logo`}
+                      className="h-8 w-8"
+                    />
+                    <div>{option.name}</div>
                   </div>
                 ))}
             </div>
