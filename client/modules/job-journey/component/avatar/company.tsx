@@ -2,18 +2,25 @@
 
 import React from "react"
 
+import { cn } from "@/lib/utils"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import { Icons } from "@/components/icons"
 
-const CompanyAvatar = () => {
+type TCompanyAvatarProps = {
+  url?: string
+  alt: string | null
+  className?: string
+  iconClassName?: string
+}
+const CompanyAvatar = (props: TCompanyAvatarProps) => {
   return (
     <div>
       <BaseAvatar
-        url={"photoUrl"}
-        alt={"username"}
-        fallBack={<Icons.buildings />}
+        url={props.url}
+        alt={props.alt}
+        fallBack={<Icons.buildings className={props.iconClassName} />}
         size="medium"
-        className="h-[100px] w-[100px] "
+        className={cn("h-[100px] w-[100px]", props.className)}
       />
     </div>
   )
