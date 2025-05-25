@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.27.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.27.0) (2025-05-25)
+
+
+### Features
+
+* diplay company lcogo ([#442](https://github.com/Pjaijai/Referalah/issues/442)) ([503835f](https://github.com/Pjaijai/Referalah/commit/503835fe61a5bb488c53f8a6939d16a0af237a63))
+
 ### [1.26.1](https://github.com/Pjaijai/Referalah/compare/v1.26.0...v1.26.1) (2025-05-22)
 
 
