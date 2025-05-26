@@ -2,21 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.27.2](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.27.2) (2025-05-26)
+
+### Bug Fixes
+
+- diable fire if already fireed ([c163019](https://github.com/Pjaijai/Referalah/commit/c163019dd0c64993b742c147fe9bd8ee891be41a))
+
 ### [1.27.1](https://github.com/Pjaijai/Referalah/compare/v1.27.0...v1.27.1) (2025-05-25)
 
 ## [1.27.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.27.0) (2025-05-25)
 
-
 ### Features
 
-* diplay company lcogo ([#442](https://github.com/Pjaijai/Referalah/issues/442)) ([503835f](https://github.com/Pjaijai/Referalah/commit/503835fe61a5bb488c53f8a6939d16a0af237a63))
+- diplay company lcogo ([#442](https://github.com/Pjaijai/Referalah/issues/442)) ([503835f](https://github.com/Pjaijai/Referalah/commit/503835fe61a5bb488c53f8a6939d16a0af237a63))
 
 ### [1.26.1](https://github.com/Pjaijai/Referalah/compare/v1.26.0...v1.26.1) (2025-05-22)
 
-
 ### Bug Fixes
 
-* fix unit test ([2b530ea](https://github.com/Pjaijai/Referalah/commit/2b530eaf7314cfd0f791aa3210df6752a62f0946))
+- fix unit test ([2b530ea](https://github.com/Pjaijai/Referalah/commit/2b530eaf7314cfd0f791aa3210df6752a62f0946))
 
 ## [1.26.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.26.0) (2025-05-19)
 
