@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.27.3](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.27.3) (2025-05-26)
+
+
+### Bug Fixes
+
+* disable fire button if disabled ([0d65eb7](https://github.com/Pjaijai/Referalah/commit/0d65eb7692e8e1596f195426cd84606ba09cb860))
+* fix linkedin icon' ([b382a3d](https://github.com/Pjaijai/Referalah/commit/b382a3d7e64b40281455bf04f082975f5c8165d9))
+
 ### [1.27.2](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.27.2) (2025-05-26)
 
 ### Bug Fixes
