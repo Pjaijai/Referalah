@@ -215,15 +215,13 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
       </section>
 
       <section className="mt-3 flex justify-end gap-[10px]">
-        <div
-          className={cn(
-            "flex flex-row items-center justify-center gap-[10px]",
-            !isAlreadyFired && "cursor-pointer"
-          )}
+        <button
+          className={cn("flex flex-row items-center justify-center gap-[10px]")}
           onClick={handleClick}
           role="button"
           aria-label={isAlreadyFired ? "Already liked" : "Like this job"}
           tabIndex={0}
+          disabled={isAlreadyFired}
           onKeyDown={(e) => e.key === "Enter" && handleClick()}
         >
           <FireIcon isFire={isAlreadyFired} />
@@ -235,7 +233,7 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
           >
             {fireCount}
           </p>
-        </div>
+        </button>
       </section>
 
       <section className="mt-[10px] rounded-md bg-slate-100">
