@@ -111,11 +111,7 @@
     "typescript": "5.3.3"
   },
   "engines": {
-    "npm": ">=9.0.0 <10.0.0",
-    "node": ">=20.0.0"
-  },
-  "volta": {
-    "node": "20.5.1"
+    "node": "22.x"
   },
   "repository": {
     "type": "git",
