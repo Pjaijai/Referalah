@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.27.4](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.27.4) (2025-05-30)
+
+
+### Bug Fixes
+
+* fix linkedin icon' ([5c624cc](https://github.com/Pjaijai/Referalah/commit/5c624cc2d2c5a5f22e6b84c8f3e619d1646e878b))
+
 ### [1.27.3](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.27.3) (2025-05-26)
 
 
