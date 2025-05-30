@@ -6,7 +6,10 @@ import { getI18n } from "@/utils/services/internationalization/server"
 import { siteConfig } from "@/config/site"
 import CommonPageLayout from "@/components/layouts/common"
 
-export const metadata = siteConfig.page.searchJobJourney.metadata
+export const metadata = {
+  ...siteConfig.page.searchJobJourney.metadata,
+  robots: "index, follow",
+}
 export const revalidate = 0
 
 const SearchJobJourneyPage = async () => {

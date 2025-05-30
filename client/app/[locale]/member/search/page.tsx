@@ -10,7 +10,10 @@ import { getI18n } from "@/utils/services/internationalization/server"
 import { siteConfig } from "@/config/site"
 import CommonPageLayout from "@/components/layouts/common"
 
-export const metadata = siteConfig.page.searchMember.metadata
+export const metadata = {
+  ...siteConfig.page.searchMember.metadata,
+  robots: "index, follow",
+}
 
 export const revalidate = 60 * 60 * 24
 

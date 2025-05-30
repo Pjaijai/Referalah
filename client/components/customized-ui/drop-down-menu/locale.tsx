@@ -38,9 +38,9 @@ const LocaleDropDownMenu = () => {
         <p>({currentLocale?.lang})</p>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {options.map((opt) => {
+        {options.map((opt, index) => {
           return (
-            <DropdownMenuItem>
+            <DropdownMenuItem key={index}>
               <button
                 onClick={(e) => handleLocalChange(e, opt.value)}
                 className="flex w-full flex-row items-center justify-start gap-1"

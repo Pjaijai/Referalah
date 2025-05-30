@@ -11,14 +11,16 @@ export async function generateMetadata({
   params: { userUuid: string }
 }) {
   const { userUuid } = params
+  const t = await getI18n()
+
   try {
     const res = await getUserProfile(userUuid)
     return {
-      title: res.username + "街招記錄",
+      title: `${res.username} | ${t("page.post_history")}`,
     }
   } catch (e) {
     return {
-      title: "街招記錄",
+      title: t("page.post_history"),
       description: "街招記錄",
     }
   }

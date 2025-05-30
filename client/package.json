@@ -52,7 +52,7 @@
     "@types/three": "0.162.0",
     "@types/uuid": "^9.0.3",
     "@vercel/analytics": "^1.0.2",
-    "@vercel/speed-insights": "1.0.9",
+    "@vercel/speed-insights": "^1.2.0",
     "class-variance-authority": "0.4.0",
     "clsx": "1.2.1",
     "cmdk": "1.0.0",
@@ -65,15 +65,15 @@
     "jest-environment-jsdom": "29.7.0",
     "jest-runner-groups": "2.2.0",
     "lucide-react": "0.302.0",
-    "next": "13.4.8",
+    "next": "14.2.29",
     "next-international": "1.1.4",
     "next-pwa": "5.6.0",
     "next-themes": "0.2.1",
     "prettier-plugin-tailwindcss": "0.5.6",
-    "react": "18.2.0",
+    "react": "18",
     "react-copy-to-clipboard": "5.1.0",
     "react-day-picker": "8.10.1",
-    "react-dom": "18.2.0",
+    "react-dom": "18",
     "react-dropzone": "14.2.3",
     "react-hook-form": "^7.46.1",
     "react-infinite-scroll-component": "6.1.0",
@@ -98,7 +98,7 @@
     "@typescript-eslint/parser": "5.61.0",
     "autoprefixer": "10.4.14",
     "eslint": "8.44.0",
-    "eslint-config-next": "13.0.0",
+    "eslint-config-next": "14.2.29",
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-react": "7.32.2",
     "eslint-plugin-tailwindcss": "3.13.0",
@@ -111,11 +111,7 @@
     "typescript": "5.3.3"
   },
   "engines": {
-    "npm": ">=9.0.0 <10.0.0",
-    "node": ">=20.0.0"
-  },
-  "volta": {
-    "node": "20.5.1"
+    "node": "22.x"
   },
   "repository": {
     "type": "git",

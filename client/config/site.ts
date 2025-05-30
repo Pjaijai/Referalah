@@ -1,10 +1,12 @@
+const logoUrl = "/Referalah-512.png"
 export type SiteConfig = typeof siteConfig
 
 const METADATA_DEFAULT_DESCRIPTION =
   "海外港人平台。An overseas Hongkongers platform to build their connections and local community."
 
+const NAME = "Referalah"
 export const siteConfig = {
-  name: "Referalah",
+  name: NAME,
   description: "海外港人平台。",
   page: {
     main: {
@@ -170,5 +172,47 @@ export const siteConfig = {
   links: {
     instagram: "https://instagram.com/referalah?igshid=NGVhN2U2NjQ0Yg==",
     github: "https://github.com/Pjaijai/Referalah",
+  },
+
+  defaultMetaData: {
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_WEB_URL || "https://referalah.com"
+    ),
+    title: {
+      default: `${NAME} | 海外港人平台`,
+      template: `%s | ${NAME}`,
+    },
+    description: METADATA_DEFAULT_DESCRIPTION,
+    keywords: [
+      "Referalah",
+      "Hong Kong job referrals",
+      "Hong Kong career networking",
+      "professional networking Hong Kong",
+      "job search platform Hong Kong",
+      "Hong Kong professional connections",
+      "overseas Hong Kong job seekers",
+      "香港工作推薦",
+      "香港職業網絡",
+      "香港人求職",
+      "career opportunities Hong Kong",
+      "networking platform for Hongkongers",
+    ],
+    icons: {
+      icon: "/favicon.ico",
+    },
+    openGraph: {
+      type: "website",
+      locale: "en_ca",
+      url: process.env.NEXT_PUBLIC_WEB_URL,
+      siteName: NAME,
+      title: `${NAME} | 海外港人平台`,
+      description: METADATA_DEFAULT_DESCRIPTION,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${NAME} | 海外港人平台`,
+      description: METADATA_DEFAULT_DESCRIPTION,
+      creator: "@referalah",
+    },
   },
 }

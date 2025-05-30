@@ -8,12 +8,13 @@ import {
 import { getI18n } from "@/utils/services/internationalization/server"
 
 import { EPostType } from "@/types/common/post-type"
+import { siteConfig } from "@/config/site"
 import CommonPageLayout from "@/components/layouts/common"
 
 export async function generateMetadata({
   params,
 }: {
-  params: { uuid: string }
+  params: { locale: string; uuid: string }
 }) {
   const { uuid } = params
 
@@ -21,7 +22,11 @@ export async function generateMetadata({
   const t = await getI18n()
 
   // Fetch post data
-  const { type: postType, job_title: jobTitle } = await getPostByUuid(uuid)
+  const {
+    type: postType,
+    job_title: jobTitle,
+    description,
+  } = await getPostByUuid(uuid)
 
   // Define type title based on post type
   let typeTitle: string = ""
@@ -43,8 +48,24 @@ export async function generateMetadata({
       break
   }
 
+  const title = `${jobTitle} | ${typeTitle} | ${t("page.post")}`
+
   return {
-    title: `${jobTitle} | ${typeTitle} | ${t("page.post")}`,
+    title: title,
+    description: description,
+    robots: "index, follow",
+    openGraph: {
+      ...siteConfig.defaultMetaData.openGraph,
+      locale: params.locale,
+      url: `${process.env.NEXT_PUBLIC_WEB_URL}${params.locale}/${siteConfig.page.viewPost.href}/${params.uuid}`,
+      title: title,
+      description: description,
+    },
+    twitter: {
+      ...siteConfig.defaultMetaData.twitter,
+      title: title,
+      description: description,
+    },
   }
 }
 
