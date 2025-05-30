@@ -9,6 +9,7 @@ import { getI18n } from "@/utils/services/internationalization/server"
 
 import { TJobJourneyWithSteps } from "@/types/api/job-journey"
 import { TLocationData } from "@/types/api/response/location"
+import { siteConfig } from "@/config/site"
 import CommonPageLayout from "@/components/layouts/common"
 
 interface ViewJobJourneyPageProps {
@@ -19,20 +20,37 @@ export const revalidate = 60 * 60 * 24
 export async function generateMetadata({
   params,
 }: {
-  params: { uuid: string }
+  params: { locale: string; uuid: string }
 }) {
   const t = await getI18n()
   const jobJourney = await getJobJourneyByUuidWithSteps(params.uuid)
+
+  const title = `${jobJourney.title} | ${jobJourney.position_title} | ${
+    jobJourney.company?.name || jobJourney.company_name
+  } | ${t("page.job_journey")}`
   return {
-    title: `${jobJourney.title} | ${jobJourney.position_title} | ${
-      jobJourney.company?.name || jobJourney.company_name
-    } | ${t("page.job_journey")}`,
+    ...siteConfig.defaultMetaData,
+    title: title,
+    description: jobJourney.description,
+    robots: "index, follow",
+    openGraph: {
+      ...siteConfig.defaultMetaData.openGraph,
+      locale: params.locale,
+      url: `${process.env.NEXT_PUBLIC_WEB_URL}${params.locale}/${siteConfig.page.viewJobJourney.href}/${params.uuid}`,
+      title: title,
+      description: jobJourney.description,
+    },
+    twitter: {
+      ...siteConfig.defaultMetaData.twitter,
+      title: title,
+      description: jobJourney.description,
+    },
   }
 }
 
 const ViewJobJourneyPage = async ({ params }: ViewJobJourneyPageProps) => {
   const { uuid } = params
-  const t = await getI18n()
+
   if (!uuid) {
     return (
       <CommonPageLayout>
