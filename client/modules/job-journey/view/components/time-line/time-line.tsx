@@ -31,12 +31,12 @@ export default function StepsTimeline({
             {/* Vertical Line: Connects from badge center to next badge */}
             {index < sortedSteps.length - 1 && (
               <div
-                className="absolute left-[14px] top-4 w-[1.5px] border-l-[1.5px] border-dashed border-gray-300"
+                className="absolute left-[14px] top-4  hidden w-[1.5px] border-l-[1.5px] border-dashed border-gray-300 md:block"
                 style={{ height: "calc(100% + 2rem)" }}
               />
             )}
             <div
-              className="absolute left-[14px] top-4 w-[1.5px] border-l-[1.5px] border-dashed border-gray-300"
+              className="left-[14px] top-4 hidden w-[1.5px]  border-l-[1.5px] border-dashed border-gray-300 md:absolute md:block"
               style={{ height: "calc(100% + 2rem)" }}
             />
           </div>
