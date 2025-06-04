@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.27.5](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.27.5) (2025-06-04)
+
+
+### Bug Fixes
+
+* adding last update at in contact function ([#450](https://github.com/Pjaijai/Referalah/issues/450)) ([cd3e5f2](https://github.com/Pjaijai/Referalah/commit/cd3e5f246a999a7d2b77c7512d0df317015829cb))
+* set conversation unseen ([bd3aa89](https://github.com/Pjaijai/Referalah/commit/bd3aa899dc7b5ff4b7ffdd41f4b3d4f8f8d1aac0))
+
 ### [1.27.4](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.27.4) (2025-05-30)
 
 
