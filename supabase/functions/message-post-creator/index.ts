@@ -156,6 +156,7 @@ serve(async (req: any) => {
           .update({
             last_message_uuid: insertMessageRes.uuid,
             last_updated_at: insertMessageRes.created_at,
+            is_receiver_seen: false,
           })
           .eq("uuid", insertConversationRes.uuid)
 
@@ -186,6 +187,7 @@ serve(async (req: any) => {
         .update({
           last_message_uuid: message.uuid,
           last_updated_at: message.created_at,
+          is_receiver_seen: false,
         })
         .eq("uuid", conversation[0].uuid)
         .select()
