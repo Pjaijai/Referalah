@@ -54,7 +54,7 @@ export default function StepCard({
       {/* Number Badge - Anchor for the line */}
       <div
         className={cn(
-          "z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs  ",
+          "z-10 hidden h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs md:flex  ",
           isHighlighted && !rejected
             ? getStepTypeStyle(stepType)
             : "border border-slate-200"
