@@ -134,7 +134,10 @@ serve(async (req: any) => {
       const { updateConversationRes, error: updateConversationError } =
         await server
           .from("conversation")
-          .update({ last_message_uuid: insertMessageRes.uuid })
+          .update({
+            last_message_uuid: insertMessageRes.uuid,
+            last_updated_at: insertMessageRes.created_at,
+          })
           .eq("uuid", insertConversationRes.uuid)
 
       console.log(
@@ -162,7 +165,10 @@ serve(async (req: any) => {
 
       const { data, error } = await server
         .from("conversation")
-        .update({ last_message_uuid: message.uuid })
+        .update({
+          last_message_uuid: message.uuid,
+          last_updated_at: message.created_at,
+        })
         .eq("uuid", conversation[0].uuid)
         .select()
         .single()
