@@ -22,6 +22,7 @@ export async function generateMetadata({
     return {
       title: t("page.post_history"),
       description: "街招記錄",
+      robots: "noindex, nofollow",
     }
   }
 }
