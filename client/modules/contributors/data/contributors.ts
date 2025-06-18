@@ -24,7 +24,6 @@ const contributors: IContributor[] = [
     links: {
       github: "https://github.com/marukosy124",
       linkedin: "https://www.linkedin.com/in/sonia-yeung-sy",
-      website: "https://www.soniayeung.com/",
     },
     contributedArea: ["software_development", "uiux_design"],
   },
