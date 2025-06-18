@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.28.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.28.0) (2025-06-18)
+
+
+### Features
+
+* remove flag ([#452](https://github.com/Pjaijai/Referalah/issues/452)) ([8b14076](https://github.com/Pjaijai/Referalah/commit/8b14076526367375f49128977d5082e87e48cb1c))
+
 ### [1.27.5](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.27.5) (2025-06-04)
 
 
