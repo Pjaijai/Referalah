@@ -23,6 +23,7 @@ const StepIndicator: React.FC = () => {
   const stepTitles = [
     t("job_journey.section.basic_info"),
     t("job_journey.section.journey_description"),
+    t("job_journey.section.preview"),
   ]
   const previousStep = usePrevious(currentStep) // Track the previous step
 
@@ -78,7 +79,12 @@ const StepIndicator: React.FC = () => {
   }
 
   return (
-    <div className="hidden items-start justify-center space-x-12 bg-white px-10 pt-10 md:flex">
+    <div
+      className={cn(
+        "hidden items-start justify-center space-x-12  px-10 pt-10 md:flex",
+        currentStep === 1 ? " bg-white" : "bg-transparent"
+      )}
+    >
       {Array.from({ length: totalSteps }, (_, index) => {
         const stepNumber = index + 1
         const isCurrentStep = currentStep === stepNumber
