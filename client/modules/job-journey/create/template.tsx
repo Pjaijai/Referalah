@@ -4,6 +4,7 @@ import React from "react"
 import { useRouter } from "next/navigation"
 import StepIndicator from "@/modules/job-journey/component/step-indicator/step-indicator"
 import BasicInfoSection from "@/modules/job-journey/create/components/sections/basic-info"
+import PreviewSection from "@/modules/job-journey/create/components/sections/preview"
 import StepSection from "@/modules/job-journey/create/components/sections/step"
 import {
   JobJourneyFormProvider,
@@ -291,7 +292,7 @@ const CreateJobJourneyPageTemplate: React.FC<
       })
     }
 
-    const { nextStep, prevStep, isLastStep, currentStep } =
+    const { nextStep, prevStep, isLastStep, currentStep, totalSteps } =
       useJobJourneyFormContext()
 
     const handleBackStep = () => {
@@ -323,6 +324,8 @@ const CreateJobJourneyPageTemplate: React.FC<
       }
     }
 
+    const formValues = form.getValues()
+
     return (
       <FormProvider {...form}>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -333,14 +336,20 @@ const CreateJobJourneyPageTemplate: React.FC<
             />
           )}
           {currentStep === 2 && <StepSection />}
+          {currentStep === 3 && (
+            <PreviewSection
+              jobJourney={formValues}
+              locationList={locationData}
+            />
+          )}
           <div
             className={cn(
               " flex flex-col justify-between gap-4 bg-white px-10 pb-10 pt-6",
-              currentStep === 2 && "bg-transparent"
+              (currentStep === 2 || currentStep === 3) && "bg-transparent"
             )}
           >
             {isError && (
-              <div className="w-fll t text-center text-destructive ">
+              <div className="w-full text-center text-destructive">
                 {t("general.error.title")}
                 {t("general.error.description")}
               </div>
@@ -392,7 +401,7 @@ const CreateJobJourneyPageTemplate: React.FC<
   }
 
   return (
-    <JobJourneyFormProvider>
+    <JobJourneyFormProvider totalSteps={3}>
       <div className="mx-auto w-full  ">
         <StepIndicator />
         <FormContent />

@@ -416,6 +416,7 @@ export default {
     section: {
       basic_info: "Basic Information",
       journey_description: "Journey Description",
+      preview: "Preview",
     },
     general: {
       step: "Step",

@@ -382,6 +382,7 @@ export default {
     section: {
       basic_info: "基本資料",
       journey_description: "職途詳情",
+      preview: "預覽",
     },
     general: {
       step: "階段",

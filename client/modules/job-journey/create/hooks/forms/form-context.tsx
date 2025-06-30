@@ -14,10 +14,11 @@ const JobJourneyFormContext = createContext<
 
 export const JobJourneyFormProvider = ({
   children,
+  totalSteps = 2,
 }: {
   children: ReactNode
+  totalSteps?: number
 }) => {
-  const totalSteps = 2
   const [currentStep, setCurrentStep] = useState(1)
 
   const nextStep = () => {
