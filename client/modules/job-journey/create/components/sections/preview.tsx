@@ -57,7 +57,7 @@ const PreviewSection: React.FC<PreviewSectionProps> = ({
     job_level: jobJourney.jobLevel,
     source: jobJourney.source,
     description: jobJourney.description,
-    title: "jobJourney.title",
+    title: jobJourney.title,
     location: jobJourney.location,
     // Add other necessary mappings if needed
   }
@@ -71,7 +71,7 @@ const PreviewSection: React.FC<PreviewSectionProps> = ({
           isPreviewMode={true}
         />
       </div>
-      {/* <div className=" md:flex"> */}
+
       <div className="flex flex-col gap-64   md:gap-[170px] ">
         <Button
           className="flex flex-row justify-center gap-1 bg-white p-3  text-sm  text-slate-500"
@@ -89,7 +89,6 @@ const PreviewSection: React.FC<PreviewSectionProps> = ({
           <Icons.pencil size={16} className="text-base" />
           <span className="hidden md:block">{t("general.edit")}</span>
         </Button>
-        {/* </div> */}
       </div>
     </div>
   )
