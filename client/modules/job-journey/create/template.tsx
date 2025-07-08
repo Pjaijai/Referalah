@@ -403,18 +403,17 @@ const CreateJobJourneyPageTemplate: React.FC<
               )}
 
               {isLastStep && (
-                <div className="absolute bottom-0 left-0 flex h-fit w-full flex-col items-center justify-around bg-indigo-50  py-4 md:flex-row md:px-20">
+                <div className="absolute bottom-0 left-0  flex h-fit w-full flex-col items-center justify-around bg-indigo-50 py-4  md:flex-row md:px-20">
                   <div />
                   <p className="text-indigo-600 ">
-                    You are in preview mode. Check confirm to submit your
-                    journey.
+                    {t("job_journey.form.preview_mode_and_confirm")}
                   </p>
                   <Button
                     variant={"theme"}
                     type="submit"
                     disabled={isCreateLoading || isSuccess}
                     size={"lg"}
-                    className="px-14 py-3 text-sm"
+                    className="mt-4 px-14 py-3 text-sm  md:mt-0"
                   >
                     {t("general.confirm")}
                   </Button>
