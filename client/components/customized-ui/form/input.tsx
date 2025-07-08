@@ -23,6 +23,7 @@ export interface IFormTextInputProps {
   onFocus?: React.FocusEventHandler<HTMLInputElement>
   onBlur?: React.FocusEventHandler<HTMLInputElement>
   isRequired?: boolean
+  isDisabled?: boolean
 }
 
 const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
@@ -37,6 +38,7 @@ const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
   onFocus,
   onBlur,
   isRequired,
+  isDisabled,
 }) => {
   return (
     <FormField
@@ -65,6 +67,7 @@ const FormTextInput: React.FunctionComponent<IFormTextInputProps> = ({
                 type={type || "text"}
                 {...field}
                 onBlur={onBlur}
+                disabled={isDisabled}
               />
               {Icon && (
                 <div className="absolute right-2 top-1/2 -translate-y-1/2">
