@@ -4,6 +4,7 @@ import React from "react"
 import { useRouter } from "next/navigation"
 import StepIndicator from "@/modules/job-journey/component/step-indicator/step-indicator"
 import BasicInfoSection from "@/modules/job-journey/create/components/sections/basic-info"
+import PreviewSection from "@/modules/job-journey/create/components/sections/preview"
 import StepSection from "@/modules/job-journey/create/components/sections/step"
 import {
   JobJourneyFormProvider,
@@ -22,6 +23,7 @@ import { cn } from "@/lib/utils"
 import { useCreateJobJourney } from "@/hooks/api/job-journey/job-journey"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
+import CommonPageLayout from "@/components/layouts/common"
 
 export interface IStep {
   type: string
@@ -291,7 +293,7 @@ const CreateJobJourneyPageTemplate: React.FC<
       })
     }
 
-    const { nextStep, prevStep, isLastStep, currentStep } =
+    const { nextStep, prevStep, currentStep, isLastStep } =
       useJobJourneyFormContext()
 
     const handleBackStep = () => {
@@ -324,79 +326,110 @@ const CreateJobJourneyPageTemplate: React.FC<
     }
 
     return (
-      <FormProvider {...form}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {currentStep === 1 && (
-            <BasicInfoSection
-              industryData={industryData}
-              locationData={locationData}
-            />
-          )}
-          {currentStep === 2 && <StepSection />}
-          <div
-            className={cn(
-              " flex flex-col justify-between gap-4 bg-white px-10 pb-10 pt-6",
-              currentStep === 2 && "bg-transparent"
+      <CommonPageLayout
+        title={t("page.create_job_journey")}
+        className={cn(" mb-12 max-w-full", isLastStep && " mb-0 ")}
+        titleClassName={cn(isLastStep ? "hidden" : "block")}
+      >
+        <StepIndicator />
+        <FormProvider {...form}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {currentStep === 1 && (
+              <BasicInfoSection
+                industryData={industryData}
+                locationData={locationData}
+              />
             )}
-          >
-            {isError && (
-              <div className="w-fll t text-center text-destructive ">
-                {t("general.error.title")}
-                {t("general.error.description")}
-              </div>
+            {currentStep === 2 && <StepSection />}
+            {currentStep === 3 && (
+              <PreviewSection
+                jobJourney={form.getValues()}
+                locationList={locationData}
+              />
             )}
+            <div
+              className={cn(
+                " flex flex-col justify-between gap-4 bg-white px-10 pb-10 pt-6",
+                currentStep >= 2 && "bg-transparent"
+              )}
+            >
+              {isError && (
+                <div className="w-fll t text-center text-destructive ">
+                  {t("general.error.title")}
+                  {t("general.error.description")}
+                </div>
+              )}
 
-            <div className={"flex w-full flex-row justify-end"}>
-              <div className="flex flex-row justify-end">
-                {currentStep !== 1 && (
+              {!isLastStep && (
+                <div className={"flex w-full flex-row justify-end"}>
+                  <div className="flex flex-row justify-end">
+                    {currentStep !== 1 && (
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        onClick={handleBackStep}
+                        disabled={currentStep === 1}
+                        size="sm"
+                      >
+                        {t("general.back")}
+                      </Button>
+                    )}
+
+                    <Button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        if (isLastStep) {
+                          handleSubmit(onSubmit)()
+                        } else {
+                          handleNextStep()
+                        }
+                      }}
+                      variant={isLastStep ? "theme" : "themeSecondary"}
+                      size="sm"
+                      className={cn(
+                        !isLastStep && " border-indigo-600 hover:bg-indigo-50"
+                      )}
+                      disabled={isCreateLoading || isSuccess}
+                    >
+                      {isLastStep
+                        ? t("form.general.submit")
+                        : isCreateLoading || isSuccess
+                        ? t("general.wait")
+                        : t("form.general.next")}
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {isLastStep && (
+                <div className="absolute bottom-0 left-0 flex h-fit w-full flex-col items-center justify-around bg-indigo-50  py-4 md:flex-row md:px-20">
+                  <div />
+                  <p className="text-indigo-600 ">
+                    You are in preview mode. Check confirm to submit your
+                    journey.
+                  </p>
                   <Button
-                    type="button"
-                    variant="ghost"
-                    onClick={handleBackStep}
-                    disabled={currentStep === 1}
-                    size="sm"
+                    variant={"theme"}
+                    type="submit"
+                    disabled={isCreateLoading || isSuccess}
+                    size={"lg"}
+                    className="px-14 py-3 text-sm"
                   >
-                    {t("general.back")}
+                    {t("general.confirm")}
                   </Button>
-                )}
-
-                <Button
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    if (isLastStep) {
-                      handleSubmit(onSubmit)()
-                    } else {
-                      handleNextStep()
-                    }
-                  }}
-                  variant={isLastStep ? "theme" : "themeSecondary"}
-                  size="sm"
-                  className={cn(
-                    !isLastStep && " border-indigo-600 hover:bg-indigo-50"
-                  )}
-                  disabled={isCreateLoading || isSuccess}
-                >
-                  {isLastStep
-                    ? t("form.general.submit")
-                    : isCreateLoading || isSuccess
-                    ? t("general.wait")
-                    : t("form.general.next")}
-                </Button>
-              </div>
+                </div>
+              )}
             </div>
-          </div>
-        </form>
-      </FormProvider>
+          </form>
+        </FormProvider>
+      </CommonPageLayout>
     )
   }
 
   return (
     <JobJourneyFormProvider>
-      <div className="mx-auto w-full  ">
-        <StepIndicator />
-        <FormContent />
-      </div>
+      <FormContent />
     </JobJourneyFormProvider>
   )
 }

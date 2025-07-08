@@ -11,11 +11,18 @@ interface CommonPageLayout {
   title?: string
   titlePosition?: "left" | "middle" | "right"
   className?: string
+  titleClassName?: string
 }
 
 const CommonPageLayout: React.FunctionComponent<
   PropsWithChildren<CommonPageLayout>
-> = ({ title, children, titlePosition = "left", className }) => {
+> = ({
+  title,
+  children,
+  titlePosition = "left",
+  className,
+  titleClassName,
+}) => {
   const pathname = usePathname()
   const router = useRouter()
 
@@ -64,7 +71,14 @@ const CommonPageLayout: React.FunctionComponent<
           )}
         >
           {title && (
-            <h1 className="mb-2 text-3xl font-bold md:mt-[14px]">{title}</h1>
+            <h1
+              className={cn(
+                "mb-2 text-3xl font-bold md:mt-[14px]",
+                titleClassName
+              )}
+            >
+              {title}
+            </h1>
           )}
         </div>
       </div>
