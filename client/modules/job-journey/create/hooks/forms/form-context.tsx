@@ -6,6 +6,7 @@ interface JobJourneyFormContextType {
   prevStep: () => void
   totalSteps: number
   isLastStep: boolean
+  goToStep: (step: number) => void
 }
 
 const JobJourneyFormContext = createContext<
@@ -17,7 +18,7 @@ export const JobJourneyFormProvider = ({
 }: {
   children: ReactNode
 }) => {
-  const totalSteps = 2
+  const totalSteps = 3
   const [currentStep, setCurrentStep] = useState(1)
 
   const nextStep = () => {
@@ -32,12 +33,25 @@ export const JobJourneyFormProvider = ({
     }
   }
 
+  const goToStep = (step: number) => {
+    if (step >= 1 && step <= totalSteps) {
+      setCurrentStep(step)
+    }
+  }
+
   // Compute isLastStep based on currentStep and totalSteps
   const isLastStep = currentStep === totalSteps
 
   return (
     <JobJourneyFormContext.Provider
-      value={{ currentStep, nextStep, prevStep, totalSteps, isLastStep }}
+      value={{
+        currentStep,
+        nextStep,
+        prevStep,
+        totalSteps,
+        isLastStep,
+        goToStep,
+      }}
     >
       {children}
     </JobJourneyFormContext.Provider>

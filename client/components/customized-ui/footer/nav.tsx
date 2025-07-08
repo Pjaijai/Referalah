@@ -19,6 +19,9 @@ const NavFooter = () => {
     siteConfig.page.editProfile.href,
   ]
 
+  const noMargin = [siteConfig.page.createJobJourney.href]
+
+  const notMargin = noMargin.some((path) => pathname.includes(path))
   const noShowFooter = hideFooterPageList.some((path) =>
     pathname.includes(path)
   )
@@ -27,7 +30,8 @@ const NavFooter = () => {
       className={cn(
         noShowFooter
           ? "hidden"
-          : "z-10 mt-12 flex flex-col items-center justify-between gap-2 border-t-2 bg-black px-4 py-2 text-white md:flex-row md:bg-slate-50 md:text-muted-foreground"
+          : "z-10  flex flex-col items-center justify-between gap-2 border-t-2 bg-black px-4 py-2 text-white md:flex-row md:bg-slate-50 md:text-muted-foreground",
+        notMargin ? "mt-0" : "mt-12"
       )}
     >
       <div className="flex flex-row-reverse  gap-[60px] ">
