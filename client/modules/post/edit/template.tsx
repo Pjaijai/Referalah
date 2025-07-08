@@ -335,12 +335,14 @@ const EditPostPageTemplate: React.FunctionComponent<
             control={form.control}
             label={t("general.company_name")}
             name="companyName"
+            isDisabled
           />
 
           <FormTextInput
             control={form.control}
             label={t("general.job_title")}
             name="jobTitle"
+            isDisabled
           />
 
           <FormTextArea
