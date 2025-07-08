@@ -378,6 +378,7 @@ export default {
       description_placeholder: "可以在喺到分享一啲建議，點樣準備同回顧思考",
       step_remarks_placeholder: "有冇咩感想或者諗法？",
       date_error_message: "日期前過上一個(時光機?)",
+      preview_mode_and_confirm: "你而家喺預覽模式。確認冇問題，就撳確認掣啦！",
     },
     section: {
       basic_info: "基本資料",

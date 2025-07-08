@@ -19,7 +19,7 @@ function usePrevious(value: number) {
 
 const StepIndicator: React.FC = () => {
   const t = useI18n()
-  const { currentStep, totalSteps } = useJobJourneyFormContext()
+  const { currentStep, totalSteps, isLastStep } = useJobJourneyFormContext()
   const stepTitles = [
     t("job_journey.section.basic_info"),
     t("job_journey.section.journey_description"),
@@ -77,9 +77,10 @@ const StepIndicator: React.FC = () => {
     }, // Transition back to gray-200 on go back
   }
 
+  if (isLastStep) return null // Hide the step indicator on the last step
   return (
     <div className="hidden items-start justify-center space-x-12 bg-white px-10 pt-10 md:flex">
-      {Array.from({ length: totalSteps }, (_, index) => {
+      {Array.from({ length: 2 }, (_, index) => {
         const stepNumber = index + 1
         const isCurrentStep = currentStep === stepNumber
         const isPreviousStep = currentStep > stepNumber
@@ -137,7 +138,7 @@ const StepIndicator: React.FC = () => {
               </motion.span>
             </div>
             {/* Connecting Line (Always Visible with Color Animation) */}
-            {!isLastStep && (
+            {stepNumber <= 1 && (
               <motion.div
                 className="absolute top-1/4 h-[1px] -translate-y-1/4"
                 style={{
