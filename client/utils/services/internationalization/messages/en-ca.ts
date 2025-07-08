@@ -412,6 +412,8 @@ export default {
         "This could include tips, preparation advice, and personal thoughts",
       step_remarks_placeholder: "Any takeaways or feelings? ",
       date_error_message: "Cannot be earlier than last one (｡ŏ_ŏ)",
+      preview_mode_and_confirm:
+        "You are in preview mode. Check confirm to submit your journey.",
     },
     section: {
       basic_info: "Basic Information",
