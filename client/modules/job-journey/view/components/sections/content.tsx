@@ -36,7 +36,7 @@ const ContentSection = ({
   jobJourney,
   locationList,
   isPreviewMode = false,
-}: IContentSectionProps & {}) => {
+}: IContentSectionProps) => {
   const t = useI18n()
   const descRef = useRef<HTMLDivElement>(null)
   const { mutate: createFire } = useCreateFire()
