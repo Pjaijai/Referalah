@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.30.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.30.0) (2025-07-15)
+
+
+### Features
+
+* disable company and job title fields ([#456](https://github.com/Pjaijai/Referalah/issues/456)) ([6cbd006](https://github.com/Pjaijai/Referalah/commit/6cbd006587dad086401fd097f2d227c49c3c5c89))
+
+
+### Bug Fixes
+
+* fix post create submit button disbale timing ([f04aa83](https://github.com/Pjaijai/Referalah/commit/f04aa8344f53f0b9f9a8b91a95fdf6018d4772fa))
+
 ## [1.29.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.29.0) (2025-07-15)
 
 
