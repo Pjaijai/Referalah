@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.29.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.29.0) (2025-07-15)
+
+
+### Features
+
+* disable company and job title fields ([#456](https://github.com/Pjaijai/Referalah/issues/456)) ([4a60daf](https://github.com/Pjaijai/Referalah/commit/4a60dafa54125e1f7c0833cd5d99859a4be75c2e))
+* remove flag ([#452](https://github.com/Pjaijai/Referalah/issues/452)) ([8b14076](https://github.com/Pjaijai/Referalah/commit/8b14076526367375f49128977d5082e87e48cb1c))
+
 ## [1.28.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.28.0) (2025-06-18)
 
 
