@@ -78,6 +78,13 @@ const CreateJobJourneyPageTemplate: React.FC<
             .max(1000, {
               message: "Company name cannot exceed 1000 characters",
             }),
+          url: z
+            .string()
+            .url({ message: t("validation.link.not_valid") })
+            .max(2000, {
+              message: t("validation.text.maximum_length", { count: 2000 }),
+            })
+            .optional(),
         })
         .nullable(),
       industry: z
