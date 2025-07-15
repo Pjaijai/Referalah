@@ -270,14 +270,12 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
             router.push(`${siteConfig.page.viewPost.href}/${res.uuid}`)
           },
           onError: () => {
+            setIsSubmitting(false)
             return toast({
               title: t("general.error.title"),
               description: t("general.error.description"),
               variant: "destructive",
             })
-          },
-          onSettled: () => {
-            setIsSubmitting(false)
           },
         }
       )
