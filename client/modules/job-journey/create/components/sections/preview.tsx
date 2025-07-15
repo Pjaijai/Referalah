@@ -26,7 +26,7 @@ const PreviewSection: React.FC<PreviewSectionProps> = ({
     uuid: "preview-mode",
     fire_count: 0,
     job_journey_step: (jobJourney.steps || []).map(
-      (step: Step, idx: number) => ({
+      (step: any, idx: number) => ({
         id: idx + 1,
         position: idx + 1,
         step_date: step.date
