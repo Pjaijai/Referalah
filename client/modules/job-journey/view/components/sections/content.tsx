@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import CompanyAvatar from "@/modules/job-journey/component/avatar/company"
 import useLocationLabel from "@/modules/job-journey/hooks/location-label"
@@ -11,10 +11,9 @@ import {
   useI18n,
 } from "@/utils/services/internationalization/client"
 
-import { TJobJourneyStep, TJobJourneyWithSteps } from "@/types/api/job-journey"
+import { TJobJourneyWithSteps } from "@/types/api/job-journey"
 import { TLocationData } from "@/types/api/response/location"
 import { EFireType } from "@/types/common/enums/fire-type"
-import { EStepType } from "@/types/common/enums/step-type"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { useCreateFire } from "@/hooks/api/fire/create-fire"
@@ -30,10 +29,16 @@ import { Icons } from "@/components/icons"
 type IContentSectionProps = {
   jobJourney: TJobJourneyWithSteps
   locationList: TLocationData[]
+  isPreviewMode?: boolean
 }
 
-const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
+const ContentSection = ({
+  jobJourney,
+  locationList,
+  isPreviewMode = false,
+}: IContentSectionProps) => {
   const t = useI18n()
+  const descRef = useRef<HTMLDivElement>(null)
   const { mutate: createFire } = useCreateFire()
   const locale = useCurrentLocale()
   const jobTypeOptions = useJobTypeOptions()
@@ -73,7 +78,7 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
           </ToastAction>
         ),
       })
-    if (isAlreadyFired) return
+    if (isAlreadyFired || isPreviewMode) return
 
     setIsFire(true)
     setFireCount((prev) => prev + 1)
@@ -195,7 +200,7 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
         </div>
       </header>
 
-      <section className="mt-[30px] flex flex-col gap-y-2 md:grid md:grid-cols-3">
+      <section className="mt-[30px] flex flex-col gap-y-2  md:grid md:grid-cols-3">
         {infoList.map((data) => (
           <div className="flex flex-row gap-1 text-sm" key={data.title}>
             <div className="flex flex-row items-center justify-start gap-[10px] md:col-span-1">
@@ -221,7 +226,7 @@ const ContentSection = ({ jobJourney, locationList }: IContentSectionProps) => {
           role="button"
           aria-label={isAlreadyFired ? "Already liked" : "Like this job"}
           tabIndex={0}
-          disabled={isAlreadyFired}
+          disabled={isAlreadyFired || isPreviewMode}
           onKeyDown={(e) => e.key === "Enter" && handleClick()}
         >
           <FireIcon isFire={isAlreadyFired} />

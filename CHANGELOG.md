@@ -2,35 +2,48 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [1.28.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.28.0) (2025-06-18)
-
+## [1.30.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.30.0) (2025-07-15)
 
 ### Features
 
-* remove flag ([#452](https://github.com/Pjaijai/Referalah/issues/452)) ([8b14076](https://github.com/Pjaijai/Referalah/commit/8b14076526367375f49128977d5082e87e48cb1c))
+- disable company and job title fields ([#456](https://github.com/Pjaijai/Referalah/issues/456)) ([6cbd006](https://github.com/Pjaijai/Referalah/commit/6cbd006587dad086401fd097f2d227c49c3c5c89))
+
+### Bug Fixes
+
+- fix post create submit button disbale timing ([f04aa83](https://github.com/Pjaijai/Referalah/commit/f04aa8344f53f0b9f9a8b91a95fdf6018d4772fa))
+
+## [1.29.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.29.0) (2025-07-15)
+
+### Features
+
+- disable company and job title fields ([#456](https://github.com/Pjaijai/Referalah/issues/456)) ([4a60daf](https://github.com/Pjaijai/Referalah/commit/4a60dafa54125e1f7c0833cd5d99859a4be75c2e))
+- remove flag ([#452](https://github.com/Pjaijai/Referalah/issues/452)) ([8b14076](https://github.com/Pjaijai/Referalah/commit/8b14076526367375f49128977d5082e87e48cb1c))
+
+## [1.28.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.28.0) (2025-06-18)
+
+### Features
+
+- remove flag ([#452](https://github.com/Pjaijai/Referalah/issues/452)) ([8b14076](https://github.com/Pjaijai/Referalah/commit/8b14076526367375f49128977d5082e87e48cb1c))
 
 ### [1.27.5](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.27.5) (2025-06-04)
 
-
 ### Bug Fixes
 
-* adding last update at in contact function ([#450](https://github.com/Pjaijai/Referalah/issues/450)) ([cd3e5f2](https://github.com/Pjaijai/Referalah/commit/cd3e5f246a999a7d2b77c7512d0df317015829cb))
-* set conversation unseen ([bd3aa89](https://github.com/Pjaijai/Referalah/commit/bd3aa899dc7b5ff4b7ffdd41f4b3d4f8f8d1aac0))
+- adding last update at in contact function ([#450](https://github.com/Pjaijai/Referalah/issues/450)) ([cd3e5f2](https://github.com/Pjaijai/Referalah/commit/cd3e5f246a999a7d2b77c7512d0df317015829cb))
+- set conversation unseen ([bd3aa89](https://github.com/Pjaijai/Referalah/commit/bd3aa899dc7b5ff4b7ffdd41f4b3d4f8f8d1aac0))
 
 ### [1.27.4](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.27.4) (2025-05-30)
 
-
 ### Bug Fixes
 
-* fix linkedin icon' ([5c624cc](https://github.com/Pjaijai/Referalah/commit/5c624cc2d2c5a5f22e6b84c8f3e619d1646e878b))
+- fix linkedin icon' ([5c624cc](https://github.com/Pjaijai/Referalah/commit/5c624cc2d2c5a5f22e6b84c8f3e619d1646e878b))
 
 ### [1.27.3](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.27.3) (2025-05-26)
 
-
 ### Bug Fixes
 
-* disable fire button if disabled ([0d65eb7](https://github.com/Pjaijai/Referalah/commit/0d65eb7692e8e1596f195426cd84606ba09cb860))
-* fix linkedin icon' ([b382a3d](https://github.com/Pjaijai/Referalah/commit/b382a3d7e64b40281455bf04f082975f5c8165d9))
+- disable fire button if disabled ([0d65eb7](https://github.com/Pjaijai/Referalah/commit/0d65eb7692e8e1596f195426cd84606ba09cb860))
+- fix linkedin icon' ([b382a3d](https://github.com/Pjaijai/Referalah/commit/b382a3d7e64b40281455bf04f082975f5c8165d9))
 
 ### [1.27.2](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.27.2) (2025-05-26)
 

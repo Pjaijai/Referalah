@@ -41,7 +41,7 @@ export default async function RootLayout({
         <Provider locale={locale}>
           <div className="flex min-h-screen flex-col ">
             <SiteHeader />
-            <div className="flex-1 overflow-hidden">{children}</div>
+            <div className=" flex-1 overflow-hidden">{children}</div>
             <NavFooter />
           </div>
           <Analytics />
