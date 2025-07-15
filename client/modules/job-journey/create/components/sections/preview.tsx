@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react"
+import React from "react"
 import { useJobJourneyFormContext } from "@/modules/job-journey/create/hooks/forms/form-context"
 import ContentSection from "@/modules/job-journey/view/components/sections/content"
 import { useI18n } from "@/utils/services/internationalization/client"
@@ -7,7 +7,6 @@ import { TLocationData } from "@/types/api/response/location"
 import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
-import CommonPageLayout from "@/components/layouts/common"
 
 interface PreviewSectionProps {
   jobJourney: any // Form data type
@@ -42,7 +41,13 @@ const PreviewSection: React.FC<PreviewSectionProps> = ({
       })
     ),
     company: jobJourney.company
-      ? { id: jobJourney.company.id, name: jobJourney.company.name }
+      ? {
+          id: jobJourney.company.id,
+          name: jobJourney.company.name,
+          meta_data: {
+            logo_url: jobJourney.company.url ?? null,
+          },
+        }
       : { name: jobJourney.newCompany },
     user: {
       username: userName,

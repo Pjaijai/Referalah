@@ -58,12 +58,16 @@ const FormCompanyCombobox: React.FC<CompanyComboboxProps> = ({
   }
 
   const handleOptionSelect = (companyId: number) => {
-    const companyName = options!.find((option) => option.id === companyId)!.name
+    const company = options!.find((option) => option.id === companyId)
 
     // Update the form value for company
     setValue(
       "company",
-      { id: companyId, name: companyName },
+      {
+        id: companyId,
+        name: company!.name,
+        url: company?.meta_data?.logo_url ?? null,
+      },
       { shouldValidate: true }
     )
 
