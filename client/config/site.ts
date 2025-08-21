@@ -116,6 +116,13 @@ export const siteConfig = {
         description: "建立職途誌 Create Job Journey",
       },
     },
+    updateJobJourney: {
+      href: "/job-journey/update",
+      metadata: {
+        title: "更新職途誌",
+        description: "更新職途誌 Update Job Journey",
+      },
+    },
     searchJobJourney: {
       href: "/job-journey/search",
       metadata: {

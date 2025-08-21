@@ -2,34 +2,36 @@
 
 import React from "react"
 import { useRouter } from "next/navigation"
-import StepIndicator from "@/modules/job-journey/component/step-indicator/step-indicator"
-import BasicInfoSection from "@/modules/job-journey/create/components/sections/basic-info"
-import PreviewSection from "@/modules/job-journey/create/components/sections/preview"
-import StepSection from "@/modules/job-journey/create/components/sections/step"
+import UpdatePreviewSection from "@/modules/job-journey/update/components/sections/preview"
+import UpdateSection from "@/modules/job-journey/update/components/sections/update"
+import { useUpdateJobJourney } from "@/modules/job-journey/update/hooks/api/update-job-journey"
 import {
-  JobJourneyFormProvider,
-  useJobJourneyFormContext,
-} from "@/modules/job-journey/create/hooks/forms/form-context"
+  UpdateJobJourneyFormProvider,
+  useUpdateJobJourneyFormContext,
+} from "@/modules/job-journey/update/hooks/forms/form-context"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FormProvider, useForm } from "react-hook-form"
-import * as z from "zod"
+import { z } from "zod"
 
-import { TCreateJobJourneyRequest } from "@/types/api/job-journey"
-import { IIndustryResponse } from "@/types/api/response/industry"
+import {
+  TJobJourneyWithSteps,
+  TUpdateJobJourneyRequest,
+} from "@/types/api/job-journey"
 import { TLocationData } from "@/types/api/response/location"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
-import { useCreateJobJourney } from "@/hooks/api/job-journey/job-journey"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
 import CommonPageLayout from "@/components/layouts/common"
 
-export interface IStep {
+export interface IUpdateStep {
   type: string
   date: string
   remarks: string | null
   position: number
+  interviewLocation: string | null
+  interviewType: string | null
 }
 
 const getEndOfToday = () => {
@@ -38,14 +40,14 @@ const getEndOfToday = () => {
   return today
 }
 
-interface ICreateJobJourneyPageTemplateProps {
-  industryData: IIndustryResponse[]
+interface IUpdateJobJourneyPageTemplateProps {
+  jobJourney: TJobJourneyWithSteps
   locationData: TLocationData[]
 }
 
-const CreateJobJourneyPageTemplate: React.FC<
-  ICreateJobJourneyPageTemplateProps
-> = ({ industryData, locationData }) => {
+const UpdateJobJourneyPageTemplate: React.FC<
+  IUpdateJobJourneyPageTemplateProps
+> = ({ jobJourney, locationData }) => {
   const router = useRouter()
   const { toast } = useToast()
   const t = useI18n()
@@ -60,68 +62,6 @@ const CreateJobJourneyPageTemplate: React.FC<
         .max(100, {
           message: t("validation.text.maximum_length", { count: 100 }),
         }),
-
-      positionTitle: z
-        .string()
-        .min(1, {
-          message: t("validation.field_required"),
-        })
-        .max(100, {
-          message: t("validation.text.maximum_length", { count: 100 }),
-        }),
-      company: z
-        .object({
-          id: z.number(),
-          name: z
-            .string()
-            .min(1, { message: t("validation.field_required") })
-            .max(1000, {
-              message: "Company name cannot exceed 1000 characters",
-            }),
-          url: z
-            .string()
-            .url({ message: t("validation.link.not_valid") })
-            .max(2000, {
-              message: t("validation.text.maximum_length", { count: 2000 }),
-            })
-            .nullable()
-            .optional(),
-        })
-        .nullable(),
-      industry: z
-        .string()
-        .min(1, {
-          message: t("validation.field_required"),
-        })
-        .max(100, {
-          message: t("validation.text.maximum_length", { count: 100 }),
-        }),
-      location: z
-        .string()
-        .min(1, {
-          message: t("validation.field_required"),
-        })
-        .max(100, {
-          message: t("validation.text.maximum_length", { count: 100 }),
-        }),
-      jobType: z
-        .string()
-        .min(1, { message: t("validation.field_required") })
-        .max(50, { message: "Job Type cannot exceed 50 characters" }),
-      jobLevel: z
-        .string()
-        .min(1, { message: t("validation.field_required") })
-        .max(50, { message: "Job Level cannot exceed 50 characters" }),
-      applicationDate: z.coerce
-        .date()
-        .min(new Date(1900, 0, 1), { message: "Date must be after 1900" })
-        .max(getEndOfToday(), {
-          message: "Application date cannot be tomorrow or later",
-        }),
-      source: z
-        .string()
-        .min(1, { message: t("validation.field_required") })
-        .max(100, { message: "Source cannot exceed 100 characters" }),
       description: z
         .string()
         .min(10, {
@@ -180,25 +120,9 @@ const CreateJobJourneyPageTemplate: React.FC<
             }
           })
       ),
-      newCompany: z
-        .string()
-        .max(100, {
-          message: t("validation.text.maximum_length", { count: 100 }),
-        })
-        .nullable(),
-    })
-    .superRefine((data, ctx) => {
-      if (!data.company && !data.newCompany) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: t("validation.field_required"),
-          path: ["company"],
-        })
-      }
     })
     .superRefine((data, ctx) => {
       // Validate step date order
-
       const steps = data.steps
 
       for (let i = 1; i < steps.length; i++) {
@@ -213,41 +137,31 @@ const CreateJobJourneyPageTemplate: React.FC<
         }
       }
     })
-    .superRefine((data, ctx) => {
-      // Validate step1 date against applicationDate
-      const steps = data.steps
 
-      if (data.steps && data.steps.length > 0) {
-        const step1 = steps[0]
-        if (step1 && step1.date < data.applicationDate) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: "Step 1 date cannot be earlier than application date",
-            path: ["steps", 0, "date"],
-          })
-        }
-      }
-    })
-
-  type JobJourneyFormData = z.infer<typeof formSchema>
+  type UpdateJobJourneyFormData = z.infer<typeof formSchema>
 
   const FormContent: React.FC = () => {
-    const form = useForm<JobJourneyFormData>({
+    const existingStepsCount = jobJourney.job_journey_step?.length || 0
+
+    // Convert existing data to form format
+    const defaultValues: UpdateJobJourneyFormData = {
+      title: jobJourney.title,
+      description: jobJourney.description || "",
+      steps: [
+        // Existing steps
+        ...(jobJourney.job_journey_step || []).map((step) => ({
+          type: step.step_type,
+          date: new Date(step.step_date),
+          remarks: step.remarks,
+          interviewLocation: step.interview_location,
+          interviewType: step.interview_type,
+        })),
+      ],
+    }
+
+    const form = useForm<UpdateJobJourneyFormData>({
       resolver: zodResolver(formSchema),
-      defaultValues: {
-        title: "",
-        company: null,
-        industry: "",
-        location: "",
-        jobType: "",
-        jobLevel: "",
-        applicationDate: new Date(),
-        source: "",
-        description: "",
-        steps: [{ type: "", date: undefined, remarks: "" }],
-        newCompany: null,
-        positionTitle: "",
-      },
+      defaultValues,
     })
 
     const {
@@ -256,28 +170,21 @@ const CreateJobJourneyPageTemplate: React.FC<
       formState: { errors },
     } = form
 
+    console.log("Form errors:", errors)
+
     const {
-      mutate: create,
-      isLoading: isCreateLoading,
+      mutate: update,
+      isLoading: isUpdateLoading,
       isError,
       isSuccess,
-    } = useCreateJobJourney()
+    } = useUpdateJobJourney(jobJourney.uuid)
 
-    const onSubmit = (data: JobJourneyFormData) => {
-      const applicationDate = data.applicationDate
+    const onSubmit = (data: UpdateJobJourneyFormData) => {
       const steps = data.steps || []
 
-      const submissionData: TCreateJobJourneyRequest = {
+      const submissionData: TUpdateJobJourneyRequest = {
         title: data.title,
         description: data.description,
-        positionTitle: data.positionTitle,
-        company: data.company?.id || null,
-        industry: data.industry,
-        location: data.location,
-        jobType: data.jobType,
-        jobLevel: data.jobLevel,
-        applicationDate: applicationDate.toISOString(),
-        source: data.source,
         steps: steps.map((step, index) => ({
           type: step.type,
           date: step.date.toISOString(),
@@ -286,45 +193,33 @@ const CreateJobJourneyPageTemplate: React.FC<
           interviewLocation: step.interviewLocation || null,
           interviewType: step.interviewType || null,
         })),
-        newCompany: data.newCompany,
       }
 
-      create(submissionData, {
-        onSuccess: (data: any) => {
+      update(submissionData, {
+        onSuccess: () => {
           toast({
-            title: t("job_journey.form.submit.success"),
+            title: "Update successful",
           })
           router.push(
-            `${siteConfig.page.viewJobJourney.href}/${data.data.job_journey_uuid}`
+            `${siteConfig.page.viewJobJourney.href}/${jobJourney.uuid}`
           )
         },
       })
     }
 
     const { nextStep, prevStep, currentStep, isLastStep } =
-      useJobJourneyFormContext()
+      useUpdateJobJourneyFormContext()
 
     const handleBackStep = () => {
       prevStep()
       window.scrollTo({ top: 0, behavior: "instant" })
     }
+
     const handleNextStep = async () => {
       let isValid = false
 
       if (currentStep === 1) {
-        isValid = await trigger([
-          "positionTitle",
-          "company",
-          "industry",
-          "location",
-          "applicationDate",
-          "source",
-          "newCompany",
-          "jobLevel",
-          "jobType",
-        ])
-      } else if (currentStep === 2) {
-        isValid = await trigger(["steps", "description", "title"])
+        isValid = await trigger(["title", "description", "steps"])
       }
 
       if (isValid) {
@@ -335,34 +230,29 @@ const CreateJobJourneyPageTemplate: React.FC<
 
     return (
       <CommonPageLayout
-        title={t("page.create_job_journey")}
-        className={cn(" mb-12 max-w-full", isLastStep && " mb-0 ")}
+        title="Update Job Journey"
+        className={cn("mb-12 max-w-full", isLastStep && "mb-0")}
         titleClassName={cn(isLastStep ? "hidden" : "block")}
       >
-        <StepIndicator />
         <FormProvider {...form}>
           <form onSubmit={handleSubmit(onSubmit)}>
             {currentStep === 1 && (
-              <BasicInfoSection
-                industryData={industryData}
-                locationData={locationData}
-              />
+              <UpdateSection existingStepsCount={existingStepsCount} />
             )}
-            {currentStep === 2 && <StepSection />}
-            {currentStep === 3 && (
-              <PreviewSection
+            {currentStep === 2 && (
+              <UpdatePreviewSection
                 jobJourney={form.getValues()}
                 locationList={locationData}
+                originalJobJourney={jobJourney}
               />
             )}
             <div
               className={cn(
-                " flex flex-col justify-between gap-4 bg-white px-10 pb-10 pt-6",
-                currentStep >= 2 && "bg-transparent"
+                "flex flex-col justify-between gap-4 bg-transparent px-10 pb-10 pt-6"
               )}
             >
               {isError && (
-                <div className="w-full text-center text-destructive ">
+                <div className="w-full text-center text-red-600">
                   {t("general.error.title")}
                   {t("general.error.description")}
                 </div>
@@ -398,12 +288,16 @@ const CreateJobJourneyPageTemplate: React.FC<
                       className={cn(
                         !isLastStep && " border-indigo-600 hover:bg-indigo-50"
                       )}
-                      disabled={isCreateLoading || isSuccess}
+                      //   disabled={isCreateLoading || isSuccess}
                     >
-                      {isLastStep
+                      {/* {isLastStep
                         ? t("form.general.submit")
                         : isCreateLoading || isSuccess
                         ? t("general.wait")
+                        : t("form.general.next")} */}
+
+                      {isLastStep
+                        ? t("form.general.submit")
                         : t("form.general.next")}
                     </Button>
                   </div>
@@ -419,7 +313,7 @@ const CreateJobJourneyPageTemplate: React.FC<
                   <Button
                     variant={"theme"}
                     type="submit"
-                    disabled={isCreateLoading || isSuccess}
+                    // disabled={isCreateLoading || isSuccess}
                     size={"lg"}
                     className="mt-4 px-14 py-3 text-sm  md:mt-0"
                   >
@@ -435,10 +329,10 @@ const CreateJobJourneyPageTemplate: React.FC<
   }
 
   return (
-    <JobJourneyFormProvider>
+    <UpdateJobJourneyFormProvider>
       <FormContent />
-    </JobJourneyFormProvider>
+    </UpdateJobJourneyFormProvider>
   )
 }
 
-export default CreateJobJourneyPageTemplate
+export default UpdateJobJourneyPageTemplate

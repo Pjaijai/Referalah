@@ -17,6 +17,7 @@ interface IStepCardProps {
   onRemoveStep: (index: number) => void
   showRemoveButton?: boolean
   className?: string
+  disabled?: boolean
 }
 
 const StepCard: React.FunctionComponent<IStepCardProps> = ({
@@ -25,6 +26,7 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
   onRemoveStep,
   className,
   showRemoveButton = true,
+  disabled = false,
 }) => {
   const t = useI18n()
   const {
@@ -69,26 +71,27 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
       setValue(`steps.${index}.interviewType`, null)
       setValue(`steps.${index}.interviewLocation`, null)
     }
-  }, [stepType])
+  }, [stepType, index, setValue])
 
   const StepError = errors?.steps as any
   return (
     <div
       className={cn(
-        "relative flex w-full items-center justify-center  ",
-        index !== 0 && "p-10  pt-8",
+        "relative flex w-full items-center justify-center",
+        index !== 0 && "p-10 pt-8",
+
         className
       )}
     >
-      <div className={cn(" w-full ", index !== 0 && "md:basis-8/12")}>
-        <div className="flex w-full flex-row justify-between ">
+      <div className={cn("w-full", index !== 0 && "md:basis-8/12")}>
+        <div className="flex w-full flex-row justify-between">
           <p className="text-base font-bold text-slate-500">
             {t("job_journey.general.step")} {index + 1}
           </p>
 
-          {showRemoveButton && (
+          {showRemoveButton && !disabled && (
             <Icons.trashBin
-              className="cursor-pointer  text-indigo-600"
+              className="cursor-pointer text-indigo-600"
               type="button"
               onClick={() => onRemoveStep(index)}
               height={20}
@@ -96,7 +99,12 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
             />
           )}
         </div>
-        <div className="mt-5 flex flex-col items-start justify-between space-y-4 md:flex-row  md:space-x-16 md:space-y-0 ">
+        <div
+          className={cn(
+            "mt-5 flex flex-col items-start justify-between space-y-4 md:flex-row md:space-x-16 md:space-y-0",
+            disabled && "pointer-events-none opacity-60"
+          )}
+        >
           <FormSelect
             name={`steps.${index}.type`}
             label={t("job_journey.general.step_type")}
@@ -105,6 +113,7 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
             labelClassName="text-slate-500"
             containerClassName="basis-full w-full"
             isRequired
+            isDisabled={disabled}
           />
           <div className="flex w-full flex-row">
             <div className="basis-full">
@@ -114,7 +123,11 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
                 control={control}
                 labelClassName="text-slate-500"
                 containerClassName="basis-full content-start"
-                disabledDates={(date) => date < minDate || date > new Date()}
+                disabledDates={
+                  disabled
+                    ? () => true // Disable all dates when disabled
+                    : (date) => date < minDate || date > new Date()
+                }
                 description={t("job_journey.form.date.description")}
                 descriptionClassName="text-indigo-400 text-xs"
                 isRequired
@@ -125,7 +138,12 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
         </div>
 
         {stepType === "interview" && (
-          <div className="mt-5 flex flex-col items-start justify-between space-y-4 md:flex-row  md:space-x-16 md:space-y-0">
+          <div
+            className={cn(
+              "mt-5 flex flex-col items-start justify-between space-y-4 md:flex-row md:space-x-16 md:space-y-0",
+              disabled && "pointer-events-none opacity-60"
+            )}
+          >
             <FormSelect
               name={`steps.${index}.interviewType`}
               label={t("job_journey.general.interview_type")}
@@ -134,6 +152,7 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
               labelClassName="text-slate-500"
               containerClassName="basis-full w-full"
               isRequired
+              isDisabled={disabled}
             />
             <div className="flex w-full flex-row">
               <div className="basis-full">
@@ -145,18 +164,22 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
                   labelClassName="text-slate-500"
                   containerClassName="basis-full w-full"
                   isRequired
+                  isDisabled={disabled}
                 />
               </div>
             </div>
           </div>
         )}
 
-        <div className="mt-5 ">
+        <div
+          className={cn("mt-5", disabled && "pointer-events-none opacity-60")}
+        >
           <FormTextArea
             name={`steps.${index}.remarks`}
             label={t("job_journey.general.remarks")}
             control={control}
             placeholder={t("job_journey.form.step_remarks_placeholder")}
+            isDisabled={disabled}
           />
         </div>
       </div>
