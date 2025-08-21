@@ -84,6 +84,7 @@ const CreateJobJourneyPageTemplate: React.FC<
             .max(2000, {
               message: t("validation.text.maximum_length", { count: 2000 }),
             })
+            .nullable()
             .optional(),
         })
         .nullable(),
