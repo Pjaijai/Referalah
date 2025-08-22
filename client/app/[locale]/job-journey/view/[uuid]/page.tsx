@@ -15,7 +15,7 @@ import CommonPageLayout from "@/components/layouts/common"
 interface ViewJobJourneyPageProps {
   params: { uuid: string }
 }
-export const revalidate = 60 * 60 * 24
+export const revalidate = 0
 
 export async function generateMetadata({
   params,

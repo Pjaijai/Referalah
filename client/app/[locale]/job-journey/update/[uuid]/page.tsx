@@ -17,7 +17,7 @@ interface UpdateJobJourneyPageProps {
 }
 export const metadata = siteConfig.page.updateJobJourney.metadata
 
-export const revalidate = 60 * 60 * 24
+export const revalidate = 0
 
 const UpdateJobJourneyPage = async ({ params }: UpdateJobJourneyPageProps) => {
   const { uuid } = params
