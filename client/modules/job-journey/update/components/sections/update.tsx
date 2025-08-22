@@ -1,13 +1,12 @@
 "use client"
 
-import React, { useEffect } from "react"
+import React from "react"
 import StepCard from "@/modules/job-journey/create/components/cards/step/step"
 import SubSection from "@/modules/job-journey/create/components/sections/sub-section"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { useFieldArray, useFormContext } from "react-hook-form"
 
 import { Button } from "@/components/ui/button"
-import FormTextInput from "@/components/customized-ui/form/input"
 import FormTextArea from "@/components/customized-ui/form/text-area"
 
 interface UpdateSectionProps {
