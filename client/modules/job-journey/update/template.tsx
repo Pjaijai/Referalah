@@ -4,7 +4,6 @@ import React from "react"
 import { useRouter } from "next/navigation"
 import UpdatePreviewSection from "@/modules/job-journey/update/components/sections/preview"
 import UpdateSection from "@/modules/job-journey/update/components/sections/update"
-import { useUpdateJobJourney } from "@/modules/job-journey/update/hooks/api/update-job-journey"
 import {
   UpdateJobJourneyFormProvider,
   useUpdateJobJourneyFormContext,
@@ -21,6 +20,7 @@ import {
 import { TLocationData } from "@/types/api/response/location"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
+import { useUpdateJobJourney } from "@/hooks/api/job-journey/job-journey"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
 import CommonPageLayout from "@/components/layouts/common"
@@ -182,14 +182,20 @@ const UpdateJobJourneyPageTemplate: React.FC<
     const onSubmit = (data: UpdateJobJourneyFormData) => {
       const steps = data.steps || []
 
+      // Only submit new steps (steps beyond the existing ones)
+      const newSteps = steps.slice(existingStepsCount)
+
+      // Calculate starting position for new steps (after the last existing step)
+      const startingPosition = existingStepsCount + 1
+
       const submissionData: TUpdateJobJourneyRequest = {
-        title: data.title,
+        title: data.title, // Keep for API compatibility, though backend may not use it
         description: data.description,
-        steps: steps.map((step, index) => ({
+        steps: newSteps.map((step, index) => ({
           type: step.type,
           date: step.date.toISOString(),
           remarks: step.remarks,
-          position: index + 1,
+          position: startingPosition + index,
           interviewLocation: step.interviewLocation || null,
           interviewType: step.interviewType || null,
         })),
@@ -248,7 +254,7 @@ const UpdateJobJourneyPageTemplate: React.FC<
             )}
             <div
               className={cn(
-                "flex flex-col justify-between gap-4 bg-transparent px-10 pb-10 pt-6"
+                "flex flex-col justify-between gap-4 bg-transparent px-10  pt-6"
               )}
             >
               {isError && (
@@ -258,69 +264,45 @@ const UpdateJobJourneyPageTemplate: React.FC<
                 </div>
               )}
 
-              {!isLastStep && (
-                <div className={"flex w-full flex-row justify-end"}>
-                  <div className="flex flex-row justify-end">
-                    {currentStep !== 1 && (
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        onClick={handleBackStep}
-                        disabled={currentStep === 1}
-                        size="sm"
-                      >
-                        {t("general.back")}
-                      </Button>
-                    )}
-
+              <div className={"flex w-full flex-row justify-end"}>
+                <div className="flex flex-row justify-end">
+                  {currentStep !== 1 && (
                     <Button
                       type="button"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        if (isLastStep) {
-                          handleSubmit(onSubmit)()
-                        } else {
-                          handleNextStep()
-                        }
-                      }}
-                      variant={isLastStep ? "theme" : "themeSecondary"}
+                      variant="ghost"
+                      onClick={handleBackStep}
+                      disabled={currentStep === 1}
                       size="sm"
-                      className={cn(
-                        !isLastStep && " border-indigo-600 hover:bg-indigo-50"
-                      )}
-                      //   disabled={isCreateLoading || isSuccess}
                     >
-                      {/* {isLastStep
-                        ? t("form.general.submit")
-                        : isCreateLoading || isSuccess
-                        ? t("general.wait")
-                        : t("form.general.next")} */}
-
-                      {isLastStep
-                        ? t("form.general.submit")
-                        : t("form.general.next")}
+                      {t("general.back")}
                     </Button>
-                  </div>
-                </div>
-              )}
+                  )}
 
-              {isLastStep && (
-                <div className="absolute bottom-0 left-0  flex h-fit w-full flex-col items-center justify-around bg-indigo-50 py-4  md:flex-row md:px-20">
-                  <div />
-                  <p className="text-indigo-600 ">
-                    {t("job_journey.form.preview_mode_and_confirm")}
-                  </p>
                   <Button
-                    variant={"theme"}
-                    type="submit"
-                    // disabled={isCreateLoading || isSuccess}
-                    size={"lg"}
-                    className="mt-4 px-14 py-3 text-sm  md:mt-0"
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      if (isLastStep) {
+                        handleSubmit(onSubmit)()
+                      } else {
+                        handleNextStep()
+                      }
+                    }}
+                    variant={isLastStep ? "theme" : "themeSecondary"}
+                    size="sm"
+                    className={cn(
+                      !isLastStep && " border-indigo-600 hover:bg-indigo-50"
+                    )}
+                    disabled={isUpdateLoading || isSuccess}
                   >
-                    {t("general.confirm")}
+                    {isLastStep
+                      ? t("general.confirm")
+                      : isUpdateLoading || isSuccess
+                      ? t("general.wait")
+                      : t("form.general.next")}
                   </Button>
                 </div>
-              )}
+              </div>
             </div>
           </form>
         </FormProvider>
