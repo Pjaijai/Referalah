@@ -25,7 +25,6 @@ import { useUpdateJobJourney } from "@/hooks/api/job-journey/job-journey"
 import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
-import CommonPageLayout from "@/components/layouts/common"
 
 export interface IUpdateStep {
   type: string
@@ -167,8 +166,22 @@ const UpdateJobJourneyPageTemplate: React.FC<
     const {
       handleSubmit,
       trigger,
+      watch,
       formState: { errors },
     } = form
+
+    // Watch for changes in description and steps
+    const currentDescription = watch("description")
+    const currentSteps = watch("steps")
+
+    // Check if there are any changes
+    const hasDescriptionChanged =
+      currentDescription?.trim() !== (jobJourney.description || "").trim()
+
+    // New steps are steps beyond the existing ones
+    const newSteps = currentSteps.slice(existingStepsCount)
+    const hasNewSteps = newSteps.length > 0
+    const hasChanges = hasDescriptionChanged || hasNewSteps
 
     const {
       mutate: update,
@@ -202,7 +215,7 @@ const UpdateJobJourneyPageTemplate: React.FC<
       update(submissionData, {
         onSuccess: () => {
           toast({
-            title: "Update successful",
+            title: t("job_journey.form.submit.success"),
           })
           router.push(
             `${siteConfig.page.viewJobJourney.href}/${jobJourney.uuid}`
@@ -290,7 +303,12 @@ const UpdateJobJourneyPageTemplate: React.FC<
                   className={cn(
                     !isLastStep && " border-indigo-600 hover:bg-indigo-50"
                   )}
-                  disabled={isUpdateLoading || isSuccess || disabledUpdate}
+                  disabled={
+                    isUpdateLoading ||
+                    isSuccess ||
+                    disabledUpdate ||
+                    !hasChanges
+                  }
                 >
                   {isLastStep
                     ? t("general.confirm")

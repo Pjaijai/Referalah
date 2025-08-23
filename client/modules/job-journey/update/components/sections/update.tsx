@@ -1,7 +1,6 @@
 "use client"
 
 import React from "react"
-import { JOURNEY_FINAL_STEPS } from "@/modules/job-journey/constant"
 import StepCard from "@/modules/job-journey/create/components/cards/step/step"
 import SubSection from "@/modules/job-journey/create/components/sections/sub-section"
 import { useI18n } from "@/utils/services/internationalization/client"
@@ -20,7 +19,7 @@ const UpdateSection: React.FC<UpdateSectionProps> = ({
   disabledUpdate,
 }) => {
   const t = useI18n()
-  const { control, watch, setValue } = useFormContext()
+  const { control, watch } = useFormContext()
   const stepsWatch = watch("steps")
   const applicationDateWatch = watch("applicationDate")
 
