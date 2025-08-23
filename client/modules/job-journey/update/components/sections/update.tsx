@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { JOURNEY_FINAL_STEPS } from "@/modules/job-journey/constant"
 import StepCard from "@/modules/job-journey/create/components/cards/step/step"
 import SubSection from "@/modules/job-journey/create/components/sections/sub-section"
 import { useI18n } from "@/utils/services/internationalization/client"
@@ -11,10 +12,12 @@ import FormTextArea from "@/components/customized-ui/form/text-area"
 
 interface UpdateSectionProps {
   existingStepsCount: number
+  disabledUpdate: boolean // Add lastStepStatus prop
 }
 
 const UpdateSection: React.FC<UpdateSectionProps> = ({
   existingStepsCount,
+  disabledUpdate,
 }) => {
   const t = useI18n()
   const { control, watch, setValue } = useFormContext()
@@ -74,6 +77,7 @@ const UpdateSection: React.FC<UpdateSectionProps> = ({
             isRequired
             minRows={6}
             placeholder={t("job_journey.form.description_placeholder")}
+            isDisabled={disabledUpdate}
           />
         </SubSection>
         <SubSection title={t("job_journey.sub_section.step_details")}>

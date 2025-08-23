@@ -2,6 +2,7 @@
 
 import React from "react"
 import { useRouter } from "next/navigation"
+import { JOURNEY_FINAL_STEPS } from "@/modules/job-journey/constant"
 import UpdatePreviewSection from "@/modules/job-journey/update/components/sections/preview"
 import UpdateSection from "@/modules/job-journey/update/components/sections/update"
 import {
@@ -21,6 +22,7 @@ import { TLocationData } from "@/types/api/response/location"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { useUpdateJobJourney } from "@/hooks/api/job-journey/job-journey"
+import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
 import CommonPageLayout from "@/components/layouts/common"
@@ -34,12 +36,6 @@ export interface IUpdateStep {
   interviewType: string | null
 }
 
-const getEndOfToday = () => {
-  const today = new Date()
-  today.setHours(23, 59, 59, 999)
-  return today
-}
-
 interface IUpdateJobJourneyPageTemplateProps {
   jobJourney: TJobJourneyWithSteps
   locationData: TLocationData[]
@@ -51,6 +47,10 @@ const UpdateJobJourneyPageTemplate: React.FC<
   const router = useRouter()
   const { toast } = useToast()
   const t = useI18n()
+
+  const disabledUpdate = JOURNEY_FINAL_STEPS.includes(
+    jobJourney.last_step_status
+  )
 
   const formSchema = z
     .object({
@@ -170,8 +170,6 @@ const UpdateJobJourneyPageTemplate: React.FC<
       formState: { errors },
     } = form
 
-    console.log("Form errors:", errors)
-
     const {
       mutate: update,
       isLoading: isUpdateLoading,
@@ -235,79 +233,81 @@ const UpdateJobJourneyPageTemplate: React.FC<
     }
 
     return (
-      <CommonPageLayout
-        title="Update Job Journey"
-        className={cn("mb-12 max-w-full", isLastStep && "mb-0")}
-        titleClassName={cn(isLastStep ? "hidden" : "block")}
-      >
-        <FormProvider {...form}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            {currentStep === 1 && (
-              <UpdateSection existingStepsCount={existingStepsCount} />
+      <FormProvider {...form}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {currentStep === 1 && (
+            <UpdateSection
+              existingStepsCount={existingStepsCount}
+              disabledUpdate={disabledUpdate}
+            />
+          )}
+          {currentStep === 2 && (
+            <UpdatePreviewSection
+              jobJourney={form.getValues()}
+              locationList={locationData}
+              originalJobJourney={jobJourney}
+            />
+          )}
+          <div
+            className={cn(
+              "flex flex-col justify-between gap-4 bg-transparent px-10  pt-6"
             )}
-            {currentStep === 2 && (
-              <UpdatePreviewSection
-                jobJourney={form.getValues()}
-                locationList={locationData}
-                originalJobJourney={jobJourney}
-              />
+          >
+            {isError && (
+              <div className="w-full text-center text-red-600">
+                {t("general.error.title")}
+                {t("general.error.description")}
+              </div>
             )}
-            <div
-              className={cn(
-                "flex flex-col justify-between gap-4 bg-transparent px-10  pt-6"
-              )}
-            >
-              {isError && (
-                <div className="w-full text-center text-red-600">
-                  {t("general.error.title")}
-                  {t("general.error.description")}
-                </div>
-              )}
 
-              <div className={"flex w-full flex-row justify-end"}>
-                <div className="flex flex-row justify-end">
-                  {currentStep !== 1 && (
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      onClick={handleBackStep}
-                      disabled={currentStep === 1}
-                      size="sm"
-                    >
-                      {t("general.back")}
-                    </Button>
-                  )}
-
+            <div className={"flex w-full flex-row justify-end"}>
+              <div className="flex flex-row justify-end">
+                {currentStep !== 1 && (
                   <Button
                     type="button"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      if (isLastStep) {
-                        handleSubmit(onSubmit)()
-                      } else {
-                        handleNextStep()
-                      }
-                    }}
-                    variant={isLastStep ? "theme" : "themeSecondary"}
+                    variant="ghost"
+                    onClick={handleBackStep}
+                    disabled={currentStep === 1}
                     size="sm"
-                    className={cn(
-                      !isLastStep && " border-indigo-600 hover:bg-indigo-50"
-                    )}
-                    disabled={isUpdateLoading || isSuccess}
                   >
-                    {isLastStep
-                      ? t("general.confirm")
-                      : isUpdateLoading || isSuccess
-                      ? t("general.wait")
-                      : t("form.general.next")}
+                    {t("general.back")}
                   </Button>
-                </div>
+                )}
+
+                <Button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    if (isLastStep) {
+                      if (disabledUpdate) return
+                      handleSubmit(onSubmit)()
+                    } else {
+                      handleNextStep()
+                    }
+                  }}
+                  variant={isLastStep ? "theme" : "themeSecondary"}
+                  size="sm"
+                  className={cn(
+                    !isLastStep && " border-indigo-600 hover:bg-indigo-50"
+                  )}
+                  disabled={isUpdateLoading || isSuccess || disabledUpdate}
+                >
+                  {isLastStep
+                    ? t("general.confirm")
+                    : isUpdateLoading || isSuccess
+                    ? t("general.wait")
+                    : t("form.general.next")}
+                </Button>
               </div>
             </div>
-          </form>
-        </FormProvider>
-      </CommonPageLayout>
+          </div>
+        </form>
+      </FormProvider>
     )
+  }
+
+  if (jobJourney.created_by !== useUserStore.getState().uuid) {
+    return null
   }
 
   return (

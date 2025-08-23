@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+import { JOURNEY_FINAL_STEPS } from "@/modules/job-journey/constant"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { useFormContext } from "react-hook-form"
 
@@ -50,7 +51,7 @@ const StepCard: React.FunctionComponent<IStepCardProps> = ({
   const filteredTypeOptions =
     position < stepsWatch.length
       ? typeOptions.filter(
-          (option) => !["offer", "rejected", "withdrawn"].includes(option.value)
+          (option) => !JOURNEY_FINAL_STEPS.includes(option.value)
         )
       : typeOptions
 
