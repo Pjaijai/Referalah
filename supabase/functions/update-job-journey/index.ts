@@ -53,7 +53,6 @@ serve(async (req: Request) => {
     if (req.method === "OPTIONS") {
       return new Response("ok", { headers: corsHeaders })
     }
-    console.log(123123)
 
     const client = initSupabaseClient(req)
     const server = initSupabaseServer()
@@ -301,11 +300,12 @@ serve(async (req: Request) => {
     for (let i = 0; i < sortedNewSteps.length; i++) {
       const step = sortedNewSteps[i]
 
-      // Check that new step positions are greater than existing step positions
-      if (step.position <= maxExistingPosition) {
+      // Check that new step positions are sequential and start right after existing steps
+      const expectedPosition = maxExistingPosition + 1 + i
+      if (step.position !== expectedPosition) {
         return new Response(
           JSON.stringify({
-            error: `New step position ${step.position} must be greater than the highest existing step position (${maxExistingPosition}). New steps should be positioned after existing steps.`,
+            error: `New step position ${step.position} is invalid. Expected position is ${expectedPosition}. New steps must be sequential and start immediately after existing steps.`,
           }),
           {
             headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -329,11 +329,17 @@ serve(async (req: Request) => {
 
       // Validate step date
       const stepDate = new Date(step.date)
-      if (isNaN(stepDate.getTime()) || stepDate < new Date(1900, 0, 1)) {
+      const endOfToday = new Date()
+      endOfToday.setHours(23, 59, 59, 999) // Set to end of today
+      if (
+        isNaN(stepDate.getTime()) ||
+        stepDate < new Date(1900, 0, 1) ||
+        stepDate > endOfToday
+      ) {
         return new Response(
           JSON.stringify({
             error:
-              "Invalid step date: Must be a valid ISO date between 1900 and today",
+              "Invalid step date: Must be a valid ISO date between 1900 and the end of today (inclusive)",
           }),
           {
             headers: { ...corsHeaders, "Content-Type": "application/json" },
