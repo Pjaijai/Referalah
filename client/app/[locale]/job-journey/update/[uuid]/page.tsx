@@ -5,6 +5,7 @@ import {
   getJobJourneyByUuidWithSteps,
   getLocationList,
 } from "@/utils/common/api"
+import { getI18n } from "@/utils/services/internationalization/server"
 
 import { TJobJourneyWithSteps } from "@/types/api/job-journey"
 import { TLocationData } from "@/types/api/response/location"
@@ -21,6 +22,7 @@ export const revalidate = 0
 
 const UpdateJobJourneyPage = async ({ params }: UpdateJobJourneyPageProps) => {
   const { uuid } = params
+  const t = await getI18n()
 
   if (!uuid) {
     return (
@@ -55,12 +57,12 @@ const UpdateJobJourneyPage = async ({ params }: UpdateJobJourneyPageProps) => {
 
   return (
     <AuthenticatedPageWrapper>
-      <div className="relative h-full">
+      <CommonPageLayout title={t("page.update_job_journey")}>
         <UpdateJobJourneyPageTemplate
           jobJourney={jobJourney}
           locationData={locationList}
         />
-      </div>
+      </CommonPageLayout>
     </AuthenticatedPageWrapper>
   )
 }
