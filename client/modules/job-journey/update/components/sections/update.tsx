@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { JOURNEY_FINAL_STEPS } from "@/modules/job-journey/constant"
 import StepCard from "@/modules/job-journey/create/components/cards/step/step"
 import SubSection from "@/modules/job-journey/create/components/sections/sub-section"
 import { useI18n } from "@/utils/services/internationalization/client"
