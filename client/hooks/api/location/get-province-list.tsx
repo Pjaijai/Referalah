@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 
 import { EQueryKeyString } from "@/types/common/query-key-string"
 
+// TODO: can be removed ?
 const useGetProvinceList = () => {
   return useQuery({
     queryKey: [EQueryKeyString.PROVINCE_LIST],
