@@ -19,6 +19,7 @@ interface IFormTextArea extends Omit<IFormTextInputProps, "control"> {
   maxLength?: number
   control: UseFormReturn<any>["control"]
   labelClassName?: string
+  isDisabled?: boolean
 }
 
 const FormTextArea: React.FunctionComponent<IFormTextArea> = ({
@@ -31,6 +32,7 @@ const FormTextArea: React.FunctionComponent<IFormTextArea> = ({
   minRows = 3,
   maxLength,
   labelClassName,
+  isDisabled,
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null)
 
@@ -85,6 +87,7 @@ const FormTextArea: React.FunctionComponent<IFormTextArea> = ({
                 }, 0)
               }}
               style={{ resize: "none" }}
+              disabled={isDisabled}
             />
           </FormControl>
           {maxLength !== undefined && (
