@@ -14,6 +14,7 @@ enum EQueryKeyString {
   MESSAGE_LIST = "message-list",
   SEARCH_NOTIFICATION = "search-notification",
   SEARCH_JOB_JOURNEY = "search-job-journey",
+  JOB_JOURNEY_BY_USER_UUID = "job-journey-by-user-uuid",
   USER_FIRES = "user-fire",
 }
 
