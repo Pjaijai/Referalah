@@ -8,6 +8,7 @@ import {
   TCreateJobJourneyRequest,
   TJobJourney,
   TJobJourneyWithSteps,
+  TUpdateJobJourneyRequest,
 } from "@/types/api/job-journey"
 import { IResetPasswordRequest } from "@/types/api/request/auth/reset-password"
 import { ISignInEmailPasswordRequest } from "@/types/api/request/auth/sign-in-with-email-password"
@@ -1086,6 +1087,44 @@ export const createJobJourney = async (
 
     if (error) throw error
     if (!data) throw new Error("No data returned after creation")
+
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+// Update Job Journey
+export const updateJobJourney = async (
+  uuid: string,
+  request: TUpdateJobJourneyRequest
+): Promise<any> => {
+  const mappedData = {
+    title: request.title,
+    description: request.description,
+    steps: request.steps.map((step) => ({
+      type: step.type,
+      date: step.date,
+      remarks: step.remarks,
+      position: step.position,
+      interview_location: step.interviewLocation,
+      interview_type: step.interviewType,
+    })),
+  }
+
+  try {
+    const { data, error } = await supabase.functions.invoke(
+      "update-job-journey",
+      {
+        body: {
+          uuid,
+          ...mappedData,
+        },
+      }
+    )
+
+    if (error) throw error
+    if (!data) throw new Error("No data returned after update")
 
     return data
   } catch (error) {
