@@ -285,6 +285,7 @@ export default {
   "page.notifications": "即時通知",
   "page.create_job_journey": "建立職途誌",
   "page.update_job_journey": "更新職途誌",
+  "page.job_journey_history": "職途誌記錄",
   "page.job_journey": "職途誌",
   "general.dark_mode": "夜間模式",
   "general.light_mode": "日間模式",

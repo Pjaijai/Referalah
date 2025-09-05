@@ -40,6 +40,7 @@ export type TJobJourneyCardProps = {
   uuid: string
   locationList: TLocationData[]
   logoUrl?: string
+  createdBy?: string // UUID of the creator
 }
 
 const JobJourneyCard: React.FC<TJobJourneyCardProps> = ({
@@ -58,6 +59,7 @@ const JobJourneyCard: React.FC<TJobJourneyCardProps> = ({
   uuid,
   locationList,
   logoUrl,
+  createdBy,
 }) => {
   const locale = useCurrentLocale()
   const router = useRouter()
@@ -67,10 +69,17 @@ const JobJourneyCard: React.FC<TJobJourneyCardProps> = ({
   const jobTypeOptions = useJobTypeOptions()
   const jobLevelOptions = useJobLevelOptions()
   const fireRecords = useUserStore((state) => state.fireRecords)
+  const currentUserUuid = useUserStore((state) => state.uuid)
   const fireRecord = fireRecords.find((f) => f.uuid === uuid)
   const isFire = !!fireRecord
+  const isOwner = currentUserUuid === createdBy
+
   const handleClick = () => {
-    router.push(`/job-journey/view/${uuid}`)
+    if (isOwner) {
+      router.push(`/job-journey/update/${uuid}`)
+    } else {
+      router.push(`/job-journey/view/${uuid}`)
+    }
   }
 
   const locationLabel = useLocationLabel({ location, locationList })
