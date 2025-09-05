@@ -133,6 +133,10 @@ export const siteConfig = {
     viewJobJourney: {
       href: "/job-journey/view",
     },
+    jobJourneyHistory: {
+      name: "職途誌記錄",
+      href: "/job-journey/history",
+    },
     postHistory: {
       name: "街招記錄",
       href: "/post/history",

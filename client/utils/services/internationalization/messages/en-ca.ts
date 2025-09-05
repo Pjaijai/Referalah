@@ -313,6 +313,7 @@ export default {
   "page.notifications": "Notifications",
   "page.create_job_journey": "Create Journey",
   "page.update_job_journey": "Update Journey",
+  "page.job_journey_history": "Journey History",
   "page.job_journey": "Journey",
   "general.dark_mode": "Dark Mode",
   "general.light_mode": "Light Mode",
