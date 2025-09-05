@@ -362,6 +362,20 @@ const ViewProfileTemplate: React.FunctionComponent<
             </Button>
           )}
 
+          {slug && (
+            <Button
+              size={"lg"}
+              variant={"outline"}
+              className="w-52 gap-2 border-slate-600 text-base font-medium text-slate-600"
+              onClick={() => {
+                router.push(`${siteConfig.page.jobJourneyHistory.href}/${slug}`)
+              }}
+            >
+              <Icons.briefcase size={16} />
+              <p className="shrink-0">{t("page.job_journey_history")}</p>
+            </Button>
+          )}
+
           {isViewingOwnProfile && (
             <Button
               className="flex w-52   justify-center gap-2  border-destructive text-destructive hover:bg-destructive hover:text-white "
