@@ -50,13 +50,13 @@ const PostHistoryTemplate: React.FunctionComponent<
         </div>
       </div>
 
-      <div className="flex justify-center">
+      <div className="grid w-full place-items-center">
         {isLoading && (
           <CardSkeletonList className="xs:grid-cols-1 lg:grid-cols-2" />
         )}
 
         {!isLoading && data && !(data.length > 0) && (
-          <div className="mt-8 rounded-lg border-2 p-4 text-center">
+          <div className="mt-8 w-full max-w-md rounded-lg border-2 p-4 text-center">
             {t("history.no_data")}
           </div>
         )}

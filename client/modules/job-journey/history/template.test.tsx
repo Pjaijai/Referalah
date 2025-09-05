@@ -304,7 +304,7 @@ describe("JobJourneyHistoryTemplate", () => {
 
     render(<JobJourneyHistoryTemplate {...defaultProps} />)
 
-    expect(screen.getByText("No job journeys found")).toBeInTheDocument()
+    expect(screen.getByText("general.no_data")).toBeInTheDocument()
     expect(screen.queryByTestId("job-journey-card")).not.toBeInTheDocument()
   })
 
