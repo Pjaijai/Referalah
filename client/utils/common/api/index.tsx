@@ -8,6 +8,7 @@ import {
   TCreateJobJourneyRequest,
   TJobJourney,
   TJobJourneyWithSteps,
+  TUpdateJobJourneyRequest,
 } from "@/types/api/job-journey"
 import { IResetPasswordRequest } from "@/types/api/request/auth/reset-password"
 import { ISignInEmailPasswordRequest } from "@/types/api/request/auth/sign-in-with-email-password"
@@ -1093,6 +1094,44 @@ export const createJobJourney = async (
   }
 }
 
+// Update Job Journey
+export const updateJobJourney = async (
+  uuid: string,
+  request: TUpdateJobJourneyRequest
+): Promise<any> => {
+  const mappedData = {
+    title: request.title,
+    description: request.description,
+    steps: request.steps.map((step) => ({
+      type: step.type,
+      date: step.date,
+      remarks: step.remarks,
+      position: step.position,
+      interview_location: step.interviewLocation,
+      interview_type: step.interviewType,
+    })),
+  }
+
+  try {
+    const { data, error } = await supabase.functions.invoke(
+      "update-job-journey",
+      {
+        body: {
+          uuid,
+          ...mappedData,
+        },
+      }
+    )
+
+    if (error) throw error
+    if (!data) throw new Error("No data returned after update")
+
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
 // Get Job Journey by UUID with Joined Steps
 export const getJobJourneyByUuidWithSteps = async (
   uuid: string
@@ -1372,6 +1411,89 @@ export const getFiresByUserUuid = async ({
     }
 
     return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const getJobJourneysByUserUuid = async (
+  userUuid: string,
+  sortBy: string = "createdAt,desc"
+): Promise<TJobJourney[]> => {
+  try {
+    if (!userUuid) {
+      throw new Error("User UUID is required")
+    }
+
+    let query = supabase
+      .from("job_journey")
+      .select<string, TJobJourney>(
+        `
+        uuid,
+        company_id,
+        company:company_id (
+          id,
+          name,
+          meta_data
+        ),
+        company_name,
+        position_title,
+        title,
+        source,
+        industry_uuid,
+        location_uuid,
+        location:location_uuid (
+          uuid,
+          english_name,
+          cantonese_name
+        ),
+        
+        job_type,
+        job_level,
+        application_submitted_date,
+        visibility,
+        status,
+        created_by,
+        user:created_by (
+          uuid,
+          username
+        ),
+        created_at,
+        updated_at,
+        last_step_status,
+        last_step_status_updated_at,
+        description,
+        fire_count
+        `
+      )
+      .eq("created_by", userUuid)
+
+    // Apply sorting
+    const [sortedBy, order] = sortBy.split(",")
+
+    if (sortedBy === "createdAt") {
+      query = query.order("created_at", { ascending: order === "asc" })
+    }
+
+    if (sortedBy === "applicationDate") {
+      query = query.order("application_submitted_date", {
+        ascending: order === "asc",
+      })
+    }
+
+    if (sortedBy === "lastUpdatedDate") {
+      query = query.order("last_step_status_updated_at", {
+        ascending: order === "asc",
+      })
+    }
+
+    const { data, error } = await query
+
+    if (error) {
+      throw new Error(`Failed to fetch user job journeys: ${error.message}`)
+    }
+
+    return data ?? []
   } catch (error) {
     throw error
   }

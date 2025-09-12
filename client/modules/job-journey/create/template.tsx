@@ -362,7 +362,7 @@ const CreateJobJourneyPageTemplate: React.FC<
               )}
             >
               {isError && (
-                <div className="w-fll t text-center text-destructive ">
+                <div className="w-full text-center text-destructive ">
                   {t("general.error.title")}
                   {t("general.error.description")}
                 </div>

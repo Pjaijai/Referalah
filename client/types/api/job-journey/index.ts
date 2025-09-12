@@ -96,3 +96,10 @@ export type TJobJourneyStep = {
 export type TJobJourneyWithSteps = TJobJourney & {
   job_journey_step: TJobJourneyStep[]
 }
+
+// Update job journey request type
+export type TUpdateJobJourneyRequest = {
+  title: string
+  description: string | null
+  steps: TStep[]
+}
