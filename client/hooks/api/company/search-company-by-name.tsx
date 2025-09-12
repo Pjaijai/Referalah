@@ -17,7 +17,7 @@ const useSearchCompanyByName = ({
   return useQuery({
     queryKey: [QUERY_KEY, trimmedSearchTerm],
     queryFn: () => searchCompanyByName({ searchTerm: trimmedSearchTerm }),
-    enabled: searchTerm.length > 0,
+    enabled: trimmedSearchTerm.length > 0,
     staleTime: 1000 * 60 * 5,
   })
 }
