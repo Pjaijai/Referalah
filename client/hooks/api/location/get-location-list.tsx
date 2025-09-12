@@ -3,7 +3,8 @@ import { useQuery } from "@tanstack/react-query"
 
 import { EQueryKeyString } from "@/types/common/query-key-string"
 
-const useGetCountryList = () => {
+// TODO: can be removed ?
+const useGetLocationList = () => {
   return useQuery({
     queryKey: [EQueryKeyString.LOCATION_LIST],
     queryFn: getLocationList,
@@ -12,4 +13,4 @@ const useGetCountryList = () => {
   })
 }
 
-export default useGetCountryList
+export default useGetLocationList
