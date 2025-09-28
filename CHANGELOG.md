@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.30.2](https://github.com/Pjaijai/Referalah/compare/v1.30.1...v1.30.2) (2025-09-28)
+
+
+### Bug Fixes
+
+* fix create journey url validation ([afe93bb](https://github.com/Pjaijai/Referalah/commit/afe93bbc722537378a9a7b26924277f5f04ae655))
+* fix type ([1c61bb0](https://github.com/Pjaijai/Referalah/commit/1c61bb054d9816ac622518399e7017e55aff0c6f))
+
 ## [1.30.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.30.0) (2025-07-15)
 
 ### Features
