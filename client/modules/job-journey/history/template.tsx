@@ -30,7 +30,7 @@ const JobJourneyHistoryTemplate: React.FunctionComponent<
   }
 
   return (
-    <div>
+    <div className="w-full ">
       <div className="flex w-full flex-row items-center justify-end">
         <div className="flex w-full flex-row items-center md:w-1/3">
           <label className="mr-2 w-2/5 text-end text-sm text-slate-500">
@@ -47,14 +47,14 @@ const JobJourneyHistoryTemplate: React.FunctionComponent<
         </div>
       </div>
 
-      <div className="flex justify-center">
+      <div className="grid w-full place-items-center">
         {isLoading && (
           <CardSkeletonList className="xs:grid-cols-1 lg:grid-cols-2" />
         )}
 
         {!isLoading && data && !(data.length > 0) && (
-          <div className="mt-8 rounded-lg border-2 p-4 text-center">
-            {t("history.no_data")}
+          <div className="mt-8 w-full max-w-md rounded-lg border-2 p-4 text-center">
+            {t("general.no_data")}
           </div>
         )}
 
