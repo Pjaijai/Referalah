@@ -84,6 +84,7 @@ const CreateJobJourneyPageTemplate: React.FC<
             .max(2000, {
               message: t("validation.text.maximum_length", { count: 2000 }),
             })
+            .nullable()
             .optional(),
         })
         .nullable(),
@@ -361,7 +362,7 @@ const CreateJobJourneyPageTemplate: React.FC<
               )}
             >
               {isError && (
-                <div className="w-fll t text-center text-destructive ">
+                <div className="w-full text-center text-destructive ">
                   {t("general.error.title")}
                   {t("general.error.description")}
                 </div>
