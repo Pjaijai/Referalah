@@ -63,7 +63,7 @@ const MemberSearchPageTemplate: React.FunctionComponent<
   const list = data !== undefined ? data.pages.flatMap((d) => d) : []
   const { data: sortingOptions } = useReferralSortOptions()
 
-  // 1/3 chance to show donation card
+  // 1/2 chance to show donation card
   const showDonationCard = Math.random() < 1 / 2
 
   return (
