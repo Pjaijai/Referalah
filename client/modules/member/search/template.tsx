@@ -18,6 +18,7 @@ import { EReferralType } from "@/types/common/referral-type"
 import useSearchUser from "@/hooks/api/user/search-user"
 import useReferralSortOptions from "@/hooks/common/sort/referral-sort-options"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
+import DonationCard from "@/components/customized-ui/cards/donation"
 import TextInput from "@/components/customized-ui/inputs/text"
 import BaseSelect from "@/components/customized-ui/selects/base"
 import FilterSheet from "@/components/customized-ui/sheets/filter"
@@ -61,6 +62,9 @@ const MemberSearchPageTemplate: React.FunctionComponent<
 
   const list = data !== undefined ? data.pages.flatMap((d) => d) : []
   const { data: sortingOptions } = useReferralSortOptions()
+
+  // 1/2 chance to show donation card
+  const showDonationCard = Math.random() < 1 / 2
 
   return (
     <div className="flex flex-col gap-4">
@@ -148,43 +152,52 @@ const MemberSearchPageTemplate: React.FunctionComponent<
           }
         >
           <div className="mx-auto grid w-full max-w-sm grid-cols-1 gap-4  md:mt-4 md:max-w-none md:grid-cols-2 lg:grid-cols-3">
-            {list.map((user) => (
-              <MemberCard
-                key={user.uuid}
-                requestCount={user.contact_request_count}
-                jobTitle={user.job_title}
-                username={user.username}
-                photoUrl={user.avatar_url}
-                companyName={user.company_name}
-                description={user.description}
-                socialMediaUrl={user.social_media_url}
-                yearOfExperience={user.year_of_experience}
-                uuid={user.uuid}
-                receiverType={EReferralType.REFERRER}
-                province={
-                  locale === ELocale.ZH_HK
-                    ? user.province && user.province.cantonese_name
-                    : user.province && user.province.english_name
+            {list.map((user, index) => (
+              <React.Fragment
+                key={
+                  index === 2 && showDonationCard
+                    ? `donation-${index}`
+                    : user.uuid
                 }
-                country={
-                  locale === ELocale.ZH_HK
-                    ? user.country && user.country.cantonese_name
-                    : user.country && user.country.english_name
-                }
-                city={
-                  locale === ELocale.ZH_HK
-                    ? user.city && user.city.cantonese_name
-                    : user.city && user.city.english_name
-                }
-                industry={
-                  locale === ELocale.ZH_HK
-                    ? user.industry && user.industry.cantonese_name
-                    : user.industry && user.industry.english_name
-                }
-                isReferee={user.is_referee}
-                isReferrer={user.is_referer}
-                links={user.links}
-              />
+              >
+                {index === 2 && showDonationCard && <DonationCard />}
+                <MemberCard
+                  key={user.uuid}
+                  requestCount={user.contact_request_count}
+                  jobTitle={user.job_title}
+                  username={user.username}
+                  photoUrl={user.avatar_url}
+                  companyName={user.company_name}
+                  description={user.description}
+                  socialMediaUrl={user.social_media_url}
+                  yearOfExperience={user.year_of_experience}
+                  uuid={user.uuid}
+                  receiverType={EReferralType.REFERRER}
+                  province={
+                    locale === ELocale.ZH_HK
+                      ? user.province && user.province.cantonese_name
+                      : user.province && user.province.english_name
+                  }
+                  country={
+                    locale === ELocale.ZH_HK
+                      ? user.country && user.country.cantonese_name
+                      : user.country && user.country.english_name
+                  }
+                  city={
+                    locale === ELocale.ZH_HK
+                      ? user.city && user.city.cantonese_name
+                      : user.city && user.city.english_name
+                  }
+                  industry={
+                    locale === ELocale.ZH_HK
+                      ? user.industry && user.industry.cantonese_name
+                      : user.industry && user.industry.english_name
+                  }
+                  isReferee={user.is_referee}
+                  isReferrer={user.is_referer}
+                  links={user.links}
+                />
+              </React.Fragment>
             ))}
           </div>
         </BaseInfiniteScroll>

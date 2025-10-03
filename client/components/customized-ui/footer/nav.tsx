@@ -40,7 +40,17 @@ const NavFooter = () => {
         </a>
 
         <Link
-          aria-label="referalah-project-github"
+          aria-label="buy-me-a-coffee"
+          className="text-sm "
+          href={siteConfig.links.buyMeACoffee}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Icons.coffee />
+        </Link>
+
+        <Link
+          aria-label="referalah-project-instagram"
           className="text-sm "
           href={siteConfig.links.instagram}
           target="_blank"
