@@ -16,6 +16,7 @@ import { EMessageType } from "@/types/common/message-type"
 import useSearchPost from "@/hooks/api/post/search-post"
 import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
+import DonationCard from "@/components/customized-ui/cards/donation"
 import PostCard from "@/components/customized-ui/cards/post"
 import TextInput from "@/components/customized-ui/inputs/text"
 import BaseSelect from "@/components/customized-ui/selects/base"
@@ -63,6 +64,9 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
 
   const list = data !== undefined ? data.pages.flatMap((d) => d) : []
   const { data: postSortingOptions } = usePostSortOptions()
+
+  // 1/2 chance to show donation card
+  const showDonationCard = Math.random() < 1 / 2
 
   return (
     <div className=" flex flex-col gap-4">
@@ -128,6 +132,7 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
           experience={experience}
         />
       </div>
+
       {!isLoading && !isFetching && list.length === 0 && (
         <div className="mt-8 rounded-lg border-2 p-4 text-center">
           {t("post.search_post.no_data")}
@@ -151,8 +156,15 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
           }
         >
           <div className="mx-auto grid w-full max-w-sm grid-cols-1 gap-11 md:mt-4 md:max-w-none md:grid-cols-2 lg:grid-cols-3">
-            {list.map((data) => {
-              return (
+            {list.map((data, index) => (
+              <React.Fragment
+                key={
+                  index === 2 && showDonationCard
+                    ? `donation-${index}`
+                    : data.uuid
+                }
+              >
+                {index === 2 && showDonationCard && <DonationCard />}
                 <PostCard
                   type={data.type}
                   jobTitle={data.job_title}
@@ -183,12 +195,11 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
                   yearOfExperience={data.year_of_experience}
                   uuid={data.uuid}
                   createdBy={data.created_by && data.created_by}
-                  key={data.uuid}
                   createdAt={data.created_at && data.created_at.toString()}
                   requestCount={data.contact_request_count}
                 />
-              )
-            })}
+              </React.Fragment>
+            ))}
           </div>
         </BaseInfiniteScroll>
       )}
