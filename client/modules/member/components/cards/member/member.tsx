@@ -74,7 +74,7 @@ const MemberCard: React.FunctionComponent<IMemberCardProps> = ({
   ].filter(Boolean)
 
   return (
-    <Card className="flex h-96 max-w-[448px] flex-col  border-none bg-white shadow-xl">
+    <Card className="flex h-full max-w-[448px] flex-col  border-none bg-white shadow-xl">
       <CardHeader className=" flex flex-row  items-center justify-between ">
         <div className="flex flex-row items-center justify-center gap-2">
           <BaseAvatar

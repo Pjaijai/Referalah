@@ -63,8 +63,8 @@ const MemberSearchPageTemplate: React.FunctionComponent<
   const list = data !== undefined ? data.pages.flatMap((d) => d) : []
   const { data: sortingOptions } = useReferralSortOptions()
 
-  // 1/2 chance to show donation card
-  const showDonationCard = Math.random() < 1 / 2
+  // 1/2 chance to show donation card (memoized to prevent re-calculation on re-renders)
+  const showDonationCard = React.useMemo(() => Math.random() < 1 / 2, [])
 
   return (
     <div className="flex flex-col gap-4">
@@ -160,7 +160,9 @@ const MemberSearchPageTemplate: React.FunctionComponent<
                     : user.uuid
                 }
               >
-                {index === 2 && showDonationCard && <DonationCard />}
+                {index === 2 && showDonationCard && (
+                  <DonationCard className="max-w-[448px]" />
+                )}
                 <MemberCard
                   key={user.uuid}
                   requestCount={user.contact_request_count}
