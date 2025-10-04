@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.30.5](https://github.com/Pjaijai/Referalah/compare/v1.30.4...v1.30.5) (2025-10-04)
+
+
+### Bug Fixes
+
+* fix donation card test ([#469](https://github.com/Pjaijai/Referalah/issues/469)) ([428bd84](https://github.com/Pjaijai/Referalah/commit/428bd84586a770fb076ca9dfcf73ff5174455af1))
+
 ### [1.30.4](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.30.4) (2025-10-04)
 
 
