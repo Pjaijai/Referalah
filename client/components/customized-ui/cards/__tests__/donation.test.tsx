@@ -68,14 +68,15 @@ describe("DonationCard", () => {
     render(<DonationCard />)
 
     // Check for coffee icons (using lucide-react Coffee component)
-    const coffeeIcons = screen.getAllByTestId("lucide-coffee")
+    const coffeeIcons = document.querySelectorAll(".lucide-coffee")
     expect(coffeeIcons).toHaveLength(2) // One in the header circle, one in the button
   })
 
   it("displays external link icon in button", () => {
     render(<DonationCard />)
 
-    expect(screen.getByTestId("lucide-external-link")).toBeInTheDocument()
+    const externalLinkIcon = document.querySelector(".lucide-external-link")
+    expect(externalLinkIcon).toBeInTheDocument()
   })
 
   it("opens donation link when button is clicked", () => {
@@ -115,7 +116,8 @@ describe("DonationCard", () => {
       "border-indigo-200",
       "bg-gradient-to-br",
       "from-indigo-50",
-      "to-indigo-100"
+      "to-indigo-100",
+      "shadow-md"
     )
   })
 
