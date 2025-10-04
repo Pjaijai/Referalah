@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.30.5](https://github.com/Pjaijai/Referalah/compare/v1.30.4...v1.30.5) (2025-10-04)
+
+
+### Bug Fixes
+
+* fix donation card test ([#469](https://github.com/Pjaijai/Referalah/issues/469)) ([428bd84](https://github.com/Pjaijai/Referalah/commit/428bd84586a770fb076ca9dfcf73ff5174455af1))
+
+### [1.30.4](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.30.4) (2025-10-04)
+
+
+### Bug Fixes
+
+* fix type ([5148d8e](https://github.com/Pjaijai/Referalah/commit/5148d8e3bde08205dcde6d5489f6d52a5b6ae452))
+
+### [1.30.3](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.30.3) (2025-10-04)
+
+
+### Bug Fixes
+
+* fix create journey url validation ([821ba6a](https://github.com/Pjaijai/Referalah/commit/821ba6ab68e909495a2faa81e053bd03a38b5a45))
+* fix type ([42d5853](https://github.com/Pjaijai/Referalah/commit/42d5853d7a044c5bf62f3b8dfaaec8a7a2b0d215))
+
 ### [1.30.2](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.30.2) (2025-09-28)
 
 ### Bug Fixes
