@@ -164,7 +164,9 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
                     : data.uuid
                 }
               >
-                {index === 2 && showDonationCard && <DonationCard />}
+                {index === 2 && showDonationCard && (
+                  <DonationCard className="max-w-sm" />
+                )}
                 <PostCard
                   type={data.type}
                   jobTitle={data.job_title}

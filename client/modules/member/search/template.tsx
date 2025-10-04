@@ -160,7 +160,9 @@ const MemberSearchPageTemplate: React.FunctionComponent<
                     : user.uuid
                 }
               >
-                {index === 2 && showDonationCard && <DonationCard />}
+                {index === 2 && showDonationCard && (
+                  <DonationCard className="max-w-[448px]" />
+                )}
                 <MemberCard
                   key={user.uuid}
                   requestCount={user.contact_request_count}
