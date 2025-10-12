@@ -35,7 +35,7 @@ const NavFooter = () => {
       )}
     >
       <div className="flex flex-row-reverse  gap-[60px] ">
-        <a aria-label="author-email" href="mailto:r1r69.referalah@gmail.com">
+        <a aria-label="author-email" href="mailto:referalah@gmail.com">
           <Icons.mail />
         </a>
 
