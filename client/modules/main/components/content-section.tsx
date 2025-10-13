@@ -46,10 +46,6 @@ const ContentSection = ({
         <h2 className="flex shrink-0 flex-row text-center">
           {scopedT("connect")}
         </h2>
-        <h2 className="flex shrink-0 flex-row text-center  md:ml-3">
-          {scopedT("hong_kong")}
-        </h2>
-
         <h2 className=" text-indigo-600 md:ml-3">{scopedT("professionals")}</h2>
       </div>
       <div className="text-inter mt-6 flex flex-row justify-center  text-base text-foreground md:text-start md:text-lg">

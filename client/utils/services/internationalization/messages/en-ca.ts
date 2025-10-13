@@ -3,7 +3,6 @@
 export default {
   index: {
     connect: "Connect Global",
-    hong_kong: "Hong Kong",
     professionals: "Professionals",
     subTitle: `We wish you all the best!`,
     so_far: "Current member:",
