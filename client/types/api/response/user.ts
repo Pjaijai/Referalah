@@ -38,4 +38,10 @@ export interface IUserResponse {
   links: ISocialLinksData[]
   post_count: { count: number }[]
   notification_permissions: string[]
+  location_uuid: string | null
+  location: {
+    uuid: string
+    cantonese_name: string
+    english_name: string
+  } | null
 }

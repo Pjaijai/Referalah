@@ -27,10 +27,8 @@ export interface IViewProfileTemplateProps {
   company: string | null
   jobTitle: string | null
   yearOfExperience?: number | null
-  country: string | null
-  province: string | null
+  location: string | null
   industry: string | null
-  city: string | null
   socialLinks: ISocialLinksData[]
   isReferer: boolean
   isReferee: boolean
@@ -47,9 +45,7 @@ const ViewProfileTemplate: React.FunctionComponent<
   company,
   jobTitle,
   yearOfExperience,
-  country,
-  province,
-  city,
+  location,
   socialLinks,
   industry,
   isReferer,
@@ -88,8 +84,6 @@ const ViewProfileTemplate: React.FunctionComponent<
   const professionalInfo = [jobTitle, company ? ` @ ${company}` : null].filter(
     Boolean
   )
-
-  const location = [city, province, country].filter(Boolean)
 
   const showContactButton = isReferee || isReferer
   const showPostHistoryButton = typeof postCount === "number" && postCount > 0
@@ -190,18 +184,10 @@ const ViewProfileTemplate: React.FunctionComponent<
                       })}
                     </div>
                   )}
-                  {location.length > 0 && (
+                  {location && (
                     <div className="flex flex-row items-center gap-2">
                       <Icons.location className="text-indigo-600" />
-
-                      <div className="flex flex-row">
-                        {location.map((lo, index) => (
-                          <React.Fragment key={index}>
-                            {index > 0 && <>,</>}
-                            <span className="ml-1">{lo}</span>
-                          </React.Fragment>
-                        ))}
-                      </div>
+                      <span>{location}</span>
                     </div>
                   )}
                 </div>
@@ -246,18 +232,10 @@ const ViewProfileTemplate: React.FunctionComponent<
                       })}
                     </div>
                   )}
-                  {location.length > 0 && (
+                  {location && (
                     <div className="flex flex-row items-center gap-2">
                       <Icons.location className="text-indigo-600" />
-
-                      <div className="flex flex-row">
-                        {location.map((lo, index) => (
-                          <React.Fragment key={index}>
-                            {index > 0 && <>,</>}
-                            <span className="ml-1">{lo}</span>
-                          </React.Fragment>
-                        ))}
-                      </div>
+                      <span>{location}</span>
                     </div>
                   )}
                 </div>

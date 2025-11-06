@@ -8,20 +8,23 @@ import {
   useI18n,
 } from "@/utils/services/internationalization/client"
 
+import { TLocationData } from "@/types/api/response/location"
 import { ELocale } from "@/types/common/enums/locale"
 import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
+import useLocationOptionsList from "@/hooks/common/options/location-options-list"
 import useUserStore from "@/hooks/state/user/store"
 import { Icons } from "@/components/icons"
 
 interface IProfileTemplateProps {
   userUuid?: string
+  locationList: TLocationData[]
 }
 
 const ProfileTemplate: React.FunctionComponent<IProfileTemplateProps> = (
   props
 ) => {
-  const { userUuid } = props
+  const { userUuid, locationList } = props
   const t = useI18n()
   const locale = useCurrentLocale()
   const userStoreUuid = useUserStore((state) => state.uuid)
@@ -36,6 +39,22 @@ const ProfileTemplate: React.FunctionComponent<IProfileTemplateProps> = (
   }, [userStoreUuid, userUuid])
 
   const { data: profile, isLoading } = useGetUserprofile(uuid)
+
+  // Use the hook to get location options with proper labels
+  const locationOptions = useLocationOptionsList(
+    locationList,
+    false, // showAllOption
+    locale
+  )
+
+  // Find the location label based on the profile's location UUID
+  const locationLabel = useMemo(() => {
+    if (!profile?.location_uuid) return null
+    const locationOption = locationOptions.find(
+      (option) => option.value === profile.location_uuid
+    )
+    return locationOption?.label ? String(locationOption.label) : null
+  }, [profile?.location_uuid, locationOptions])
 
   if (!userUuid || (!isLoading && !profile))
     return (
@@ -72,21 +91,7 @@ const ProfileTemplate: React.FunctionComponent<IProfileTemplateProps> = (
         isReferee={profile.is_referee}
         isReferer={profile.is_referer}
         slug={userUuid}
-        province={
-          locale === ELocale.ZH_HK
-            ? profile.province && profile.province.cantonese_name
-            : profile.province && profile.province.english_name
-        }
-        country={
-          locale === ELocale.ZH_HK
-            ? profile.country && profile.country.cantonese_name
-            : profile.country && profile.country.english_name
-        }
-        city={
-          locale === ELocale.ZH_HK
-            ? profile.city && profile.city.cantonese_name
-            : profile.city && profile.city.english_name
-        }
+        location={locationLabel}
         industry={
           locale === ELocale.ZH_HK
             ? profile.industry && profile.industry.cantonese_name

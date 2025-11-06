@@ -41,7 +41,6 @@ import {
 import { IReferralResponse } from "@/types/api/response/referral"
 import { IUserResponse } from "@/types/api/response/user"
 import { EJobLevel } from "@/types/common/enums/job-level"
-import { EJobType } from "@/types/common/enums/job-type"
 import { EPostType } from "@/types/common/post-type"
 import { EUserType } from "@/types/common/user-type"
 import { siteConfig } from "@/config/site"
@@ -85,7 +84,13 @@ export const getUserProfile = async (userUuid: string) => {
           contact_request_count,
           links,
           post_count:post(count),
-          notification_permissions
+          notification_permissions,
+          location:location_uuid(
+            uuid,
+            cantonese_name,
+            english_name
+          ),
+          location_uuid
           `
       )
       .eq("uuid", userUuid)
@@ -230,9 +235,7 @@ export const updateUserProfile = async (req: IUpdateUserProfileRequest) => {
       company_name: req.companyName,
       job_title: req.jobTitle,
       year_of_experience: req.yearOfExperience,
-      country_uuid: req.countryUuid,
-      province_uuid: req.provinceUuid,
-      city_uuid: req.cityUuid,
+      location_uuid: req.locationUuid,
       industry_uuid: req.industryUuid,
       links: req.links,
       is_referer: req.isReferer,

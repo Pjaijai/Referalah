@@ -17,4 +17,5 @@ export interface IUpdateUserProfileRequest {
   userUuid: string
   links: Json //ISocialLinksData[]
   notificationPermissions: string[]
+  locationUuid?: string
 }

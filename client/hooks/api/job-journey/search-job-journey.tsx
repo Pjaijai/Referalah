@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useCallback, useEffect, useReducer } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import findRelatedLocationsHelper from "@/modules/job-journey/helpers/find-related-locaitons"
+import findRelatedLocationsHelper from "@/modules/job-journey/helpers/find-related-location"
 import { searchJobJourney } from "@/utils/common/api"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
