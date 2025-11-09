@@ -3,25 +3,24 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import usePostTypeOptions from "@/modules/post/hooks/post-type-options"
-import { useI18n } from "@/utils/services/internationalization/client"
+import {
+  useCurrentLocale,
+  useI18n,
+} from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { ICityResponse } from "@/types/api/response/city"
-import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
-import { IProvinceResponse } from "@/types/api/response/province"
+import { TLocationData } from "@/types/api/response/location"
 import { EPostStatus } from "@/types/common/post-status"
 import { EPostType } from "@/types/common/post-type"
 import { EUserStatus } from "@/types/common/user-status"
 import { siteConfig } from "@/config/site"
 import useGetPost from "@/hooks/api/post/get-post"
 import useUpdatePost from "@/hooks/api/post/update-post"
-import useCityOptions from "@/hooks/common/options/city-options"
-import useCountryOptions from "@/hooks/common/options/country-options"
 import useIndustryOptions from "@/hooks/common/options/industry-options"
-import useProvinceOptions from "@/hooks/common/options/province-options"
+import useLocationOptionsList from "@/hooks/common/options/location-options-list"
 import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
@@ -34,18 +33,14 @@ import { ISelectOption } from "@/components/customized-ui/selects/base"
 
 interface IEditPostPageTemplateProps {
   postUuid: string
-  countryList: ICountryResponse[]
-  provinceList: IProvinceResponse[]
-  cityList: ICityResponse[]
+  locationList: TLocationData[]
   industryList: IIndustryResponse[]
 }
 
 interface IForm {
   description: string
   status: "active" | "inactive"
-  countryUuid: string
-  provinceUuid: string
-  cityUuid: string
+  locationUuid: string
   industryUuid: string
   yearOfExperience: string
   companyName: string
@@ -57,11 +52,13 @@ interface IForm {
 
 const EditPostPageTemplate: React.FunctionComponent<
   IEditPostPageTemplateProps
-> = ({ postUuid, countryList, provinceList, cityList, industryList }) => {
+> = ({ postUuid, locationList, industryList }) => {
   const { data: post, isLoading } = useGetPost(postUuid)
 
   const userUuid = useUserStore((state) => state.uuid)
   const router = useRouter()
+  const locale = useCurrentLocale()
+
   // If not sign in and not viewing by same user
   useEffect(() => {
     if (!isLoading && post?.user?.uuid !== userUuid) {
@@ -102,13 +99,7 @@ const EditPostPageTemplate: React.FunctionComponent<
           message: t("validation.text.minimum_length", { count: 10 }),
         }),
 
-      countryUuid: z.string().min(1, {
-        message: t("validation.field_required"),
-      }),
-      provinceUuid: z.string().min(1, {
-        message: t("validation.field_required"),
-      }),
-      cityUuid: z.string().min(1, {
+      locationUuid: z.string().min(1, {
         message: t("validation.field_required"),
       }),
       industryUuid: z.string().min(1, {
@@ -188,9 +179,7 @@ const EditPostPageTemplate: React.FunctionComponent<
         jobTitle: post?.job_title || "",
         yearOfExperience: post?.year_of_experience?.toString() || "0",
         url: post?.url || "",
-        countryUuid: post?.country?.uuid || "",
-        provinceUuid: post?.province?.uuid || "",
-        cityUuid: post?.city?.uuid || "",
+        locationUuid: post?.location?.uuid || "",
         industryUuid: post?.industry?.uuid || "",
         type: post?.type,
       }
@@ -199,8 +188,6 @@ const EditPostPageTemplate: React.FunctionComponent<
 
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const countryWatch = form.watch("countryUuid")
-  const provinceWatch = form.watch("provinceUuid")
   const yearOfExperienceWatch = form.watch("yearOfExperience")
 
   const user = useUserStore((state) => state)
@@ -210,26 +197,11 @@ const EditPostPageTemplate: React.FunctionComponent<
   ]
 
   const industryOptions = useIndustryOptions(industryList)
-  const countryOptions = useCountryOptions(countryList)
-  const provinceOptions = useProvinceOptions(provinceList, countryWatch)
-  const cityOptions = useCityOptions(cityList, provinceWatch)
+  const locationOptions = useLocationOptionsList(locationList, false, locale)
   const typeOptions = usePostTypeOptions()
 
   const { mutate: updatePost, isLoading: isUpdatingPostLoading } =
     useUpdatePost()
-
-  useEffect(() => {
-    if (!isLoading && countryWatch !== post?.country?.uuid) {
-      form.setValue("provinceUuid", "")
-      form.setValue("cityUuid", "")
-    }
-  }, [form, isLoading, countryWatch])
-
-  useEffect(() => {
-    if (provinceWatch !== post?.province?.uuid) {
-      form.setValue("cityUuid", "")
-    }
-  }, [form, isLoading, provinceWatch])
 
   useEffect(() => {
     // Convert yearOfExperienceWatch to a number
@@ -250,7 +222,7 @@ const EditPostPageTemplate: React.FunctionComponent<
       // Set a default value or handle it as needed
       form.setValue("yearOfExperience", "0")
     }
-  }, [yearOfExperienceWatch])
+  }, [form, yearOfExperienceWatch])
 
   const onSubmit = async (values: IForm, e: any) => {
     e.preventDefault()
@@ -270,9 +242,7 @@ const EditPostPageTemplate: React.FunctionComponent<
           uuid: postUuid,
           status: values.status,
           url: values.url,
-          countryUuid: values.countryUuid,
-          provinceUuid: values.provinceUuid,
-          cityUuid: values.cityUuid,
+          locationUuid: values.locationUuid,
           industryUuid: values.industryUuid,
           yearOfExperience: parseInt(values.yearOfExperience),
           companyName: values.companyName.trim(),
@@ -357,25 +327,12 @@ const EditPostPageTemplate: React.FunctionComponent<
             label={t("general.industry")}
             name="industryUuid"
           />
-          <FormSelect
-            options={countryOptions}
-            control={form.control}
-            label={t("general.country")}
-            name="countryUuid"
-          />
 
           <FormSelect
+            options={locationOptions}
             control={form.control}
-            label={t("general.region")}
-            name="provinceUuid"
-            options={provinceOptions}
-          />
-
-          <FormSelect
-            control={form.control}
-            label={t("general.city")}
-            name="cityUuid"
-            options={cityOptions}
+            label={t("general.location")}
+            name="locationUuid"
           />
 
           <FormNumberInput

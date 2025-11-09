@@ -1,6 +1,6 @@
 import React from "react"
 import PostHistoryTemplate from "@/modules/post/history/template"
-import { getUserProfile } from "@/utils/common/api"
+import { getLocationList, getUserProfile } from "@/utils/common/api"
 import { getI18n } from "@/utils/services/internationalization/server"
 
 import CommonPageLayout from "@/components/layouts/common"
@@ -33,9 +33,11 @@ const PostHistoryPage = async ({
   params: { userUuid: string }
 }) => {
   const t = await getI18n()
+  const locationList = await getLocationList()
+
   return (
     <CommonPageLayout title={t("page.post_history")}>
-      <PostHistoryTemplate slug={params.userUuid} />
+      <PostHistoryTemplate slug={params.userUuid} locationList={locationList} />
     </CommonPageLayout>
   )
 }

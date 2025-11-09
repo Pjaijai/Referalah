@@ -1,11 +1,6 @@
 import React from "react"
 import PostSearchPageTemplate from "@/modules/post/search/template"
-import {
-  getCityList,
-  getCountryList,
-  getIndustryList,
-  getProvinceList,
-} from "@/utils/common/api"
+import { getIndustryList, getLocationList } from "@/utils/common/api"
 import { getI18n } from "@/utils/services/internationalization/server"
 
 import { siteConfig } from "@/config/site"
@@ -17,16 +12,12 @@ export const revalidate = 60 * 60 * 24
 
 const PostSearchPage = async () => {
   const t = await getI18n()
-  const countryList = await getCountryList()
-  const provinceList = await getProvinceList()
-  const cityList = await getCityList()
+  const locationList = await getLocationList()
   const industryList = await getIndustryList()
   return (
     <CommonPageLayout title={t("page.post")}>
       <PostSearchPageTemplate
-        countryList={countryList}
-        provinceList={provinceList}
-        cityList={cityList}
+        locationList={locationList}
         industryList={industryList}
       />
     </CommonPageLayout>

@@ -192,9 +192,7 @@ describe("BasicInfoSection", () => {
     company_name: "Tech Corp",
     job_title: "Senior Developer",
     year_of_experience: 5,
-    country: null,
-    province: null,
-    city: null,
+    industry_uuid: "tech-uuid",
     industry: {
       uuid: "tech-uuid",
       english_name: "Technology",

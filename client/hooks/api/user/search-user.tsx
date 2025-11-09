@@ -1,24 +1,16 @@
 import { ChangeEvent, useCallback, useEffect, useReducer } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import findRelatedLocationsHelper from "@/modules/job-journey/helpers/find-related-location"
 import { searchUser } from "@/utils/common/api"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { IUserFilterMeta } from "@/types/api/request/user/filter-meta"
-import { ICityResponse } from "@/types/api/response/city"
 import { IIndustryResponse } from "@/types/api/response/industry"
+import { TLocationData } from "@/types/api/response/location"
 import { EQueryKeyString } from "@/types/common/query-key-string"
 import { EUserType } from "@/types/common/user-type"
 import useDebounce from "@/hooks/common/debounce"
 import useReferralSortOptions from "@/hooks/common/sort/referral-sort-options"
-
-const mapCityToUuid = (cities: string[], cityData: ICityResponse[]) => {
-  return cities
-    .map((v) => {
-      const city = cityData.find((d) => d.value === v)
-      return city ? city.uuid : null
-    })
-    .filter((uuid): uuid is string => Boolean(uuid))
-}
 
 const mapIndustryToUuid = (
   industries: string[],
@@ -67,14 +59,15 @@ const search = ({
   })
 }
 interface ISearchUserProps {
-  cityList: ICityResponse[]
+  locationList: TLocationData[]
   industryList: IIndustryResponse[]
 }
 
 interface State {
   keywords: string
   debouncedKeywords: string
-  locations: Set<string>
+  locations: string[]
+  location: string
   industries: Set<string>
   experience: number
   debouncedExperience: number
@@ -86,7 +79,8 @@ interface State {
 type Action =
   | { type: "SET_KEYWORDS"; payload: string }
   | { type: "SET_DEBOUNCED_KEYWORDS"; payload: string }
-  | { type: "SET_LOCATIONS"; payload: Set<string> }
+  | { type: "SET_LOCATION"; payload: string }
+  | { type: "SET_LOCATIONS"; payload: string[] }
   | { type: "SET_INDUSTRIES"; payload: Set<string> }
   | { type: "SET_EXPERIENCE"; payload: number }
   | { type: "SET_DEBOUNCED_EXPERIENCE"; payload: number }
@@ -101,6 +95,8 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, keywords: action.payload }
     case "SET_DEBOUNCED_KEYWORDS":
       return { ...state, debouncedKeywords: action.payload }
+    case "SET_LOCATION":
+      return { ...state, location: action.payload }
     case "SET_LOCATIONS":
       return { ...state, locations: action.payload }
     case "SET_INDUSTRIES":
@@ -123,7 +119,7 @@ const reducer = (state: State, action: Action): State => {
 }
 
 const useSearchUser = (props: ISearchUserProps) => {
-  const { cityList: cityData, industryList: industryData } = props
+  const { locationList: locationData, industryList: industryData } = props
   const { data: referralSortingOptions } = useReferralSortOptions()
 
   const keyString = EQueryKeyString.SEARCH_USER
@@ -136,14 +132,11 @@ const useSearchUser = (props: ISearchUserProps) => {
   const initialState: State = {
     keywords: searchParams.get("keywords")?.toString() || "",
     debouncedKeywords: searchParams.get("keywords")?.toString() || "",
-    locations: new Set(
-      searchParams.get("locations")
-        ? mapCityToUuid(
-            searchParams.get("locations")!.toString().split(","),
-            cityData
-          )
-        : cityData.map((data) => data.uuid)
+    locations: findRelatedLocationsHelper(
+      locationData,
+      searchParams.get("location")?.toString()
     ),
+    location: searchParams?.get("location") || "all",
     industries: new Set(
       searchParams.get("industries")
         ? mapIndustryToUuid(
@@ -225,19 +218,23 @@ const useSearchUser = (props: ISearchUserProps) => {
     }
   }
 
-  const handleLocationChange = (value: string[]) => {
-    dispatch({ type: "SET_LOCATIONS", payload: new Set(value) })
-    const isAllSelected = cityData.every((val) => value.includes(val.uuid))
-    if (isAllSelected) {
-      removeQueryString("locations")
+  const handleLocationChange = (uuid: string) => {
+    const selectedLocation = locationData.find((loc) => loc.uuid === uuid)
+    if (!selectedLocation) return
+
+    const locationValue = selectedLocation.value
+    const relatedLocations = findRelatedLocationsHelper(
+      locationData,
+      locationValue
+    )
+
+    dispatch({ type: "SET_LOCATION", payload: locationValue })
+    dispatch({ type: "SET_LOCATIONS", payload: relatedLocations })
+
+    if (locationValue === "all") {
+      removeQueryString("location")
     } else {
-      createQueryString(
-        "locations",
-        value
-          .map((v) => cityData.find((d) => d.uuid === v)?.value)
-          .filter(Boolean)
-          .join(",")
-      )
+      createQueryString("location", locationValue)
     }
   }
 
@@ -272,7 +269,8 @@ const useSearchUser = (props: ISearchUserProps) => {
       sorting: referralSortingOptions[0].value,
       params: new URLSearchParams(),
       userType: EUserType.ALL,
-      locations: new Set(cityData.map((data) => data.uuid)),
+      locations: findRelatedLocationsHelper(locationData, "all"),
+      location: "all",
       industries: new Set(industryData.map((data) => data.uuid)),
       keywords: "",
       debouncedKeywords: "",
@@ -319,6 +317,7 @@ const useSearchUser = (props: ISearchUserProps) => {
     handleUserTypeChange,
     userType: state.userType,
     handleLocationChange,
+    location: state.location,
     locations: state.locations,
     industries: state.industries,
     handleExperienceChange,

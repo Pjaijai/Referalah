@@ -9,6 +9,7 @@ import { useScopedI18n } from "@/utils/services/internationalization/client"
 import { motion } from "framer-motion"
 
 import { TContactRequestListResponse } from "@/types/api/response/contact-request/contact-request-list"
+import { TLocationData } from "@/types/api/response/location"
 import { ISearchPostResponse } from "@/types/api/response/referer-post"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
@@ -19,10 +20,12 @@ const ContentSection = ({
   count,
   posts,
   contactList,
+  locationList,
 }: {
   count: number | null
   posts: ISearchPostResponse[]
   contactList: TContactRequestListResponse[]
+  locationList: TLocationData[]
 }) => {
   const isUserSignIn = useUserStore((state) => state.isSignIn)
 
@@ -96,7 +99,7 @@ const ContentSection = ({
         <UserCount numberOfMembers={count} />
       </div>
       <div className="mt-20 ">
-        <PostCarousel list={posts} />
+        <PostCarousel list={posts} locationList={locationList} />
       </div>
 
       <div className="mt-12 ">

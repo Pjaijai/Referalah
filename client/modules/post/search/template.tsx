@@ -7,10 +7,8 @@ import {
   useI18n,
 } from "@/utils/services/internationalization/client"
 
-import { ICityResponse } from "@/types/api/response/city"
-import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
-import { IProvinceResponse } from "@/types/api/response/province"
+import { TLocationData } from "@/types/api/response/location"
 import { ELocale } from "@/types/common/enums/locale"
 import { EMessageType } from "@/types/common/message-type"
 import useSearchPost from "@/hooks/api/post/search-post"
@@ -25,16 +23,12 @@ import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 import { Icons } from "@/components/icons"
 
 interface IPostSearchPageProps {
-  countryList: ICountryResponse[]
-  provinceList: IProvinceResponse[]
-  cityList: ICityResponse[]
+  locationList: TLocationData[]
   industryList: IIndustryResponse[]
 }
 
 const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
-  countryList,
-  provinceList,
-  cityList,
+  locationList,
   industryList,
 }) => {
   const t = useI18n()
@@ -50,12 +44,12 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
     keywords,
     handleKeywordsChange,
     handleLocationChange,
-    locations,
+    location,
     industries,
     experience,
     handleExperienceChange,
   } = useSearchPost({
-    cityList,
+    locationList,
     industryList,
   })
   const locale = useCurrentLocale()
@@ -80,13 +74,11 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
         />
         <FilterSheet
           onIndustryChange={handleIndustryChange}
-          cityList={cityList}
-          countryList={countryList}
+          locationList={locationList}
           industryList={industryList}
-          provinceList={provinceList}
           handleReset={handleReset}
           onLocationChange={handleLocationChange}
-          locations={locations}
+          location={location}
           industries={industries}
           onExperienceChange={handleExperienceChange}
           experience={experience}
@@ -120,13 +112,11 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
           onSortingChange={handleSortingChange}
           currentSorting={sorting}
           type={EMessageType.POST}
-          cityList={cityList}
-          countryList={countryList}
+          locationList={locationList}
           industryList={industryList}
-          provinceList={provinceList}
           handleReset={handleReset}
           onLocationChange={handleLocationChange}
-          locations={locations}
+          location={location}
           industries={industries}
           onExperienceChange={handleExperienceChange}
           experience={experience}
@@ -172,25 +162,12 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
                   jobTitle={data.job_title}
                   username={data.user && data.user.username}
                   photoUrl={data.user && data.user.avatar_url}
-                  province={
-                    locale === ELocale.ZH_HK
-                      ? data.province && data.province.cantonese_name
-                      : data.province && data.province.english_name
-                  }
-                  country={
-                    locale === ELocale.ZH_HK
-                      ? data.country && data.country.cantonese_name
-                      : data.country && data.country.english_name
-                  }
-                  city={
-                    locale === ELocale.ZH_HK
-                      ? data.city && data.city.cantonese_name
-                      : data.city && data.city.english_name
-                  }
+                  locationUuid={data.location?.uuid || null}
+                  locationList={locationList}
                   industry={
                     locale === ELocale.ZH_HK
-                      ? data.industry && data.industry.cantonese_name
-                      : data.industry && data.industry.english_name
+                      ? data.industry?.cantonese_name || null
+                      : data.industry?.english_name || null
                   }
                   companyName={data.company_name}
                   url={data.url}

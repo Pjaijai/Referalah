@@ -1,6 +1,7 @@
 import { Suspense } from "react"
 import MainPageTemplate from "@/modules/main/template"
 import {
+  getLocationList,
   getUserCount,
   listLatestContactRequest,
   searchPost,
@@ -24,7 +25,7 @@ export default async function IndexPage() {
 }
 
 async function MainPageContent() {
-  const [count, posts, list] = await Promise.all([
+  const [count, posts, list, locationList] = await Promise.all([
     getUserCount(),
     searchPost({
       keywords: "",
@@ -35,7 +36,15 @@ async function MainPageContent() {
       sortingType: "createdAt,dec",
     }),
     listLatestContactRequest(),
+    getLocationList(),
   ])
 
-  return <MainPageTemplate count={count} posts={posts} contactList={list} />
+  return (
+    <MainPageTemplate
+      count={count}
+      posts={posts}
+      contactList={list}
+      locationList={locationList}
+    />
+  )
 }

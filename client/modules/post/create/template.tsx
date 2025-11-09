@@ -4,23 +4,22 @@ import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import usePostTypeOptions from "@/modules/post/hooks/post-type-options"
-import { useI18n } from "@/utils/services/internationalization/client"
+import {
+  useCurrentLocale,
+  useI18n,
+} from "@/utils/services/internationalization/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { ICityResponse } from "@/types/api/response/city"
-import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
-import { IProvinceResponse } from "@/types/api/response/province"
+import { TLocationData } from "@/types/api/response/location"
 import { EPostType } from "@/types/common/post-type"
 import { EUserStatus } from "@/types/common/user-status"
 import { siteConfig } from "@/config/site"
 import useCreatePost from "@/hooks/api/post/create-post"
-import useCityOptions from "@/hooks/common/options/city-options"
-import useCountryOptions from "@/hooks/common/options/country-options"
 import useIndustryOptions from "@/hooks/common/options/industry-options"
-import useProvinceOptions from "@/hooks/common/options/province-options"
+import useLocationOptionsList from "@/hooks/common/options/location-options-list"
 import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
@@ -32,19 +31,16 @@ import FormSelect from "@/components/customized-ui/form/select"
 import FormTextArea from "@/components/customized-ui/form/text-area"
 
 interface ICreatePostTemplateProps {
-  countryList: ICountryResponse[]
-  provinceList: IProvinceResponse[]
-  cityList: ICityResponse[]
+  locationList: TLocationData[]
   industryList: IIndustryResponse[]
 }
 
 const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
-  countryList,
-  provinceList,
-  cityList,
+  locationList,
   industryList,
 }) => {
   const t = useI18n()
+  const locale = useCurrentLocale()
 
   const createPostValidationSchema = z
     .object({
@@ -78,13 +74,7 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
         }
       ),
 
-      countryUuid: z.string().min(1, {
-        message: t("validation.field_required"),
-      }),
-      provinceUuid: z.string().min(1, {
-        message: t("validation.field_required"),
-      }),
-      cityUuid: z.string().min(1, {
+      locationUuid: z.string().min(1, {
         message: t("validation.field_required"),
       }),
       industryUuid: z.string().min(1, {
@@ -160,43 +150,28 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
       companyName: "",
       jobTitle: "",
       yearOfExperience: "0",
-      countryUuid: "",
-      provinceUuid: "",
-      cityUuid: "",
+      locationUuid: "",
       industryUuid: "",
       url: "",
     },
   })
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const countryWatch = form.watch("countryUuid")
-  const provinceWatch = form.watch("provinceUuid")
   const yearOfExperienceWatch = form.watch("yearOfExperience")
   const urlWatch = form.watch("url")
   const router = useRouter()
   const user = useUserStore((state) => state)
 
   const industryOptions = useIndustryOptions(industryList)
-  const countryOptions = useCountryOptions(countryList)
-  const provinceOptions = useProvinceOptions(provinceList, countryWatch)
-  const cityOptions = useCityOptions(cityList, provinceWatch)
+  const locationOptions = useLocationOptionsList(locationList, false, locale)
   const typeOptions = usePostTypeOptions()
   const { mutate: createPost, isLoading: isCreatePostLoading } = useCreatePost()
-
-  useEffect(() => {
-    form.setValue("provinceUuid", "")
-    form.setValue("cityUuid", "")
-  }, [countryWatch])
-
-  useEffect(() => {
-    form.setValue("cityUuid", "")
-  }, [provinceWatch])
 
   useEffect(() => {
     if (urlWatch === "") {
       form.setValue("url", undefined)
     }
-  }, [urlWatch])
+  }, [form, urlWatch])
 
   useEffect(() => {
     // Convert yearOfExperienceWatch to a number
@@ -220,7 +195,7 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
       // Set a default value or handle it as needed
       form.setValue("yearOfExperience", "0")
     }
-  }, [yearOfExperienceWatch])
+  }, [form, yearOfExperienceWatch])
 
   const onSubmit = async (
     values: z.infer<typeof createPostValidationSchema>,
@@ -255,9 +230,7 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
       createPost(
         {
           url: values.url,
-          countryUuid: values.countryUuid,
-          provinceUuid: values.provinceUuid,
-          cityUuid: values.cityUuid,
+          locationUuid: values.locationUuid,
           industryUuid: values.industryUuid,
           yearOfExperience: parseInt(values.yearOfExperience),
           type: values.type,
@@ -333,24 +306,12 @@ const CreatePostTemplate: React.FunctionComponent<ICreatePostTemplateProps> = ({
             label={t("general.industry")}
             name="industryUuid"
           />
-          <FormSelect
-            options={countryOptions}
-            control={form.control}
-            label={t("general.country")}
-            name="countryUuid"
-          />
-          <FormSelect
-            control={form.control}
-            label={t("general.region")}
-            name="provinceUuid"
-            options={provinceOptions as any}
-          />
 
           <FormSelect
+            options={locationOptions}
             control={form.control}
-            label={t("general.city")}
-            name="cityUuid"
-            options={cityOptions as any}
+            label={t("general.location")}
+            name="locationUuid"
           />
 
           <FormNumberInput
