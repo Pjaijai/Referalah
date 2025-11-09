@@ -1,6 +1,7 @@
 import React from "react"
 import ReferralPostDetailsPageTemplate from "@/modules/post/view/template"
 import {
+  getLocationList,
   getPostByUuid,
   getPostViewCountByUuid,
   incrementPostViewCountByUuid,
@@ -75,13 +76,17 @@ const RefererPostDetailsPage = async ({
   params: { uuid: string }
 }) => {
   await incrementPostViewCountByUuid(params.uuid)
-  const viewCount = await getPostViewCountByUuid(params.uuid)
+  const [viewCount, locationList] = await Promise.all([
+    getPostViewCountByUuid(params.uuid),
+    getLocationList(),
+  ])
 
   return (
     <CommonPageLayout>
       <ReferralPostDetailsPageTemplate
         postUuid={params.uuid}
         viewCount={viewCount}
+        locationList={locationList}
       />
     </CommonPageLayout>
   )

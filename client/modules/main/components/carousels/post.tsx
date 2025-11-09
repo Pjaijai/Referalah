@@ -3,6 +3,7 @@
 import React from "react"
 import { useCurrentLocale } from "@/utils/services/internationalization/client"
 
+import { TLocationData } from "@/types/api/response/location"
 import { ISearchPostResponse } from "@/types/api/response/referer-post"
 import { ELocale } from "@/types/common/enums/locale"
 import PostCard from "@/components/customized-ui/cards/post"
@@ -10,9 +11,11 @@ import Marquee from "@/components/magicui/marquee"
 
 interface IPostCarouselProps {
   list: ISearchPostResponse[]
+  locationList: TLocationData[]
 }
 const PostCarousel: React.FunctionComponent<IPostCarouselProps> = ({
   list,
+  locationList,
 }) => {
   const locale = useCurrentLocale()
   return (
@@ -27,25 +30,12 @@ const PostCarousel: React.FunctionComponent<IPostCarouselProps> = ({
               jobTitle={data.job_title}
               username={data.user && data.user.username}
               photoUrl={data.user && data.user.avatar_url}
+              locationUuid={data.location?.uuid || null}
+              locationList={locationList}
               industry={
                 locale === ELocale.ZH_HK
-                  ? data.industry && data.industry.cantonese_name
-                  : data.industry && data.industry.english_name
-              }
-              province={
-                locale === ELocale.ZH_HK
-                  ? data.province && data.province.cantonese_name
-                  : data.province && data.province.english_name
-              }
-              country={
-                locale === ELocale.ZH_HK
-                  ? data.country && data.country.cantonese_name
-                  : data.country && data.country.english_name
-              }
-              city={
-                locale === ELocale.ZH_HK
-                  ? data.city && data.city.cantonese_name
-                  : data.city && data.city.english_name
+                  ? data.industry?.cantonese_name || null
+                  : data.industry?.english_name || null
               }
               companyName={data.company_name}
               url={data.url}

@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useCallback, useEffect, useReducer } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import findRelatedLocationsHelper from "@/modules/job-journey/helpers/find-related-locaitons"
+import findRelatedLocationsHelper from "@/modules/job-journey/helpers/find-related-location"
 import { searchJobJourney } from "@/utils/common/api"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
@@ -10,7 +10,6 @@ import { IJobJourneyFilterMeta } from "@/types/api/job-journey"
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { TLocationData } from "@/types/api/response/location"
 import { EJobLevel } from "@/types/common/enums/job-level"
-import { EJobType } from "@/types/common/enums/job-type"
 import { EQueryKeyString } from "@/types/common/query-key-string"
 import useDebounce from "@/hooks/common/debounce"
 import useJobJourneySortOptions from "@/hooks/common/sort/job-journey-sort-options"

@@ -182,9 +182,7 @@ describe("ViewProfileTemplate", () => {
     company: "Tech Corp",
     jobTitle: "Senior Developer",
     yearOfExperience: 5,
-    country: "Canada",
-    province: "Ontario",
-    city: "Toronto",
+    location: "Ontario - Toronto",
     socialLinks: [
       {
         type: ESocialLink.LINKEDIN,
@@ -347,9 +345,7 @@ describe("ViewProfileTemplate", () => {
 
     expect(screen.getAllByText("Technology")[0]).toBeInTheDocument()
     expect(screen.getAllByText("5 years of experience")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Toronto")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Ontario")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Canada")[0]).toBeInTheDocument()
+    expect(screen.getAllByText("Ontario - Toronto")[0]).toBeInTheDocument()
   })
 
   it("should display community statistics", () => {
@@ -564,9 +560,7 @@ describe("ViewProfileTemplate", () => {
       company: null,
       jobTitle: null,
       yearOfExperience: null,
-      country: null,
-      province: null,
-      city: null,
+      location: null,
       socialLinks: [],
       industry: null,
       isReferer: false,
@@ -616,16 +610,22 @@ describe("ViewProfileTemplate", () => {
     expect(screen.queryByText("@ Tech Corp")).not.toBeInTheDocument()
   })
 
-  it("should display location correctly when some location fields are null", () => {
-    const propsWithPartialLocation = {
+  it("should not display location when location is null", () => {
+    const propsWithoutLocation = {
       ...mockProps,
-      province: null,
+      location: null,
     }
 
-    render(<ViewProfileTemplate {...propsWithPartialLocation} />)
+    render(<ViewProfileTemplate {...propsWithoutLocation} />)
 
-    // Should still display city and country
-    expect(screen.getAllByText("Toronto")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Canada")[0]).toBeInTheDocument()
+    expect(screen.queryByText("Ontario - Toronto")).not.toBeInTheDocument()
+    expect(screen.queryByTestId("location-icon")).not.toBeInTheDocument()
+  })
+
+  it("should display location when provided", () => {
+    render(<ViewProfileTemplate {...mockProps} />)
+
+    expect(screen.getAllByText("Ontario - Toronto")[0]).toBeInTheDocument()
+    expect(screen.getAllByTestId("location-icon")[0]).toBeInTheDocument()
   })
 })

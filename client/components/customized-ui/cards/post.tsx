@@ -1,12 +1,18 @@
-import React from "react"
+import React, { useMemo } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import PostStatusDisplay from "@/modules/post/components/info-display/status"
+import {
+  useCurrentLocale,
+  useI18n,
+} from "@/utils/services/internationalization/client"
 
+import { TLocationData } from "@/types/api/response/location"
 import { TPostStatusType } from "@/types/common/post-status"
 import { EPostType } from "@/types/common/post-type"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
+import useLocationOptionsList from "@/hooks/common/options/location-options-list"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
@@ -15,8 +21,8 @@ import ContactRequestCountIcon from "@/components/customized-ui/icons/contact-re
 import LinkIcon from "@/components/customized-ui/icons/link"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
 import IndustryDisplay from "@/components/customized-ui/info-display/industry"
-import LocationDisplay from "@/components/customized-ui/info-display/location"
 import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
+import { Icons } from "@/components/icons"
 
 interface IPostCardProps {
   uuid: string | null
@@ -25,9 +31,8 @@ interface IPostCardProps {
   companyName: string | null
   jobTitle: string | null
   yearOfExperience?: number | null
-  country: string | null
-  province: string | null
-  city: string | null
+  locationUuid: string | null
+  locationList: TLocationData[]
   industry?: string | null
   url: string | null
   createdAt: string | null
@@ -42,11 +47,10 @@ const PostCard: React.FunctionComponent<IPostCardProps> = ({
   type,
   uuid,
   jobTitle,
-  city,
+  locationUuid,
+  locationList,
   companyName,
-  country,
   photoUrl,
-  province,
   url,
   industry,
   username,
@@ -58,6 +62,23 @@ const PostCard: React.FunctionComponent<IPostCardProps> = ({
   status,
 }) => {
   const router = useRouter()
+  const locale = useCurrentLocale()
+
+  // Use the hook to get location options with proper labels
+  const locationOptions = useLocationOptionsList(
+    locationList,
+    false, // showAllOption
+    locale
+  )
+
+  // Find the location label based on the locationUuid
+  const location = useMemo(() => {
+    if (!locationUuid) return null
+    const locationOption = locationOptions.find(
+      (option) => option.value === locationUuid
+    )
+    return locationOption?.label ? String(locationOption.label) : null
+  }, [locationUuid, locationOptions])
 
   const handleAvatarOnClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
@@ -109,13 +130,13 @@ const PostCard: React.FunctionComponent<IPostCardProps> = ({
           <div className="mt-5 flex flex-row items-end">
             {/* location, industry, year of exp */}
             <div className="flex w-full flex-col items-start justify-start gap-2 text-sm font-normal text-slate-700">
-              {(city || province || country) && (
-                <LocationDisplay
-                  city={city}
-                  province={province}
-                  country={country}
-                  className="gap-2"
-                />
+              {location && (
+                <div className="flex items-center justify-start gap-2">
+                  <div>
+                    <Icons.location width="18" height="18" />
+                  </div>
+                  <span className="ml-1">{location}</span>
+                </div>
               )}
 
               {industry && <IndustryDisplay industry={industry} />}

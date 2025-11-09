@@ -1,10 +1,5 @@
 import CreatePostTemplate from "@/modules/post/create/template"
-import {
-  getCityList,
-  getCountryList,
-  getIndustryList,
-  getProvinceList,
-} from "@/utils/common/api"
+import { getIndustryList, getLocationList } from "@/utils/common/api"
 import { getI18n } from "@/utils/services/internationalization/server"
 
 import { siteConfig } from "@/config/site"
@@ -17,17 +12,15 @@ export const revalidate = 60 * 60 * 24
 
 const CreatePostPage = async () => {
   const t = await getI18n()
-  const countryList = await getCountryList()
-  const provinceList = await getProvinceList()
-  const cityList = await getCityList()
-  const industryList = await getIndustryList()
+  const [locationList, industryList] = await Promise.all([
+    getLocationList(),
+    getIndustryList(),
+  ])
   return (
     <AuthenticatedPageWrapper>
       <CommonPageLayout title={t("page.create_post")}>
         <CreatePostTemplate
-          cityList={cityList}
-          provinceList={provinceList}
-          countryList={countryList}
+          locationList={locationList}
           industryList={industryList}
         />
       </CommonPageLayout>

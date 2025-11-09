@@ -11,9 +11,7 @@ export interface IPost {
   company_name: string | null
   job_title: string | null
   year_of_experience: number | null
-  country_uuid: string | null
-  province_uuid: string | null
-  city_uuid: string | null
+  location_uuid: string | null
   industry_uuid: string | null
   url: string | null
   status: TPostStatusType

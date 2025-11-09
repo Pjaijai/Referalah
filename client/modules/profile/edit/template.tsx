@@ -16,33 +16,25 @@ import { v4 as uuidv4 } from "uuid"
 import { z } from "zod"
 
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
-import { ICityResponse } from "@/types/api/response/city"
-import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
-import { IProvinceResponse } from "@/types/api/response/province"
+import { TLocationData } from "@/types/api/response/location"
 import { EQueryKeyString } from "@/types/common/query-key-string"
 import { ESocialLink, socialLinkValues } from "@/types/common/social-links"
 import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
 import useUpdateUserProfile from "@/hooks/api/user/update-user-profile"
-import useCountryOptions from "@/hooks/common/options/country-options"
-import useProvinceOptions from "@/hooks/common/options/province-options"
 import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { useToast } from "@/components/ui/use-toast"
 
 interface IEdiProfileTemplate {
-  countryList: ICountryResponse[]
-  provinceList: IProvinceResponse[]
-  cityList: ICityResponse[]
+  locationList: TLocationData[]
   industryList: IIndustryResponse[]
 }
 
 const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
-  countryList,
-  provinceList,
-  cityList,
+  locationList,
   industryList,
 }) => {
   const userUuid = useUserStore((state) => state.uuid)
@@ -118,11 +110,9 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
           message: t("validation.text.maximum_length", { count: 3000 }),
         })
         .optional(),
-      countryUuid: z.string().min(1, {
+      locationUuid: z.string().min(1, {
         message: t("validation.field_required"),
       }),
-      provinceUuid: z.string().optional(),
-      cityUuid: z.string().optional(),
       industryUuid: z.string().min(1, {
         message: t("validation.field_required"),
       }),
@@ -196,9 +186,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         company: profile?.company_name || undefined,
         jobTitle: profile?.job_title || undefined,
         yearOfExperience: profile?.year_of_experience?.toString() || "0",
-        countryUuid: profile?.country?.uuid || undefined,
-        provinceUuid: profile?.province?.uuid || undefined,
-        cityUuid: profile?.city?.uuid || undefined,
+        locationUuid: profile?.location?.uuid || undefined,
         socialMediaUrl: profile?.social_media_url || undefined,
         isReferer: profile?.is_referer || false,
         isReferee: profile?.is_referee || false,
@@ -208,17 +196,16 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       }
 
       return res
-    }, [profile, profile?.links]),
+    }, [profile]),
   })
 
-  const { watch, setValue, reset, control } = form
+  const { watch, reset, control } = form
 
   useEffect(() => {
     if (profile) {
       const {
-        city,
+        location,
         company_name,
-        country,
         description,
         industry,
         is_referee,
@@ -226,7 +213,6 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         job_title,
         username,
         year_of_experience,
-        province,
         social_media_url,
       } = profile
 
@@ -236,9 +222,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         company: company_name || undefined,
         jobTitle: job_title || undefined,
         yearOfExperience: year_of_experience?.toString() || "0",
-        countryUuid: country?.uuid || undefined,
-        provinceUuid: province?.uuid || undefined,
-        cityUuid: city?.uuid || undefined,
+        locationUuid: location?.uuid || undefined,
         socialMediaUrl: social_media_url || undefined,
         isReferer: is_referer || false,
         isReferee: is_referee || false,
@@ -249,28 +233,12 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
     }
   }, [profile, isProfileLoading, reset])
 
-  const countryWatch = watch("countryUuid")
-  const provinceWatch = watch("provinceUuid")
+  const locationWatch = watch("locationUuid")
   const yearOfExperienceWatch = watch("yearOfExperience")
 
+  console.log("locationWatch", locationWatch)
   const isReferrerWatch = watch("isReferer")
   const isRefereeWatch = watch("isReferee")
-
-  const countryOptions = useCountryOptions(countryList)
-  const provinceOptions = useProvinceOptions(provinceList, countryWatch)
-
-  useEffect(() => {
-    if (profile && countryWatch !== profile.country?.uuid) {
-      setValue("provinceUuid", "")
-      setValue("cityUuid", "")
-    }
-  }, [countryOptions, countryWatch, setValue])
-
-  useEffect(() => {
-    if (profile && provinceWatch !== profile.province?.uuid) {
-      setValue("cityUuid", "")
-    }
-  }, [provinceOptions, provinceWatch, setValue])
 
   useEffect(() => {
     // Convert yearOfExperienceWatch to a number
@@ -355,9 +323,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
         yearOfExperience: values.yearOfExperience
           ? parseInt(values.yearOfExperience)
           : undefined,
-        countryUuid: values.countryUuid,
-        provinceUuid: values?.provinceUuid?.length ? values.provinceUuid : null,
-        cityUuid: values?.cityUuid?.length ? values.cityUuid : null,
+        locationUuid: values.locationUuid,
         industryUuid: values.industryUuid,
         links: mappedLinks,
         isReferer: values.isReferer,
@@ -426,11 +392,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
             form={form}
             onProfileImageChange={handleProfileImageChange}
             profile={profile}
-            cityList={cityList}
-            provinceList={provinceList}
-            countryList={countryList}
-            countryWatchValue={countryWatch}
-            provinceWatchValue={provinceWatch}
+            locationList={locationList}
             isReferrerChecked={isReferrerWatch}
             isRefereeChecked={isRefereeWatch}
           />

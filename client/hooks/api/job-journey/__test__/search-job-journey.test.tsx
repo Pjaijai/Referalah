@@ -26,7 +26,7 @@ jest.mock("@/utils/common/api", () => ({
 }))
 
 // Mock the helper function
-jest.mock("@/modules/job-journey/helpers/find-related-locaitons", () => {
+jest.mock("@/modules/job-journey/helpers/find-related-location", () => {
   return jest.fn((locationList: TLocationData[], value?: string) => {
     if (!value || value === "all") return []
     const location = locationList.find((loc) => loc.value === value)

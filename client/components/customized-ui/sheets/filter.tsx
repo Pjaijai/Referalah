@@ -1,12 +1,16 @@
 import React from "react"
 import IndustryInput from "@/modules/post/components/selects/industry"
-import LocationSelect from "@/modules/post/components/selects/location"
-import { useI18n } from "@/utils/services/internationalization/client"
+import {
+  useCurrentLocale,
+  useI18n,
+} from "@/utils/services/internationalization/client"
 
+import useLocationOptionsList from "@/hooks/common/options/location-options-list"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { ISearchSearchBarProps } from "@/components/customized-ui/bars/search"
 import ClearAllButton from "@/components/customized-ui/buttons/clear-all"
+import BaseSelect from "@/components/customized-ui/selects/base"
 import YearOfExperienceSlider from "@/components/customized-ui/sliders/year-of-experience"
 import { Icons } from "@/components/icons"
 
@@ -14,12 +18,10 @@ interface IFilterSheet
   extends Pick<
     ISearchSearchBarProps,
     | "onIndustryChange"
-    | "locations"
+    | "location"
     | "onLocationChange"
-    | "cityList"
-    | "countryList"
+    | "locationList"
     | "industryList"
-    | "provinceList"
     | "industries"
     | "onExperienceChange"
     | "experience"
@@ -27,18 +29,20 @@ interface IFilterSheet
   > {}
 const FilterSheet: React.FunctionComponent<IFilterSheet> = ({
   onIndustryChange,
-  locations,
+  location,
   onLocationChange,
-  cityList,
-  countryList,
+  locationList,
   industryList,
-  provinceList,
   industries,
   onExperienceChange,
   experience,
   handleReset,
 }) => {
   const t = useI18n()
+  const locale = useCurrentLocale()
+  const locationOptions = useLocationOptionsList(locationList, false, locale)
+  const currentLocationUuid =
+    locationList.find((i) => i.value === location)?.uuid || "all"
 
   return (
     <Sheet>
@@ -72,14 +76,15 @@ const FilterSheet: React.FunctionComponent<IFilterSheet> = ({
               onChange={onExperienceChange}
             />
           </div>
-          <p className="mt-8 text-sm font-medium">{t("general.city")}</p>
-          <LocationSelect
-            containerClassName="mt-2"
-            countryList={countryList}
-            provinceList={provinceList}
-            cityList={cityList}
-            locations={locations}
-            onLocationChange={onLocationChange}
+          <p className="mt-8 text-sm font-medium">{t("general.location")}</p>
+          <BaseSelect
+            options={locationOptions}
+            onChange={onLocationChange}
+            value={currentLocationUuid}
+            placeholder={t("general.location")}
+            triggerClassName="w-full mt-2"
+            showAllOption
+            allOptionLabel={t("general.all_locations")}
           />
         </div>
 

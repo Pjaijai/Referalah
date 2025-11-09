@@ -1,5 +1,5 @@
 import ProfileTemplate from "@/modules/profile/template"
-import { getUserProfile } from "@/utils/common/api/index"
+import { getLocationList, getUserProfile } from "@/utils/common/api/index"
 import { getI18n } from "@/utils/services/internationalization/server"
 
 import { siteConfig } from "@/config/site"
@@ -43,8 +43,9 @@ export async function generateMetadata({
 
 const Page = async ({ params }: { params: { userUuid: string } }) => {
   const { userUuid } = params
+  const locationList = await getLocationList()
 
-  return <ProfileTemplate userUuid={userUuid} />
+  return <ProfileTemplate userUuid={userUuid} locationList={locationList} />
 }
 
 export default Page

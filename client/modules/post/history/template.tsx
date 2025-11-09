@@ -6,6 +6,7 @@ import {
   useI18n,
 } from "@/utils/services/internationalization/client"
 
+import { TLocationData } from "@/types/api/response/location"
 import { ELocale } from "@/types/common/enums/locale"
 import useListPostsByUserUuid from "@/hooks/api/post/list-posts-by-user-uuid"
 import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
@@ -15,10 +16,11 @@ import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 
 interface IPostHistoryTemplateProps {
   slug: string
+  locationList: TLocationData[]
 }
 const PostHistoryTemplate: React.FunctionComponent<
   IPostHistoryTemplateProps
-> = ({ slug }) => {
+> = ({ slug, locationList }) => {
   const t = useI18n()
   const locale = useCurrentLocale()
 
@@ -77,25 +79,12 @@ const PostHistoryTemplate: React.FunctionComponent<
                 url={data.url}
                 username={data.user.username}
                 requestCount={data.contact_request_count}
-                province={
-                  locale === ELocale.ZH_HK
-                    ? data.province && data.province.cantonese_name
-                    : data.province && data.province.english_name
-                }
-                country={
-                  locale === ELocale.ZH_HK
-                    ? data.country && data.country.cantonese_name
-                    : data.country && data.country.english_name
-                }
-                city={
-                  locale === ELocale.ZH_HK
-                    ? data.city && data.city.cantonese_name
-                    : data.city && data.city.english_name
-                }
+                locationUuid={data.location?.uuid || null}
+                locationList={locationList}
                 industry={
                   locale === ELocale.ZH_HK
-                    ? data.industry && data.industry.cantonese_name
-                    : data.industry && data.industry.english_name
+                    ? data.industry?.cantonese_name || null
+                    : data.industry?.english_name || null
                 }
                 createdBy={data.created_by && data.created_by}
               />
