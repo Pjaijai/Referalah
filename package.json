@@ -1,7 +1,7 @@
 {
   "name": "Referalah",
-  "description": "An open source online platform for oversea Hong Kong People to connect each other",
-  "version": "1.30.5",
+  "description": "An open source online platform for people to connect each other",
+  "version": "1.31.0",
   "license": "Apache-2.0",
   "scripts": {
     "prepare": "husky install .husky",

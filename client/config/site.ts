@@ -87,7 +87,7 @@ export const siteConfig = {
       metadata: {
         title: "貼街招 Stick a job posting",
         description:
-          "你公司請人又想搵香港人？網上睇到份工又想人幫手？係到貼個街招，等人聯絡你。 Is your company hiring and looking for folks from Hong Kong? Stick a job posting here to get contacted.",
+          "你公司請人又想搵人？網上睇到份工又想人幫手？係到貼個街招，等人聯絡你。 Is your company hiring and looking for folks? Stick a job posting here to get contacted.",
       },
     },
     editPost: {
@@ -197,16 +197,16 @@ export const siteConfig = {
     description: METADATA_DEFAULT_DESCRIPTION,
     keywords: [
       "Referalah",
-      "Hong Kong job referrals",
-      "Hong Kong career networking",
-      "professional networking Hong Kong",
-      "job search platform Hong Kong",
-      "Hong Kong professional connections",
-      "overseas Hong Kong job seekers",
+      "job referrals",
+      "Career networking",
+      "professional networking",
+      "job search platform",
+      "professional connections",
+      "overseas job seekers",
       "香港工作推薦",
       "香港職業網絡",
       "香港人求職",
-      "career opportunities Hong Kong",
+      "career opportunities",
       "networking platform for Hongkongers",
     ],
     icons: {

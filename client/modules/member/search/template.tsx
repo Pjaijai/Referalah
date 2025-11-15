@@ -8,10 +8,8 @@ import {
   useI18n,
 } from "@/utils/services/internationalization/client"
 
-import { ICityResponse } from "@/types/api/response/city"
-import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
-import { IProvinceResponse } from "@/types/api/response/province"
+import { TLocationData } from "@/types/api/response/location"
 import { ELocale } from "@/types/common/enums/locale"
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
@@ -26,15 +24,13 @@ import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 import { Icons } from "@/components/icons"
 
 interface IMemberSearchPageTemplateProps {
-  countryList: ICountryResponse[]
-  provinceList: IProvinceResponse[]
-  cityList: ICityResponse[]
+  locationList: TLocationData[]
   industryList: IIndustryResponse[]
 }
 
 const MemberSearchPageTemplate: React.FunctionComponent<
   IMemberSearchPageTemplateProps
-> = ({ cityList, countryList, industryList, provinceList }) => {
+> = ({ locationList, industryList }) => {
   const t = useI18n()
   const {
     result,
@@ -47,12 +43,12 @@ const MemberSearchPageTemplate: React.FunctionComponent<
     keywords,
     handleKeywordsChange,
     handleLocationChange,
-    locations,
+    location,
     industries,
     experience,
     handleExperienceChange,
   } = useSearchUser({
-    cityList,
+    locationList,
     industryList,
   })
 
@@ -78,13 +74,11 @@ const MemberSearchPageTemplate: React.FunctionComponent<
         />
         <FilterSheet
           onIndustryChange={handleIndustryChange}
-          cityList={cityList}
-          countryList={countryList}
+          locationList={locationList}
           industryList={industryList}
-          provinceList={provinceList}
           handleReset={handleReset}
           onLocationChange={handleLocationChange}
-          locations={locations}
+          location={location}
           industries={industries}
           onExperienceChange={handleExperienceChange}
           experience={experience}
@@ -117,13 +111,11 @@ const MemberSearchPageTemplate: React.FunctionComponent<
         onSortingChange={handleSortingChange}
         currentSorting={sorting}
         type={EMessageType.REFERRAL}
-        cityList={cityList}
-        countryList={countryList}
+        locationList={locationList}
         industryList={industryList}
-        provinceList={provinceList}
         handleReset={handleReset}
         onLocationChange={handleLocationChange}
-        locations={locations}
+        location={location}
         industries={industries}
         onExperienceChange={handleExperienceChange}
         experience={experience}
@@ -175,25 +167,15 @@ const MemberSearchPageTemplate: React.FunctionComponent<
                   yearOfExperience={user.year_of_experience}
                   uuid={user.uuid}
                   receiverType={EReferralType.REFERRER}
-                  province={
+                  location={
                     locale === ELocale.ZH_HK
-                      ? user.province && user.province.cantonese_name
-                      : user.province && user.province.english_name
-                  }
-                  country={
-                    locale === ELocale.ZH_HK
-                      ? user.country && user.country.cantonese_name
-                      : user.country && user.country.english_name
-                  }
-                  city={
-                    locale === ELocale.ZH_HK
-                      ? user.city && user.city.cantonese_name
-                      : user.city && user.city.english_name
+                      ? user.location?.cantonese_name || null
+                      : user.location?.english_name || null
                   }
                   industry={
                     locale === ELocale.ZH_HK
-                      ? user.industry && user.industry.cantonese_name
-                      : user.industry && user.industry.english_name
+                      ? user.industry?.cantonese_name || null
+                      : user.industry?.english_name || null
                   }
                   isReferee={user.is_referee}
                   isReferrer={user.is_referer}

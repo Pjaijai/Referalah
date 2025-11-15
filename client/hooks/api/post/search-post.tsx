@@ -2,25 +2,17 @@
 
 import { ChangeEvent, useCallback, useEffect, useReducer } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import findRelatedLocationsHelper from "@/modules/job-journey/helpers/find-related-location"
 import { searchPost } from "@/utils/common/api"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { IPostFilterMeta } from "@/types/api/request/post/filter-meta"
-import { ICityResponse } from "@/types/api/response/city"
 import { IIndustryResponse } from "@/types/api/response/industry"
+import { TLocationData } from "@/types/api/response/location"
 import { EPostType } from "@/types/common/post-type"
 import { EQueryKeyString } from "@/types/common/query-key-string"
 import useDebounce from "@/hooks/common/debounce"
 import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
-
-const mapCityToUuid = (cities: string[], cityData: ICityResponse[]) => {
-  return cities
-    .map((v) => {
-      const city = cityData.find((d) => d.value === v)
-      return city ? city.uuid : null
-    })
-    .filter((uuid): uuid is string => Boolean(uuid))
-}
 
 const mapIndustryToUuid = (
   industries: string[],
@@ -70,14 +62,15 @@ const search = ({
 }
 
 interface ISearchPostProps {
-  cityList: ICityResponse[]
+  locationList: TLocationData[]
   industryList: IIndustryResponse[]
 }
 
 interface State {
   keywords: string
   debouncedKeywords: string
-  locations: Set<string>
+  locations: string[]
+  location: string
   industries: Set<string>
   experience: number
   debouncedExperience: number
@@ -89,7 +82,8 @@ interface State {
 type Action =
   | { type: "SET_KEYWORDS"; payload: string }
   | { type: "SET_DEBOUNCED_KEYWORDS"; payload: string }
-  | { type: "SET_LOCATIONS"; payload: Set<string> }
+  | { type: "SET_LOCATION"; payload: string }
+  | { type: "SET_LOCATIONS"; payload: string[] }
   | { type: "SET_INDUSTRIES"; payload: Set<string> }
   | { type: "SET_EXPERIENCE"; payload: number }
   | { type: "SET_DEBOUNCED_EXPERIENCE"; payload: number }
@@ -104,6 +98,8 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, keywords: action.payload }
     case "SET_DEBOUNCED_KEYWORDS":
       return { ...state, debouncedKeywords: action.payload }
+    case "SET_LOCATION":
+      return { ...state, location: action.payload }
     case "SET_LOCATIONS":
       return { ...state, locations: action.payload }
     case "SET_INDUSTRIES":
@@ -126,7 +122,7 @@ const reducer = (state: State, action: Action): State => {
 }
 
 const useSearchPost = (props: ISearchPostProps) => {
-  const { cityList: cityData, industryList: industryData } = props
+  const { locationList: locationData, industryList: industryData } = props
   const { data: postSortingOptions } = usePostSortOptions()
 
   const keyString = EQueryKeyString.SEARCH_POST
@@ -139,14 +135,11 @@ const useSearchPost = (props: ISearchPostProps) => {
   const initialState: State = {
     keywords: searchParams.get("keywords")?.toString() || "",
     debouncedKeywords: searchParams.get("keywords")?.toString() || "",
-    locations: new Set(
-      searchParams.get("locations")
-        ? mapCityToUuid(
-            searchParams.get("locations")!.toString().split(","),
-            cityData
-          )
-        : cityData.map((data) => data.uuid)
+    locations: findRelatedLocationsHelper(
+      locationData,
+      searchParams.get("location")?.toString()
     ),
+    location: searchParams?.get("location") || "all",
     industries: new Set(
       searchParams.get("industries")
         ? mapIndustryToUuid(
@@ -169,23 +162,19 @@ const useSearchPost = (props: ISearchPostProps) => {
   const debouncedKeywords = useDebounce(state.keywords, 1000)
   const debouncedExperience = useDebounce(state.experience, 1000)
 
-  useEffect(() => {
-    dispatch({ type: "SET_DEBOUNCED_KEYWORDS", payload: debouncedKeywords })
-    if (debouncedKeywords.trim()) {
-      createQueryString("keywords", debouncedKeywords.trim())
-    } else {
-      removeQueryString("keywords")
-    }
-  }, [debouncedKeywords])
+  const createQueryStrings = useCallback(
+    (entries: { name: string; value: string }[]) => {
+      const newParams = new URLSearchParams(state.params.toString())
 
-  useEffect(() => {
-    dispatch({ type: "SET_DEBOUNCED_EXPERIENCE", payload: debouncedExperience })
-    if (debouncedExperience > 0) {
-      createQueryString("experience", String(debouncedExperience))
-    } else {
-      removeQueryString("experience")
-    }
-  }, [debouncedExperience])
+      entries.forEach(({ name, value }) => {
+        newParams.set(name, value)
+      })
+
+      dispatch({ type: "SET_PARAMS", payload: newParams })
+      return newParams.toString()
+    },
+    [state.params]
+  )
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -207,6 +196,37 @@ const useSearchPost = (props: ISearchPostProps) => {
     [state.params]
   )
 
+  const removeQueryStrings = useCallback(
+    (names: string[]) => {
+      const newParams = new URLSearchParams(state.params.toString())
+
+      names.forEach((name) => newParams.delete(name))
+
+      dispatch({ type: "SET_PARAMS", payload: newParams })
+      return newParams.toString()
+    },
+    [state.params]
+  )
+
+  useEffect(() => {
+    dispatch({ type: "SET_DEBOUNCED_KEYWORDS", payload: debouncedKeywords })
+
+    if (debouncedKeywords.trim()) {
+      createQueryString("keywords", debouncedKeywords.trim())
+    } else {
+      removeQueryString("keywords")
+    }
+  }, [debouncedKeywords])
+
+  useEffect(() => {
+    dispatch({ type: "SET_DEBOUNCED_EXPERIENCE", payload: debouncedExperience })
+    if (debouncedExperience > 0) {
+      createQueryString("experience", String(debouncedExperience))
+    } else {
+      removeQueryString("experience")
+    }
+  }, [debouncedExperience])
+
   useEffect(() => {
     router.push(`${pathname}?${state.params.toString()}`)
   }, [state.params, router, pathname])
@@ -225,19 +245,22 @@ const useSearchPost = (props: ISearchPostProps) => {
     }
   }
 
-  const handleLocationChange = (value: string[]) => {
-    dispatch({ type: "SET_LOCATIONS", payload: new Set(value) })
-    const isAllSelected = cityData.every((val) => value.includes(val.uuid))
-    if (isAllSelected) {
-      removeQueryString("locations")
+  const handleLocationChange = (uuid: string | "all") => {
+    if (uuid === "all") {
+      removeQueryString("location")
+      dispatch({ type: "SET_LOCATION", payload: "all" })
+      dispatch({ type: "SET_LOCATIONS", payload: [] })
     } else {
-      createQueryString(
-        "locations",
-        value
-          .map((v) => cityData.find((d) => d.uuid === v)?.value)
-          .filter(Boolean)
-          .join(",")
-      )
+      const LocationValue = locationData.find((d) => d.uuid === uuid)?.value
+      if (!LocationValue) return
+
+      dispatch({ type: "SET_LOCATION", payload: LocationValue })
+      dispatch({
+        type: "SET_LOCATIONS",
+        payload: findRelatedLocationsHelper(locationData, LocationValue),
+      })
+
+      createQueryString("location", LocationValue)
     }
   }
 
@@ -267,12 +290,13 @@ const useSearchPost = (props: ISearchPostProps) => {
   }
 
   const handleReset = () => {
-    const resetState = {
+    const resetState: State = {
       ...initialState,
       sorting: postSortingOptions[0].value,
       params: new URLSearchParams(),
       postType: EPostType.ALL,
-      locations: new Set(cityData.map((data) => data.uuid)),
+      locations: [],
+      location: "all",
       industries: new Set(industryData.map((data) => data.uuid)),
       keywords: "",
       debouncedKeywords: "",
@@ -285,7 +309,7 @@ const useSearchPost = (props: ISearchPostProps) => {
 
   const filterMeta: IPostFilterMeta = {
     keywords: state.debouncedKeywords,
-    locations: Array.from(state.locations),
+    locations: state.locations,
     industries: Array.from(state.industries),
     sorting: state.sorting,
     experience: state.debouncedExperience,
@@ -319,7 +343,7 @@ const useSearchPost = (props: ISearchPostProps) => {
     handlePostTypesChange,
     postType: state.postType,
     handleLocationChange,
-    locations: state.locations,
+    location: state.location,
     industries: state.industries,
     handleExperienceChange,
     experience: state.experience,

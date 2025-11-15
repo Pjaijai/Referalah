@@ -1,6 +1,6 @@
 {
   "name": "Referalah",
-  "description": "An open source online platform for oversea Hong Kong People to connect each other",
+  "description": "An open source online platform for oversea people to connect each other",
   "version": "1.5.0",
   "license": "Apache-2.0",
   "scripts": {
@@ -119,9 +119,9 @@
   },
   "keywords": [
     "Referalah",
-    "Hong Kong",
     "referee",
     "referral",
-    "referrer"
+    "referrer",
+    "connections"
   ]
 }

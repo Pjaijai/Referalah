@@ -1,14 +1,15 @@
 import React, { ChangeEvent } from "react"
 import IndustryCombobox from "@/modules/post/components/comboboxes/industry"
-import LocationCombobox from "@/modules/post/components/comboboxes/location"
-import { useI18n } from "@/utils/services/internationalization/client"
+import {
+  useCurrentLocale,
+  useI18n,
+} from "@/utils/services/internationalization/client"
 
-import { ICityResponse } from "@/types/api/response/city"
-import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
-import { IProvinceResponse } from "@/types/api/response/province"
+import { TLocationData } from "@/types/api/response/location"
 import { EMessageType } from "@/types/common/message-type"
 import { cn } from "@/lib/utils"
+import useLocationOptionsList from "@/hooks/common/options/location-options-list"
 import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
 import useReferralSortOptions from "@/hooks/common/sort/referral-sort-options"
 import ClearAllButton from "@/components/customized-ui/buttons/clear-all"
@@ -23,12 +24,10 @@ export interface ISearchSearchBarProps {
   onSortingChange: (value: string) => void
   currentSorting: string
   type: EMessageType
-  countryList: ICountryResponse[]
-  provinceList: IProvinceResponse[]
-  cityList: ICityResponse[]
+  locationList: TLocationData[]
   industryList: IIndustryResponse[]
-  onLocationChange: (value: string[]) => void
-  locations: Set<string>
+  onLocationChange: (value: string) => void
+  location: string
   industries: Set<string>
   keywords: string
   handleReset: () => void
@@ -40,14 +39,12 @@ export interface ISearchSearchBarProps {
 const SearchBar: React.FunctionComponent<ISearchSearchBarProps> = ({
   onIndustryChange,
   onSortingChange,
-  locations,
+  location,
   onLocationChange,
   currentSorting,
   type,
-  cityList,
-  countryList,
+  locationList,
   industryList,
-  provinceList,
   handleReset,
   bottomLeftSection,
   onKeyWordsChange,
@@ -57,8 +54,13 @@ const SearchBar: React.FunctionComponent<ISearchSearchBarProps> = ({
   experience,
 }) => {
   const t = useI18n()
+  const locale = useCurrentLocale()
   const { data: postSortingOptions } = usePostSortOptions()
   const { data: referralSortingOptions } = useReferralSortOptions()
+  const locationOptions = useLocationOptionsList(locationList, false, locale)
+
+  const currentLocationUuid =
+    locationList.find((i) => i.value === location)?.uuid || "all"
 
   return (
     <div className=" mt-10">
@@ -86,15 +88,17 @@ const SearchBar: React.FunctionComponent<ISearchSearchBarProps> = ({
 
           <div className="flex flex-row items-center justify-between">
             <label className="basis-1/4 text-center text-sm">
-              {t("general.city")}
+              {t("general.location")}
             </label>
             <div className="basis-3/4">
-              <LocationCombobox
-                cityList={cityList}
-                countryList={countryList}
-                provinceList={provinceList}
-                locations={locations}
-                onLocationChange={onLocationChange}
+              <BaseSelect
+                options={locationOptions}
+                onChange={onLocationChange}
+                value={currentLocationUuid}
+                placeholder={t("general.location")}
+                triggerClassName="w-full"
+                showAllOption
+                allOptionLabel={t("general.all_locations")}
               />
             </div>
           </div>

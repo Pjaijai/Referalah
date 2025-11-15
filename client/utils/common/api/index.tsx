@@ -41,7 +41,6 @@ import {
 import { IReferralResponse } from "@/types/api/response/referral"
 import { IUserResponse } from "@/types/api/response/user"
 import { EJobLevel } from "@/types/common/enums/job-level"
-import { EJobType } from "@/types/common/enums/job-type"
 import { EPostType } from "@/types/common/post-type"
 import { EUserType } from "@/types/common/user-type"
 import { siteConfig } from "@/config/site"
@@ -85,7 +84,13 @@ export const getUserProfile = async (userUuid: string) => {
           contact_request_count,
           links,
           post_count:post(count),
-          notification_permissions
+          notification_permissions,
+          location:location_uuid(
+            uuid,
+            cantonese_name,
+            english_name
+          ),
+          location_uuid
           `
       )
       .eq("uuid", userUuid)
@@ -230,9 +235,7 @@ export const updateUserProfile = async (req: IUpdateUserProfileRequest) => {
       company_name: req.companyName,
       job_title: req.jobTitle,
       year_of_experience: req.yearOfExperience,
-      country_uuid: req.countryUuid,
-      province_uuid: req.provinceUuid,
-      city_uuid: req.cityUuid,
+      location_uuid: req.locationUuid,
       industry_uuid: req.industryUuid,
       links: req.links,
       is_referer: req.isReferer,
@@ -274,22 +277,14 @@ export const searchUser = async ({
             company_name,
             job_title,
             year_of_experience,
-            country(
+            location_uuid,
+            location:location_uuid(
               uuid,
               cantonese_name,
               english_name
             ),
-            province(
-              uuid,
-              cantonese_name,
-              english_name
-            ),
-            city(
-              uuid,
-              cantonese_name,
-              english_name
-            ),
-            industry(
+            industry_uuid,
+            industry:industry_uuid(
               uuid,
               cantonese_name,
               english_name
@@ -324,8 +319,8 @@ export const searchUser = async ({
     query = query.in("industry_uuid", industries)
   }
 
-  if (locations !== undefined) {
-    query = query.in("city_uuid", locations)
+  if (locations !== undefined && locations.length > 0) {
+    query = query.in("location_uuid", locations)
   }
 
   if (sortedBy === "yearOfExperience") {
@@ -350,9 +345,7 @@ export const createPost = async (req: ICreatePostRequest) => {
       .from("post")
       .insert({
         url: req.url,
-        country_uuid: req.countryUuid,
-        province_uuid: req.provinceUuid,
-        city_uuid: req.cityUuid,
+        location_uuid: req.locationUuid,
         industry_uuid: req.industryUuid,
         year_of_experience: req.yearOfExperience,
         type: req.type,
@@ -376,9 +369,7 @@ export const updatePost = async (req: IUpdatePostRequest) => {
       .update({
         status: req.status,
         url: req.url,
-        country_uuid: req.countryUuid,
-        province_uuid: req.provinceUuid,
-        city_uuid: req.cityUuid,
+        location_uuid: req.locationUuid,
         industry_uuid: req.industryUuid,
         year_of_experience: req.yearOfExperience,
         company_name: req.companyName.trim(),
@@ -423,19 +414,15 @@ export const searchPost = async ({
           company_name,
           job_title,
           year_of_experience,
-          country(
+          location_uuid,
+          location:location_uuid(
+              uuid,
               cantonese_name,
               english_name
           ),
-          province(
-              cantonese_name,
-              english_name
-          ),
-          city(
-              cantonese_name,
-              english_name
-          ),
-          industry(
+          industry_uuid,
+          industry:industry_uuid(
+              uuid,
               cantonese_name,
               english_name
           ),
@@ -471,8 +458,8 @@ export const searchPost = async ({
       query = query.in("industry_uuid", industries)
     }
 
-    if (locations !== undefined) {
-      query = query.in("city_uuid", locations)
+    if (locations !== undefined && locations.length > 0) {
+      query = query.in("location_uuid", locations)
     }
 
     const { data, error, count } = await query
@@ -502,22 +489,14 @@ export const getPostByUuid = async (uuid: string) => {
               company_name,
               job_title,
               year_of_experience,
-              country(
+              location_uuid,
+              location:location_uuid(
                   uuid,
                   cantonese_name,
                   english_name
               ),
-              province(
-                  uuid,
-                  cantonese_name,
-                  english_name
-              ),
-              city(
-                 uuid,
-                  cantonese_name,
-                  english_name
-              ),
-              industry(
+              industry_uuid,
+              industry:industry_uuid(
                   uuid,
                   cantonese_name,
                   english_name
@@ -554,19 +533,13 @@ export const ListPostByUserUuid = async (
       .select<string, IListPostResponse>(
         `
         *,
-        country(
+        location:location_uuid(
+          uuid,
           cantonese_name,
           english_name
         ),
-        province(
-          cantonese_name,
-          english_name
-        ),
-        city(
-          cantonese_name,
-          english_name
-        ),
-        industry(
+        industry:industry_uuid(
+          uuid,
           cantonese_name,
           english_name
         ),

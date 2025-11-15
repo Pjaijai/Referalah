@@ -11,21 +11,13 @@ export interface IUserResponse {
   company_name: string | null
   job_title: string | null
   year_of_experience: number | null
-  country: {
+  location_uuid: string | null
+  location: {
     uuid: string
     cantonese_name: string
     english_name: string
   } | null
-  province: {
-    uuid: string
-    cantonese_name: string
-    english_name: string
-  } | null
-  city: {
-    uuid: string
-    cantonese_name: string
-    english_name: string
-  } | null
+  industry_uuid: string | null
   industry: {
     uuid: string
     cantonese_name: string

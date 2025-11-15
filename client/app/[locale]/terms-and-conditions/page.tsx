@@ -22,8 +22,7 @@ const TncPage = () => {
 
       <p>
         You can contact us by email at{" "}
-        <a href="mailto:r1r69.referalah@gmail.com">r1r69.referalah@gmail.com</a>
-        .
+        <a href="mailto:referalah@gmail.com">referalah@gmail.com</a>.
       </p>
 
       <p>
@@ -124,12 +123,12 @@ const TncPage = () => {
       <p>
         If you wish to make any use of the Services, Content, or Marks other
         than as set out in this section or elsewhere in our Legal Terms, please
-        address your request to: <a>r1r69.referalah@gmail.com</a>. If we ever
-        grant you the permission to post, reproduce, or publicly display any
-        part of our Services or Content, you must identify us as the owners or
-        licensors of the Services, Content, or Marks and ensure that any
-        copyright or proprietary notice appears or is visible on posting,
-        reproducing, or displaying our Content.
+        address your request to: <a>referalah@gmail.com</a>. If we ever grant
+        you the permission to post, reproduce, or publicly display any part of
+        our Services or Content, you must identify us as the owners or licensors
+        of the Services, Content, or Marks and ensure that any copyright or
+        proprietary notice appears or is visible on posting, reproducing, or
+        displaying our Content.
       </p>
       <p>
         We reserve all rights not expressly granted to you in and to the
@@ -819,7 +818,7 @@ const TncPage = () => {
       <p>
         In order to resolve a complaint regarding the Services or to receive
         further information regarding use of the Services, please contact us at:
-        <a href="mailto:r1r69.referalah@gmail.com">r1r69.referalah@gmail.com</a>
+        <a href="mailto:referalah@gmail.com">referalah@gmail.com</a>
       </p>
     </article>
   )

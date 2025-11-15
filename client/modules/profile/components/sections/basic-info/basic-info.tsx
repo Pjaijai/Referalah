@@ -1,17 +1,16 @@
 import React from "react"
 import { StaticImport } from "next/dist/shared/lib/get-img-props"
 import BaseSection from "@/modules/profile/components/sections/base/base"
-import { useI18n } from "@/utils/services/internationalization/client"
+import {
+  useCurrentLocale,
+  useI18n,
+} from "@/utils/services/internationalization/client"
 import { UseFormReturn } from "react-hook-form"
 
-import { ICityResponse } from "@/types/api/response/city"
-import { ICountryResponse } from "@/types/api/response/country"
-import { IProvinceResponse } from "@/types/api/response/province"
+import { TLocationData } from "@/types/api/response/location"
 import { IUserResponse } from "@/types/api/response/user"
 import { cn } from "@/lib/utils"
-import useCityOptions from "@/hooks/common/options/city-options"
-import useCountryOptions from "@/hooks/common/options/country-options"
-import useProvinceOptions from "@/hooks/common/options/province-options"
+import useLocationOptionsList from "@/hooks/common/options/location-options-list"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import FormCheckBox from "@/components/customized-ui/form/check-box"
 import FormFileUpload from "@/components/customized-ui/form/file"
@@ -24,11 +23,7 @@ interface IBasicInfoSectionProps {
   onProfileImageChange: (e: any) => void
   profile: IUserResponse
   form: UseFormReturn<any>
-  countryList: ICountryResponse[]
-  provinceList: IProvinceResponse[]
-  cityList: ICityResponse[]
-  provinceWatchValue: any
-  countryWatchValue: any
+  locationList: TLocationData[]
   isReferrerChecked: boolean
   isRefereeChecked: boolean
 }
@@ -37,19 +32,19 @@ const BasicInfoSection: React.FunctionComponent<IBasicInfoSectionProps> = ({
   onProfileImageChange,
   profile,
   form,
-  countryList,
-  provinceList,
-  provinceWatchValue,
-  countryWatchValue,
-  cityList,
+  locationList,
   isReferrerChecked,
   isRefereeChecked,
 }) => {
   const t = useI18n()
+  const currentLocale = useCurrentLocale()
 
-  const countryOptions = useCountryOptions(countryList)
-  const provinceOptions = useProvinceOptions(provinceList, countryWatchValue)
-  const cityOptions = useCityOptions(cityList, provinceWatchValue)
+  // Use the existing hook to build location options with proper hierarchy
+  const locationOptions = useLocationOptionsList(
+    locationList,
+    false, // showAllOption
+    currentLocale
+  )
 
   return (
     <BaseSection title={t("profile.section.basic_info")}>
@@ -139,46 +134,12 @@ const BasicInfoSection: React.FunctionComponent<IBasicInfoSectionProps> = ({
             {t("general.location")}
           </label>
 
-          <div className="flex flex-col p-2">
-            <div className="grid grid-cols-4 items-center gap-4 ">
-              <label className="col-span-1 justify-self-start text-xxs font-medium text-slate-500">
-                {t("general.country")}
-              </label>
-              <div className="col-span-3 ">
-                <FormSelect
-                  options={countryOptions}
-                  control={form.control}
-                  name="countryUuid"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-4 items-center gap-4 ">
-              <label className="col-span-1 justify-self-start text-xxs font-medium text-slate-500">
-                {t("profile.form.optional_region_label")}
-              </label>
-              <div className="col-span-3 ">
-                <FormSelect
-                  control={form.control}
-                  name="provinceUuid"
-                  options={provinceOptions}
-                />{" "}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-4 items-center gap-4 ">
-              <label className="col-span-1 justify-self-start text-xxs font-medium text-slate-500">
-                {t("profile.form.optional_city_label")}
-              </label>
-
-              <div className="col-span-3 ">
-                <FormSelect
-                  control={form.control}
-                  name="cityUuid"
-                  options={cityOptions}
-                />
-              </div>
-            </div>
+          <div className="flex flex-col ">
+            <FormSelect
+              options={locationOptions}
+              control={form.control}
+              name="locationUuid"
+            />
 
             <div className="mt-8 flex flex-col">
               <label className="col-span-1 justify-self-start text-xxs font-medium text-slate-500">

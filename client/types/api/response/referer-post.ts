@@ -1,50 +1,28 @@
 import { IPost } from "@/types/common/post"
 
 export interface ISearchPostResponse
-  extends Omit<
-    IPost,
-    "city_uuid" | "province_uuid" | "country_uuid" | "status" | "industry_uuid"
-  > {
+  extends Omit<IPost, "status" | "industry_uuid" | "location_uuid"> {
   user: {
     username: string | null
     avatar_url: string | null
   } | null
 
-  country: {
-    cantonese_name: string
-    english_name: string
-  } | null
-  province: {
-    cantonese_name: string
-    english_name: string
-  } | null
-  city: {
+  location: {
+    uuid: string
     cantonese_name: string
     english_name: string
   } | null
 
   industry: {
+    uuid: string
     cantonese_name: string
     english_name: string
   } | null
 }
 
 export interface IGetPostResponse
-  extends Omit<
-    IPost,
-    "id" | "city_uuid" | "province_uuid" | "country_uuid" | "industry_uuid"
-  > {
-  country: {
-    uuid: string | null
-    cantonese_name: string
-    english_name: string
-  } | null
-  province: {
-    uuid: string | null
-    cantonese_name: string
-    english_name: string
-  } | null
-  city: {
+  extends Omit<IPost, "id" | "industry_uuid" | "location_uuid"> {
+  location: {
     uuid: string | null
     cantonese_name: string
     english_name: string
@@ -64,20 +42,14 @@ export interface IGetPostResponse
 }
 
 export interface IListPostResponse extends IPost {
-  country: {
-    cantonese_name: string
-    english_name: string
-  } | null
-  province: {
-    cantonese_name: string
-    english_name: string
-  } | null
-  city: {
+  location: {
+    uuid: string
     cantonese_name: string
     english_name: string
   } | null
 
   industry: {
+    uuid: string
     cantonese_name: string
     english_name: string
   } | null

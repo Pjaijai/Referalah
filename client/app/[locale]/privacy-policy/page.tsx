@@ -460,7 +460,7 @@ const PrivacyPage = () => {
           us:
         </p>
         <ul className="list-inside list-disc">
-          <li>By email: r1r69.referalah@gmail.com</li>
+          <li>By email: referalah@gmail.com</li>
         </ul>
       </div>
     </article>

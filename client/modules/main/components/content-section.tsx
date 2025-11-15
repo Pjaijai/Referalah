@@ -9,6 +9,7 @@ import { useScopedI18n } from "@/utils/services/internationalization/client"
 import { motion } from "framer-motion"
 
 import { TContactRequestListResponse } from "@/types/api/response/contact-request/contact-request-list"
+import { TLocationData } from "@/types/api/response/location"
 import { ISearchPostResponse } from "@/types/api/response/referer-post"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
@@ -19,10 +20,12 @@ const ContentSection = ({
   count,
   posts,
   contactList,
+  locationList,
 }: {
   count: number | null
   posts: ISearchPostResponse[]
   contactList: TContactRequestListResponse[]
+  locationList: TLocationData[]
 }) => {
   const isUserSignIn = useUserStore((state) => state.isSignIn)
 
@@ -46,10 +49,6 @@ const ContentSection = ({
         <h2 className="flex shrink-0 flex-row text-center">
           {scopedT("connect")}
         </h2>
-        <h2 className="flex shrink-0 flex-row text-center  md:ml-3">
-          {scopedT("hong_kong")}
-        </h2>
-
         <h2 className=" text-indigo-600 md:ml-3">{scopedT("professionals")}</h2>
       </div>
       <div className="text-inter mt-6 flex flex-row justify-center  text-base text-foreground md:text-start md:text-lg">
@@ -96,7 +95,7 @@ const ContentSection = ({
         <UserCount numberOfMembers={count} />
       </div>
       <div className="mt-20 ">
-        <PostCarousel list={posts} />
+        <PostCarousel list={posts} locationList={locationList} />
       </div>
 
       <div className="mt-12 ">

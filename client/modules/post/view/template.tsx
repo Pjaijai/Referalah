@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useMemo } from "react"
 import Link from "next/link"
 import LinkShareDrawer from "@/modules/post/components/drawers/link-share"
 import PostHeader from "@/modules/post/components/info-display/header"
@@ -10,6 +10,7 @@ import {
   useI18n,
 } from "@/utils/services/internationalization/client"
 
+import { TLocationData } from "@/types/api/response/location"
 import { ELocale } from "@/types/common/enums/locale"
 import { EMessageType } from "@/types/common/message-type"
 import { EPostStatus } from "@/types/common/post-status"
@@ -17,6 +18,7 @@ import { EReferralType } from "@/types/common/referral-type"
 import { siteConfig } from "@/config/site"
 import { PostNotFoundError } from "@/lib/exceptions"
 import useGetPost from "@/hooks/api/post/get-post"
+import useLocationOptionsList from "@/hooks/common/options/location-options-list"
 import useUserStore from "@/hooks/state/user/store"
 import { buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -27,7 +29,6 @@ import BaseClipboard from "@/components/customized-ui/clipboards/base"
 import CompanyNameDisplay from "@/components/customized-ui/info-display/company"
 import CreatedAtDisplay from "@/components/customized-ui/info-display/created-at"
 import IndustryDisplay from "@/components/customized-ui/info-display/industry"
-import LocationDisplay from "@/components/customized-ui/info-display/location"
 import RequestCountDisplay from "@/components/customized-ui/info-display/requestion-count"
 import YearsOfExperienceDisplay from "@/components/customized-ui/info-display/years-of-experience"
 import { Icons } from "@/components/icons"
@@ -36,16 +37,26 @@ import PageStatusLayout from "@/components/layouts/page-status"
 interface ReferralPostDetailsPageProps {
   postUuid: string | null
   viewCount: number | undefined
+  locationList: TLocationData[]
 }
 const ReferralPostDetailsPageTemplate: React.FunctionComponent<
   ReferralPostDetailsPageProps
-> = ({ postUuid, viewCount }) => {
+> = ({ postUuid, viewCount, locationList }) => {
   const t = useI18n()
   const { data: post, isLoading, isSuccess } = useGetPost(postUuid)
   const userUuid = useUserStore((state) => state.uuid)
   const isViewingOwnProfile = post?.created_by === userUuid
   const isOpen = post?.status === EPostStatus.ACTIVE
   const locale = useCurrentLocale()
+
+  const locationOptions = useLocationOptionsList(locationList, false, locale)
+  const locationDisplay = useMemo(() => {
+    if (!post?.location?.uuid) return null
+    const locationOption = locationOptions.find(
+      (option) => option.value === post.location?.uuid
+    )
+    return locationOption?.label ? String(locationOption.label) : null
+  }, [post?.location?.uuid, locationOptions])
 
   return (
     <PageStatusLayout
@@ -123,25 +134,11 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
 
               <Separator className="my-3" />
               <div className="text-sm">
-                {(post.city || post.province || post.country) && (
-                  <LocationDisplay
-                    province={
-                      locale === ELocale.ZH_HK
-                        ? post.province && post.province.cantonese_name
-                        : post.province && post.province.english_name
-                    }
-                    country={
-                      locale === ELocale.ZH_HK
-                        ? post.country && post.country.cantonese_name
-                        : post.country && post.country.english_name
-                    }
-                    city={
-                      locale === ELocale.ZH_HK
-                        ? post.city && post.city.cantonese_name
-                        : post.city && post.city.english_name
-                    }
-                    className="xs:max-w-full mb-2 max-w-sm"
-                  />
+                {locationDisplay && (
+                  <div className="xs:max-w-full mb-2 flex max-w-sm items-center justify-start">
+                    <Icons.location width="18" height="18" />
+                    <span className="ml-1">{locationDisplay}</span>
+                  </div>
                 )}
                 {post.industry && (
                   <IndustryDisplay

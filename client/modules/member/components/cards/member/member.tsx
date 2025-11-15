@@ -23,9 +23,7 @@ interface IMemberCardProps {
   companyName: string | null
   jobTitle: string | null
   yearOfExperience: number | null
-  country: string | null
-  province: string | null
-  city: string | null
+  location: string | null
   industry: string | null
   socialMediaUrl: string | null
   receiverType: EReferralType
@@ -37,13 +35,11 @@ interface IMemberCardProps {
 
 const MemberCard: React.FunctionComponent<IMemberCardProps> = ({
   jobTitle,
-  city,
+  location,
   companyName,
-  country,
   description,
   industry,
   photoUrl,
-  province,
   username,
   uuid,
   yearOfExperience,
@@ -59,8 +55,6 @@ const MemberCard: React.FunctionComponent<IMemberCardProps> = ({
   const handleProfileClick = () => {
     router.push(`${siteConfig.page.profile.href}/${uuid}`)
   }
-
-  const location = city || province || country
 
   const info = [
     location,
