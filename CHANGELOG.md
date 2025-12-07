@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.32.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.32.0) (2025-12-07)
+
+
+### Features
+
+* update copies ([#470](https://github.com/Pjaijai/Referalah/issues/470)) ([2cef9e3](https://github.com/Pjaijai/Referalah/commit/2cef9e369084fad3d624ea5c59a5a72d6561c21e))
+
+
+### Bug Fixes
+
+* fix location label display ([904b022](https://github.com/Pjaijai/Referalah/commit/904b022a4ac7abc794baac0c1a8caad45b4d07cf))
+* fix type ([9e13542](https://github.com/Pjaijai/Referalah/commit/9e135421b694dca9d09346e61be6bb83fa21f809))
+
 ## [1.31.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.31.0) (2025-11-15)
 
 

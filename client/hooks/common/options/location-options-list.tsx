@@ -21,31 +21,44 @@ const useLocationOptionsList = (
 
     // Helper function to get the hierarchical label
     const getLocationLabel = (location: TLocationData): string => {
-      const parts: string[] = [getName(location)]
+      const parts: string[] = []
 
-      // For Level 1 and Level 2, include emoji if present
-      if (location.level === 1 || location.level === 2) {
-        if (location.meta_data?.emoji) {
-          parts.unshift(location.meta_data.emoji)
-          return parts.join(" ")
-        }
+      // Add emoji if present for Level 1 and Level 2
+      if (
+        (location.level === 1 || location.level === 2) &&
+        location.meta_data?.emoji
+      ) {
+        parts.push(location.meta_data.emoji)
       }
 
-      // If no parent, return the name (and emoji if already added)
-      if (!location.parent_uuid) {
+      // Add current location name
+      parts.push(getName(location))
+
+      // If level 1 or no parent, return now
+      if (location.level === 1 || !location.parent_uuid) {
         return parts.join(" ")
       }
 
-      // Add parent name
-      if (location.parent_uuid) {
-        const parent = locationMap.get(location.parent_uuid)
-        if (parent) parts.push(getName(parent))
-      }
+      // Add parent name if parent exists
+      const parent = locationMap.get(location.parent_uuid)
+      if (parent) {
+        parts.push(getName(parent))
 
-      // Add country name if applicable and not already added
-      if (location.country_uuid) {
+        // For level 3, also try to add country if it exists and is different from parent
+        if (
+          location.level === 3 &&
+          location.country_uuid &&
+          location.country_uuid !== location.parent_uuid
+        ) {
+          const country = locationMap.get(location.country_uuid)
+          if (country && country.uuid !== parent.uuid) {
+            parts.push(getName(country))
+          }
+        }
+      } else if (location.country_uuid) {
+        // If parent not found but country exists, add country
         const country = locationMap.get(location.country_uuid)
-        if (country && country.uuid !== location.parent_uuid) {
+        if (country) {
           parts.push(getName(country))
         }
       }
@@ -154,28 +167,71 @@ const useLocationOptionsList = (
     // Process Level 2 with parent_uuid that weren't processed as children of Level 1
     level2WithParent.forEach((location) => {
       if (!options.some((opt) => opt.value === location.uuid)) {
-        processLocation(location, 2)
-      }
-    })
-
-    // Process Level 3 with parent_uuid that weren't processed as children of Level 2
-    level3WithParent.forEach((location) => {
-      if (!options.some((opt) => opt.value === location.uuid)) {
+        // Add level 2 location
         options.push({
           value: location.uuid,
           label: getLocationLabel(location),
         })
+
+        // Add its level 3 children
+        const level3Children = level3WithParent.filter(
+          (loc) => loc.parent_uuid === location.uuid
+        )
+        level3Children.sort(sortByName)
+
+        level3Children.forEach((child) => {
+          options.push({
+            value: child.uuid,
+            label: getLocationLabel(child),
+          })
+        })
       }
     })
 
-    // Step 6: Process Level 2 and Level 3 without parent_uuid last
+    // Process Level 3 with parent_uuid that weren't processed as children of Level 2
+    // BUT skip those whose parent is in level2WithoutParent (they'll be added with their parent)
+    level3WithParent.forEach((location) => {
+      if (!options.some((opt) => opt.value === location.uuid)) {
+        // Check if parent is in level2WithoutParent
+        const parentIsOrphan = level2WithoutParent.some(
+          (l2) => l2.uuid === location.parent_uuid
+        )
+
+        // Only add if parent is not an orphan (without parent)
+        if (!parentIsOrphan) {
+          options.push({
+            value: location.uuid,
+            label: getLocationLabel(location),
+          })
+        }
+      }
+    })
+
+    // Step 6: Process Level 2 without parent_uuid and their Level 3 children
     level2WithoutParent.forEach((location) => {
       options.push({
         value: location.uuid,
         label: getLocationLabel(location),
       })
+
+      // Add level 3 children that belong to this level 2 location
+      const level3Children = level3WithParent.filter(
+        (loc) => loc.parent_uuid === location.uuid
+      )
+      level3Children.sort(sortByName)
+
+      level3Children.forEach((child) => {
+        // Only add if not already in options
+        if (!options.some((opt) => opt.value === child.uuid)) {
+          options.push({
+            value: child.uuid,
+            label: getLocationLabel(child),
+          })
+        }
+      })
     })
 
+    // Process Level 3 without parent_uuid last
     level3WithoutParent.forEach((location) => {
       options.push({
         value: location.uuid,
@@ -189,7 +245,7 @@ const useLocationOptionsList = (
     }
 
     return options
-  }, [locations, locale, searchTerm])
+  }, [locations, locale, searchTerm, showAllOption])
 }
 
 export default useLocationOptionsList
