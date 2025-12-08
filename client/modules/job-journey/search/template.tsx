@@ -119,6 +119,7 @@ const SearchJobJourneyPageTemplate: React.FunctionComponent<
             {list.map((data) => {
               return (
                 <JobJourneyCard
+                  key={data.uuid}
                   applicationDate={data.application_submitted_date}
                   companyName={
                     ((data.company && data.company.name) ||

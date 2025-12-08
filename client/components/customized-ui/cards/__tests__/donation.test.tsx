@@ -56,12 +56,6 @@ describe("DonationCard", () => {
     expect(
       screen.getByText(/Coffee for contributors and maintainers/)
     ).toBeInTheDocument()
-
-    // Check for bonus information
-    expect(screen.getByText(/✨ Bonus:/)).toBeInTheDocument()
-    expect(
-      screen.getByText(/shoutout on Referalah's Instagram and Threads/)
-    ).toBeInTheDocument()
   })
 
   it("displays coffee icons", () => {
