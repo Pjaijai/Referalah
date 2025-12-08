@@ -13,8 +13,6 @@ import { siteConfig } from "@/config/site"
 import useSearchJourney from "@/hooks/api/job-journey/search-job-journey"
 import { Button } from "@/components/ui/button"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
-import DonationCard from "@/components/customized-ui/cards/donation"
-import StepsRedirectCard from "@/components/customized-ui/cards/steps-redirect"
 import TextInput from "@/components/customized-ui/inputs/text"
 import CardSkeletonList from "@/components/customized-ui/skeletons/card-list"
 import { Icons } from "@/components/icons"
@@ -53,9 +51,6 @@ const SearchJobJourneyPageTemplate: React.FunctionComponent<
     router.push(`${siteConfig.page.createJobJourney.href}`)
   }
   const list = data !== undefined ? data.pages.flatMap((d) => d) : []
-
-  // 50% chance to show donation card, 50% chance to show steps redirect card
-  const showDonationCard = React.useMemo(() => Math.random() < 1 / 2, [])
 
   return (
     <div>
@@ -121,22 +116,7 @@ const SearchJobJourneyPageTemplate: React.FunctionComponent<
           hasMore={hasNextPage!}
         >
           <div className="mx-auto mt-10 grid w-full max-w-sm grid-cols-1 gap-[30px] md:mt-8 md:max-w-none md:grid-cols-2">
-            {list.map((data, index) => {
-              // Show card at index 2
-              if (index === 2) {
-                return showDonationCard ? (
-                  <DonationCard
-                    key={`donation-${index}`}
-                    className="max-w-sm"
-                  />
-                ) : (
-                  <StepsRedirectCard
-                    key={`steps-${index}`}
-                    className="max-w-sm"
-                  />
-                )
-              }
-
+            {list.map((data) => {
               return (
                 <JobJourneyCard
                   key={data.uuid}
