@@ -218,23 +218,22 @@ const useSearchUser = (props: ISearchUserProps) => {
     }
   }
 
-  const handleLocationChange = (uuid: string) => {
-    const selectedLocation = locationData.find((loc) => loc.uuid === uuid)
-    if (!selectedLocation) return
-
-    const locationValue = selectedLocation.value
-    const relatedLocations = findRelatedLocationsHelper(
-      locationData,
-      locationValue
-    )
-
-    dispatch({ type: "SET_LOCATION", payload: locationValue })
-    dispatch({ type: "SET_LOCATIONS", payload: relatedLocations })
-
-    if (locationValue === "all") {
+  const handleLocationChange = (uuid: string | "all") => {
+    if (uuid === "all") {
       removeQueryString("location")
+      dispatch({ type: "SET_LOCATION", payload: "all" })
+      dispatch({ type: "SET_LOCATIONS", payload: [] })
     } else {
-      createQueryString("location", locationValue)
+      const LocationValue = locationData.find((d) => d.uuid === uuid)?.value
+      if (!LocationValue) return
+
+      dispatch({ type: "SET_LOCATION", payload: LocationValue })
+      dispatch({
+        type: "SET_LOCATIONS",
+        payload: findRelatedLocationsHelper(locationData, LocationValue),
+      })
+
+      createQueryString("location", LocationValue)
     }
   }
 
@@ -264,12 +263,12 @@ const useSearchUser = (props: ISearchUserProps) => {
   }
 
   const handleReset = () => {
-    const resetState = {
+    const resetState: State = {
       ...initialState,
       sorting: referralSortingOptions[0].value,
       params: new URLSearchParams(),
       userType: EUserType.ALL,
-      locations: findRelatedLocationsHelper(locationData, "all"),
+      locations: [],
       location: "all",
       industries: new Set(industryData.map((data) => data.uuid)),
       keywords: "",
