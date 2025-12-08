@@ -16,6 +16,7 @@ import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import DonationCard from "@/components/customized-ui/cards/donation"
 import PostCard from "@/components/customized-ui/cards/post"
+import StepsRedirectCard from "@/components/customized-ui/cards/steps-redirect"
 import TextInput from "@/components/customized-ui/inputs/text"
 import BaseSelect from "@/components/customized-ui/selects/base"
 import FilterSheet from "@/components/customized-ui/sheets/filter"
@@ -59,7 +60,7 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
   const list = data !== undefined ? data.pages.flatMap((d) => d) : []
   const { data: postSortingOptions } = usePostSortOptions()
 
-  // 1/2 chance to show donation card (memoized to prevent re-calculation on re-renders)
+  // 50% chance to show donation card, 50% chance to show steps redirect card
   const showDonationCard = React.useMemo(() => Math.random() < 1 / 2, [])
 
   return (
@@ -146,18 +147,25 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
           }
         >
           <div className="mx-auto grid w-full max-w-sm grid-cols-1 gap-11 md:mt-4 md:max-w-none md:grid-cols-2 lg:grid-cols-3">
-            {list.map((data, index) => (
-              <React.Fragment
-                key={
-                  index === 2 && showDonationCard
-                    ? `donation-${index}`
-                    : data.uuid
-                }
-              >
-                {index === 2 && showDonationCard && (
-                  <DonationCard className="max-w-sm" />
-                )}
+            {list.map((data, index) => {
+              // Show card at index 2
+              if (index === 2) {
+                return showDonationCard ? (
+                  <DonationCard
+                    key={`donation-${index}`}
+                    className="max-w-sm"
+                  />
+                ) : (
+                  <StepsRedirectCard
+                    key={`steps-${index}`}
+                    className="max-w-sm"
+                  />
+                )
+              }
+
+              return (
                 <PostCard
+                  key={data.uuid}
                   type={data.type}
                   jobTitle={data.job_title}
                   username={data.user && data.user.username}
@@ -177,8 +185,8 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
                   createdAt={data.created_at && data.created_at.toString()}
                   requestCount={data.contact_request_count}
                 />
-              </React.Fragment>
-            ))}
+              )
+            })}
           </div>
         </BaseInfiniteScroll>
       )}

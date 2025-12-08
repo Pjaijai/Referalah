@@ -17,6 +17,7 @@ import useSearchUser from "@/hooks/api/user/search-user"
 import useReferralSortOptions from "@/hooks/common/sort/referral-sort-options"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
 import DonationCard from "@/components/customized-ui/cards/donation"
+import StepsRedirectCard from "@/components/customized-ui/cards/steps-redirect"
 import TextInput from "@/components/customized-ui/inputs/text"
 import BaseSelect from "@/components/customized-ui/selects/base"
 import FilterSheet from "@/components/customized-ui/sheets/filter"
@@ -59,7 +60,7 @@ const MemberSearchPageTemplate: React.FunctionComponent<
   const list = data !== undefined ? data.pages.flatMap((d) => d) : []
   const { data: sortingOptions } = useReferralSortOptions()
 
-  // 1/2 chance to show donation card (memoized to prevent re-calculation on re-renders)
+  // 50% chance to show donation card, 50% chance to show steps redirect card
   const showDonationCard = React.useMemo(() => Math.random() < 1 / 2, [])
 
   return (
@@ -144,17 +145,23 @@ const MemberSearchPageTemplate: React.FunctionComponent<
           }
         >
           <div className="mx-auto grid w-full max-w-sm grid-cols-1 gap-4  md:mt-4 md:max-w-none md:grid-cols-2 lg:grid-cols-3">
-            {list.map((user, index) => (
-              <React.Fragment
-                key={
-                  index === 2 && showDonationCard
-                    ? `donation-${index}`
-                    : user.uuid
-                }
-              >
-                {index === 2 && showDonationCard && (
-                  <DonationCard className="max-w-[448px]" />
-                )}
+            {list.map((user, index) => {
+              // Show card at index 2
+              if (index === 2) {
+                return showDonationCard ? (
+                  <DonationCard
+                    key={`donation-${index}`}
+                    className="max-w-[448px]"
+                  />
+                ) : (
+                  <StepsRedirectCard
+                    key={`steps-${index}`}
+                    className="max-w-[448px]"
+                  />
+                )
+              }
+
+              return (
                 <MemberCard
                   key={user.uuid}
                   requestCount={user.contact_request_count}
@@ -181,8 +188,8 @@ const MemberSearchPageTemplate: React.FunctionComponent<
                   isReferrer={user.is_referer}
                   links={user.links}
                 />
-              </React.Fragment>
-            ))}
+              )
+            })}
           </div>
         </BaseInfiniteScroll>
       )}
