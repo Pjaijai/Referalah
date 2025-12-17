@@ -2,52 +2,56 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [1.32.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.32.0) (2025-12-07)
-
+## [1.33.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.33.0) (2025-12-17)
 
 ### Features
 
-* update copies ([#470](https://github.com/Pjaijai/Referalah/issues/470)) ([2cef9e3](https://github.com/Pjaijai/Referalah/commit/2cef9e369084fad3d624ea5c59a5a72d6561c21e))
-
+- update card showing logic ([#476](https://github.com/Pjaijai/Referalah/issues/476)) ([7f2a119](https://github.com/Pjaijai/Referalah/commit/7f2a1198cc5d1c29314aeafde8963bc0f200f895))
 
 ### Bug Fixes
 
-* fix location label display ([904b022](https://github.com/Pjaijai/Referalah/commit/904b022a4ac7abc794baac0c1a8caad45b4d07cf))
-* fix type ([9e13542](https://github.com/Pjaijai/Referalah/commit/9e135421b694dca9d09346e61be6bb83fa21f809))
+- fix back to all option logic ([#475](https://github.com/Pjaijai/Referalah/issues/475)) ([669e366](https://github.com/Pjaijai/Referalah/commit/669e3664a627002b997af5ed150b1c578b2d6d97))
+- fix type ([78c6b0b](https://github.com/Pjaijai/Referalah/commit/78c6b0baf3b9c77bd21a96e4729035fbd30918db))
+
+## [1.32.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.32.0) (2025-12-07)
+
+### Features
+
+- update copies ([#470](https://github.com/Pjaijai/Referalah/issues/470)) ([2cef9e3](https://github.com/Pjaijai/Referalah/commit/2cef9e369084fad3d624ea5c59a5a72d6561c21e))
+
+### Bug Fixes
+
+- fix location label display ([904b022](https://github.com/Pjaijai/Referalah/commit/904b022a4ac7abc794baac0c1a8caad45b4d07cf))
+- fix type ([9e13542](https://github.com/Pjaijai/Referalah/commit/9e135421b694dca9d09346e61be6bb83fa21f809))
 
 ## [1.31.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.31.0) (2025-11-15)
 
-
 ### Features
 
-* update copies ([#470](https://github.com/Pjaijai/Referalah/issues/470)) ([2cef9e3](https://github.com/Pjaijai/Referalah/commit/2cef9e369084fad3d624ea5c59a5a72d6561c21e))
-
+- update copies ([#470](https://github.com/Pjaijai/Referalah/issues/470)) ([2cef9e3](https://github.com/Pjaijai/Referalah/commit/2cef9e369084fad3d624ea5c59a5a72d6561c21e))
 
 ### Bug Fixes
 
-* fix type ([9e13542](https://github.com/Pjaijai/Referalah/commit/9e135421b694dca9d09346e61be6bb83fa21f809))
+- fix type ([9e13542](https://github.com/Pjaijai/Referalah/commit/9e135421b694dca9d09346e61be6bb83fa21f809))
 
 ### [1.30.5](https://github.com/Pjaijai/Referalah/compare/v1.30.4...v1.30.5) (2025-10-04)
 
-
 ### Bug Fixes
 
-* fix donation card test ([#469](https://github.com/Pjaijai/Referalah/issues/469)) ([428bd84](https://github.com/Pjaijai/Referalah/commit/428bd84586a770fb076ca9dfcf73ff5174455af1))
+- fix donation card test ([#469](https://github.com/Pjaijai/Referalah/issues/469)) ([428bd84](https://github.com/Pjaijai/Referalah/commit/428bd84586a770fb076ca9dfcf73ff5174455af1))
 
 ### [1.30.4](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.30.4) (2025-10-04)
 
-
 ### Bug Fixes
 
-* fix type ([5148d8e](https://github.com/Pjaijai/Referalah/commit/5148d8e3bde08205dcde6d5489f6d52a5b6ae452))
+- fix type ([5148d8e](https://github.com/Pjaijai/Referalah/commit/5148d8e3bde08205dcde6d5489f6d52a5b6ae452))
 
 ### [1.30.3](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.30.3) (2025-10-04)
 
-
 ### Bug Fixes
 
-* fix create journey url validation ([821ba6a](https://github.com/Pjaijai/Referalah/commit/821ba6ab68e909495a2faa81e053bd03a38b5a45))
-* fix type ([42d5853](https://github.com/Pjaijai/Referalah/commit/42d5853d7a044c5bf62f3b8dfaaec8a7a2b0d215))
+- fix create journey url validation ([821ba6a](https://github.com/Pjaijai/Referalah/commit/821ba6ab68e909495a2faa81e053bd03a38b5a45))
+- fix type ([42d5853](https://github.com/Pjaijai/Referalah/commit/42d5853d7a044c5bf62f3b8dfaaec8a7a2b0d215))
 
 ### [1.30.2](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.30.2) (2025-09-28)
 

@@ -21,7 +21,7 @@ const DonationCard: React.FunctionComponent<IDonationCardProps> = ({
   return (
     <div
       className={cn(
-        "w-full rounded-lg border-2 border-indigo-200 bg-gradient-to-br from-indigo-50 to-indigo-100 p-6 shadow-md transition-all duration-300 hover:shadow-lg",
+        "flex h-full w-full flex-col rounded-lg border-2 border-indigo-200 bg-gradient-to-br from-indigo-50 to-indigo-100 p-6 shadow-md transition-all duration-300 hover:shadow-lg",
         className
       )}
     >
@@ -31,7 +31,7 @@ const DonationCard: React.FunctionComponent<IDonationCardProps> = ({
         </div>
       </div>
 
-      <div className="space-y-4 text-center">
+      <div className="flex flex-1 flex-col space-y-4 text-center">
         <h3 className="text-xl font-semibold text-slate-800">
           Support Referalah
         </h3>
@@ -56,24 +56,16 @@ const DonationCard: React.FunctionComponent<IDonationCardProps> = ({
           </div>
         </div>
 
-        <div className="rounded-lg bg-indigo-50 p-3 text-left">
-          <p className="text-xs text-indigo-700">
-            <span className="font-medium">✨ Bonus:</span> We&apos;ll give you a
-            shoutout on Referalah&apos;s Instagram and Threads! Your donation
-            message will be featured (if appropriate) to show our appreciation.
-          </p>
-        </div>
+        <div className="flex-1"></div>
 
-        <div className="pt-2">
-          <Button
-            onClick={handleDonateClick}
-            className="flex w-full items-center justify-center space-x-2 bg-indigo-600 px-4 py-2 font-medium text-white transition-colors duration-200 hover:bg-indigo-700"
-          >
-            <Coffee className="h-4 w-4" />
-            <span>Buy Me a Coffee</span>
-            <ExternalLink className="h-4 w-4" />
-          </Button>
-        </div>
+        <Button
+          onClick={handleDonateClick}
+          className="mt-auto flex w-full items-center justify-center space-x-2 bg-indigo-600 px-4 py-2 font-medium text-white transition-colors duration-200 hover:bg-indigo-700"
+        >
+          <Coffee className="h-4 w-4" />
+          <span>Buy Me a Coffee</span>
+          <ExternalLink className="h-4 w-4" />
+        </Button>
       </div>
     </div>
   )
