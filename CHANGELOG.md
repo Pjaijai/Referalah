@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.33.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.33.0) (2025-12-17)
+
+
+### Features
+
+* update card sowing logic ([#476](https://github.com/Pjaijai/Referalah/issues/476)) ([7f2a119](https://github.com/Pjaijai/Referalah/commit/7f2a1198cc5d1c29314aeafde8963bc0f200f895))
+
+
+### Bug Fixes
+
+* fix back to all option logic ([#475](https://github.com/Pjaijai/Referalah/issues/475)) ([669e366](https://github.com/Pjaijai/Referalah/commit/669e3664a627002b997af5ed150b1c578b2d6d97))
+* fix type ([78c6b0b](https://github.com/Pjaijai/Referalah/commit/78c6b0baf3b9c77bd21a96e4729035fbd30918db))
+
 ## [1.32.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.32.0) (2025-12-07)
 
 
