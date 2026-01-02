@@ -9,7 +9,7 @@ import {
 } from "@/utils/services/internationalization/client"
 
 import { TLocationData } from "@/types/api/response/location"
-import { ELocale } from "@/types/common/enums/locale"
+import { isChineseLocale } from "@/types/common/enums/locale"
 import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
 import useLocationOptionsList from "@/hooks/common/options/location-options-list"
@@ -93,7 +93,7 @@ const ProfileTemplate: React.FunctionComponent<IProfileTemplateProps> = (
         slug={userUuid}
         location={locationLabel}
         industry={
-          locale === ELocale.ZH_HK
+          isChineseLocale(locale)
             ? profile.industry && profile.industry.cantonese_name
             : profile.industry && profile.industry.english_name
         }

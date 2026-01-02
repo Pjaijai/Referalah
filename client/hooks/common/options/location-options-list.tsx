@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 
 import { TLocationData } from "@/types/api/response/location"
-import { ELocale } from "@/types/common/enums/locale"
+import { ELocale, isChineseLocale } from "@/types/common/enums/locale"
 import { ISelectOption } from "@/components/customized-ui/selects/base"
 
 const useLocationOptionsList = (
@@ -17,7 +17,7 @@ const useLocationOptionsList = (
 
     // Helper function to get the name based on locale
     const getName = (location: TLocationData): string =>
-      locale === ELocale.ZH_HK ? location.cantonese_name : location.english_name
+      isChineseLocale(locale) ? location.cantonese_name : location.english_name
 
     // Helper function to get the hierarchical label
     const getLocationLabel = (location: TLocationData): string => {

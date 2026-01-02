@@ -20,6 +20,7 @@ const LocaleDropDownMenu = () => {
   const changeLocale = useChangeLocale({ preserveSearchParams: true })
   const options = [
     { value: ELocale.ZH_HK, location: "香港", icon: "🇭🇰", lang: "廣東話" },
+    { value: ELocale.ZH_TW, location: "台灣", icon: "🇹🇼", lang: "中文" },
     { value: ELocale.EN_CA, location: "Canada", icon: "🇨🇦", lang: "English" },
   ] as const
   const currentLocale = options.find((opt) => opt.value === locale)
