@@ -9,7 +9,7 @@ import {
 
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { TLocationData } from "@/types/api/response/location"
-import { ELocale } from "@/types/common/enums/locale"
+import { ELocale, isChineseLocale } from "@/types/common/enums/locale"
 import { EMessageType } from "@/types/common/message-type"
 import useSearchPost from "@/hooks/api/post/search-post"
 import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
@@ -173,7 +173,7 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
                   locationUuid={data.location?.uuid || null}
                   locationList={locationList}
                   industry={
-                    locale === ELocale.ZH_HK
+                    isChineseLocale(locale)
                       ? data.industry?.cantonese_name || null
                       : data.industry?.english_name || null
                   }

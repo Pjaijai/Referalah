@@ -11,7 +11,7 @@ import {
 } from "@/utils/services/internationalization/client"
 
 import { TLocationData } from "@/types/api/response/location"
-import { ELocale } from "@/types/common/enums/locale"
+import { ELocale, isChineseLocale } from "@/types/common/enums/locale"
 import { EMessageType } from "@/types/common/message-type"
 import { EPostStatus } from "@/types/common/post-status"
 import { EReferralType } from "@/types/common/referral-type"
@@ -143,7 +143,7 @@ const ReferralPostDetailsPageTemplate: React.FunctionComponent<
                 {post.industry && (
                   <IndustryDisplay
                     industry={
-                      locale === ELocale.ZH_HK
+                      isChineseLocale(locale)
                         ? post.industry && post.industry.cantonese_name
                         : post.industry && post.industry.english_name
                     }

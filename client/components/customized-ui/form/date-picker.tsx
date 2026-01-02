@@ -4,7 +4,7 @@ import dayjs from "dayjs"
 import { CalendarIcon } from "lucide-react"
 import { Control } from "react-hook-form"
 
-import { ELocale } from "@/types/common/enums/locale"
+import { ELocale, isChineseLocale } from "@/types/common/enums/locale"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -77,7 +77,7 @@ const FormDatePicker: React.FC<FormDatePickerProps> = ({
                   )}
                 >
                   {!field.value && <span>Pick a date</span>}
-                  {locate === ELocale.ZH_HK && field.value
+                  {isChineseLocale(locate) && field.value
                     ? dayjs(field.value).format("YYYY年M月D日")
                     : dayjs(field.value).format("D MMM YYYY")}
 

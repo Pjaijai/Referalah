@@ -14,4 +14,5 @@ export const {
 } = createI18nClient({
   [ELocale.EN_CA]: () => import("./messages/en-ca"),
   [ELocale.ZH_HK]: () => import("./messages/zh-hk"),
+  [ELocale.ZH_TW]: () => import("./messages/zh-tw"),
 })

@@ -2,7 +2,7 @@ import { useMemo } from "react"
 import { useCurrentLocale } from "@/utils/services/internationalization/client"
 
 import { IIndustryResponse } from "@/types/api/response/industry"
-import { ELocale } from "@/types/common/enums/locale"
+import { ELocale, isChineseLocale } from "@/types/common/enums/locale"
 
 // TODO: Rename
 const useIndustryFilterOptions = (
@@ -15,10 +15,9 @@ const useIndustryFilterOptions = (
     industries: IIndustryResponse[]
   ): { label: string; value: string; filterLabel: string[] }[] => {
     return industries.map((industry) => {
-      const text =
-        locale === ELocale.ZH_HK
-          ? industry.cantonese_name
-          : industry.english_name
+      const text = isChineseLocale(locale)
+        ? industry.cantonese_name
+        : industry.english_name
 
       // Filter text includes both languages
       const filterLabels = [industry.cantonese_name, industry.english_name]

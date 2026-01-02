@@ -5,7 +5,7 @@ import { useCurrentLocale } from "@/utils/services/internationalization/client"
 
 import { TLocationData } from "@/types/api/response/location"
 import { ISearchPostResponse } from "@/types/api/response/referer-post"
-import { ELocale } from "@/types/common/enums/locale"
+import { isChineseLocale } from "@/types/common/enums/locale"
 import PostCard from "@/components/customized-ui/cards/post"
 import Marquee from "@/components/magicui/marquee"
 
@@ -33,7 +33,7 @@ const PostCarousel: React.FunctionComponent<IPostCarouselProps> = ({
               locationUuid={data.location?.uuid || null}
               locationList={locationList}
               industry={
-                locale === ELocale.ZH_HK
+                isChineseLocale(locale)
                   ? data.industry?.cantonese_name || null
                   : data.industry?.english_name || null
               }

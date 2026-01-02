@@ -7,7 +7,7 @@ import {
 } from "@/utils/services/internationalization/client"
 
 import { TLocationData } from "@/types/api/response/location"
-import { ELocale } from "@/types/common/enums/locale"
+import { ELocale, isChineseLocale } from "@/types/common/enums/locale"
 import useListPostsByUserUuid from "@/hooks/api/post/list-posts-by-user-uuid"
 import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
 import PostCard from "@/components/customized-ui/cards/post"
@@ -82,7 +82,7 @@ const PostHistoryTemplate: React.FunctionComponent<
                 locationUuid={data.location?.uuid || null}
                 locationList={locationList}
                 industry={
-                  locale === ELocale.ZH_HK
+                  isChineseLocale(locale)
                     ? data.industry?.cantonese_name || null
                     : data.industry?.english_name || null
                 }
