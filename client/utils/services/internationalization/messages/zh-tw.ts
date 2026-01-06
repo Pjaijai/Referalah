@@ -173,6 +173,22 @@ export default {
   "profile.form.unseen_message_label": "有新訊息時通知我",
   "profile.form.official_broadcast_message_label": "接收官方通知郵件",
 
+  "profile.linkedin.verify.button.link": "驗證LinkedIn",
+  "profile.linkedin.verify.error.failed_to_start": "無法啟動LinkedIn驗證",
+  "profile.linkedin.verify.error.failed": "LinkedIn驗證失敗",
+
+  "profile.linkedin.unlink.dialog.title": "解除LinkedIn驗證",
+  "profile.linkedin.unlink.dialog.description":
+    "確定要解除LinkedIn帳號連結驗證嗎？這將移除您的LinkedIn驗證徽章。",
+  "profile.linkedin.unlink.button.cancel": "先不要",
+  "profile.linkedin.unlink.button.confirm": "確定解除",
+  "profile.linkedin.unlink.button.unlinking": "解除中...",
+  "profile.linkedin.unlink.error.no_account": "未連結LinkedIn帳號",
+  "profile.linkedin.unlink.error.failed": "無法解除LinkedIn連結",
+  "profile.linkedin.unlink.success.title": "已解除LinkedIn連結",
+  "profile.linkedin.unlink.success.description":
+    "您的LinkedIn帳號已成功解除連結",
+
   "general.year_of_experience_count#zero": "{count} 年經驗",
   "general.year_of_experience_count#one": "{count} 年經驗",
   "general.year_of_experience_count#other": "{count} 年經驗",
@@ -181,7 +197,7 @@ export default {
   "referral.form.contact.success_description": "祝一切順利！",
   "referral.form.send_message_to": "傳送訊息給",
   "referral.form.find_job_in_advance_reminder":
-    "提醒：聯絡前建議先準備對應傳單連結，推薦人並無義務替您尋找傳單。",
+    "提醒：聯絡前建議先準備對應職缺連結，推薦人並無義務替您尋找職缺。",
   "referral.form.ai_warning": "警告：使用 AI 代寫可能會降低成功機率。",
   "referral.form.message_label": "訊息",
   "referral.form.message_placeholder":
@@ -212,7 +228,7 @@ export default {
   "general.user": "使用者",
   "general.post_history": "傳單紀錄",
   "general.me": "我",
-  "general.check_user_profile": "查看使用者檔案",
+  "general.check_user_profile": "查看檔案",
   "general.personal_link": "個人連結",
   "auth.form.sign_out.success": "已成功登出！",
   "general.create_post": "發布傳單",
@@ -291,6 +307,7 @@ export default {
 
   "auth.verify_one_time_password.your_one_time_password_label": "您的單次密碼",
   "general.verify": "驗證",
+  "general.verified": "已驗證",
   "page.verify_one_time_password": "驗證一次性密碼",
   "auth.verify_one_time_password.token_expired_or_invalid": "代碼已過期或無效",
   "auth.verify_one_time_password.user_not_found": "找不到使用者",

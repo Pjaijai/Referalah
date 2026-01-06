@@ -1,4 +1,5 @@
 import React from "react"
+import { useI18n } from "@/utils/services/internationalization/client"
 
 import { Icons } from "@/components/icons"
 
@@ -8,6 +9,7 @@ interface LinkedInBadgeProps {
   onUnlink?: () => void
   isUnlinking?: boolean
   variant?: "full" | "simple" // full shows name and picture, simple shows just "Verified"
+  className?: string
 }
 
 const LinkedInBadge: React.FC<LinkedInBadgeProps> = ({
@@ -16,14 +18,21 @@ const LinkedInBadge: React.FC<LinkedInBadgeProps> = ({
   onUnlink,
   isUnlinking = false,
   variant = "full",
+  className = "",
 }) => {
+  const t = useI18n()
+
   return (
-    <div className="relative flex flex-row items-center gap-2 rounded-full bg-blue-50 px-3 py-1">
+    <div
+      className={`relative flex flex-row items-center gap-2 rounded-full bg-blue-50 px-3 py-1 ${className}`}
+    >
       <div className="flex h-6 w-6 items-center justify-center rounded bg-[#0A66C2]">
         <Icons.linkedin className="h-4 w-4 text-white" />
       </div>
       <span className="text-sm font-medium text-blue-600">
-        {variant === "simple" ? "Verified" : name || "LinkedIn Verified"}
+        {variant === "simple"
+          ? t("general.verified")
+          : name || "LinkedIn Verified"}
       </span>
       {variant === "full" && picture && (
         <img

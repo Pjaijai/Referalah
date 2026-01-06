@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import LinkedInVerifyButton from "@/modules/profile/components/buttons/linkedin-verify-button"
+import LinkedInUnlinkDialog from "@/modules/profile/components/dialogs/linkedin-unlink-dialog"
 import { useI18n } from "@/utils/services/internationalization/client"
 import { supabase } from "@/utils/services/supabase/config"
 
@@ -12,14 +14,6 @@ import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import useUserStore from "@/hooks/state/user/store"
 import { Button, buttonVariants } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
 import { useToast } from "@/components/ui/use-toast"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
 import LinkedInBadge from "@/components/customized-ui/badges/linkedin/linkedin"
@@ -76,136 +70,12 @@ const ViewProfileTemplate: React.FunctionComponent<
   const { toast } = useToast()
   const router = useRouter()
 
-  const [isVerifyingLinkedIn, setIsVerifyingLinkedIn] = useState(false)
-  const [isUnlinkingLinkedIn, setIsUnlinkingLinkedIn] = useState(false)
   const [showUnlinkDialog, setShowUnlinkDialog] = useState(false)
 
   const isLinkedInVerified = !!linkedInVerification
 
-  const handleLinkedInVerify = async () => {
-    console.log("🔗 LinkedIn verify button clicked")
-    setIsVerifyingLinkedIn(true)
-
-    try {
-      // Check if user is signed in
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-
-      if (!user) {
-        toast({
-          title: t("general.error.title"),
-          description: "Please sign in first",
-          variant: "destructive",
-        })
-        setIsVerifyingLinkedIn(false)
-        return
-      }
-
-      console.log("Current user:", user.id)
-
-      // Link LinkedIn OAuth - will redirect to LinkedIn and back to this page
-      const { data, error } = await supabase.auth.linkIdentity({
-        provider: "linkedin_oidc",
-        options: {
-          redirectTo: window.location.href, // Redirect back to this profile page
-          scopes: "openid profile email",
-        },
-      })
-
-      if (error) {
-        console.error("LinkedIn link error:", error)
-        toast({
-          title: t("general.error.title"),
-          description: "Failed to start LinkedIn verification",
-          variant: "destructive",
-        })
-        setIsVerifyingLinkedIn(false)
-      }
-      // Will redirect to LinkedIn, no need to handle data here
-    } catch (error) {
-      console.error("LinkedIn verification error:", error)
-      toast({
-        title: t("general.error.title"),
-        description: "Failed to verify LinkedIn",
-        variant: "destructive",
-      })
-      setIsVerifyingLinkedIn(false)
-    }
-  }
-
-  const handleLinkedInUnlink = async () => {
-    // Show confirmation dialog instead of unlinking directly
-    setShowUnlinkDialog(true)
-  }
-
-  const confirmUnlink = async () => {
-    console.log("🔗 LinkedIn unlink confirmed")
-    setShowUnlinkDialog(false)
-    setIsUnlinkingLinkedIn(true)
-
-    try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-
-      if (!user) {
-        toast({
-          title: t("general.error.title"),
-          description: "Please sign in first",
-          variant: "destructive",
-        })
-        setIsUnlinkingLinkedIn(false)
-        return
-      }
-
-      // Find LinkedIn identity
-      const linkedInIdentity = user.identities?.find(
-        (identity) => identity.provider === "linkedin_oidc"
-      )
-
-      if (!linkedInIdentity) {
-        toast({
-          title: t("general.error.title"),
-          description: "No LinkedIn account linked",
-          variant: "destructive",
-        })
-        setIsUnlinkingLinkedIn(false)
-        return
-      }
-
-      // Unlink the identity
-      const { error } = await supabase.auth.unlinkIdentity(linkedInIdentity)
-
-      if (error) {
-        console.error("LinkedIn unlink error:", error)
-        toast({
-          title: t("general.error.title"),
-          description: "Failed to unlink LinkedIn",
-          variant: "destructive",
-        })
-        setIsUnlinkingLinkedIn(false)
-        return
-      }
-
-      toast({
-        title: "LinkedIn Unlinked",
-        description: "Your LinkedIn account has been unlinked successfully",
-      })
-
-      // Refresh the page to update the profile data
-      router.refresh()
-
-      setIsUnlinkingLinkedIn(false)
-    } catch (error) {
-      console.error("LinkedIn unlink error:", error)
-      toast({
-        title: t("general.error.title"),
-        description: "Failed to unlink LinkedIn",
-        variant: "destructive",
-      })
-      setIsUnlinkingLinkedIn(false)
-    }
+  const handleUnlinkSuccess = () => {
+    router.refresh()
   }
 
   const handleSignOut = async () => {
@@ -255,30 +125,8 @@ const ViewProfileTemplate: React.FunctionComponent<
               <div className="flex flex-row gap-2">
                 {/* LinkedIn Link/Unlink Button - Mobile */}
                 {!isLinkedInVerified ? (
-                  <button
-                    onClick={handleLinkedInVerify}
-                    disabled={isVerifyingLinkedIn}
-                    className="flex flex-row items-center justify-center gap-2 rounded-md bg-[#0A66C2] p-3 text-white shadow-md hover:bg-[#004182] disabled:opacity-50"
-                  >
-                    {isVerifyingLinkedIn ? (
-                      <Icons.loader className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <Icons.linkedin size={15} />
-                    )}
-                  </button>
-                ) : (
-                  <button
-                    onClick={handleLinkedInUnlink}
-                    disabled={isUnlinkingLinkedIn}
-                    className="flex flex-row items-center justify-center gap-2 rounded-md border border-slate-600 bg-white p-3 text-slate-600 shadow-md hover:bg-slate-50 disabled:opacity-50"
-                  >
-                    {isUnlinkingLinkedIn ? (
-                      <Icons.loader className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <Icons.linkedin size={15} />
-                    )}
-                  </button>
-                )}
+                  <LinkedInVerifyButton showText={false} />
+                ) : null}
 
                 <button
                   onClick={() => {
@@ -331,10 +179,9 @@ const ViewProfileTemplate: React.FunctionComponent<
                             picture={linkedInVerification?.picture}
                             onUnlink={
                               isViewingOwnProfile
-                                ? handleLinkedInUnlink
+                                ? () => setShowUnlinkDialog(true)
                                 : undefined
                             }
-                            isUnlinking={isUnlinkingLinkedIn}
                           />
                         )}
                       </div>
@@ -350,29 +197,7 @@ const ViewProfileTemplate: React.FunctionComponent<
                   {isViewingOwnProfile && (
                     <div className="flex flex-row gap-2">
                       {/* LinkedIn Link Button - Only show when not verified */}
-                      {!isLinkedInVerified && (
-                        <button
-                          onClick={handleLinkedInVerify}
-                          disabled={isVerifyingLinkedIn}
-                          className="flex flex-row items-center justify-center gap-2 rounded-md bg-[#0A66C2] p-3 text-white shadow-md hover:bg-[#004182] disabled:opacity-50"
-                        >
-                          {isVerifyingLinkedIn ? (
-                            <>
-                              <Icons.loader className="h-4 w-4 animate-spin" />
-                              <span className="hidden sm:inline">
-                                Linking...
-                              </span>
-                            </>
-                          ) : (
-                            <>
-                              <Icons.linkedin size={15} />
-                              <span className="hidden sm:inline">
-                                Link LinkedIn
-                              </span>
-                            </>
-                          )}
-                        </button>
-                      )}
+                      {!isLinkedInVerified && <LinkedInVerifyButton />}
 
                       <button
                         onClick={() => {
@@ -419,9 +244,23 @@ const ViewProfileTemplate: React.FunctionComponent<
               <div className="flex flex-col">
                 <div className="flex-row\ flex">
                   <div className="w-44" />
-                  <div className="flex w-full flex-row justify-end gap-2 px-4">
-                    {isReferer && <ReferrerBadge />}
-                    {isReferee && <RefereeBadge />}
+                  <div className="flex w-full flex-col items-end gap-2 px-4">
+                    <div className="flex flex-row gap-2">
+                      {isReferer && <ReferrerBadge />}
+                      {isReferee && <RefereeBadge />}
+                    </div>
+                    {/* Show verified badge under referrer/referee badges - Mobile */}
+                    {isLinkedInVerified && (
+                      <LinkedInBadge
+                        name={linkedInVerification?.name}
+                        picture={linkedInVerification?.picture}
+                        onUnlink={
+                          isViewingOwnProfile
+                            ? () => setShowUnlinkDialog(true)
+                            : undefined
+                        }
+                      />
+                    )}
                   </div>
                 </div>
 
@@ -437,18 +276,6 @@ const ViewProfileTemplate: React.FunctionComponent<
                   <h5 className="text-lg font-semibold text-slate-400">
                     {username}
                   </h5>
-
-                  {/* Show verified badge next to username - Mobile */}
-                  {isLinkedInVerified && (
-                    <LinkedInBadge
-                      name={linkedInVerification?.name}
-                      picture={linkedInVerification?.picture}
-                      onUnlink={
-                        isViewingOwnProfile ? handleLinkedInUnlink : undefined
-                      }
-                      isUnlinking={isUnlinkingLinkedIn}
-                    />
-                  )}
                 </div>
 
                 <div className="mt-4 flex flex-col items-start gap-4">
@@ -590,10 +417,10 @@ const ViewProfileTemplate: React.FunctionComponent<
 
           {isViewingOwnProfile && (
             <Button
-              className="flex w-52   justify-center gap-2  border-destructive text-destructive hover:bg-destructive hover:text-white "
+              className="flex w-52 justify-center gap-2 border-destructive text-destructive hover:bg-destructive hover:text-white"
               onClick={handleSignOut}
-              variant={"base"}
-              size={"lg"}
+              variant="base"
+              size="lg"
             >
               <Icons.logOut size={18} />
               {t("general.sign_out")}
@@ -614,39 +441,11 @@ const ViewProfileTemplate: React.FunctionComponent<
       </div>
 
       {/* LinkedIn Unlink Confirmation Dialog */}
-      <Dialog open={showUnlinkDialog} onOpenChange={setShowUnlinkDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Unlink LinkedIn Account?</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to unlink your LinkedIn account? This will
-              remove your LinkedIn verification badge.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setShowUnlinkDialog(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="destructive"
-              onClick={confirmUnlink}
-              disabled={isUnlinkingLinkedIn}
-            >
-              {isUnlinkingLinkedIn ? (
-                <>
-                  <Icons.loader className="mr-2 h-4 w-4 animate-spin" />
-                  Unlinking...
-                </>
-              ) : (
-                "Yes, Unlink"
-              )}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <LinkedInUnlinkDialog
+        open={showUnlinkDialog}
+        onOpenChange={setShowUnlinkDialog}
+        onSuccess={handleUnlinkSuccess}
+      />
     </>
   )
 }

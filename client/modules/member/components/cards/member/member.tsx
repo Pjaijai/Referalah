@@ -88,16 +88,17 @@ const MemberCard: React.FunctionComponent<IMemberCardProps> = ({
           </p>
         </div>
 
-        <div className="flex flex-col-reverse gap-2 md:flex-row">
+        <div className="flex flex-col-reverse gap-2 md:flex-col">
+          {isReferrer && <ReferrerBadge />}
+          {isReferee && <RefereeBadge />}
           {linkedInVerification && (
             <LinkedInBadge
               name={linkedInVerification.name}
               picture={linkedInVerification.picture}
               variant="simple"
+              className="shrink-0 rounded-lg py-0"
             />
           )}
-          {isReferee && <RefereeBadge />}
-          {isReferrer && <ReferrerBadge />}
         </div>
       </CardHeader>
 

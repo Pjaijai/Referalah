@@ -4,6 +4,11 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import "@testing-library/jest-dom"
 import LinkedInBadge from "./linkedin"
 
+// Mock internationalization
+jest.mock("@/utils/services/internationalization/client", () => ({
+  useI18n: () => (key: string) => key,
+}))
+
 // Mock the Icons component
 jest.mock("@/components/icons", () => ({
   Icons: {
@@ -52,7 +57,7 @@ describe("LinkedInBadge Component", () => {
     it("should render 'Verified' text in simple variant", () => {
       render(<LinkedInBadge name="John Doe" variant="simple" />)
 
-      expect(screen.getByText("Verified")).toBeInTheDocument()
+      expect(screen.getByText("general.verified")).toBeInTheDocument()
       expect(screen.queryByText("John Doe")).not.toBeInTheDocument()
     })
 
@@ -106,7 +111,7 @@ describe("LinkedInBadge Component", () => {
     it("should display 'Verified' in simple variant regardless of name", () => {
       render(<LinkedInBadge name="Jane Smith" variant="simple" />)
 
-      expect(screen.getByText("Verified")).toBeInTheDocument()
+      expect(screen.getByText("general.verified")).toBeInTheDocument()
       expect(screen.queryByText("Jane Smith")).not.toBeInTheDocument()
     })
   })
@@ -257,7 +262,7 @@ describe("LinkedInBadge Component", () => {
         />
       )
 
-      expect(screen.getByText("Verified")).toBeInTheDocument()
+      expect(screen.getByText("general.verified")).toBeInTheDocument()
       expect(screen.queryByText("Bob Smith")).not.toBeInTheDocument()
       expect(screen.queryByAltText("LinkedIn Profile")).not.toBeInTheDocument()
       expect(
