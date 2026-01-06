@@ -2,7 +2,7 @@ import { useMemo } from "react"
 import { useCurrentLocale } from "@/utils/services/internationalization/client"
 
 import { TLocationData } from "@/types/api/response/location"
-import { ELocale } from "@/types/common/enums/locale"
+import { isChineseLocale } from "@/types/common/enums/locale"
 
 interface LocationLabelProps {
   location: Pick<TLocationData, "english_name" | "cantonese_name" | "uuid">
@@ -14,10 +14,9 @@ const useLocationLabel = ({ location, locationList }: LocationLabelProps) => {
   const locationLabel = useMemo(() => {
     // Step 1: Find the full location data in locationList
     const fullLocation = locationList.find((loc) => loc.uuid === location.uuid)
-    const locationName =
-      locale === ELocale.ZH_HK
-        ? fullLocation?.cantonese_name ?? location.cantonese_name
-        : fullLocation?.english_name ?? location.english_name
+    const locationName = isChineseLocale(locale)
+      ? fullLocation?.cantonese_name ?? location.cantonese_name
+      : fullLocation?.english_name ?? location.english_name
 
     // Step 2: Find parent and country
     let parentName = ""
@@ -30,10 +29,9 @@ const useLocationLabel = ({ location, locationList }: LocationLabelProps) => {
         const parent = locationList.find(
           (loc) => loc.uuid === fullLocation.parent_uuid
         )
-        parentName =
-          locale === ELocale.ZH_HK
-            ? parent?.cantonese_name ?? ""
-            : parent?.english_name ?? ""
+        parentName = isChineseLocale(locale)
+          ? parent?.cantonese_name ?? ""
+          : parent?.english_name ?? ""
       }
 
       // Find country and fallback emoji
@@ -41,10 +39,9 @@ const useLocationLabel = ({ location, locationList }: LocationLabelProps) => {
         const country = locationList.find(
           (loc) => loc.uuid === fullLocation.country_uuid
         )
-        countryName =
-          locale === ELocale.ZH_HK
-            ? country?.cantonese_name ?? ""
-            : country?.english_name ?? ""
+        countryName = isChineseLocale(locale)
+          ? country?.cantonese_name ?? ""
+          : country?.english_name ?? ""
         if (!emoji && country?.meta_data?.emoji) {
           emoji = country.meta_data.emoji
         }
