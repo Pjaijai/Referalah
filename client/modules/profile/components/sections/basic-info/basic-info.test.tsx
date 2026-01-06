@@ -217,6 +217,7 @@ describe("BasicInfoSection", () => {
     ],
     notification_permissions: ["email_notifications"],
     post_count: [{ count: 5 }],
+    linkedin_verification: null,
   }
 
   const mockT = jest.fn((key: string) => {

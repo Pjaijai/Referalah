@@ -9,6 +9,7 @@ import { siteConfig } from "@/config/site"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import BaseAvatar from "@/components/customized-ui/avatars/base"
+import LinkedInBadge from "@/components/customized-ui/badges/linkedin/linkedin"
 import RefereeBadge from "@/components/customized-ui/badges/referee/referee"
 import ReferrerBadge from "@/components/customized-ui/badges/referrer/referrer"
 import ContactButton from "@/components/customized-ui/buttons/contact"
@@ -31,6 +32,11 @@ interface IMemberCardProps {
   isReferee: boolean
   requestCount: number
   links: ISocialLinksData[]
+  linkedInVerification?: {
+    user_uuid: string
+    name: string | null
+    picture: string | null
+  } | null
 }
 
 const MemberCard: React.FunctionComponent<IMemberCardProps> = ({
@@ -48,6 +54,7 @@ const MemberCard: React.FunctionComponent<IMemberCardProps> = ({
   isReferrer,
   requestCount,
   links,
+  linkedInVerification,
 }) => {
   const t = useI18n()
   const router = useRouter()
@@ -82,6 +89,13 @@ const MemberCard: React.FunctionComponent<IMemberCardProps> = ({
         </div>
 
         <div className="flex flex-col-reverse gap-2 md:flex-row">
+          {linkedInVerification && (
+            <LinkedInBadge
+              name={linkedInVerification.name}
+              picture={linkedInVerification.picture}
+              variant="simple"
+            />
+          )}
           {isReferee && <RefereeBadge />}
           {isReferrer && <ReferrerBadge />}
         </div>

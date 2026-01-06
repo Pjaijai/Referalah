@@ -2,7 +2,6 @@
 
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { getFiresByUserUuid } from "@/utils/common/api"
 import { supabase } from "@/utils/services/supabase/config"
 
 import { EFireType } from "@/types/common/enums/fire-type"

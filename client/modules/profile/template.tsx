@@ -99,6 +99,7 @@ const ProfileTemplate: React.FunctionComponent<IProfileTemplateProps> = (
         }
         requestCount={profile.contact_request_count}
         postCount={profile.post_count[0].count}
+        linkedInVerification={profile.linkedin_verification}
       />
     )
 

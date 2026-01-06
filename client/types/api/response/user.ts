@@ -30,4 +30,9 @@ export interface IUserResponse {
   links: ISocialLinksData[]
   post_count: { count: number }[]
   notification_permissions: string[]
+  linkedin_verification: {
+    user_uuid: string
+    name: string | null
+    picture: string | null
+  } | null
 }
