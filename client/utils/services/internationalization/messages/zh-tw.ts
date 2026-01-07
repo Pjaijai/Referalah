@@ -202,12 +202,14 @@ export default {
   "referral.form.message_label": "訊息",
   "referral.form.message_placeholder":
     "- 自我介紹\n- 想應徵的職務？\n- 如何聯絡您？",
-  "referral.form.cancel": "先不送出",
+  "referral.form.cancel": "先不要",
   "referral.form.submit": "傳送",
 
   "referral.form.resume_optional_label": "履歷（選填）",
   "referral.form.resume_description_label":
     "僅接受 PDF，最大 2 MB，檔案將保留 7 天後刪除。",
+  "referral.form.profile_incomplete_placeholder":
+    "為了幫助其他人更好地聯絡您，請在個人簡介中添加更多自我介紹或完成 LinkedIn 驗證。",
   "referral.user_not_sing_in_dialog.title": "請先登入",
   "referral.user_not_sing_in_dialog.description": "請登入以聯絡對方。",
   "referral.user_not_sing_in_dialog.cancel": "下次再說",

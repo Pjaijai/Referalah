@@ -229,6 +229,8 @@ export default {
   "referral.form.resume_optional_label": "Resume (Optional)",
   "referral.form.resume_description_label":
     "Only PDF files are accepted, with a maximum size limit of 2 MB. File will be removed after 7 days",
+  "referral.form.profile_incomplete_placeholder":
+    "To help you contact people better, please add more description to your profile or complete LinkedIn verification.",
   "referral.user_not_sing_in_dialog.title": "Please sign in",
   "referral.user_not_sing_in_dialog.description":
     "Please sign in to reach out to them",
