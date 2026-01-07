@@ -59,6 +59,30 @@ jest.mock("@/components/customized-ui/avatars/base", () => {
   }
 })
 
+jest.mock("@/components/customized-ui/badges/linkedin/linkedin", () => {
+  return function MockLinkedInBadge({
+    name,
+    picture,
+    onUnlink,
+    isUnlinking,
+  }: any) {
+    return (
+      <div data-testid="linkedin-badge">
+        LinkedIn: {name || "Verified"}
+        {onUnlink && (
+          <button
+            data-testid="linkedin-badge-unlink"
+            onClick={onUnlink}
+            disabled={isUnlinking}
+          >
+            Unlink
+          </button>
+        )}
+      </div>
+    )
+  }
+})
+
 jest.mock("@/components/customized-ui/badges/referee/referee", () => {
   return function MockRefereeBadge() {
     return <div data-testid="referee-badge">Referee</div>
@@ -121,6 +145,16 @@ jest.mock("@/components/icons", () => ({
     pencil: ({ size }: any) => (
       <div data-testid="pencil-icon" data-size={size}>
         ✏️
+      </div>
+    ),
+    linkedin: ({ size }: any) => (
+      <div data-testid="linkedin-icon" data-size={size}>
+        🔗
+      </div>
+    ),
+    loader: ({ className }: any) => (
+      <div data-testid="loader-icon" className={className}>
+        ⏳
       </div>
     ),
     industry: ({ className }: any) => (
@@ -212,6 +246,17 @@ describe("ViewProfileTemplate", () => {
       "auth.form.sign_out.success": "Successfully signed out",
       "auth.form.sign_out.error": "Sign out failed",
       "general.error.description": "An error occurred",
+      "profile.linkedin.verify.button.link": "Link LinkedIn",
+      "profile.linkedin.unlink.dialog.title": "Unlink LinkedIn Account?",
+      "profile.linkedin.unlink.dialog.description":
+        "Are you sure you want to unlink your LinkedIn account?",
+      "profile.linkedin.unlink.button.cancel": "Cancel",
+      "profile.linkedin.unlink.button.confirm": "Yes, Unlink",
+      "profile.linkedin.verify.error.failed_to_start":
+        "Failed to start LinkedIn verification",
+      "profile.linkedin.verify.error.failed": "Failed to verify LinkedIn",
+      "profile.linkedin.unlink.error.failed": "Failed to unlink LinkedIn",
+      "general.error.title": "Error",
     }
     return translations[key] || key
   })
@@ -627,5 +672,513 @@ describe("ViewProfileTemplate", () => {
 
     expect(screen.getAllByText("Ontario - Toronto")[0]).toBeInTheDocument()
     expect(screen.getAllByTestId("location-icon")[0]).toBeInTheDocument()
+  })
+})
+
+/**
+ * LinkedIn Verification Tests
+ * @group unit
+ */
+describe("LinkedIn Verification Tests", () => {
+  const mockGetUser = jest.fn()
+  const mockGetUserIdentities = jest.fn()
+  const mockLinkIdentity = jest.fn()
+  const mockUnlinkIdentity = jest.fn()
+  const mockRefresh = jest.fn()
+
+  const mockProps: IViewProfileTemplateProps = {
+    photoUrl: "https://example.com/photo.jpg",
+    username: "johndoe",
+    description: "Software engineer with 5 years of experience",
+    company: "Tech Corp",
+    jobTitle: "Senior Developer",
+    yearOfExperience: 5,
+    location: "Hong Kong",
+    socialLinks: [],
+    industry: "Technology",
+    isReferer: true,
+    isReferee: false,
+    slug: "current-user-123", // Same as mock user UUID (own profile)
+    requestCount: 10,
+    postCount: 5,
+  }
+
+  beforeEach(() => {
+    jest.clearAllMocks()
+
+    // Setup mocks
+    ;(useRouter as jest.Mock).mockReturnValue({
+      push: jest.fn(),
+      back: jest.fn(),
+      refresh: mockRefresh,
+    })
+    ;(useI18n as jest.Mock).mockReturnValue((key: string, options?: any) => {
+      const translations: Record<string, string> = {
+        "general.year_of_experience_count": `${options?.count} YOE`,
+        "profile.linkedin.verify.button.link": "Link LinkedIn",
+        "profile.linkedin.unlink.dialog.title": "Unlink LinkedIn Account?",
+        "profile.linkedin.unlink.dialog.description":
+          "Are you sure you want to unlink your LinkedIn account?",
+        "profile.linkedin.unlink.button.cancel": "Cancel",
+        "profile.linkedin.unlink.button.confirm": "Yes, Unlink",
+        "general.wait": "Loading...",
+        "general.error.title": "Error",
+        "profile.linkedin.verify.error.failed_to_start":
+          "Failed to start LinkedIn verification",
+        "profile.linkedin.verify.error.failed": "Failed to verify LinkedIn",
+        "profile.linkedin.unlink.error.no_account":
+          "No LinkedIn account linked",
+        "profile.linkedin.unlink.error.failed": "Failed to unlink LinkedIn",
+        "profile.linkedin.unlink.success.title": "LinkedIn Unlinked",
+        "profile.linkedin.unlink.success.description":
+          "Your LinkedIn account has been unlinked successfully",
+      }
+      return translations[key] || key
+    })
+    ;(useUserStore as unknown as jest.Mock).mockImplementation(
+      (selector: any) => {
+        const store = {
+          uuid: "current-user-123",
+          reSetUser: jest.fn(),
+        }
+        return selector ? selector(store) : store
+      }
+    )
+    ;(useToast as jest.Mock).mockReturnValue({
+      toast: jest.fn(),
+    })
+
+    // Mock Supabase auth
+    const supabaseMock = supabase as any
+    supabaseMock.auth = {
+      ...supabaseMock.auth,
+      getUser: mockGetUser,
+      getUserIdentities: mockGetUserIdentities,
+      linkIdentity: mockLinkIdentity,
+      unlinkIdentity: mockUnlinkIdentity,
+      signOut: jest.fn(),
+    }
+
+    // Default: user is signed in
+    mockGetUser.mockResolvedValue({
+      data: {
+        user: {
+          id: "current-user-123",
+          identities: [],
+        },
+      },
+      error: null,
+    })
+
+    // Default: user has no LinkedIn identity
+    mockGetUserIdentities.mockResolvedValue({
+      data: {
+        identities: [],
+      },
+      error: null,
+    })
+  })
+
+  describe("LinkedIn Badge Display", () => {
+    it("should display LinkedIn badge when user is verified", () => {
+      const propsWithLinkedIn = {
+        ...mockProps,
+        linkedInVerification: {
+          user_uuid: "current-user-123",
+          name: "John Doe",
+          picture: "https://linkedin.com/photo.jpg",
+        },
+      }
+
+      render(<ViewProfileTemplate {...propsWithLinkedIn} />)
+
+      expect(screen.getAllByTestId("linkedin-badge")).toHaveLength(2) // Desktop + Mobile
+    })
+
+    it("should not display LinkedIn badge when verification is null", () => {
+      const propsWithoutLinkedIn = {
+        ...mockProps,
+        linkedInVerification: null,
+      }
+
+      render(<ViewProfileTemplate {...propsWithoutLinkedIn} />)
+
+      expect(screen.queryByTestId("linkedin-badge")).not.toBeInTheDocument()
+    })
+
+    it("should not display LinkedIn badge when verification is undefined", () => {
+      render(<ViewProfileTemplate {...mockProps} />)
+
+      expect(screen.queryByTestId("linkedin-badge")).not.toBeInTheDocument()
+    })
+
+    it("should pass correct props to LinkedIn badge", () => {
+      const linkedInVerification = {
+        user_uuid: "current-user-123",
+        name: "John Doe",
+        picture: "https://linkedin.com/photo.jpg",
+      }
+
+      const propsWithLinkedIn = {
+        ...mockProps,
+        linkedInVerification,
+      }
+
+      render(<ViewProfileTemplate {...propsWithLinkedIn} />)
+
+      const badges = screen.getAllByTestId("linkedin-badge")
+      expect(badges.length).toBeGreaterThan(0)
+    })
+  })
+
+  describe("Link LinkedIn Button (Own Profile, Not Verified)", () => {
+    it("should show Link LinkedIn button when viewing own profile and not verified", () => {
+      render(<ViewProfileTemplate {...mockProps} />)
+
+      // Button text is in hidden span on mobile, so we query with hidden: true
+      expect(screen.getByText("Link LinkedIn")).toBeInTheDocument()
+    })
+
+    it("should not show Link LinkedIn button when viewing other's profile", () => {
+      const otherUserProps = {
+        ...mockProps,
+        slug: "other-user-456", // Different from current user
+      }
+
+      render(<ViewProfileTemplate {...otherUserProps} />)
+
+      expect(screen.queryByText("Link LinkedIn")).not.toBeInTheDocument()
+    })
+
+    it("should not show Link LinkedIn button when already verified", () => {
+      const propsWithLinkedIn = {
+        ...mockProps,
+        linkedInVerification: {
+          user_uuid: "current-user-123",
+          name: "John Doe",
+          picture: "https://linkedin.com/photo.jpg",
+        },
+      }
+
+      render(<ViewProfileTemplate {...propsWithLinkedIn} />)
+
+      expect(screen.queryByText("Link LinkedIn")).not.toBeInTheDocument()
+    })
+
+    it("should call Supabase linkIdentity when Link LinkedIn is clicked", async () => {
+      mockLinkIdentity.mockResolvedValue({ data: {}, error: null })
+
+      render(<ViewProfileTemplate {...mockProps} />)
+
+      const linkButton = screen.getByText("Link LinkedIn")
+      fireEvent.click(linkButton)
+
+      await waitFor(() => {
+        expect(mockLinkIdentity).toHaveBeenCalledWith({
+          provider: "linkedin_oidc",
+          options: {
+            redirectTo: window.location.href,
+            scopes: "openid profile email",
+          },
+        })
+      })
+    })
+
+    it("should show loading state when linking", async () => {
+      mockLinkIdentity.mockImplementation(
+        () =>
+          new Promise((resolve) =>
+            setTimeout(() => resolve({ data: {}, error: null }), 100)
+          )
+      )
+
+      render(<ViewProfileTemplate {...mockProps} />)
+
+      const linkButton = screen.getByText("Link LinkedIn")
+      fireEvent.click(linkButton)
+
+      await waitFor(() => {
+        expect(screen.getByText("Loading...")).toBeInTheDocument()
+      })
+    })
+
+    it("should show error toast when linkIdentity fails", async () => {
+      const toast = jest.fn()
+      ;(useToast as jest.Mock).mockReturnValue({ toast })
+
+      mockLinkIdentity.mockResolvedValue({
+        data: null,
+        error: { message: "Failed to link" },
+      })
+
+      render(<ViewProfileTemplate {...mockProps} />)
+
+      const linkButton = screen.getByText("Link LinkedIn")
+      fireEvent.click(linkButton)
+
+      await waitFor(() => {
+        expect(toast).toHaveBeenCalledWith({
+          title: "Error",
+          description: "Failed to start LinkedIn verification",
+          variant: "destructive",
+        })
+      })
+    })
+  })
+
+  describe("Unlink LinkedIn Functionality", () => {
+    const verifiedProps = {
+      ...mockProps,
+      linkedInVerification: {
+        user_uuid: "current-user-123",
+        name: "John Doe",
+        picture: "https://linkedin.com/photo.jpg",
+      },
+    }
+
+    it("should show unlink button on LinkedIn badge when viewing own profile", () => {
+      render(<ViewProfileTemplate {...verifiedProps} />)
+
+      const unlinkButtons = screen.getAllByTestId("linkedin-badge-unlink")
+      expect(unlinkButtons.length).toBeGreaterThan(0)
+    })
+
+    it("should not show unlink button when viewing other's profile", () => {
+      const otherUserProps = {
+        ...verifiedProps,
+        slug: "other-user-456",
+      }
+
+      render(<ViewProfileTemplate {...otherUserProps} />)
+
+      expect(
+        screen.queryByTestId("linkedin-badge-unlink")
+      ).not.toBeInTheDocument()
+    })
+
+    it("should open confirmation dialog when unlink is clicked", async () => {
+      render(<ViewProfileTemplate {...verifiedProps} />)
+
+      const unlinkButtons = screen.getAllByTestId("linkedin-badge-unlink")
+      fireEvent.click(unlinkButtons[0])
+
+      await waitFor(() => {
+        expect(screen.getByText("Unlink LinkedIn Account?")).toBeInTheDocument()
+        expect(
+          screen.getByText(
+            /Are you sure you want to unlink your LinkedIn account/
+          )
+        ).toBeInTheDocument()
+      })
+    })
+
+    it("should close dialog when Cancel is clicked", async () => {
+      render(<ViewProfileTemplate {...verifiedProps} />)
+
+      // Open dialog
+      const unlinkButtons = screen.getAllByTestId("linkedin-badge-unlink")
+      fireEvent.click(unlinkButtons[0])
+
+      await waitFor(() => {
+        expect(screen.getByText("Unlink LinkedIn Account?")).toBeInTheDocument()
+      })
+
+      // Click cancel
+      const cancelButton = screen.getByText("Cancel")
+      fireEvent.click(cancelButton)
+
+      await waitFor(() => {
+        expect(
+          screen.queryByText("Unlink LinkedIn Account?")
+        ).not.toBeInTheDocument()
+      })
+
+      expect(mockUnlinkIdentity).not.toHaveBeenCalled()
+    })
+
+    it("should unlink when confirmed in dialog", async () => {
+      const toast = jest.fn()
+      ;(useToast as jest.Mock).mockReturnValue({ toast })
+
+      mockGetUserIdentities.mockResolvedValue({
+        data: {
+          identities: [
+            {
+              id: "linkedin-identity-123",
+              provider: "linkedin_oidc",
+            },
+          ],
+        },
+        error: null,
+      })
+      mockUnlinkIdentity.mockResolvedValue({ error: null })
+
+      render(<ViewProfileTemplate {...verifiedProps} />)
+
+      // Open dialog
+      const unlinkButtons = screen.getAllByTestId("linkedin-badge-unlink")
+      fireEvent.click(unlinkButtons[0])
+
+      await waitFor(() => {
+        expect(screen.getByText("Unlink LinkedIn Account?")).toBeInTheDocument()
+      })
+
+      // Click confirm
+      const confirmButton = screen.getByText("Yes, Unlink")
+      fireEvent.click(confirmButton)
+
+      await waitFor(() => {
+        expect(mockGetUserIdentities).toHaveBeenCalled()
+        expect(mockUnlinkIdentity).toHaveBeenCalledWith({
+          id: "linkedin-identity-123",
+          provider: "linkedin_oidc",
+        })
+      })
+
+      // Should show success toast
+      expect(toast).toHaveBeenCalledWith({
+        title: "LinkedIn Unlinked",
+        description: "Your LinkedIn account has been unlinked successfully",
+      })
+
+      // Should refresh the page
+      expect(mockRefresh).toHaveBeenCalled()
+    })
+
+    it("should show error toast when no LinkedIn identity found", async () => {
+      const toast = jest.fn()
+      ;(useToast as jest.Mock).mockReturnValue({ toast })
+
+      mockGetUserIdentities.mockResolvedValue({
+        data: {
+          identities: [], // No LinkedIn identity
+        },
+        error: null,
+      })
+
+      render(<ViewProfileTemplate {...verifiedProps} />)
+
+      // Open dialog
+      const unlinkButtons = screen.getAllByTestId("linkedin-badge-unlink")
+      fireEvent.click(unlinkButtons[0])
+
+      await waitFor(() => {
+        expect(screen.getByText("Unlink LinkedIn Account?")).toBeInTheDocument()
+      })
+
+      // Click confirm
+      const confirmButton = screen.getByText("Yes, Unlink")
+      fireEvent.click(confirmButton)
+
+      await waitFor(() => {
+        expect(toast).toHaveBeenCalledWith({
+          title: "Error",
+          description: "No LinkedIn account linked",
+          variant: "destructive",
+        })
+      })
+
+      expect(mockUnlinkIdentity).not.toHaveBeenCalled()
+    })
+
+    it("should show error toast when unlinkIdentity fails", async () => {
+      const toast = jest.fn()
+      ;(useToast as jest.Mock).mockReturnValue({ toast })
+
+      mockGetUserIdentities.mockResolvedValue({
+        data: {
+          identities: [
+            {
+              id: "linkedin-identity-123",
+              provider: "linkedin_oidc",
+            },
+          ],
+        },
+        error: null,
+      })
+      mockUnlinkIdentity.mockResolvedValue({
+        error: { message: "Failed to unlink" },
+      })
+
+      render(<ViewProfileTemplate {...verifiedProps} />)
+
+      // Open dialog
+      const unlinkButtons = screen.getAllByTestId("linkedin-badge-unlink")
+      fireEvent.click(unlinkButtons[0])
+
+      await waitFor(() => {
+        expect(screen.getByText("Unlink LinkedIn Account?")).toBeInTheDocument()
+      })
+
+      // Click confirm
+      const confirmButton = screen.getByText("Yes, Unlink")
+      fireEvent.click(confirmButton)
+
+      await waitFor(() => {
+        expect(toast).toHaveBeenCalledWith({
+          title: "Error",
+          description: "Failed to unlink LinkedIn",
+          variant: "destructive",
+        })
+      })
+
+      expect(mockRefresh).not.toHaveBeenCalled()
+    })
+  })
+
+  describe("Button Visibility Based on Verification State", () => {
+    it("should show Link button when not verified (own profile)", () => {
+      render(<ViewProfileTemplate {...mockProps} />)
+
+      expect(screen.getByText("Link LinkedIn")).toBeInTheDocument()
+    })
+
+    it("should show badge with unlink when verified (own profile)", () => {
+      const verifiedProps = {
+        ...mockProps,
+        linkedInVerification: {
+          user_uuid: "current-user-123",
+          name: "John Doe",
+          picture: "https://linkedin.com/photo.jpg",
+        },
+      }
+
+      render(<ViewProfileTemplate {...verifiedProps} />)
+
+      expect(screen.queryByText("Link LinkedIn")).not.toBeInTheDocument()
+      expect(screen.getAllByTestId("linkedin-badge")).toHaveLength(2)
+    })
+
+    it("should show neither when viewing other's unverified profile", () => {
+      const otherUserProps = {
+        ...mockProps,
+        slug: "other-user-456",
+        linkedInVerification: null,
+      }
+
+      render(<ViewProfileTemplate {...otherUserProps} />)
+
+      expect(screen.queryByText("Link LinkedIn")).not.toBeInTheDocument()
+      expect(screen.queryByTestId("linkedin-badge")).not.toBeInTheDocument()
+    })
+
+    it("should show badge without unlink when viewing other's verified profile", () => {
+      const otherUserProps = {
+        ...mockProps,
+        slug: "other-user-456",
+        linkedInVerification: {
+          user_uuid: "other-user-456",
+          name: "Jane Smith",
+          picture: "https://linkedin.com/photo2.jpg",
+        },
+      }
+
+      render(<ViewProfileTemplate {...otherUserProps} />)
+
+      expect(screen.getAllByTestId("linkedin-badge")).toHaveLength(2)
+      expect(
+        screen.queryByTestId("linkedin-badge-unlink")
+      ).not.toBeInTheDocument()
+    })
   })
 })

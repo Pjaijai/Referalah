@@ -187,6 +187,7 @@ const MemberSearchPageTemplate: React.FunctionComponent<
                   isReferee={user.is_referee}
                   isReferrer={user.is_referer}
                   links={user.links}
+                  linkedInVerification={user.linkedin_verification}
                 />
               )
             })}
