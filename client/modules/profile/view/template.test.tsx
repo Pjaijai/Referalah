@@ -27,6 +27,13 @@ jest.mock("@/utils/services/supabase/config", () => ({
   },
 }))
 
+// Mock @tanstack/react-query
+jest.mock("@tanstack/react-query", () => ({
+  useQueryClient: jest.fn(() => ({
+    invalidateQueries: jest.fn(),
+  })),
+}))
+
 // Mock components
 jest.mock("@/components/ui/button", () => ({
   Button: ({ children, onClick, className, size, variant, ...props }: any) => (
