@@ -35,42 +35,8 @@ serve(async () => {
       }
     })
 
-    const { data: memberContactList } = await server
-      .from("referral_contact_history")
-      .select(
-        `
-      id,
-      uuid,
-    sender_uuid(
-      username
-    ),
-    receiver_uuid(
-      username,
-      uuid
-    ),
-    created_at
-      `,
-      )
-      .order("created_at", { ascending: false })
-      .limit(10)
-
-    const newMemberList = memberContactList.map((member) => {
-      return {
-        type: "member",
-        createdAt: member.created_at,
-        receiverUserName: member.receiver_uuid.username,
-        receiverUuid: member.receiver_uuid.uuid,
-        senderUserName: member.sender_uuid.username,
-      }
-    })
-
-    const res = [...newPostList, ...newMemberList]
-    const sortedRes = res.sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-    )
-    return new Response(JSON.stringify(sortedRes), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" }, // Be sure to add CORS headers here too
+    return new Response(JSON.stringify(newPostList), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     })
   } catch (error: any) {
