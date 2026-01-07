@@ -90,7 +90,12 @@ export const getUserProfile = async (userUuid: string) => {
             cantonese_name,
             english_name
           ),
-          location_uuid
+          location_uuid,
+          linkedin_verification(
+            user_uuid,
+            name,
+            picture
+          )
           `
       )
       .eq("uuid", userUuid)
@@ -292,7 +297,12 @@ export const searchUser = async ({
             is_referer,
             is_referee,
             contact_request_count,
-            links
+            links,
+            linkedin_verification(
+              user_uuid,
+              name,
+              picture
+            )
           `
     )
     .gte("year_of_experience", experience)

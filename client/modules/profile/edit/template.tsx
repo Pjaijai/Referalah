@@ -236,7 +236,6 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   const locationWatch = watch("locationUuid")
   const yearOfExperienceWatch = watch("yearOfExperience")
 
-  console.log("locationWatch", locationWatch)
   const isReferrerWatch = watch("isReferer")
   const isRefereeWatch = watch("isReferee")
 
