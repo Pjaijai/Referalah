@@ -40,6 +40,13 @@ jest.mock("@/components/ui/use-toast", () => ({
   }),
 }))
 
+// Mock @tanstack/react-query
+jest.mock("@tanstack/react-query", () => ({
+  useQueryClient: jest.fn(() => ({
+    invalidateQueries: jest.fn(),
+  })),
+}))
+
 // Mock UI components
 jest.mock("@/components/ui/dialog", () => ({
   Dialog: ({ children, open }: any) =>
