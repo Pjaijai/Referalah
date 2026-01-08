@@ -1,6 +1,6 @@
 import dayjs from "dayjs"
 
-import { ELocale } from "@/types/common/enums/locale"
+import { isChineseLocale } from "@/types/common/enums/locale"
 
 const formatVagueDateHelper = (isoString: string, locale: string): string => {
   const date = dayjs(isoString)
@@ -10,7 +10,7 @@ const formatVagueDateHelper = (isoString: string, locale: string): string => {
   const year = date.year()
   const month = date.month() + 1
 
-  if (locale === ELocale.ZH_HK)
+  if (isChineseLocale(locale))
     return `${year}年${month}月${day <= 10 ? "初" : day <= 20 ? "中" : "尾"}`
 
   return `${day <= 10 ? "Early" : day <= 20 ? "Mid" : "Late"} ${date.format(

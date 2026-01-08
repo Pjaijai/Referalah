@@ -190,6 +190,23 @@ export default {
   "profile.form.official_broadcast_message_label":
     "Receive official broadcast emails",
 
+  "profile.linkedin.verify.button.link": "Verify LinkedIn",
+  "profile.linkedin.verify.error.failed_to_start":
+    "Failed to start LinkedIn verification",
+  "profile.linkedin.verify.error.failed": "Failed to verify LinkedIn",
+
+  "profile.linkedin.unlink.dialog.title": "Unlink LinkedIn Account?",
+  "profile.linkedin.unlink.dialog.description":
+    "Are you sure you want to unlink your LinkedIn account? This will remove your LinkedIn verification badge.",
+  "profile.linkedin.unlink.button.cancel": "Cancel",
+  "profile.linkedin.unlink.button.confirm": "Yes, Unlink",
+  "profile.linkedin.unlink.button.unlinking": "Unlinking...",
+  "profile.linkedin.unlink.error.no_account": "No LinkedIn account linked",
+  "profile.linkedin.unlink.error.failed": "Failed to unlink LinkedIn",
+  "profile.linkedin.unlink.success.title": "LinkedIn Unlinked",
+  "profile.linkedin.unlink.success.description":
+    "Your LinkedIn account has been unlinked successfully",
+
   "general.year_of_experience_count#zero": "{count} years of experience",
   "general.year_of_experience_count#one": "{count} years of experience",
   "general.year_of_experience_count#other": "{count} years of experience",
@@ -212,6 +229,8 @@ export default {
   "referral.form.resume_optional_label": "Resume (Optional)",
   "referral.form.resume_description_label":
     "Only PDF files are accepted, with a maximum size limit of 2 MB. File will be removed after 7 days",
+  "referral.form.profile_incomplete_placeholder":
+    "To help you contact people better, please add more description to your profile or complete LinkedIn verification.",
   "referral.user_not_sing_in_dialog.title": "Please sign in",
   "referral.user_not_sing_in_dialog.description":
     "Please sign in to reach out to them",
@@ -320,6 +339,7 @@ export default {
   "auth.verify_one_time_password.your_one_time_password_label":
     "Your one time password",
   "general.verify": "Verify",
+  "general.verified": "Verified",
   "page.verify_one_time_password": "Verify Your One Time Password",
   "auth.verify_one_time_password.token_expired_or_invalid":
     "Token has expired or is invalid ",

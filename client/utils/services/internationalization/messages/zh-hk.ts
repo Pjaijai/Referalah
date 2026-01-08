@@ -2,14 +2,12 @@
 
 export default {
   index: {
-    connect: "連結海外",
+    connect: "連結",
     professionals: "人材",
     subTitle: `祝大家一切順利！`,
     so_far: "會員人數:",
     join_now: "即刻加入！",
     check_latest_post: "查看最新街招",
-    requested: "回應咗街招",
-    contacted: "聯絡咗",
   },
   "auth.form.email_label": "電郵",
   "auth.form.username_label": "用戶名稱",
@@ -173,6 +171,21 @@ export default {
   "profile.form.unseen_message_label": "如果有新訊息就通知我",
   "profile.form.official_broadcast_message_label": "接收官方消息(電郵)",
 
+  "profile.linkedin.verify.button.link": "驗證LinkedIn",
+  "profile.linkedin.verify.error.failed_to_start": "無法啟動LinkedIn驗證",
+  "profile.linkedin.verify.error.failed": "LinkedIn驗證失敗",
+
+  "profile.linkedin.unlink.dialog.title": "解除LinkedIn驗證？",
+  "profile.linkedin.unlink.dialog.description":
+    "真係要解除 LinkedIn 帳號連結？咁樣會移除你嘅LinkedIn驗證徽章。",
+  "profile.linkedin.unlink.button.cancel": "取消",
+  "profile.linkedin.unlink.button.confirm": "確定解除",
+  "profile.linkedin.unlink.button.unlinking": "解除緊...",
+  "profile.linkedin.unlink.error.no_account": "未連結 LinkedIn 帳號",
+  "profile.linkedin.unlink.error.failed": "無法解除 LinkedIn 連結",
+  "profile.linkedin.unlink.success.title": "已解除 LinkedIn 連結",
+  "profile.linkedin.unlink.success.description": "你已經成功解除LinkedIn連結",
+
   "general.year_of_experience_count#zero": "{count}年經驗",
   "general.year_of_experience_count#one": "{count}年經驗",
   "general.year_of_experience_count#other": "{count}年經驗",
@@ -212,7 +225,7 @@ export default {
   "general.user": "用戶",
   "general.post_history": "街招記錄",
   "general.me": "我",
-  "general.check_user_profile": "查看用戶檔案",
+  "general.check_user_profile": "查看檔案",
   "general.personal_link": "個人連結",
   "auth.form.sign_out.success": "登出成功！",
   "general.create_post": "貼街招",
@@ -291,6 +304,7 @@ export default {
   "auth.verify_one_time_password.your_one_time_password_label":
     "你的一次性密碼",
   "general.verify": "驗証",
+  "general.verified": "已驗証",
   "page.verify_one_time_password": "驗証你的一次性密碼",
   "auth.verify_one_time_password.token_expired_or_invalid": "無效密碼或已過期",
   "auth.verify_one_time_password.user_not_found": "搵唔到會員",

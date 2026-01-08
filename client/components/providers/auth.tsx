@@ -2,7 +2,6 @@
 
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { getFiresByUserUuid } from "@/utils/common/api"
 import { supabase } from "@/utils/services/supabase/config"
 
 import { EFireType } from "@/types/common/enums/fire-type"
@@ -74,7 +73,14 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({ children }) => {
       try {
         const { data, error } = await supabase
           .from("user")
-          .select("uuid, username, avatar_url, status")
+          .select(
+            `uuid, 
+            username, 
+            avatar_url, 
+            status, 
+            description,
+            linkedin_verification(user_uuid)`
+          )
           .eq("uuid", userUuid)
           .single()
 
@@ -87,6 +93,8 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({ children }) => {
           username: data.username,
           photoUrl: data.avatar_url,
           status: data.status as EUserStatus | null,
+          description: data.description,
+          hasLinkedInVerification: !!data.linkedin_verification,
         })
       } catch (error) {
         toast({
@@ -98,7 +106,7 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({ children }) => {
     }
 
     fetchData()
-  }, [userUuid, reSetUserState, setUserState, toast, supabase])
+  }, [userUuid])
 
   return <>{children}</>
 }

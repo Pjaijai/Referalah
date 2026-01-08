@@ -4,7 +4,7 @@ import { useCurrentLocale } from "@/utils/services/internationalization/client"
 import { ICityResponse } from "@/types/api/response/city"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IProvinceResponse } from "@/types/api/response/province"
-import { ELocale } from "@/types/common/enums/locale"
+import { ELocale, isChineseLocale } from "@/types/common/enums/locale"
 
 const useLocationOptions = (
   countryList: ICountryResponse[],
@@ -27,10 +27,12 @@ const useLocationOptions = (
         return { label: "", value: city.uuid, filterLabel: [] }
       }
 
-      const countryText =
-        locale === ELocale.ZH_HK ? country.cantonese_name : country.english_name
-      const cityText =
-        locale === ELocale.ZH_HK ? city.cantonese_name : city.english_name
+      const countryText = isChineseLocale(locale)
+        ? country.cantonese_name
+        : country.english_name
+      const cityText = isChineseLocale(locale)
+        ? city.cantonese_name
+        : city.english_name
 
       // Filter text includes both languages
       const filterLabels = [

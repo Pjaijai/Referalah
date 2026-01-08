@@ -1,13 +1,12 @@
-const logoUrl = "/Referalah-512.png"
 export type SiteConfig = typeof siteConfig
 
 const METADATA_DEFAULT_DESCRIPTION =
-  "海外港人平台。An overseas Hongkongers platform to build their connections and local community."
+  "人脈網絡平台，連接專業人士，建立職業關係，分享工作機會。Professional networking platform connecting professionals, building career relationships, and sharing job opportunities."
 
 const NAME = "Referalah"
 export const siteConfig = {
   name: NAME,
-  description: "海外港人平台。",
+  description: "人脈網絡平台。",
   page: {
     main: {
       name: "main",
@@ -191,23 +190,62 @@ export const siteConfig = {
       process.env.NEXT_PUBLIC_WEB_URL || "https://referalah.com"
     ),
     title: {
-      default: `${NAME} | 海外港人平台`,
+      default: `${NAME} | 人脈網絡平台`,
       template: `%s | ${NAME}`,
     },
     description: METADATA_DEFAULT_DESCRIPTION,
     keywords: [
+      // Brand
       "Referalah",
-      "job referrals",
-      "Career networking",
+
+      // Connection Building - English
       "professional networking",
-      "job search platform",
-      "professional connections",
-      "overseas job seekers",
-      "香港工作推薦",
-      "香港職業網絡",
-      "香港人求職",
+      "networking platform",
+      "career networking",
+      "build professional connections",
+      "business networking",
+      "professional relationships",
+      "career connections",
+      "networking community",
+      "professional network",
+      "connection building",
+
+      // Connection Building - Chinese
+      "人脈網絡",
+      "建立人脈",
+      "職業網絡",
+      "專業人脈",
+      "職場關係",
+      "人脈平台",
+      "拓展人脈",
+      "專業連結",
+      "職業關係",
+
+      // Job Referrals
+      "job referrals",
+      "employee referrals",
+      "internal referral",
+      "referral program",
+      "工作推薦",
+      "內推",
+      "內推平台",
+      "職位推薦",
+
+      // Opportunities
+      "job opportunities",
       "career opportunities",
-      "networking platform for Hongkongers",
+      "job search platform",
+      "工作機會",
+      "職業機會",
+      "職缺分享",
+      "求職平台",
+
+      // Platform Features
+      "professional community",
+      "career development",
+      "job posting platform",
+      "職涯發展",
+      "專業社群",
     ],
     icons: {
       icon: "/favicon.ico",
@@ -215,16 +253,27 @@ export const siteConfig = {
     openGraph: {
       type: "website",
       locale: "en_ca",
+      alternateLocale: ["zh_HK", "zh_TW"],
       url: process.env.NEXT_PUBLIC_WEB_URL,
       siteName: NAME,
-      title: `${NAME} | 海外港人平台`,
+      title: `${NAME} | 人脈網絡平台`,
       description: METADATA_DEFAULT_DESCRIPTION,
+      images: [
+        {
+          url: `${process.env.NEXT_PUBLIC_WEB_URL}/og-image.png`,
+          width: 1200,
+          height: 630,
+          alt: "Referalah - Professional Networking Platform",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${NAME} | 海外港人平台`,
+      title: `${NAME} | 人脈網絡平台`,
       description: METADATA_DEFAULT_DESCRIPTION,
       creator: "@referalah",
+      site: "@referalah",
+      images: [`${process.env.NEXT_PUBLIC_WEB_URL}/og-image.png`],
     },
   },
 }

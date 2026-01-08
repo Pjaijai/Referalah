@@ -10,7 +10,7 @@ import {
 
 import { IIndustryResponse } from "@/types/api/response/industry"
 import { TLocationData } from "@/types/api/response/location"
-import { ELocale } from "@/types/common/enums/locale"
+import { isChineseLocale } from "@/types/common/enums/locale"
 import { EMessageType } from "@/types/common/message-type"
 import { EReferralType } from "@/types/common/referral-type"
 import useSearchUser from "@/hooks/api/user/search-user"
@@ -175,18 +175,19 @@ const MemberSearchPageTemplate: React.FunctionComponent<
                   uuid={user.uuid}
                   receiverType={EReferralType.REFERRER}
                   location={
-                    locale === ELocale.ZH_HK
+                    isChineseLocale(locale)
                       ? user.location?.cantonese_name || null
                       : user.location?.english_name || null
                   }
                   industry={
-                    locale === ELocale.ZH_HK
+                    isChineseLocale(locale)
                       ? user.industry?.cantonese_name || null
                       : user.industry?.english_name || null
                   }
                   isReferee={user.is_referee}
                   isReferrer={user.is_referer}
                   links={user.links}
+                  linkedInVerification={user.linkedin_verification}
                 />
               )
             })}

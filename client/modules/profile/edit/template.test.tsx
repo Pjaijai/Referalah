@@ -267,6 +267,7 @@ describe("EditProfileTemplate", () => {
     mockUseUserStore.mockImplementation((selector: any) => {
       const state = {
         uuid: "user-uuid-123",
+        setUser: jest.fn(),
       }
       return selector(state)
     })
@@ -456,6 +457,28 @@ describe("EditProfileTemplate", () => {
 
   describe("Form Submission", () => {
     it("should submit form with valid data", async () => {
+      const mockInvalidateQueries = jest.fn()
+      const mockGetQueryData = jest.fn().mockReturnValue({
+        uuid: "user-uuid-123",
+        username: "newusername",
+        avatar_url: "https://example.com/avatar.jpg",
+        status: "active",
+        description: "Updated description",
+        linkedin_verification: { user_uuid: "user-uuid-123" },
+      })
+
+      queryClient.invalidateQueries = mockInvalidateQueries
+      queryClient.getQueryData = mockGetQueryData
+
+      const mockSetUser = jest.fn()
+      mockUseUserStore.mockImplementation((selector: any) => {
+        const state = {
+          uuid: "user-uuid-123",
+          setUser: mockSetUser,
+        }
+        return selector(state)
+      })
+
       mockUpdateProfile.mockImplementation((data, { onSuccess }) => {
         onSuccess()
       })
@@ -476,10 +499,26 @@ describe("EditProfileTemplate", () => {
 
       await waitFor(() => {
         expect(mockUpdateProfile).toHaveBeenCalled()
+        expect(mockInvalidateQueries).toHaveBeenCalled()
+        expect(mockGetQueryData).toHaveBeenCalled()
+        expect(mockSetUser).toHaveBeenCalledWith({
+          uuid: "user-uuid-123",
+          username: "newusername",
+          photoUrl: "https://example.com/avatar.jpg",
+          status: "active",
+          description: "Updated description",
+          hasLinkedInVerification: true,
+        })
       })
     })
 
     it("should show success toast on successful update", async () => {
+      const mockInvalidateQueries = jest.fn()
+      const mockGetQueryData = jest.fn().mockReturnValue(mockProfile)
+
+      queryClient.invalidateQueries = mockInvalidateQueries
+      queryClient.getQueryData = mockGetQueryData
+
       mockUpdateProfile.mockImplementation((data, { onSuccess }) => {
         onSuccess()
       })
@@ -503,6 +542,12 @@ describe("EditProfileTemplate", () => {
     })
 
     it("should navigate to profile page on successful update", async () => {
+      const mockInvalidateQueries = jest.fn()
+      const mockGetQueryData = jest.fn().mockReturnValue(mockProfile)
+
+      queryClient.invalidateQueries = mockInvalidateQueries
+      queryClient.getQueryData = mockGetQueryData
+
       mockUpdateProfile.mockImplementation((data, { onSuccess }) => {
         onSuccess()
       })

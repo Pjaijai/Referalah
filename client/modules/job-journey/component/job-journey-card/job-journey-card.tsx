@@ -1,6 +1,4 @@
 import React from "react"
-
-import "dayjs/locale/zh-hk"
 import { useRouter } from "next/navigation"
 import CompanyAvatar from "@/modules/job-journey/component/avatar/company"
 import getStepTypeStyle from "@/modules/job-journey/helpers/get-step-type-style"
@@ -21,8 +19,6 @@ import useJobTypeOptions from "@/hooks/common/options/Job-type-options"
 import useStepTypeOptions from "@/hooks/common/options/step-type-options"
 import useUserStore from "@/hooks/state/user/store"
 import FireIcon from "@/components/customized-ui/icons/fire"
-// Import the zh-hk locale
-import { Icons } from "@/components/icons"
 
 export type TJobJourneyCardProps = {
   username: string
