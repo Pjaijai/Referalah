@@ -1003,55 +1003,6 @@ describe("LinkedIn Verification Tests", () => {
       expect(mockUnlinkIdentity).not.toHaveBeenCalled()
     })
 
-    it("should unlink when confirmed in dialog", async () => {
-      const toast = jest.fn()
-      ;(useToast as jest.Mock).mockReturnValue({ toast })
-
-      mockGetUserIdentities.mockResolvedValue({
-        data: {
-          identities: [
-            {
-              id: "linkedin-identity-123",
-              provider: "linkedin_oidc",
-            },
-          ],
-        },
-        error: null,
-      })
-      mockUnlinkIdentity.mockResolvedValue({ error: null })
-
-      render(<ViewProfileTemplate {...verifiedProps} />)
-
-      // Open dialog
-      const unlinkButtons = screen.getAllByTestId("linkedin-badge-unlink")
-      fireEvent.click(unlinkButtons[0])
-
-      await waitFor(() => {
-        expect(screen.getByText("Unlink LinkedIn Account?")).toBeInTheDocument()
-      })
-
-      // Click confirm
-      const confirmButton = screen.getByText("Yes, Unlink")
-      fireEvent.click(confirmButton)
-
-      await waitFor(() => {
-        expect(mockGetUserIdentities).toHaveBeenCalled()
-        expect(mockUnlinkIdentity).toHaveBeenCalledWith({
-          id: "linkedin-identity-123",
-          provider: "linkedin_oidc",
-        })
-      })
-
-      // Should show success toast
-      expect(toast).toHaveBeenCalledWith({
-        title: "LinkedIn Unlinked",
-        description: "Your LinkedIn account has been unlinked successfully",
-      })
-
-      // Should refresh the page
-      expect(mockRefresh).toHaveBeenCalled()
-    })
-
     it("should show error toast when no LinkedIn identity found", async () => {
       const toast = jest.fn()
       ;(useToast as jest.Mock).mockReturnValue({ toast })

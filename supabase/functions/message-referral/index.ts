@@ -53,7 +53,9 @@ serve(async (req: any) => {
 
     const { data: sender, error } = await server
       .from("user")
-      .select("uuid,username, status")
+      .select(
+        "uuid,username, status, description, linkedin_verification(user_uuid)",
+      )
       .eq("uuid", user.id)
       .single()
 
@@ -62,6 +64,21 @@ serve(async (req: any) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 500,
       })
+    }
+
+    // Check if sender has description or LinkedIn verification
+    const hasDescription =
+      sender.description && sender.description.trim().length > 0
+    const hasLinkedInVerification = !!sender.linkedin_verification
+
+    if (!hasDescription && !hasLinkedInVerification) {
+      return new Response(
+        "Profile incomplete. Please add a description to your profile or complete LinkedIn verification before contacting others.",
+        {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 403,
+        },
+      )
     }
 
     const { data: receiver } = await server

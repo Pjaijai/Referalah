@@ -59,6 +59,15 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
 }) => {
   const t = useI18n()
   const userUuid = useUserStore((state) => state.uuid)
+  const userDescription = useUserStore((state) => state.description)
+  const hasLinkedInVerification = useUserStore(
+    (state) => state.hasLinkedInVerification
+  )
+
+  // Check if user profile is complete (has description or LinkedIn verification)
+  const isProfileIncomplete =
+    !userDescription || userDescription.trim().length === 0
+  const canContact = !isProfileIncomplete || hasLinkedInVerification
 
   const formSchema = z.object({
     message: z
@@ -263,10 +272,14 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
                     <FormControl>
                       <Textarea
                         placeholder={
-                          receiverType === "referer"
+                          !canContact
+                            ? t("referral.form.profile_incomplete_placeholder")
+                            : receiverType === "referer"
                             ? t("referral.form.message_placeholder")
                             : ""
                         }
+                        disabled={!canContact}
+                        readOnly={!canContact}
                         {...field}
                       />
                     </FormControl>
@@ -292,7 +305,7 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
                 {t("referral.form.cancel")}
               </Button>
 
-              <Button type="submit" disabled={isLoading}>
+              <Button type="submit" disabled={isLoading || !canContact}>
                 {isLoading ? t("general.wait") : t("referral.form.submit")}
               </Button>
             </DialogFooter>

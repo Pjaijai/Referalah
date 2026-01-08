@@ -20,6 +20,7 @@ import { IIndustryResponse } from "@/types/api/response/industry"
 import { TLocationData } from "@/types/api/response/location"
 import { EQueryKeyString } from "@/types/common/query-key-string"
 import { ESocialLink, socialLinkValues } from "@/types/common/social-links"
+import { EUserStatus } from "@/types/common/user-status"
 import { siteConfig } from "@/config/site"
 import useGetUserprofile from "@/hooks/api/user/get-user-profile"
 import useUpdateUserProfile from "@/hooks/api/user/update-user-profile"
@@ -174,8 +175,7 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
   )
   const [isSubmitting, setIsSubmitting] = useState(false)
   const user = useUserStore((state) => state)
-  const { mutate: updateProfile, error: updateProfileError } =
-    useUpdateUserProfile()
+  const { mutate: updateProfile } = useUpdateUserProfile()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -332,14 +332,37 @@ const EditProfileTemplate: React.FunctionComponent<IEdiProfileTemplate> = ({
       }
 
       updateProfile(updateUserRequest, {
-        onSuccess: () => {
+        onSuccess: async () => {
           toast({
             title: t("profile.edit.success"),
           })
 
-          queryClient.invalidateQueries({
+          // Invalidate and refetch user profile query
+          await queryClient.invalidateQueries({
             queryKey: [EQueryKeyString.USER_PROFILE, { userUuid: user.uuid }],
           })
+
+          // Get the fresh data from the query cache
+          const freshProfile = queryClient.getQueryData<{
+            uuid: string
+            username: string
+            avatar_url: string
+            status: string
+            description: string
+            linkedin_verification: { user_uuid: string } | null
+          }>([EQueryKeyString.USER_PROFILE, { userUuid: user.uuid }])
+
+          // Update user store with the fresh data
+          if (freshProfile) {
+            user.setUser({
+              uuid: freshProfile.uuid,
+              username: freshProfile.username,
+              photoUrl: freshProfile.avatar_url,
+              status: freshProfile.status as EUserStatus | null,
+              description: freshProfile.description,
+              hasLinkedInVerification: !!freshProfile.linkedin_verification,
+            })
+          }
 
           router.push(`${siteConfig.page.profile.href}/${userUuid}`)
         },
