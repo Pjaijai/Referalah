@@ -40,10 +40,30 @@ jest.mock("@/components/ui/use-toast", () => ({
   }),
 }))
 
+// Mock user store
+const mockSetUser = jest.fn()
+const mockUserStore = {
+  uuid: "test-user-uuid",
+  username: "testuser",
+  photoUrl: "https://example.com/photo.jpg",
+  status: "active",
+  description: "Test description",
+  hasLinkedInVerification: true,
+  setUser: mockSetUser,
+}
+
+jest.mock("@/hooks/state/user/store", () => ({
+  __esModule: true,
+  default: jest.fn(() => mockUserStore),
+}))
+
 // Mock @tanstack/react-query
+const mockInvalidateQueries = jest.fn()
+const mockGetQueryData = jest.fn()
 jest.mock("@tanstack/react-query", () => ({
   useQueryClient: jest.fn(() => ({
-    invalidateQueries: jest.fn(),
+    invalidateQueries: mockInvalidateQueries,
+    getQueryData: mockGetQueryData,
   })),
 }))
 
@@ -108,6 +128,16 @@ describe("LinkedInUnlinkDialog Component", () => {
         ],
       },
       error: null,
+    })
+
+    // Default: query returns fresh profile data
+    mockGetQueryData.mockReturnValue({
+      uuid: "test-user-uuid",
+      username: "testuser",
+      avatar_url: "https://example.com/photo.jpg",
+      status: "active",
+      description: "Updated description",
+      linkedin_verification: null, // Unlinked
     })
   })
 
@@ -257,6 +287,45 @@ describe("LinkedInUnlinkDialog Component", () => {
 
       await waitFor(() => {
         expect(mockRefresh).toHaveBeenCalled()
+      })
+    })
+
+    it("should invalidate user profile queries after unlink", async () => {
+      mockUnlinkIdentity.mockResolvedValue({ error: null })
+
+      render(
+        <LinkedInUnlinkDialog open={true} onOpenChange={mockOnOpenChange} />
+      )
+
+      const confirmButton = screen.getByTestId("confirm-button")
+      fireEvent.click(confirmButton)
+
+      await waitFor(() => {
+        expect(mockInvalidateQueries).toHaveBeenCalledWith({
+          queryKey: ["user-profile"],
+        })
+      })
+    })
+
+    it("should update user store with fresh profile data after unlink", async () => {
+      mockUnlinkIdentity.mockResolvedValue({ error: null })
+
+      render(
+        <LinkedInUnlinkDialog open={true} onOpenChange={mockOnOpenChange} />
+      )
+
+      const confirmButton = screen.getByTestId("confirm-button")
+      fireEvent.click(confirmButton)
+
+      await waitFor(() => {
+        expect(mockSetUser).toHaveBeenCalledWith({
+          uuid: "test-user-uuid",
+          username: "testuser",
+          photoUrl: "https://example.com/photo.jpg",
+          status: "active",
+          description: "Updated description",
+          hasLinkedInVerification: false, // Should be false after unlink
+        })
       })
     })
   })

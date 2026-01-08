@@ -1,5 +1,6 @@
 "use client"
 
+import { supabase } from "@/utils/services/supabase/config"
 import { create } from "zustand"
 
 import { EFireType } from "@/types/common/enums/fire-type"
@@ -16,28 +17,37 @@ interface IUserState {
   uuid: null | string
   photoUrl: string | null
   status: EUserStatus | null
+  description: string | null
+  hasLinkedInVerification: boolean
   fireRecords: TFiresRecord[]
   setUser: ({
     username,
     uuid,
     photoUrl,
+    status,
+    description,
+    hasLinkedInVerification,
   }: {
     username: string | null
     uuid: string
     photoUrl: string | null
     status: EUserStatus | null
+    description: string | null
+    hasLinkedInVerification: boolean
   }) => void
   reSetUser: () => void
   setFires: (firesRecord: TFiresRecord[]) => void
   addFire: (firesRecord: TFiresRecord) => void
 }
-const useUserStore = create<IUserState>((set) => ({
+const useUserStore = create<IUserState>((set, get) => ({
   username: null,
   isSignIn: false,
   uuid: null,
   photoUrl: null,
   fireRecords: [],
   status: null,
+  description: null,
+  hasLinkedInVerification: false,
 
   reSetUser: () => {
     set(() => ({
@@ -46,16 +56,27 @@ const useUserStore = create<IUserState>((set) => ({
       uuid: null,
       photoUrl: null,
       status: null,
+      description: null,
+      hasLinkedInVerification: false,
       fireRecord: [],
     }))
   },
-  setUser: ({ username, uuid, photoUrl, status }) =>
+  setUser: ({
+    username,
+    uuid,
+    photoUrl,
+    status,
+    description,
+    hasLinkedInVerification,
+  }) =>
     set(() => ({
       username,
       isSignIn: true,
       uuid,
       photoUrl,
       status,
+      description,
+      hasLinkedInVerification,
     })),
   setFires: (firesRecord: TFiresRecord[]) => {
     set((state) => ({

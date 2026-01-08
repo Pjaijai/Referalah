@@ -7,6 +7,8 @@ import { supabase } from "@/utils/services/supabase/config"
 import { useQueryClient } from "@tanstack/react-query"
 
 import { EQueryKeyString } from "@/types/common/query-key-string"
+import { EUserStatus } from "@/types/common/user-status"
+import useUserStore from "@/hooks/state/user/store"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -38,6 +40,7 @@ const LinkedInUnlinkDialog: React.FC<ILinkedInUnlinkDialogProps> = ({
   const { toast } = useToast()
   const router = useRouter()
   const queryClient = useQueryClient()
+  const user = useUserStore((state) => state)
   const [isUnlinking, setIsUnlinking] = useState(false)
 
   const handleConfirmUnlink = async () => {
@@ -80,10 +83,32 @@ const LinkedInUnlinkDialog: React.FC<ILinkedInUnlinkDialogProps> = ({
         description: t("profile.linkedin.unlink.success.description"),
       })
 
-      // Invalidate user profile query to refetch updated data
-      queryClient.invalidateQueries({
+      // Invalidate and refetch user profile query
+      await queryClient.invalidateQueries({
         queryKey: [EQueryKeyString.USER_PROFILE],
       })
+
+      // Get the fresh data from the query cache
+      const freshProfile = queryClient.getQueryData<{
+        uuid: string
+        username: string
+        avatar_url: string
+        status: string
+        description: string
+        linkedin_verification: { user_uuid: string } | null
+      }>([EQueryKeyString.USER_PROFILE, { userUuid: user.uuid }])
+
+      // Update user store with the fresh data
+      if (freshProfile) {
+        user.setUser({
+          uuid: freshProfile.uuid,
+          username: freshProfile.username,
+          photoUrl: freshProfile.avatar_url,
+          status: freshProfile.status as EUserStatus | null,
+          description: freshProfile.description,
+          hasLinkedInVerification: !!freshProfile.linkedin_verification,
+        })
+      }
 
       // Close dialog
       onOpenChange(false)
