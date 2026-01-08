@@ -5,7 +5,7 @@
 
 export default {
   index: {
-    connect: "連結海外",
+    connect: "連結",
     professionals: "人才",
     subTitle: `祝大家一切順利！`,
     so_far: "會員人數:",
