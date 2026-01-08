@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.34.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.34.0) (2026-01-08)
+
+### Features
+
+- remove member contact ([#483](https://github.com/Pjaijai/Referalah/issues/483)) ([73565a6](https://github.com/Pjaijai/Referalah/commit/73565a65c26cf3502841559b70ead50bdcd05a95))
+- update card sowing logic ([#476](https://github.com/Pjaijai/Referalah/issues/476)) ([7f2a119](https://github.com/Pjaijai/Referalah/commit/7f2a1198cc5d1c29314aeafde8963bc0f200f895))
+- update seo stuff ([#484](https://github.com/Pjaijai/Referalah/issues/484)) ([d45e63a](https://github.com/Pjaijai/Referalah/commit/d45e63ab38f1dd58462cd3de518bc3aea10cced1))
+
+### Bug Fixes
+
+- add is chinese locale vague date helper ([#481](https://github.com/Pjaijai/Referalah/issues/481)) ([4795c40](https://github.com/Pjaijai/Referalah/commit/4795c4068ce406e63cf86d8b9ce55f628a8b8967))
+- fix ([#485](https://github.com/Pjaijai/Referalah/issues/485)) ([2059d3b](https://github.com/Pjaijai/Referalah/commit/2059d3b636f706be98c9fdcbdf756eb106d80faa))
+- fix back to all option logic ([#475](https://github.com/Pjaijai/Referalah/issues/475)) ([669e366](https://github.com/Pjaijai/Referalah/commit/669e3664a627002b997af5ed150b1c578b2d6d97))
+- fix type ([78c6b0b](https://github.com/Pjaijai/Referalah/commit/78c6b0baf3b9c77bd21a96e4729035fbd30918db))
+
 ## [1.33.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.33.0) (2025-12-17)
 
 ### Features
