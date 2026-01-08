@@ -83,6 +83,7 @@ export const getUserProfile = async (userUuid: string) => {
           is_referee,
           contact_request_count,
           links,
+          status,
           post_count:post(count),
           notification_permissions,
           location:location_uuid(
