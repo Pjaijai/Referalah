@@ -84,9 +84,7 @@ const PrivacyPage = () => {
         </p>
         <p>
           <strong>Website</strong> refers to Referalah, accessible from{" "}
-          <Link href={siteConfig.page.main.href}>
-            Referalah | 海外港人搵Referral平台
-          </Link>
+          <Link href={siteConfig.page.main.href}>Referalah | 人脈網絡平台</Link>
         </p>
         <p>
           <strong>You</strong> means the individual accessing or using the
