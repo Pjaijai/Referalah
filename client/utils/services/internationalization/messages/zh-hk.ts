@@ -2,14 +2,12 @@
 
 export default {
   index: {
-    connect: "連結海外",
+    connect: "連結",
     professionals: "人材",
     subTitle: `祝大家一切順利！`,
     so_far: "會員人數:",
     join_now: "即刻加入！",
     check_latest_post: "查看最新街招",
-    requested: "回應咗街招",
-    contacted: "聯絡咗",
   },
   "auth.form.email_label": "電郵",
   "auth.form.username_label": "用戶名稱",
@@ -207,8 +205,6 @@ export default {
   "referral.form.resume_optional_label": "CV/Resume (可skip)",
   "referral.form.resume_description_label":
     "淨係接受PDF，最多2mb，文件只會存放7日",
-  "referral.form.profile_incomplete_placeholder":
-    "為咗幫助你更好咁聯絡人哋，請係個人簡介度加多啲自我介紹或者完成LinkedIn驗證。",
 
   "referral.user_not_sing_in_dialog.title": "未登入",
   "referral.user_not_sing_in_dialog.description": "要登入咗先可以聯絡對方。",
