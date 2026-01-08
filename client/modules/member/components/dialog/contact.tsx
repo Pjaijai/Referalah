@@ -280,6 +280,8 @@ const ContactDialog: React.FunctionComponent<IContactDialogProps> = ({
                         }
                         disabled={!canContact}
                         readOnly={!canContact}
+                        rows={4}
+                        className="min-h-[4rem]"
                         {...field}
                       />
                     </FormControl>
