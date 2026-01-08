@@ -205,6 +205,8 @@ export default {
   "referral.form.resume_optional_label": "CV/Resume (可skip)",
   "referral.form.resume_description_label":
     "淨係接受PDF，最多2mb，文件只會存放7日",
+  "referral.form.profile_incomplete_placeholder":
+    "為咗幫助你更好咁聯絡人哋，請係個人簡介度加多啲自我介紹或者完成LinkedIn驗證。",
 
   "referral.user_not_sing_in_dialog.title": "未登入",
   "referral.user_not_sing_in_dialog.description": "要登入咗先可以聯絡對方。",
