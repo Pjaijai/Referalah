@@ -25,7 +25,6 @@ import { IUpdatePostRequest } from "@/types/api/request/post/update"
 import { ISearchMemberRequest } from "@/types/api/request/user/search"
 import { IUpdateUserProfileRequest } from "@/types/api/request/user/update"
 import { ICityResponse } from "@/types/api/response/city"
-import { TContactRequestListResponse } from "@/types/api/response/contact-request/contact-request-list"
 import { IGetConversationListByUserUuidResponse } from "@/types/api/response/conversation-list"
 import { ICountryResponse } from "@/types/api/response/country"
 import { IIndustryResponse } from "@/types/api/response/industry"
@@ -913,20 +912,6 @@ export const getUserCount = async () => {
 
     if (error) throw error
     return count
-  } catch (error) {
-    throw error
-  }
-}
-
-// contact Request history
-export const listLatestContactRequest = async () => {
-  try {
-    const { data, error } = await supabase.functions.invoke(
-      "list-latest-contact-request"
-    )
-
-    if (error) throw error
-    return data as TContactRequestListResponse[]
   } catch (error) {
     throw error
   }
