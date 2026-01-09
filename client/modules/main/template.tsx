@@ -1,19 +1,16 @@
 import React from "react"
 import ContentSection from "@/modules/main/components/content-section"
 
-import { TContactRequestListResponse } from "@/types/api/response/contact-request/contact-request-list"
 import { TLocationData } from "@/types/api/response/location"
 import { ISearchPostResponse } from "@/types/api/response/referer-post"
 
 const MainPageTemplate = ({
   count,
   posts,
-  contactList,
   locationList,
 }: {
   count: number | null
   posts: ISearchPostResponse[]
-  contactList: TContactRequestListResponse[]
   locationList: TLocationData[]
 }) => {
   return (
@@ -22,7 +19,6 @@ const MainPageTemplate = ({
         <ContentSection
           count={count}
           posts={posts}
-          contactList={contactList}
           locationList={locationList}
         />
       </div>

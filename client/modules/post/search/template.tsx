@@ -147,25 +147,15 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
           }
         >
           <div className="mx-auto grid w-full max-w-sm grid-cols-1 gap-11 md:mt-4 md:max-w-none md:grid-cols-2 lg:grid-cols-3">
-            {list.map((data, index) => {
-              // Show card at index 2
-              if (index === 2) {
-                return showDonationCard ? (
-                  <DonationCard
-                    key={`donation-${index}`}
-                    className="max-w-sm"
-                  />
-                ) : (
-                  <StepsRedirectCard
-                    key={`steps-${index}`}
-                    className="max-w-sm"
-                  />
-                )
-              }
-
-              return (
+            {list.map((data, index) => (
+              <React.Fragment key={data.uuid}>
+                {index === 2 &&
+                  (showDonationCard ? (
+                    <DonationCard key="donation-card" className="max-w-sm" />
+                  ) : (
+                    <StepsRedirectCard key="steps-card" className="max-w-sm" />
+                  ))}
                 <PostCard
-                  key={data.uuid}
                   type={data.type}
                   jobTitle={data.job_title}
                   username={data.user && data.user.username}
@@ -185,8 +175,8 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
                   createdAt={data.created_at && data.created_at.toString()}
                   requestCount={data.contact_request_count}
                 />
-              )
-            })}
+              </React.Fragment>
+            ))}
           </div>
         </BaseInfiniteScroll>
       )}
