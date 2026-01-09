@@ -145,25 +145,21 @@ const MemberSearchPageTemplate: React.FunctionComponent<
           }
         >
           <div className="mx-auto grid w-full max-w-sm grid-cols-1 gap-4  md:mt-4 md:max-w-none md:grid-cols-2 lg:grid-cols-3">
-            {list.map((user, index) => {
-              // Show card at index 2
-              if (index === 2) {
-                return showDonationCard ? (
-                  <DonationCard
-                    key={`donation-${index}`}
-                    className="max-w-[448px]"
-                  />
-                ) : (
-                  <StepsRedirectCard
-                    key={`steps-${index}`}
-                    className="max-w-[448px]"
-                  />
-                )
-              }
-
-              return (
+            {list.map((user, index) => (
+              <React.Fragment key={user.uuid}>
+                {index === 2 &&
+                  (showDonationCard ? (
+                    <DonationCard
+                      key="donation-card"
+                      className="max-w-[448px]"
+                    />
+                  ) : (
+                    <StepsRedirectCard
+                      key="steps-card"
+                      className="max-w-[448px]"
+                    />
+                  ))}
                 <MemberCard
-                  key={user.uuid}
                   requestCount={user.contact_request_count}
                   jobTitle={user.job_title}
                   username={user.username}
@@ -189,8 +185,8 @@ const MemberSearchPageTemplate: React.FunctionComponent<
                   links={user.links}
                   linkedInVerification={user.linkedin_verification}
                 />
-              )
-            })}
+              </React.Fragment>
+            ))}
           </div>
         </BaseInfiniteScroll>
       )}
