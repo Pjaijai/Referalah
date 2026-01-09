@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.35.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.35.0) (2026-01-09)
+
+
+### Features
+
+* remove ([#490](https://github.com/Pjaijai/Referalah/issues/490)) ([50f1d13](https://github.com/Pjaijai/Referalah/commit/50f1d13abbc735087923041d1403988fbc86e37b))
+* update seo stuff ([#484](https://github.com/Pjaijai/Referalah/issues/484)) ([9fab612](https://github.com/Pjaijai/Referalah/commit/9fab612bf3a846b2b9df8a5df8555abdd07492a7))
+
+
+### Bug Fixes
+
+* fix ([#489](https://github.com/Pjaijai/Referalah/issues/489)) ([2275c34](https://github.com/Pjaijai/Referalah/commit/2275c34ebd29e6cbb9e2bab0c4e0f6784cb3b7ab))
+* fix type ([4943ba1](https://github.com/Pjaijai/Referalah/commit/4943ba10ef8744077945d52a33155178b786f6fc))
+
 ## [1.34.0](https://github.com/Pjaijai/Referalah/compare/v1.21.1...v1.34.0) (2026-01-08)
 
 ### Features
