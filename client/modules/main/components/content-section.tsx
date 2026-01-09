@@ -2,13 +2,11 @@
 
 import React from "react"
 import Link from "next/link"
-import ContactRequestCarousel from "@/modules/main/components/carousels/contact-request"
 import PostCarousel from "@/modules/main/components/carousels/post"
 import UserCount from "@/modules/main/components/user-count"
 import { useScopedI18n } from "@/utils/services/internationalization/client"
 import { motion } from "framer-motion"
 
-import { TContactRequestListResponse } from "@/types/api/response/contact-request/contact-request-list"
 import { TLocationData } from "@/types/api/response/location"
 import { ISearchPostResponse } from "@/types/api/response/referer-post"
 import { siteConfig } from "@/config/site"
@@ -19,12 +17,10 @@ import { buttonVariants } from "@/components/ui/button"
 const ContentSection = ({
   count,
   posts,
-  contactList,
   locationList,
 }: {
   count: number | null
   posts: ISearchPostResponse[]
-  contactList: TContactRequestListResponse[]
   locationList: TLocationData[]
 }) => {
   const isUserSignIn = useUserStore((state) => state.isSignIn)
@@ -96,10 +92,6 @@ const ContentSection = ({
       </div>
       <div className="mt-20 ">
         <PostCarousel list={posts} locationList={locationList} />
-      </div>
-
-      <div className="mt-12 ">
-        <ContactRequestCarousel list={contactList} />
       </div>
     </motion.div>
   )

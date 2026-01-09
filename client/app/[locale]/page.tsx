@@ -1,11 +1,6 @@
 import { Suspense } from "react"
 import MainPageTemplate from "@/modules/main/template"
-import {
-  getLocationList,
-  getUserCount,
-  listLatestContactRequest,
-  searchPost,
-} from "@/utils/common/api"
+import { getLocationList, getUserCount, searchPost } from "@/utils/common/api"
 
 import { EPostType } from "@/types/common/post-type"
 import CommonPageLayout from "@/components/layouts/common"
@@ -25,7 +20,7 @@ export default async function IndexPage() {
 }
 
 async function MainPageContent() {
-  const [count, posts, list, locationList] = await Promise.all([
+  const [count, posts, locationList] = await Promise.all([
     getUserCount(),
     searchPost({
       keywords: "",
@@ -35,16 +30,10 @@ async function MainPageContent() {
       type: EPostType.ALL,
       sortingType: "createdAt,dec",
     }),
-    listLatestContactRequest(),
     getLocationList(),
   ])
 
   return (
-    <MainPageTemplate
-      count={count}
-      posts={posts}
-      contactList={list}
-      locationList={locationList}
-    />
+    <MainPageTemplate count={count} posts={posts} locationList={locationList} />
   )
 }
