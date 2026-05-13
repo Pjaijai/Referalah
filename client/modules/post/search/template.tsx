@@ -14,9 +14,8 @@ import { EMessageType } from "@/types/common/message-type"
 import useSearchPost from "@/hooks/api/post/search-post"
 import usePostSortOptions from "@/hooks/common/sort/post-sort-options"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
-import DonationCard from "@/components/customized-ui/cards/donation"
+import JobuzzerRedirectCard from "@/components/customized-ui/cards/jobuzzer-redirect"
 import PostCard from "@/components/customized-ui/cards/post"
-import StepsRedirectCard from "@/components/customized-ui/cards/steps-redirect"
 import TextInput from "@/components/customized-ui/inputs/text"
 import BaseSelect from "@/components/customized-ui/selects/base"
 import FilterSheet from "@/components/customized-ui/sheets/filter"
@@ -59,9 +58,6 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
 
   const list = data !== undefined ? data.pages.flatMap((d) => d) : []
   const { data: postSortingOptions } = usePostSortOptions()
-
-  // 50% chance to show donation card, 50% chance to show steps redirect card
-  const showDonationCard = React.useMemo(() => Math.random() < 1 / 2, [])
 
   return (
     <div className=" flex flex-col gap-4">
@@ -149,12 +145,12 @@ const PostSearchPageTemplate: React.FunctionComponent<IPostSearchPageProps> = ({
           <div className="mx-auto grid w-full max-w-sm grid-cols-1 gap-11 md:mt-4 md:max-w-none md:grid-cols-2 lg:grid-cols-3">
             {list.map((data, index) => (
               <React.Fragment key={data.uuid}>
-                {index === 2 &&
-                  (showDonationCard ? (
-                    <DonationCard key="donation-card" className="max-w-sm" />
-                  ) : (
-                    <StepsRedirectCard key="steps-card" className="max-w-sm" />
-                  ))}
+                {index === 2 && (
+                  <JobuzzerRedirectCard
+                    key="jobuzzer-card"
+                    className="max-w-sm"
+                  />
+                )}
                 <PostCard
                   type={data.type}
                   jobTitle={data.job_title}

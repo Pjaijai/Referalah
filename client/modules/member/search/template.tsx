@@ -16,8 +16,7 @@ import { EReferralType } from "@/types/common/referral-type"
 import useSearchUser from "@/hooks/api/user/search-user"
 import useReferralSortOptions from "@/hooks/common/sort/referral-sort-options"
 import BaseInfiniteScroll from "@/components/customized-ui/Infinite-scroll/base"
-import DonationCard from "@/components/customized-ui/cards/donation"
-import StepsRedirectCard from "@/components/customized-ui/cards/steps-redirect"
+import JobuzzerRedirectCard from "@/components/customized-ui/cards/jobuzzer-redirect"
 import TextInput from "@/components/customized-ui/inputs/text"
 import BaseSelect from "@/components/customized-ui/selects/base"
 import FilterSheet from "@/components/customized-ui/sheets/filter"
@@ -59,9 +58,6 @@ const MemberSearchPageTemplate: React.FunctionComponent<
 
   const list = data !== undefined ? data.pages.flatMap((d) => d) : []
   const { data: sortingOptions } = useReferralSortOptions()
-
-  // 50% chance to show donation card, 50% chance to show steps redirect card
-  const showDonationCard = React.useMemo(() => Math.random() < 1 / 2, [])
 
   return (
     <div className="flex flex-col gap-4">
@@ -147,18 +143,12 @@ const MemberSearchPageTemplate: React.FunctionComponent<
           <div className="mx-auto grid w-full max-w-sm grid-cols-1 gap-4  md:mt-4 md:max-w-none md:grid-cols-2 lg:grid-cols-3">
             {list.map((user, index) => (
               <React.Fragment key={user.uuid}>
-                {index === 2 &&
-                  (showDonationCard ? (
-                    <DonationCard
-                      key="donation-card"
-                      className="max-w-[448px]"
-                    />
-                  ) : (
-                    <StepsRedirectCard
-                      key="steps-card"
-                      className="max-w-[448px]"
-                    />
-                  ))}
+                {index === 2 && (
+                  <JobuzzerRedirectCard
+                    key="jobuzzer-card"
+                    className="max-w-[448px]"
+                  />
+                )}
                 <MemberCard
                   requestCount={user.contact_request_count}
                   jobTitle={user.job_title}
