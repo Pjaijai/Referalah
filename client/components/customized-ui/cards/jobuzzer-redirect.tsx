@@ -36,7 +36,7 @@ const JobuzzerRedirectCard: React.FunctionComponent<
         </h3>
 
         <p className="text-sm leading-relaxed text-slate-600">
-          <span className="font-semibold text-amber-700">JobBuzzer</span> helps
+          <span className="font-semibold text-amber-700">JoBuzzer</span> helps
           you discover opportunities faster than
           <span className="font-semibold text-amber-700">
             {" "}
@@ -80,7 +80,7 @@ const JobuzzerRedirectCard: React.FunctionComponent<
           onClick={handleVisitClick}
           className="mt-auto flex w-full items-center justify-center space-x-2 bg-amber-600 px-4 py-2 font-medium text-white shadow-sm transition-all duration-200 hover:bg-amber-700 hover:shadow-md"
         >
-          <span>Explore JobBuzzer</span>
+          <span>Explore JoBuzzer</span>
           <ExternalLink className="h-4 w-4" />
         </Button>
       </div>
